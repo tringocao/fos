@@ -3,3 +3,10 @@
 ################################################################################
 
 /fos-api/FOS/FOS.API/bin
+/fos-api/FOS/FOS.API/obj/Debug
+/fos-api/FOS/FOS.Common/obj/Debug
+/fos-api/FOS/FOS.Model/obj/Debug
+/fos-api/FOS/FOS.Repositories/obj/Debug
+/fos-api/FOS/FOS.Service/obj/Debug
+/fos-api/FOS/packages
+/fos-api/FOS/.vs/FOS/v15
