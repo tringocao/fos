@@ -1,6 +1,7 @@
 using System;
 
 using Unity;
+using Unity.Lifetime;
 
 namespace FOS.API
 {
@@ -41,7 +42,12 @@ namespace FOS.API
             // container.LoadConfiguration();
 
             // TODO: Register your type's mappings here.
-            // container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<Repositories.FosContext, Repositories.FosContext>(new PerResolveLifetimeManager());
+            container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
+            container.RegisterType<Repositories.IOrderRepository, Repositories.OrderRepository>();
+
+            container.RegisterType<Services.IOrderService, Services.OrderService>();
+            container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
             container.AddExtension(new Diagnostic());
         }
     }
