@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
 using FOS.API.Models;
+using System.Web.Caching;
+using System.Runtime.Caching;
 
 namespace FOS.API.Controllers
 {
@@ -26,23 +28,31 @@ namespace FOS.API.Controllers
 
             }
 
-            return Redirect(redirectUri);
+            return Redirect("https://localhost:44372/");
         }
 
         public async Task<ActionResult> GetAuthCode()
         {
-            var tenant = ConfigurationManager.AppSettings["ida:Tenant"];
-            var clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-            var redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
-            var scope = "Sites.FullControl.All";
+            var accessToken = GetAccessTokenFromCookie();
+            if (accessToken == null)
+            {
+                var tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+                var clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+                var redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+                var scope = "Sites.FullControl.All";
 
-            var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/authorize?" +
-                        "client_id=" + clientId +
-                        "&response_type=code" +
-                        "&redirect_uri=" + redirectUri +
-                        "&scope=" + scope +
-                        "&state=12345";
-            return Redirect(path);
+                var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/authorize?" +
+                            "client_id=" + clientId +
+                            "&response_type=code" +
+                            "&redirect_uri=" + redirectUri +
+                            "&scope=" + scope +
+                            "&state=12345";
+                return Redirect(path);
+            }
+            else
+            {
+                return Redirect("https://localhost:44372/");
+            }
         }
 
         public async Task<string> GetToken(string code)
@@ -73,10 +83,14 @@ namespace FOS.API.Controllers
 
         private void SaveToCookie(string access_token, int expireDuration)
         {
-            HttpCookie tokenCookie = new HttpCookie("access_token");
+            HttpCookie tokenCookie = new HttpCookie("access_token_key");
             DateTime now = DateTime.Now;
 
-            tokenCookie.Value = access_token;
+            var policy = now.AddSeconds(expireDuration);
+
+            MemoryCache.Default.Add(policy.ToString(), access_token, policy);
+
+            tokenCookie.Value = policy.ToString();
 
             tokenCookie.Expires = now.AddSeconds(expireDuration);
 
@@ -85,10 +99,14 @@ namespace FOS.API.Controllers
 
         private string GetAccessTokenFromCookie()
         {
-            HttpCookie tokenCookie = Request.Cookies["access_token"];
+            HttpCookie tokenCookie = Request.Cookies["access_token_key"];
             if (tokenCookie != null)
             {
-                return tokenCookie.Value;
+                var token = MemoryCache.Default.Get(tokenCookie.Value);
+                if (token !=null)
+                {
+                    return token.ToString();
+                }
             }
             return null;
         }
