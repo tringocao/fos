@@ -45,7 +45,17 @@ namespace FOS.API
             container.RegisterType<Repositories.FosContext, Repositories.FosContext>(new PerResolveLifetimeManager());
             container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
             container.RegisterType<Repositories.IOrderRepository, Repositories.OrderRepository>();
+            container.RegisterType<Repositories.Infrastructor.IDbFactory, Repositories.Infrastructor.DbFactory>();
+            container.RegisterType<Repositories.Repositories.IFOSCrawlLinksRepository, Repositories.Repositories.FOSCrawlLinksRepository>();
+            container.RegisterType<Repositories.Repositories.IFOSHostLinkRepository, Repositories.Repositories.FOSHostLinkRepository>();
 
+            container.RegisterType<Services.IExternalServiceFactory, Services.ExternalServiceFactory>();
+            container.RegisterType<Services.IHostLinkService, Services.HostLinkService>();
+
+            container.RegisterType<Services.ICrawlLinksService, Services.CrawlLinksService>();
+            container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());
+            container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.GetMethod> ("GetMethod");
+            container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.PostMethod>("PostMethod");
             container.RegisterType<Services.IOrderService, Services.OrderService>();
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
             container.AddExtension(new Diagnostic());

@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\APIs.cs" />
+    <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Dto\Order.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />

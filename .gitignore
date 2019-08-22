@@ -14,3 +14,9 @@
 /fos-api/FOS/FOS.Model/bin/Debug
 /fos-api/FOS/FOS.Repositories/bin/Debug
 /fos-api/FOS/FOS.Service/bin/Debug
+/fos-api/FOS.rar
+/fos-client/.vs/fos-client/config/applicationhost.config
+*.suo
+/fos-client/.vs/slnx.sqlite
+/fos-client/.vs/VSWorkspaceState.json
+/fos-api/FOS/.vs/FOS/v16/Server/sqlite3
