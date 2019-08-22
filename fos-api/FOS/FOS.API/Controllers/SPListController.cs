@@ -20,23 +20,9 @@ namespace FOS.API.Controllers
 
             if(authenticated == true)
             {
-                var accessToken = TokenHelper.GetAccessTokenFromCookie();
+                var accessToken = TokenHelper.GetTokenFromCookie("access_token_key");
 
                 var SiteId = ConfigurationManager.AppSettings["ida:SiteId"];
-
-                //var listId = "3a8b82cb-655b-429c-a774-9a3d2af07289";
-
-                //HttpWebRequest endpointRequest =
-                //    (HttpWebRequest)HttpWebRequest.Create(
-                //    "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id);
-                //endpointRequest.Method = "GET";
-                //endpointRequest.Accept = "application/json;odata=verbose";
-                //endpointRequest.Headers.Add("Authorization",
-                //  "Bearer " + accessToken);
-                //endpointRequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)";
-
-                //HttpWebResponse endpointResponse =
-                //  (HttpWebResponse)endpointRequest.GetResponse();
 
                 HttpClient client = new HttpClient();
 

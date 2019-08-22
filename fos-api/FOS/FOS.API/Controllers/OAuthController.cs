@@ -33,26 +33,18 @@ namespace FOS.API.Controllers
 
         public async Task<ActionResult> GetAuthCode()
         {
-            //var accessToken = GetAccessTokenFromCookie();
-            //if (accessToken == null)
-            //{
-                var tenant = ConfigurationManager.AppSettings["ida:Tenant"];
-                var clientId = ConfigurationManager.AppSettings["ida:ClientId"];
-                var redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
-                var scope = "Sites.FullControl.All";
+            var tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+            var clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+            var redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+            var scope = ConfigurationManager.AppSettings["ida:Scope"];
 
-                var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/authorize?" +
-                            "client_id=" + clientId +
-                            "&response_type=code" +
-                            "&redirect_uri=" + redirectUri +
-                            "&scope=" + scope +
-                            "&state=12345";
-                return Redirect(path);
-            //}
-            //else
-            //{
-            //    return Redirect(ConfigurationManager.AppSettings["ida:HomeUri"]);
-            //}
+            var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/authorize?" +
+                        "client_id=" + clientId +
+                        "&response_type=code" +
+                        "&redirect_uri=" + redirectUri +
+                        "&scope=" + scope +
+                        "&state=12345";
+            return Redirect(path);
         }
 
         public async Task<string> GetToken(string code)
@@ -72,29 +64,67 @@ namespace FOS.API.Controllers
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
                 new KeyValuePair<string, string>("code", code),
             });
+
             HttpResponseMessage response = await client.PostAsync(path, content);
             //var resultContent = await response.Content.ReadAsStringAsync();
             var resultContent = await response.Content.ReadAsAsync<OAuthResponse>();
             //return resultContent;
-
-            SaveToCookie(resultContent.access_token, resultContent.expires_in);
+            if (resultContent.access_token != null && resultContent.refresh_token != null)
+            {
+                SaveToCookie(resultContent.access_token, resultContent.refresh_token, resultContent.expires_in);
+            }
             return resultContent.access_token;
         }
 
-        private void SaveToCookie(string access_token, int expireDuration)
+        public async Task<string> RefreshToken()
         {
-            HttpCookie tokenCookie = new HttpCookie("access_token_key");
+            var refreshToken = TokenHelper.GetTokenFromCookie("refresh_token_key");
+
+            HttpClient client = new HttpClient();
+
+            var tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+            var clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+            var redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
+            var secret = ConfigurationManager.AppSettings["ida:ClientSecret"];
+            var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/token";
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("client_secret", secret),
+                new KeyValuePair<string, string>("client_id", clientId),
+                new KeyValuePair<string, string>("grant_type", "refresh_token"),
+                new KeyValuePair<string, string>("refresh_token", refreshToken),
+            });
+            HttpResponseMessage response = await client.PostAsync(path, content);
+            //var resultContent = await response.Content.ReadAsStringAsync();
+            var resultContent = await response.Content.ReadAsAsync<OAuthResponse>();
+            //return resultContent;
+            if (resultContent.access_token != null && resultContent.refresh_token != null)
+            {
+                SaveToCookie(resultContent.access_token, resultContent.access_token, resultContent.expires_in);
+            }            
+            return resultContent.access_token;
+        }
+
+        private void SaveToCookie(string access_token, string refresh_token, int expireDuration)
+        {
+            HttpCookie accessTokenCookie = new HttpCookie("access_token_key");
+            HttpCookie refreshTokenCookie = new HttpCookie("refresh_token_key");
+
             DateTime now = DateTime.Now;
 
             var policy = now.AddSeconds(expireDuration);
 
-            MemoryCache.Default.Add(policy.ToString(), access_token, policy);
+            accessTokenCookie.Value = "access_" + policy.ToString();
+            refreshTokenCookie.Value = "refresh_" + policy.ToString();
 
-            tokenCookie.Value = policy.ToString();
+            accessTokenCookie.Expires = now.AddSeconds(expireDuration);
+            refreshTokenCookie.Expires = now.AddYears(99);
 
-            tokenCookie.Expires = now.AddSeconds(expireDuration);
+            Response.Cookies.Add(accessTokenCookie);
+            Response.Cookies.Add(refreshTokenCookie);
 
-            Response.Cookies.Add(tokenCookie);
+            MemoryCache.Default.Set("access_" + policy.ToString(), access_token, policy);
+            MemoryCache.Default.Set("refresh_" + policy.ToString(), refresh_token, policy);          
         }
 
         public ActionResult CheckAuthentication()
@@ -110,20 +140,6 @@ namespace FOS.API.Controllers
                 }
             }
             return Redirect(ConfigurationManager.AppSettings["ida:RedirectUri"] + "getauthcode");
-        }
-
-        public string GetAccessTokenFromCookie()
-        {
-            HttpCookie tokenCookie = Request.Cookies["access_token_key"];
-            if (tokenCookie != null)
-            {
-                var token = MemoryCache.Default.Get(tokenCookie.Value);
-                if (token !=null)
-                {
-                    return token.ToString();
-                }
-            }
-            return null;
         }
     }
 }
