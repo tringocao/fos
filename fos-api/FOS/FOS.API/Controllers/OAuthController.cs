@@ -28,14 +28,14 @@ namespace FOS.API.Controllers
 
             }
 
-            return Redirect("https://localhost:44372/");
+            return Redirect(ConfigurationManager.AppSettings["ida:HomeUri"]);
         }
 
         public async Task<ActionResult> GetAuthCode()
         {
-            var accessToken = GetAccessTokenFromCookie();
-            if (accessToken == null)
-            {
+            //var accessToken = GetAccessTokenFromCookie();
+            //if (accessToken == null)
+            //{
                 var tenant = ConfigurationManager.AppSettings["ida:Tenant"];
                 var clientId = ConfigurationManager.AppSettings["ida:ClientId"];
                 var redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
@@ -48,11 +48,11 @@ namespace FOS.API.Controllers
                             "&scope=" + scope +
                             "&state=12345";
                 return Redirect(path);
-            }
-            else
-            {
-                return Redirect("https://localhost:44372/");
-            }
+            //}
+            //else
+            //{
+            //    return Redirect(ConfigurationManager.AppSettings["ida:HomeUri"]);
+            //}
         }
 
         public async Task<string> GetToken(string code)
@@ -97,7 +97,22 @@ namespace FOS.API.Controllers
             Response.Cookies.Add(tokenCookie);
         }
 
-        private string GetAccessTokenFromCookie()
+        public ActionResult CheckAuthentication()
+        {
+            HttpCookie tokenCookie = Request.Cookies["access_token_key"];
+            if (tokenCookie != null)
+            {
+                var token = MemoryCache.Default.Get(tokenCookie.Value);
+                if (token != null)
+                {
+                    // valid token
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+            }
+            return Redirect(ConfigurationManager.AppSettings["ida:RedirectUri"] + "getauthcode");
+        }
+
+        public string GetAccessTokenFromCookie()
         {
             HttpCookie tokenCookie = Request.Cookies["access_token_key"];
             if (tokenCookie != null)
