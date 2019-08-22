@@ -4,14 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="049576eaebdb4ff18dcacd12578858c0" Name="Diagram1">
-        <EntityTypeShape EntityType="APIExternalServiceModel.FOSBodyFieldLink" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="APIExternalServiceModel.FOSCrawlLink" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="APIExternalServiceModel.FOSHeaderLink" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="APIExternalServiceModel.FOSHostLink" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <AssociationConnector Association="APIExternalServiceModel.FK_FOSCrawlLinks_FOSHostLinks" ManuallyRouted="false" />
-        <AssociationConnector Association="APIExternalServiceModel.FOSCrawlLinks_Body" ManuallyRouted="false" />
-        <AssociationConnector Association="APIExternalServiceModel.FOSHeader_CrawlLinks" ManuallyRouted="false" />
+      <Diagram DiagramId="4628a793e43b4f1cbd3be53203168bbb" Name="Diagram1">
+        <EntityTypeShape EntityType="APIExternalServiceModel.FoodServiceAPI" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -5,244 +5,34 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="APIExternalServiceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="FOSBodyFieldLinks">
+        <EntityType Name="FoodServiceAPIs">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="DefaultValue" Type="nvarchar(max)" />
-          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="TypeService" Type="nvarchar" MaxLength="100" />
+          <Property Name="JSONData" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="FOSCrawlLinks">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Link" Type="nvarchar(max)" />
-          <Property Name="HostID" Type="int" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Request_Method" Type="nvarchar" MaxLength="10" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'APIExternalService.dbo.FOSCrawlLinks_Body' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="FOSCrawlLinks_Body">
-          <Key>
-            <PropertyRef Name="CrawlLinksID" />
-            <PropertyRef Name="BodyFieldID" />
-          </Key>
-          <Property Name="CrawlLinksID" Type="int" Nullable="false" />
-          <Property Name="BodyFieldID" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'APIExternalService.dbo.FOSHeader_CrawlLinks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="FOSHeader_CrawlLinks">
-          <Key>
-            <PropertyRef Name="HeaderID" />
-            <PropertyRef Name="CrawlLinksID" />
-          </Key>
-          <Property Name="HeaderID" Type="int" Nullable="false" />
-          <Property Name="CrawlLinksID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FOSHeaderLinks">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="DefaultValue" Type="nvarchar(max)" />
-          <Property Name="Description" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="FOSHostLinks">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-        </EntityType>
-        <Association Name="FK_FOSCrawlLinks_Body_FOSBodyFieldLinks">
-          <End Role="FOSBodyFieldLinks" Type="Self.FOSBodyFieldLinks" Multiplicity="1" />
-          <End Role="FOSCrawlLinks_Body" Type="Self.FOSCrawlLinks_Body" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FOSBodyFieldLinks">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FOSCrawlLinks_Body">
-              <PropertyRef Name="BodyFieldID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FOSCrawlLinks_Body_FOSCrawlLinks">
-          <End Role="FOSCrawlLinks" Type="Self.FOSCrawlLinks" Multiplicity="1" />
-          <End Role="FOSCrawlLinks_Body" Type="Self.FOSCrawlLinks_Body" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FOSCrawlLinks">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FOSCrawlLinks_Body">
-              <PropertyRef Name="CrawlLinksID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FOSCrawlLinks_FOSHostLinks">
-          <End Role="FOSHostLinks" Type="Self.FOSHostLinks" Multiplicity="1" />
-          <End Role="FOSCrawlLinks" Type="Self.FOSCrawlLinks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FOSHostLinks">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FOSCrawlLinks">
-              <PropertyRef Name="HostID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FOSHeader_CrawlLinks_FOSCrawlLinks">
-          <End Role="FOSCrawlLinks" Type="Self.FOSCrawlLinks" Multiplicity="1" />
-          <End Role="FOSHeader_CrawlLinks" Type="Self.FOSHeader_CrawlLinks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FOSCrawlLinks">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FOSHeader_CrawlLinks">
-              <PropertyRef Name="CrawlLinksID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FOSHeader_CrawlLinks_FOSHeaderLinks">
-          <End Role="FOSHeaderLinks" Type="Self.FOSHeaderLinks" Multiplicity="1" />
-          <End Role="FOSHeader_CrawlLinks" Type="Self.FOSHeader_CrawlLinks" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FOSHeaderLinks">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FOSHeader_CrawlLinks">
-              <PropertyRef Name="HeaderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="APIExternalServiceModelStoreContainer">
-          <EntitySet Name="FOSBodyFieldLinks" EntityType="Self.FOSBodyFieldLinks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FOSCrawlLinks" EntityType="Self.FOSCrawlLinks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FOSHeaderLinks" EntityType="Self.FOSHeaderLinks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FOSHostLinks" EntityType="Self.FOSHostLinks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FOSCrawlLinks_Body" EntityType="Self.FOSCrawlLinks_Body" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [FOSCrawlLinks_Body].[CrawlLinksID] AS [CrawlLinksID], 
-    [FOSCrawlLinks_Body].[BodyFieldID] AS [BodyFieldID]
-    FROM [dbo].[FOSCrawlLinks_Body] AS [FOSCrawlLinks_Body]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="FOSHeader_CrawlLinks" EntityType="Self.FOSHeader_CrawlLinks" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [FOSHeader_CrawlLinks].[HeaderID] AS [HeaderID], 
-    [FOSHeader_CrawlLinks].[CrawlLinksID] AS [CrawlLinksID]
-    FROM [dbo].[FOSHeader_CrawlLinks] AS [FOSHeader_CrawlLinks]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_FOSCrawlLinks_Body_FOSBodyFieldLinks" Association="Self.FK_FOSCrawlLinks_Body_FOSBodyFieldLinks">
-            <End Role="FOSBodyFieldLinks" EntitySet="FOSBodyFieldLinks" />
-            <End Role="FOSCrawlLinks_Body" EntitySet="FOSCrawlLinks_Body" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FOSCrawlLinks_Body_FOSCrawlLinks" Association="Self.FK_FOSCrawlLinks_Body_FOSCrawlLinks">
-            <End Role="FOSCrawlLinks" EntitySet="FOSCrawlLinks" />
-            <End Role="FOSCrawlLinks_Body" EntitySet="FOSCrawlLinks_Body" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FOSCrawlLinks_FOSHostLinks" Association="Self.FK_FOSCrawlLinks_FOSHostLinks">
-            <End Role="FOSHostLinks" EntitySet="FOSHostLinks" />
-            <End Role="FOSCrawlLinks" EntitySet="FOSCrawlLinks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FOSHeader_CrawlLinks_FOSCrawlLinks" Association="Self.FK_FOSHeader_CrawlLinks_FOSCrawlLinks">
-            <End Role="FOSCrawlLinks" EntitySet="FOSCrawlLinks" />
-            <End Role="FOSHeader_CrawlLinks" EntitySet="FOSHeader_CrawlLinks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FOSHeader_CrawlLinks_FOSHeaderLinks" Association="Self.FK_FOSHeader_CrawlLinks_FOSHeaderLinks">
-            <End Role="FOSHeaderLinks" EntitySet="FOSHeaderLinks" />
-            <End Role="FOSHeader_CrawlLinks" EntitySet="FOSHeader_CrawlLinks" />
-          </AssociationSet>
+          <EntitySet Name="FoodServiceAPIs" EntityType="Self.FoodServiceAPIs" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="APIExternalServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="FOSBodyFieldLink">
+        <EntityType Name="FoodServiceAPI">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DefaultValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="FOSCrawlLinks" Relationship="Self.FOSCrawlLinks_Body" FromRole="FOSBodyFieldLinks" ToRole="FOSCrawlLinks" />
+          <Property Name="TypeService" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="JSONData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="FOSCrawlLink">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="HostID" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Request_Method" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="FOSHostLink" Relationship="Self.FK_FOSCrawlLinks_FOSHostLinks" FromRole="FOSCrawlLinks" ToRole="FOSHostLinks" />
-          <NavigationProperty Name="FOSBodyFieldLinks" Relationship="Self.FOSCrawlLinks_Body" FromRole="FOSCrawlLinks" ToRole="FOSBodyFieldLinks" />
-          <NavigationProperty Name="FOSHeaderLinks" Relationship="Self.FOSHeader_CrawlLinks" FromRole="FOSCrawlLinks" ToRole="FOSHeaderLinks" />
-        </EntityType>
-        <EntityType Name="FOSHeaderLink">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DefaultValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="FOSCrawlLinks" Relationship="Self.FOSHeader_CrawlLinks" FromRole="FOSHeaderLinks" ToRole="FOSCrawlLinks" />
-        </EntityType>
-        <EntityType Name="FOSHostLink">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="FOSCrawlLinks" Relationship="Self.FK_FOSCrawlLinks_FOSHostLinks" FromRole="FOSHostLinks" ToRole="FOSCrawlLinks" />
-        </EntityType>
-        <Association Name="FK_FOSCrawlLinks_FOSHostLinks">
-          <End Role="FOSHostLinks" Type="Self.FOSHostLink" Multiplicity="1" />
-          <End Role="FOSCrawlLinks" Type="Self.FOSCrawlLink" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FOSHostLinks">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FOSCrawlLinks">
-              <PropertyRef Name="HostID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FOSCrawlLinks_Body">
-          <End Role="FOSBodyFieldLinks" Type="Self.FOSBodyFieldLink" Multiplicity="*" />
-          <End Role="FOSCrawlLinks" Type="Self.FOSCrawlLink" Multiplicity="*" />
-        </Association>
-        <Association Name="FOSHeader_CrawlLinks">
-          <End Role="FOSCrawlLinks" Type="Self.FOSCrawlLink" Multiplicity="*" />
-          <End Role="FOSHeaderLinks" Type="Self.FOSHeaderLink" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="APIExternalServiceEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="FOSBodyFieldLinks" EntityType="Self.FOSBodyFieldLink" />
-          <EntitySet Name="FOSCrawlLinks" EntityType="Self.FOSCrawlLink" />
-          <EntitySet Name="FOSHeaderLinks" EntityType="Self.FOSHeaderLink" />
-          <EntitySet Name="FOSHostLinks" EntityType="Self.FOSHostLink" />
-          <AssociationSet Name="FK_FOSCrawlLinks_FOSHostLinks" Association="Self.FK_FOSCrawlLinks_FOSHostLinks">
-            <End Role="FOSHostLinks" EntitySet="FOSHostLinks" />
-            <End Role="FOSCrawlLinks" EntitySet="FOSCrawlLinks" />
-          </AssociationSet>
-          <AssociationSet Name="FOSCrawlLinks_Body" Association="Self.FOSCrawlLinks_Body">
-            <End Role="FOSBodyFieldLinks" EntitySet="FOSBodyFieldLinks" />
-            <End Role="FOSCrawlLinks" EntitySet="FOSCrawlLinks" />
-          </AssociationSet>
-          <AssociationSet Name="FOSHeader_CrawlLinks" Association="Self.FOSHeader_CrawlLinks">
-            <End Role="FOSCrawlLinks" EntitySet="FOSCrawlLinks" />
-            <End Role="FOSHeaderLinks" EntitySet="FOSHeaderLinks" />
-          </AssociationSet>
+          <EntitySet Name="FoodServiceAPIs" EntityType="Self.FoodServiceAPI" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -250,62 +40,16 @@ warning 6002: The table/view 'APIExternalService.dbo.FOSHeader_CrawlLinks' does 
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="APIExternalServiceModelStoreContainer" CdmEntityContainer="APIExternalServiceEntities">
-          <EntitySetMapping Name="FOSBodyFieldLinks">
-            <EntityTypeMapping TypeName="APIExternalServiceModel.FOSBodyFieldLink">
-              <MappingFragment StoreEntitySet="FOSBodyFieldLinks">
+          <EntitySetMapping Name="FoodServiceAPIs">
+            <EntityTypeMapping TypeName="APIExternalServiceModel.FoodServiceAPI">
+              <MappingFragment StoreEntitySet="FoodServiceAPIs">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DefaultValue" ColumnName="DefaultValue" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TypeService" ColumnName="TypeService" />
+                <ScalarProperty Name="JSONData" ColumnName="JSONData" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FOSCrawlLinks">
-            <EntityTypeMapping TypeName="APIExternalServiceModel.FOSCrawlLink">
-              <MappingFragment StoreEntitySet="FOSCrawlLinks">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="HostID" ColumnName="HostID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Request_Method" ColumnName="Request_Method" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FOSHeaderLinks">
-            <EntityTypeMapping TypeName="APIExternalServiceModel.FOSHeaderLink">
-              <MappingFragment StoreEntitySet="FOSHeaderLinks">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DefaultValue" ColumnName="DefaultValue" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FOSHostLinks">
-            <EntityTypeMapping TypeName="APIExternalServiceModel.FOSHostLink">
-              <MappingFragment StoreEntitySet="FOSHostLinks">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="FOSCrawlLinks_Body" TypeName="APIExternalServiceModel.FOSCrawlLinks_Body" StoreEntitySet="FOSCrawlLinks_Body">
-            <EndProperty Name="FOSBodyFieldLinks">
-              <ScalarProperty Name="ID" ColumnName="BodyFieldID" />
-            </EndProperty>
-            <EndProperty Name="FOSCrawlLinks">
-              <ScalarProperty Name="ID" ColumnName="CrawlLinksID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FOSHeader_CrawlLinks" TypeName="APIExternalServiceModel.FOSHeader_CrawlLinks" StoreEntitySet="FOSHeader_CrawlLinks">
-            <EndProperty Name="FOSCrawlLinks">
-              <ScalarProperty Name="ID" ColumnName="CrawlLinksID" />
-            </EndProperty>
-            <EndProperty Name="FOSHeaderLinks">
-              <ScalarProperty Name="ID" ColumnName="HeaderID" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

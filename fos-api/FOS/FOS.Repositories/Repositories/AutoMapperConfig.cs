@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FOS.Model.Domain;
+using FOS.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,12 @@ namespace FOS.Repositories.Repositories
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<FOSCrawlLink, APIs>()
-                .ForMember(model => model.HostID, cfig => cfig.MapFrom(e => e.FOSHostLink.ID))
-                .ForMember(model => model.header, cfig => cfig.MapFrom(c => new Dictionary<string,
-                    string>(c.FOSHeaderLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
-                .ForMember(model => model.body, cfig => cfig.MapFrom(c => new Dictionary<string,
-                    string>(c.FOSBodyFieldLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
+                config.CreateMap<FoodServiceAPI, APIs>()
+                .ForMember(model => model.TypeService, cfig => cfig.MapFrom(e => e.TypeService))
+                //.ForMember(model => model.header, cfig => cfig.MapFrom(c => new Dictionary<string,
+                //    string>(c.FOSHeaderLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
+                //.ForMember(model => model.body, cfig => cfig.MapFrom(c => new Dictionary<string,
+                //    string>(c.FOSBodyFieldLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
                 .ReverseMap();
 
 

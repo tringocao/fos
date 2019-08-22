@@ -25,9 +25,6 @@ namespace FOS.Repositories
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<FOSBodyFieldLink> FOSBodyFieldLinks { get; set; }
-        public virtual DbSet<FOSCrawlLink> FOSCrawlLinks { get; set; }
-        public virtual DbSet<FOSHeaderLink> FOSHeaderLinks { get; set; }
-        public virtual DbSet<FOSHostLink> FOSHostLinks { get; set; }
+        public virtual DbSet<FoodServiceAPI> FoodServiceAPIs { get; set; }
     }
 }

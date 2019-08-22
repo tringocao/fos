@@ -79,17 +79,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrawlLinksService.cs" />
-    <Compile Include="ExternalServiceFactory.cs" />
-    <Compile Include="HostLinkService.cs" />
-    <Compile Include="ICrawlLinksService.cs" />
-    <Compile Include="IExternalServiceFactory.cs" />
-    <Compile Include="IHostLinkService.cs" />
+    <Compile Include="FoodServices\ExternalServiceFactory.cs" />
+    <Compile Include="FoodServices\GrabFoodService\GrabFoodService.cs" />
+    <Compile Include="FoodServices\IExternalServiceFactory.cs" />
+    <Compile Include="FoodServices\NowService\Model\NowServiceConfiguration.cs" />
+    <Compile Include="FoodServices\IFoodService.cs" />
+    <Compile Include="FoodServices\NowService\NowService.cs" />
+    <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestMethods\GetMethod.cs" />
-    <Compile Include="RequestMethods\IRequestMethod.cs" />
-    <Compile Include="RequestMethods\PostMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
@@ -108,5 +106,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

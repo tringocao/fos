@@ -75,19 +75,10 @@
       <DependentUpon>APIExternalService.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Order.cs" />
-    <Compile Include="FOSBodyFieldLink.cs">
+    <Compile Include="FoodServiceAPI.cs">
       <DependentUpon>APIExternalService.tt</DependentUpon>
     </Compile>
     <Compile Include="FosContext.cs" />
-    <Compile Include="FOSCrawlLink.cs">
-      <DependentUpon>APIExternalService.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FOSHeaderLink.cs">
-      <DependentUpon>APIExternalService.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FOSHostLink.cs">
-      <DependentUpon>APIExternalService.tt</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
@@ -97,10 +88,8 @@
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AutoMapperConfig.cs" />
-    <Compile Include="Repositories\FOSCrawlLinksRepository.cs" />
-    <Compile Include="Repositories\FOSHostLinkRepository.cs" />
-    <Compile Include="Repositories\IFOSCrawlLinksRepository.cs" />
-    <Compile Include="Repositories\IFOSHostLinkRepository.cs" />
+    <Compile Include="Repositories\FOSFoodServiceAPIsRepository.cs" />
+    <Compile Include="Repositories\IFOSFoodServiceAPIsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="APIExternalService.edmx">

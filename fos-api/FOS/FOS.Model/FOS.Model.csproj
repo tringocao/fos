@@ -42,9 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\APIs.cs" />
+    <Compile Include="Dto\APIs.cs" />
+    <Compile Include="Dto\Food.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\Order.cs" />
+    <Compile Include="Dto\Restaurant.cs" />
     <Compile Include="Dto\Order.cs" />
+    <Compile Include="Dto\ServiceKind.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,6 @@
-﻿using FOS.Services;
+﻿using FOS.Model.Dto;
+using FOS.Services;
+using FOS.Services.FoodServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +13,35 @@ namespace FOS.API.Controllers
 {
     public class APIsController : ApiController
     {
-        ICrawlLinksService _craw;
-        IExternalServiceFactory _factory;
-        public APIsController(ICrawlLinksService craw, IExternalServiceFactory factory)
+        IExternalServiceFactory _craw;
+        public APIsController(IExternalServiceFactory craw)
         {
             _craw = craw;
-            _factory = factory;
         }
         // GET: api/APIs
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetALLRestaurants(int idService)
         {
+            _craw.Service(idService);
+
             return new string[] { "value1", "value2" };
+
+            //ServiceKind foodService = (ServiceKind)idService;
+            //IFoodService myService = ExternalServiceFactory.GetFoodService(foodService);
+            //return myService.GetRestaurantsAsync();
+
         }
-
         // GET: api/APIs/5
-        public Task<string> Get(int id)
+        [HttpGet]
+        public string Gets(int id)
         {
-            return _factory.API(id);
+            return "";
+        }
+        // GET: api/APIs/5
+        public Task<string> GetRestaurant(int id)
+        {
+            //return _factory.API(id);
 
-            //return _craw.GetByIdAsync(id);
+            return null;
         }
 
         // POST: api/APIs
