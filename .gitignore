@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+
 /fos-api/FOS/FOS.API/bin
 /fos-api/FOS/FOS.API/obj/Debug
 /fos-api/FOS/FOS.Common/obj/Debug
