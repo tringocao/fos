@@ -95,7 +95,7 @@ namespace FOS.API.Controllers
                 new KeyValuePair<string, string>("refresh_token", refreshToken),
             });
             HttpResponseMessage response = await client.PostAsync(path, content);
-            //var resultContent = await response.Content.ReadAsStringAsync();
+            var resultContentString = await response.Content.ReadAsStringAsync();
             var resultContent = await response.Content.ReadAsAsync<OAuthResponse>();
             //return resultContent;
             if (resultContent.access_token != null && resultContent.refresh_token != null)
@@ -108,23 +108,28 @@ namespace FOS.API.Controllers
         private void SaveToCookie(string access_token, string refresh_token, int expireDuration)
         {
             HttpCookie accessTokenCookie = new HttpCookie("access_token_key");
-            HttpCookie refreshTokenCookie = new HttpCookie("refresh_token_key");
-
             DateTime now = DateTime.Now;
-
             var policy = now.AddSeconds(expireDuration);
 
             accessTokenCookie.Value = "access_" + policy.ToString();
-            refreshTokenCookie.Value = "refresh_" + policy.ToString();
-
             accessTokenCookie.Expires = now.AddSeconds(expireDuration);
-            refreshTokenCookie.Expires = now.AddYears(99);
 
             Response.Cookies.Add(accessTokenCookie);
-            Response.Cookies.Add(refreshTokenCookie);
 
             MemoryCache.Default.Set("access_" + policy.ToString(), access_token, policy);
-            MemoryCache.Default.Set("refresh_" + policy.ToString(), refresh_token, policy);          
+
+            var refreshToken = TokenHelper.GetTokenFromCookie("refresh_token_key");
+
+            if (refreshToken == null)
+            {
+                HttpCookie refreshTokenCookie = new HttpCookie("refresh_token_key");
+                refreshTokenCookie.Value = "refresh_" + policy.ToString();
+                refreshTokenCookie.Expires = now.AddYears(99);
+
+                Response.Cookies.Add(refreshTokenCookie);
+
+                MemoryCache.Default.Set("refresh_" + policy.ToString(), refresh_token, policy);
+            }           
         }
 
         public ActionResult CheckAuthentication()
