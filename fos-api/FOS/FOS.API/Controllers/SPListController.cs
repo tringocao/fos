@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FOS.Common;
+using FOS.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -12,17 +14,23 @@ namespace FOS.API.Controllers
 {
     public class SPListController : ApiController
     {
+        IOAuthService _oAuthService;
+
+        public SPListController(IOAuthService oAuthService)
+        {
+            _oAuthService = oAuthService;
+        }
         // GET api/splist
         //[Authorize]
         public async Task<HttpResponseMessage> Get(string Id)
         {
-            var authenticated = TokenHelper.CheckAuthentication();
+            var authenticated = _oAuthService.CheckAuthentication().Result;
 
             if(authenticated == true)
             {
-                var accessToken = TokenHelper.GetTokenFromCookie("access_token_key");
+                var accessToken = _oAuthService.GetTokenKeyFromCookie("access_token");
 
-                var SiteId = ConfigurationManager.AppSettings["ida:SiteId"];
+                var SiteId = OAuth.SITE_ID;
 
                 HttpClient client = new HttpClient();
 
@@ -40,7 +48,7 @@ namespace FOS.API.Controllers
             else
             {
                 var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri(ConfigurationManager.AppSettings["ida:RedirectUri"] + "getauthcode");
+                response.Headers.Location = new Uri(_oAuthService.GetAuthCodePath());
 
                 return response;
             }

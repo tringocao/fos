@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
+    <Compile Include="Domain\Token.cs" />
     <Compile Include="Dto\Order.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
