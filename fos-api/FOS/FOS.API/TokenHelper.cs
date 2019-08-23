@@ -19,14 +19,16 @@ namespace FOS.API
                 var token = MemoryCache.Default.Get(tokenCookie.Value);
                 if (token != null)
                 {
+                    var expireTime = tokenCookie.Expires;
+                    //if (expireTime)
                     return true;
                 }
             }
             return false;
         }
-        public static string GetAccessTokenFromCookie()
+        public static string GetTokenFromCookie(string tokenType)
         {
-            HttpCookie tokenCookie = HttpContext.Current.Request.Cookies["access_token_key"];
+            HttpCookie tokenCookie = HttpContext.Current.Request.Cookies[tokenType];
             if (tokenCookie != null)
             {
                 var token = MemoryCache.Default.Get(tokenCookie.Value);
@@ -35,7 +37,6 @@ namespace FOS.API
                     return token.ToString();
                 }
             }
-            //HttpContext.Current.Response.RedirectToRoute(ConfigurationManager.AppSettings["ida:RedirectUri"] + "getauthcode");
             return null;
         }
     }
