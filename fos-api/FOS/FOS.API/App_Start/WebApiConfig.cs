@@ -14,7 +14,7 @@ namespace FOS.API
         {
             // Web API configuration and services
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("multipart/form-data"));
-            // Web API routes
+            // Web API routesD:\new fos\fos-api\FOS\FOS.API\App_Start\WebApiConfig.cs
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

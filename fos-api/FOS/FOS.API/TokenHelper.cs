@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FOS.API.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -14,19 +15,32 @@ namespace FOS.API
         public static bool CheckAuthentication()
         {
             HttpCookie tokenCookie = HttpContext.Current.Request.Cookies["access_token_key"];
+            HttpCookie tokenExpireTime = HttpContext.Current.Request.Cookies["token_expire_time"]; //memorycache
+
             if (tokenCookie != null)
             {
-                var token = MemoryCache.Default.Get(tokenCookie.Value);
+                var token = MemoryCache.Default.Get(tokenCookie.Value); //also expire time in one object
                 if (token != null)
                 {
-                    var expireTime = tokenCookie.Expires;
-                    //if (expireTime)
-                    return true;
+                    if (tokenExpireTime != null)
+                    {
+                        if (DateTime.Parse(tokenExpireTime.Value) < DateTime.Now)
+                        {
+                            var accessToken = new OAuthController().RefreshToken();
+                            if (accessToken != null)
+                            {
+                                // valid token
+                                return true;
+                            }
+                        }
+                        return true;
+                    }
                 }
             }
             return false;
         }
-        public static string GetTokenFromCookie(string tokenType)
+
+        public static string GetTokenFromCookie(string tokenType) //get key from token
         {
             HttpCookie tokenCookie = HttpContext.Current.Request.Cookies[tokenType];
             if (tokenCookie != null)

@@ -34,8 +34,6 @@ namespace FOS.API.Controllers
                 HttpResponseMessage responde = await client.SendAsync(request);
 
                 var json = responde.Content.ReadAsStringAsync();
-                //var response = Request.CreateResponse(HttpStatusCode.OK);
-                //response.Content = 
 
                 return responde;
             }
