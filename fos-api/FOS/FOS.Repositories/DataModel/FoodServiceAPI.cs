@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FOS.Repositories
+namespace FOS.Repositories.DataModel
 {
     using System;
     using System.Collections.Generic;

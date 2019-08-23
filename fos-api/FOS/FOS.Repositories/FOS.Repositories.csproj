@@ -59,31 +59,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIExternalService.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>APIExternalService.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="APIExternalService.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>APIExternalService.tt</DependentUpon>
-    </Compile>
-    <Compile Include="APIExternalService.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>APIExternalService.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="DataModel\FoodServiceAPI.cs" />
     <Compile Include="DataModel\Order.cs" />
-    <Compile Include="FoodServiceAPI.cs">
-      <DependentUpon>APIExternalService.tt</DependentUpon>
-    </Compile>
     <Compile Include="FosContext.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
+    <Compile Include="Migrations\201908231007307_init1.cs" />
+    <Compile Include="Migrations\201908231007307_init1.Designer.cs">
+      <DependentUpon>201908231007307_init1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,13 +79,6 @@
     <Compile Include="Repositories\IFOSFoodServiceAPIsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="APIExternalService.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>APIExternalService.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="APIExternalService.edmx.diagram">
-      <DependentUpon>APIExternalService.edmx</DependentUpon>
-    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -116,16 +96,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="APIExternalService.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>APIExternalService.edmx</DependentUpon>
-      <LastGenOutput>APIExternalService.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="APIExternalService.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>APIExternalService.edmx</DependentUpon>
-      <LastGenOutput>APIExternalService.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="Migrations\201908231007307_init1.resx">
+      <DependentUpon>201908231007307_init1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

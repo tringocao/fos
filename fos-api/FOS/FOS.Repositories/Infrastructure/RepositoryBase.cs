@@ -22,12 +22,12 @@ namespace FOS.Repositories.Infrastructor
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
 
-        private APIExternalServiceEntities dbContext;
+        private FosContext dbContext;
         private IDbSet<T> dbSet;
 
         public IDbFactory dbFactory { get; set; }
 
-        public APIExternalServiceEntities DbContext
+        public FosContext DbContext
         {
             get
             {

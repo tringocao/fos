@@ -8,12 +8,12 @@ namespace FOS.Repositories.Infrastructor
 {
     public interface IDbFactory
     {
-        APIExternalServiceEntities Init();
+        FosContext Init();
     }
 
     public class DbFactory : Disposable, IDbFactory
     {
-        private APIExternalServiceEntities dbContext;
+        private FosContext dbContext;
 
         protected override void DisposeCore()
         {
@@ -21,9 +21,9 @@ namespace FOS.Repositories.Infrastructor
                 dbContext.Dispose();
         }
 
-        public APIExternalServiceEntities Init()
+        public FosContext Init()
         {
-            return dbContext ?? (dbContext = new APIExternalServiceEntities());
+            return dbContext ?? (dbContext = new FosContext());
             //dbContext.Employees.Open();
 
         }
