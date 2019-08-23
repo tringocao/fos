@@ -52,14 +52,14 @@ export class EventFormComponent implements OnInit {
       { "id": 10, "itemName": "Sweden" }
     ];
     this.selectedItems = [
-      { "id": 2, "itemName": "Singapore" },
-      { "id": 3, "itemName": "Australia" },
-      { "id": 4, "itemName": "Canada" },
-      { "id": 5, "itemName": "South Korea" }
+      // { "id": 2, "itemName": "Singapore" },
+      // { "id": 3, "itemName": "Australia" },
+      // { "id": 4, "itemName": "Canada" },
+      // { "id": 5, "itemName": "South Korea" }
     ];
     this.dropdownSettings = {
       singleSelection: false,
-      text: "Select Countries",
+      text: "Select user",
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
@@ -79,6 +79,10 @@ export class EventFormComponent implements OnInit {
     // console.log(this.number)
   }
   showValue(): void {
+
+    var _dateTimeToClose = this.dateTimeToClose;
+    var _dateTimeToReminder = this.dateTimeToReminder;
+    
     console.log(this.dateTimeToClose);
   }
   onItemSelect(item: any) {
