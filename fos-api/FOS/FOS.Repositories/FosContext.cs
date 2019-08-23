@@ -11,7 +11,7 @@ namespace FOS.Repositories
     public class FosContext : DbContext
     {
         public FosContext()
-            : base("FosContext")
+            : base("name=FosContext")
         {
 
         }
