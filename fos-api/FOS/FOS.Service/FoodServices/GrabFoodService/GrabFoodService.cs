@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FOS.Model.Domain;
+using FOS.Model.Dto;
 
 namespace FOS.Services.FoodServices.GrabFoodService
 {
-    class GrabFoodService : IFoodService
+    public class GrabFoodService : IFoodService
     {
-        public List<Food> GetFoods(Restaurant restaurant)
+        public List<Food> GetFoods(DeliveryInfos delivery)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Province> GetMetadata()
         {
             throw new NotImplementedException();
         }
@@ -19,7 +24,17 @@ namespace FOS.Services.FoodServices.GrabFoodService
             throw new NotImplementedException();
         }
 
-        public List<Restaurant> GetRestaurantsAsync()
+        public List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Restaurant> GetRestaurants(Province province)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
         {
             throw new NotImplementedException();
         }

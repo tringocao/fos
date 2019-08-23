@@ -51,6 +51,9 @@ namespace FOS.API
 
             container.RegisterType<Services.FoodServices.IExternalServiceFactory, Services.FoodServices.ExternalServiceFactory>();
             container.RegisterType<Services.IFOSFoodServiceAPIsService, Services.FOSFoodServiceAPIsService>();
+            container.RegisterType<Services.DeliveryServices.IDeliveryService, Services.DeliveryServices.DeliveryService>();
+            container.RegisterType<Services.ProvinceServices.IProvinceService, Services.ProvinceServices.ProvinceService>();
+            container.RegisterType<Services.RestaurantServices.IRestaurantService, Services.RestaurantServices.RestaurantService>();
 
             //container.RegisterType<Services.ICrawlLinksService, Services.CrawlLinksService>();
             container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());
@@ -58,6 +61,8 @@ namespace FOS.API
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.PostMethod>("PostMethod");
             container.RegisterType<Services.IOrderService, Services.OrderService>();
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
+            container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
+
             container.AddExtension(new Diagnostic());
         }
     }

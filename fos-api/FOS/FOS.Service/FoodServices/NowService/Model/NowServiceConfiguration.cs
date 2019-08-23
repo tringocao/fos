@@ -8,10 +8,10 @@ namespace FOS.Services.FoodServices.NowService
 {
     public class NowServiceConfiguration
     {
-        public APIDetail GetAllRestaurant { get; set; }
-        public APIDetail GetAll { get; set; }
-        public APIDetail Search_Global { get; set; }
+        public APIDetail GetRestaurantDeliveryInfor { get; set; }
+        public APIDetail GetMetadata { get; set; }
         public APIDetail GetDeliveryDishes { get; set; }
+        public APIDetail SearchRestaurantsInProvince { get; set; }
 
     }
     public class APIDetail

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FOS.Model;
-using FOS.Model.Domain;
 using FOS.Repositories.Infrastructor;
 using System;
 using System.Collections.Generic;

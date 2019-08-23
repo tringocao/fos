@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Domain
+namespace FOS.Model.Dto
 {
-    public class APIsDTO
+    public class APIs
     {
         public int ID { get; set; }
         public string Name { get; set; }

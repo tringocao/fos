@@ -1,5 +1,5 @@
-﻿using FOS.Model.Domain;
-using FOS.Model.Dto;
+﻿using FOS.Model.Dto;
+using FOS.Model.Mapping;
 using FOS.Repositories.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,25 +12,20 @@ namespace FOS.Services
     public interface IFOSFoodServiceAPIsService
     {
         //string GetByIdAsync(int businessId);
-        APIsDTO GetById(int Id);
+        APIs GetById(int Id);
     }
     public class FOSFoodServiceAPIsService : IFOSFoodServiceAPIsService
     {
         IFOSFoodServiceAPIsRepository _iFOSFood;
-        public FOSFoodServiceAPIsService(IFOSFoodServiceAPIsRepository iFOSFood)
+        IAPIsDtoMapper _aPIsDto;
+        public FOSFoodServiceAPIsService(IFOSFoodServiceAPIsRepository iFOSFood, IAPIsDtoMapper aPIsDto)
         {
             _iFOSFood = iFOSFood;
+            _aPIsDto = aPIsDto;
         }
-        public APIsDTO GetById(int Id)
+        public APIs GetById(int Id)
         {
-            APIs a = _iFOSFood.GetFOSCrawlLinksById(Id);
-            APIsDTO a2 = new APIsDTO() { ID = a.ID, JSONData = a.JSONData, Name = a.Name };
-            //if (a.TypeService == ServiceKind.Now.GetType().FullName)
-            //{
-            //    a2.TypeService = ServiceKind.Now;
-            //}
-            a2.TypeService = ServiceKind.Now;
-            return a2;
+            return _aPIsDto.ToDto(_iFOSFood.GetFOSCrawlLinksById(Id));
         }
 
     }
