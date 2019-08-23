@@ -1,0 +1,70 @@
+<div class="block">
+  <div class="head">
+    <input class="search" placeholder="Search" />
+    <div class="dropdown">
+      <button mat-button>Click me!</button>
+    </div>
+  </div>
+  <div class="restaurants">
+    <div class="head row">
+      <div class="col bordered-right sort-name" (click)="sortName()">
+        <p class="text">Restaurant</p>
+        <div class="sort-buttons">
+          <button class="sort" [hidden]="sortNameOrder != 0">
+            <img src="../../../assets/sort-solid.svg" />
+          </button>
+          <button class="sort-up" [hidden]="sortNameOrder != 2">
+            <img src="../../../assets/sort-up-solid.svg" />
+          </button>
+          <button class="sort-down" [hidden]="sortNameOrder != 1">
+            <img src="../../../assets/sort-down-solid.svg" />
+          </button>
+        </div>
+      </div>
+      <div class="col bordered-right sort-category" (click)="sortCategory()">
+        <p class="text">Category</p>
+        <div class="sort-buttons">
+          <button class="sort" [hidden]="sortCategoryOrder != 0">
+            <img src="../../../assets/sort-solid.svg" />
+          </button>
+          <button class="sort-up" [hidden]="sortCategoryOrder != 2">
+            <img src="../../../assets/sort-up-solid.svg" />
+          </button>
+          <button class="sort-down" [hidden]="sortCategoryOrder != 1">
+            <img src="../../../assets/sort-down-solid.svg" />
+          </button>
+        </div>
+      </div>
+      <div class="col bordered-right">
+        <p class="text">Address</p>
+      </div>
+      <div class="col bordered-right">
+        <p class="text">Promotion</p>
+      </div>
+      <div class="col">
+        <p class="text">Open</p>
+      </div>
+    </div>
+    <div class="body">
+      <div *ngFor="let item of restaurants; let i = index">
+        <div [ngClass]="i % 2 == 0 ? 'row light' : 'row'">
+          <div class="col bordered-right">
+            <p class="item-name">{{ item.restaurant }}</p>
+          </div>
+          <div class="col bordered-right">
+            <p class="item-category">{{ item.category }}</p>
+          </div>
+          <div class="col bordered-right">
+            <p>{{ item.address }}</p>
+          </div>
+          <div class="col bordered-right">
+            <p>{{ item.promotion }}</p>
+          </div>
+          <div class="col">
+            <p>{{ item.open }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

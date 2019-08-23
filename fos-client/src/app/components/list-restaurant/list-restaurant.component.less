@@ -1,0 +1,69 @@
+@import '../../../styles/global/variables.less';
+
+.block {
+  padding: 2rem;
+  .search {
+    background-image: url('../../../assets/search-solid.svg');
+    background-position: 3% 50%;
+    background-repeat: no-repeat;
+    background-size: 1rem;
+    padding-left: 1.5rem;
+    border-radius: 1rem;
+    border-color: @black;
+    margin-bottom: 1rem;
+    outline: none;
+  }
+  .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .dropdown {
+    margin-left: 3rem;
+  }
+}
+.restaurants {
+  width: 100%;
+  border: 1px solid @black;
+  border-radius: 0.2rem;
+  .bordered-right {
+    border-right: 1px solid @black;
+  }
+  .row {
+    line-height: 3rem;
+  }
+  .light {
+    background-color: @white-smoke;
+  }
+  .head {
+    background-color: @grey;
+  }
+  .sort-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+    button {
+      display: inline-block;
+      line-height: 0.5rem;
+      background: none;
+      outline: none;
+      border: none;
+      padding: 0;
+    }
+  }
+}
+.sort-name,
+.sort-category {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.sort-category {
+  cursor: pointer;
+}
