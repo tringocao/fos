@@ -44,5 +44,10 @@ namespace FOS.API.Controllers
         public void Delete(int id)
         {
         }
+
+        public Repositories.DataModel.Order GetOrder(int id)
+        {
+            return _service.GetOrder(id);
+        }
     }
 }

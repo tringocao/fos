@@ -14,4 +14,14 @@
 /fos-api/FOS/FOS.Model/bin/Debug
 /fos-api/FOS/FOS.Repositories/bin/Debug
 /fos-api/FOS/FOS.Service/bin/Debug
-/.vs
+/fos-api/FOS/FOS.Common/bin/Release
+/fos-api/FOS/FOS.Common/obj/Release
+/fos-api/FOS/FOS.Model/bin/Release
+/fos-api/FOS/FOS.Model/obj/Release
+/fos-api/FOS/FOS.Service/bin/Release
+/fos-api/FOS/FOS.Service/obj/Release
+/fos-api/FOS/FOS.Repositories/bin/Release
+/fos-api/FOS/FOS.Repositories/obj/Release
+/fos-api/FOS/FOS.API/Properties/PublishProfiles
+/fos-api/FOS/FOS.API/obj/Release
+/fos-api/FOS/.vs/FOS
