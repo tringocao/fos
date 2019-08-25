@@ -24,6 +24,7 @@ namespace FOS.Services
 
     public class OAuthService : IOAuthService
     {
+
         public string GetAuthCodePath()
         {
             var tenant = OAuth.TENANT;

@@ -12,12 +12,12 @@ namespace FOS.API.Controllers
 {
     public class HomeController : Controller
     {
-        OAuthService _oAuthService = new OAuthService();
+        OAuthService _oAuthService;
 
-        //public HomeController()
-        //{
-        //    //_oAuthService = oAuthService;
-        //}
+        public HomeController(OAuthService oAuthService)
+        {
+            _oAuthService = oAuthService;
+        }
 
         public async Task<ActionResult> Index()
         {

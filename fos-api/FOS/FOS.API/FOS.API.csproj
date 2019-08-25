@@ -136,6 +136,9 @@
     <Reference Include="Unity.Container, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.Container.5.11.1\lib\net47\Unity.Container.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Mvc, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.5.11.1\lib\net47\Unity.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -163,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityPerRequestHttpModule.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
