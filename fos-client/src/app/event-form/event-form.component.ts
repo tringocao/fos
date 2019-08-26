@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventUser } from '../eventuser';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-event-form',
@@ -22,13 +23,16 @@ export class EventFormComponent implements OnInit {
     { id: 5, name: 'six}' }
   ];
   selected: number = 0;
-
+  EventTitle: string ="Event";
+  Host: string ="Host";
+  Restaurant: string = "Restaurant";
+  maximunBudget: number = 100000;
   dateTimeToClose: Date = new Date();
   dateTimeToReminder: Date = new Date();
   settings = {
     bigBanner: true,
     timePicker: true,
-    format: 'dd-MM-yyyy hh:mm',
+    format: 'dd-MM-yyyy HH:mm',
     // defaultOpen: true
   }
   dropdownList = [];
@@ -64,18 +68,41 @@ export class EventFormComponent implements OnInit {
 
   }
   AddUserToTable(): void {
-    for (var k in this.selectedItems) {
+    for (var s in this.selectedItems) {
       var flag = false;
-      for (var i in this.eventusers) {
-        if (this.selectedItems[k].itemName == this.eventusers[i].name) {
+      for (var e in this.eventusers) {
+        if (this.selectedItems[s].itemName == this.eventusers[e].name) {
           flag = true
         }
       }
-      if(flag == false){
-        this.eventusers.push({ 'name': this.selectedItems[k].itemName, 'email': this.selectedItems[k].id });
+      if (flag == false) {
+        this.eventusers.push({ 'name': this.selectedItems[s].itemName, 'email': this.selectedItems[s].id });
       }
     }
   }
+
+  DeleteUserInTable(): void {
+
+    for (var i = 0; i < this.selectedItems.length; i++) {
+      console.log(this.selectedItems[i].id);
+
+
+      for (var j = 0; j < this.eventusers.length; j++) {
+        if (this.selectedItems[i].itemName == this.eventusers[j].name) {
+          this.eventusers.splice(j, 1);
+
+          j--;
+        }
+      }
+      this.selectedItems.splice(i, 1);
+      i--;
+    }
+
+
+    // this.eventusers = [];
+    // this.selectedItems = [];
+  }
+
   showSelectValue(id: string) {
     //getted from event
     console.log("option thay doi");
@@ -83,12 +110,16 @@ export class EventFormComponent implements OnInit {
     //getted from binding
     // console.log(this.number)
   }
-  showValue(): void {
+  SaveToSharePointEventList(): void {
 
-    var _dateTimeToClose = this.dateTimeToClose;
+    var dateSaveToSharePoint = this.dateTimeToClose.getFullYear()+'-'+(this.dateTimeToClose.getMonth()+1)+'-'+this.dateTimeToClose.getDate();
+    var timeSaveToSharePoint = this.dateTimeToClose.getHours() + ":" + this.dateTimeToClose.getMinutes();
+    var dateTimeSaveToSharePoint = dateSaveToSharePoint+' '+timeSaveToSharePoint;
+
+
     var _dateTimeToReminder = this.dateTimeToReminder;
 
-    console.log(this.dateTimeToClose);
+    console.log(dateTimeSaveToSharePoint +" maxium Budget: " + this.maximunBudget);
   }
   onItemSelect(item: any) {
     console.log(item);
@@ -103,5 +134,6 @@ export class EventFormComponent implements OnInit {
   }
   onDeSelectAll(items: any) {
     console.log(items);
+    // this.eventusers = [];
   }
 }
