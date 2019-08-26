@@ -25,3 +25,5 @@
 /fos-api/FOS/FOS.API/Properties/PublishProfiles
 /fos-api/FOS/FOS.API/obj/Release
 /fos-api/FOS/.vs/FOS
+/fos-api/FOS/FOS.Repositories/Migrations
+/.vs
