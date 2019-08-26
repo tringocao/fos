@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModel\FoodServiceAPI.cs" />
+    <Compile Include="DataModel\ExternalServiceAPI.cs" />
     <Compile Include="DataModel\Order.cs" />
     <Compile Include="FosContext.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
@@ -67,9 +67,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201908231007307_init1.cs" />
-    <Compile Include="Migrations\201908231007307_init1.Designer.cs">
-      <DependentUpon>201908231007307_init1.cs</DependentUpon>
+    <Compile Include="Migrations\201908260325463_init.cs" />
+    <Compile Include="Migrations\201908260325463_init.Designer.cs">
+      <DependentUpon>201908260325463_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderRepository.cs" />
@@ -96,8 +96,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201908231007307_init1.resx">
-      <DependentUpon>201908231007307_init1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908260325463_init.resx">
+      <DependentUpon>201908260325463_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

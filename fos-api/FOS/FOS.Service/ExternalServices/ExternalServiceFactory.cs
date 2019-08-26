@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Services.FoodServices
+namespace FOS.Services.ExternalServices
 {
     public class ExternalServiceFactory : IExternalServiceFactory
     {
         private IFOSFoodServiceAPIsService _foodServiceAPIsService;
-        IFoodService service;
+        IExternalService service;
         public ExternalServiceFactory(IFOSFoodServiceAPIsService foodServiceAPIsService)
         {
             this._foodServiceAPIsService = foodServiceAPIsService;
         }
-        public string GetFoodServiceById(int id)
+        public string GetExternalServiceById(int id)
         {
             APIs apis = _foodServiceAPIsService.GetById(id);
-            service = GetFoodService(apis);
+            service = GetExternalService(apis);
             return service.GetNameService();
             //----------------Test----------------------
             //var re1 = service.GetMetadata().ToList().ToString();
@@ -45,11 +45,11 @@ namespace FOS.Services.FoodServices
         {
             return service.GetRestaurantsDeliveryInfor(restaurant);
         }
-        public List<Food> GetFoods(DeliveryInfos delivery)
+        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
         {
-            return service.GetFoods(delivery);
+            return service.GetFoodCatalogues(delivery);
         }
-        private IFoodService GetFoodService(APIs api)
+        private IExternalService GetExternalService(APIs api)
         {
             switch (api.TypeService)
             {

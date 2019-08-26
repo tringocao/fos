@@ -23,7 +23,7 @@ namespace FOS.Repositories
         }
 
         public DbSet<DataModel.Order> Orders { get; set; }
-        public DbSet<FoodServiceAPI> FoodServiceAPIs { get; set; }
+        public DbSet<ExternalServiceAPI> ExternalServiceAPIs { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

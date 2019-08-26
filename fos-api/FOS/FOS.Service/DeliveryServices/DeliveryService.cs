@@ -13,15 +13,16 @@ namespace FOS.Services.DeliveryServices
     {
         IRestaurantService _restaurantService;
         int IdService;
+        List<DeliveryInfos> deliveryInfos;
         public DeliveryService(IRestaurantService restaurantService)
         {
             //_craw = craw;
             _restaurantService = restaurantService;
         }
-        public string GetFoodServiceById(int IdService)
+        public string GetExternalServiceById(int IdService)
         {
             this.IdService = IdService;
-            return "DeliveryService in " + _restaurantService.GetFoodServiceById(IdService) + "is ready";
+            return "DeliveryService in " + _restaurantService.GetExternalServiceById(IdService) + "is ready";
         }
 
         public List<DeliveryInfos> GetRestaurantDeliveryInfor(int city_id, int restaurant_id)
@@ -31,7 +32,8 @@ namespace FOS.Services.DeliveryServices
         }
         public List<DeliveryInfos> GetRestaurantsDeliveryInfor(int city_id, List<Restaurant> restaurant_ids)
         {
-            return _restaurantService.GetRestaurantsDeliveryInfor(restaurant_ids);
+            deliveryInfos = _restaurantService.GetRestaurantsDeliveryInfor(restaurant_ids);
+            return deliveryInfos;
         }
         public DeliveryInfos GetRestaurantFirstDeliveryInfor(int city_id, int restaurant_id)
         {
@@ -42,6 +44,15 @@ namespace FOS.Services.DeliveryServices
             var listRestaurant = _restaurantService.GetRestaurantsByProvince(city_id);
             var result = listRestaurant.Skip((pagenum - 1) * pageSize).Take(pageSize);         
             return GetRestaurantsDeliveryInfor(city_id, result.ToList());
+        }
+
+        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        {
+            return _restaurantService.GetFoodCatalogues(delivery);
+        }
+        public List<DeliveryInfos> SearchByName(string nameDelivery)
+        {
+            return deliveryInfos.FindAll(d => d.name.Contains(nameDelivery));            
         }
     }
 }

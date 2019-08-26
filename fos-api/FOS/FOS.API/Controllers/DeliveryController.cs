@@ -22,7 +22,7 @@ namespace FOS.API.Controllers
         [Route("Get")]
         public string Get(int IdService, int city_id, int restaurant_id)
         {
-            _craw.GetFoodServiceById(IdService);
+            _craw.GetExternalServiceById(IdService);
             return JsonConvert.SerializeObject(_craw.GetRestaurantDeliveryInfor(city_id, restaurant_id));
         }
 
@@ -31,7 +31,7 @@ namespace FOS.API.Controllers
         [Route("GetFirstId")]
         public string GetFirstId(int IdService, int city_id, int restaurant_id)
         {
-            _craw.GetFoodServiceById(IdService);
+            _craw.GetExternalServiceById(IdService);
 
             return JsonConvert.SerializeObject(_craw.GetRestaurantFirstDeliveryInfor(city_id, restaurant_id));
         }
@@ -39,7 +39,7 @@ namespace FOS.API.Controllers
         [Route("GetPageDelivery")]
         public string GetPageDelivery(int IdService, int city_id, int pagenum, int pagesize)
         {
-            _craw.GetFoodServiceById(IdService);
+            _craw.GetExternalServiceById(IdService);
 
             return JsonConvert.SerializeObject(_craw.GetRestaurantDeliveryInforByPaging(city_id, pagenum, pagesize));
         }

@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Services.FoodServices.NowService
+namespace FOS.Services.ExternalServices.NowService
 {
     public class RequestMethodFactory
     {

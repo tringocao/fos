@@ -12,7 +12,7 @@ namespace FOS.Repositories.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class FoodServiceAPI
+    public partial class ExternalServiceAPI
     {
         public int ID { get; set; }
         public string Name { get; set; }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Services.FoodServices.NowService.Convert
+namespace FOS.Services.ExternalServices.NowService.Convert
 {
     public static class ConvertJson
     {
@@ -26,18 +26,15 @@ namespace FOS.Services.FoodServices.NowService.Convert
             }
             return newList;
         }
-        public static List<Food> ConvertString2ListFood(string result)
+        public static List<FoodCatalogue> ConvertString2ListFoodCatalogue(string result)
         {
-            //TODO
-            throw new NotImplementedException(result);
-
             dynamic data = JObject.Parse(result);
-            List<Food> newList = new List<Food>();
-            foreach (var dish in data.reply.menu_infos[0].dishes)
+            List<FoodCatalogue> newList = new List<FoodCatalogue>();
+            JsonDtoMapper<FoodCatalogue> map = new JsonDtoMapper<FoodCatalogue>();
+
+            foreach (var dish in data.reply.menu_infos)
             {
-                Food item = new Food();
-                item.id = dish.id;
-                newList.Add(item);
+                newList.Add(map.ToDto(dish));
             }
             return newList;
         }

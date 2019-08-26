@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using FOS.Model.Dto;
 using FOS.Model.Mapping;
-using FOS.Services.FoodServices.NowService.Convert;
+using FOS.Services.ExternalServices.NowService.Convert;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace FOS.Services.FoodServices.NowService
+namespace FOS.Services.ExternalServices.NowService
 {
-    public class NowService : IFoodService
+    public class NowService : IExternalService
     {
         APIs _apis;
         NowServiceConfiguration apisJson;
@@ -23,7 +23,7 @@ namespace FOS.Services.FoodServices.NowService
             apisJson = JsonConvert.DeserializeObject<NowServiceConfiguration>(_apis.JSONData);
         }
 
-        public List<Food> GetFoods(DeliveryInfos delivery)
+        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
         {
             //Get function
             APIDetail api = apisJson.GetDeliveryDishes;
@@ -36,14 +36,33 @@ namespace FOS.Services.FoodServices.NowService
             if (response.Result.IsSuccessStatusCode)
             {
                 var result = response.Result.Content.ReadAsStringAsync().Result;
-                return ConvertJson.ConvertString2ListFood(result);
+                return ConvertJson.ConvertString2ListFoodCatalogue(result);
             }
             else
             {
                 return null;
             }
         }
-
+        public string GetDeliveryFromUrl(Province province, DeliveryInfos delivery)
+        {
+            //Get function
+            APIDetail api = apisJson.GetDeliveryFromUrl;
+            //Set Fields
+            api.AvailableParams.Where(a => a.FieldName == "url").FirstOrDefault().ValueDefault
+                = province.name_url + "/" + delivery.url_rewrite_name;
+            //Call API
+            RequestMethodFactory method = new RequestMethodFactory(api);
+            var response = method.CallApi();
+            if (response.Result.IsSuccessStatusCode)
+            {
+                var result = response.Result.Content.ReadAsStringAsync().Result;
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public List<Restaurant> GetRestaurants(Province province)
         {
             //Get function
@@ -133,6 +152,11 @@ namespace FOS.Services.FoodServices.NowService
             {
                 return null;
             }
+        }
+
+        public List<FoodCatalogue> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
+        {
+            throw new NotImplementedException();
         }
     }
 }

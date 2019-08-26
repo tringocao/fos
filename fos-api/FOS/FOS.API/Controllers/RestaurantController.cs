@@ -1,4 +1,4 @@
-﻿using FOS.Services.FoodServices;
+﻿using FOS.Services.ExternalServices;
 using FOS.Services.RestaurantServices;
 using Newtonsoft.Json;
 using System;
@@ -24,7 +24,7 @@ namespace FOS.API.Controllers
         [Route("Get")]
         public string Get(int IdService, int province_id)
         {
-            _craw.GetFoodServiceById(IdService);
+            _craw.GetExternalServiceById(IdService);
             return JsonConvert.SerializeObject(_craw.GetRestaurantsByProvince(province_id));
         }
 
@@ -33,7 +33,7 @@ namespace FOS.API.Controllers
         [Route("GetById")]
         public string GetById(int IdService, int province_id, int restaurant_id)
         {
-            _craw.GetFoodServiceById(IdService);
+            _craw.GetExternalServiceById(IdService);
 
             return JsonConvert.SerializeObject(_craw.GetRestaurantsById(province_id, restaurant_id));
         }

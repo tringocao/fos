@@ -1,5 +1,5 @@
 ﻿using FOS.Model.Dto;
-using FOS.Services.FoodServices;
+using FOS.Services.ExternalServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +12,21 @@ namespace FOS.Services.ProvinceServices
     {
         IExternalServiceFactory _craw;
         int IdService;
+        List<DeliveryInfos> deliveryInfos;
         public ProvinceService(IExternalServiceFactory craw)
         {
             _craw = craw;
         }
-        public string GetFoodServiceById(int IdService)
+
+        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        {
+            return _craw.GetFoodCatalogues(delivery);
+        }
+
+        public string GetExternalServiceById(int IdService)
         {
             this.IdService = IdService;
-            return "ProvinceService in " + _craw.GetFoodServiceById(IdService) + "is ready";
+            return "ProvinceService in " + _craw.GetExternalServiceById(IdService) + "is ready";
         }
 
         public List<Province> GetMetadata()

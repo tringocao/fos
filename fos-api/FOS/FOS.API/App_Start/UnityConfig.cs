@@ -49,7 +49,7 @@ namespace FOS.API
             container.RegisterType<Repositories.Repositories.IFOSFoodServiceAPIsRepository, Repositories.Repositories.FOSFoodServiceAPIsRepository>();
             //container.RegisterType<Repositories.Repositories.IFOSHostLinkRepository, Repositories.Repositories.FOSHostLinkRepository>();
 
-            container.RegisterType<Services.FoodServices.IExternalServiceFactory, Services.FoodServices.ExternalServiceFactory>();
+            container.RegisterType<Services.ExternalServices.IExternalServiceFactory, Services.ExternalServices.ExternalServiceFactory>();
             container.RegisterType<Services.IFOSFoodServiceAPIsService, Services.FOSFoodServiceAPIsService>();
             container.RegisterType<Services.DeliveryServices.IDeliveryService, Services.DeliveryServices.DeliveryService>();
             container.RegisterType<Services.ProvinceServices.IProvinceService, Services.ProvinceServices.ProvinceService>();

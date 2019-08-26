@@ -5,11 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using FOS.Model.Dto;
 
-namespace FOS.Services.FoodServices.GrabFoodService
+namespace FOS.Services.ExternalServices.GrabFoodService
 {
-    public class GrabFoodService : IFoodService
+    public class GrabFoodService : IExternalService
     {
-        public List<Food> GetFoods(DeliveryInfos delivery)
+        public List<FoodCatalogue> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
         {
             throw new NotImplementedException();
         }

@@ -3,12 +3,12 @@ namespace FOS.Repositories.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init1 : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.FoodServiceAPIs",
+                "dbo.ExternalServiceAPIs",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
@@ -18,11 +18,21 @@ namespace FOS.Repositories.Migrations
                     })
                 .PrimaryKey(t => t.ID);
             
+            CreateTable(
+                "dbo.Orders",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        OrderDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
         {
-            DropTable("dbo.FoodServiceAPIs");
+            DropTable("dbo.Orders");
+            DropTable("dbo.ExternalServiceAPIs");
         }
     }
 }

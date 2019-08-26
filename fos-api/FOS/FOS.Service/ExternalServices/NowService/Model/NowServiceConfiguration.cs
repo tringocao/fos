@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Services.FoodServices.NowService
+namespace FOS.Services.ExternalServices.NowService
 {
     public class NowServiceConfiguration
     {
@@ -12,7 +12,7 @@ namespace FOS.Services.FoodServices.NowService
         public APIDetail GetMetadata { get; set; }
         public APIDetail GetDeliveryDishes { get; set; }
         public APIDetail SearchRestaurantsInProvince { get; set; }
-
+        public APIDetail GetDeliveryFromUrl { get; set; }
     }
     public class APIDetail
     {

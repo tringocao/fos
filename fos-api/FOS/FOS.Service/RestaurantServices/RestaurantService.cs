@@ -1,5 +1,5 @@
 ﻿using FOS.Model.Dto;
-using FOS.Services.FoodServices;
+using FOS.Services.ExternalServices;
 using FOS.Services.ProvinceServices;
 using System;
 using System.Collections.Generic;
@@ -19,10 +19,10 @@ namespace FOS.Services.RestaurantServices
             //_craw = craw;
             _provinceService = provinceService;
         }
-        public string GetFoodServiceById(int IdService)
+        public string GetExternalServiceById(int IdService)
         {
             this.IdService = IdService;
-            return "RestaurantService in " + _provinceService.GetFoodServiceById(IdService) + "is ready";
+            return "RestaurantService in " + _provinceService.GetExternalServiceById(IdService) + "is ready";
         }
         public List<Restaurant> GetRestaurantsByProvince(int city_id)
         {
@@ -42,6 +42,10 @@ namespace FOS.Services.RestaurantServices
         public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
         {
             return _provinceService.GetRestaurantsDeliveryInfor(restaurant);
+        }
+        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        {
+            return _provinceService.GetFoodCatalogues(delivery);
         }
     }
 }
