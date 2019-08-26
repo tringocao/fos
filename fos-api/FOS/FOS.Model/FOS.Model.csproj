@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\APIs.cs" />
+    <Compile Include="Domain\Event.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
