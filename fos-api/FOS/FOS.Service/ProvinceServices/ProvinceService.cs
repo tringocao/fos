@@ -12,10 +12,14 @@ namespace FOS.Services.ProvinceServices
     {
         IExternalServiceFactory _craw;
         int IdService;
-        List<DeliveryInfos> deliveryInfos;
         public ProvinceService(IExternalServiceFactory craw)
         {
             _craw = craw;
+        }
+        public string GetExternalServiceById(int IdService)
+        {
+            this.IdService = IdService;
+            return "ProvinceService in " + _craw.GetExternalServiceById(IdService) + "is ready";
         }
 
         public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
@@ -23,11 +27,6 @@ namespace FOS.Services.ProvinceServices
             return _craw.GetFoodCatalogues(delivery);
         }
 
-        public string GetExternalServiceById(int IdService)
-        {
-            this.IdService = IdService;
-            return "ProvinceService in " + _craw.GetExternalServiceById(IdService) + "is ready";
-        }
 
         public List<Province> GetMetadata()
         {
@@ -45,9 +44,9 @@ namespace FOS.Services.ProvinceServices
             return _craw.GetRestaurantDeliveryInfor(restaurant);
         }
 
-        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
+        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> categories)
         {
-            return _craw.GetRestaurants(province, keyword, category);
+            return _craw.GetRestaurants(province, keyword, categories);
         }
 
         public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
