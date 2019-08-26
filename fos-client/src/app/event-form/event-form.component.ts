@@ -8,10 +8,10 @@ import { EventUser } from '../eventuser';
 })
 export class EventFormComponent implements OnInit {
   eventusers: EventUser[] = [
-    { name: 'Salah', email: 'Liverpool' },
-    { name: 'Kane', email: 'Tottenham Hospur' },
-    { name: 'Hazard', email: 'Real Madrid' },
-    { name: 'Griezmann', email: 'Barcelona' },
+    // { name: 'Salah', email: 'Liverpool' },
+    // { name: 'Kane', email: 'Tottenham Hospur' },
+    // { name: 'Hazard', email: 'Real Madrid' },
+    // { name: 'Griezmann', email: 'Barcelona' },
   ];
   items: any[] = [
     { id: 0, name: 'one' },
@@ -40,16 +40,12 @@ export class EventFormComponent implements OnInit {
 
   ngOnInit() {
     this.dropdownList = [
-      { "id": 1, "itemName": "India" },
-      { "id": 2, "itemName": "Singapore" },
-      { "id": 3, "itemName": "Australia" },
-      { "id": 4, "itemName": "Canada" },
-      { "id": 5, "itemName": "South Korea" },
-      { "id": 6, "itemName": "Germany" },
-      { "id": 7, "itemName": "France" },
-      { "id": 8, "itemName": "Russia" },
-      { "id": 9, "itemName": "Italy" },
-      { "id": 10, "itemName": "Sweden" }
+      { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" },
+      { "id": "jan.oblak@gmail.com", "itemName": "Jan Oblak" },
+      { "id": "koke@gmail.com", "itemName": "Koke" },
+      { "id": "jimenez@gmail.com", "itemName": "Jimenez" },
+      { "id": "lemar@gmail.com", "itemName": "Thomas Lemar" },
+      { "id": "diego.costa@gmail.com", "itemName": "Diego Costa" },
     ];
     this.selectedItems = [
       // { "id": 2, "itemName": "Singapore" },
@@ -67,9 +63,18 @@ export class EventFormComponent implements OnInit {
     };
 
   }
-  add(): void {
-    // console.log(this.nu + "-----");
-    this.eventusers.push({ 'name': "new name", 'email': "new email" });
+  AddUserToTable(): void {
+    for (var k in this.selectedItems) {
+      var flag = false;
+      for (var i in this.eventusers) {
+        if (this.selectedItems[k].itemName == this.eventusers[i].name) {
+          flag = true
+        }
+      }
+      if(flag == false){
+        this.eventusers.push({ 'name': this.selectedItems[k].itemName, 'email': this.selectedItems[k].id });
+      }
+    }
   }
   showSelectValue(id: string) {
     //getted from event
@@ -82,7 +87,7 @@ export class EventFormComponent implements OnInit {
 
     var _dateTimeToClose = this.dateTimeToClose;
     var _dateTimeToReminder = this.dateTimeToReminder;
-    
+
     console.log(this.dateTimeToClose);
   }
   onItemSelect(item: any) {
