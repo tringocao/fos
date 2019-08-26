@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventUser } from '../eventuser';
 import { ThrowStmt } from '@angular/compiler';
 
+
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
@@ -23,12 +24,12 @@ export class EventFormComponent implements OnInit {
     { id: 5, name: 'six}' }
   ];
   selected: number = 0;
-  EventTitle: string ="Event";
+  EventTitle: string ="Event Title";
   Host: string ="Host";
   Restaurant: string = "Restaurant";
   maximunBudget: number = 100000;
-  dateTimeToClose: Date = new Date();
-  dateTimeToReminder: Date = new Date();
+  // dateTimeToClose: Date = new Date();
+  // dateTimeToReminder: Date = new Date();
   settings = {
     bigBanner: true,
     timePicker: true,
@@ -38,11 +39,24 @@ export class EventFormComponent implements OnInit {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
-  constructor() {
 
+  dateTimeToClose: string;
+  dateToReminder: string;
+  constructor() {
+    // this.date = new Date().toLocaleString();
+    this.dateTimeToClose = this.toDateString(new Date());
+    this.dateToReminder = this.toDateString(new Date());
   }
+  private toDateString(date: Date): string {
+    return (date.getFullYear().toString() + '-' 
+       + ("0" + (date.getMonth() + 1)).slice(-2) + '-' 
+       + ("0" + (date.getDate())).slice(-2))
+       + 'T' + date.toTimeString().slice(0,5);
+}
 
   ngOnInit() {
+    var yearSelect = document.querySelector('#party');
+
     this.dropdownList = [
       { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" },
       { "id": "jan.oblak@gmail.com", "itemName": "Jan Oblak" },
@@ -68,6 +82,7 @@ export class EventFormComponent implements OnInit {
 
   }
   AddUserToTable(): void {
+    console.log("Nhan add card");
     for (var s in this.selectedItems) {
       var flag = false;
       for (var e in this.eventusers) {
@@ -112,14 +127,14 @@ export class EventFormComponent implements OnInit {
   }
   SaveToSharePointEventList(): void {
 
-    var dateSaveToSharePoint = this.dateTimeToClose.getFullYear()+'-'+(this.dateTimeToClose.getMonth()+1)+'-'+this.dateTimeToClose.getDate();
-    var timeSaveToSharePoint = this.dateTimeToClose.getHours() + ":" + this.dateTimeToClose.getMinutes();
-    var dateTimeSaveToSharePoint = dateSaveToSharePoint+' '+timeSaveToSharePoint;
+    // var dateSaveToSharePoint = this.dateTimeToClose.getFullYear()+'-'+(this.dateTimeToClose.getMonth()+1)+'-'+this.dateTimeToClose.getDate();
+    // var timeSaveToSharePoint = this.dateTimeToClose.getHours() + ":" + this.dateTimeToClose.getMinutes();
+    // var dateTimeSaveToSharePoint = dateSaveToSharePoint+' '+timeSaveToSharePoint;
 
 
-    var _dateTimeToReminder = this.dateTimeToReminder;
+    // var _dateTimeToReminder = this.dateTimeToReminder;
 
-    console.log(dateTimeSaveToSharePoint +" maxium Budget: " + this.maximunBudget);
+    console.log(this.dateToReminder);
   }
   onItemSelect(item: any) {
     console.log(item);
