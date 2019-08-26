@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Filters;
 using Unity;
 
 namespace FOS.API
@@ -27,7 +28,7 @@ namespace FOS.API
 
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // resolve customauth
-            config.Filters.Add(new CustomAuthentication(UnityConfig.Container.Resolve<IOAuthService>()));
+            config.Filters.Add((IAuthenticationFilter)UnityConfig.Container.Resolve<ICustomAuthentication>());
         }
     }
 }

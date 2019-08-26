@@ -17,7 +17,7 @@ namespace FOS.API
         Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken);
     }
 
-    public class CustomAuthentication : ICustomAuthentication, System.Web.Http.Filters.IAuthenticationFilter
+    public class CustomAuthentication : ICustomAuthentication, IAuthenticationFilter
     {
         public bool AllowMultiple => throw new NotImplementedException();
 
