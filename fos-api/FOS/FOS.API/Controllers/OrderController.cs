@@ -19,35 +19,36 @@ namespace FOS.API.Controllers
             _service = service;
         }
         // GET: api/Order
-        public IEnumerable<Model.Dto.Order> Get()
-        {
-            return new List<Model.Dto.Order>();
-        }
+        //public IEnumerable<Model.Dto.Order> Get()
+        //{
+        //    return new List<Model.Dto.Order>();
+        //}
 
-        // GET: api/Order/5
-        public Model.Dto.Order Get(int id)
-        {
-            return new Model.Dto.Order();
-        }
+        //// GET: api/Order/5
+        //public Model.Dto.Order Get(int id)
+        //{
+        //    return new Model.Dto.Order();
+        //}
 
-        // POST: api/Order
-        public void Post([FromBody]string value)
-        {
-        }
+        //// POST: api/Order
+        //public void Post([FromBody]string value)
+        //{
+        //}
 
-        // PUT: api/Order/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// PUT: api/Order/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
 
-        // DELETE: api/Order/5
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/Order/5
+        //public void Delete(int id)
+        //{
+        //}
 
-        public Repositories.DataModel.Order GetOrder(int id)
-        {
-            return _service.GetOrder(id);
-        }
+        //public Repositories.DataModel.Order GetOrder(int id)
+        //{
+        //    //return null;
+        //    return _service.GetOrder(id);
+        //}
     }
 }
