@@ -64,6 +64,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
 
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
+            container.RegisterType<IGraphHttpClient, GraphHttpClient>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
 
             container.AddExtension(new Diagnostic());

@@ -13,23 +13,21 @@ namespace FOS.API.Controllers
     public class SPUserController : ApiController
     {
         IOAuthService _oAuthService;
+        IGraphHttpClient _graphHttpClient;
 
-        public SPUserController(IOAuthService oAuthService)
+        public SPUserController(IOAuthService oAuthService, IGraphHttpClient graphHttpClient)
         {
             _oAuthService = oAuthService;
+            _graphHttpClient = graphHttpClient;
         }
 
         // GET api/spuser/getusers
         public async Task<HttpResponseMessage> GetUsers()
         {
-            var accessToken = _oAuthService.GetTokenFromCookie()._accessToken;
-
             HttpClient client = new HttpClient();
 
             string path = "https://graph.microsoft.com/v1.0/users";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path);
-
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
 
             HttpResponseMessage responde = await client.SendAsync(request);
 
