@@ -14,6 +14,7 @@ namespace FOS.Model.Dto
         public string is_open { get; set; }
         public string is_foody_delivery { get; set; }
         public dynamic campaigns { get; set; }
+        public dynamic promotion_groups { get; set; }
         public dynamic photos { get; set; }
         public dynamic operating { get; set; }
 
