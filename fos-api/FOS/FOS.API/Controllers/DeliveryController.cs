@@ -1,4 +1,5 @@
-﻿using FOS.Services.DeliveryServices;
+﻿using FOS.Model.Dto;
+using FOS.Services.DeliveryServices;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -49,8 +50,20 @@ namespace FOS.API.Controllers
         }
 
         // PUT: api/Delivery/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("PutRestaurantIds")]
+        // PUT: api/Delivery/5
+        public string PutRestaurantIds(int IdService, int city_id, [FromBody]dynamic data)
         {
+            _craw.GetFoodServiceById(IdService);
+            List<Restaurant> newList = new List<Restaurant>();
+            foreach (var id in data.restaurant_ids)//get the fisrt catalogue
+            {
+                Restaurant item = new Restaurant();
+                item.restaurant_id = id.ToString();
+                newList.Add(item);
+            }
+            return JsonConvert.SerializeObject(_craw.GetRestaurantsDeliveryInfor(city_id, newList));
 
         }
 

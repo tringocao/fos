@@ -21,11 +21,11 @@ namespace FOS.API.Controllers
         }
         // GET: api/Restaurant
         [HttpGet]
-        [Route("Get")]
-        public string Get(int IdService, int province_id)
+        [Route("GetIds")]
+        public IEnumerable<int> GetIds(int IdService, int province_id)
         {
             _craw.GetFoodServiceById(IdService);
-            return JsonConvert.SerializeObject(_craw.GetRestaurantsByProvince(province_id));
+            return _craw.GetRestaurantsByProvince(province_id).Select(l => Int32.Parse(l.restaurant_id));
         }
 
         // GET: api/Restaurant/5
