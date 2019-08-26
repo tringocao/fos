@@ -25,6 +25,8 @@
 /fos-api/FOS/FOS.API/Properties/PublishProfiles
 /fos-api/FOS/FOS.API/obj/Release
 /fos-api/FOS/.vs/FOS
+/.vs
+/fos-api/FOS/FOS.Repositories/Migrations
 /fos-client/.vs
 /.vs/fos/v16
 /fos-api/FOS5.zip
