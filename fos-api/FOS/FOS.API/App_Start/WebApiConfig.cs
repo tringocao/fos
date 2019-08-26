@@ -1,10 +1,13 @@
-﻿using System;
+﻿using FOS.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Filters;
+using Unity;
 
 namespace FOS.API
 {
@@ -14,7 +17,7 @@ namespace FOS.API
         {
             // Web API configuration and services
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("multipart/form-data"));
-            // Web API routes
+            // Web API routesD:\new fos\fos-api\FOS\FOS.API\App_Start\WebApiConfig.cs
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -24,7 +27,8 @@ namespace FOS.API
             );
 
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
-            //config.Filters.Add(new AuthorizeAttribute());
+            // resolve customauth
+            config.Filters.Add((IAuthenticationFilter)UnityConfig.Container.Resolve<ICustomAuthentication>());
         }
     }
 }
