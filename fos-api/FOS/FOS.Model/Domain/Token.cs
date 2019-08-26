@@ -7,13 +7,15 @@ namespace FOS.API.Models
 {
     public class Token
     {
-        public string _key { get; set; }
-        public string _expireTime { get; set; }
+        public string _accessToken { get; set; }
+        public string _refreshToken { get; set; }
+        public string _acessTokenExpireTime { get; set; }
 
-        public Token(string key, string expireTime)
+        public Token(string accessToken, string refreshToken, string expireTime)
         {
-            _key = key;
-            _expireTime = expireTime;
+            _accessToken = accessToken;
+            _refreshToken = refreshToken;
+            _acessTokenExpireTime = expireTime;
         }
     }
 }

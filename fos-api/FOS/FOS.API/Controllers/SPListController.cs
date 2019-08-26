@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -21,37 +22,24 @@ namespace FOS.API.Controllers
             _oAuthService = oAuthService;
         }
         // GET api/splist
-        //[Authorize]
         public async Task<HttpResponseMessage> Get(string Id)
         {
-            //var authenticated = _oAuthService.CheckAuthentication().Result;
+            var accessToken = _oAuthService.GetTokenFromCookie()._accessToken;
 
-            //if(authenticated == true)
-            //{
-                var accessToken = _oAuthService.GetTokenKeyFromCookie("access_token");
+            var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
 
-                var SiteId = OAuth.SITE_ID;
+            HttpClient client = new HttpClient();
 
-                HttpClient client = new HttpClient();
+            string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id;
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path);
 
-                string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id;
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            HttpResponseMessage responde = await client.SendAsync(request);
 
-                HttpResponseMessage responde = await client.SendAsync(request);
+            var json = responde.Content.ReadAsStringAsync();
 
-                var json = responde.Content.ReadAsStringAsync();
-
-                return responde;
-            //}
-            //else
-            //{
-            //    var response = Request.CreateResponse(HttpStatusCode.Moved);
-            //    response.Headers.Location = new Uri(_oAuthService.GetAuthCodePath());
-
-            //    return response;
-            //}
+            return responde;
         }
     }
 }

@@ -49,6 +49,8 @@ namespace FOS.API
             container.RegisterType<Services.IOrderService, Services.OrderService>();
             container.RegisterType<Services.IOAuthService, Services.OAuthService>();
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
+
+            container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.AddExtension(new Diagnostic());
         }
     }

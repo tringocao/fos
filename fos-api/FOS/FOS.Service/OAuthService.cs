@@ -4,50 +4,54 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
+using System.Web.Configuration;
 using System.Web;
 using FOS.API.Models;
 using System.Runtime.Caching;
 using FOS.Common;
+using FOS.Model.Domain;
+using System.Web.Script.Serialization;
 
 namespace FOS.Services
 {
     public interface IOAuthService
     {
-        string GetAuthCodePath();
-        Task<string> GetToken(string code);
-        Task<string> RefreshToken();
-        Task<bool> CheckAuthentication();
+        string GetAuthCodePath(State state);
+        Task<string> GetTokenAsync(string code);
+        Task<string> RefreshTokenAsync();
+        Task<bool> CheckAuthenticationAsync();
         void SaveToCookie(string accessTokenKey, string refreshTokenKey, int expireDuration);
-        string GetTokenKeyFromCookie(string tokenType);
+        Token GetTokenFromCookie();
     }
 
     public class OAuthService : IOAuthService
     {
 
-        public string GetAuthCodePath()
+        public string GetAuthCodePath(State _state)
         {
-            var tenant = OAuth.TENANT;
-            var clientId = OAuth.CLIENT_ID;
-            var redirectUri = OAuth.HOME_URI;
-            var scope = OAuth.SCOPE;
+            var tenant = WebConfigurationManager.AppSettings[OAuth.TENANT];
+            var clientId = WebConfigurationManager.AppSettings[OAuth.CLIENT_ID];
+            var redirectUri = WebConfigurationManager.AppSettings[OAuth.REDIRECT_URI];
+            var scope = WebConfigurationManager.AppSettings[OAuth.SCOPE];
+            var state = new JavaScriptSerializer().Serialize(_state);
 
             var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/authorize?" +
                         "client_id=" + clientId +
                         "&response_type=code" +
                         "&redirect_uri=" + redirectUri +
-                        "&scope=" + scope;
+                        "&scope=" + scope +
+                        "&state=" + state;
             return path;
         }
 
-        public async Task<string> GetToken(string code)
+        public async Task<string> GetTokenAsync(string code)
         {
             HttpClient client = new HttpClient();
 
-            var tenant = OAuth.TENANT;
-            var clientId = OAuth.CLIENT_ID;
-            var redirectUri = OAuth.HOME_URI;
-            var secret = OAuth.CLIENT_SECRET;
+            var tenant = WebConfigurationManager.AppSettings[OAuth.TENANT];
+            var clientId = WebConfigurationManager.AppSettings[OAuth.CLIENT_ID];
+            var redirectUri = WebConfigurationManager.AppSettings[OAuth.REDIRECT_URI];
+            var secret = WebConfigurationManager.AppSettings[OAuth.CLIENT_SECRET];
 
             var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/token";
             var content = new FormUrlEncodedContent(new[]
@@ -60,7 +64,7 @@ namespace FOS.Services
             });
 
             HttpResponseMessage response = await client.PostAsync(path, content);
-            //var resultContent = await response.Content.ReadAsStringAsync();
+            //var resultContent2 = await response.Content.ReadAsStringAsync();
             var resultContent = await response.Content.ReadAsAsync<OAuthResponse>();
             //return resultContent;
             if (resultContent.access_token != null && resultContent.refresh_token != null)
@@ -70,16 +74,15 @@ namespace FOS.Services
             return resultContent.access_token;
         }
 
-        public async Task<string> RefreshToken()
+        public async Task<string> RefreshTokenAsync()
         {
-            var refreshToken = GetTokenKeyFromCookie("refresh_token");
+            var refreshToken = GetTokenFromCookie()._refreshToken;
 
             HttpClient client = new HttpClient();
 
-            var tenant = OAuth.TENANT;
-            var clientId = OAuth.CLIENT_ID;
-            var redirectUri = OAuth.HOME_URI;
-            var secret = OAuth.CLIENT_SECRET;
+            var tenant = WebConfigurationManager.AppSettings[OAuth.TENANT];
+            var clientId = WebConfigurationManager.AppSettings[OAuth.CLIENT_ID];
+            var secret = WebConfigurationManager.AppSettings[OAuth.CLIENT_SECRET];
             var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/token";
             var content = new FormUrlEncodedContent(new[]
             {
@@ -94,25 +97,25 @@ namespace FOS.Services
             //return resultContent;
             if (resultContent.access_token != null && resultContent.refresh_token != null)
             {
-                SaveToCookie(resultContent.access_token, resultContent.access_token, resultContent.expires_in);
+                SaveToCookie(resultContent.access_token, resultContent.refresh_token, resultContent.expires_in);
             }
             return resultContent.access_token;
         }
 
-        public async Task<bool> CheckAuthentication()
+        public async Task<bool> CheckAuthenticationAsync()
         {
-            HttpCookie tokenCookie = HttpContext.Current.Request.Cookies["access_token"];
+            HttpCookie tokenCookie = HttpContext.Current.Request.Cookies["token_key"];
 
             if (tokenCookie != null)
             {
-                Token accessToken = (Token)MemoryCache.Default.Get(tokenCookie.Value);
-                if (accessToken != null)
+                Token token = (Token)MemoryCache.Default.Get(tokenCookie.Value);
+                if (token != null)
                 {
-                    if (accessToken._expireTime != null)
+                    if (token._acessTokenExpireTime != null)
                     {
-                        if (DateTime.Parse(accessToken._expireTime) < DateTime.Now)
+                        if (DateTime.Parse(token._acessTokenExpireTime) < DateTime.Now)
                         {
-                            var accessTokenKey = await RefreshToken();
+                            var accessTokenKey = await RefreshTokenAsync();
                             if (accessTokenKey != null)
                             {
                                 // valid token
@@ -131,45 +134,52 @@ namespace FOS.Services
             string accessTokenId = Guid.NewGuid().ToString();
             string expireTime = DateTime.Now.AddSeconds(expireDuration).ToString();
 
-            Token accessToken = new Token(accessTokenKey, expireTime);
+            var _token = GetTokenFromCookie();
 
-            MemoryCache.Default.Set(accessTokenId, accessToken, DateTime.Now.AddYears(1));
-
-            HttpCookie accessTokenCookie = new HttpCookie("access_token");
-
-            accessTokenCookie.Value = accessTokenId;
-            accessTokenCookie.Expires = DateTime.Now.AddDays(1);
-
-            HttpContext.Current.Response.Cookies.Add(accessTokenCookie);
-
-            var _refreshToken = GetTokenKeyFromCookie("refresh_token");
-
-            if (_refreshToken == null)
+            if (_token != null)
             {
-                HttpCookie refreshTokenCookie = new HttpCookie("refresh_token");
-
-                string refreshTokenId = Guid.NewGuid().ToString();
-                string refreshTokenExpireTime = DateTime.Now.AddYears(1).ToString();
-
-                Token refreshToken = new Token(refreshTokenKey, refreshTokenExpireTime);
-                MemoryCache.Default.Set(refreshTokenId, refreshToken, DateTime.Now.AddYears(1));
-
-                refreshTokenCookie.Value = refreshTokenId;
-                refreshTokenCookie.Expires = DateTime.Now.AddYears(1);
-
-                HttpContext.Current.Response.Cookies.Add(refreshTokenCookie);
+                _token._accessToken = accessTokenKey;
             }
+            else
+            {
+                _token = new Token(accessTokenKey, refreshTokenKey, expireTime);
+            }
+
+            MemoryCache.Default.Set(accessTokenId, _token, DateTime.Now.AddYears(1));
+
+            HttpCookie tokenCookie = new HttpCookie("token_key");
+
+            tokenCookie.Value = accessTokenId;
+            tokenCookie.Expires = DateTime.Now.AddDays(1);
+
+            HttpContext.Current.Response.Cookies.Add(tokenCookie);
+
+            //if (_refreshToken == null)
+            //{
+            //    HttpCookie refreshTokenCookie = new HttpCookie("refresh_token");
+
+            //    string refreshTokenId = Guid.NewGuid().ToString();
+            //    string refreshTokenExpireTime = DateTime.Now.AddYears(1).ToString();
+
+            //    Token refreshToken = new Token(refreshTokenKey, refreshTokenExpireTime);
+            //    MemoryCache.Default.Set(refreshTokenId, refreshToken, DateTime.Now.AddYears(1));
+
+            //    refreshTokenCookie.Value = refreshTokenId;
+            //    refreshTokenCookie.Expires = DateTime.Now.AddYears(1);
+
+            //    HttpContext.Current.Response.Cookies.Add(refreshTokenCookie);
+            //}
         }
 
-        public string GetTokenKeyFromCookie(string tokenType)
+        public Token GetTokenFromCookie()
         {
-            HttpCookie tokenCookie = HttpContext.Current.Request.Cookies[tokenType];
+            HttpCookie tokenCookie = HttpContext.Current.Request.Cookies["token_key"];
             if (tokenCookie != null)
             {
                 Token token = (Token)MemoryCache.Default.Get(tokenCookie.Value);
                 if (token != null)
                 {
-                    return token._key;
+                    return token;
                 }
             }
             return null;
