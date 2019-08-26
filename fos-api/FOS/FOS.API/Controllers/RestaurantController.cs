@@ -1,4 +1,5 @@
-﻿using FOS.Services.ExternalServices;
+﻿using FOS.Model.Dto;
+using FOS.Services.ExternalServices;
 using FOS.Services.RestaurantServices;
 using Newtonsoft.Json;
 using System;
@@ -25,7 +26,7 @@ namespace FOS.API.Controllers
         public string Get(int IdService, int province_id)
         {
             _craw.GetExternalServiceById(IdService);
-            return JsonConvert.SerializeObject(_craw.GetRestaurantsByProvince(province_id));
+            return JsonConvert.SerializeObject(_craw.GetRestaurantsByProvince(province_id).Select(l => Int32.Parse(l.restaurant_id)));
         }
 
         // GET: api/Restaurant/5
@@ -37,15 +38,25 @@ namespace FOS.API.Controllers
 
             return JsonConvert.SerializeObject(_craw.GetRestaurantsById(province_id, restaurant_id));
         }
+        [HttpGet]
+        [Route("GetByKeyword")]
+        public string GetByKeyword(int IdService, int city_id, string keyword)
+        {
+            _craw.GetExternalServiceById(IdService);
+            return JsonConvert.SerializeObject(_craw.GetRestaurantsByKeyword(city_id, keyword));
+        }
 
         // POST: api/Restaurant
         public void Post([FromBody]string value)
         {
         }
-
-        // PUT: api/Restaurant/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("PutCategorySearch")]
+        public string PutCategorySearch(int IdService, int city_id, [FromBody]dynamic obj)
         {
+            _craw.GetExternalServiceById(IdService);
+            List<RestaurantCategory> categories = obj.ToObject<List<RestaurantCategory>>();
+            return JsonConvert.SerializeObject(_craw.GetRestaurantsByCategories(city_id, categories).Select(l => Int32.Parse(l.restaurant_id)));
         }
 
         // DELETE: api/Restaurant/5

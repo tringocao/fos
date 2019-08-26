@@ -23,7 +23,7 @@ namespace FOS.Services.ExternalServices.NowService
             apisJson = JsonConvert.DeserializeObject<NowServiceConfiguration>(_apis.JSONData);
         }
 
-        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
         {
             //Get function
             APIDetail api = apisJson.GetDeliveryDishes;
@@ -63,7 +63,7 @@ namespace FOS.Services.ExternalServices.NowService
                 return null;
             }
         }
-        public List<Restaurant> GetRestaurants(Province province)
+        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
         {
             //Get function
             APIDetail api = apisJson.SearchRestaurantsInProvince;
@@ -71,7 +71,19 @@ namespace FOS.Services.ExternalServices.NowService
             api.AvailableBodys.Where(a => a.FieldName == "city_id").FirstOrDefault().ValueDefault
                 = province.id.ToString();// 217 is id of HCM city
             api.AvailableBodys.Where(a => a.FieldName == "keyword").FirstOrDefault().ValueDefault
-                = "\"\"";
+                = "\"" + keyword + "\"";
+            if (category !=null )
+            {
+                StringBuilder icate = new StringBuilder();
+                foreach (var c in category)
+                {
+                    icate.Append(",{\"code\":" + c.code + ",\"id\":" + c.id + "}");
+                }
+                if (category.Count() != 0) icate.Remove(0, 1);// remove the first comma
+                api.AvailableBodys.Where(a => a.FieldName == "combine_categories").FirstOrDefault().ValueDefault
+                    = "[" + icate + "]";
+            }
+
             //Call API
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = method.CallApi();
@@ -137,7 +149,7 @@ namespace FOS.Services.ExternalServices.NowService
             {
                 rid.Append("," + r.restaurant_id);
             }
-            rid.Remove(0, 1);// remove the first comma
+            if (restaurant.Count() != 0) rid.Remove(0, 1);// remove the first comma
             api.AvailableBodys.Where(a => a.FieldName == "restaurant_ids").FirstOrDefault().ValueDefault
                 = "[" + rid + "]";// 217 is id of HCM city
             //Call API
@@ -154,7 +166,7 @@ namespace FOS.Services.ExternalServices.NowService
             }
         }
 
-        public List<FoodCatalogue> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
+        public List<FoodCategory> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
         {
             throw new NotImplementedException();
         }

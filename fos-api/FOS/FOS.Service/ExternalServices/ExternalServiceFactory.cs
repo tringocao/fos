@@ -32,10 +32,10 @@ namespace FOS.Services.ExternalServices
         public List<Province> GetMetadata()
         {
             return service.GetMetadata();
-        }      
-        public List<Restaurant> GetRestaurants(Province province)
+        }
+        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
         {
-            return service.GetRestaurants(province);
+            return service.GetRestaurants(province, keyword, category);
         }
         public List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant)
         {
@@ -45,7 +45,7 @@ namespace FOS.Services.ExternalServices
         {
             return service.GetRestaurantsDeliveryInfor(restaurant);
         }
-        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
         {
             return service.GetFoodCatalogues(delivery);
         }

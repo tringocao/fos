@@ -46,7 +46,7 @@ namespace FOS.Services.DeliveryServices
             return GetRestaurantsDeliveryInfor(city_id, result.ToList());
         }
 
-        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
         {
             return _restaurantService.GetFoodCatalogues(delivery);
         }

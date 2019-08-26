@@ -51,8 +51,8 @@
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DiscountPrice.cs" />
     <Compile Include="Dto\Food.cs" />
-    <Compile Include="Dto\FoodCatalogue.cs" />
-    <Compile Include="Dto\FoodType.cs" />
+    <Compile Include="Dto\FoodCategory.cs" />
+    <Compile Include="Dto\RestaurantCategory.cs" />
     <Compile Include="Dto\Order.cs" />
     <Compile Include="Dto\Price.cs" />
     <Compile Include="Dto\Province.cs" />

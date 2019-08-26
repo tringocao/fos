@@ -7,10 +7,10 @@ namespace FOS.Services.ExternalServices
     {
         string GetExternalServiceById(int id);
         List<Province> GetMetadata();
-        List<Restaurant> GetRestaurants(Province province);
+        List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category);
 
         List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
-        List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery);
+        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
         List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant);
     }
 }

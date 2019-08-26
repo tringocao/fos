@@ -22,11 +22,11 @@ namespace FOS.Services.FoodServices
             this.IdService = IdService;
             return "DeliveryService in " + _deliveryService.GetExternalServiceById(IdService) + "is ready";
         }
-        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
         {
             return _deliveryService.GetFoodCatalogues(delivery);
         }
-        public List<FoodCatalogue> GetFoodCataloguesFromDeliveryId(int delivery_id)
+        public List<FoodCategory> GetFoodCataloguesFromDeliveryId(int delivery_id)
         {          
             return GetFoodCatalogues(
                 new DeliveryInfos() { delivery_id = delivery_id.ToString()});

@@ -10,7 +10,7 @@ namespace FOS.Services.DeliveryServices
         DeliveryInfos GetRestaurantFirstDeliveryInfor(int city_id, int restaurant_id);
         List<DeliveryInfos> GetRestaurantDeliveryInforByPaging(int city_id, int pagenum, int pageSize);
         List<DeliveryInfos> GetRestaurantsDeliveryInfor(int city_id, List<Restaurant> restaurant_ids);
-        List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery);
+        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
 
     }
 }

@@ -26,11 +26,11 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             }
             return newList;
         }
-        public static List<FoodCatalogue> ConvertString2ListFoodCatalogue(string result)
+        public static List<FoodCategory> ConvertString2ListFoodCatalogue(string result)
         {
             dynamic data = JObject.Parse(result);
-            List<FoodCatalogue> newList = new List<FoodCatalogue>();
-            JsonDtoMapper<FoodCatalogue> map = new JsonDtoMapper<FoodCatalogue>();
+            List<FoodCategory> newList = new List<FoodCategory>();
+            JsonDtoMapper<FoodCategory> map = new JsonDtoMapper<FoodCategory>();
 
             foreach (var dish in data.reply.menu_infos)
             {

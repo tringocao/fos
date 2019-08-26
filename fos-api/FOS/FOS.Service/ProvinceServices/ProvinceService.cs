@@ -18,7 +18,7 @@ namespace FOS.Services.ProvinceServices
             _craw = craw;
         }
 
-        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
         {
             return _craw.GetFoodCatalogues(delivery);
         }
@@ -31,7 +31,7 @@ namespace FOS.Services.ProvinceServices
 
         public List<Province> GetMetadata()
         {
-           return _craw.GetMetadata();
+            return _craw.GetMetadata();
         }
 
         public Province GetMetadataById(int city_id)
@@ -45,9 +45,9 @@ namespace FOS.Services.ProvinceServices
             return _craw.GetRestaurantDeliveryInfor(restaurant);
         }
 
-        public List<Restaurant> GetRestaurants(Province province)
+        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
         {
-            return _craw.GetRestaurants(province);
+            return _craw.GetRestaurants(province, keyword, category);
         }
 
         public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)

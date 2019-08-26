@@ -10,7 +10,8 @@ namespace FOS.Services.RestaurantServices
         Restaurant GetRestaurantsById(int city_id, int restaurant_id);
         List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
         List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant);
-        List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery);
-
+        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
+        List<Restaurant> GetRestaurantsByCategories(int city_id, List<RestaurantCategory> categories);
+        List<Restaurant> GetRestaurantsByKeyword(int city_id, string keyword);
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public class FoodType
+    public class FoodCategory
     {
-        public string dish_type_name { get; set; }
         public string dish_type_id { get; set; }
+        public string dish_type_name { get; set; }
         public List<Food> dishes { get; set; }
-
     }
+
 }

@@ -10,12 +10,12 @@ namespace FOS.Services.ExternalServices
     public interface IExternalService
     {
         string GetNameService();
-        List<Restaurant> GetRestaurants(Province province);
-        List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery);
+        List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category);
+        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
         List<Province> GetMetadata();
         List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
         List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant);
-        List<FoodCatalogue> GetFoodFromDelivery(List<DeliveryInfos> deliveries);
+        List<FoodCategory> GetFoodFromDelivery(List<DeliveryInfos> deliveries);
 
     }
 }

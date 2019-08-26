@@ -9,12 +9,12 @@ namespace FOS.Services.ExternalServices.GrabFoodService
 {
     public class GrabFoodService : IExternalService
     {
-        public List<FoodCatalogue> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
+        public List<FoodCategory> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
         {
             throw new NotImplementedException();
         }
 
-        public List<FoodCatalogue> GetFoodCatalogues(DeliveryInfos delivery)
+        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
         {
             throw new NotImplementedException();
         }
@@ -40,6 +40,11 @@ namespace FOS.Services.ExternalServices.GrabFoodService
         }
 
         public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
         {
             throw new NotImplementedException();
         }
