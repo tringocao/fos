@@ -9,8 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListRestaurantComponent } from './components/list-restaurant/list-restaurant.component';
 import { ServiceTabComponent } from './components/service-tab/service-tab.component';
 import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MatTableModule,
@@ -18,26 +16,58 @@ import {
   MatPaginatorModule,
   MatTabsModule
 } from '@angular/material';
+import { EventFormComponent } from './event-form/event-form.component';
+import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
+import { FormsModule } from '@angular/forms';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {
+  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule,
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
+} from '@angular/material';
+
+import {MatSelectModule} from '@angular/material/select';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { SelectAutocompleteModule } from 'mat-select-autocomplete';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TestComponent,
-    ListRestaurantComponent,
-    RestaurantsPageComponent,
-    ServiceTabComponent
-  ],
+    declarations: [
+        AppComponent,
+        TestComponent,
+        ListRestaurantComponent,
+        RestaurantsPageComponent,
+        ServiceTabComponent,
+        EventFormComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+    DlDateTimeDateModule,
+    DlDateTimePickerModule,
+    FormsModule,
+    AngularDateTimePickerModule,
+    AngularMultiSelectModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
     MatButtonModule,
-    MatCheckboxModule,
+    MatCardModule,
+    MatInputModule,
+    MatDialogModule,
     MatTableModule,
+    MatMenuModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatGridListModule,
+    SelectAutocompleteModule,
     MatSortModule,
-    MatPaginatorModule,
-    MatTabsModule
+  MatPaginatorModule,
+  MatTabsModule,
+  HttpClientModule,
+  MatCheckboxModule
   ],
   providers: [OrderService],
   bootstrap: [AppComponent]
