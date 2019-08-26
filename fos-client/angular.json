@@ -25,7 +25,7 @@
             "aot": false,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.less"],
-            "scripts": ["src/app/vendors/bootstrap/js/bootstrap.min.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {

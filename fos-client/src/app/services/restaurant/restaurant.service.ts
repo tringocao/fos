@@ -1,44 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, XhrFactory } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestaurantService {
+  ids: any;
+
   constructor(private http: HttpClient) {}
 
-  getRestaurant() {
-    const param = [
-      '595',
-      '42888',
-      '90677',
-      '152809',
-      '110335',
-      '900',
-      '47168',
-      '4336',
-      '90018',
-      '96530'
-    ];
-
-    return this.http.post<any>(
-      'https://gappapi.deliverynow.vn/api/delivery/get_infos',
+  getRestaurantIds() {
+    return this.http.get<any>(environment.apiUrl + 'api/Restaurant/GetIds', {
+      params: {
+        IdService: '1',
+        province_id: '217'
+      }
+    });
+  }
+  getRestaurants(ids: any) {
+    return this.http.put<any>(
+      environment.apiUrl + 'api/Delivery/PutRestaurantIds',
       {
-        restaurant_ids: [595]
+        restaurant_ids: ids
       },
       {
-        headers: {
-          'x-foody-api-version': '1',
-          'x-foody-app-type': '1004',
-          'x-foody-access-token': '',
-          'x-foody-client-id': '',
-          'x-foody-client-language': 'vi',
-          'x-foody-client-type': '1',
-          'x-foody-client-version': '3.0.0',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': '*',
-          'Access-Control-Allow-Headers':
-            'Content-Type, Authorization, Content-Length, X-Requested-With, Accept'
+        params: {
+          IdService: '1',
+          city_id: '217'
         }
       }
     );

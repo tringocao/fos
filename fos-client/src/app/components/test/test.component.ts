@@ -25,8 +25,8 @@ export class TestComponent implements OnInit {
   }
 
   getRestaurant() {
-    const data = this.restaurantService.getRestaurant().subscribe(response => {
-      this.restaurants = response;
-    });
+    // const data = this.restaurantService.getRestaurants().subscribe(response => {
+    //   this.restaurants = response;
+    // });
   }
 }
