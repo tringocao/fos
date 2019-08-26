@@ -11,7 +11,7 @@ namespace FOS.Repositories
     public interface IOrderRepository
     {
         bool AddOrder(Model.Order order);
-        Repositories.DataModel.Order GetOrder(int id);
+        DataModel.Order GetOrder(int id);
     }
 
     public class OrderRepository : IOrderRepository
@@ -27,7 +27,7 @@ namespace FOS.Repositories
             throw new NotImplementedException();
         }
 
-        public Repositories.DataModel.Order GetOrder(int id)
+        public DataModel.Order GetOrder(int id)
         {
             return _context.Orders.Find(id);
         }
