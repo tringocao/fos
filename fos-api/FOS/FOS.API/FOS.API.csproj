@@ -170,10 +170,12 @@
     <Compile Include="App_Start\UnityPerRequestHttpModule.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AuthenticationFailureResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\SPListController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="CustomAuthentication.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

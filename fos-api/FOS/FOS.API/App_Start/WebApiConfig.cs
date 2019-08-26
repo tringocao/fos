@@ -24,7 +24,7 @@ namespace FOS.API
             );
 
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
-            //config.Filters.Add(new AuthorizeAttribute());
+            config.Filters.Add(new CustomAuthentication());
         }
     }
 }

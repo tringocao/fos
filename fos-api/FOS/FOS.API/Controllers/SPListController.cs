@@ -24,10 +24,10 @@ namespace FOS.API.Controllers
         //[Authorize]
         public async Task<HttpResponseMessage> Get(string Id)
         {
-            var authenticated = _oAuthService.CheckAuthentication().Result;
+            //var authenticated = _oAuthService.CheckAuthentication().Result;
 
-            if(authenticated == true)
-            {
+            //if(authenticated == true)
+            //{
                 var accessToken = _oAuthService.GetTokenKeyFromCookie("access_token");
 
                 var SiteId = OAuth.SITE_ID;
@@ -44,14 +44,14 @@ namespace FOS.API.Controllers
                 var json = responde.Content.ReadAsStringAsync();
 
                 return responde;
-            }
-            else
-            {
-                var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri(_oAuthService.GetAuthCodePath());
+            //}
+            //else
+            //{
+            //    var response = Request.CreateResponse(HttpStatusCode.Moved);
+            //    response.Headers.Location = new Uri(_oAuthService.GetAuthCodePath());
 
-                return response;
-            }
+            //    return response;
+            //}
         }
     }
 }
