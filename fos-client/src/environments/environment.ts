@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:4200',
-  apiUrl: 'https://localhost:49926'
+  apiUrl: 'https://foodordering.preciofishbone.se'
 };
 
 /*

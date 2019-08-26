@@ -3,6 +3,19 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TestComponent } from './components/test/test.component';
+import { OrderService } from './services/order/order.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ListRestaurantComponent } from './components/list-restaurant/list-restaurant.component';
+import { ServiceTabComponent } from './components/service-tab/service-tab.component';
+import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule,
+  MatTabsModule
+} from '@angular/material';
 import { EventFormComponent } from './event-form/event-form.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +24,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule,
+  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule,
   MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
 } from '@angular/material';
 
@@ -21,10 +34,14 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    EventFormComponent
-  ],
+    declarations: [
+        AppComponent,
+        TestComponent,
+        ListRestaurantComponent,
+        RestaurantsPageComponent,
+        ServiceTabComponent,
+        EventFormComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -45,9 +62,14 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatGridListModule,
-    SelectAutocompleteModule
+    SelectAutocompleteModule,
+    MatSortModule,
+  MatPaginatorModule,
+  MatTabsModule,
+  HttpClientModule,
+  MatCheckboxModule
   ],
-  providers: [],
+  providers: [OrderService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
