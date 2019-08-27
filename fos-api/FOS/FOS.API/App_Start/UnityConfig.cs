@@ -60,7 +60,10 @@ namespace FOS.API
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.GetMethod> ("GetMethod");
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.PostMethod>("PostMethod");
             container.RegisterType<Services.IOrderService, Services.OrderService>();
+            container.RegisterType<Services.IOAuthService, Services.OAuthService>();
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
+
+            container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
 
             container.AddExtension(new Diagnostic());
