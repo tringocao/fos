@@ -15,7 +15,8 @@ export class AuthService {
 //   }
 
   public getToken(): string {
-    return this.cookieService.get('token_key');
+    var token = this.cookieService.get('token_key');
+    return token || "";
   }
 
   public isAuthenticated(): boolean {
