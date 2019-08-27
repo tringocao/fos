@@ -24,6 +24,7 @@ namespace FOS.Repositories.Repositories
                 //    string>(c.FOSBodyFieldLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
                 .ReverseMap();
 
+                config.CreateMap<FavoriteRestaurant, Model.Domain.FavoriteRestaurant>().ReverseMap();
 
             });
         }

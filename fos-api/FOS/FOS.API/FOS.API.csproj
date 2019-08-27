@@ -175,6 +175,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="AuthenticationFailureResult.cs" />
+    <Compile Include="Controllers\FavoriteRestaurantController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OauthController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
