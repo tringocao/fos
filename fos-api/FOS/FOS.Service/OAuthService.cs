@@ -104,7 +104,7 @@ namespace FOS.Services
 
         public async Task<bool> CheckAuthenticationAsync()
         {
-            var tokenCookie = HttpContext.Current.Request.Headers.GetValues("Token_Key").FirstOrDefault();
+            var tokenCookie = HttpContext.Current.Request.Headers.GetValues("token_key").FirstOrDefault();
 
             if (tokenCookie != null)
             {
@@ -173,10 +173,21 @@ namespace FOS.Services
 
         public Token GetTokenFromCookie()
         {
-            HttpCookie tokenCookie = HttpContext.Current.Request.Cookies["token_key"];
-            if (tokenCookie != null)
+            var abc = HttpContext.Current.Request;
+            HttpCookie tokenCookieFromRequest = HttpContext.Current.Request.Cookies["token_key"];
+            var tokenCookieFromHeader = HttpContext.Current.Request.Headers.GetValues("token_key");
+
+            if (tokenCookieFromRequest != null)
             {
-                Token token = (Token)MemoryCache.Default.Get(tokenCookie.Value);
+                Token token = (Token)MemoryCache.Default.Get(tokenCookieFromRequest.Value);
+                if (token != null)
+                {
+                    return token;
+                }
+            }
+            else if (tokenCookieFromHeader != null)
+            {
+                Token token = (Token)MemoryCache.Default.Get(tokenCookieFromHeader.FirstOrDefault());
                 if (token != null)
                 {
                     return token;

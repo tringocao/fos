@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     request = request.clone({
       setHeaders: {
-        Token_Key: this.auth.getToken()
+        token_key: this.auth.getToken()
       }
     });
 

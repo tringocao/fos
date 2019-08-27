@@ -19,6 +19,11 @@ export class RestaurantsPageComponent implements OnInit {
     }, error => {
         console.log(error)
     });
+
+    this.http.get('https://localhost:44366/api/SPUser/GetUsers').subscribe(data => {
+      console.log("request data");
+      console.log(data);
+    });
   }
 
   ngOnInit() {
