@@ -1,4 +1,6 @@
-﻿using FOS.Model.Domain;
+﻿using FOS.API.Models;
+using FOS.Common;
+using FOS.Model.Domain;
 using FOS.Services;
 using Newtonsoft.Json;
 using System;
@@ -6,7 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
+using System.Runtime.Caching;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Configuration;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -31,6 +39,26 @@ namespace FOS.API.Controllers
 
             var response = Request.CreateResponse(HttpStatusCode.Moved);
             response.Headers.Location = new Uri(redirectUri);
+
+            return response;
+        }
+        // GET: api/oauth/checkauth
+        [HttpGet]
+        [OverrideAuthentication]
+        public async Task<HttpResponseMessage> CheckAuth()
+            {
+            var authenticated = _oAuthService.CheckAuthenticationAsync().Result;
+            var response = new HttpResponseMessage();
+
+            response.Content = new ObjectContent<AuthClientRespond>(
+                        new AuthClientRespond()
+                        {
+                            redirect = !authenticated,
+                            redirectUrl = _oAuthService.GetAuthCodePath(new State(
+                            WebConfigurationManager.AppSettings[OAuth.HOME_URI]
+                            ))
+                        }, new JsonMediaTypeFormatter(), "application/json"
+                    );
 
             return response;
         }

@@ -10,6 +10,13 @@ import { ListRestaurantComponent } from './components/list-restaurant/list-resta
 import { ServiceTabComponent } from './components/service-tab/service-tab.component';
 import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/TokenInterceptor';
+
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './auth/auth.service';
+
 import {
   MatTableModule,
   MatSortModule,
@@ -69,7 +76,15 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
   HttpClientModule,
   MatCheckboxModule
   ],
-  providers: [OrderService],
+  providers: [
+    OrderService, 
+    CookieService,
+    AuthService,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

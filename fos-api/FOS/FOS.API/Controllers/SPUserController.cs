@@ -13,23 +13,51 @@ namespace FOS.API.Controllers
     public class SPUserController : ApiController
     {
         IOAuthService _oAuthService;
+        IGraphHttpClient _graphHttpClient;
 
-        public SPUserController(IOAuthService oAuthService)
+        public SPUserController(IOAuthService oAuthService, IGraphHttpClient graphHttpClient)
         {
             _oAuthService = oAuthService;
+            _graphHttpClient = graphHttpClient;
         }
 
         // GET api/spuser/getusers
         public async Task<HttpResponseMessage> GetUsers()
         {
-            var accessToken = _oAuthService.GetTokenFromCookie()._accessToken;
-
             HttpClient client = new HttpClient();
 
             string path = "https://graph.microsoft.com/v1.0/users";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path);
+            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            HttpResponseMessage responde = await client.SendAsync(request);
+
+            var json = responde.Content.ReadAsStringAsync();
+
+            return responde;
+        }
+
+        // GET api/spuser/GetCurrentUser
+        public async Task<HttpResponseMessage> GetCurrentUser()
+        {
+            HttpClient client = new HttpClient();
+
+            string path = "https://graph.microsoft.com/v1.0/me";
+            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
+
+            HttpResponseMessage responde = await client.SendAsync(request);
+
+            var json = responde.Content.ReadAsStringAsync();
+
+            return responde;
+        }
+
+        // GET api/spuser/GetUserById/Id
+        public async Task<HttpResponseMessage> GetUserById(string Id)
+        {
+            HttpClient client = new HttpClient();
+
+            string path = "https://graph.microsoft.com/v1.0/users/" + Id;
+            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
 
             HttpResponseMessage responde = await client.SendAsync(request);
 

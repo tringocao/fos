@@ -48,12 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\FavoriteRestaurant.cs" />
+    <Compile Include="DataModel\FoodServiceAPI.cs" />
     <Compile Include="DataModel\Order.cs" />
     <Compile Include="FosContext.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
+    <Compile Include="Migrations\201908231007307_init1.cs" />
+    <Compile Include="Migrations\201908231007307_init1.Designer.cs">
+      <DependentUpon>201908231007307_init1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908270118164_init2.cs" />
+    <Compile Include="Migrations\201908270118164_init2.Designer.cs">
+      <DependentUpon>201908270118164_init2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AutoMapperConfig.cs" />
+    <Compile Include="Repositories\FOSFavoriteRestaurantRepository.cs" />
+    <Compile Include="Repositories\FOSFoodServiceAPIsRepository.cs" />
+    <Compile Include="Repositories\IFOSFoodServiceAPIsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -69,6 +83,17 @@
       <Project>{8252d347-1bad-4276-a6e3-180fb9f0a3db}</Project>
       <Name>FOS.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201908231007307_init1.resx">
+      <DependentUpon>201908231007307_init1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908270118164_init2.resx">
+      <DependentUpon>201908270118164_init2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
