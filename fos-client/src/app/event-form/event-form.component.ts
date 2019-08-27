@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { EventUser } from '../eventuser';
+import { EventUser } from '../services/event-form/eventuser';
 import { ThrowStmt } from '@angular/compiler';
 import { HttpClient } from '@angular/common/http';
+import { EventFormService } from '../services/event-form/event-form.service';
+import { ViewChild } from '@angular/core';
+ 
+import { MatDialog, MatTable } from '@angular/material';
+
 
 @Component({
   selector: 'app-event-form',
@@ -9,6 +14,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./event-form.component.less']
 })
 export class EventFormComponent implements OnInit {
+  @ViewChild(MatTable,{static:true}) table: MatTable<any>;
+
   eventusers: EventUser[] = [
     // { name: 'Salah', email: 'Liverpool' },
     // { name: 'Kane', email: 'Tottenham Hospur' },
@@ -42,16 +49,44 @@ export class EventFormComponent implements OnInit {
 
   dateTimeToClose: string;
   dateToReminder: string;
-  constructor(private http: HttpClient) {
+
+  eventforms: EventUser[];
+
+  displayedColumns = ['name', 'email'];
+  
+
+ 
+  
+  dataSource: EventUser[] = [
+    { name: 'Salah', email: 'Liverpool' },
+    { name: 'Kane', email: 'Tottenham Hospur' },
+    { name: 'Hazard', email: 'Real Madrid' },
+    { name: 'Griezmann', email: 'Barcelona' },
+  ];
+
+  constructor(private http: HttpClient,private eventFormService: EventFormService) {
     // this.date = new Date().toLocaleString();
     this.dateTimeToClose = this.toDateString(new Date());
     this.dateToReminder = this.toDateString(new Date());
-    this.http.get('https://localhost:44372/api/SPUser/GetUsers').subscribe(data => {
-      console.log("request data");
-      console.log(data);
-    });
+
+    // this.eventusers = this.eventFormService.getUsers();
+
+    // this.eventFormService.getUsers()
+    // .subscribe(eventusers => this.eventusers = eventusers);
+
+
+
+    // this.http.get('https://localhost:44372/api/SPUser/GetUsers').subscribe(data => {
+    //   console.log("request data");
+    //   console.log(data);
+    // });
   }
   private toDateString(date: Date): string {
+    // var dateSaveToSharePoint = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+    // var timeSaveToSharePoint = date.getHours() + ":" + date.getMinutes();
+    // var dateTimeSaveToSharePoint = dateSaveToSharePoint+' '+timeSaveToSharePoint;
+    // return dateTimeSaveToSharePoint;
+
     return (date.getFullYear().toString() + '-' 
        + ("0" + (date.getMonth() + 1)).slice(-2) + '-' 
        + ("0" + (date.getDate())).slice(-2))
@@ -59,7 +94,7 @@ export class EventFormComponent implements OnInit {
 }
 
   ngOnInit() {
-    var yearSelect = document.querySelector('#party');
+    // var yearSelect = document.querySelector('#party');
 
     this.dropdownList = [
       { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" },
@@ -87,6 +122,15 @@ export class EventFormComponent implements OnInit {
   }
   AddUserToTable(): void {
     console.log("Nhan add card");
+    // this.eventusers.push({ 'name': 'aaaa', 'email': 'aaa' });
+
+    // this.eventusers.push({
+    //   name:'abc',
+    //   email:'abc'
+    // });
+    
+
+    console.log(this.eventusers);
     for (var s in this.selectedItems) {
       var flag = false;
       for (var e in this.eventusers) {
@@ -96,6 +140,7 @@ export class EventFormComponent implements OnInit {
       }
       if (flag == false) {
         this.eventusers.push({ 'name': this.selectedItems[s].itemName, 'email': this.selectedItems[s].id });
+        this.table.renderRows();
       }
     }
   }
@@ -111,10 +156,12 @@ export class EventFormComponent implements OnInit {
           this.eventusers.splice(j, 1);
 
           j--;
+          this.table.renderRows();
         }
       }
       this.selectedItems.splice(i, 1);
       i--;
+      // this.table.renderRows();
     }
 
 
@@ -131,14 +178,12 @@ export class EventFormComponent implements OnInit {
   }
   SaveToSharePointEventList(): void {
 
-    // var dateSaveToSharePoint = this.dateTimeToClose.getFullYear()+'-'+(this.dateTimeToClose.getMonth()+1)+'-'+this.dateTimeToClose.getDate();
-    // var timeSaveToSharePoint = this.dateTimeToClose.getHours() + ":" + this.dateTimeToClose.getMinutes();
-    // var dateTimeSaveToSharePoint = dateSaveToSharePoint+' '+timeSaveToSharePoint;
+   
 
 
     // var _dateTimeToReminder = this.dateTimeToReminder;
 
-    console.log(this.dateToReminder);
+    console.log(this.dateToReminder.replace("T", " "));
   }
   onItemSelect(item: any) {
     console.log(item);

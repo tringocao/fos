@@ -5,6 +5,7 @@ export const EventUsers: EventUser[] = [
     { name: 'Kane', email: 'Tottenham Hospur' },
     { name: 'Hazard', email: 'Real Madrid' },
     { name: 'Griezmann', email: 'Barcelona' },
+    { name: 'Mane', email: 'Liverpool' },
 ];
 
 
