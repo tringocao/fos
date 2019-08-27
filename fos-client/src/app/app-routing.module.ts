@@ -16,6 +16,15 @@ const routes: Routes = [
         path: 'event-form',
         component: EventFormComponent
     }
+  {
+    path: 'home',
+    component: RestaurantsPageComponent
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  }
 ];
 
 

@@ -17,11 +17,18 @@ import { TokenInterceptor } from './auth/TokenInterceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth/auth.service';
 
+import { HeaderComponent } from './components/navigation/header/header.component';
+import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+
 import {
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatListModule
 } from '@angular/material';
 import { EventFormComponent } from './event-form/event-form.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
@@ -41,6 +48,15 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 
 @NgModule({
+  declarations: [
+    AppComponent,
+    TestComponent,
+    ListRestaurantComponent,
+    RestaurantsPageComponent,
+    ServiceTabComponent,
+    HeaderComponent,
+    SidenavListComponent
+  ],
     declarations: [
         AppComponent,
         TestComponent,
@@ -75,6 +91,12 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
   MatTabsModule,
   HttpClientModule,
   MatCheckboxModule
+    MatPaginatorModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [
     OrderService, 
@@ -85,6 +107,7 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     useClass: TokenInterceptor,
     multi: true
   }],
+  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
