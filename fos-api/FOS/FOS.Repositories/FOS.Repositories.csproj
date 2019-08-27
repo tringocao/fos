@@ -72,13 +72,9 @@
     <Compile Include="Migrations\201908231007307_init1.Designer.cs">
       <DependentUpon>201908231007307_init1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201908262139598_fav.cs" />
-    <Compile Include="Migrations\201908262139598_fav.Designer.cs">
-      <DependentUpon>201908262139598_fav.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908262331013_new.cs" />
-    <Compile Include="Migrations\201908262331013_new.Designer.cs">
-      <DependentUpon>201908262331013_new.cs</DependentUpon>
+    <Compile Include="Migrations\201908270118164_init2.cs" />
+    <Compile Include="Migrations\201908270118164_init2.Designer.cs">
+      <DependentUpon>201908270118164_init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderRepository.cs" />
@@ -111,11 +107,8 @@
     <EmbeddedResource Include="Migrations\201908231007307_init1.resx">
       <DependentUpon>201908231007307_init1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908262139598_fav.resx">
-      <DependentUpon>201908262139598_fav.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908262331013_new.resx">
-      <DependentUpon>201908262331013_new.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908270118164_init2.resx">
+      <DependentUpon>201908270118164_init2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -28,6 +28,7 @@ namespace FOS.Repositories.Repositories
             {
                 var _favoriteRestaurant = Mapper.Map<FavoriteRestaurant, DataModel.FavoriteRestaurant>(favoriteRestaurant);
                 _context.FavoriteRestaurants.Add(_favoriteRestaurant);
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception e)
@@ -42,6 +43,7 @@ namespace FOS.Repositories.Repositories
             {
                 var _favoriteRestaurant = Mapper.Map<FavoriteRestaurant, DataModel.FavoriteRestaurant>(favoriteRestaurant);
                 _context.FavoriteRestaurants.Remove(_favoriteRestaurant);
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception e)

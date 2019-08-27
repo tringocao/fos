@@ -12,6 +12,13 @@ import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-p
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/TokenInterceptor';
+
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './auth/auth.service';
+
 import {
   MatTableModule,
   MatSortModule,
@@ -39,7 +46,15 @@ import {
     MatPaginatorModule,
     MatTabsModule
   ],
-  providers: [OrderService],
+  providers: [
+    OrderService, 
+    CookieService,
+    AuthService,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

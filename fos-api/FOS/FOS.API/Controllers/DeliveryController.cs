@@ -49,18 +49,22 @@ namespace FOS.API.Controllers
         {
         }
 
-        // PUT: api/Delivery/5
         [HttpPut]
         [Route("PutRestaurantIds")]
         // PUT: api/Delivery/5
-        public string PutRestaurantIds(int IdService, int city_id, [FromBody]dynamic data)
+        public string Put(int IdService, int city_id, [FromBody]dynamic data)
         {
             _craw.GetFoodServiceById(IdService);
             List<Restaurant> newList = new List<Restaurant>();
-            foreach (var id in data.restaurant_ids)//get the fisrt catalogue
+
+            String list = data.restaurant_ids;
+            list = list.Remove(0, 1);
+            list = list.Remove(list.Length - 1, 1);
+
+            foreach (var id in list.Split(','))//get the fisrt catalogue
             {
                 Restaurant item = new Restaurant();
-                item.restaurant_id = id.ToString();
+                item.restaurant_id = id;
                 newList.Add(item);
             }
             return JsonConvert.SerializeObject(_craw.GetRestaurantsDeliveryInfor(city_id, newList));

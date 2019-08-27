@@ -29,16 +29,16 @@ namespace FOS.API.Controllers
             return _favoriteService.GetFavoriteRestaurantsById(userId);
         }
 
-        //// POST: api/favoriterestaurant/add/id
-        //public IEnumerable<FavoriteRestaurant> Add(string userId)
-        //{
-        //    return _favoriteService.AddFavoriteRestaurant(userId);
-        //}
+        // POST: api/favoriterestaurant/add/id
+        public void Add([FromBody] FavoriteRestaurant favoriteRestaurant)
+        {
+            _favoriteService.AddFavoriteRestaurant(favoriteRestaurant);
+        }
 
-        //// DELETE: api/favoriterestaurant/remove/id
-        //public IEnumerable<FavoriteRestaurant> Remove(string userId)
-        //{
-        //    return _favoriteService.RemoveFavoriteRestaurant(userId);
-        //}
+        // DELETE: api/favoriterestaurant/remove/id
+        public void Remove([FromBody] FavoriteRestaurant favoriteRestaurant)
+        {
+            _favoriteService.RemoveFavoriteRestaurant(favoriteRestaurant);
+        }
     }
 }
