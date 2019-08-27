@@ -4,12 +4,13 @@ import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-p
 
 const routes: Routes = [
   {
-    path: 'restaurants',
+    path: 'home',
     component: RestaurantsPageComponent
   },
   {
     path: '',
-    component: RestaurantsPageComponent
+    redirectTo: '/home',
+    pathMatch: 'full'
   }
 ];
 
