@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventUser } from '../eventuser';
 import { ThrowStmt } from '@angular/compiler';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-event-form',
@@ -42,10 +42,14 @@ export class EventFormComponent implements OnInit {
 
   dateTimeToClose: string;
   dateToReminder: string;
-  constructor() {
+  constructor(private http: HttpClient) {
     // this.date = new Date().toLocaleString();
     this.dateTimeToClose = this.toDateString(new Date());
     this.dateToReminder = this.toDateString(new Date());
+    this.http.get('https://localhost:44372/api/SPUser/GetUsers').subscribe(data => {
+      console.log("request data");
+      console.log(data);
+    });
   }
   private toDateString(date: Date): string {
     return (date.getFullYear().toString() + '-' 
