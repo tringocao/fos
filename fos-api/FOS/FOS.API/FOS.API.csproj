@@ -214,8 +214,6 @@
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\SPListController.cs" />
     <Compile Include="Controllers\SPUserController.cs" />
-    <Compile Include="Controllers\ProvinceController.cs" />
-    <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="CustomAuthentication.cs" />
     <Compile Include="Global.asax.cs">

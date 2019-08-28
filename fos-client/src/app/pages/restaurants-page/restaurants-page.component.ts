@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-restaurants-page',
@@ -9,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class RestaurantsPageComponent implements OnInit {
 
   constructor(private http: HttpClient) {
-    this.http.get('https://localhost:44366/api/oauth/CheckAuth').subscribe((data: authRespond) => {
+    this.http.get(environment.apiUrl + '/api/oauth/CheckAuth').subscribe((data: authRespond) => {
       console.log("request data");
       console.log(data.redirect);
       if (data.redirect) {
@@ -20,7 +21,7 @@ export class RestaurantsPageComponent implements OnInit {
         console.log(error)
     });
 
-    this.http.get('https://localhost:44366/api/SPUser/GetUsers').subscribe(data => {
+    this.http.get(environment.apiUrl + '/api/SPUser/GetUsers').subscribe(data => {
       console.log("request data");
       console.log(data);
     });

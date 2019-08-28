@@ -15,7 +15,7 @@ const routes: Routes = [
     {
         path: 'event-form',
         component: EventFormComponent
-    }
+    },
   {
     path: 'home',
     component: RestaurantsPageComponent

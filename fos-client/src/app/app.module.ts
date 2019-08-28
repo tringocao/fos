@@ -26,8 +26,6 @@ import {
   MatPaginatorModule,
   MatTabsModule,
   MatSidenavModule,
-  MatToolbarModule,
-  MatIconModule,
   MatListModule
 } from '@angular/material';
 import { EventFormComponent } from './event-form/event-form.component';
@@ -55,16 +53,17 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     RestaurantsPageComponent,
     ServiceTabComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    EventFormComponent,
   ],
-    declarations: [
-        AppComponent,
-        TestComponent,
-        ListRestaurantComponent,
-        RestaurantsPageComponent,
-        ServiceTabComponent,
-        EventFormComponent
-    ],
+    // declarations: [
+    //     AppComponent,
+    //     TestComponent,
+    //     ListRestaurantComponent,
+    //     RestaurantsPageComponent,
+    //     ServiceTabComponent,
+    //     EventFormComponent
+    // ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -87,10 +86,10 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,
-  MatPaginatorModule,
-  MatTabsModule,
-  HttpClientModule,
-  MatCheckboxModule
+    MatPaginatorModule,
+    MatTabsModule,
+    HttpClientModule,
+    MatCheckboxModule,
     MatPaginatorModule,
     MatTabsModule,
     MatSidenavModule,
