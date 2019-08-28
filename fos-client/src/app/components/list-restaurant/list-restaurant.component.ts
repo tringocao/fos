@@ -106,7 +106,7 @@ export class ListRestaurantComponent implements OnInit {
   }
 
   getRestaurant() {
-    this.restaurantService.getRestaurantIds().subscribe(response => {
+    this.restaurantService.getRestaurantIds(JSON.parse("[]"), "").subscribe(response => {
       this.restaurantService.getRestaurants(response).subscribe(result => {
         const jsonData = JSON.parse(result);
         this.dataSource = [];
@@ -147,6 +147,8 @@ export class ListRestaurantComponent implements OnInit {
         jsonData.forEach((element, index) => {
           // tslint:disable-next-line:prefer-const
           let restaurantItem: Restaurant = {
+            id: element.restaurant_id,
+            stared: this.favoriteRestaurants.includes(element.restaurant_id),
             restaurant: element.name,
             address: element.address,
             category:
@@ -156,7 +158,7 @@ export class ListRestaurantComponent implements OnInit {
                 ? element.promotion_groups[0].text
                 : '',
             open:
-              element.operating.open_time + '-' + element.operating.close_time,
+                  (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?"),
               url_rewrite_name:""
           };
           dataSourceTemp.push(restaurantItem);

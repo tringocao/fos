@@ -29,19 +29,19 @@ import {
   MatPaginatorModule,
   MatTabsModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
   MatInputModule
 } from '@angular/material';
 import { EventFormComponent } from './event-form/event-form.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SearchComponent } from './components/search/search.component';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule,
+  MatButtonModule, MatCardModule, MatDialogModule,
   MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
 } from '@angular/material';
 
@@ -103,8 +103,7 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
-    MatSelectModule,
+    MatListModule,
     ReactiveFormsModule,
     FormsModule,
     MatInputModule

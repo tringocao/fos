@@ -18,7 +18,7 @@ export class RestaurantService {
     },
      {
       params: {
-        IdService: '3',
+        IdService: '1',
         city_id: '217',
         keyword: "\"" + keyword + "\""
       }
@@ -32,7 +32,7 @@ export class RestaurantService {
       },
       {
         params: {
-          IdService: '3',
+          IdService: '1',
           city_id: '217'
         }
       }
@@ -42,7 +42,7 @@ export class RestaurantService {
     return this.http.get<any>(
       environment.apiUrl + 'api/Restaurant/GetMetadataForCategory', {
         params: {
-          IdService: '3'
+          IdService: '1'
         }
       }
     );
@@ -52,7 +52,7 @@ export class RestaurantService {
 
     this.http.get<any>(environment.apiUrl + 'api/Restaurant/GetByKeywordLimit', {
       params: {
-        IdService: '3',
+        IdService: '1',
         city_id: '217',
         keyword: "\"" + name + "\"",
         limit: limit
@@ -83,4 +83,29 @@ export class RestaurantService {
   })
   return of(dataSourceTemp);
   }
+  addFavoriteRestaurant(userId: any, restaurantId: any) {
+    return this.http.post<any>(
+      environment.apiUrl + 'api/favorite/add',
+      {
+          UserId: userId,
+          RestaurantId: restaurantId,
+      },
+    )
+  }
+  removeFavoriteRestaurant(userId: any, restaurantId: any) {
+    return this.http.post<any>(
+      environment.apiUrl + 'api/favorite/remove',
+      {
+          UserId: userId,
+          RestaurantId: restaurantId,
+      },
+    )
+  }
+  getFavorite(userId: any) {
+    return this.http.get<any>(environment.apiUrl + 'api/favorite/GetAllById/' + userId);
+  }
+  getCurrentUserId() {
+    return this.http.get<any>(environment.apiUrl + 'api/spuser/GetCurrentUser');
+  }
+  
 }
