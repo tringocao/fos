@@ -6,6 +6,7 @@ import { EventFormService } from '../services/event-form/event-form.service';
 import { ViewChild } from '@angular/core';
  
 import { MatDialog, MatTable } from '@angular/material';
+import { Alert } from 'selenium-webdriver';
 
 
 @Component({
@@ -74,12 +75,23 @@ export class EventFormComponent implements OnInit {
     // this.eventFormService.getUsers()
     // .subscribe(eventusers => this.eventusers = eventusers);
 
+    console.log("request data");
 
-
-    // this.http.get('https://localhost:44372/api/SPUser/GetUsers').subscribe(data => {
-    //   console.log("request data");
-    //   console.log(data);
-    // });
+    this.http.get('https://localhost:44398/api/SPUser/GetUsers').subscribe(data => {
+      console.log("request data");
+      var objects = JSON.stringify(data);
+      // console.log(objects);
+      var jsonData = JSON.parse(objects);
+      // console.log(jsonData);
+      for (var i = 0; i < jsonData.value.length; i++) {
+        
+        var counter = jsonData.value[i];
+        // console.log(counter);
+        // console.log(counter.displayName);
+        this.dropdownList.push({ 'itemName': counter.displayName, 'id': counter.mail });
+        // this.table.renderRows();
+      }
+    });
   }
   private toDateString(date: Date): string {
     // var dateSaveToSharePoint = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
@@ -97,12 +109,12 @@ export class EventFormComponent implements OnInit {
     // var yearSelect = document.querySelector('#party');
 
     this.dropdownList = [
-      { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" },
-      { "id": "jan.oblak@gmail.com", "itemName": "Jan Oblak" },
-      { "id": "koke@gmail.com", "itemName": "Koke" },
-      { "id": "jimenez@gmail.com", "itemName": "Jimenez" },
-      { "id": "lemar@gmail.com", "itemName": "Thomas Lemar" },
-      { "id": "diego.costa@gmail.com", "itemName": "Diego Costa" },
+      // { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" },
+      // { "id": "jan.oblak@gmail.com", "itemName": "Jan Oblak" },
+      // { "id": "koke@gmail.com", "itemName": "Koke" },
+      // { "id": "jimenez@gmail.com", "itemName": "Jimenez" },
+      // { "id": "lemar@gmail.com", "itemName": "Thomas Lemar" },
+      // { "id": "diego.costa@gmail.com", "itemName": "Diego Costa" },
     ];
     this.selectedItems = [
       // { "id": 2, "itemName": "Singapore" },
@@ -178,12 +190,37 @@ export class EventFormComponent implements OnInit {
   }
   SaveToSharePointEventList(): void {
 
-   
+    // this.http.post<any>('https://localhost:44398/api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
+    //   {
+    //     EventTitle: this.EventTitle,
+    //     EventRestaurant: this.Restaurant,
+    //     EventMaximumBudget: this.maximunBudget
+    //   },
+    // )
+    this.http.post("https://localhost:44398/api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289",
+      {
+        EventTitle: this.EventTitle,
+        EventRestaurant: this.Restaurant,
+        EventMaximumBudget: this.maximunBudget,
+        
+      })
+      .subscribe(
+        (val) => {
+          console.log("POST call successful value returned in body",
+            val);
+        },
+        response => {
+          console.log("POST call in error", response);
+        },
+        () => {
+          console.log("The POST observable is now completed.");
+        });
 
 
+    console.log("add item to list");
     // var _dateTimeToReminder = this.dateTimeToReminder;
 
-    console.log(this.dateToReminder.replace("T", " "));
+    // console.log(this.dateToReminder.replace("T", " "));
   }
   onItemSelect(item: any) {
     console.log(item);

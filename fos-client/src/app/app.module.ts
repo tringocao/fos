@@ -10,6 +10,13 @@ import { ListRestaurantComponent } from './components/list-restaurant/list-resta
 import { ServiceTabComponent } from './components/service-tab/service-tab.component';
 import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/TokenInterceptor';
+
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './auth/auth.service';
+
 import {
   MatTableModule,
   MatSortModule,
@@ -21,27 +28,27 @@ import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-
 import { FormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
+  MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule
 } from '@angular/material';
 
-import {MatSelectModule} from '@angular/material/select';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        TestComponent,
-        ListRestaurantComponent,
-        RestaurantsPageComponent,
-        ServiceTabComponent,
-        EventFormComponent
-    ],
+  declarations: [
+    AppComponent,
+    TestComponent,
+    ListRestaurantComponent,
+    RestaurantsPageComponent,
+    ServiceTabComponent,
+    EventFormComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -64,12 +71,20 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,
-  MatPaginatorModule,
-  MatTabsModule,
-  HttpClientModule,
-  MatCheckboxModule
+    MatPaginatorModule,
+    MatTabsModule,
+    HttpClientModule,
+    MatCheckboxModule,
   ],
-  providers: [OrderService],
+  providers: [
+    OrderService,
+    CookieService,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
