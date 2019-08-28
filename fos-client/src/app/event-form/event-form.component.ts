@@ -7,8 +7,12 @@ import { ViewChild } from '@angular/core';
  
 import { MatDialog, MatTable } from '@angular/material';
 import { Alert } from 'selenium-webdriver';
+import { environment } from 'src/environments/environment';
 
-
+export interface User {
+  name: string;
+  email: string;
+}
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
@@ -16,7 +20,7 @@ import { Alert } from 'selenium-webdriver';
 })
 export class EventFormComponent implements OnInit {
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
-
+  selectedUser = 'admin';
   eventusers: EventUser[] = [
     // { name: 'Salah', email: 'Liverpool' },
     // { name: 'Kane', email: 'Tottenham Hospur' },
@@ -32,10 +36,10 @@ export class EventFormComponent implements OnInit {
     { id: 5, name: 'six}' }
   ];
   selected: number = 0;
-  EventTitle: string ="Event Title";
+  EventTitle: string ="";
   Host: string ="Host";
   Restaurant: string = "Restaurant";
-  maximunBudget: number = 100000;
+  maximunBudget: number = 0;
   // dateTimeToClose: Date = new Date();
   // dateTimeToReminder: Date = new Date();
   settings = {
@@ -45,7 +49,18 @@ export class EventFormComponent implements OnInit {
     // defaultOpen: true
   }
   dropdownList = [];
-  selectedItems = [];
+  selectedItems = [
+    { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" }
+  ];
+  selectedNewUser = [];
+  dropdownListNewUser = [
+    { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" },
+      { "id": "jan.oblak@gmail.com", "itemName": "Jan Oblak" },
+      { "id": "koke@gmail.com", "itemName": "Koke" },
+      { "id": "jimenez@gmail.com", "itemName": "Jimenez" },
+      { "id": "lemar@gmail.com", "itemName": "Thomas Lemar" },
+      { "id": "diego.costa@gmail.com", "itemName": "Diego Costa" },
+  ];
   dropdownSettings = {};
 
   dateTimeToClose: string;
@@ -65,15 +80,36 @@ export class EventFormComponent implements OnInit {
     { name: 'Griezmann', email: 'Barcelona' },
   ];
 
+  
+  users: User[] = [
+    {name: 'admin', email: 'admin'}
+  ];
+
+  
+
   constructor(private http: HttpClient,private eventFormService: EventFormService) {
     // this.date = new Date().toLocaleString();
     this.dateTimeToClose = this.toDateString(new Date());
     this.dateToReminder = this.toDateString(new Date());
 
-    // this.eventusers = this.eventFormService.getUsers();
+    // eventFormService.getCurrentUser(this.Host).then(_host => {
+    //   console.log("1" + _host);
+    //   this.Host = _host
+    //   console.log("2" + this.Host);
+    // });
+    
+    // console.log("" + this.Host);
+        this.http.get('https://localhost:44398/api/SPUser/GetCurrentUser').subscribe(data => {
+            console.log("get current User");
+            // console.log(data.displayName);
+            var objects = JSON.stringify(data);
+            // console.log(objects);
+            var jsonData = JSON.parse(objects);
+            this.selectedNewUser.push({'itemName':jsonData.displayName,'id': jsonData.mail});
+            this.Host = jsonData.displayName
+            this.selectedUser = jsonData.displayName;
+        });
 
-    // this.eventFormService.getUsers()
-    // .subscribe(eventusers => this.eventusers = eventusers);
 
     console.log("request data");
 
@@ -89,6 +125,7 @@ export class EventFormComponent implements OnInit {
         // console.log(counter);
         // console.log(counter.displayName);
         this.dropdownList.push({ 'itemName': counter.displayName, 'id': counter.mail });
+        // this.users.push({'name': counter.displayName, 'email': counter.mail });
         // this.table.renderRows();
       }
     });
@@ -116,14 +153,15 @@ export class EventFormComponent implements OnInit {
       // { "id": "lemar@gmail.com", "itemName": "Thomas Lemar" },
       // { "id": "diego.costa@gmail.com", "itemName": "Diego Costa" },
     ];
-    this.selectedItems = [
-      // { "id": 2, "itemName": "Singapore" },
+    this.selectedNewUser = [
+      // { "id": "jao.felix@gmail.com", "itemName": "Jao Felix" },
       // { "id": 3, "itemName": "Australia" },
       // { "id": 4, "itemName": "Canada" },
       // { "id": 5, "itemName": "South Korea" }
     ];
+    
     this.dropdownSettings = {
-      singleSelection: false,
+      singleSelection: true,
       text: "Select user",
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
@@ -190,20 +228,50 @@ export class EventFormComponent implements OnInit {
   }
   SaveToSharePointEventList(): void {
 
-    // this.http.post<any>('https://localhost:44398/api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
-    //   {
-    //     EventTitle: this.EventTitle,
-    //     EventRestaurant: this.Restaurant,
-    //     EventMaximumBudget: this.maximunBudget
-    //   },
-    // )
-    this.http.post("https://localhost:44398/api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289",
-      {
-        EventTitle: this.EventTitle,
-        EventRestaurant: this.Restaurant,
-        EventMaximumBudget: this.maximunBudget,
+    // this.http.get('https://localhost:44398/api/SPUser/GetCurrentUser').subscribe(data => {
+    //   console.log("request data");
+    //   var objects = JSON.stringify(data);
+    //   // console.log(objects);
+    //   var jsonData = JSON.parse(objects);
+    //   // console.log(jsonData);
+    //   for (var i = 0; i < jsonData.value.length; i++) {
         
-      })
+    //     var counter = jsonData.value[i];
+    //     // console.log(counter);
+    //     // console.log(counter.displayName);
+    //     this.dropdownList.push({ 'itemName': counter.displayName, 'id': counter.mail });
+    //     // this.table.renderRows();
+    //   }
+    // });
+    
+    // this.http.post(environment.apiUrl + 'api/web/ensureUser/',
+    // {logonName: "admin@devpreciovn.onmicrosoft.com"})
+    //   .subscribe(
+    //     (val) => {
+    //       console.log("POST call successful value returned in body",
+    //         val);
+    //     },
+    //     response => {
+    //       console.log("POST call in error", response);
+    //     },
+    //     () => {
+    //       console.log("The POST observable is now completed.");
+    //     });
+    
+
+
+    let a = JSON.stringify( {fields: {
+      EventTitle: this.EventTitle,
+      EventId: '1',
+      EventRestaurant: this.Restaurant,
+      EventMaximumBudget: this.maximunBudget,
+      EventTimeToClose: this.dateTimeToClose.replace("T"," "),
+      EventTimeToReminder: this.dateToReminder.replace("T"," "),
+      // EventHostLookupId:[10,23],
+    }}).toString();
+    console.log(a)
+    this.http.post(environment.apiUrl + 'api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
+    {data: a})
       .subscribe(
         (val) => {
           console.log("POST call successful value returned in body",
@@ -216,11 +284,8 @@ export class EventFormComponent implements OnInit {
           console.log("The POST observable is now completed.");
         });
 
-
     console.log("add item to list");
-    // var _dateTimeToReminder = this.dateTimeToReminder;
-
-    // console.log(this.dateToReminder.replace("T", " "));
+    
   }
   onItemSelect(item: any) {
     console.log(item);
