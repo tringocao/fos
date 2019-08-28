@@ -4,4 +4,5 @@ class Restaurant {
   address: string;
   promotion: string;
   open: string;
+  url_rewrite_name: string;
 }

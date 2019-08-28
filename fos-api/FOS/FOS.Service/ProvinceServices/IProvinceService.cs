@@ -6,12 +6,14 @@ namespace FOS.Services.ProvinceServices
     public interface IProvinceService
     {
         Province GetMetadataById(int city_id);
-        string GetFoodServiceById(int IdService);
-        List<Restaurant> GetRestaurants(Province province);
+        string GetExternalServiceById(int IdService);
+        List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> categories);
         List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
         List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant);
+        List<RestaurantCategory> GetMetadataForCategory();
 
-        List<Province> GetMetadata();
+        List<Province> GetMetadataForProvince();
+        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
 
 
     }
