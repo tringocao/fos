@@ -2,6 +2,7 @@
 using FOS.Model.Domain;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,9 @@ namespace FOS.Repositories.Repositories
         {
             try
             {
-                var _favoriteRestaurant = Mapper.Map<FavoriteRestaurant, DataModel.FavoriteRestaurant>(favoriteRestaurant);
+                var _favoriteRestaurant = _context.FavoriteRestaurants.Where(
+                    fav => fav.RestaurantId == favoriteRestaurant.RestaurantId && fav.UserId == favoriteRestaurant.UserId).FirstOrDefault();
+                //var _favoriteRestaurant = Mapper.Map<FavoriteRestaurant, DataModel.FavoriteRestaurant>(favoriteRestaurantEntity);
                 _context.FavoriteRestaurants.Remove(_favoriteRestaurant);
                 _context.SaveChanges();
                 return true;
@@ -50,6 +53,23 @@ namespace FOS.Repositories.Repositories
             {
                 return false;
             }
+
+            //bool oldValidateOnSaveEnabled = _context.Configuration.ValidateOnSaveEnabled;
+
+            //try
+            //{
+            //    _context.Configuration.ValidateOnSaveEnabled = false;
+
+            //    var _favoriteRestaurant = Mapper.Map<FavoriteRestaurant, DataModel.FavoriteRestaurant>(favoriteRestaurant);
+            //    _context.FavoriteRestaurants.Attach(_favoriteRestaurant);
+            //    _context.Entry(_favoriteRestaurant).State = EntityState.Deleted;
+            //    _context.SaveChanges();
+            //}
+            //finally
+            //{
+            //    _context.Configuration.ValidateOnSaveEnabled = oldValidateOnSaveEnabled;
+            //}
+            //return true;
         }
 
         public IEnumerable<FavoriteRestaurant> GetAll()

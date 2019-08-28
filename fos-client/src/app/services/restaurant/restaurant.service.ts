@@ -32,4 +32,28 @@ export class RestaurantService {
       }
     );
   }
+  addFavoriteRestaurant(userId: any, restaurantId: any) {
+    return this.http.post<any>(
+      environment.apiUrl + 'api/favorite/add',
+      {
+          UserId: userId,
+          RestaurantId: restaurantId,
+      },
+    )
+  }
+  removeFavoriteRestaurant(userId: any, restaurantId: any) {
+    return this.http.post<any>(
+      environment.apiUrl + 'api/favorite/remove',
+      {
+          UserId: userId,
+          RestaurantId: restaurantId,
+      },
+    )
+  }
+  getFavorite(userId: any) {
+    return this.http.get<any>(environment.apiUrl + 'api/favorite/GetAllById/' + userId);
+  }
+  getCurrentUserId() {
+    return this.http.get<any>(environment.apiUrl + 'api/spuser/GetCurrentUser');
+  }
 }

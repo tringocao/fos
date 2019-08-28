@@ -1,6 +1,35 @@
 <div class="restaurants ">
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+              <button 
+                mat-icon-button color="warn" 
+                aria-label="Example icon-button with a heart icon"
+                *ngIf="element.stared; else elseBlock"
+                (click)="removeFromFavorite(event, element.id)"
+              > 
+                <mat-icon>star</mat-icon>
+                <!-- <ng-template #elseBlock><mat-icon>star_border</mat-icon></ng-template> -->
+              </button>
+              <ng-template #elseBlock>
+              <button 
+                mat-icon-button color="warn" 
+                aria-label="Example icon-button with a heart icon"
+                (click)="addToFavorite(event, element.id)"
+              > 
+              <mat-icon>star_border</mat-icon>
+            </button>
+            </ng-template>
+              <!-- <mat-icon *ngIf="element.stared; else elseBlock">star</mat-icon> -->
+              <!-- </ng-template><mat-icon>star_border</mat-icon></ng-template> -->
+
+          </td>
+          
+      </ng-container>
+
       <ng-container matColumnDef="restaurant">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Restaurant</th>
         <td mat-cell *matCellDef="let element">{{ element.restaurant }}</td>

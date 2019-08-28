@@ -57,14 +57,10 @@ namespace FOS.API.Controllers
             _craw.GetFoodServiceById(IdService);
             List<Restaurant> newList = new List<Restaurant>();
 
-            String list = data.restaurant_ids;
-            list = list.Remove(0, 1);
-            list = list.Remove(list.Length - 1, 1);
-
-            foreach (var id in list.Split(','))//get the fisrt catalogue
+            foreach (var id in data.restaurant_ids)//get the fisrt catalogue
             {
                 Restaurant item = new Restaurant();
-                item.restaurant_id = id;
+                item.restaurant_id = id.ToString();
                 newList.Add(item);
             }
             return JsonConvert.SerializeObject(_craw.GetRestaurantsDeliveryInfor(city_id, newList));
