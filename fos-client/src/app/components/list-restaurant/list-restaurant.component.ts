@@ -38,6 +38,42 @@ export class ListRestaurantComponent implements OnInit {
 
   constructor(private restaurantService: RestaurantService) {}
 
+  addToFavorite(event, restaurantId:string) {
+    console.log("add", restaurantId);
+    this.restaurantService.addFavoriteRestaurant(this.userId, restaurantId).subscribe(response => {
+      console.log(response);
+      this.favoriteRestaurants = [];  
+      this.restaurantService.getFavorite(this.userId).subscribe(response => {
+        console.log(response);
+        response.map(item => {
+          if (!this.favoriteRestaurants.includes(item)) {
+            this.favoriteRestaurants.push(item.RestaurantId);
+          }
+        })
+        console.log( this.favoriteRestaurants);
+        this.getRestaurant();
+      })
+    })
+  }
+
+  removeFromFavorite(event, restaurantId:string) {
+    console.log("remove", restaurantId);
+    this.restaurantService.removeFavoriteRestaurant(this.userId, restaurantId).subscribe(response => {
+      console.log(response);
+      this.favoriteRestaurants = [];
+      this.restaurantService.getFavorite(this.userId).subscribe(response => {
+        console.log(response);
+        response.map(item => {
+          if (!this.favoriteRestaurants.includes(item)) {
+            this.favoriteRestaurants.push(item.RestaurantId);
+          }
+        })
+        console.log( this.favoriteRestaurants);
+        this.getRestaurant();
+      })
+    })
+  }
+
   ngOnInit() {
     this.categorys = ['a', 'b', 'c', 'd'];
     this.sortNameOrder = 0;
@@ -65,6 +101,10 @@ export class ListRestaurantComponent implements OnInit {
       })
     });
 
+    this.getRestaurant()
+  }
+
+  getRestaurant() {
     this.restaurantService.getRestaurantIds().subscribe(response => {
       this.restaurantService.getRestaurants(response).subscribe(result => {
         const jsonData = JSON.parse(result);
@@ -85,7 +125,7 @@ export class ListRestaurantComponent implements OnInit {
                 ? element.promotion_groups[0].text
                 : '',
             open:
-              element.operating.open_time + '-' + element.operating.close_time
+              (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?")
           };
           dataSourceTemp.push(restaurantItem);
         });
@@ -95,6 +135,4 @@ export class ListRestaurantComponent implements OnInit {
       });
     });
   }
-
-  getRestaurant() {}
 }

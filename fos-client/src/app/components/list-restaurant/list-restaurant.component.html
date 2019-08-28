@@ -8,11 +8,24 @@
               <button 
                 mat-icon-button color="warn" 
                 aria-label="Example icon-button with a heart icon"
-                
+                *ngIf="element.stared; else elseBlock"
+                (click)="removeFromFavorite(event, element.id)"
               > 
-                <mat-icon *ngIf="element.stared; else elseBlock">star</mat-icon>
-                <ng-template #elseBlock><mat-icon>star_border</mat-icon></ng-template>
+                <mat-icon>star</mat-icon>
+                <!-- <ng-template #elseBlock><mat-icon>star_border</mat-icon></ng-template> -->
               </button>
+              <ng-template #elseBlock>
+              <button 
+                mat-icon-button color="warn" 
+                aria-label="Example icon-button with a heart icon"
+                (click)="addToFavorite(event, element.id)"
+              > 
+              <mat-icon>star_border</mat-icon>
+            </button>
+            </ng-template>
+              <!-- <mat-icon *ngIf="element.stared; else elseBlock">star</mat-icon> -->
+              <!-- </ng-template><mat-icon>star_border</mat-icon></ng-template> -->
+
           </td>
           
       </ng-container>

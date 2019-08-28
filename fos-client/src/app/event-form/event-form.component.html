@@ -88,18 +88,17 @@
     </div>
 </div> -->
 
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <!--  <span>HOME</span> -->
         <span><a href="/">HOME</a></span>
         <span class="spacer"></span>
         <a mat-button routerLink="/register">Register</a>
         <a mat-button routerLink="/login">Login</a>
     </mat-toolbar-row>
-</mat-toolbar>
+</mat-toolbar> -->
 
 <mat-toolbar>
-    <span>Registration</span>
+    <span>Place an event</span>
 </mat-toolbar>
 <mat-card class="my-card">
     <mat-card-content>
@@ -119,11 +118,11 @@
                 </mat-form-field>
                 <mat-form-field class="full-width">
                         <mat-label>Maximum Budget</mat-label>
-                        <input matInput placeholder="Maximum Budget" name="maximunBudget" required [(ngModel)]="maximunBudget">
+                        <input matInput type="number" placeholder="Maximum Budget" name="maximunBudget" required [(ngModel)]="maximunBudget">
                     </mat-form-field>
             <mat-form-field class="full-width">
                 <mat-label>Time To Close</mat-label>
-                <input id="party" matInput type="datetime-local" name="partydate" [(ngModel)]="dateTimeToClose">
+                <input id="party" matInput type="datetime-local" name="partydate" [(ngModel)]="dateTimeToClose"  required>
             </mat-form-field>
             <mat-form-field class="full-width">
                     <mat-label>Time To Reminder</mat-label>
@@ -142,7 +141,7 @@
                 (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
                 (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
         </div>
-        <div>
+        <!-- <div>
             <table class="scrolldown">
                 <thead>
                     <tr>
@@ -157,6 +156,43 @@
                         <td>{{policy.email}}</td>
                     </tr>
                 </tbody>
+            </table>
+        </div> -->
+        <div class="example-container mat-elevation-z8">
+            <table mat-table [dataSource]="eventusers">
+        
+                <!-- Position Column -->
+                <!-- <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container> -->
+        
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+        
+                <!-- Weight Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+        
+                <!-- Symbol Column -->
+                <!-- <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                </ng-container> -->
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+
+                </tr>
+                <!-- <tr *ngFor="let policy of eventusers">
+                    <td>{{policy.name}}</td>
+                    <td>{{policy.email}}</td>
+                </tr> -->
             </table>
         </div>
     </mat-card-content>

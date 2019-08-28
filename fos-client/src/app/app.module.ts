@@ -20,6 +20,9 @@ import { AuthService } from './auth/auth.service';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 
+import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
+import { MealsPageComponent } from './pages/meals-page/meals-page.component';
+
 import {
   MatTableModule,
   MatSortModule,
@@ -55,6 +58,8 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     HeaderComponent,
     SidenavListComponent,
     EventFormComponent,
+    OrdersPageComponent,
+    MealsPageComponent,
   ],
     // declarations: [
     //     AppComponent,
