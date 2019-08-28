@@ -29,9 +29,13 @@ namespace FOS.Services.ExternalServices
             //var re4 = service.GetFoods(restaurant);
             //----------------Test----------------------
         }
-        public List<Province> GetMetadata()
+        public List<Province> GetMetadataForProvince()
         {
-            return service.GetMetadata();
+            return service.GetMetadataForProvince();
+        }
+        public List<RestaurantCategory> GetMetadataForCategory()
+        {
+            return service.GetMetadataForCategory();
         }
         public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
         {

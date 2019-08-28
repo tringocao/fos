@@ -1,7 +1,9 @@
 ﻿using FOS.Model.Dto;
+using FOS.Model.Mapping;
 using FOS.Services.ExternalServices;
 using FOS.Services.RestaurantServices;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,24 +41,41 @@ namespace FOS.API.Controllers
             return JsonConvert.SerializeObject(_craw.GetRestaurantsById(province_id, restaurant_id));
         }
         [HttpGet]
-        [Route("GetByKeyword")]
-        public string GetByKeyword(int IdService, int city_id, string keyword)
+        [Route("GetByKeywordLimit")]
+        public string GetByKeywordLimit(int IdService, int city_id, string keyword, int limit)
         {
             _craw.GetExternalServiceById(IdService);
-            return JsonConvert.SerializeObject(_craw.GetRestaurantsByKeyword(city_id, keyword));
+            return JsonConvert.SerializeObject(_craw.GetRestaurantsByKeyword(city_id, keyword).Select(l => Int32.Parse(l.restaurant_id)).Take(limit));
         }
-
+        [HttpGet]
+        [Route("GetMetadataForCategory")]
+        public string GetMetadataForCategory(int IdService)
+        {
+            _craw.GetExternalServiceById(IdService);
+            return System.Text.RegularExpressions.Regex.Unescape(JsonConvert.SerializeObject(_craw.GetMetadataForCategory()));
+        }
         // POST: api/Restaurant
         public void Post([FromBody]string value)
         {
         }
         [HttpPut]
         [Route("PutCategorySearch")]
-        public string PutCategorySearch(int IdService, int city_id, [FromBody]dynamic obj)
+        public string PutCategorySearch(int IdService, int city_id, string keyword, [FromBody]dynamic categories)
         {
             _craw.GetExternalServiceById(IdService);
-            List<RestaurantCategory> categories = obj.ToObject<List<RestaurantCategory>>();
-            return JsonConvert.SerializeObject(_craw.GetRestaurantsByCategories(city_id, categories).Select(l => Int32.Parse(l.restaurant_id)));
+            if (categories.categories == null) return "";
+            if (categories.categories.Count < 1)
+            {
+                return JsonConvert.SerializeObject(_craw.GetRestaurantsByKeyword(city_id, keyword).Select(l => Int32.Parse(l.restaurant_id)));
+            }
+            List<RestaurantCategory> newList = new List<RestaurantCategory>();
+            JsonDtoMapper<RestaurantCategory> map = new JsonDtoMapper<RestaurantCategory>();
+            foreach (var category in categories.categories)//get the fisrt catalogue
+            {
+                newList.Add(map.ToDto(category));
+            }
+
+            return JsonConvert.SerializeObject(_craw.GetRestaurantsByCategoriesKeyword(city_id, newList, keyword).Select(l => Int32.Parse(l.restaurant_id)));
         }
 
         // DELETE: api/Restaurant/5

@@ -9,7 +9,8 @@ namespace FOS.Services.ExternalServices.NowService
     public class NowServiceConfiguration
     {
         public APIDetail GetRestaurantDeliveryInfor { get; set; }
-        public APIDetail GetMetadata { get; set; }
+        public APIDetail GetMetadataForCategory { get; set; }
+        public APIDetail GetMetadataForProvince { get; set; }
         public APIDetail GetDeliveryDishes { get; set; }
         public APIDetail SearchRestaurantsInProvince { get; set; }
         public APIDetail GetDeliveryFromUrl { get; set; }

@@ -13,5 +13,7 @@ namespace FOS.Services.RestaurantServices
         List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
         List<Restaurant> GetRestaurantsByCategories(int city_id, List<RestaurantCategory> categories);
         List<Restaurant> GetRestaurantsByKeyword(int city_id, string keyword);
+        List<RestaurantCategory> GetMetadataForCategory();
+        List<Restaurant> GetRestaurantsByCategoriesKeyword(int city_id, List<RestaurantCategory> categories, string keyword);
     }
 }

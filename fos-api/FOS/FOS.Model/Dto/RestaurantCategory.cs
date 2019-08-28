@@ -13,7 +13,7 @@ namespace FOS.Model.Dto
         public string id { get; set; }
         public string parent_category_id { get; set; }
 
-        ///public List<RestaurantCategory> categories { get; set; }
+        public List<RestaurantCategory> categories { get; set; }
 
     }
 }

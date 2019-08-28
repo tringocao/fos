@@ -12,7 +12,8 @@ namespace FOS.Services.ExternalServices
         string GetNameService();
         List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category);
         List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
-        List<Province> GetMetadata();
+        List<Province> GetMetadataForProvince();
+        List<RestaurantCategory> GetMetadataForCategory();
         List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
         List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant);
         List<FoodCategory> GetFoodFromDelivery(List<DeliveryInfos> deliveries);

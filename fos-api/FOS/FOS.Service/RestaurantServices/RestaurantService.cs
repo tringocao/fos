@@ -37,6 +37,11 @@ namespace FOS.Services.RestaurantServices
 
             return _provinceService.GetRestaurants(_provinceService.GetMetadataById(city_id), "", categories);
         }
+        public List<Restaurant> GetRestaurantsByCategoriesKeyword(int city_id, List<RestaurantCategory> categories, string keyword)
+        {
+
+            return _provinceService.GetRestaurants(_provinceService.GetMetadataById(city_id), keyword, categories);
+        }
         public Restaurant GetRestaurantsById(int city_id, int restaurant_id)
         {
             var listRestaurants = GetRestaurantsByProvince(city_id);
@@ -55,6 +60,11 @@ namespace FOS.Services.RestaurantServices
         public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
         {
             return _provinceService.GetFoodCatalogues(delivery);
+        }
+
+        public List<RestaurantCategory> GetMetadataForCategory()
+        {
+            return _provinceService.GetMetadataForCategory();
         }
     }
 }

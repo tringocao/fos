@@ -48,5 +48,15 @@ namespace FOS.Services.ExternalServices.GrabFoodService
         {
             throw new NotImplementedException();
         }
+
+        public List<Province> GetMetadataForProvince()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<RestaurantCategory> GetMetadataForCategory()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

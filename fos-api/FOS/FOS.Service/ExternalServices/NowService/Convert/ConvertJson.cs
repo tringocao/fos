@@ -18,11 +18,14 @@ namespace FOS.Services.ExternalServices.NowService.Convert
 
             dynamic data = JObject.Parse(result);
             List<Restaurant> newList = new List<Restaurant>();
-            foreach (var id in data.reply.search_result[0].restaurant_ids)//get the fisrt catalogue
+            if (data.result == "success")
             {
-                Restaurant item = new Restaurant();
-                item.restaurant_id = id;
-                newList.Add(item);
+                foreach (var id in data.reply.search_result[0].restaurant_ids)//get the fisrt catalogue
+                {
+                    Restaurant item = new Restaurant();
+                    item.restaurant_id = id;
+                    newList.Add(item);
+                }
             }
             return newList;
         }
@@ -43,11 +46,13 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             dynamic data = JObject.Parse(result);
             List<DeliveryInfos> newList = new List<DeliveryInfos>();
             JsonDtoMapper<DeliveryInfos> map = new JsonDtoMapper<DeliveryInfos>();
-
-            foreach (var delivery in data.reply.delivery_infos)
+            if (data.result == "success")
             {
-                newList.Add(map.ToDto(delivery));
+                foreach (var delivery in data.reply.delivery_infos)
+                {
+                    newList.Add(map.ToDto(delivery));
 
+                }
             }
             return newList;
         }
@@ -59,6 +64,17 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             foreach (var province in data.reply.metadata.province)
             {
                 newList.Add(map.ToDto(province));
+            }
+            return newList;
+        }
+        public static List<RestaurantCategory> ConvertString2ListRestaurantCategories(string result)
+        {
+            dynamic data = JObject.Parse(result);
+            List<RestaurantCategory> newList = new List<RestaurantCategory>();
+            JsonDtoMapper<RestaurantCategory> map = new JsonDtoMapper<RestaurantCategory>();
+            foreach (var categories in data.reply.country.now_services[0].categories)
+            {
+                newList.Add(map.ToDto(categories));
             }
             return newList;
         }

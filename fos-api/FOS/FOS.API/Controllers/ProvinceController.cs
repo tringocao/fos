@@ -25,7 +25,7 @@ namespace FOS.API.Controllers
         public string Get(int IdService)
         {
             _craw.GetExternalServiceById(IdService);
-            return JsonConvert.SerializeObject(_craw.GetMetadata());
+            return JsonConvert.SerializeObject(_craw.GetMetadataForProvince());
         }
 
         // GET: api/Province/5

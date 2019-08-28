@@ -10,8 +10,9 @@ namespace FOS.Services.ProvinceServices
         List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> categories);
         List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
         List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant);
+        List<RestaurantCategory> GetMetadataForCategory();
 
-        List<Province> GetMetadata();
+        List<Province> GetMetadataForProvince();
         List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
 
 

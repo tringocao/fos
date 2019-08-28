@@ -28,14 +28,14 @@ namespace FOS.Services.ProvinceServices
         }
 
 
-        public List<Province> GetMetadata()
+        public List<Province> GetMetadataForProvince()
         {
-            return _craw.GetMetadata();
+            return _craw.GetMetadataForProvince();
         }
 
         public Province GetMetadataById(int city_id)
         {
-            var listProvinces = GetMetadata();
+            var listProvinces = GetMetadataForProvince();
             return listProvinces.Where(p => p.id == city_id.ToString()).FirstOrDefault();
         }
 
@@ -52,6 +52,11 @@ namespace FOS.Services.ProvinceServices
         public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
         {
             return _craw.GetRestaurantsDeliveryInfor(restaurant);
+        }
+
+        public List<RestaurantCategory> GetMetadataForCategory()
+        {
+            return _craw.GetMetadataForCategory();
         }
     }
 }

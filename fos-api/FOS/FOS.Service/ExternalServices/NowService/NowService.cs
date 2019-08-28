@@ -71,7 +71,7 @@ namespace FOS.Services.ExternalServices.NowService
             api.AvailableBodys.Where(a => a.FieldName == "city_id").FirstOrDefault().ValueDefault
                 = province.id.ToString();// 217 is id of HCM city
             api.AvailableBodys.Where(a => a.FieldName == "keyword").FirstOrDefault().ValueDefault
-                = "\"" + keyword + "\"";
+                = "" + keyword + "";
             if (category !=null )
             {
                 StringBuilder icate = new StringBuilder();
@@ -117,10 +117,10 @@ namespace FOS.Services.ExternalServices.NowService
                 return null;
             }
         }
-        public List<Province> GetMetadata()
+        public List<Province> GetMetadataForProvince()
         {
             //Get function
-            APIDetail api = apisJson.GetMetadata;
+            APIDetail api = apisJson.GetMetadataForProvince;
             //Call API
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = method.CallApi();
@@ -128,6 +128,23 @@ namespace FOS.Services.ExternalServices.NowService
             {
                 var result = response.Result.Content.ReadAsStringAsync().Result;
                 return ConvertJson.ConvertString2ListProvinces(result);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public List<RestaurantCategory> GetMetadataForCategory()
+        {
+            //Get function
+            APIDetail api = apisJson.GetMetadataForCategory;
+            //Call API
+            RequestMethodFactory method = new RequestMethodFactory(api);
+            var response = method.CallApi();
+            if (response.Result.IsSuccessStatusCode)
+            {
+                var result = response.Result.Content.ReadAsStringAsync().Result;
+                return ConvertJson.ConvertString2ListRestaurantCategories(result);
             }
             else
             {

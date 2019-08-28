@@ -12,12 +12,17 @@ import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-p
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 import {
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-  MatTabsModule
+  MatTabsModule,
+  MatInputModule
 } from '@angular/material';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +30,8 @@ import {
     TestComponent,
     ListRestaurantComponent,
     RestaurantsPageComponent,
-    ServiceTabComponent
+    ServiceTabComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +43,11 @@ import {
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule
   ],
   providers: [OrderService],
   bootstrap: [AppComponent]

@@ -6,7 +6,8 @@ namespace FOS.Services.ExternalServices
     public interface IExternalServiceFactory
     {
         string GetExternalServiceById(int id);
-        List<Province> GetMetadata();
+        List<Province> GetMetadataForProvince();
+        List<RestaurantCategory> GetMetadataForCategory();
         List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category);
 
         List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
