@@ -26,7 +26,7 @@ export class ListRestaurantComponent implements OnInit {
   sortNameOrder: number;
   sortCategoryOrder: number;
   categorys: any;
-  displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open'];
+  displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open', 'menu'];
   dataSource: any = new MatTableDataSource(restaurants);
 
   userId: string;
@@ -108,6 +108,7 @@ export class ListRestaurantComponent implements OnInit {
   getRestaurant() {
     this.restaurantService.getRestaurantIds(JSON.parse("[]"), "").subscribe(response => {
       this.restaurantService.getRestaurants(response).subscribe(result => {
+        if(result != null && result != ""){
         const jsonData = JSON.parse(result);
         this.dataSource = [];
         const dataSourceTemp = [];
@@ -134,13 +135,14 @@ export class ListRestaurantComponent implements OnInit {
         this.dataSource = new MatTableDataSource(dataSourceTemp);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-      });
+      }});
     });
   }
 
   getRes($event) {
     this.restaurantService.getRestaurantIds($event.topic, $event.keyword).subscribe(response => {
       this.restaurantService.getRestaurants(response).subscribe(result => {
+        if(result != null && result != ""){
         const jsonData = JSON.parse(result);
         this.dataSource = [];
         const dataSourceTemp = [];
@@ -166,7 +168,7 @@ export class ListRestaurantComponent implements OnInit {
         this.dataSource = new MatTableDataSource(dataSourceTemp);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-      });
+      }});
     });
   }
 }

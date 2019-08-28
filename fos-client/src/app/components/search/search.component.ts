@@ -30,6 +30,7 @@ export class SearchComponent implements OnInit {
   restaurant$: Observable<Restaurant[]>;
   private searchTerms = new Subject<string>();
   toppings = new FormControl();
+  show$ = false;
   keyword = "";
   toppingList: CategoryGroup[];
   constructor(private restaurantService: RestaurantService) {
@@ -73,7 +74,7 @@ export class SearchComponent implements OnInit {
 
   onSubmit() { 
     this.submitted = true;
-    let cod = this.getCondition(this.toppings.value);
+    let cod = this.toppings.value ? this.getCondition(this.toppings.value) : "[]"
     console.log(cod);
     this.change.emit({topic: JSON.parse(cod), keyword: this.keyword});
   }
@@ -88,12 +89,14 @@ export class SearchComponent implements OnInit {
   // Push a search term into the observable stream.
   search(term: string): void {
     this.keyword = term;
+    this.show$ = term != ""? true : false;
+    console.log(this.show$);
     this.searchTerms.next(term);
   }
   ngOnInit(): void {
     this.restaurant$ = this.searchTerms.pipe(
-      // wait 300ms after each keystroke before considering the term
-      debounceTime(30),
+      // wait 500ms after each keystroke before considering the term
+      debounceTime(500),
 
       // ignore new term if same as previous term
       distinctUntilChanged(),

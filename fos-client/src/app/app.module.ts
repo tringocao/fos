@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +49,8 @@ import {
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
+import { MenuComponent } from './components/menu/menu.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 
 @NgModule({
@@ -62,7 +65,9 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     EventFormComponent,
     OrdersPageComponent,
     MealsPageComponent,
-    SearchComponent
+    SearchComponent,
+    DialogComponent,
+    MenuComponent
   ],
     // declarations: [
     //     AppComponent,
@@ -73,6 +78,7 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     //     EventFormComponent
     // ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     DlDateTimeDateModule,
@@ -117,7 +123,9 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     useClass: TokenInterceptor,
     multi: true
   }],
-  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule],
-  bootstrap: [AppComponent]
+  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent],
+
 })
 export class AppModule {}
