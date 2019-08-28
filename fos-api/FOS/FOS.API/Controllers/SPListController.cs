@@ -19,25 +19,22 @@ namespace FOS.API.Controllers
     public class SPListController : ApiController
     {
         IOAuthService _oAuthService;
+        IGraphHttpClient _graphHttpClient;
 
-        public SPListController(IOAuthService oAuthService)
+        public SPListController(IOAuthService oAuthService, IGraphHttpClient graphHttpClient)
         {
             _oAuthService = oAuthService;
+            _graphHttpClient = graphHttpClient;
         }
         // GET api/splist/getlist/{list-id}
         public async Task<HttpResponseMessage> GetList(string Id)
         {
-            var accessToken = _oAuthService.GetTokenFromCookie()._accessToken;
-
             var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
 
             HttpClient client = new HttpClient();
 
             string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id;
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, path);
-
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
+            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
             HttpResponseMessage responde = await client.SendAsync(request);
 
             var json = responde.Content.ReadAsStringAsync();
@@ -45,23 +42,15 @@ namespace FOS.API.Controllers
             return responde;
         }
         // POST api/splist/addlistitem/{list-id}/
-        public async Task<HttpResponseMessage> AddListItem(string Id)
+        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]dynamic item)
         {
-            var accessToken = _oAuthService.GetTokenFromCookie()._accessToken;
-
             var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
-
             HttpClient client = new HttpClient();
 
             string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id + "/items";
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
+            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Post);
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            request.Content = new StringContent("{\"fields\":" + 
-                JsonConvert.SerializeObject(new Event("event 1", "1")) + 
-                "}", Encoding.UTF8, "application/json");
-
+            request.Content = new StringContent( item, Encoding.UTF8, "application/json");
 
             HttpResponseMessage responde = await client.SendAsync(request);
 

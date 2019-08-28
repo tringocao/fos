@@ -49,6 +49,8 @@ namespace FOS.API.Controllers
         public void Post([FromBody]string value)
         {
         }
+
+        // PUT: api/Delivery/5
         [HttpPut]
         [Route("PutRestaurantIds")]
         // PUT: api/Delivery/5
