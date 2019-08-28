@@ -42,7 +42,7 @@ namespace FOS.API.Controllers
             return responde;
         }
         // POST api/splist/addlistitem/{list-id}/
-        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]dynamic item)
+        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]JSONRequest item)
         {
             var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
             HttpClient client = new HttpClient();
@@ -50,7 +50,7 @@ namespace FOS.API.Controllers
             string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id + "/items";
             HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Post);
 
-            request.Content = new StringContent( item, Encoding.UTF8, "application/json");
+            request.Content = new StringContent(item.data, Encoding.UTF8, "application/json");
 
             HttpResponseMessage responde = await client.SendAsync(request);
 

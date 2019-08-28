@@ -46,7 +46,7 @@ namespace FOS.API.Controllers
         [HttpGet]
         [OverrideAuthentication]
         public async Task<HttpResponseMessage> CheckAuth()
-            {
+        {
             var authenticated = _oAuthService.CheckAuthenticationAsync().Result;
             var response = new HttpResponseMessage();
 

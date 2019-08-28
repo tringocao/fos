@@ -199,14 +199,14 @@ export class EventFormComponent implements OnInit {
     //     EventMaximumBudget: this.maximunBudget
     //   },
     // )
-    let a = JSON.stringify( {
+    let a = JSON.stringify( {fields: {
       EventTitle: this.EventTitle,
       EventRestaurant: this.Restaurant,
       EventMaximumBudget: this.maximunBudget, 
-    }).toString();
+    }}).toString();
     console.log(a)
     this.http.post(environment.apiUrl + 'api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
-    {fields: a}
+    {data: a}
 )
       .subscribe(
         (val) => {

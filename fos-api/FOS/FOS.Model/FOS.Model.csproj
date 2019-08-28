@@ -49,6 +49,7 @@
     <Compile Include="Domain\AuthClientRespond.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
     <Compile Include="Domain\Host.cs" />
+    <Compile Include="Domain\JSONRequest.cs" />
     <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Domain\State.cs" />
