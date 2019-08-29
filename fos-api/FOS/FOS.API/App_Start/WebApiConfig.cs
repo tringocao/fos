@@ -28,7 +28,9 @@ namespace FOS.API
 
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // resolve customauth
-            //config.Filters.Add((IAuthenticationFilter)UnityConfig.Container.Resolve<ICustomAuthentication>());
+            config.Filters.Add((IAuthenticationFilter)UnityConfig.Container.Resolve<ICustomAuthentication>());
+            //config.MessageHandlers.Add(new CrossDomainHandler());
+            //config.MessageHandlers.Add(new CustomLogHandler());
         }
     }
 }

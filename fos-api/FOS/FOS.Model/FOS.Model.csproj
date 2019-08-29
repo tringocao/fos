@@ -49,8 +49,11 @@
     <Compile Include="Domain\AuthClientRespond.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
     <Compile Include="Domain\Host.cs" />
+    <Compile Include="Domain\JSONRequest.cs" />
+    <Compile Include="Domain\LogMetadata.cs" />
     <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
+    <Compile Include="Domain\TokenResource.cs" />
     <Compile Include="Dto\APIs.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DiscountPrice.cs" />
@@ -81,7 +84,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
+    <Folder Include="bin\Debug\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
