@@ -8,7 +8,7 @@ import { ViewChild } from '@angular/core';
 import { MatDialog, MatTable } from '@angular/material';
 import { Alert } from 'selenium-webdriver';
 import { environment } from 'src/environments/environment';
-
+import {EventList} from 'src/app/models/eventList';
 export interface User {
   name: string;
   email: string;
@@ -92,11 +92,6 @@ export class EventFormComponent implements OnInit {
     this.dateTimeToClose = this.toDateString(new Date());
     this.dateToReminder = this.toDateString(new Date());
 
-    // eventFormService.getCurrentUser(this.Host).then(_host => {
-    //   console.log("1" + _host);
-    //   this.Host = _host
-    //   console.log("2" + this.Host);
-    // });
     
     // console.log("" + this.Host);
         this.http.get('https://localhost:44398/api/SPUser/GetCurrentUser').subscribe(data => {
@@ -122,20 +117,11 @@ export class EventFormComponent implements OnInit {
       for (var i = 0; i < jsonData.value.length; i++) {
         
         var counter = jsonData.value[i];
-        // console.log(counter);
-        // console.log(counter.displayName);
         this.dropdownList.push({ 'itemName': counter.displayName, 'id': counter.mail });
-        // this.users.push({'name': counter.displayName, 'email': counter.mail });
-        // this.table.renderRows();
       }
     });
   }
   private toDateString(date: Date): string {
-    // var dateSaveToSharePoint = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
-    // var timeSaveToSharePoint = date.getHours() + ":" + date.getMinutes();
-    // var dateTimeSaveToSharePoint = dateSaveToSharePoint+' '+timeSaveToSharePoint;
-    // return dateTimeSaveToSharePoint;
-
     return (date.getFullYear().toString() + '-' 
        + ("0" + (date.getMonth() + 1)).slice(-2) + '-' 
        + ("0" + (date.getDate())).slice(-2))
@@ -171,14 +157,7 @@ export class EventFormComponent implements OnInit {
 
   }
   AddUserToTable(): void {
-    console.log("Nhan add card");
-    // this.eventusers.push({ 'name': 'aaaa', 'email': 'aaa' });
-
-    // this.eventusers.push({
-    //   name:'abc',
-    //   email:'abc'
-    // });
-    
+    console.log("Nhan add card");    
 
     console.log(this.eventusers);
     for (var s in this.selectedItems) {
@@ -220,72 +199,19 @@ export class EventFormComponent implements OnInit {
   }
 
   showSelectValue(id: string) {
-    //getted from event
     console.log("option thay doi");
-
-    //getted from binding
-    // console.log(this.number)
   }
   SaveToSharePointEventList(): void {
-
-    // this.http.get('https://localhost:44398/api/SPUser/GetCurrentUser').subscribe(data => {
-    //   console.log("request data");
-    //   var objects = JSON.stringify(data);
-    //   // console.log(objects);
-    //   var jsonData = JSON.parse(objects);
-    //   // console.log(jsonData);
-    //   for (var i = 0; i < jsonData.value.length; i++) {
-        
-    //     var counter = jsonData.value[i];
-    //     // console.log(counter);
-    //     // console.log(counter.displayName);
-    //     this.dropdownList.push({ 'itemName': counter.displayName, 'id': counter.mail });
-    //     // this.table.renderRows();
-    //   }
-    // });
-    
-    // this.http.post(environment.apiUrl + 'api/web/ensureUser/',
-    // {logonName: "admin@devpreciovn.onmicrosoft.com"})
-    //   .subscribe(
-    //     (val) => {
-    //       console.log("POST call successful value returned in body",
-    //         val);
-    //     },
-    //     response => {
-    //       console.log("POST call in error", response);
-    //     },
-    //     () => {
-    //       console.log("The POST observable is now completed.");
-    //     });
-    
-
-
-    let a = JSON.stringify( {fields: {
-      EventTitle: this.EventTitle,
-      EventId: '1',
-      EventRestaurant: this.Restaurant,
-      EventMaximumBudget: this.maximunBudget,
-      EventTimeToClose: this.dateTimeToClose.replace("T"," "),
-      EventTimeToReminder: this.dateToReminder.replace("T"," "),
-      // EventHostLookupId:[10,23],
-    }}).toString();
-    console.log(a)
-    this.http.post(environment.apiUrl + 'api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
-    {data: a})
-      .subscribe(
-        (val) => {
-          console.log("POST call successful value returned in body",
-            val);
-        },
-        response => {
-          console.log("POST call in error", response);
-        },
-        () => {
-          console.log("The POST observable is now completed.");
-        });
-
-    console.log("add item to list");
-    
+    var eventlistitem: EventList = {
+      eventTitle: "FIKA",
+      eventId: 'FIKA1',
+      eventRestaurant: 'Now',
+      eventMaximumBudget: 0,
+      eventTimeToClose: this.dateTimeToClose,
+      eventTimeToReminder: this.dateToReminder,
+      eventHost: 'i:0#.f|membership|admin@devpreciovn.onmicrosoft.com'
+    };
+    this.eventFormService.addEventListItem(eventlistitem)    
   }
   onItemSelect(item: any) {
     console.log(item);
@@ -300,6 +226,5 @@ export class EventFormComponent implements OnInit {
   }
   onDeSelectAll(items: any) {
     console.log(items);
-    // this.eventusers = [];
   }
 }

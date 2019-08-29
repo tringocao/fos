@@ -6,7 +6,8 @@ import { EventUser } from './eventuser';
 import { EventUsers } from './mock-eventuser';
 // import { MessageService } from './message.service';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from 'src/environments/environment';
+import {EventList} from 'src/app/models/eventList';
 @Injectable({
     providedIn: 'root',
 })
@@ -16,15 +17,37 @@ export class EventFormService {
     getUser(): void {
         console.log("get user");
     }
-    //   getUser(): Observable<Hero[]> {
-    //     // this.messageService.add('HeroService: fetched heroes');
-    //     // return of(HEROES);
-    //   }
     getUsers(): Observable<EventUser[]> {
-        // TODO: send the message _after_ fetching the heroes
-        // this.messageService.add('HeroService: fetched heroes');
         return of(EventUsers);
       }
+
+      async addEventListItem(eventlist: EventList): Promise<any>{
+        console.log("event list");
+        console.log(eventlist);
+
+        this.http.post(environment.apiUrl + 'api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
+        {
+          eventTitle: eventlist.eventTitle,
+          eventId: eventlist.eventId,
+          eventRestaurant: eventlist.eventRestaurant,
+          eventMaximumBudget: eventlist.eventMaximumBudget,
+          eventTimeToClose: eventlist.eventTimeToClose,
+          eventTimeToReminder: eventlist.eventTimeToReminder,
+          eventHost: eventlist.eventHost
+        })
+        .subscribe(
+          (val) => {
+            console.log("POST call successful value returned in body",
+              val);
+          },
+          response => {
+            console.log("POST call in error", response);
+          },
+          () => {
+            console.log("The POST observable is now completed.");
+          });
+      }
+
     // async getCurrentUser(Host: string): Promise<string> {
     //     var self = this;
     //     var currentUserDisplayName = "";
@@ -44,6 +67,5 @@ export class EventFormService {
     //         // }
     //     });
     //     return Host;
-       
     // }
 }
