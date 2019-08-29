@@ -33,7 +33,7 @@ namespace FOS.API.Controllers
 
             HttpClient client = new HttpClient();
 
-            string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id;
+            string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id + "/items?expand=fields";
             HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
             HttpResponseMessage responde = await client.SendAsync(request);
 

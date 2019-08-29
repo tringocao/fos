@@ -19,9 +19,9 @@ export class TestComponent implements OnInit {
   ngOnInit() {}
 
   click() {
-    const data = this.orderService.getOrder('1').subscribe(response => {
-      this.testData = response;
-    });
+    // const data = this.orderService.getOrder('1').subscribe(response => {
+    //   this.testData = response;
+    // });
   }
 
   getRestaurant() {

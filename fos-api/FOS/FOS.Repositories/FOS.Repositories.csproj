@@ -64,13 +64,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201908260325463_init.cs" />
-    <Compile Include="Migrations\201908260325463_init.Designer.cs">
-      <DependentUpon>201908260325463_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908272105041_abc.cs" />
-    <Compile Include="Migrations\201908272105041_abc.Designer.cs">
-      <DependentUpon>201908272105041_abc.cs</DependentUpon>
+    <Compile Include="Migrations\201908280431333_CodeChange.cs" />
+    <Compile Include="Migrations\201908280431333_CodeChange.Designer.cs">
+      <DependentUpon>201908280431333_CodeChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderRepository.cs" />
@@ -103,11 +99,8 @@
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201908260325463_init.resx">
-      <DependentUpon>201908260325463_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908272105041_abc.resx">
-      <DependentUpon>201908272105041_abc.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201908280431333_CodeChange.resx">
+      <DependentUpon>201908280431333_CodeChange.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
