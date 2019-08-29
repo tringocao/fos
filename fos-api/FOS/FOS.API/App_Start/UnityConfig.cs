@@ -70,9 +70,9 @@ namespace FOS.API
             container.RegisterType<IGraphHttpClient, GraphHttpClient>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
 
-            container.RegisterType<ITokenProvider, TokenProvider>();
             container.RegisterType<IGraphApiProvider, GraphApiProvider>();
             container.RegisterType<ISharepointContextProvider, SharepointContextProvider>();
+            container.RegisterType<ITokenProvider, TokenProvider>();
 
             container.AddExtension(new Diagnostic());
         }
