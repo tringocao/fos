@@ -51,13 +51,14 @@
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
-    <Compile Include="Domain\State.cs" />
-    <Compile Include="Domain\Token.cs" />
     <Compile Include="Dto\APIs.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DiscountPrice.cs" />
     <Compile Include="Dto\Food.cs" />
-    <Compile Include="Dto\FoodType.cs" />
+    <Compile Include="Dto\FoodCategory.cs" />
+    <Compile Include="Dto\RestaurantCategory.cs" />
+    <Compile Include="Domain\State.cs" />
+    <Compile Include="Domain\Token.cs" />
     <Compile Include="Dto\Order.cs" />
     <Compile Include="Dto\Price.cs" />
     <Compile Include="Dto\Province.cs" />
@@ -80,13 +81,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\FOS.Common.dll" />
-    <Content Include="bin\Debug\FOS.Common.pdb" />
-    <Content Include="bin\Debug\FOS.Model.dll" />
-    <Content Include="bin\Debug\FOS.Model.pdb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\" />
+    <Folder Include="bin\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

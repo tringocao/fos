@@ -29,28 +29,20 @@ import {
   MatPaginatorModule,
   MatTabsModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  MatInputModule
 } from '@angular/material';
 import { EventFormComponent } from './event-form/event-form.component';
-import {
-  DlDateTimeDateModule,
-  DlDateTimePickerModule
-} from 'angular-bootstrap-datetimepicker';
+import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SearchComponent } from './components/search/search.component';
 
 import {
-  MatButtonModule,
-  MatCardModule,
-  MatDialogModule,
-  MatInputModule,
-  MatToolbarModule,
-  MatMenuModule,
-  MatIconModule,
-  MatProgressSpinnerModule,
-  MatFormFieldModule
+  MatButtonModule, MatCardModule, MatDialogModule,
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
 } from '@angular/material';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -73,6 +65,7 @@ import { ListOrderComponent } from './components/list-order/list-order.component
     MealsPageComponent,
     OrderTabComponent,
     ListOrderComponent
+    SearchComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -114,8 +107,9 @@ import { ListOrderComponent } from './components/list-order/list-order.component
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    MatFormFieldModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule
   ],
   providers: [
     OrderService,

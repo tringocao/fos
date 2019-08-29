@@ -1,5 +1,5 @@
 ﻿using FOS.Model.Dto;
-using FOS.Services.FoodServices;
+using FOS.Services.ExternalServices;
 using FOS.Services.ProvinceServices;
 using System;
 using System.Collections.Generic;
@@ -19,14 +19,28 @@ namespace FOS.Services.RestaurantServices
             //_craw = craw;
             _provinceService = provinceService;
         }
-        public string GetFoodServiceById(int IdService)
+        public string GetExternalServiceById(int IdService)
         {
             this.IdService = IdService;
-            return "RestaurantService in " + _provinceService.GetFoodServiceById(IdService) + "is ready";
+            return "RestaurantService in " + _provinceService.GetExternalServiceById(IdService) + "is ready";
         }
         public List<Restaurant> GetRestaurantsByProvince(int city_id)
         {
-            return _provinceService.GetRestaurants(_provinceService.GetMetadataById(city_id));
+            return _provinceService.GetRestaurants(_provinceService.GetMetadataById(city_id), "", null);
+        }
+        public List<Restaurant> GetRestaurantsByKeyword(int city_id, string keyword)
+        {
+            return _provinceService.GetRestaurants(_provinceService.GetMetadataById(city_id), keyword, null);
+        }
+        public List<Restaurant> GetRestaurantsByCategories(int city_id, List<RestaurantCategory> categories)
+        {
+
+            return _provinceService.GetRestaurants(_provinceService.GetMetadataById(city_id), "", categories);
+        }
+        public List<Restaurant> GetRestaurantsByCategoriesKeyword(int city_id, List<RestaurantCategory> categories, string keyword)
+        {
+
+            return _provinceService.GetRestaurants(_provinceService.GetMetadataById(city_id), keyword, categories);
         }
         public Restaurant GetRestaurantsById(int city_id, int restaurant_id)
         {
@@ -42,6 +56,15 @@ namespace FOS.Services.RestaurantServices
         public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
         {
             return _provinceService.GetRestaurantsDeliveryInfor(restaurant);
+        }
+        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
+        {
+            return _provinceService.GetFoodCatalogues(delivery);
+        }
+
+        public List<RestaurantCategory> GetMetadataForCategory()
+        {
+            return _provinceService.GetMetadataForCategory();
         }
     }
 }

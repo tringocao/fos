@@ -14,6 +14,7 @@ interface Restaurant {
   address: string;
   promotion: string;
   open: string;
+  url_rewrite_name: string;
 }
 
 @Component({
@@ -110,8 +111,8 @@ export class ListRestaurantComponent implements OnInit {
     this.getRestaurant(true);
   }
 
-  getRestaurant(isOnInit: boolean) {
-    this.restaurantService.getRestaurantIds().subscribe(response => {
+  getRestaurant() {
+    this.restaurantService.getRestaurantIds(JSON.parse("[]"), "").subscribe(response => {
       this.restaurantService.getRestaurants(response).subscribe(result => {
         const jsonData = JSON.parse(result);
         this.dataSource = [];
@@ -131,9 +132,40 @@ export class ListRestaurantComponent implements OnInit {
                 ? element.promotion_groups[0].text
                 : '',
             open:
-              (element.operating.open_time || '?') +
-              '-' +
-              (element.operating.close_time || '?')
+                  (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?"),
+              url_rewrite_name:""
+          };
+          dataSourceTemp.push(restaurantItem);
+        });
+        this.dataSource = new MatTableDataSource(dataSourceTemp);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+    });
+  }
+
+  getRes($event) {
+    this.restaurantService.getRestaurantIds($event.topic, $event.keyword).subscribe(response => {
+      this.restaurantService.getRestaurants(response).subscribe(result => {
+        const jsonData = JSON.parse(result);
+        this.dataSource = [];
+        const dataSourceTemp = [];
+        jsonData.forEach((element, index) => {
+          // tslint:disable-next-line:prefer-const
+          let restaurantItem: Restaurant = {
+            id: element.restaurant_id,
+            stared: this.favoriteRestaurants.includes(element.restaurant_id),
+            restaurant: element.name,
+            address: element.address,
+            category:
+              element.categories.length > 0 ? element.categories[0] : '',
+            promotion:
+              element.promotion_groups.length > 0
+                ? element.promotion_groups[0].text
+                : '',
+            open:
+                  (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?"),
+              url_rewrite_name:""
           };
           dataSourceTemp.push(restaurantItem);
         });

@@ -45,11 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\FOS.Common.dll" />
-    <Content Include="bin\Debug\FOS.Common.pdb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\" />
+    <Folder Include="bin\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
