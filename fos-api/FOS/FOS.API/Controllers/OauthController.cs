@@ -23,7 +23,7 @@ namespace FOS.API.Controllers
     {
         OAuthService _oAuthService;
 
-        public OauthController(OAuthService oAuthService)
+        public OauthController(OAuthService oAuthService, ConfigurationModel configuraModel)
         {
             _oAuthService = oAuthService;
         }
@@ -33,7 +33,7 @@ namespace FOS.API.Controllers
             var redirectUri = "";
             if (code != null)
             {
-                var accessToken = await _oAuthService.GetTokenAsync(code);
+                await _oAuthService.SaveTokensAsync(code);
                 redirectUri = JsonConvert.DeserializeObject<State>(state).redirectUri;
             }
 
@@ -51,14 +51,14 @@ namespace FOS.API.Controllers
             var response = new HttpResponseMessage();
 
             response.Content = new ObjectContent<AuthClientRespond>(
-                        new AuthClientRespond()
-                        {
-                            redirect = !authenticated,
-                            redirectUrl = _oAuthService.GetAuthCodePath(new State(
-                            WebConfigurationManager.AppSettings[OAuth.HOME_URI]
-                            ))
-                        }, new JsonMediaTypeFormatter(), "application/json"
-                    );
+                new AuthClientRespond()
+                {
+                    redirect = !authenticated,
+                    redirectUrl = _oAuthService.GetAuthCodePath(new State(
+                        WebConfigurationManager.AppSettings[OAuth.HOME_URI]
+                    ))
+                }, new JsonMediaTypeFormatter(), "application/json"
+            );
 
             return response;
         }

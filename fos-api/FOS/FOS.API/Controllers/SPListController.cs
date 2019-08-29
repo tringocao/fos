@@ -1,6 +1,7 @@
 ﻿using FOS.Common;
 using FOS.Model.Domain;
 using FOS.Services;
+using FOS.Services.Providers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,44 +20,24 @@ namespace FOS.API.Controllers
     public class SPListController : ApiController
     {
         IOAuthService _oAuthService;
-        IGraphHttpClient _graphHttpClient;
+        IGraphApiProvider _graphApiProvider;
+        ISharepointContextProvider _sharepointContextProvider;
 
-        public SPListController(IOAuthService oAuthService, IGraphHttpClient graphHttpClient)
+        public SPListController(IOAuthService oAuthService, IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider)
         {
             _oAuthService = oAuthService;
-            _graphHttpClient = graphHttpClient;
+            _graphApiProvider = graphApiProvider;
+            _sharepointContextProvider = sharepointContextProvider;
         }
         // GET api/splist/getlist/{list-id}
         public async Task<HttpResponseMessage> GetList(string Id)
         {
-            var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
-
-            HttpClient client = new HttpClient();
-
-            string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id;
-            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
-            HttpResponseMessage responde = await client.SendAsync(request);
-
-            var json = responde.Content.ReadAsStringAsync();
-
-            return responde;
+            return await _graphApiProvider.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
         }
         // POST api/splist/addlistitem/{list-id}/
         public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]JSONRequest item)
         {
-            var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
-            HttpClient client = new HttpClient();
-
-            string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id + "/items";
-            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Post);
-
-            request.Content = new StringContent(item.data, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage responde = await client.SendAsync(request);
-
-            var json = responde.Content.ReadAsStringAsync();
-
-            return responde;
+            return await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
         }
     }
 }
