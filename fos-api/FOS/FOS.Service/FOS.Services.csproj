@@ -83,12 +83,47 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -101,15 +136,17 @@
   <ItemGroup>
     <Compile Include="DeliveryServices\DeliveryService.cs" />
     <Compile Include="DeliveryServices\IDeliveryService.cs" />
+    <Compile Include="ExternalServices\ExternalServiceFactory.cs" />
+    <Compile Include="ExternalServices\GrabFoodService\GrabFoodService.cs" />
+    <Compile Include="ExternalServices\IExternalService.cs" />
+    <Compile Include="ExternalServices\IExternalServiceFactory.cs" />
+    <Compile Include="ExternalServices\NowService\Convert\ConvertJson.cs" />
+    <Compile Include="ExternalServices\NowService\Model\NowServiceConfiguration.cs" />
+    <Compile Include="ExternalServices\NowService\NowService.cs" />
+    <Compile Include="ExternalServices\NowService\RequestMethodFactory.cs" />
+    <Compile Include="FoodServices\FoodService.cs" />
     <Compile Include="FavoriteService\FavoriteService.cs" />
-    <Compile Include="FoodServices\ExternalServiceFactory.cs" />
-    <Compile Include="FoodServices\GrabFoodService\GrabFoodService.cs" />
-    <Compile Include="FoodServices\IExternalServiceFactory.cs" />
     <Compile Include="FoodServices\IFoodService.cs" />
-    <Compile Include="FoodServices\NowService\Convert\ConvertJson.cs" />
-    <Compile Include="FoodServices\NowService\Model\NowServiceConfiguration.cs" />
-    <Compile Include="FoodServices\NowService\NowService.cs" />
-    <Compile Include="FoodServices\NowService\RequestMethodFactory.cs" />
     <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="ConfigurationProvider.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -125,6 +162,7 @@
     <Compile Include="OAuthService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProvinceServices\IProvinceService.cs" />
     <Compile Include="ProvinceServices\ProvinceService.cs" />
     <Compile Include="RestaurantServices\IRestaurantService.cs" />
     <Compile Include="RestaurantServices\RestaurantService.cs" />
@@ -146,18 +184,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\FOS.Services.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Debug\FOS.Services.csprojAssemblyReference.cache" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="obj\Debug\FOS.Services.csproj.FileListAbsolute.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-    <Folder Include="bin\Release\" />
-    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="bin\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

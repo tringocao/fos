@@ -60,7 +60,10 @@
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DiscountPrice.cs" />
     <Compile Include="Dto\Food.cs" />
-    <Compile Include="Dto\FoodType.cs" />
+    <Compile Include="Dto\FoodCategory.cs" />
+    <Compile Include="Dto\RestaurantCategory.cs" />
+    <Compile Include="Domain\State.cs" />
+    <Compile Include="Domain\Token.cs" />
     <Compile Include="Dto\Order.cs" />
     <Compile Include="Dto\Price.cs" />
     <Compile Include="Dto\Province.cs" />
@@ -71,9 +74,6 @@
     <Compile Include="Mapping\Config.cs" />
     <Compile Include="Mapping\JsonDtoMapper.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,24 +83,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\FOS.Model.csproj.CopyComplete" />
-    <None Include="obj\Debug\FOS.Model.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Debug\FOS.Model.csprojAssemblyReference.cache" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\FOS.Common.dll" />
-    <Content Include="bin\Debug\FOS.Common.pdb" />
-    <Content Include="bin\Debug\FOS.Model.dll" />
-    <Content Include="bin\Debug\FOS.Model.pdb" />
-    <Content Include="obj\Debug\FOS.Model.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\FOS.Model.dll" />
-    <Content Include="obj\Debug\FOS.Model.pdb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\" />
-    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="bin\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

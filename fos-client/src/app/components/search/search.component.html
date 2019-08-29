@@ -1,0 +1,36 @@
+<div id="search-component">
+        <form class="example-form" (ngSubmit)="onSubmit()">
+            <mat-form-field class="example-full-width">
+                <input matInput  placeholder="Search.." name="search2" #searchBox id="search-box" (input)="search(searchBox.value)" />
+                <ul class="search-result">
+                        <li *ngFor="let res of restaurant$ | async">
+                        <p routerLink="{{res.url_rewrite_name}}">
+                            {{res.name}}
+                        </p>
+                        </li>
+                </ul>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
+                    <mat-select-trigger>
+                        {{toppings.value ? toppings.value[0].name : ''}}
+                        <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+                            (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-optgroup *ngFor="let group of toppingList" [label]="group.name"
+                                    [disabled]="group.disabled">
+                        <mat-option *ngFor="let category of group.category" [value]="category">
+                        {{category.name}}
+                        </mat-option>
+                    </mat-optgroup>
+                    <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+            <div class="example-button-row">
+            <button mat-mini-fab color="primary" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+
+    </form>
+</div>
+  
