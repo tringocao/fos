@@ -1,5 +1,5 @@
 import { RestaurantService } from './../../services/restaurant/restaurant.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges, Input } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -14,6 +14,7 @@ interface Restaurant {
   address: string;
   promotion: string;
   open: string;
+  delivery_id: string;
   url_rewrite_name: string;
 }
 
@@ -23,13 +24,14 @@ interface Restaurant {
   styleUrls: ['./list-restaurant.component.less']
 })
 export class ListRestaurantComponent implements OnInit {
+
   sortNameOrder: number;
   sortCategoryOrder: number;
   categorys: any;
   displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open', 'menu'];
   dataSource: any = new MatTableDataSource(restaurants);
-
   userId: string;
+  load:boolean;
   favoriteRestaurants: string[];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -76,6 +78,7 @@ export class ListRestaurantComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.load = true;
     this.categorys = ['a', 'b', 'c', 'd'];
     this.sortNameOrder = 0;
     this.sortCategoryOrder = 0;
@@ -117,6 +120,7 @@ export class ListRestaurantComponent implements OnInit {
           // tslint:disable-next-line:prefer-const
           let restaurantItem: Restaurant = {
             id: element.restaurant_id,
+            delivery_id: element.delivery_id,
             stared: this.favoriteRestaurants.includes(element.restaurant_id),
             restaurant: element.name,
             address: element.address,
@@ -132,14 +136,18 @@ export class ListRestaurantComponent implements OnInit {
           };
           dataSourceTemp.push(restaurantItem);
         });
+        console.log(dataSourceTemp);
         this.dataSource = new MatTableDataSource(dataSourceTemp);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        this.load = false;
       }});
     });
+
   }
 
   getRes($event) {
+    this.load = true;
     this.restaurantService.getRestaurantIds($event.topic, $event.keyword).subscribe(response => {
       this.restaurantService.getRestaurants(response).subscribe(result => {
         if(result != null && result != ""){
@@ -150,6 +158,7 @@ export class ListRestaurantComponent implements OnInit {
           // tslint:disable-next-line:prefer-const
           let restaurantItem: Restaurant = {
             id: element.restaurant_id,
+            delivery_id: element.delivery_id,
             stared: this.favoriteRestaurants.includes(element.restaurant_id),
             restaurant: element.name,
             address: element.address,
@@ -168,7 +177,10 @@ export class ListRestaurantComponent implements OnInit {
         this.dataSource = new MatTableDataSource(dataSourceTemp);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        this.load = false;
+
       }});
     });
+
   }
 }

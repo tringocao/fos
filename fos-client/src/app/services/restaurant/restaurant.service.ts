@@ -10,7 +10,15 @@ export class RestaurantService {
   ids: any;
 
   constructor(private http: HttpClient) {}
-
+  getFood(delivery_id: any) {
+    return this.http.get<any>(environment.apiUrl + 'GetFoodCatalogues', 
+     {
+      params: {
+        IdService: '1',
+        delivery_id: delivery_id,
+      }
+    })
+    }
   getRestaurantIds(topic: any, keyword:string) {
     return this.http.put<any>(environment.apiUrl + 'api/Restaurant/PutCategorySearch', 
     {
@@ -78,8 +86,6 @@ export class RestaurantService {
           dataSourceTemp.push(restaurantItem);
         });
       });
-
-
   })
   return of(dataSourceTemp);
   }

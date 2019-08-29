@@ -1,19 +1,19 @@
 <div id="search-component">
         <form class="example-form" (ngSubmit)="onSubmit()">
             <mat-form-field class="example-full-width">
-                <input matInput  placeholder="Search" name="search2" #searchBox id="search-box" (input)="search(searchBox.value)" />
+                <input matInput  placeholder="Search" name="search2" [value]="keyword" #searchBox id="search-box" (input)="search(searchBox.value)" />
                 <div  class="search-result">
                         <div *ngFor="let res of restaurant$ | async">
-                            <div  *ngIf="show$">
+                            <div  *ngIf="show$ && keyword">
                                 <p  routerLink="{{res.url_rewrite_name}}">
                                     {{res.name}}
                                 </p>
-                            </div>
+                            </div>  
                         </div>
                     </div>
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <mat-select placeholder="Toppings" [formControl]="toppings" (ngModelChange)="onSubmit()" multiple>
+                <mat-select placeholder="Toppings" [formControl]="toppings" (openedChange)="openedChange($event)" multiple>
                     <mat-select-trigger>
                         {{toppings.value ? toppings.value[0] ? toppings.value[0].name : '' : ''}}
                         <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
@@ -22,7 +22,7 @@
                     </mat-select-trigger>
                     <mat-optgroup *ngFor="let group of toppingList" [label]="group.name"
                                     [disabled]="group.disabled">
-                        <mat-option *ngFor="let category of group.category" [value]="category">
+                        <mat-option *ngFor="let category of group.category" [value]="category" >
                         {{category.name}}
                         </mat-option>
                     </mat-optgroup>
@@ -31,5 +31,14 @@
             </mat-form-field>
 
     </form>
+    <div *ngIf ="loading">
+            <section class="example-section">
+              <mat-progress-bar
+                  class="example-margin"
+                  [color]="color"
+                  [mode]="mode">
+              </mat-progress-bar>
+            </section>
+          </div>
 </div>
   

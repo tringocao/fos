@@ -52,6 +52,8 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { MenuComponent } from './components/menu/menu.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     MealsPageComponent,
     SearchComponent,
     DialogComponent,
-    MenuComponent
+    MenuComponent,
+    FoodCategoriesComponent
   ],
     // declarations: [
     //     AppComponent,
@@ -97,6 +100,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
     MatIconModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatProgressBarModule,
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,

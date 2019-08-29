@@ -56,6 +56,7 @@ namespace FOS.API
             container.RegisterType<Services.ProvinceServices.IProvinceService, Services.ProvinceServices.ProvinceService>();
             container.RegisterType<Services.RestaurantServices.IRestaurantService, Services.RestaurantServices.RestaurantService>();
             container.RegisterType<Services.FavoriteService.IFavoriteService, Services.FavoriteService.FavoriteService>();
+            container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>();
 
             //container.RegisterType<Services.ICrawlLinksService, Services.CrawlLinksService>();
             //container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());

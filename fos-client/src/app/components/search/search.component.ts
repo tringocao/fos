@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnChanges, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { RestaurantService } from './../../services/restaurant/restaurant.service';
 import {MatSelectModule} from '@angular/material/select';
@@ -26,13 +26,20 @@ export interface CategoryGroup {
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.less']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnChanges {
   restaurant$: Observable<Restaurant[]>;
   private searchTerms = new Subject<string>();
   toppings = new FormControl();
   show$ = false;
   keyword = "";
+  color = 'primary';
+  mode = 'indeterminate';
   toppingList: CategoryGroup[];
+  @Input('loading') loading : boolean;
+
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log(changes);
+  }
   constructor(private restaurantService: RestaurantService) {
       this.restaurantService.GetMetadataForCategory().subscribe(result => {
         const jsonData = JSON.parse(result);
@@ -71,12 +78,21 @@ export class SearchComponent implements OnInit {
   @ViewChild(MatSelectModule, { static: true }) x: MatSelectModule;
   @Output()  change = new EventEmitter();
   submitted = false;
+  isOpen = false;
 
+  
+  openedChange(opened: boolean) {
+    console.log(opened ? 'opened' : 'closed');
+    if(!opened){
+      this.onSubmit();
+    }
+  }
   onSubmit() { 
     this.submitted = true;
     let cod = this.toppings.value ? this.getCondition(this.toppings.value) : "[]"
     console.log(cod);
     this.change.emit({topic: JSON.parse(cod), keyword: this.keyword});
+    this.keyword = "";
   }
   getCondition(term:Category[]):string{
     let getCod = "";
@@ -94,13 +110,14 @@ export class SearchComponent implements OnInit {
     this.searchTerms.next(term);
   }
   ngOnInit(): void {
+    this.loading = true;
+
     this.restaurant$ = this.searchTerms.pipe(
       // wait 500ms after each keystroke before considering the term
       debounceTime(500),
 
       // ignore new term if same as previous term
       distinctUntilChanged(),
-
       // switch to new search observable each time the term changes
       switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, "4")),
       );
