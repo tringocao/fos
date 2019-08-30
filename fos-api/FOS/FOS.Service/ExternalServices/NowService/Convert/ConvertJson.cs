@@ -20,6 +20,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             List<Restaurant> newList = new List<Restaurant>();
             if (data.result == "success")
             {
+                if (data.reply.search_result.Count < 1) return newList;
                 foreach (var id in data.reply.search_result[0].restaurant_ids)//get the fisrt catalogue
                 {
                     Restaurant item = new Restaurant();
