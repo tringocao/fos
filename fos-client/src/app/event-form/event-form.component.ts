@@ -29,7 +29,8 @@ export interface User {
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
-  styleUrls: ['./event-form.component.less']
+  styleUrls: ['./event-form.component.less'],
+  
 })
 export class EventFormComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -79,7 +80,7 @@ export class EventFormComponent implements OnInit {
 
   eventforms: EventUser[];
 
-  displayedColumns = ['name', 'email'];
+  displayedColumns = ['name', 'email','action'];
 
 
 
@@ -189,7 +190,39 @@ export class EventFormComponent implements OnInit {
     });
     this.userPickerGroups.push({ name: 'Office 365', userpicker: this.office365Group });
     this.userPickerGroups.push({ name: 'User', userpicker: this.office365User });
+
+    // get photo
+    // console.log("photo data");
+    // this.http.get(environment.apiUrl + '/api/SPUser/GetUserPhoToById?Id=e618f708-8dde-4f04-9d9b-5c5bc3a4905d').subscribe(data => {
+    //   console.log(data);
+    // });
+  //   this.http
+  //     .get(environment.apiUrl + '/api/SPUser/GetUserPhoToById?Id=e618f708-8dde-4f04-9d9b-5c5bc3a4905d', { responseType: 'blob' })
+  //     .subscribe(data => {
+  //       console.log(data);
+  //       let reader = new FileReader();
+  //       reader.addEventListener("load", () => {
+  //         this.imageToShow = reader.result;
+  //       }, false);
+
+  //       if (image) {
+  //         reader.readAsDataURL(image);
+  //  }
+  //     });
+
+      // this.http.get(environment.apiUrl + '/api/SPUser/GetUserPhoToById?Id=e618f708-8dde-4f04-9d9b-5c5bc3a4905d',{ responseType: 'blob' }).subscribe(data => {
+      //   var img = data;
+      //   // this.createImageFromBlob(img);
+      //   // this.isImageLoading = false;
+      //   var objectURL = URL.createObjectURL(img);
+      //   console.log(objectURL);
+      // }, error => {
+      //   // this.isImageLoading = false;
+      //   console.log(error);
+      // });
+
   }
+  
   private toDateString(date: Date): string {
     return (date.getFullYear().toString() + '-'
       + ("0" + (date.getMonth() + 1)).slice(-2) + '-'
@@ -256,6 +289,28 @@ export class EventFormComponent implements OnInit {
     }
   }
 
+
+  deleteUserInTable(name: string): void {
+
+
+
+      for (var j = 0; j < this.eventusers.length; j++) {
+        if (name == this.eventusers[j].name) {
+          this.eventusers.splice(j, 1);
+
+          j--;
+          this.table.renderRows();
+        }
+      }
+      // this.userSelect.splice(i, 1);
+      // i--;
+      // this.table.renderRows();
+
+
+    // this.eventusers = [];
+    // this.selectedItems = [];
+  }
+
   DeleteUserInTable(): void {
 
     for (var i = 0; i < this.userSelect.length; i++) {
@@ -305,6 +360,10 @@ export class EventFormComponent implements OnInit {
       return;
     }
 
+    var newParticipantList = participantList.slice(0, participantList.length-1);
+
+    console.log('participant list: ' + newParticipantList);
+
     console.log('nguoi host: ' + this.HostEmail);
     var eventlistitem: EventList = {
       eventTitle: this.EventTitle,
@@ -314,7 +373,7 @@ export class EventFormComponent implements OnInit {
       eventTimeToClose: this.dateTimeToClose,
       eventTimeToReminder: this.dateToReminder,
       eventHost: this.HostEmail,
-      eventParticipants: participantList,
+      eventParticipants: newParticipantList,
     };
     this.eventFormService.addEventListItem(eventlistitem)
   }
