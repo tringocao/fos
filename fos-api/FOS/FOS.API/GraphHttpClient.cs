@@ -25,9 +25,9 @@ namespace FOS.API
         {
             HttpRequestMessage request = new HttpRequestMessage(method, path);
 
-            var accessToken = _oAuthService.GetTokenFromCookie()._accessToken;
+            //var accessToken = _oAuthService.GetTokenFromCookie()._accessToken;
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             return request;
         }

@@ -1,6 +1,9 @@
 ﻿using FOS.Common;
 using FOS.Model.Domain;
 using FOS.Services;
+using FOS.Services.EventServices;
+using FOS.Services.Providers;
+using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,44 +22,42 @@ namespace FOS.API.Controllers
     public class SPListController : ApiController
     {
         IOAuthService _oAuthService;
-        IGraphHttpClient _graphHttpClient;
+        IGraphApiProvider _graphApiProvider;
+        ISharepointContextProvider _sharepointContextProvider;
+        IEventService _eventService;
 
-        public SPListController(IOAuthService oAuthService, IGraphHttpClient graphHttpClient)
+        public SPListController(IOAuthService oAuthService, IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IEventService eventService)
         {
             _oAuthService = oAuthService;
-            _graphHttpClient = graphHttpClient;
+            _graphApiProvider = graphApiProvider;
+            _sharepointContextProvider = sharepointContextProvider;
+            _eventService = eventService;
         }
         // GET api/splist/getlist/{list-id}
         public async Task<HttpResponseMessage> GetList(string Id)
         {
-            var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
-
-            HttpClient client = new HttpClient();
-
-            string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id + "/items?expand=fields";
-            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Get);
-            HttpResponseMessage responde = await client.SendAsync(request);
-
-            var json = responde.Content.ReadAsStringAsync();
-
-            return responde;
+            return await _graphApiProvider.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
         }
         // POST api/splist/addlistitem/{list-id}/
-        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]dynamic item)
+        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]JSONRequest item)
         {
-            var SiteId = WebConfigurationManager.AppSettings[OAuth.SITE_ID];
-            HttpClient client = new HttpClient();
+            return await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
+        }
+        public string GetAllOrder()
+        {
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                var web = clientContext.Web;
+                var list = web.Lists.GetByTitle("Event List");
+                clientContext.Load(list);
+                clientContext.ExecuteQuery();
 
-            string path = "https://graph.microsoft.com/v1.0/sites/" + SiteId + "/lists/" + Id + "/items";
-            HttpRequestMessage request = _graphHttpClient.GetRequestMessage(path, HttpMethod.Post);
+                var collListItem = list.GetItems(CamlQuery.CreateAllItemsQuery());
+                clientContext.Load(collListItem);
+                clientContext.ExecuteQuery();
 
-            request.Content = new StringContent( item, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage responde = await client.SendAsync(request);
-
-            var json = responde.Content.ReadAsStringAsync();
-
-            return responde;
+                return JsonConvert.SerializeObject(_eventService.MapSharepointEventListToEventModel(collListItem));
+            }
         }
     }
 }

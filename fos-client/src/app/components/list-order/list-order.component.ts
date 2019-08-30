@@ -8,18 +8,9 @@ import { RestaurantService } from './../../services/restaurant/restaurant.servic
 import * as moment from 'moment';
 import 'moment/locale/vi';
 import { Category } from './../search/search.component';
+import Event from '../../models/event';
 
 moment.locale('vi');
-
-interface Order {
-  restaurant: string;
-  category: string;
-  date: Date;
-  participants: number;
-  maximumBudget: number;
-  host: number;
-  name: string;
-}
 
 @Component({
   selector: 'app-list-order',
@@ -40,8 +31,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
   isLoading = false;
   currency = 'VND';
   userId: any;
-  allOrder = [];
-  myOrder = [];
+  allOrder: Event[];
+  myOrder: Event[];
   myOrderCategories = [];
   allOrderCategories = [];
 
@@ -66,8 +57,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.dataSource.paginator = this.paginator;
     this.restaurantService.getCurrentUserId().subscribe(value => {
       this.userId = value.id;
+      this.getOrders();
     });
-    this.getOrders(true);
   }
 
   ngOnChanges() {
@@ -99,13 +90,12 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.dataSource.paginator = this.paginator;
   }
 
-  getOrders(isOnInit: boolean) {
+  getOrders() {
     this.orderService.getAllOrder().subscribe(response => {
-      const myOrder = response.value.filter(
-        item => item.createdBy.user.id === this.userId
-      );
-      this.myOrder = this.mapResponseToOders(myOrder);
-      this.allOrder = this.mapResponseToOders(response.value);
+      this.allOrder = this.orderService.mapResponseDataToEvent(response);
+      this.myOrder = this.allOrder.filter(item => {
+        return item.createdBy === this.userId || item.hostId === this.userId;
+      });
       this.getCateroriesFromOrders(this.myOrder, true);
       this.getCateroriesFromOrders(this.allOrder, false);
       this.setDataSource(this.myOrder);
@@ -113,7 +103,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     });
   }
 
-  getCateroriesFromOrders(orders: any, isMyOrder: boolean) {
+  getCateroriesFromOrders(orders: Event[], isMyOrder: boolean) {
     const categories = [];
     orders.forEach(element => {
       categories.push(element.category);
@@ -126,23 +116,6 @@ export class ListOrderComponent implements OnInit, OnChanges {
     } else {
       this.allOrderCategories = myCategories;
     }
-  }
-
-  mapResponseToOders(response: any) {
-    const result = [];
-    response.forEach(element => {
-      const order: Order = {
-        name: element.fields.EventTitle,
-        category: element.fields.EventCategory,
-        date: element.fields.EventTimeToClose,
-        maximumBudget: element.fields.EventMaximumBudget,
-        participants: element.fields.EventParticipants,
-        restaurant: element.fields.EventRestaurant,
-        host: element.fields.EventHostLookupId
-      };
-      result.push(order);
-    });
-    return result;
   }
 
   async categoryChange(event: any) {
@@ -160,24 +133,30 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   filterBoth() {
     if (this.searchQuery !== '' && this.categorySelected !== null) {
-      this.dataSource.filterPredicate = (dataFilter: Order, filter: string) => {
+      this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return (
           dataFilter.category === this.categorySelected &&
-          dataFilter.restaurant
+          (dataFilter.restaurant
             .toLowerCase()
-            .indexOf(this.searchQuery.toLowerCase()) > -1
+            .indexOf(this.searchQuery.toLowerCase()) > -1 ||
+            dataFilter.name
+              .toLowerCase()
+              .indexOf(this.searchQuery.toLowerCase()) > -1)
         );
       };
     } else if (this.searchQuery !== '' && this.categorySelected === null) {
-      this.dataSource.filterPredicate = (dataFilter: Order, filter: string) => {
+      this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return (
           dataFilter.restaurant
+            .toLowerCase()
+            .indexOf(this.searchQuery.toLowerCase()) > -1 ||
+          dataFilter.name
             .toLowerCase()
             .indexOf(this.searchQuery.toLowerCase()) > -1
         );
       };
     } else if (this.categorySelected !== null && this.searchQuery === '') {
-      this.dataSource.filterPredicate = (dataFilter: Order, filter: string) => {
+      this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return dataFilter.category === this.categorySelected;
       };
     }

@@ -1,3 +1,4 @@
+using FOS.Services.Providers;
 using System;
 
 using Unity;
@@ -56,6 +57,8 @@ namespace FOS.API
             container.RegisterType<Services.ProvinceServices.IProvinceService, Services.ProvinceServices.ProvinceService>();
             container.RegisterType<Services.RestaurantServices.IRestaurantService, Services.RestaurantServices.RestaurantService>();
             container.RegisterType<Services.FavoriteService.IFavoriteService, Services.FavoriteService.FavoriteService>();
+            container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>();
+            container.RegisterType<Services.EventServices.IEventService, Services.EventServices.EventService>();
 
             //container.RegisterType<Services.ICrawlLinksService, Services.CrawlLinksService>();
             //container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());
@@ -68,6 +71,10 @@ namespace FOS.API
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.RegisterType<IGraphHttpClient, GraphHttpClient>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
+
+            container.RegisterType<IGraphApiProvider, GraphApiProvider>();
+            container.RegisterType<ISharepointContextProvider, SharepointContextProvider>();
+            container.RegisterType<ITokenProvider, TokenProvider>();
 
             container.AddExtension(new Diagnostic());
         }

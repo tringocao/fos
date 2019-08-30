@@ -12,7 +12,7 @@ namespace FOS.Model.Dto
         public int id { get; set; }
         public bool is_available { get; set; }
         public bool is_group_discount_item { get; set; }
-        public string photos { get; set; }
+        public List<Photo> photos { get; set; }
         public Price price { get; set; }
         public DiscountPrice discount_price { get; set; }
         public string name { get; set; }

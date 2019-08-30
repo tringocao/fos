@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,8 +57,15 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
+import { MenuComponent } from './components/menu/menu.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
+import { LoadingComponent } from './components/loading/loading.component';
 import { OrderTabComponent } from './components/order-tab/order-tab.component';
 import { ListOrderComponent } from './components/list-order/list-order.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,9 +78,13 @@ import { ListOrderComponent } from './components/list-order/list-order.component
     EventFormComponent,
     OrdersPageComponent,
     MealsPageComponent,
+    SearchComponent,
+    DialogComponent,
+    MenuComponent,
+    FoodCategoriesComponent,
+    LoadingComponent,
     OrderTabComponent,
-    ListOrderComponent,
-    SearchComponent
+    ListOrderComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -83,6 +95,7 @@ import { ListOrderComponent } from './components/list-order/list-order.component
   //     EventFormComponent
   // ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     DlDateTimeDateModule,
@@ -101,6 +114,7 @@ import { ListOrderComponent } from './components/list-order/list-order.component
     MatIconModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatProgressBarModule,
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,
@@ -128,7 +142,14 @@ import { ListOrderComponent } from './components/list-order/list-order.component
       multi: true
     }
   ],
-  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule],
-  bootstrap: [AppComponent]
+  exports: [
+    HeaderComponent,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    DialogComponent
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent]
 })
 export class AppModule {}

@@ -1,0 +1,17 @@
+<div id="search-component">
+    <h3>Menu</h3>
+            <mat-form-field class="example-full-width">
+                <mat-select placeholder="Toppings" [formControl]="ts" (openedChange)="openedChange($event)">
+                    <!-- <mat-optgroup *ngFor="let group of toppingList" [label]="group.name"
+                                    [disabled]="group.disabled">
+                        <mat-option *ngFor="let category of group.category" [value]="category" >
+                        {{category.name}}
+                        </mat-option>
+                    </mat-optgroup> -->
+                    <mat-option *ngFor="let t of toppingList" [value]="t.dish_type_id">{{t.dish_type_name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+    
+</div>
+<app-loading [loading] = "loading"></app-loading>

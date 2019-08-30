@@ -1,5 +1,5 @@
 <div class="restaurants ">
-    <app-search (change)='getRes($event)'></app-search>
+    <app-search [loading]="load" (change)='getRes($event)'></app-search>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
@@ -50,6 +50,12 @@
         <td mat-cell *matCellDef="let element">{{ element.open }}</td>
       </ng-container>
 
+      <ng-container matColumnDef="menu">
+          <th mat-header-cell *matHeaderCellDef>Menu</th>
+          <td mat-cell *matCellDef="let element">
+              <app-menu   [restaurant]="element"></app-menu>
+          </td>          
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
