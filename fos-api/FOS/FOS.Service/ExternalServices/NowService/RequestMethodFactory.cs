@@ -61,31 +61,29 @@ namespace FOS.Services.ExternalServices.NowService
             }
             else return myJSONRequest;
         }
-        private Task<HttpResponseMessage> PostMethod(StringBuilder myJSONRequest)
+        private async Task<HttpResponseMessage> PostMethodAsync(StringBuilder myJSONRequest)
         {
             HttpContent requestContent = new StreamContent(Config.GenerateStreamFromString(myJSONRequest.ToString()));
-            var response = h.PostAsync(api.API, requestContent);
-            response.Wait(3000);
+            var response = await h.PostAsync(api.API, requestContent);
             return response;
         }
-        private Task<HttpResponseMessage> GetMethod(StringBuilder myJSONRequest)
+        private async Task<HttpResponseMessage> GetMethod(StringBuilder myJSONRequest)
         {
-            var response = h.GetAsync(api.API + myJSONRequest.ToString());
-            response.Wait(3000);
+            var response = await h.GetAsync(api.API + myJSONRequest.ToString());
             return response;
         }
-        public Task<HttpResponseMessage> CallApi()
+        public async Task<HttpResponseMessage> CallApiAsync()
         {
             SetHeader();
             switch (api.RequestMethod)
             {
                 case RequestMethod.Post:
                     {
-                        return PostMethod(SetBody());
+                        return await PostMethodAsync(SetBody());
                     }
                 case RequestMethod.Get:
                     {
-                        return GetMethod(SetParams());
+                        return await GetMethod(SetParams());
                     }
                 default:
                     throw new Exception();

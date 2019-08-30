@@ -7,14 +7,14 @@ import { MatPaginator } from '@angular/material/paginator';
 const restaurants: any = [];
 
 interface Restaurant {
-  id: string;
+  id: number;
   stared: boolean;
   restaurant: string;
   category: string;
   address: string;
   promotion: string;
   open: string;
-  delivery_id: string;
+  delivery_id: number;
   url_rewrite_name: string;
 }
 
@@ -55,7 +55,7 @@ export class ListRestaurantComponent implements OnInit {
         console.log( this.favoriteRestaurants);
       })
     });
-    this.getRestaurant()
+        this.getRestaurant({topic:JSON.parse("[]"), keyword:""});
   }
 
   constructor(private restaurantService: RestaurantService) {}
@@ -73,7 +73,7 @@ export class ListRestaurantComponent implements OnInit {
           }
         })
         console.log( this.favoriteRestaurants);
-        this.getRestaurant();
+        this.getRestaurant({topic:JSON.parse("[]"), keyword:""});
       })
     })
   }
@@ -91,20 +91,17 @@ export class ListRestaurantComponent implements OnInit {
           }
         })
         console.log( this.favoriteRestaurants);
-        this.getRestaurant();
+        this.getRestaurant({topic:JSON.parse("[]"), keyword:""});
       })
     })
   }
 
  
-  getRestaurant() {
-    this.restaurantService.getRestaurantIds(JSON.parse("[]"), "").subscribe(response => {
-      this.restaurantService.getRestaurants(response).subscribe(result => {
-        if(result != null && result != ""){
-        const jsonData = JSON.parse(result);
-        this.dataSource = [];
+  getRestaurant($event) {
+    this.restaurantService.getRestaurantIds($event.topic, $event.keyword).then(response => {
+      this.restaurantService.getRestaurants(response).then(result => {
         const dataSourceTemp = [];
-        jsonData.forEach((element, index) => {
+        result.forEach((element, index) => {          
           let restaurantItem: Restaurant = {
             id: element.restaurant_id,
             delivery_id: element.delivery_id,
@@ -128,45 +125,7 @@ export class ListRestaurantComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.load = false;
-      }});
-    });
-
-  }
-
-  getRes($event) {
-    this.load = true;
-    this.restaurantService.getRestaurantIds($event.topic, $event.keyword).subscribe(response => {
-      this.restaurantService.getRestaurants(response).subscribe(result => {
-        if(result != null && result != ""){
-        const jsonData = JSON.parse(result);
-        this.dataSource = [];
-        const dataSourceTemp = [];
-        jsonData.forEach((element, index) => {
-          // tslint:disable-next-line:prefer-const
-          let restaurantItem: Restaurant = {
-            id: element.restaurant_id,
-            delivery_id: element.delivery_id,
-            stared: this.favoriteRestaurants.includes(element.restaurant_id),
-            restaurant: element.name,
-            address: element.address,
-            category:
-              element.categories.length > 0 ? element.categories[0] : '',
-            promotion:
-              element.promotion_groups.length > 0
-                ? element.promotion_groups[0].text
-                : '',
-            open:
-                  (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?"),
-              url_rewrite_name:""
-          };
-          dataSourceTemp.push(restaurantItem);
-        });
-        this.dataSource = new MatTableDataSource(dataSourceTemp);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.load = false;
-
-      }});
+      });
     });
 
   }

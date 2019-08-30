@@ -22,41 +22,41 @@ namespace FOS.Services.ProvinceServices
             return "ProvinceService in " + _craw.GetExternalServiceById(IdService) + "is ready";
         }
 
-        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
+        public async Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
         {
-            return _craw.GetFoodCatalogues(delivery);
+            return await _craw.GetFoodCataloguesAsync(delivery);
         }
 
 
-        public List<Province> GetMetadataForProvince()
+        public async Task<List<Province>> GetMetadataForProvinceAsync()
         {
-            return _craw.GetMetadataForProvince();
+            return await _craw.GetMetadataForProvinceAsync();
         }
 
-        public Province GetMetadataById(int city_id)
+        public async Task<Province> GetMetadataByIdAsync(int city_id)
         {
-            var listProvinces = GetMetadataForProvince();
-            return listProvinces.Where(p => p.id == city_id.ToString()).FirstOrDefault();
+            var listProvinces = await GetMetadataForProvinceAsync();
+            return  listProvinces.Where(p => p.id == city_id.ToString()).FirstOrDefault();
         }
 
-        public List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant)
+        public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant)
         {
-            return _craw.GetRestaurantDeliveryInfor(restaurant);
+            return await _craw.GetRestaurantDeliveryInforAsync(restaurant);
         }
 
-        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> categories)
+        public async Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> categories)
         {
-            return _craw.GetRestaurants(province, keyword, categories);
+            return await _craw.GetRestaurantsAsync(province, keyword, categories);
         }
 
-        public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
+        public async Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(List<Restaurant> restaurant)
         {
-            return _craw.GetRestaurantsDeliveryInfor(restaurant);
+            return await _craw.GetRestaurantsDeliveryInforAsync(restaurant);
         }
 
-        public List<RestaurantCategory> GetMetadataForCategory()
+        public async Task<List<RestaurantCategory>> GetMetadataForCategoryAsync()
         {
-            return _craw.GetMetadataForCategory();
+            return await _craw.GetMetadataForCategoryAsync();
         }
     }
 }

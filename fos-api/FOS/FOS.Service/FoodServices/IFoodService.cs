@@ -1,13 +1,14 @@
 ﻿using FOS.Model.Dto;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FOS.Services.FoodServices
 {
     public interface IFoodService
     {
         string GetExternalServiceById(int IdService);
-        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
-        List<FoodCategory> GetFoodCataloguesFromDeliveryId(int delivery_id);
-        List<Food> GetFoodFromCatalogue(int delivery_id, int dish_type_id);
+        Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
+        Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int delivery_id);
+        Task<List<Food>> GetFoodFromCatalogueAsync(int delivery_id, int dish_type_id);
     }
 }

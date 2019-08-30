@@ -1,4 +1,6 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain;
+using FOS.Model.Dto;
+using FOS.Model.Util;
 using FOS.Services.DeliveryServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -14,36 +17,62 @@ namespace FOS.API.Controllers
     [RoutePrefix("api/Delivery")]
     public class DeliveryController : ApiController
     {
-        IDeliveryService _craw;
-        public DeliveryController(IDeliveryService craw)
+        IDeliveryService _deliveryService;
+        public DeliveryController(IDeliveryService deliveryService)
         {
-            _craw = craw;
+            _deliveryService = deliveryService;
         }
         // GET: api/Delivery
         [HttpGet]
         [Route("Get")]
-        public string Get(int IdService, int city_id, int restaurant_id)
+        public async Task<ApiResponse<List<DeliveryInfos>>> GetAsync(int IdService, int city_id, int restaurant_id)
         {
-            _craw.GetExternalServiceById(IdService);
-            return JsonConvert.SerializeObject(_craw.GetRestaurantDeliveryInfor(city_id, restaurant_id));
+            try
+            {
+                _deliveryService.GetExternalServiceById(IdService);
+                return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
+                  await _deliveryService.GetRestaurantDeliveryInforAsync(city_id, restaurant_id)
+                );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<DeliveryInfos>>.CreateFailResult(e.ToString());
+            }
         }
 
         // GET: api/Delivery/5
         [HttpGet]
         [Route("GetFirstId")]
-        public string GetFirstId(int IdService, int city_id, int restaurant_id)
+        public async Task<ApiResponse<DeliveryInfos>> GetFirstIdAsync(int IdService, int city_id, int restaurant_id)
         {
-            _craw.GetExternalServiceById(IdService);
+            try
+            {
+                _deliveryService.GetExternalServiceById(IdService);
+                return ApiUtil<DeliveryInfos>.CreateSuccessfulResult(
+                  await _deliveryService.GetRestaurantFirstDeliveryInforAsync(city_id, restaurant_id)
+                );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<DeliveryInfos>.CreateFailResult(e.ToString());
+            }
 
-            return JsonConvert.SerializeObject(_craw.GetRestaurantFirstDeliveryInfor(city_id, restaurant_id));
         }
         [HttpGet]
         [Route("GetPageDelivery")]
-        public string GetPageDelivery(int IdService, int city_id, int pagenum, int pagesize)
+        public async Task<ApiResponse<List<DeliveryInfos>>> GetPageDeliveryAsync(int IdService, int city_id, int pagenum, int pagesize)
         {
-            _craw.GetExternalServiceById(IdService);
-
-            return JsonConvert.SerializeObject(_craw.GetRestaurantDeliveryInforByPaging(city_id, pagenum, pagesize));
+            try
+            {
+                _deliveryService.GetExternalServiceById(IdService);
+                return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
+                  await _deliveryService.GetRestaurantDeliveryInforByPagingAsync(city_id, pagenum, pagesize)
+                );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<DeliveryInfos>>.CreateFailResult(e.ToString());
+            }
         }
         // POST: api/Delivery
         public void Post([FromBody]string value)
@@ -54,24 +83,29 @@ namespace FOS.API.Controllers
         [HttpPut]
         [Route("PutRestaurantIds")]
         // PUT: api/Delivery/5
-        public string Put(int IdService, int city_id, [FromBody]dynamic data)
+        public async Task<ApiResponse<List<DeliveryInfos>>> Put(int IdService, int city_id, [FromBody]ListRestaurant data)
         {
-            _craw.GetExternalServiceById(IdService);
-            List<Restaurant> newList = new List<Restaurant>();
-
-            String list = data.restaurant_ids;
-            if (list == "") return "";
-            list = list.Remove(0, 1);
-            list = list.Remove(list.Length - 1, 1);
-
-            foreach (var id in list.Split(','))//get the fisrt catalogue
+            try
             {
-                Restaurant item = new Restaurant();
-                item.restaurant_id = id;
-                newList.Add(item);
-            }
-            return JsonConvert.SerializeObject(_craw.GetRestaurantsDeliveryInfor(city_id, newList));
+                _deliveryService.GetExternalServiceById(IdService);
+                List<Restaurant> newList = new List<Restaurant>();
 
+                if (data.restaurant_ids.Count() < 1) ApiUtil<List<DeliveryInfos>>.CreateFailResult("");
+     
+                foreach (var id in data.restaurant_ids)//get the fisrt catalogue
+                {
+                    Restaurant item = new Restaurant();
+                    item.restaurant_id = id.ToString();
+                    newList.Add(item);
+                }
+                return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
+                  await _deliveryService.GetRestaurantsDeliveryInforAsync(city_id, newList)
+                );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<DeliveryInfos>>.CreateFailResult(e.ToString());
+            }
         }
 
         // DELETE: api/Delivery/5

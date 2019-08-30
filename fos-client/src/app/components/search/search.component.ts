@@ -8,26 +8,14 @@ import {
 } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { stringify } from '@angular/compiler/src/util';
-export interface Category {
-  name: string;
-  id: string;
-  code: string;
-}
 
-export interface CategoryGroup {
-  disabled?: boolean;
-  name: string;
-  id: string;
-  code: string;
-  category: Category[];
-}
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.less']
 })
 export class SearchComponent implements OnInit, OnChanges {
-  restaurant$: Observable<Restaurant[]>;
+  restaurant$: Observable<RestaurantSearch[]>;
   private searchTerms = new Subject<string>();
   toppings = new FormControl();
   show$ = false;
@@ -42,7 +30,19 @@ export class SearchComponent implements OnInit, OnChanges {
   isOpen = false;
   ngOnInit(): void {
     this.loading = true;
-
+    this.restaurantService.GetMetadataForCategory().then(result => {
+      result.forEach((element, index) => {
+        if(element.categories.length < 1){
+          let selectAll : Category = {
+            name: "All",
+            id: element.id,
+            code: element.code
+          };
+          element.categories.push(selectAll);
+        }
+      });
+      this.toppingList = result;
+    });
     this.restaurant$ = this.searchTerms.pipe(
       // wait 500ms after each keystroke before considering the term
       debounceTime(500),
@@ -50,7 +50,7 @@ export class SearchComponent implements OnInit, OnChanges {
       // ignore new term if same as previous term
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
-      switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, "4")),
+      switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, 4)),
       );
     }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
@@ -60,39 +60,7 @@ export class SearchComponent implements OnInit, OnChanges {
     this.show$ = false;
   }
   constructor(private restaurantService: RestaurantService) {
-      this.restaurantService.GetMetadataForCategory().subscribe(result => {
-        const jsonData = JSON.parse(result);
-        let dataSourceTemp1 = [];
-
-        jsonData.forEach((element, index) => {
-          // tslint:disable-next-line:prefer-const
-          let dataSourceTemp2 = [];
-          if(element.categories.length < 1){
-            let selectAll : Category = {
-              name: "All",
-              id: element.id,
-              code: element.code
-            };
-            dataSourceTemp2.push(selectAll);
-          }
-          element.categories.forEach(e => {
-            let Category: Category = {
-              name: e.name,
-              id: e.id,
-              code: e.code
-            };
-            dataSourceTemp2.push(Category);
-          });
-          let categoriesItem: CategoryGroup = {
-              name: element.name,
-              id: element.id,
-              category:dataSourceTemp2,
-              code: element.code        
-          };
-          dataSourceTemp1.push(categoriesItem);
-        });
-        this.toppingList = dataSourceTemp1;
-      });
+      
   }
 
 

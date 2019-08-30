@@ -17,14 +17,14 @@ interface Food {
   price: string;
 }
 interface Restaurant {
-  id: string;
+  id: number;
   stared: boolean;
   restaurant: string;
   category: string;
   address: string;
   promotion: string;
   open: string;
-  delivery_id: string;
+  delivery_id: number;
   url_rewrite_name: string;
 }
 @Component({
