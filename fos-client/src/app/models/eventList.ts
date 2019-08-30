@@ -5,5 +5,6 @@ export class EventList {
     eventMaximumBudget: number;
     eventTimeToClose: string;
     eventTimeToReminder: string;
-    eventHost: string
+    eventHost: string;
+    eventParticipants: string
 }

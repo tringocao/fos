@@ -6,7 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
 
 // cookieValue = 'UNKNOWN';
-
+ 
   constructor( private cookieService: CookieService ) { }
 
 //   ngOnInit(): void {
@@ -15,9 +15,8 @@ export class AuthService {
 //   }
 
   public getToken(): string {
-      var t = this.cookieService.get('token_key');
-      console.log("token", t);
-    return t || "";
+    var token = this.cookieService.get('token_key');
+    return token || "";
   }
 
   public isAuthenticated(): boolean {

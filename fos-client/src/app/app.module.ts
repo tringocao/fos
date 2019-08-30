@@ -17,26 +17,36 @@ import { TokenInterceptor } from './auth/TokenInterceptor';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './auth/auth.service';
 
+import { HeaderComponent } from './components/navigation/header/header.component';
+import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+
+import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
+import { MealsPageComponent } from './pages/meals-page/meals-page.component';
+
 import {
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSidenavModule,
+  MatListModule,
+  MatInputModule
 } from '@angular/material';
 import { EventFormComponent } from './event-form/event-form.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SearchComponent } from './components/search/search.component';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule,
-  MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule
+  MatButtonModule, MatCardModule, MatDialogModule,
+  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
 } from '@angular/material';
 
-import { MatSelectModule } from '@angular/material/select';
-import { MatGridListModule } from '@angular/material/grid-list';
+import {MatSelectModule} from '@angular/material/select';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 
@@ -47,8 +57,21 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     ListRestaurantComponent,
     RestaurantsPageComponent,
     ServiceTabComponent,
-    EventFormComponent
+    HeaderComponent,
+    SidenavListComponent,
+    EventFormComponent,
+    OrdersPageComponent,
+    MealsPageComponent,
+    SearchComponent
   ],
+    // declarations: [
+    //     AppComponent,
+    //     TestComponent,
+    //     ListRestaurantComponent,
+    //     RestaurantsPageComponent,
+    //     ServiceTabComponent,
+    //     EventFormComponent
+    // ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -75,16 +98,26 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     MatTabsModule,
     HttpClientModule,
     MatCheckboxModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule
   ],
   providers: [
-    OrderService,
+    OrderService, 
     CookieService,
     AuthService,
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }],
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
+  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

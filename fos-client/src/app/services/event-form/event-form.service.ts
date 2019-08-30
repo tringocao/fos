@@ -25,7 +25,7 @@ export class EventFormService {
         console.log("event list");
         console.log(eventlist);
 
-        this.http.post(environment.apiUrl + 'api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
+        this.http.post(environment.apiUrl + 'api/SPList/AddListItemCSOM/3a8b82cb-655b-429c-a774-9a3d2af07289',
         {
           eventTitle: eventlist.eventTitle,
           eventId: eventlist.eventId,
@@ -33,7 +33,8 @@ export class EventFormService {
           eventMaximumBudget: eventlist.eventMaximumBudget,
           eventTimeToClose: eventlist.eventTimeToClose,
           eventTimeToReminder: eventlist.eventTimeToReminder,
-          eventHost: eventlist.eventHost
+          eventHost: eventlist.eventHost,
+          eventParticipants: eventlist.eventParticipants
         })
         .subscribe(
           (val) => {

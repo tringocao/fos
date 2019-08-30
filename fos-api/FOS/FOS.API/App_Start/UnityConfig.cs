@@ -1,3 +1,4 @@
+using FOS.Services.Providers;
 using System;
 
 using Unity;
@@ -47,13 +48,15 @@ namespace FOS.API
             container.RegisterType<Repositories.IOrderRepository, Repositories.OrderRepository>();
             container.RegisterType<Repositories.Infrastructor.IDbFactory, Repositories.Infrastructor.DbFactory>();
             container.RegisterType<Repositories.Repositories.IFOSFoodServiceAPIsRepository, Repositories.Repositories.FOSFoodServiceAPIsRepository>();
+            container.RegisterType<Repositories.Repositories.IFOSFavoriteRestaurantRepository, Repositories.Repositories.FOSFavoriteRestaurantRepository>();
             //container.RegisterType<Repositories.Repositories.IFOSHostLinkRepository, Repositories.Repositories.FOSHostLinkRepository>();
 
-            container.RegisterType<Services.FoodServices.IExternalServiceFactory, Services.FoodServices.ExternalServiceFactory>();
+            container.RegisterType<Services.ExternalServices.IExternalServiceFactory, Services.ExternalServices.ExternalServiceFactory>();
             container.RegisterType<Services.IFOSFoodServiceAPIsService, Services.FOSFoodServiceAPIsService>();
             container.RegisterType<Services.DeliveryServices.IDeliveryService, Services.DeliveryServices.DeliveryService>();
             container.RegisterType<Services.ProvinceServices.IProvinceService, Services.ProvinceServices.ProvinceService>();
             container.RegisterType<Services.RestaurantServices.IRestaurantService, Services.RestaurantServices.RestaurantService>();
+            container.RegisterType<Services.FavoriteService.IFavoriteService, Services.FavoriteService.FavoriteService>();
 
             //container.RegisterType<Services.ICrawlLinksService, Services.CrawlLinksService>();
             //container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());
@@ -64,7 +67,12 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
 
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
+            container.RegisterType<IGraphHttpClient, GraphHttpClient>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
+
+            container.RegisterType<IGraphApiProvider, GraphApiProvider>();
+            container.RegisterType<ISharepointContextProvider, SharepointContextProvider>();
+            container.RegisterType<ITokenProvider, TokenProvider>();
 
             container.AddExtension(new Diagnostic());
         }

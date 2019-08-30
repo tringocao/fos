@@ -31,8 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +45,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\APIs.cs" />
+    <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\EventList.cs" />
+    <Compile Include="Domain\FavoriteRestaurant.cs" />
+    <Compile Include="Domain\Host.cs" />
+    <Compile Include="Domain\JSONRequest.cs" />
+    <Compile Include="Domain\LogMetadata.cs" />
+    <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
+    <Compile Include="Domain\TokenResource.cs" />
+    <Compile Include="Dto\APIs.cs" />
+    <Compile Include="Dto\DeliveryInfos.cs" />
+    <Compile Include="Dto\DiscountPrice.cs" />
+    <Compile Include="Dto\Food.cs" />
+    <Compile Include="Dto\FoodCategory.cs" />
+    <Compile Include="Dto\RestaurantCategory.cs" />
+    <Compile Include="Domain\State.cs" />
+    <Compile Include="Domain\Token.cs" />
     <Compile Include="Dto\Order.cs" />
+    <Compile Include="Dto\Price.cs" />
+    <Compile Include="Dto\Province.cs" />
+    <Compile Include="Dto\RequestMethod.cs" />
+    <Compile Include="Dto\Restaurant.cs" />
+    <Compile Include="Dto\ServiceKind.cs" />
+    <Compile Include="Mapping\APIsDtoMapper.cs" />
+    <Compile Include="Mapping\Config.cs" />
+    <Compile Include="Mapping\JsonDtoMapper.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,6 +81,12 @@
       <Name>FOS.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="obj\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

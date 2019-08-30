@@ -1,0 +1,17 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+<mat-toolbar color="primary" class="header">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenavlist.toggle()">menu</mat-icon>
+    </button>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="'/home'"> Home </a>
+      <a mat-button [routerLink]="'/orders'"> Orders </a>
+      <a mat-button [routerLink]="'/meals'"> Meals </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -14,23 +14,8 @@ namespace FOS.API.Controllers
 {
     public class HomeController : Controller
     {
-        OAuthService _oAuthService;
-
-        public HomeController(OAuthService oAuthService)
-        {
-            _oAuthService = oAuthService;
-        }
-
         public async Task<ActionResult> Index()
         {
-            var authenticated = _oAuthService.CheckAuthenticationAsync().Result;
-
-            if (authenticated == false)
-            {
-                return Redirect(_oAuthService.GetAuthCodePath(new State(
-                    WebConfigurationManager.AppSettings[OAuth.HOME_URI]
-                    )));
-            }
             return View();
         }
     }

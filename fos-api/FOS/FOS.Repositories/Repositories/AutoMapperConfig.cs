@@ -16,7 +16,7 @@ namespace FOS.Repositories.Repositories
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<FoodServiceAPI, APIs>()
+                config.CreateMap<ExternalServiceAPI, APIs>()
                 .ForMember(model => model.TypeService, cfig => cfig.MapFrom(e => e.TypeService))
                 //.ForMember(model => model.header, cfig => cfig.MapFrom(c => new Dictionary<string,
                 //    string>(c.FOSHeaderLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
@@ -24,6 +24,7 @@ namespace FOS.Repositories.Repositories
                 //    string>(c.FOSBodyFieldLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
                 .ReverseMap();
 
+                config.CreateMap<FavoriteRestaurant, Model.Domain.FavoriteRestaurant>().ReverseMap();
 
             });
         }
