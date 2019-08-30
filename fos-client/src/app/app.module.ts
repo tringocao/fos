@@ -48,6 +48,7 @@ import {
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
+import { EventFormReadonlyComponent } from './event-form-readonly/event-form-readonly.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
     EventFormComponent,
     OrdersPageComponent,
     MealsPageComponent,
-    SearchComponent
+    SearchComponent,
+    EventFormReadonlyComponent
   ],
     // declarations: [
     //     AppComponent,

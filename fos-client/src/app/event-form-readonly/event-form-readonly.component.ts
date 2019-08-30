@@ -26,12 +26,14 @@ export interface User {
   name: string;
   email: string;
 }
+
 @Component({
-  selector: 'app-event-form',
-  templateUrl: './event-form.component.html',
-  styleUrls: ['./event-form.component.less']
+  selector: 'app-event-form-readonly',
+  templateUrl: './event-form-readonly.component.html',
+  styleUrls: ['./event-form-readonly.component.less']
 })
-export class EventFormComponent implements OnInit {
+export class EventFormReadonlyComponent implements OnInit {
+
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   eventFormControl = new FormControl();
   selectedUser = 'admin';
@@ -356,4 +358,5 @@ export class EventFormComponent implements OnInit {
     // this.HostEmail = event.value;
     // console.log('host email ' + this.HostEmail );
   }
+
 }
