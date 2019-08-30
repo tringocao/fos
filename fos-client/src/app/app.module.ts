@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,8 +49,12 @@ import {
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
-import { EventFormReadonlyComponent } from './event-form-readonly/event-form-readonly.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +69,10 @@ import { EventFormReadonlyComponent } from './event-form-readonly/event-form-rea
     OrdersPageComponent,
     MealsPageComponent,
     SearchComponent,
-    EventFormReadonlyComponent
+    DialogComponent,
+    MenuComponent,
+    FoodCategoriesComponent,
+    LoadingComponent
   ],
     // declarations: [
     //     AppComponent,
@@ -75,6 +83,7 @@ import { EventFormReadonlyComponent } from './event-form-readonly/event-form-rea
     //     EventFormComponent
     // ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     DlDateTimeDateModule,
@@ -93,6 +102,7 @@ import { EventFormReadonlyComponent } from './event-form-readonly/event-form-rea
     MatIconModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatProgressBarModule,
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,
@@ -119,7 +129,9 @@ import { EventFormReadonlyComponent } from './event-form-readonly/event-form-rea
     useClass: TokenInterceptor,
     multi: true
   }],
-  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule],
-  bootstrap: [AppComponent]
+  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogComponent],
+
 })
 export class AppModule {}
