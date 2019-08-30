@@ -1,3 +1,4 @@
+using FOS.Services.Providers;
 using System;
 
 using Unity;
@@ -69,6 +70,10 @@ namespace FOS.API
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.RegisterType<IGraphHttpClient, GraphHttpClient>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
+
+            container.RegisterType<IGraphApiProvider, GraphApiProvider>();
+            container.RegisterType<ISharepointContextProvider, SharepointContextProvider>();
+            container.RegisterType<ITokenProvider, TokenProvider>();
 
             container.AddExtension(new Diagnostic());
         }
