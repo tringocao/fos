@@ -1,7 +1,9 @@
 ﻿using FOS.Common;
 using FOS.Model.Domain;
+using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.Providers;
+using FOS.Services.SPListService;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,27 +19,35 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [RoutePrefix("api/splist")]
+
     public class SPListController : ApiController
     {
-        IOAuthService _oAuthService;
-        IGraphApiProvider _graphApiProvider;
-        ISharepointContextProvider _sharepointContextProvider;
+        ISPListService _spListService;
+        public SPListController(ISPListService spListService)
+        {
+            _spListService = spListService;
+        }
+        //// GET api/splist/getlist/{list-id}
+        //public async Task<HttpResponseMessage> GetList(string Id)
+        //{
+        //    return await _spListService.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
+        //}
 
-        public SPListController(IOAuthService oAuthService, IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider)
-        {
-            _oAuthService = oAuthService;
-            _graphApiProvider = graphApiProvider;
-            _sharepointContextProvider = sharepointContextProvider;
-        }
-        // GET api/splist/getlist/{list-id}
-        public async Task<HttpResponseMessage> GetList(string Id)
-        {
-            return await _graphApiProvider.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
-        }
         // POST api/splist/addlistitem/{list-id}/
-        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]JSONRequest item)
+        [HttpPost]
+        [Route("AddListItem")]
+        public async Task<ApiResponse> AddListItem(string Id, [FromBody]JSONRequest item)
         {
-            return await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
+            try
+            {
+                await _spListService.AddListItem(Id, item);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
         }
     }
 }
