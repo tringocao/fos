@@ -15,11 +15,10 @@ export class OrderService {
     // this.baseUrl = envService.getApiUrl() + "/api/order";
   }
 
-  getOrder(orderId: string) {
-    return this.http.get<any>(environment.apiUrl + '/api/order/getOrder', {
-      params: {
-        id: orderId
-      }
-    });
+  getAllOrder() {
+    return this.http.get<any>(
+      environment.apiUrl +
+        'api/splist/getlist/d3619975-747b-4617-a12d-4abb267da516'
+    );
   }
 }

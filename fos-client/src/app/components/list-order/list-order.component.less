@@ -1,0 +1,31 @@
+@import '../../../styles/global/variables.less';
+
+.orders {
+  padding: 1rem;
+  table {
+    width: 100%;
+  }
+  .loading {
+    background-color: @white;
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+  }
+  .filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    .search {
+      width: 15rem;
+      margin-right: 1rem;
+      -webkit-transition: 0.5s; /* For Safari 3.1 to 6.0 */
+      transition: 0.5s;
+    }
+    .mat-focused {
+      width: 20rem;
+    }
+    .category {
+      width: 15rem;
+    }
+  }
+}
