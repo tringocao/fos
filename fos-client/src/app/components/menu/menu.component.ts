@@ -42,7 +42,6 @@ export class MenuComponent{
   }
 
   openDialog(): void {
-
     const dialogRef = this.dialog.open(DialogComponent, {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       autoFocus: false,

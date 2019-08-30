@@ -36,9 +36,28 @@ export class SearchComponent implements OnInit, OnChanges {
   mode = 'indeterminate';
   toppingList: CategoryGroup[];
   @Input('loading') loading : boolean;
+  @ViewChild(MatSelectModule, { static: true }) x: MatSelectModule;
+  @Output()  change = new EventEmitter();
+  submitted = false;
+  isOpen = false;
+  ngOnInit(): void {
+    this.loading = true;
 
+    this.restaurant$ = this.searchTerms.pipe(
+      // wait 500ms after each keystroke before considering the term
+      debounceTime(500),
+
+      // ignore new term if same as previous term
+      distinctUntilChanged(),
+      // switch to new search observable each time the term changes
+      switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, "4")),
+      );
+    }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     console.log(changes);
+  }
+  onBlur(){
+    this.show$ = false;
   }
   constructor(private restaurantService: RestaurantService) {
       this.restaurantService.GetMetadataForCategory().subscribe(result => {
@@ -75,10 +94,7 @@ export class SearchComponent implements OnInit, OnChanges {
         this.toppingList = dataSourceTemp1;
       });
   }
-  @ViewChild(MatSelectModule, { static: true }) x: MatSelectModule;
-  @Output()  change = new EventEmitter();
-  submitted = false;
-  isOpen = false;
+
 
   
   openedChange(opened: boolean) {
@@ -109,17 +125,5 @@ export class SearchComponent implements OnInit, OnChanges {
     console.log(this.show$);
     this.searchTerms.next(term);
   }
-  ngOnInit(): void {
-    this.loading = true;
 
-    this.restaurant$ = this.searchTerms.pipe(
-      // wait 500ms after each keystroke before considering the term
-      debounceTime(500),
-
-      // ignore new term if same as previous term
-      distinctUntilChanged(),
-      // switch to new search observable each time the term changes
-      switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, "4")),
-      );
-    }
-  }
+}

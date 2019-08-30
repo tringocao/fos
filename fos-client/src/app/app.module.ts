@@ -54,6 +54,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { FoodCategoriesComponent } from './components/dialog/food-categories/foo
     SearchComponent,
     DialogComponent,
     MenuComponent,
-    FoodCategoriesComponent
+    FoodCategoriesComponent,
+    LoadingComponent
   ],
     // declarations: [
     //     AppComponent,

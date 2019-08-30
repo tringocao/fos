@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-
 export class RestaurantService {
   ids: any;
 
@@ -73,6 +72,7 @@ export class RestaurantService {
           // tslint:disable-next-line:prefer-const
           let restaurantItem: Restaurant = {
             name: element.name,
+            delivery_id: element.delivery_id,
             address: element.address,
             category:
               element.categories.length > 0 ? element.categories[0] : '',
@@ -82,9 +82,7 @@ export class RestaurantService {
                 : '',
             open:
               element.operating.open_time + '-' + element.operating.close_time,
-            delivery_id: element.delivery_id,
-
-            url_rewrite_name: element.url_rewrite_name
+              url_rewrite_name: element.url_rewrite_name
           };
           dataSourceTemp.push(restaurantItem);
         });

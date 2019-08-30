@@ -31,16 +31,13 @@ interface Restaurant {
   styleUrls: ['./food-categories.component.less']
 })
 export class FoodCategoriesComponent implements OnInit {
-  ts = new FormControl();
-  show$ = false;
-  color = 'primary';
-  mode = 'indeterminate';
-  constructor() { }
   @Output()  change = new EventEmitter();
   @Input('loading') loading : boolean;
   @Input('toppingList') toppingList: FoodCategory[];
-
-
+  ts = new FormControl();
+  color = 'primary';
+  mode = 'indeterminate';
+  constructor() { }
   openedChange(opened: boolean) {
     console.log(opened ? 'opened' : 'closed');
     if(!opened){

@@ -34,16 +34,20 @@ interface Restaurant {
   styleUrls: ['./dialog.component.less']
 })
 export class DialogComponent implements OnInit {
-  // async ngOnInit() {
-  //   let dataSourceTemp: FoodCategory[] = [];
-  //   console.log(this.data);
-  //   dataSourceTemp = await this.restaurantService.getFood(this.data);
-  //   console.log(dataSourceTemp)
-  //   this.dataSource2.sort = this.sort;
-  //   this.dataSource2.paginator = this.paginator;
-  //   this.data = this.data + "1";
-  //   console.log(this.data);
-  //   this.dataSource2 = new MatTableDataSource(dataSourceTemp);  }
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  foodCategory: FoodCategory[]= [];
+  load = true;
+  sortNameOrder: number;
+  sortCategoryOrder: number;
+  categorys: any;
+  displayedColumns2: string[] = ['picture','name', 'description', 'price'];
+  dataSource2: any;
+  userId: string;
+  constructor(
+    public dialogRef: MatDialogRef<DialogComponent>,
+    private restaurantService: RestaurantService,
+    @Inject(MAT_DIALOG_DATA) public data: Restaurant) { }
 
     async ngOnInit(): Promise<void> {
       console.log("-------------------------------------")
@@ -101,23 +105,8 @@ export class DialogComponent implements OnInit {
   }
 
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  foodCategory: FoodCategory[]= [];
-  load = true;
-  sortNameOrder: number;
-  sortCategoryOrder: number;
-  categorys: any;
-  displayedColumns2: string[] = ['picture','name', 'description', 'price'];
-  dataSource2: any;
-  userId: string;
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    private restaurantService: RestaurantService,
-    @Inject(MAT_DIALOG_DATA) public data: Restaurant) {
-      
-    }
 
   onNoClick(): void {
     this.dialogRef.close();
