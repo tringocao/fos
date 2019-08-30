@@ -163,6 +163,10 @@
     <Compile Include="RestaurantServices\IRestaurantService.cs" />
     <Compile Include="RestaurantServices\RestaurantService.cs" />
     <Compile Include="SharePointContext.cs" />
+    <Compile Include="SPListService\ISPListService.cs" />
+    <Compile Include="SPListService\SPListService.cs" />
+    <Compile Include="SPUserService\ISPUserService.cs" />
+    <Compile Include="SPUserService\SPUserService.cs" />
     <Compile Include="TokenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
