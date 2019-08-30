@@ -16,6 +16,17 @@ interface Food {
   description: string;
   price: string;
 }
+interface Restaurant {
+  id: string;
+  stared: boolean;
+  restaurant: string;
+  category: string;
+  address: string;
+  promotion: string;
+  open: string;
+  delivery_id: string;
+  url_rewrite_name: string;
+}
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -24,7 +35,7 @@ interface Food {
 export class MenuComponent{
   overlay: Overlay;
   foodCategory: FoodCategory[];
-  @Input('deliveryId') deliveryId : string;
+  @Input('restaurant') restaurant : Restaurant;
 
   constructor(public dialog: MatDialog, overlay: Overlay) {
     this.overlay = overlay;    
@@ -35,8 +46,9 @@ export class MenuComponent{
     const dialogRef = this.dialog.open(DialogComponent, {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       autoFocus: false,
-      maxHeight: '90vh',
-      data: this.deliveryId 
+      maxHeight: '98vh',
+      width: '80%',
+      data: this.restaurant
     });
 
     dialogRef.afterClosed().subscribe(result => {

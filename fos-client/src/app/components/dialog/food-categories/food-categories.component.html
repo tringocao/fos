@@ -1,12 +1,7 @@
 <div id="search-component">
+    <h3>Menu</h3>
             <mat-form-field class="example-full-width">
                 <mat-select placeholder="Toppings" [formControl]="ts" (openedChange)="openedChange($event)">
-                    <!-- <mat-select-trigger>
-                        {{toppings.value ? toppings.value[0] ? toppings.value[0].name : '' : ''}}
-                        <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
-                            (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
-                        </span>
-                    </mat-select-trigger> -->
                     <!-- <mat-optgroup *ngFor="let group of toppingList" [label]="group.name"
                                     [disabled]="group.disabled">
                         <mat-option *ngFor="let category of group.category" [value]="category" >
@@ -17,14 +12,14 @@
                 </mat-select>
             </mat-form-field>
 
-    <div *ngIf ="loading">
-            <section class="example-section">
-              <mat-progress-bar
-                  class="example-margin"
-                  [color]="color"
-                  [mode]="mode">
-              </mat-progress-bar>
-            </section>
-          </div>
+    
 </div>
-  
+<div *ngIf ="loading">
+        <section class="example-section">
+          <mat-progress-bar
+              class="example-margin"
+              [color]="color"
+              [mode]="mode">
+          </mat-progress-bar>
+        </section>
+      </div>

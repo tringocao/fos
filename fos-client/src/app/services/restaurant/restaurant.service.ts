@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RestaurantService {
   ids: any;
 
@@ -81,7 +82,9 @@ export class RestaurantService {
                 : '',
             open:
               element.operating.open_time + '-' + element.operating.close_time,
-              url_rewrite_name: element.url_rewrite_name
+            delivery_id: element.delivery_id,
+
+            url_rewrite_name: element.url_rewrite_name
           };
           dataSourceTemp.push(restaurantItem);
         });

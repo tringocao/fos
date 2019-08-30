@@ -16,6 +16,18 @@ interface Food {
   price: string;
 }
 
+interface Restaurant {
+  id: string;
+  stared: boolean;
+  restaurant: string;
+  category: string;
+  address: string;
+  promotion: string;
+  open: string;
+  delivery_id: string;
+  url_rewrite_name: string;
+}
+
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -36,7 +48,7 @@ export class DialogComponent implements OnInit {
     async ngOnInit(): Promise<void> {
       console.log("-------------------------------------")
 
-      this.restaurantService.getFood(this.data).subscribe(result => {
+      this.restaurantService.getFood(this.data.delivery_id).subscribe(result => {
         const dataSourceTemp = [];
         const jsonData = JSON.parse(result);
         jsonData.forEach((element, index) => {
@@ -59,9 +71,21 @@ export class DialogComponent implements OnInit {
           };
           this.foodCategory.push(categoriesItem);
         });
-        console.log(this.foodCategory);
-        this.updateTable(this.foodCategory[0].dishes);
+        this.showAll(this.foodCategory);
       });
+  }
+  showAll(dataSourceTemp:any[]){
+    console.log(dataSourceTemp);
+    this.dataSource2 = new MatTableDataSource();
+    
+    dataSourceTemp.forEach(f =>  {
+      if(f.dishes != null){
+        f.dishes.forEach(d => this.dataSource2.data.push(d));
+      }
+    });
+    this.dataSource2.sort = this.sort;
+    this.dataSource2.paginator = this.paginator;
+    this.load = false;
   }
   updateTable(dataSourceTemp:any[]){
     console.log(dataSourceTemp);
@@ -71,7 +95,8 @@ export class DialogComponent implements OnInit {
     this.load = false;
   }
   setFood($event) {
-    this.updateTable(this.foodCategory[$event.topic].dishes)
+    if($event.topic == 0) this.showAll(this.foodCategory);
+    else this.updateTable(this.foodCategory[$event.topic].dishes);
     this.load = false;
   }
 
@@ -84,13 +109,13 @@ export class DialogComponent implements OnInit {
   sortNameOrder: number;
   sortCategoryOrder: number;
   categorys: any;
-  displayedColumns2: string[] = ['picture','name', 'category', 'price'];
+  displayedColumns2: string[] = ['picture','name', 'description', 'price'];
   dataSource2: any;
   userId: string;
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     private restaurantService: RestaurantService,
-    @Inject(MAT_DIALOG_DATA) public data: string) {
+    @Inject(MAT_DIALOG_DATA) public data: Restaurant) {
       
     }
 

@@ -12,6 +12,19 @@ interface Food {
   description: string;
   price: string;
 }
+
+interface Restaurant {
+  id: string;
+  stared: boolean;
+  restaurant: string;
+  category: string;
+  address: string;
+  promotion: string;
+  open: string;
+  delivery_id: string;
+  url_rewrite_name: string;
+}
+
 @Component({
   selector: 'app-food-categories',
   templateUrl: './food-categories.component.html',
@@ -43,6 +56,13 @@ export class FoodCategoriesComponent implements OnInit {
     return this.toppingList.map(x => x.dish_type_id ).indexOf(term);
   }
   ngOnInit() {
+    var name: string = "Show all";
+    let allfood : FoodCategory ={
+      dish_type_name: name,
+      dish_type_id: "-1",
+      dishes: null,
+    }
+    this.toppingList.push(allfood);
   }
 
 }
