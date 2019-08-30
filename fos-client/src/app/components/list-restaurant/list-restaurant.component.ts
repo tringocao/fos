@@ -23,62 +23,68 @@ interface Restaurant {
   styleUrls: ['./list-restaurant.component.less']
 })
 export class ListRestaurantComponent implements OnInit {
-  sortNameOrder: number;
-  sortCategoryOrder: number;
   categorys: any;
-  displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open'];
+  displayedColumns: string[] = [
+    'id',
+    'restaurant',
+    'category',
+    'promotion',
+    'open'
+  ];
   dataSource: any = new MatTableDataSource(restaurants);
 
   userId: string;
   favoriteRestaurants: string[];
+  isLoading = true;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  
 
   constructor(private restaurantService: RestaurantService) {}
 
-  addToFavorite(event, restaurantId:string) {
-    console.log("add", restaurantId);
-    this.restaurantService.addFavoriteRestaurant(this.userId, restaurantId).subscribe(response => {
-      console.log(response);
-      this.favoriteRestaurants = [];  
-      this.restaurantService.getFavorite(this.userId).subscribe(response => {
+  addToFavorite(event, restaurantId: string) {
+    console.log('add', restaurantId);
+    this.restaurantService
+      .addFavoriteRestaurant(this.userId, restaurantId)
+      .subscribe(response => {
         console.log(response);
-        response.map(item => {
-          if (!this.favoriteRestaurants.includes(item)) {
-            this.favoriteRestaurants.push(item.RestaurantId);
-          }
-        })
-        console.log( this.favoriteRestaurants);
-        this.getRestaurant();
-      })
-    })
+        this.favoriteRestaurants = [];
+        this.restaurantService.getFavorite(this.userId).subscribe(response => {
+          console.log(response);
+          response.map(item => {
+            if (!this.favoriteRestaurants.includes(item)) {
+              this.favoriteRestaurants.push(item.RestaurantId);
+            }
+          });
+          console.log(this.favoriteRestaurants);
+          this.getRestaurant(false);
+        });
+      });
   }
 
-  removeFromFavorite(event, restaurantId:string) {
-    console.log("remove", restaurantId);
-    this.restaurantService.removeFavoriteRestaurant(this.userId, restaurantId).subscribe(response => {
-      console.log(response);
-      this.favoriteRestaurants = [];
-      this.restaurantService.getFavorite(this.userId).subscribe(response => {
+  removeFromFavorite(event, restaurantId: string) {
+    console.log('remove', restaurantId);
+    this.restaurantService
+      .removeFavoriteRestaurant(this.userId, restaurantId)
+      .subscribe(response => {
         console.log(response);
-        response.map(item => {
-          if (!this.favoriteRestaurants.includes(item)) {
-            this.favoriteRestaurants.push(item.RestaurantId);
-          }
-        })
-        console.log( this.favoriteRestaurants);
-        this.getRestaurant();
-      })
-    })
+        this.favoriteRestaurants = [];
+        this.restaurantService.getFavorite(this.userId).subscribe(response => {
+          console.log(response);
+          response.map(item => {
+            if (!this.favoriteRestaurants.includes(item)) {
+              this.favoriteRestaurants.push(item.RestaurantId);
+            }
+          });
+          console.log(this.favoriteRestaurants);
+          this.getRestaurant(false);
+        });
+      });
   }
 
   ngOnInit() {
     this.categorys = ['a', 'b', 'c', 'd'];
-    this.sortNameOrder = 0;
-    this.sortCategoryOrder = 0;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.userId = '';
@@ -97,12 +103,12 @@ export class ListRestaurantComponent implements OnInit {
         console.log(response);
         response.map(item => {
           this.favoriteRestaurants.push(item.RestaurantId);
-        })
-        console.log( this.favoriteRestaurants);
-      })
+        });
+        console.log(this.favoriteRestaurants);
+      });
     });
 
-    this.getRestaurant()
+    this.getRestaurant(true);
   }
 
   getRestaurant() {
@@ -166,6 +172,9 @@ export class ListRestaurantComponent implements OnInit {
         this.dataSource = new MatTableDataSource(dataSourceTemp);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        if (isOnInit) {
+          this.isLoading = false;
+        }
       });
     });
   }

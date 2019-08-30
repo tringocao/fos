@@ -58,7 +58,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { OrderTabComponent } from './components/order-tab/order-tab.component';
 import { ListOrderComponent } from './components/list-order/list-order.component';
-
 @NgModule({
   declarations: [
     AppComponent,

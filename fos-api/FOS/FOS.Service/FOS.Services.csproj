@@ -102,6 +102,7 @@
     <Compile Include="FavoriteService\FavoriteService.cs" />
     <Compile Include="FoodServices\IFoodService.cs" />
     <Compile Include="FOSFoodServiceAPIsService.cs" />
+    <Compile Include="ProvinceServices\IProvinceService.cs" />
     <Compile Include="OAuthService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

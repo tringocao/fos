@@ -104,11 +104,11 @@ namespace FOS.Services
 
         public async Task<bool> CheckAuthenticationAsync()
         {
-            var tokenCookie = HttpContext.Current.Request.Headers.GetValues("token_key").FirstOrDefault();
+            var tokenCookie = HttpContext.Current.Request.Headers.GetValues("token_key");
 
             if (tokenCookie != null)
             {
-                Token token = (Token)MemoryCache.Default.Get(tokenCookie);
+                Token token = (Token)MemoryCache.Default.Get(tokenCookie.FirstOrDefault());
                 if (token != null)
                 {
                     if (token._acessTokenExpireTime != null)
