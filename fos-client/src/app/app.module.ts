@@ -55,7 +55,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
 import { LoadingComponent } from './components/loading/loading.component';
-
+import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
+import { MenuEventComponent } from './components/menu-event/menu-event.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +73,9 @@ import { LoadingComponent } from './components/loading/loading.component';
     DialogComponent,
     MenuComponent,
     FoodCategoriesComponent,
-    LoadingComponent
+    LoadingComponent,
+    EventDialogComponent,
+    MenuEventComponent
   ],
     // declarations: [
     //     AppComponent,
@@ -129,9 +132,9 @@ import { LoadingComponent } from './components/loading/loading.component';
     useClass: TokenInterceptor,
     multi: true
   }],
-  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent],
+  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent,EventDialogComponent],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent],
+  entryComponents: [DialogComponent,EventDialogComponent],
 
 })
 export class AppModule {}

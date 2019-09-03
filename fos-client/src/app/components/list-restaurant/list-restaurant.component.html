@@ -61,6 +61,14 @@
               <app-menu   [restaurant]="element"></app-menu>
           </td>          
       </ng-container>
+
+      <ng-container matColumnDef="addEvent">
+        <th mat-header-cell *matHeaderCellDef>add event</th>
+        <td mat-cell *matCellDef="let element">
+          <app-menu-event [restaurant]="element"></app-menu-event>
+        </td>
+      </ng-container>
+      
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>

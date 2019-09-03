@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
   templateUrl: './restaurants-page.component.html',
   styleUrls: ['./restaurants-page.component.less']
 })
-export class RestaurantsPageComponent implements OnInit {
+export class 
+RestaurantsPageComponent implements OnInit {
 
   constructor(private http: HttpClient) {
     // this.http.get(environment.apiUrl + '/api/oauth/CheckAuth').subscribe((data: authRespond) => {

@@ -27,7 +27,7 @@ export class ListRestaurantComponent implements OnInit {
   sortNameOrder: number;
   sortCategoryOrder: number;
   categorys: any;
-  displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open', 'menu'];
+  displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open', 'menu','addEvent'];
   dataSource: any = new MatTableDataSource(restaurants);
   userId: string;
   load:boolean;

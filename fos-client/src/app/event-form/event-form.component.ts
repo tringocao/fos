@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EventUser } from '../services/event-form/eventuser';
+import { EventUser } from '../services/event-form-a/eventuser';
 import { ThrowStmt } from '@angular/compiler';
 import { HttpClient } from '@angular/common/http';
-import { EventFormService } from '../services/event-form/event-form.service';
+import { EventFormService } from '../services/event-form-a/event-form.service';
 import { ViewChild } from '@angular/core';
 
 import { MatDialog, MatTable } from '@angular/material';
@@ -148,9 +148,9 @@ export class EventFormComponent implements OnInit {
 
     console.log("request data");
 
-    this.http.get(environment.apiUrl + '/api/SPUser/GetUsers').subscribe(data => {
+    this.http.get(environment.apiUrl + '/api/SPUser/GetUsers').subscribe((data: any) => {
       console.log("request data");
-      var objects = JSON.stringify(data);
+      var objects = JSON.stringify(data.Data);
       // console.log(objects);
       var jsonData = JSON.parse(objects);
       // console.log(jsonData);
@@ -168,7 +168,7 @@ export class EventFormComponent implements OnInit {
       }
     });
 
-    this.http.get(environment.apiUrl + '/api/SPUser/GetGroups').subscribe(data => {
+    this.http.get(environment.apiUrl + '/api/SPUser/GetGroups').subscribe((data: any) => {
       console.log("request data");
       var objects = JSON.stringify(data);
       // console.log(objects);
@@ -292,8 +292,6 @@ export class EventFormComponent implements OnInit {
 
   deleteUserInTable(name: string): void {
 
-
-
       for (var j = 0; j < this.eventusers.length; j++) {
         if (name == this.eventusers[j].name) {
           this.eventusers.splice(j, 1);
@@ -375,7 +373,7 @@ export class EventFormComponent implements OnInit {
       eventHost: this.HostEmail,
       eventParticipants: newParticipantList,
     };
-    this.eventFormService.addEventListItem(eventlistitem)
+    // this.eventFormService.addEventListItem(eventlistitem)
   }
   onItemSelect(item: any) {
     console.log(item);
@@ -409,9 +407,11 @@ export class EventFormComponent implements OnInit {
   }
 
   changeClient(event) {
+    console.log("change value: ");
+    console.log(event);
     let target = event.source.selected._element.nativeElement;
     this.userSelect = [];
-    this.userSelect.push({ 'name': target.innerText.trim(), 'email': event.value });
+    this.userSelect.push({ 'name': target.innerText.trim(), 'email': event.value, 'img':  event.img});
     // this.HostEmail = event.value;
     // console.log('host email ' + this.HostEmail );
   }

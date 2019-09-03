@@ -3,6 +3,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { Observable, Observer } from 'rxjs';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+import { EventDialogComponent } from '../event-dialog/event-dialog.component';
+
 interface FoodCategory {
   dish_type_name: string;
   dish_type_id:string;
@@ -47,7 +49,8 @@ export class DialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     private restaurantService: RestaurantService,
-    @Inject(MAT_DIALOG_DATA) public data: Restaurant) { }
+    @Inject(MAT_DIALOG_DATA) public data: Restaurant,
+    public dialog: MatDialog) { }
 
     async ngOnInit(): Promise<void> {
       console.log("-------------------------------------")
@@ -104,7 +107,19 @@ export class DialogComponent implements OnInit {
     this.load = false;
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EventDialogComponent, {
+      // scrollStrategy: this.overlay.scrollStrategies.noop(),
+      // autoFocus: false,
+      maxHeight: '98vh',
+      width: '80%',
+      data: this.data
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
   
 
 

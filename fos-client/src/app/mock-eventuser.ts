@@ -1,10 +1,10 @@
 import { EventUser } from './eventuser';
 
 export const EventUsers: EventUser[] = [
-    { name: 'Salah', email: 'Liverpool' },
-    { name: 'Kane', email: 'Tottenham Hospur' },
-    { name: 'Hazard', email: 'Real Madrid' },
-    { name: 'Griezmann', email: 'Barcelona' },
+    { name: 'Salah', email: 'Liverpool', img: "" },
+    { name: 'Kane', email: 'Tottenham Hospur',img: "" },
+    { name: 'Hazard', email: 'Real Madrid',img: "" },
+    { name: 'Griezmann', email: 'Barcelona',img: "" },
 ];
 
 

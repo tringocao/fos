@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EventUser } from '../services/event-form/eventuser';
+// import { EventUser } from '../services/event-form-a/eventuser';
 import { ThrowStmt } from '@angular/compiler';
 import { HttpClient } from '@angular/common/http';
-import { EventFormService } from '../services/event-form/event-form.service';
+import { EventFormService } from '../services/event-form-a/event-form.service';
 import { ViewChild } from '@angular/core';
 
 import { MatDialog, MatTable } from '@angular/material';
@@ -37,12 +37,12 @@ export class EventFormReadonlyComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   eventFormControl = new FormControl();
   selectedUser = 'admin';
-  eventusers: EventUser[] = [
-    // { name: 'Salah', email: 'Liverpool' },
-    // { name: 'Kane', email: 'Tottenham Hospur' },
-    // { name: 'Hazard', email: 'Real Madrid' },
-    // { name: 'Griezmann', email: 'Barcelona' },
-  ];
+  // eventusers: EventUser[] = [
+  //   // { name: 'Salah', email: 'Liverpool' },
+  //   // { name: 'Kane', email: 'Tottenham Hospur' },
+  //   // { name: 'Hazard', email: 'Real Madrid' },
+  //   // { name: 'Griezmann', email: 'Barcelona' },
+  // ];
   items: any[] = [
     { id: 0, name: 'one' },
     { id: 1, name: 'two' },
@@ -79,19 +79,19 @@ export class EventFormReadonlyComponent implements OnInit {
   dateTimeToClose: string;
   dateToReminder: string;
 
-  eventforms: EventUser[];
+  // eventforms: EventUser[];
 
   displayedColumns = ['name', 'email'];
 
 
 
 
-  dataSource: EventUser[] = [
-    { name: 'Salah', email: 'Liverpool' },
-    { name: 'Kane', email: 'Tottenham Hospur' },
-    { name: 'Hazard', email: 'Real Madrid' },
-    { name: 'Griezmann', email: 'Barcelona' },
-  ];
+  // dataSource: EventUser[] = [
+  //   { name: 'Salah', email: 'Liverpool' },
+  //   { name: 'Kane', email: 'Tottenham Hospur' },
+  //   { name: 'Hazard', email: 'Real Madrid' },
+  //   { name: 'Griezmann', email: 'Barcelona' },
+  // ];
 
 
   users: User[] = [
@@ -244,18 +244,18 @@ export class EventFormReadonlyComponent implements OnInit {
     //   }
     // }
 
-    for (var s in this.userSelect) {
-      var flag = false;
-      for (var e in this.eventusers) {
-        if (this.userSelect[s].name == this.eventusers[e].name) {
-          flag = true
-        }
-      }
-      if (flag == false) {
-        this.eventusers.push({ 'name': this.userSelect[s].name, 'email': this.userSelect[s].email });
-        this.table.renderRows();
-      }
-    }
+    // for (var s in this.userSelect) {
+    //   var flag = false;
+    //   for (var e in this.eventusers) {
+    //     if (this.userSelect[s].name == this.eventusers[e].name) {
+    //       flag = true
+    //     }
+    //   }
+    //   if (flag == false) {
+    //     // this.eventusers.push({ 'name': this.userSelect[s].name, 'email': this.userSelect[s].email });
+    //     this.table.renderRows();
+    //   }
+    // }
   }
 
   DeleteUserInTable(): void {
@@ -264,14 +264,15 @@ export class EventFormReadonlyComponent implements OnInit {
       // console.log(this.userSelect[i].nam);
 
 
-      for (var j = 0; j < this.eventusers.length; j++) {
-        if (this.userSelect[i].name == this.eventusers[j].name) {
-          this.eventusers.splice(j, 1);
+      // for (var j = 0; j < this.eventusers.length; j++) {
+      //   if (this.userSelect[i].name == this.eventusers[j].name) {
+      //     this.eventusers.splice(j, 1);
 
-          j--;
-          this.table.renderRows();
-        }
-      }
+      //     j--;
+      //     this.table.renderRows();
+      //   }
+      // }
+
       // this.userSelect.splice(i, 1);
       // i--;
       // this.table.renderRows();
@@ -287,12 +288,12 @@ export class EventFormReadonlyComponent implements OnInit {
   }
   SaveToSharePointEventList(): void {
 
-    var participantList = "";
-    for (var j = 0; j < this.eventusers.length; j++) {
-      if (this.eventusers[j].email) {
-        participantList += this.eventusers[j].email + ", ";
-      }
-    }
+    // var participantList = "";
+    // for (var j = 0; j < this.eventusers.length; j++) {
+    //   if (this.eventusers[j].email) {
+    //     participantList += this.eventusers[j].email + ", ";
+    //   }
+    // }
 
     for (var i = 0; i < this.userLogin.length; i++) {
       console.log(this.HostEmail + " vs " + this.userLogin[i].loginName)
@@ -302,23 +303,23 @@ export class EventFormReadonlyComponent implements OnInit {
     }
 
     if (!Boolean(this.EventTitle) || !Boolean(this.Restaurant) || !Boolean(this.HostEmail)
-      || !Boolean(participantList)) {
+      ) {
       console.log('Missing info to submit event');
       return;
     }
 
     console.log('nguoi host: ' + this.HostEmail);
-    var eventlistitem: EventList = {
-      eventTitle: this.EventTitle,
-      eventId: 'FIKA1',
-      eventRestaurant: this.Restaurant,
-      eventMaximumBudget: 0,
-      eventTimeToClose: this.dateTimeToClose,
-      eventTimeToReminder: this.dateToReminder,
-      eventHost: this.HostEmail,
-      eventParticipants: participantList,
-    };
-    this.eventFormService.addEventListItem(eventlistitem)
+    // var eventlistitem: EventList = {
+    //   eventTitle: this.EventTitle,
+    //   eventId: 'FIKA1',
+    //   eventRestaurant: this.Restaurant,
+    //   eventMaximumBudget: 0,
+    //   eventTimeToClose: this.dateTimeToClose,
+    //   eventTimeToReminder: this.dateToReminder,
+    //   eventHost: this.HostEmail,
+    //   // eventParticipants: participantList,
+    // };
+    // this.eventFormService.addEventListItem(eventlistitem)
   }
   onItemSelect(item: any) {
     console.log(item);
