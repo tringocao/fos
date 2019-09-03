@@ -36,7 +36,7 @@ namespace FOS.API
 
             if (result.Exception != null)
             {
-                WriteErrorLog("Method " + input.MethodBase.Name + " returns exception " + result.Exception.Message + " for " + timeSpan.TotalMilliseconds);
+                WriteErrorLog("Method " + input.MethodBase.Name + " returns exception " + result.Exception.Message + " for " + timeSpan.TotalMilliseconds, result.Exception);
             }
             else
             {
@@ -61,11 +61,11 @@ namespace FOS.API
             }
         }
 
-        private void WriteErrorLog(string message)
+        private void WriteErrorLog(string message, Exception e)
         {
             if (Log != null)
             {
-                Log.ErrorFormat("Profiler: " + message);
+                Log.ErrorFormat("Profiler: " + message, e);
             }
         }
     }

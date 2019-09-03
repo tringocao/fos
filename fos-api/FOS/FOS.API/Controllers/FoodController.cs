@@ -1,4 +1,5 @@
-﻿using FOS.Services.FoodServices;
+﻿using FOS.API.App_Start;
+using FOS.Services.FoodServices;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     public class FoodController : ApiController
     {
         IFoodService _craw;

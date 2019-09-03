@@ -1,4 +1,5 @@
-﻿using FOS.Model.Domain;
+﻿using FOS.API.App_Start;
+using FOS.Model.Domain;
 using FOS.Services.FavoriteService;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     [RoutePrefix("api/favorite")]
     public class FavoriteRestaurantController : ApiController
     {

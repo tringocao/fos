@@ -1,4 +1,5 @@
-﻿using FOS.Common;
+﻿using FOS.API.App_Start;
+using FOS.Common;
 using FOS.Model.Domain;
 using FOS.Model.Util;
 using FOS.Services;
@@ -19,6 +20,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     [RoutePrefix("api/splist")]
 
     public class SPListController : ApiController
@@ -42,6 +44,21 @@ namespace FOS.API.Controllers
             try
             {
                 await _spListService.AddListItem(Id, item);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("AddEventListItem")]
+        public ApiResponse AddEventListItem(string Id, [FromBody]EventList item)
+        {
+            try
+            {
+                _spListService.AddEventListItem(Id, item);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

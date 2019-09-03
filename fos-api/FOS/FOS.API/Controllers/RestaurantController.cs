@@ -1,4 +1,5 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.API.App_Start;
+using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using FOS.Services.ExternalServices;
 using FOS.Services.RestaurantServices;
@@ -13,6 +14,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     [RoutePrefix("api/Restaurant")]
 
     public class RestaurantController : ApiController

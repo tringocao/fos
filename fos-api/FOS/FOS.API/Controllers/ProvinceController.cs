@@ -1,4 +1,5 @@
-﻿using FOS.Services.ExternalServices;
+﻿using FOS.API.App_Start;
+using FOS.Services.ExternalServices;
 using FOS.Services.ProvinceServices;
 using Newtonsoft.Json;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     [RoutePrefix("api/Province")]
 
     public class ProvinceController : ApiController

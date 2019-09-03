@@ -1,4 +1,5 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.API.App_Start;
+using FOS.Model.Dto;
 using FOS.Services.DeliveryServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,6 +12,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     [RoutePrefix("api/Delivery")]
     public class DeliveryController : ApiController
     {
