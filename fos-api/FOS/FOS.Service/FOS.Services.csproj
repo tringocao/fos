@@ -165,6 +165,10 @@
     <Compile Include="SendEmailServices\ISendEmailService.cs" />
     <Compile Include="SendEmailServices\SendEmailService.cs" />
     <Compile Include="SharePointContext.cs" />
+    <Compile Include="SPListService\ISPListService.cs" />
+    <Compile Include="SPListService\SPListService.cs" />
+    <Compile Include="SPUserService\ISPUserService.cs" />
+    <Compile Include="SPUserService\SPUserService.cs" />
     <Compile Include="TokenHelper.cs" />
   </ItemGroup>
   <ItemGroup>

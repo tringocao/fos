@@ -18,7 +18,6 @@ namespace FOS.Model.Domain
         public string preferredLanguage { get; set; }
         public string surname { get; set; }
         public string userPrincipalName { get; set; }
-        public List<string> businessPhones { get; set; }
-
+        //public List<string> businessPhones { get; set; }
     }
 }
