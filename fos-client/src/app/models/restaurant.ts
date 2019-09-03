@@ -9,8 +9,8 @@ class Restaurant {
   delivery_id: number;
   url_rewrite_name: string;
 }
-class RestaurantSearch {
-  id: number;
-  restaurant: string;
-  delivery_id: number;
-}
+// class RestaurantSearch {
+//   id: number;
+//   restaurant: string;
+//   delivery_id: number;
+// }

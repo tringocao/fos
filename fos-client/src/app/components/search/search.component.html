@@ -1,17 +1,19 @@
 <div id="search-component">
-        <form class="example-form" (ngSubmit)="onSubmit()">
+        <form class="example-form" (ngSubmit)="onSubmit()" [formGroup]='usersForm'>
             <mat-form-field class="example-full-width">
-                <input matInput (blur)="onBlur()" placeholder="Search" name="search2" [value]="keyword" #searchBox id="search-box" (input)="search(searchBox.value)" />
-                <div  class="search-result">
-                        <div *ngFor="let res of restaurant$ | async">
-                            <div  *ngIf="show$ && keyword">
-                                <p >
-                                    {{res.restaurant}}
-                                </p>
-                            </div>  
-                        </div>
-                    </div>
-            </mat-form-field>
+                        <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='userInput'>
+                      </mat-form-field>
+
+                      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+                        <ng-container *ngIf="!isLoading">
+                          <mat-option *ngFor="let restaurant of restaurant$" [value]="restaurant">
+                                <app-menu   [restaurant]="restaurant"></app-menu>
+                            <span>{{ restaurant.restaurant }}</span>
+                            <small> | ID: {{restaurant.id}}</small>
+                          </mat-option>
+                        </ng-container>
+            </mat-autocomplete>
             <mat-form-field class="example-full-width">
                 <mat-select placeholder="Toppings" [formControl]="toppings" (openedChange)="openedChange($event)" multiple>
                     <mat-select-trigger>

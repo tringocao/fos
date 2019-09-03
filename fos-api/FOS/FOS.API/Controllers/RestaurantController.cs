@@ -67,7 +67,7 @@ namespace FOS.API.Controllers
         {
             try
             {
-                _restaurantService.GetExternalServiceById(IdService);
+               _restaurantService.GetExternalServiceById(IdService);
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
                   (await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword)).Select(l => Int32.Parse(l.restaurant_id)).Take(limit)
                 );
@@ -105,7 +105,9 @@ namespace FOS.API.Controllers
             {
                 List<Restaurant> listR = new List<Restaurant>();
                 _restaurantService.GetExternalServiceById(IdService);
-                if (categories.categories == null) return ApiUtil<IEnumerable<int>>.CreateFailResult("");
+                if (categories.categories == null) return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
+                   new int[] {}
+                );
                 if (categories.categories.Count() < 1)
                 {
                     listR = await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword);

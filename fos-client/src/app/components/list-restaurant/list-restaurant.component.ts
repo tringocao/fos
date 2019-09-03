@@ -98,6 +98,9 @@ export class ListRestaurantComponent implements OnInit {
 
  
   getRestaurant($event) {
+    if($event.topic != undefined && $event.keyword != undefined){
+      this.load = true;
+
     this.restaurantService.getRestaurantIds($event.topic, $event.keyword).then(response => {
       this.restaurantService.getRestaurants(response).then(result => {
         const dataSourceTemp = [];
@@ -126,7 +129,8 @@ export class ListRestaurantComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.load = false;
       });
+      
     });
 
-  }
+  }}
 }

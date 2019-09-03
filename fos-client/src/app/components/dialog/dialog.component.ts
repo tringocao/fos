@@ -85,7 +85,10 @@ export class DialogComponent implements OnInit {
 
 
   
-
+  doSth(){
+    this.restaurantService.setEmail(1);
+    console.log("Sent!");
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

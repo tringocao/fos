@@ -4,9 +4,9 @@ import { RestaurantService } from './../../services/restaurant/restaurant.servic
 import {MatSelectModule} from '@angular/material/select';
 
 import {
-  debounceTime, distinctUntilChanged, switchMap
+  debounceTime, distinctUntilChanged, switchMap, tap, finalize
 } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { stringify } from '@angular/compiler/src/util';
 
 @Component({
@@ -15,11 +15,15 @@ import { stringify } from '@angular/compiler/src/util';
   styleUrls: ['./search.component.less']
 })
 export class SearchComponent implements OnInit, OnChanges {
-  restaurant$: Observable<RestaurantSearch[]>;
+  restaurant$: Restaurant[];
+  //restaurant: RestaurantSearch[] = [];
+
   private searchTerms = new Subject<string>();
   toppings = new FormControl();
+  usersForm: FormGroup;
+  isLoading = false;
+
   show$ = false;
-  keyword = "";
   color = 'primary';
   mode = 'indeterminate';
   toppingList: CategoryGroup[];
@@ -29,7 +33,6 @@ export class SearchComponent implements OnInit, OnChanges {
   submitted = false;
   isOpen = false;
   ngOnInit(): void {
-    this.loading = true;
     this.restaurantService.GetMetadataForCategory().then(result => {
       result.forEach((element, index) => {
         if(element.categories.length < 1){
@@ -43,15 +46,56 @@ export class SearchComponent implements OnInit, OnChanges {
       });
       this.toppingList = result;
     });
-    this.restaurant$ = this.searchTerms.pipe(
-      // wait 500ms after each keystroke before considering the term
-      debounceTime(500),
+    this.usersForm = this.fb.group({
+      userInput: null
+    })
 
-      // ignore new term if same as previous term
-      distinctUntilChanged(),
-      // switch to new search observable each time the term changes
-      switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, 4)),
-      );
+    this.usersForm
+    .get('userInput')
+    .valueChanges
+    .pipe(
+      debounceTime(300),
+      tap(() => this.isLoading = true),
+      switchMap(value => this.restaurantService.SearchRestaurantName(value, 4)
+      .pipe(
+        finalize(() => this.isLoading = true),
+        )
+      )
+    ).subscribe(
+      data => this.restaurantService.getRestaurants(data.Data).then(result => {
+        var dataSourceTemp = [];
+        result.forEach((element, index) => {
+          // tslint:disable-next-line:prefer-const
+          let restaurantItem: Restaurant = {
+            id: element.restaurant_id,
+            delivery_id: element.delivery_id,
+            stared: false,
+            restaurant: element.name,
+            address: element.address,
+            category:
+              element.categories.length > 0 ? element.categories[0] : '',
+            promotion:
+              element.promotion_groups.length > 0
+                ? element.promotion_groups[0].text
+                : '',
+            open:
+                  (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?"),
+              url_rewrite_name:""
+          };
+          dataSourceTemp.push(restaurantItem);
+        });
+        this.restaurant$ = dataSourceTemp;
+        this.isLoading = false;
+      }))
+      // this.restaurant$ = this.searchTerms.pipe(
+    //   // wait 500ms after each keystroke before considering the term
+    //   debounceTime(500),
+
+    //   // ignore new term if same as previous term
+    //   distinctUntilChanged(),
+    //   // switch to new search observable each time the term changes
+    //   switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, 4)),
+    //   );
     }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     console.log(changes);
@@ -59,8 +103,11 @@ export class SearchComponent implements OnInit, OnChanges {
   onBlur(){
     this.show$ = false;
   }
-  constructor(private restaurantService: RestaurantService) {
+  constructor(private fb: FormBuilder, private restaurantService: RestaurantService) {
       
+  }
+  displayFn(user: Restaurant) {
+    if (user) { return user.restaurant; }
   }
 
 
@@ -75,8 +122,9 @@ export class SearchComponent implements OnInit, OnChanges {
     this.submitted = true;
     let cod = this.toppings.value ? this.getCondition(this.toppings.value) : "[]"
     console.log(cod);
-    this.change.emit({topic: JSON.parse(cod), keyword: this.keyword});
-    this.keyword = "";
+    let keyword = this.usersForm.get('userInput').value.restaurant? this.usersForm.get('userInput').value.restaurant
+      :this.usersForm.get('userInput').value;
+    this.change.emit({topic: JSON.parse(cod), keyword: keyword});
   }
   getCondition(term:Category[]):string{
     let getCod = "";
@@ -86,12 +134,6 @@ export class SearchComponent implements OnInit, OnChanges {
     getCod = getCod.substr(1);
     return "[" + getCod + "]";
   }
-  // Push a search term into the observable stream.
-  search(term: string): void {
-    this.keyword = term;
-    this.show$ = term != ""? true : false;
-    console.log(this.show$);
-    this.searchTerms.next(term);
-  }
+  // Push a search term into the observable stream
 
 }

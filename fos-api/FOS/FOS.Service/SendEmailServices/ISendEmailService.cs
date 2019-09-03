@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace FOS.Services.SendEmailServices
 {
-    interface ISendEmailService
+    public interface ISendEmailService
     {
+        Task SendEmailAsync(string idEvent, string html);
     }
 }
