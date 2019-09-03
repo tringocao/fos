@@ -62,7 +62,7 @@ namespace FOS.Services.SendEmailServices
                     emailp.To = new List<string>() { user.mail };
                     emailp.From = emailTemplate.HostUserEmail.mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.mail };
-                    emailp.Body = emailTemplate.Html;
+                    emailp.Body = String.Format(emailTemplate.Html.ToString(),emailTemplate.EventTitle.ToString(), emailTemplate.EventRestaurant.ToString(), user.mail.ToString());
                     emailp.Subject = emailTemplate.Subject;
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();

@@ -21033,3 +21033,781 @@
 2019-09-03 18:50:26,904 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 20.9415
 2019-09-03 18:50:26,913 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUserById returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 42.8858
 2019-09-03 18:50:26,943 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendEmailAsync returns System.Threading.Tasks.Task`1[System.Threading.Tasks.VoidTaskResult] for 59605.2745
+2019-09-03 19:27:13,589 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start SaveTokenResource at 7:27:13 PM
+2019-09-03 19:27:13,625 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method SaveTokenResource returns  for 37.8973
+2019-09-03 19:27:16,590 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:16 PM
+2019-09-03 19:27:16,599 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 8.9772
+2019-09-03 19:27:16,644 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:16 PM
+2019-09-03 19:27:16,644 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:16 PM
+2019-09-03 19:27:16,645 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:16 PM
+2019-09-03 19:27:16,655 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:16 PM
+2019-09-03 19:27:16,690 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:16 PM
+2019-09-03 19:27:16,665 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:16 PM
+2019-09-03 19:27:16,697 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:16 PM
+2019-09-03 19:27:16,702 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 11.9683
+2019-09-03 19:27:16,716 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:16 PM
+2019-09-03 19:27:16,747 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 30.9143
+2019-09-03 19:27:16,744 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 99.7421
+2019-09-03 19:27:16,726 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 28.9238
+2019-09-03 19:27:16,701 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 45.8777
+2019-09-03 19:27:16,772 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 128.6555
+2019-09-03 19:27:16,754 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 88.7625
+2019-09-03 19:27:16,785 [10] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – Request GET https://localhost:44366/api/SPUser/GetUsers
+2019-09-03 19:27:16,767 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 122.6761
+2019-09-03 19:27:16,792 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:16 PM
+2019-09-03 19:27:16,808 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:16 PM
+2019-09-03 19:27:16,815 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:16 PM
+2019-09-03 19:27:16,801 [15] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – Request GET https://localhost:44366/api/spuser/GetCurrentUser
+2019-09-03 19:27:16,802 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:16 PM
+2019-09-03 19:27:16,799 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUsers at 7:27:16 PM
+2019-09-03 19:27:16,821 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:16 PM
+2019-09-03 19:27:16,831 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetCurrentUser at 7:27:16 PM
+2019-09-03 19:27:16,835 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:16 PM
+2019-09-03 19:27:16,863 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:16 PM
+2019-09-03 19:27:16,871 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:16 PM
+2019-09-03 19:27:16,843 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:27:16 PM
+2019-09-03 19:27:16,856 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:27:16 PM
+2019-09-03 19:27:16,880 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:16 PM
+2019-09-03 19:27:16,886 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:27:16 PM
+2019-09-03 19:27:16,849 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:16 PM
+2019-09-03 19:27:16,890 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:27:16 PM
+2019-09-03 19:27:16,903 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 16.9551
+2019-09-03 19:27:16,915 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 24.9299
+2019-09-03 19:27:16,947 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 103.7225
+2019-09-03 19:27:16,963 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUsers returns System.Threading.Tasks.Task`1[System.String] for 163.5637
+2019-09-03 19:27:16,953 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 96.7418
+2019-09-03 19:27:16,983 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetCurrentUser returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 151.6638
+2019-09-03 19:27:17,385 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 504.7511
+2019-09-03 19:27:17,393 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 521.731
+2019-09-03 19:27:17,390 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 540.6935
+2019-09-03 19:27:17,403 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 581.5432
+2019-09-03 19:27:17,405 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 541.687
+2019-09-03 19:27:17,414 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 578.5558
+2019-09-03 19:27:17,418 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 615.4556
+2019-09-03 19:27:17,408 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 592.5187
+2019-09-03 19:27:17,430 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 621.4333
+2019-09-03 19:27:17,436 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 643.3816
+2019-09-03 19:27:17,424 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByKeywordAsync at 7:27:17 PM
+2019-09-03 19:27:17,449 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:27:17 PM
+2019-09-03 19:27:17,456 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:27:17 PM
+2019-09-03 19:27:17,442 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:27:17 PM
+2019-09-03 19:27:17,469 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 12.9667
+2019-09-03 19:27:17,477 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 27.9254
+2019-09-03 19:27:17,484 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 59.8406
+2019-09-03 19:27:17,470 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:27:17 PM
+2019-09-03 19:27:17,500 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:27:17 PM
+2019-09-03 19:27:17,510 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 9.9709
+2019-09-03 19:27:17,517 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 46.8751
+2019-09-03 19:27:17,522 [7] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 79.7856
+2019-09-03 19:27:18,421 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:18 PM
+2019-09-03 19:27:18,430 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:18 PM
+2019-09-03 19:27:18,439 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 8.9745
+2019-09-03 19:27:18,446 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 24.9342
+2019-09-03 19:27:18,531 [12] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – https://localhost:44366/api/spuser/GetCurrentUser Response Code: OK
+2019-09-03 19:27:18,587 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:18 PM
+2019-09-03 19:27:18,596 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:18 PM
+2019-09-03 19:27:18,603 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 6.9866
+2019-09-03 19:27:18,609 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 21.9417
+2019-09-03 19:27:18,617 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFavoriteRestaurantsById at 7:27:18 PM
+2019-09-03 19:27:18,624 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetAll at 7:27:18 PM
+2019-09-03 19:27:18,649 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetAll returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 24.9326
+2019-09-03 19:27:18,655 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFavoriteRestaurantsById returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 37.899
+2019-09-03 19:27:18,915 [12] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – https://localhost:44366/api/SPUser/GetUsers Response Code: OK
+2019-09-03 19:27:18,992 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByCategoriesKeywordAsync at 7:27:18 PM
+2019-09-03 19:27:18,998 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:27:18 PM
+2019-09-03 19:27:19,003 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:27:19 PM
+2019-09-03 19:27:19,008 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 5.9508
+2019-09-03 19:27:19,014 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 15.9968
+2019-09-03 19:27:19,019 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByCategoriesKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 27.9235
+2019-09-03 19:27:19,447 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:19 PM
+2019-09-03 19:27:19,452 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:19 PM
+2019-09-03 19:27:19,462 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 9.9726
+2019-09-03 19:27:19,467 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 19.9464
+2019-09-03 19:27:19,674 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:19 PM
+2019-09-03 19:27:19,680 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:19 PM
+2019-09-03 19:27:19,686 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9337
+2019-09-03 19:27:19,692 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 17.9495
+2019-09-03 19:27:19,701 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:19 PM
+2019-09-03 19:27:19,710 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:19 PM
+2019-09-03 19:27:19,716 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:19 PM
+2019-09-03 19:27:19,720 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:19 PM
+2019-09-03 19:27:19,727 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:19 PM
+2019-09-03 19:27:19,732 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:19 PM
+2019-09-03 19:27:19,740 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 7.9643
+2019-09-03 19:27:19,747 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 19.9453
+2019-09-03 19:27:19,752 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 31.9082
+2019-09-03 19:27:19,757 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 40.8904
+2019-09-03 19:27:19,764 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 53.8479
+2019-09-03 19:27:19,769 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 67.8147
+2019-09-03 19:27:19,776 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:19 PM
+2019-09-03 19:27:19,785 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:19 PM
+2019-09-03 19:27:19,793 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:19 PM
+2019-09-03 19:27:19,800 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:19 PM
+2019-09-03 19:27:19,810 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 9.9358
+2019-09-03 19:27:19,816 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 22.9399
+2019-09-03 19:27:19,823 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 37.8638
+2019-09-03 19:27:19,832 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 55.855
+2019-09-03 19:27:23,290 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:23 PM
+2019-09-03 19:27:23,300 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:23 PM
+2019-09-03 19:27:23,308 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 7.9777
+2019-09-03 19:27:23,318 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 27.9232
+2019-09-03 19:27:23,332 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:23 PM
+2019-09-03 19:27:23,339 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:23 PM
+2019-09-03 19:27:23,347 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:23 PM
+2019-09-03 19:27:23,353 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:23 PM
+2019-09-03 19:27:23,362 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:23 PM
+2019-09-03 19:27:23,368 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:23 PM
+2019-09-03 19:27:23,377 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:23 PM
+2019-09-03 19:27:23,386 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 8.9775
+2019-09-03 19:27:23,395 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 26.9282
+2019-09-03 19:27:23,403 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 40.8858
+2019-09-03 19:27:23,413 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 59.8333
+2019-09-03 19:27:23,418 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 70.8545
+2019-09-03 19:27:23,427 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 88.7626
+2019-09-03 19:27:23,434 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis readyis ready for 102.7406
+2019-09-03 19:27:23,443 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesFromDeliveryIdAsync at 7:27:23 PM
+2019-09-03 19:27:23,454 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:23 PM
+2019-09-03 19:27:23,465 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:23 PM
+2019-09-03 19:27:23,473 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:23 PM
+2019-09-03 19:27:23,482 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:23 PM
+2019-09-03 19:27:23,496 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 13.9645
+2019-09-03 19:27:23,507 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 33.9092
+2019-09-03 19:27:23,524 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 58.8446
+2019-09-03 19:27:23,531 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 76.8083
+2019-09-03 19:27:23,537 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesFromDeliveryIdAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 93.7604
+2019-09-03 19:27:27,395 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:27 PM
+2019-09-03 19:27:27,402 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:27 PM
+2019-09-03 19:27:27,412 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 9.9688
+2019-09-03 19:27:27,421 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 25.8942
+2019-09-03 19:27:27,432 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:27 PM
+2019-09-03 19:27:27,441 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:27 PM
+2019-09-03 19:27:27,449 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:27 PM
+2019-09-03 19:27:27,457 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:27 PM
+2019-09-03 19:27:27,467 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:27 PM
+2019-09-03 19:27:27,477 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 9.9773
+2019-09-03 19:27:27,483 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 25.9297
+2019-09-03 19:27:27,490 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 40.8904
+2019-09-03 19:27:27,496 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 54.8532
+2019-09-03 19:27:27,501 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 68.8288
+2019-09-03 19:27:27,508 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByKeywordAsync at 7:27:27 PM
+2019-09-03 19:27:27,513 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:27:27 PM
+2019-09-03 19:27:27,518 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:27:27 PM
+2019-09-03 19:27:27,525 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 6.9845
+2019-09-03 19:27:27,531 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 17.9552
+2019-09-03 19:27:27,536 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 28.1709
+2019-09-03 19:27:27,968 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:27 PM
+2019-09-03 19:27:27,975 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:27 PM
+2019-09-03 19:27:27,981 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 6.0168
+2019-09-03 19:27:27,987 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 18.973
+2019-09-03 19:27:28,765 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:28 PM
+2019-09-03 19:27:28,772 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:28 PM
+2019-09-03 19:27:28,778 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9815
+2019-09-03 19:27:28,785 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 19.9469
+2019-09-03 19:27:28,792 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:28 PM
+2019-09-03 19:27:28,797 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:28 PM
+2019-09-03 19:27:28,801 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:28 PM
+2019-09-03 19:27:28,809 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:28 PM
+2019-09-03 19:27:28,815 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:28 PM
+2019-09-03 19:27:28,821 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:28 PM
+2019-09-03 19:27:28,829 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 7.8952
+2019-09-03 19:27:28,834 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 18.8665
+2019-09-03 19:27:28,840 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 30.8419
+2019-09-03 19:27:28,846 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 44.7973
+2019-09-03 19:27:28,850 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 52.7364
+2019-09-03 19:27:28,857 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 64.7423
+2019-09-03 19:27:28,862 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:28 PM
+2019-09-03 19:27:28,867 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:28 PM
+2019-09-03 19:27:28,874 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:28 PM
+2019-09-03 19:27:28,879 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:28 PM
+2019-09-03 19:27:28,886 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 6.9814
+2019-09-03 19:27:28,893 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 19.9259
+2019-09-03 19:27:28,900 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 32.9105
+2019-09-03 19:27:28,909 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 46.8784
+2019-09-03 19:27:30,102 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:30 PM
+2019-09-03 19:27:30,110 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:30 PM
+2019-09-03 19:27:30,116 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9826
+2019-09-03 19:27:30,124 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 21.973
+2019-09-03 19:27:30,131 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,139 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,145 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,155 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,163 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,169 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:30 PM
+2019-09-03 19:27:30,179 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:30 PM
+2019-09-03 19:27:30,188 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 8.9593
+2019-09-03 19:27:30,195 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 25.9327
+2019-09-03 19:27:30,200 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 36.9069
+2019-09-03 19:27:30,208 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 53.388
+2019-09-03 19:27:30,213 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 68.5843
+2019-09-03 19:27:30,218 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 79.5532
+2019-09-03 19:27:30,225 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis readyis ready for 94.5205
+2019-09-03 19:27:30,230 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesFromDeliveryIdAsync at 7:27:30 PM
+2019-09-03 19:27:30,234 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:30 PM
+2019-09-03 19:27:30,240 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:30 PM
+2019-09-03 19:27:30,245 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:30 PM
+2019-09-03 19:27:30,250 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:27:30 PM
+2019-09-03 19:27:30,259 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 8.9497
+2019-09-03 19:27:30,266 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 20.9438
+2019-09-03 19:27:30,271 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 30.9142
+2019-09-03 19:27:30,278 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 43.8836
+2019-09-03 19:27:30,283 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesFromDeliveryIdAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 52.8516
+2019-09-03 19:27:30,404 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:30 PM
+2019-09-03 19:27:30,410 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:30 PM
+2019-09-03 19:27:30,417 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 6.9796
+2019-09-03 19:27:30,425 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 20.9427
+2019-09-03 19:27:30,431 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,437 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,442 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:30 PM
+2019-09-03 19:27:30,447 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:30 PM
+2019-09-03 19:27:30,451 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:30 PM
+2019-09-03 19:27:30,460 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 8.9435
+2019-09-03 19:27:30,465 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 18.0077
+2019-09-03 19:27:30,471 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 28.9475
+2019-09-03 19:27:30,476 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 38.9492
+2019-09-03 19:27:30,480 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 48.9486
+2019-09-03 19:27:30,485 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByKeywordAsync at 7:27:30 PM
+2019-09-03 19:27:30,492 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:27:30 PM
+2019-09-03 19:27:30,497 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:27:30 PM
+2019-09-03 19:27:30,502 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 4.9855
+2019-09-03 19:27:30,510 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 17.9533
+2019-09-03 19:27:30,515 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 29.8771
+2019-09-03 19:27:31,011 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:31 PM
+2019-09-03 19:27:31,017 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:27:31 PM
+2019-09-03 19:27:31,026 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 8.9794
+2019-09-03 19:27:31,032 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 20.9428
+2019-09-03 19:27:31,097 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:31 PM
+2019-09-03 19:27:31,102 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:31 PM
+2019-09-03 19:27:31,111 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 8.9757
+2019-09-03 19:27:31,118 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 21.9423
+2019-09-03 19:27:31,125 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:31 PM
+2019-09-03 19:27:31,131 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:31 PM
+2019-09-03 19:27:31,138 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:31 PM
+2019-09-03 19:27:31,144 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:27:31 PM
+2019-09-03 19:27:31,149 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:27:31 PM
+2019-09-03 19:27:31,156 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:27:31 PM
+2019-09-03 19:27:31,165 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 8.9755
+2019-09-03 19:27:31,170 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 20.944
+2019-09-03 19:27:31,177 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 32.916
+2019-09-03 19:27:31,182 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 43.8842
+2019-09-03 19:27:31,188 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 56.8451
+2019-09-03 19:27:31,194 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 68.8167
+2019-09-03 19:27:31,199 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:31 PM
+2019-09-03 19:27:31,207 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:31 PM
+2019-09-03 19:27:31,214 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:31 PM
+2019-09-03 19:27:31,222 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:27:31 PM
+2019-09-03 19:27:31,230 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 7.9786
+2019-09-03 19:27:31,237 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 22.9387
+2019-09-03 19:27:31,245 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 37.8957
+2019-09-03 19:27:31,252 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 52.8582
+2019-09-03 19:27:36,280 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:27:36 PM
+2019-09-03 19:27:36,290 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:27:36 PM
+2019-09-03 19:27:36,295 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9841
+2019-09-03 19:27:36,304 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 23.9293
+2019-09-03 19:27:36,316 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendEmailAsync at 7:27:36 PM
+2019-09-03 19:27:36,329 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetSharepointContextFromUrl at 7:27:36 PM
+2019-09-03 19:27:36,338 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:27:36 PM
+2019-09-03 19:27:36,345 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 6.9831
+2019-09-03 19:27:36,355 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetSharepointContextFromUrl returns Microsoft.SharePoint.Client.ClientContext for 25.9541
+2019-09-03 19:27:37,205 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUserById at 7:27:37 PM
+2019-09-03 19:27:37,212 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:27:37 PM
+2019-09-03 19:27:37,217 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:27:37 PM
+2019-09-03 19:27:37,222 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 4.9748
+2019-09-03 19:27:37,227 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 14.9582
+2019-09-03 19:27:37,233 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUserById returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 28.2799
+2019-09-03 19:27:37,239 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendEmailAsync returns System.Threading.Tasks.Task`1[System.Threading.Tasks.VoidTaskResult] for 922.8792
+2019-09-03 19:28:18,716 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:28:18 PM
+2019-09-03 19:28:18,730 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:28:18 PM
+2019-09-03 19:28:18,738 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 8.5056
+2019-09-03 19:28:18,749 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 32.9113
+2019-09-03 19:28:18,758 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendEmailAsync at 7:28:18 PM
+2019-09-03 19:28:18,765 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetSharepointContextFromUrl at 7:28:18 PM
+2019-09-03 19:28:18,771 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:28:18 PM
+2019-09-03 19:28:18,779 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 7.9801
+2019-09-03 19:28:18,785 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetSharepointContextFromUrl returns Microsoft.SharePoint.Client.ClientContext for 20.4544
+2019-09-03 19:28:18,994 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUserById at 7:28:18 PM
+2019-09-03 19:28:18,999 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:28:18 PM
+2019-09-03 19:28:19,005 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:28:19 PM
+2019-09-03 19:28:19,011 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 5.9799
+2019-09-03 19:28:19,016 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 16.9561
+2019-09-03 19:28:19,021 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUserById returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 26.9045
+2019-09-03 19:28:19,027 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendEmailAsync returns System.Threading.Tasks.Task`1[System.Threading.Tasks.VoidTaskResult] for 269.0238
+2019-09-03 19:30:56,321 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:30:56 PM
+2019-09-03 19:30:56,329 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:30:56 PM
+2019-09-03 19:30:56,329 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:30:56 PM
+2019-09-03 19:30:56,334 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:30:56 PM
+2019-09-03 19:30:56,329 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:30:56 PM
+2019-09-03 19:30:56,439 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:30:56 PM
+2019-09-03 19:30:56,447 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 7.9787
+2019-09-03 19:30:56,441 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:30:56 PM
+2019-09-03 19:30:56,443 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 123.6709
+2019-09-03 19:30:56,442 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:30:56 PM
+2019-09-03 19:30:56,472 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 30.0735
+2019-09-03 19:30:56,458 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 128.6562
+2019-09-03 19:30:56,448 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:30:56 PM
+2019-09-03 19:30:56,492 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 44.0365
+2019-09-03 19:30:56,462 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 21.0972
+2019-09-03 19:30:56,505 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 175.6851
+2019-09-03 19:30:56,478 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 143.7682
+2019-09-03 19:30:56,499 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 169.7015
+2019-09-03 19:31:05,301 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start SaveTokenResource at 7:31:05 PM
+2019-09-03 19:31:05,309 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method SaveTokenResource returns  for 8.9813
+2019-09-03 19:31:08,191 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:08 PM
+2019-09-03 19:31:08,200 [18] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 7.9779
+2019-09-03 19:31:08,256 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:08 PM
+2019-09-03 19:31:08,257 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:08 PM
+2019-09-03 19:31:08,270 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:08 PM
+2019-09-03 19:31:08,258 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:08 PM
+2019-09-03 19:31:08,280 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:08 PM
+2019-09-03 19:31:08,312 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 31.9157
+2019-09-03 19:31:08,259 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:08 PM
+2019-09-03 19:31:08,327 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:08 PM
+2019-09-03 19:31:08,332 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 4.9864
+2019-09-03 19:31:08,321 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 64.826
+2019-09-03 19:31:08,304 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:08 PM
+2019-09-03 19:31:08,350 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 45.8722
+2019-09-03 19:31:08,290 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 20.9432
+2019-09-03 19:31:08,362 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 106.7128
+2019-09-03 19:31:08,357 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 99.7314
+2019-09-03 19:31:08,340 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 81.7818
+2019-09-03 19:31:08,348 [16] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – Request GET https://localhost:44366/api/spuser/GetCurrentUser
+2019-09-03 19:31:08,383 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:08 PM
+2019-09-03 19:31:08,399 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:08 PM
+2019-09-03 19:31:08,408 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:08 PM
+2019-09-03 19:31:08,415 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:31:08 PM
+2019-09-03 19:31:08,425 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:31:08 PM
+2019-09-03 19:31:08,368 [14] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – Request GET https://localhost:44366/api/SPUser/GetUsers
+2019-09-03 19:31:08,394 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetCurrentUser at 7:31:08 PM
+2019-09-03 19:31:08,417 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:08 PM
+2019-09-03 19:31:08,452 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:08 PM
+2019-09-03 19:31:08,447 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:31:08 PM
+2019-09-03 19:31:08,482 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:31:08 PM
+2019-09-03 19:31:08,439 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUsers at 7:31:08 PM
+2019-09-03 19:31:08,499 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:31:08 PM
+2019-09-03 19:31:08,505 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:31:08 PM
+2019-09-03 19:31:08,512 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 5.985
+2019-09-03 19:31:08,477 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:08 PM
+2019-09-03 19:31:08,539 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:31:08 PM
+2019-09-03 19:31:08,545 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:31:08 PM
+2019-09-03 19:31:08,533 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 34.9077
+2019-09-03 19:31:08,490 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 7.9785
+2019-09-03 19:31:08,560 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUsers returns System.Threading.Tasks.Task`1[System.String] for 121.2949
+2019-09-03 19:31:08,574 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 127.2755
+2019-09-03 19:31:08,592 [16] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetCurrentUser returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 198.0864
+2019-09-03 19:31:08,931 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 385.8023
+2019-09-03 19:31:08,934 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 509.0879
+2019-09-03 19:31:08,942 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 527.2022
+2019-09-03 19:31:08,938 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 398.801
+2019-09-03 19:31:08,956 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 479.3328
+2019-09-03 19:31:08,962 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 510.2504
+2019-09-03 19:31:08,956 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 548.1497
+2019-09-03 19:31:08,973 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 574.1003
+2019-09-03 19:31:08,977 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 594.0589
+2019-09-03 19:31:08,983 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:31:08 PM
+2019-09-03 19:31:08,989 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:31:08 PM
+2019-09-03 19:31:08,967 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 550.1435
+2019-09-03 19:31:08,999 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByKeywordAsync at 7:31:08 PM
+2019-09-03 19:31:08,995 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:31:08 PM
+2019-09-03 19:31:09,006 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:31:09 PM
+2019-09-03 19:31:09,024 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:31:09 PM
+2019-09-03 19:31:09,016 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 20.9617
+2019-09-03 19:31:09,041 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 51.8606
+2019-09-03 19:31:09,037 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 12.9734
+2019-09-03 19:31:09,058 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 51.8234
+2019-09-03 19:31:09,050 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 66.821
+2019-09-03 19:31:09,069 [17] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 69.8131
+2019-09-03 19:31:09,649 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:31:09 PM
+2019-09-03 19:31:09,658 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:31:09 PM
+2019-09-03 19:31:09,652 [11] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – https://localhost:44366/api/spuser/GetCurrentUser Response Code: OK
+2019-09-03 19:31:09,670 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 11.9702
+2019-09-03 19:31:09,680 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 30.9271
+2019-09-03 19:31:09,771 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:09 PM
+2019-09-03 19:31:09,776 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:09 PM
+2019-09-03 19:31:09,783 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 6.9812
+2019-09-03 19:31:09,789 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 17.9496
+2019-09-03 19:31:09,795 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFavoriteRestaurantsById at 7:31:09 PM
+2019-09-03 19:31:09,801 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetAll at 7:31:09 PM
+2019-09-03 19:31:09,823 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetAll returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 21.9418
+2019-09-03 19:31:09,829 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFavoriteRestaurantsById returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 32.9117
+2019-09-03 19:31:10,021 [13] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – https://localhost:44366/api/SPUser/GetUsers Response Code: OK
+2019-09-03 19:31:10,063 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByCategoriesKeywordAsync at 7:31:10 PM
+2019-09-03 19:31:10,070 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:31:10 PM
+2019-09-03 19:31:10,076 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:31:10 PM
+2019-09-03 19:31:10,082 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 6.0004
+2019-09-03 19:31:10,088 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 18.4164
+2019-09-03 19:31:10,100 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByCategoriesKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 37.3679
+2019-09-03 19:31:10,622 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:31:10 PM
+2019-09-03 19:31:10,626 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:31:10 PM
+2019-09-03 19:31:10,632 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 5.9837
+2019-09-03 19:31:10,638 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 15.9021
+2019-09-03 19:31:10,947 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:10 PM
+2019-09-03 19:31:10,958 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:10 PM
+2019-09-03 19:31:10,967 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 8.9755
+2019-09-03 19:31:10,973 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 25.9315
+2019-09-03 19:31:10,984 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:10 PM
+2019-09-03 19:31:10,990 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:10 PM
+2019-09-03 19:31:10,995 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:10 PM
+2019-09-03 19:31:11,001 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:11 PM
+2019-09-03 19:31:11,007 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:31:11 PM
+2019-09-03 19:31:11,013 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:31:11 PM
+2019-09-03 19:31:11,021 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 7.9771
+2019-09-03 19:31:11,026 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 18.9491
+2019-09-03 19:31:11,031 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 29.9396
+2019-09-03 19:31:11,037 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 41.886
+2019-09-03 19:31:11,042 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 51.8243
+2019-09-03 19:31:11,047 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 62.7945
+2019-09-03 19:31:11,054 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:31:11 PM
+2019-09-03 19:31:11,061 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:31:11 PM
+2019-09-03 19:31:11,069 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:31:11 PM
+2019-09-03 19:31:11,076 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:31:11 PM
+2019-09-03 19:31:11,089 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 12.9635
+2019-09-03 19:31:11,096 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 27.9418
+2019-09-03 19:31:11,103 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 42.8858
+2019-09-03 19:31:11,110 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 56.8621
+2019-09-03 19:31:15,061 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:15 PM
+2019-09-03 19:31:15,070 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:15 PM
+2019-09-03 19:31:15,078 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 7.9775
+2019-09-03 19:31:15,088 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 26.928
+2019-09-03 19:31:15,101 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:15 PM
+2019-09-03 19:31:15,110 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:15 PM
+2019-09-03 19:31:15,118 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:15 PM
+2019-09-03 19:31:15,127 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:15 PM
+2019-09-03 19:31:15,135 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:31:15 PM
+2019-09-03 19:31:15,143 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:31:15 PM
+2019-09-03 19:31:15,151 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:31:15 PM
+2019-09-03 19:31:15,162 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 10.9633
+2019-09-03 19:31:15,170 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 26.9298
+2019-09-03 19:31:15,177 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 41.8887
+2019-09-03 19:31:15,185 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 57.8467
+2019-09-03 19:31:15,192 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 73.9435
+2019-09-03 19:31:15,198 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 87.8943
+2019-09-03 19:31:15,205 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis readyis ready for 103.8595
+2019-09-03 19:31:15,212 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesFromDeliveryIdAsync at 7:31:15 PM
+2019-09-03 19:31:15,224 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:31:15 PM
+2019-09-03 19:31:15,231 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:31:15 PM
+2019-09-03 19:31:15,240 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:31:15 PM
+2019-09-03 19:31:15,248 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:31:15 PM
+2019-09-03 19:31:15,258 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 9.9731
+2019-09-03 19:31:15,264 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 23.934
+2019-09-03 19:31:15,274 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 42.8876
+2019-09-03 19:31:15,281 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 56.8429
+2019-09-03 19:31:15,289 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesFromDeliveryIdAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 76.846
+2019-09-03 19:31:18,032 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:31:18 PM
+2019-09-03 19:31:18,039 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:31:18 PM
+2019-09-03 19:31:18,045 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9835
+2019-09-03 19:31:18,054 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 21.939
+2019-09-03 19:31:18,063 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendEmailAsync at 7:31:18 PM
+2019-09-03 19:31:18,078 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetSharepointContextFromUrl at 7:31:18 PM
+2019-09-03 19:31:18,088 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:31:18 PM
+2019-09-03 19:31:18,096 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 7.9793
+2019-09-03 19:31:18,107 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetSharepointContextFromUrl returns Microsoft.SharePoint.Client.ClientContext for 28.923
+2019-09-03 19:31:18,906 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUserById at 7:31:18 PM
+2019-09-03 19:31:18,914 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:31:18 PM
+2019-09-03 19:31:18,920 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:31:18 PM
+2019-09-03 19:31:18,925 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 4.9862
+2019-09-03 19:31:18,931 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 16.9543
+2019-09-03 19:31:18,939 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUserById returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 32.9128
+2019-09-03 19:31:18,946 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendEmailAsync returns System.Threading.Tasks.Task`1[System.Threading.Tasks.VoidTaskResult] for 882.9845
+2019-09-03 19:32:05,234 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:32:05 PM
+2019-09-03 19:32:05,245 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:32:05 PM
+2019-09-03 19:32:05,252 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 6.9833
+2019-09-03 19:32:05,262 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 27.9341
+2019-09-03 19:32:05,269 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendEmailAsync at 7:32:05 PM
+2019-09-03 19:32:05,276 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetSharepointContextFromUrl at 7:32:05 PM
+2019-09-03 19:32:05,282 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:32:05 PM
+2019-09-03 19:32:05,291 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 8.9745
+2019-09-03 19:32:05,296 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetSharepointContextFromUrl returns Microsoft.SharePoint.Client.ClientContext for 19.9462
+2019-09-03 19:32:05,620 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUserById at 7:32:05 PM
+2019-09-03 19:32:05,639 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:32:05 PM
+2019-09-03 19:32:05,648 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:32:05 PM
+2019-09-03 19:32:05,656 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 7.9791
+2019-09-03 19:32:05,662 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 22.9045
+2019-09-03 19:32:05,669 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUserById returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 48.8607
+2019-09-03 19:32:05,676 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendEmailAsync returns System.Threading.Tasks.Task`1[System.Threading.Tasks.VoidTaskResult] for 405.9879
+2019-09-03 19:33:43,579 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:43 PM
+2019-09-03 19:33:43,579 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:43 PM
+2019-09-03 19:33:43,579 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:43 PM
+2019-09-03 19:33:43,644 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:43 PM
+2019-09-03 19:33:43,669 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:43 PM
+2019-09-03 19:33:43,684 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 14.9597
+2019-09-03 19:33:43,691 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 114.6949
+2019-09-03 19:33:43,593 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:43 PM
+2019-09-03 19:33:43,709 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:43 PM
+2019-09-03 19:33:43,715 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 5.9838
+2019-09-03 19:33:43,676 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 97.7387
+2019-09-03 19:33:43,678 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 33.9092
+2019-09-03 19:33:43,735 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 158.5764
+2019-09-03 19:33:43,598 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:43 PM
+2019-09-03 19:33:43,720 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 126.6611
+2019-09-03 19:33:43,750 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:43 PM
+2019-09-03 19:33:43,764 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns  for 13.9624
+2019-09-03 19:33:43,770 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 171.5407
+2019-09-03 19:33:51,596 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start SaveTokenResource at 7:33:51 PM
+2019-09-03 19:33:51,616 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method SaveTokenResource returns  for 19.9475
+2019-09-03 19:33:54,492 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:54 PM
+2019-09-03 19:33:54,503 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 10.9703
+2019-09-03 19:33:54,572 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:54 PM
+2019-09-03 19:33:54,581 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:54 PM
+2019-09-03 19:33:54,573 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:54 PM
+2019-09-03 19:33:54,596 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:54 PM
+2019-09-03 19:33:54,575 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:54 PM
+2019-09-03 19:33:54,625 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:54 PM
+2019-09-03 19:33:54,630 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 4.9856
+2019-09-03 19:33:54,590 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 8.9768
+2019-09-03 19:33:54,643 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 70.8086
+2019-09-03 19:33:54,638 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 62.8314
+2019-09-03 19:33:54,652 [14] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – Request GET https://localhost:44366/api/SPUser/GetUsers
+2019-09-03 19:33:54,575 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:54 PM
+2019-09-03 19:33:54,615 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 18.9495
+2019-09-03 19:33:54,675 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 101.727
+2019-09-03 19:33:54,669 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUsers at 7:33:54 PM
+2019-09-03 19:33:54,658 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:54 PM
+2019-09-03 19:33:54,680 [9] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – Request GET https://localhost:44366/api/spuser/GetCurrentUser
+2019-09-03 19:33:54,687 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:33:54 PM
+2019-09-03 19:33:54,691 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:54 PM
+2019-09-03 19:33:54,698 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetCurrentUser at 7:33:54 PM
+2019-09-03 19:33:54,671 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:54 PM
+2019-09-03 19:33:54,708 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:54 PM
+2019-09-03 19:33:54,728 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:33:54 PM
+2019-09-03 19:33:54,743 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:33:54 PM
+2019-09-03 19:33:54,714 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:33:54 PM
+2019-09-03 19:33:54,760 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:33:54 PM
+2019-09-03 19:33:54,720 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 48.8719
+2019-09-03 19:33:54,704 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:33:54 PM
+2019-09-03 19:33:54,798 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 93.7477
+2019-09-03 19:33:54,795 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 219.413
+2019-09-03 19:33:54,769 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 8.9774
+2019-09-03 19:33:54,820 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 105.718
+2019-09-03 19:33:54,830 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetCurrentUser returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 131.6473
+2019-09-03 19:33:54,806 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 117.685
+2019-09-03 19:33:54,848 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUsers returns System.Threading.Tasks.Task`1[System.String] for 178.5222
+2019-09-03 19:33:54,861 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:54 PM
+2019-09-03 19:33:54,867 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:54 PM
+2019-09-03 19:33:54,874 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:54 PM
+2019-09-03 19:33:54,879 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:33:54 PM
+2019-09-03 19:33:54,885 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:33:54 PM
+2019-09-03 19:33:55,236 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 493.5943
+2019-09-03 19:33:55,239 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 354.9648
+2019-09-03 19:33:55,248 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 369.9268
+2019-09-03 19:33:55,243 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 515.5367
+2019-09-03 19:33:55,263 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 389.9049
+2019-09-03 19:33:55,269 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 402.8372
+2019-09-03 19:33:55,273 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 412.8112
+2019-09-03 19:33:55,278 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByKeywordAsync at 7:33:55 PM
+2019-09-03 19:33:55,285 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:33:55 PM
+2019-09-03 19:33:55,293 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:33:55 PM
+2019-09-03 19:33:55,263 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 555.4624
+2019-09-03 19:33:55,311 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 620.2541
+2019-09-03 19:33:55,307 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 13.9623
+2019-09-03 19:33:55,335 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 677.1055
+2019-09-03 19:33:55,364 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:33:55 PM
+2019-09-03 19:33:55,372 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:33:55 PM
+2019-09-03 19:33:55,359 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 73.7996
+2019-09-03 19:33:55,384 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 105.7146
+2019-09-03 19:33:55,378 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForCategoryAsync at 7:33:55 PM
+2019-09-03 19:33:55,403 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 24.9524
+2019-09-03 19:33:55,408 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 35.9033
+2019-09-03 19:33:55,418 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForCategoryAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.RestaurantCategory]] for 53.8254
+2019-09-03 19:33:55,987 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:33:55 PM
+2019-09-03 19:33:55,996 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:33:55 PM
+2019-09-03 19:33:56,008 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 11.9662
+2019-09-03 19:33:56,016 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 28.8915
+2019-09-03 19:33:56,283 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByCategoriesKeywordAsync at 7:33:56 PM
+2019-09-03 19:33:56,291 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:33:56 PM
+2019-09-03 19:33:56,295 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:33:56 PM
+2019-09-03 19:33:56,303 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 7.981
+2019-09-03 19:33:56,309 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 18.9041
+2019-09-03 19:33:56,315 [12] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByCategoriesKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 31.9482
+2019-09-03 19:33:56,284 [9] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – https://localhost:44366/api/spuser/GetCurrentUser Response Code: OK
+2019-09-03 19:33:56,390 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:56 PM
+2019-09-03 19:33:56,397 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:56 PM
+2019-09-03 19:33:56,405 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 7.0162
+2019-09-03 19:33:56,410 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 19.9637
+2019-09-03 19:33:56,420 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFavoriteRestaurantsById at 7:33:56 PM
+2019-09-03 19:33:56,429 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetAll at 7:33:56 PM
+2019-09-03 19:33:56,462 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetAll returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 32.9222
+2019-09-03 19:33:56,470 [9] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFavoriteRestaurantsById returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 49.8664
+2019-09-03 19:33:56,547 [9] DEBUG  FOS.API.App_Start.LogActionWebApiFilter – https://localhost:44366/api/SPUser/GetUsers Response Code: OK
+2019-09-03 19:33:56,763 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:33:56 PM
+2019-09-03 19:33:56,770 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:33:56 PM
+2019-09-03 19:33:56,776 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 5.9847
+2019-09-03 19:33:56,787 [15] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 23.9347
+2019-09-03 19:33:57,043 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:57 PM
+2019-09-03 19:33:57,048 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:57 PM
+2019-09-03 19:33:57,055 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 6.9828
+2019-09-03 19:33:57,060 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 16.9539
+2019-09-03 19:33:57,071 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:57 PM
+2019-09-03 19:33:57,116 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:57 PM
+2019-09-03 19:33:57,125 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:57 PM
+2019-09-03 19:33:57,130 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:57 PM
+2019-09-03 19:33:57,164 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:33:57 PM
+2019-09-03 19:33:57,171 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:33:57 PM
+2019-09-03 19:33:57,177 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 5.9832
+2019-09-03 19:33:57,183 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 18.9494
+2019-09-03 19:33:57,188 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 57.8446
+2019-09-03 19:33:57,194 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 68.8133
+2019-09-03 19:33:57,202 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 85.7615
+2019-09-03 19:33:57,207 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 135.6366
+2019-09-03 19:33:57,214 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:33:57 PM
+2019-09-03 19:33:57,221 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:33:57 PM
+2019-09-03 19:33:57,227 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:33:57 PM
+2019-09-03 19:33:57,234 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:33:57 PM
+2019-09-03 19:33:57,242 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 7.9785
+2019-09-03 19:33:57,247 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 19.9466
+2019-09-03 19:33:57,252 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 30.9176
+2019-09-03 19:33:57,257 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 42.8864
+2019-09-03 19:33:59,834 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:33:59 PM
+2019-09-03 19:33:59,840 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:33:59 PM
+2019-09-03 19:33:59,846 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9837
+2019-09-03 19:33:59,856 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 21.9406
+2019-09-03 19:33:59,867 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:59 PM
+2019-09-03 19:33:59,877 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:59 PM
+2019-09-03 19:33:59,886 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:33:59 PM
+2019-09-03 19:33:59,895 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:33:59 PM
+2019-09-03 19:33:59,903 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:33:59 PM
+2019-09-03 19:33:59,913 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 9.9885
+2019-09-03 19:33:59,921 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 25.9352
+2019-09-03 19:33:59,927 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 40.2283
+2019-09-03 19:33:59,933 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 55.1865
+2019-09-03 19:33:59,939 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 72.1351
+2019-09-03 19:33:59,945 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByKeywordAsync at 7:33:59 PM
+2019-09-03 19:33:59,953 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:33:59 PM
+2019-09-03 19:33:59,959 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:33:59 PM
+2019-09-03 19:33:59,966 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 6.9821
+2019-09-03 19:33:59,972 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 18.9527
+2019-09-03 19:33:59,982 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 36.9019
+2019-09-03 19:34:00,389 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:34:00 PM
+2019-09-03 19:34:00,394 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:34:00 PM
+2019-09-03 19:34:00,401 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 6.9563
+2019-09-03 19:34:00,410 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 20.9442
+2019-09-03 19:34:00,784 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:34:00 PM
+2019-09-03 19:34:00,790 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:34:00 PM
+2019-09-03 19:34:00,799 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 8.9797
+2019-09-03 19:34:00,805 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 20.9419
+2019-09-03 19:34:00,811 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:00 PM
+2019-09-03 19:34:00,817 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:00 PM
+2019-09-03 19:34:00,822 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:00 PM
+2019-09-03 19:34:00,828 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:00 PM
+2019-09-03 19:34:00,834 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:34:00 PM
+2019-09-03 19:34:00,839 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:34:00 PM
+2019-09-03 19:34:00,848 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 8.9747
+2019-09-03 19:34:00,855 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 20.943
+2019-09-03 19:34:00,861 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 32.9135
+2019-09-03 19:34:00,866 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 43.8815
+2019-09-03 19:34:00,873 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 55.8453
+2019-09-03 19:34:00,879 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 67.8304
+2019-09-03 19:34:00,888 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:00 PM
+2019-09-03 19:34:00,894 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:00 PM
+2019-09-03 19:34:00,901 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:00 PM
+2019-09-03 19:34:00,907 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:00 PM
+2019-09-03 19:34:00,913 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 5.9815
+2019-09-03 19:34:00,921 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 20.0115
+2019-09-03 19:34:00,928 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 33.9334
+2019-09-03 19:34:00,935 [14] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 46.8907
+2019-09-03 19:34:02,328 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:34:02 PM
+2019-09-03 19:34:02,334 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:34:02 PM
+2019-09-03 19:34:02,343 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 8.99
+2019-09-03 19:34:02,353 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 23.9337
+2019-09-03 19:34:02,364 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,371 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,380 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,389 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,396 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,402 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:34:02 PM
+2019-09-03 19:34:02,408 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:34:02 PM
+2019-09-03 19:34:02,419 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 10.9724
+2019-09-03 19:34:02,425 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 22.9869
+2019-09-03 19:34:02,431 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 34.958
+2019-09-03 19:34:02,438 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 48.9166
+2019-09-03 19:34:02,444 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 63.8804
+2019-09-03 19:34:02,451 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 79.8731
+2019-09-03 19:34:02,456 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis readyis ready for 91.8028
+2019-09-03 19:34:02,463 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesFromDeliveryIdAsync at 7:34:02 PM
+2019-09-03 19:34:02,472 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:34:02 PM
+2019-09-03 19:34:02,479 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:34:02 PM
+2019-09-03 19:34:02,486 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:34:02 PM
+2019-09-03 19:34:02,493 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFoodCataloguesAsync at 7:34:02 PM
+2019-09-03 19:34:02,502 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 8.9754
+2019-09-03 19:34:02,509 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 22.9269
+2019-09-03 19:34:02,516 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 36.8806
+2019-09-03 19:34:02,524 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 51.8614
+2019-09-03 19:34:02,530 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFoodCataloguesFromDeliveryIdAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.FoodCategory]] for 66.8203
+2019-09-03 19:34:02,612 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:34:02 PM
+2019-09-03 19:34:02,619 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:34:02 PM
+2019-09-03 19:34:02,624 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.4486
+2019-09-03 19:34:02,629 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 17.4173
+2019-09-03 19:34:02,635 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,640 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,645 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:02 PM
+2019-09-03 19:34:02,650 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:34:02 PM
+2019-09-03 19:34:02,656 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:34:02 PM
+2019-09-03 19:34:02,664 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 7.9782
+2019-09-03 19:34:02,674 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 23.8921
+2019-09-03 19:34:02,679 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 34.9103
+2019-09-03 19:34:02,686 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 45.8786
+2019-09-03 19:34:02,691 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 55.8476
+2019-09-03 19:34:02,695 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsByKeywordAsync at 7:34:02 PM
+2019-09-03 19:34:02,703 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataByIdAsync at 7:34:02 PM
+2019-09-03 19:34:02,708 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetMetadataForProvinceAsync at 7:34:02 PM
+2019-09-03 19:34:02,714 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataForProvinceAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Province]] for 5.9858
+2019-09-03 19:34:02,725 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetMetadataByIdAsync returns System.Threading.Tasks.Task`1[FOS.Model.Dto.Province] for 21.9422
+2019-09-03 19:34:02,731 [13] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsByKeywordAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 35.9058
+2019-09-03 19:34:03,209 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:34:03 PM
+2019-09-03 19:34:03,215 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsAsync at 7:34:03 PM
+2019-09-03 19:34:03,222 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 6.9978
+2019-09-03 19:34:03,228 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.Restaurant]] for 18.9503
+2019-09-03 19:34:03,313 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:34:03 PM
+2019-09-03 19:34:03,320 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:34:03 PM
+2019-09-03 19:34:03,326 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9874
+2019-09-03 19:34:03,332 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 18.9511
+2019-09-03 19:34:03,337 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:03 PM
+2019-09-03 19:34:03,342 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:03 PM
+2019-09-03 19:34:03,346 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:03 PM
+2019-09-03 19:34:03,351 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetExternalServiceById at 7:34:03 PM
+2019-09-03 19:34:03,356 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetById at 7:34:03 PM
+2019-09-03 19:34:03,361 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetFOSCrawlLinksById at 7:34:03 PM
+2019-09-03 19:34:03,368 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetFOSCrawlLinksById returns FOS.Model.APIs for 6.9823
+2019-09-03 19:34:03,374 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetById returns FOS.Model.Dto.APIs for 17.9517
+2019-09-03 19:34:03,379 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns NowService for 27.9251
+2019-09-03 19:34:03,385 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns ProvinceService in NowServiceis ready for 38.8977
+2019-09-03 19:34:03,391 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns RestaurantService in ProvinceService in NowServiceis readyis ready for 48.869
+2019-09-03 19:34:03,395 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetExternalServiceById returns DeliveryService in RestaurantService in ProvinceService in NowServiceis readyis readyis ready for 57.8445
+2019-09-03 19:34:03,402 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:03 PM
+2019-09-03 19:34:03,407 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:03 PM
+2019-09-03 19:34:03,413 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:03 PM
+2019-09-03 19:34:03,419 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetRestaurantsDeliveryInforAsync at 7:34:03 PM
+2019-09-03 19:34:03,424 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 4.9825
+2019-09-03 19:34:03,433 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 19.9473
+2019-09-03 19:34:03,440 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 32.9131
+2019-09-03 19:34:03,447 [10] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetRestaurantsDeliveryInforAsync returns System.Threading.Tasks.Task`1[System.Collections.Generic.List`1[FOS.Model.Dto.DeliveryInfos]] for 44.8811
+2019-09-03 19:34:03,941 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:34:03 PM
+2019-09-03 19:34:03,949 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:34:03 PM
+2019-09-03 19:34:03,955 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 5.9501
+2019-09-03 19:34:03,960 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 18.9524
+2019-09-03 19:34:03,968 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendEmailAsync at 7:34:03 PM
+2019-09-03 19:34:03,976 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetSharepointContextFromUrl at 7:34:03 PM
+2019-09-03 19:34:03,983 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:34:03 PM
+2019-09-03 19:34:03,988 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 4.9709
+2019-09-03 19:34:03,995 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetSharepointContextFromUrl returns Microsoft.SharePoint.Client.ClientContext for 18.9516
+2019-09-03 19:34:04,814 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUserById at 7:34:04 PM
+2019-09-03 19:34:04,819 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:34:04 PM
+2019-09-03 19:34:04,826 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:34:04 PM
+2019-09-03 19:34:04,832 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 5.9968
+2019-09-03 19:34:04,837 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 17.9521
+2019-09-03 19:34:04,844 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUserById returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 29.9199
+2019-09-03 19:34:04,852 [11] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendEmailAsync returns System.Threading.Tasks.Task`1[System.Threading.Tasks.VoidTaskResult] for 883.6529
+2019-09-03 19:38:39,477 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start CheckAuthenticationAsync at 7:38:39 PM
+2019-09-03 19:38:39,485 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenResourceFromRequest at 7:38:39 PM
+2019-09-03 19:38:39,493 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 7.9786
+2019-09-03 19:38:39,502 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 24.8964
+2019-09-03 19:38:39,510 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendEmailAsync at 7:38:39 PM
+2019-09-03 19:38:39,520 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetSharepointContextFromUrl at 7:38:39 PM
+2019-09-03 19:38:39,527 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:38:39 PM
+2019-09-03 19:38:39,535 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 8.976
+2019-09-03 19:38:39,541 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetSharepointContextFromUrl returns Microsoft.SharePoint.Client.ClientContext for 20.9507
+2019-09-03 19:38:40,151 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetUserById at 7:38:40 PM
+2019-09-03 19:38:40,157 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start SendAsync at 7:38:40 PM
+2019-09-03 19:38:40,165 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Start GetTokenByResourceUrl at 7:38:40 PM
+2019-09-03 19:38:40,174 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 8.983
+2019-09-03 19:38:40,180 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 22.938
+2019-09-03 19:38:40,189 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method GetUserById returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 37.8763
+2019-09-03 19:38:40,195 [32] INFO   FOS.API.LoggingInterceptor – Profiler: Method SendEmailAsync returns System.Threading.Tasks.Task`1[System.Threading.Tasks.VoidTaskResult] for 685.4177
