@@ -63,7 +63,6 @@
     <Compile Include="Domain\LogMetadata.cs" />
     <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
-    <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\TokenResource.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Dto\APIs.cs" />
