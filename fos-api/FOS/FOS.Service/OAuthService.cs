@@ -118,7 +118,6 @@ namespace FOS.Services
                 new KeyValuePair<string, string>("resource", resourceUrl),
                 new KeyValuePair<string, string>("refresh_token", token),
             });
-
             HttpResponseMessage response = await client.PostAsync(path, content);
             var resultContentString = await response.Content.ReadAsStringAsync();
             var resultContent = await response.Content.ReadAsAsync<OAuthResponse>();
@@ -138,116 +137,48 @@ namespace FOS.Services
 
         public async Task<string> RefreshTokenAsync()
         {
-            var refreshToken = _tokenProvider.GetTokenResourceFromRequest().RefreshToken;
+            var tokenResource = _tokenProvider.GetTokenResourceFromRequest();
+            var tokens = tokenResource.tokens;
 
-            HttpClient client = new HttpClient();
-
-            var tenant = WebConfigurationManager.AppSettings[OAuth.TENANT];
-            var clientId = WebConfigurationManager.AppSettings[OAuth.CLIENT_ID];
-            var secret = WebConfigurationManager.AppSettings[OAuth.CLIENT_SECRET];
-            var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/token";
-            var content = new FormUrlEncodedContent(new[]
+            Type apiResource = typeof(APIResource);
+            foreach (FieldInfo resource in apiResource.GetFields(BindingFlags.Static | BindingFlags.Public))
             {
-                new KeyValuePair<string, string>("client_secret", secret),
-                new KeyValuePair<string, string>("client_id", clientId),
-                new KeyValuePair<string, string>("grant_type", "refresh_token"),
-                new KeyValuePair<string, string>("refresh_token", refreshToken),
-            });
-            HttpResponseMessage response = await client.PostAsync(path, content);
-            var resultContentString = await response.Content.ReadAsStringAsync();
-            var resultContent = await response.Content.ReadAsAsync<OAuthResponse>();
-            //return resultContent;
-            if (resultContent.access_token != null && resultContent.refresh_token != null)
-            {
-                //SaveToCookie(resultContent.access_token, resultContent.refresh_token, resultContent.expires_in);
+                var _resource = resource.GetValue(null).ToString();
+                Token token = await GetTokenAsync(tokenResource.RefreshToken, _resource);
+                if (token != null)
+                {
+                    tokens[tokens.FindIndex(_token => _token._resource == _resource)] = token;
+                }
             }
-            return resultContent.access_token;
+            _tokenProvider.SaveTokenResource(tokenResource);
+
+            return tokens.FirstOrDefault()._accessToken;
         }
 
         public async Task<bool> CheckAuthenticationAsync()
         {
-            //string requestUrl = HttpContext.Current.Request.Url.ToString();
-
             var tokenResource = _tokenProvider.GetTokenResourceFromRequest();
 
             if (tokenResource != null)
             {
-                return true;
+                Token token = tokenResource.tokens.FirstOrDefault();
+                if (token != null)
+                {
+                    if (DateTime.Compare(DateTime.Parse(token._acessTokenExpireTime), DateTime.Now) < 0)
+                    {
+                        var accessTokenKey = await RefreshTokenAsync();
+                        if (accessTokenKey != null)
+                        {
+                            // valid token
+                            return true;
+                        }
+                        return false;
+                    }
+                    return true;
+                }
+                return false;
             }
             return false;
-            //var tokenCookie = HttpContext.Current.Request.Headers.GetValues("token_key");
-
-            //if (tokenCookie != null)
-            //{
-            //    Token token = (Token)MemoryCache.Default.Get(tokenCookie.FirstOrDefault());
-            //    if (token != null)
-            //    {
-            //        if (token._acessTokenExpireTime != null)
-            //        {
-            //            if (DateTime.Parse(token._acessTokenExpireTime) < DateTime.Now)
-            //            {
-            //                var accessTokenKey = await RefreshTokenAsync();
-            //                if (accessTokenKey != null)
-            //                {
-            //                    // valid token
-            //                    return true;
-            //                }
-            //            }
-            //            return true;
-            //        }
-            //    }
-            //}
         }
-
-        //public void SaveToCookie(string accessTokenKey, string refreshTokenKey, int expireDuration)
-        //{
-        //    string accessTokenId = Guid.NewGuid().ToString();
-        //    string expireTime = DateTime.Now.AddSeconds(expireDuration).ToString();
-
-        //    var _token = GetTokenFromCookie();
-
-        //    if (_token != null)
-        //    {
-        //        _token._accessToken = accessTokenKey;
-        //    }
-        //    else
-        //    {
-        //        _token = new Token(accessTokenKey, refreshTokenKey, expireTime);
-        //    }
-
-        //    MemoryCache.Default.Set(accessTokenId, _token, DateTime.Now.AddYears(1));
-
-        //    HttpCookie tokenCookie = new HttpCookie("token_key");
-
-        //    tokenCookie.Value = accessTokenId;
-        //    tokenCookie.Expires = DateTime.Now.AddDays(1);
-
-        //    HttpContext.Current.Response.Cookies.Add(tokenCookie);
-        //}
-
-        //public Token GetTokenFromCookie()
-        //{
-        //    var abc = HttpContext.Current.Request;
-        //    HttpCookie tokenCookieFromRequest = HttpContext.Current.Request.Cookies["token_key"];
-        //    var tokenCookieFromHeader = HttpContext.Current.Request.Headers.GetValues("token_key");
-
-        //    if (tokenCookieFromRequest != null)
-        //    {
-        //        Token token = (Token)MemoryCache.Default.Get(tokenCookieFromRequest.Value);
-        //        if (token != null)
-        //        {
-        //            return token;
-        //        }
-        //    }
-        //    else if (tokenCookieFromHeader != null)
-        //    {
-        //        Token token = (Token)MemoryCache.Default.Get(tokenCookieFromHeader.FirstOrDefault());
-        //        if (token != null)
-        //        {
-        //            return token;
-        //        }
-        //    }
-        //    return null;
-        //}
     }
 }

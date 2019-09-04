@@ -22,7 +22,6 @@ namespace FOS.API
           new Lazy<IUnityContainer>(() =>
           {
               var container = new UnityContainer()
-              .AddNewExtension<LogCreation>()
               .AddNewExtension<Log4NetExtension>()
               .AddNewExtension<Interception>();
 

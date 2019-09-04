@@ -1,4 +1,5 @@
-﻿using FOS.Model.Mapping;
+﻿using FOS.API.App_Start;
+using FOS.Model.Mapping;
 using FOS.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     public class OrderController : ApiController
     {
         private readonly IOrderDtoMapper _mapper;

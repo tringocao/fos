@@ -76,22 +76,38 @@ namespace FOS.API.Controllers
             }
         }
 
-        //public async Task<HttpResponseMessage> GetContext()
-        //{
-        //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-        //    {
-        //        var web = clientContext.Web;
-        //        clientContext.Load(web);
-        //        clientContext.ExecuteQuery();
-        //        if (clientContext.Web.IsPropertyAvailable("Title"))
-        //        {
-        //            Console.WriteLine("Found title");
-        //        }
-        //        Console.WriteLine("Title: {0}", web.Title);
-        //    }
-        //    HttpResponseMessage responde = new HttpResponseMessage();
+        // GET api/spuser/GetAvatarById/Id
+        [HttpGet]
+        [Route("GetAvatarById")]
+        public async Task<ApiResponse<string>> GetAvatarById(string Id, string size)
+        {
+            try
+            {
+                var avatar = await _sPUserService.GetAvatarById(Id, size);
+                return ApiUtil<string>.CreateSuccessfulResult(avatar);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<string>.CreateFailResult(e.ToString());
+            }
+        }
 
-        //    return responde;
-        //}
+            //public async Task<HttpResponseMessage> GetContext()
+            //{
+            //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            //    {
+            //        var web = clientContext.Web;
+            //        clientContext.Load(web);
+            //        clientContext.ExecuteQuery();
+            //        if (clientContext.Web.IsPropertyAvailable("Title"))
+            //        {
+            //            Console.WriteLine("Found title");
+            //        }
+            //        Console.WriteLine("Title: {0}", web.Title);
+            //    }
+            //    HttpResponseMessage responde = new HttpResponseMessage();
+
+            //    return responde;
+            //}
     }
 }

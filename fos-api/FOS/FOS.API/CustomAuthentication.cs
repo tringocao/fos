@@ -31,7 +31,7 @@ namespace FOS.API
         {
             HttpRequestMessage request = context.Request;
 
-            var authenticated = _oAuthService.CheckAuthenticationAsync().Result;
+            var authenticated = await _oAuthService.CheckAuthenticationAsync();
 
             if (authenticated == false)
             {

@@ -10,5 +10,6 @@ namespace FOS.Services.SPListService
     public interface ISPListService
     {
         Task AddListItem(string Id, JSONRequest item);
+        void AddEventListItem(string Id, EventList item);
     }
 }

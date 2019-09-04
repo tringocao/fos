@@ -1,4 +1,5 @@
-﻿using FOS.API.Models;
+﻿using FOS.API.App_Start;
+using FOS.API.Models;
 using FOS.Common;
 using FOS.Model.Domain;
 using FOS.Services;
@@ -19,6 +20,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     public class OauthController : ApiController
     {
         OAuthService _oAuthService;
@@ -47,7 +49,7 @@ namespace FOS.API.Controllers
         [OverrideAuthentication]
         public async Task<HttpResponseMessage> CheckAuth()
         {
-            var authenticated = _oAuthService.CheckAuthenticationAsync().Result;
+            var authenticated = await _oAuthService.CheckAuthenticationAsync();
             var response = new HttpResponseMessage();
 
             response.Content = new ObjectContent<AuthClientRespond>(

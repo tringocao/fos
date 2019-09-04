@@ -42,6 +42,12 @@ namespace FOS.Services.SPUserService
             return await result.Content.ReadAsAsync<Model.Domain.User>();
         }
 
+        public async Task<string> GetAvatarById(string Id, string size)
+        {
+            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "/me/photo/$value", null);
+            return await result.Content.ReadAsStringAsync();
+        }
+
         //public async Task<HttpResponseMessage> GetContext()
         //{
         //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
