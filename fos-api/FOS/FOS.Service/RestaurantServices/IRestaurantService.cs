@@ -16,5 +16,6 @@ namespace FOS.Services.RestaurantServices
         Task<List<Restaurant>> GetRestaurantsByKeywordAsync(int city_id, string keyword);
         Task<List<RestaurantCategory>> GetMetadataForCategoryAsync();
         Task<List<Restaurant>> GetRestaurantsByCategoriesKeywordAsync(int city_id, List<RestaurantCategory> categories, string keyword);
+        Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant);
     }
 }

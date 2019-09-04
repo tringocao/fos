@@ -56,6 +56,22 @@ export class RestaurantService {
     }).catch(alert => console.log(alert))
     });
   }
+  getRestaurantDetail(id: number, IdService: number = 1): Promise<any> {
+    return new Promise<any>((resolve,reject)=>{ 
+      this.http.get<ApiOperationResult<any>>(
+        environment.apiUrl + 'api/Delivery/GetDeliveryDetail',
+        {
+          params: {
+            IdService: JSON.stringify(IdService),
+            delivery_id: JSON.stringify(id)
+          }
+        }
+      ).toPromise().then(result => {
+          if(result.Success){resolve(result.Data)}
+          else reject(new Error(JSON.stringify(result.ErrorMessage)));        
+        }).catch(alert => console.log(alert))
+      });
+    }
   getRestaurants(ids: Array<number>, IdService: number = 1, city_id: number = 217): Promise<Array<any>> {
     return new Promise<Array<any>>((resolve,reject)=>{ 
       this.http.put<ApiOperationResult<Array<any>>>(

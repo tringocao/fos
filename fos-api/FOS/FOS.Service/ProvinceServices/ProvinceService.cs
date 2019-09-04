@@ -58,5 +58,11 @@ namespace FOS.Services.ProvinceServices
         {
             return await _craw.GetMetadataForCategoryAsync();
         }
+
+        public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        {
+            return await _craw.GetRestaurantDetailAsync(restaurant);
+
+        }
     }
 }

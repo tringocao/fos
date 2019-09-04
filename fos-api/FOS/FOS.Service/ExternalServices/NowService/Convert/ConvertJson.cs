@@ -11,6 +11,17 @@ namespace FOS.Services.ExternalServices.NowService.Convert
 {
     public static class ConvertJson
     {
+        public static DeliveryDetail ConvertString2DeliveryInfos(string result)
+        {
+            dynamic data = JObject.Parse(result);
+            JsonDtoMapper<DeliveryDetail> map = new JsonDtoMapper<DeliveryDetail>();
+            DeliveryDetail deliveryInfos = new DeliveryDetail();
+            if (data.result == "success")
+            {
+                deliveryInfos = map.ToDto(data.reply.delivery_detail);
+            }
+            return deliveryInfos;
+        }
         public static List<Restaurant> ConvertString2ListRestaurant(string result)
         {
             //TODO

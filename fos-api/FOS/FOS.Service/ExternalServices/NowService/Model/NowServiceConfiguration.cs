@@ -14,6 +14,8 @@ namespace FOS.Services.ExternalServices.NowService
         public APIDetail GetDeliveryDishes { get; set; }
         public APIDetail SearchRestaurantsInProvince { get; set; }
         public APIDetail GetDeliveryFromUrl { get; set; }
+        public APIDetail GetRestaurantDetail { get; set; }
+
     }
     public class APIDetail
     {
