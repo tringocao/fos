@@ -1,10 +1,12 @@
+@import '../../../../styles/global/variables.less';
+
 .header {
   a {
     text-decoration: none;
     color: white;
     font-size: 1.1rem;
   }
-
+  
   a:hover,
   a:active {
     color: lightgray;
@@ -24,5 +26,17 @@
     mat-toolbar {
       border-radius: 0px;
     }
+  }
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+.logo {
+  width: 3rem;
+  height: 3rem;
+  @media @desktop {
+  }
+  @media @mobile {
+    margin-left: 1rem;
   }
 }

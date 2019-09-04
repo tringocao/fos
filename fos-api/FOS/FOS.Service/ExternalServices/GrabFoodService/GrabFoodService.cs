@@ -39,6 +39,11 @@ namespace FOS.Services.ExternalServices.GrabFoodService
             throw new NotImplementedException();
         }
 
+        public Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> category)
         {
             throw new NotImplementedException();

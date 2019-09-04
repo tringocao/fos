@@ -22,7 +22,20 @@ namespace FOS.Services.ExternalServices.NowService
             _apis = apis;
             apisJson = JsonConvert.DeserializeObject<NowServiceConfiguration>(_apis.JSONData);
         }
+        public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        {
+            //Get function
+            APIDetail api = apisJson.GetRestaurantDetail;
+            //Set Fields
+            api.AvailableParams.Where(a => a.FieldName == "request_id").FirstOrDefault().ValueDefault
+                = restaurant.delivery_id.ToString();
+            //Call API
+            RequestMethodFactory method = new RequestMethodFactory(api);
+            var response = await method.CallApiAsync();
+            var result = response.Content.ReadAsStringAsync().Result;
+            return ConvertJson.ConvertString2DeliveryInfos(result);
 
+        }
         public async Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
         {
             //Get function

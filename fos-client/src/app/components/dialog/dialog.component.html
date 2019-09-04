@@ -1,6 +1,8 @@
 
 
-<h2>{{data.restaurant}}</h2>
+<h1>{{data.restaurant.restaurant}}</h1>
+<h3>Rating: {{data.detail.rating}} & Review: {{data.detail.total_review}}</h3>
+
 <div class="restaurants ">
     <app-food-categories [loading]="load" [toppingList]="foodCategory" (change)='setFood($event)'></app-food-categories>
   <div class="mat-elevation-z8">
@@ -9,9 +11,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Picture</th>
           <td mat-cell *matCellDef="let element">
               <img [src]="element.photos[0].value" style="width:68px;height:68px;">
-
-          </td>
-          
+          </td>         
       </ng-container>
 
       <ng-container matColumnDef="name">

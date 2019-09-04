@@ -53,6 +53,10 @@ namespace FOS.Services.ExternalServices
         {
             return await service.GetFoodCataloguesAsync(delivery);
         }
+        public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        {
+            return await service.GetRestaurantDetailAsync(restaurant);
+        }
         private IExternalService GetExternalService(APIs api)
         {
             switch (api.TypeService)
@@ -70,6 +74,6 @@ namespace FOS.Services.ExternalServices
             }
         }
 
-
+       
     }
 }

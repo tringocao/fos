@@ -14,3 +14,7 @@ class Restaurant {
 //   restaurant: string;
 //   delivery_id: number;
 // }
+class RestaurantDetail {
+  rating: number;
+  total_review: number;
+}

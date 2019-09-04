@@ -27,7 +27,10 @@ interface Restaurant {
   delivery_id: number;
   url_rewrite_name: string;
 }
-
+interface RestaurantMore{
+  restaurant: Restaurant;
+  detail: RestaurantDetail;
+}
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -44,20 +47,22 @@ export class DialogComponent implements OnInit {
   displayedColumns2: string[] = ['picture','name', 'description', 'price'];
   dataSource2: any;
   userId: string;
+
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     private restaurantService: RestaurantService,
-    @Inject(MAT_DIALOG_DATA) public data: Restaurant) { }
+    @Inject(MAT_DIALOG_DATA) public data: RestaurantMore) {     }
 
     async ngOnInit(): Promise<void> {
       console.log("-------------------------------------")
 
-      this.restaurantService.getFood(Number(this.data.delivery_id)).then(result => {
+      this.restaurantService.getFood(Number(this.data.restaurant.delivery_id)).then(result => {
         this.foodCategory = result;
         this.showAll(this.foodCategory);
       });
   }
   showAll(dataSourceTemp:any[]){
+    
     console.log(dataSourceTemp);
     this.dataSource2 = new MatTableDataSource();
     
