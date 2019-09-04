@@ -33,7 +33,6 @@ import {
   MatListModule,
   MatInputModule
 } from '@angular/material';
-import { EventFormComponent } from './event-form/event-form.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
@@ -66,7 +65,6 @@ import { MenuEventComponent } from './components/menu-event/menu-event.component
     ServiceTabComponent,
     HeaderComponent,
     SidenavListComponent,
-    EventFormComponent,
     OrdersPageComponent,
     MealsPageComponent,
     SearchComponent,

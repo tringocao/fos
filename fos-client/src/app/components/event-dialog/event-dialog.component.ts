@@ -21,6 +21,8 @@ import { EventUser } from '../../eventuser';
 import { EventFormService } from '../../services/event-form/event-form.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { EventList } from 'src/app/models/eventList';
+
 interface Restaurant {
   id: string;
   stared: boolean;
@@ -32,10 +34,9 @@ interface Restaurant {
   delivery_id: string;
   url_rewrite_name: string;
 }
+
 export interface OwnerForCreation {
-  name: string;
-  dateOfBirth: Date;
-  address: string;
+  title: string;
   host: string;
   dateTimeToClose: string;
   participants: string;
@@ -72,7 +73,8 @@ export class EventDialogComponent implements OnInit {
     private eventFormService: EventFormService,
     private http: HttpClient
   ) { }
-
+  
+  createdUser = {"id": ""};
   dateTimeToClose: string;
   dateToReminder: string;
   maximumBudget: number;
@@ -154,7 +156,7 @@ export class EventDialogComponent implements OnInit {
 
     // -----
     this.ownerForm = new FormGroup({
-      name: new FormControl('', [
+      title: new FormControl('', [
         Validators.required
         // Validators.maxLength(60)
       ]),
@@ -176,8 +178,8 @@ export class EventDialogComponent implements OnInit {
     
     
 
-
-    this.eventFormService.setUserInfo(this.hostPickerGroup,this.office365User,this.userPickerGroups,currentDisplayName,this.ownerForm);
+    console.log(this.createdUser);
+    this.eventFormService.setUserInfo(this.hostPickerGroup,this.office365User,this.userPickerGroups,currentDisplayName,this.ownerForm,this.createdUser);
     
 
     
@@ -213,24 +215,6 @@ export class EventDialogComponent implements OnInit {
       var dataImg = "data:image/png;base64," + data.Data;
       console.log(dataImg);
     });
-
-    //
-
-    // console.log("get avatar by id");
-    // this.http.get(environment.apiUrl + 'api/SPUser/GetAvatarByUserId?Id=' + counter.id).subscribe((data: any) => {
-    //   // console.log("get avatar by id");
-
-    //   // console.log(data);
-    //   var dataImg = "data:image/png;base64," + data.Data;
-    //   Object.assign(this.hostPickerGroup, {
-    //     firstNewAttribute: {
-    //       img: dataImg
-    //     }
-    //   });
-    //   console.log(dataImg);
-    // });
-
-    
   }
   public hasError = (controlName: string, errorName: string) => {
     return this.ownerForm.controls[controlName].hasError(errorName);
@@ -291,15 +275,8 @@ export class EventDialogComponent implements OnInit {
     }else{
       this.userSelect.push({ name: target.innerText.trim(), email: event.value, img: ""});
     }
-
-    // console.log(toSelect);
-    // toSelect.name;
-
-    
-
-
-
   }
+
   AddUserToTable(): void {
     console.log('Nhan add card');
 
@@ -329,48 +306,83 @@ export class EventDialogComponent implements OnInit {
       return;
     }
 
+    var host = this.ownerForm.get('host').value.principalName;
+    console.log('get host: ');
+    console.log(host);
+
+    var title = this.ownerForm.get('title').value;
+    console.log('get title: ');
+    console.log(title);
+
+    var maximumBudget = this.maximumBudget;
+    console.log('get maximumBudget: ');
+    console.log(maximumBudget);
+
+    var dateTimeToClose = this.dateTimeToClose.replace("T"," ");
+    console.log('get dateTimeToClose: ');
+    console.log(dateTimeToClose);
+
+    var dateToReminder = this.dateToReminder.replace("T"," ");
+    console.log('get dateToReminder: ');
+    console.log(dateToReminder);
+
+    var restaurant = this.data.restaurant;
+    console.log('get restaurant: ');
+    console.log(dateToReminder);
+
+    var restaurantId = this.data.id;
+    console.log('get restaurantId: ');
+    console.log(restaurantId);
+    
+    var category = this.data.category;
+    console.log('get category: ');
+    console.log(category);
+
+    var deliveryId = this.data.delivery_id;
+    console.log('get deliveryId: ');
+    console.log(deliveryId);
+
+    var serciveId = 1;
+    console.log('get deliveryId: ');
+    console.log(serciveId);
+
+    var hostId = this.ownerForm.get('host').value.id;
+    console.log('get hostId: ');
+    console.log(hostId);
+
+    console.log('get createUserId: ');
+    console.log(this.createdUser.id);
+
     var participantList = '';
     for (var j = 0; j < this.eventusers.length; j++) {
       if (this.eventusers[j].email) {
         participantList = participantList.concat(
-          this.eventusers[j].email + ','
+          this.eventusers[j].email + ';#'
         );
       }
     }
 
-    // for (var i = 0; i < this.userLogin.length; i++) {
-    //   console.log(this.HostEmail + " vs " + this.userLogin[i].loginName)
-    //   if (this.HostEmail == this.userLogin[i].name) {
-    //     this.HostEmail = this.userLogin[i].loginName;
-    //   }
-    // }
-
-    // if (!Boolean(this.EventTitle) || !Boolean(this.Restaurant) || !Boolean(this.HostEmail)
-    //   || !Boolean(participantList)) {
-    //   console.log('Missing info to submit event');
-    //   return;
-    // }
-
-    let newParticipantList = participantList.slice(0, -1);
+    let newParticipantList = participantList.slice(0, -2);
 
     console.log('participant list: ' + newParticipantList);
 
-    // var str = 'abcgmail.com,abc@gmail.com,';
-    // str = str.slice(0, -1);
-    // console.log('value ' + str);
-
-    // console.log('nguoi host: ' + this.HostEmail);
-    // var eventlistitem: EventList = {
-    //   eventTitle: this.EventTitle,
-    //   eventId: 'FIKA1',
-    //   eventRestaurant: this.Restaurant,
-    //   eventMaximumBudget: 0,
-    //   eventTimeToClose: this.dateTimeToClose,
-    //   eventTimeToReminder: this.dateToReminder,
-    //   eventHost: this.HostEmail,
-    //   eventParticipants: newParticipantList,
-    // };
-    // this.eventFormService.addEventListItem(eventlistitem)
+    var eventlistitem: EventList = {
+      eventTitle: title,
+      eventId: title,
+      eventRestaurant: restaurant,
+      eventMaximumBudget: maximumBudget,
+      eventTimeToClose: dateTimeToClose,
+      eventTimeToReminder: dateToReminder,
+      eventHost: host,
+      eventParticipants: newParticipantList,
+      eventCategory: category,
+      eventRestaurantId: restaurantId,
+      eventServiceId: '1',
+      eventDeliveryId: deliveryId,
+      eventCreatedUserId: this.createdUser.id,
+      eventHostId: hostId,
+    };
+    this.eventFormService.addEventListItem(eventlistitem);
   }
 
   changeHost(event) {

@@ -12,9 +12,9 @@
       <div class="tp-container">
 
         <mat-form-field>
-          <input matInput type="text" placeholder="EventTitle" formControlName="name" id="name">
+          <input matInput type="text" placeholder="EventTitle" formControlName="title" id="title">
           <mat-hint align="end">Event title is required.</mat-hint>
-          <mat-error *ngIf="hasError('name', 'required')">Event title is required.</mat-error>
+          <mat-error *ngIf="hasError('title', 'required')">Event title is required.</mat-error>
         </mat-form-field>
 
 
