@@ -2,12 +2,20 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import {EventList} from 'src/app/models/eventList';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Injectable({
   providedIn: 'root'
 })
 export class EventFormService {
 
-  constructor(private http: HttpClient) { }
+  toast(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  } 
+
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
   getAvatar(userId: string): Promise<object> {
     return this.http.get(environment.apiUrl + 'api/SPUser/GetAvatarByUserId?Id=' + userId).toPromise();
   }
@@ -97,7 +105,7 @@ export class EventFormService {
     })
     .subscribe(
       (val) => {
-        alert('Create event successfuly ');
+        this.toast("Create event successfuly ", "Dismiss");        
       },
       response => {
         console.log("POST call in error", response);

@@ -1,4 +1,5 @@
-﻿using FOS.Common;
+﻿using FOS.API.App_Start;
+using FOS.Common;
 using FOS.Model.Domain;
 using FOS.Model.Util;
 using FOS.Services;
@@ -19,6 +20,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     [RoutePrefix("api/splist")]
 
     public class SPListController : ApiController

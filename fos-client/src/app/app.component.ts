@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-
   constructor(private http: HttpClient) {
     this.http.get(environment.apiUrl + '/api/oauth/CheckAuth').subscribe((data: authRespond) => {
       console.log("request data");
@@ -19,11 +18,6 @@ export class AppComponent {
       }
     }, error => {
         console.log(error)
-    });
-
-    this.http.get(environment.apiUrl + '/api/SPUser/GetUsers').subscribe(data => {
-      console.log("request data");
-      console.log(data);
     });
   }
   

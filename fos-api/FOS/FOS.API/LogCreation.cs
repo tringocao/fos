@@ -11,7 +11,7 @@ namespace FOS.API
     {
         protected override void Initialize()
         {
-            Logger.Setup();
+            //Logger.Setup();
         }
-    }
+}
 }

@@ -8,13 +8,6 @@ using System.Threading.Tasks;
 
 namespace FOS.Services.FavoriteService
 {
-    public interface IFavoriteService
-    {
-        List<FavoriteRestaurant> GetFavoriteRestaurants();
-        List<FavoriteRestaurant> GetFavoriteRestaurantsById(string UserId);
-        void AddFavoriteRestaurant(FavoriteRestaurant favoriteRestaurant);
-        void RemoveFavoriteRestaurant(FavoriteRestaurant favoriteRestaurant);
-    }
     public class FavoriteService : IFavoriteService
     {
         IFOSFavoriteRestaurantRepository _fOSFavoriteRestaurantRepository;

@@ -1,4 +1,5 @@
-﻿using FOS.Model.Domain;
+using FOS.API.App_Start;
+using FOS.Model.Domain;
 using FOS.Model.Dto;
 using FOS.Model.Util;
 using FOS.Services.FoodServices;
@@ -13,6 +14,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     public class FoodController : ApiController
     {
         IFoodService _foodService;

@@ -144,6 +144,7 @@
     <Compile Include="ExternalServices\NowService\Model\NowServiceConfiguration.cs" />
     <Compile Include="ExternalServices\NowService\NowService.cs" />
     <Compile Include="ExternalServices\NowService\RequestMethodFactory.cs" />
+    <Compile Include="FavoriteService\IFavoriteService.cs" />
     <Compile Include="FoodServices\FoodService.cs" />
     <Compile Include="FavoriteService\FavoriteService.cs" />
     <Compile Include="FoodServices\IFoodService.cs" />

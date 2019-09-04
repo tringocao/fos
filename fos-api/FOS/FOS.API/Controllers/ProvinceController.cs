@@ -1,4 +1,5 @@
-﻿using FOS.Model.Domain;
+﻿using FOS.API.App_Start;
+using FOS.Model.Domain;
 using FOS.Model.Dto;
 using FOS.Model.Util;
 using FOS.Services.ExternalServices;
@@ -14,6 +15,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     [RoutePrefix("api/Province")]
 
     public class ProvinceController : ApiController
