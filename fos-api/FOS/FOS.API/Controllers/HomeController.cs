@@ -22,7 +22,7 @@ namespace FOS.API.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var authenticated = _oAuthService.CheckAuthenticationAsync().Result;
+            var authenticated = await _oAuthService.CheckAuthenticationAsync();
 
             if (!authenticated)
             {
