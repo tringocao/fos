@@ -317,6 +317,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProvinceController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
+    <Compile Include="Controllers\SendEmailController.cs" />
     <Compile Include="Controllers\SPListController.cs" />
     <Compile Include="Controllers\SPUserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -335,6 +336,7 @@
     <Compile Include="TokenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\email_template.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="bin\Microsoft.IdentityModel.dll" />
     <Content Include="bin\Microsoft.IdentityModel.Extensions.dll" />
@@ -424,7 +426,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="bin\roslyn\" />
     <Folder Include="Models\" />
     <Folder Include="obj\" />

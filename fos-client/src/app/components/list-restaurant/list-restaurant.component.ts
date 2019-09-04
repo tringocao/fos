@@ -123,6 +123,9 @@ export class ListRestaurantComponent implements OnInit {
   }
 
   getRestaurant($event) {
+    if($event.topic != undefined && $event.keyword != undefined){
+      this.load = true;
+
     this.topic = $event.topic;
     this.keyword = $event.keyword;
     this.restaurantService.getRestaurantIds($event.topic, $event.keyword).then(response => {
@@ -157,5 +160,5 @@ export class ListRestaurantComponent implements OnInit {
       this.changeDetectorRefs.detectChanges();
     });
 
-  }
+  }}
 }

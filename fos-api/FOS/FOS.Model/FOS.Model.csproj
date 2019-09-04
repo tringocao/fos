@@ -69,6 +69,7 @@
     <Compile Include="Dto\APIs.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DiscountPrice.cs" />
+    <Compile Include="Dto\EmailTemplate.cs" />
     <Compile Include="Dto\Food.cs" />
     <Compile Include="Dto\FoodCategory.cs" />
     <Compile Include="Params\Categories.cs" />
