@@ -65,9 +65,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909030124533_init2.cs" />
-    <Compile Include="Migrations\201909030124533_init2.Designer.cs">
-      <DependentUpon>201909030124533_init2.cs</DependentUpon>
+    <Compile Include="Migrations\201909040754473_newfos.cs" />
+    <Compile Include="Migrations\201909040754473_newfos.Designer.cs">
+      <DependentUpon>201909040754473_newfos.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderRepository.cs" />
@@ -95,12 +95,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
+    <Folder Include="bin\Debug\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201908290840378_nw.resx">
-      <DependentUpon>201908290840378_nw.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909040754473_newfos.resx">
+      <DependentUpon>201909040754473_newfos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

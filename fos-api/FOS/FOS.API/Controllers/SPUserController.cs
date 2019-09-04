@@ -78,36 +78,49 @@ namespace FOS.API.Controllers
 
         // GET api/spuser/GetAvatarById/Id
         [HttpGet]
-        [Route("GetAvatarById")]
-        public async Task<ApiResponse<string>> GetAvatarById(string Id, string size)
+        [Route("GetGroups")]
+        public async Task<ApiResponse<string>> GetGroups()
         {
             try
             {
-                var avatar = await _sPUserService.GetAvatarById(Id, size);
-                return ApiUtil<string>.CreateSuccessfulResult(avatar);
+                var group = await _sPUserService.GetGroups();
+                return ApiUtil<string>.CreateSuccessfulResult(group);
             }
             catch (Exception e)
             {
                 return ApiUtil<string>.CreateFailResult(e.ToString());
             }
         }
+        [HttpGet]
+        [Route("GetAvatarByUserId")]
+        public async Task<ApiResponse<byte[]>> GetAvatarByUserId(string Id)
+        {
+            try
+            {
+                var avatar = await _sPUserService.GetAvatarByUserId(Id);
+                return ApiUtil<byte[]>.CreateSuccessfulResult(avatar);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        //public async Task<HttpResponseMessage> GetContext()
+        //{
+        //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+        //    {
+        //        var web = clientContext.Web;
+        //        clientContext.Load(web);
+        //        clientContext.ExecuteQuery();
+        //        if (clientContext.Web.IsPropertyAvailable("Title"))
+        //        {
+        //            Console.WriteLine("Found title");
+        //        }
+        //        Console.WriteLine("Title: {0}", web.Title);
+        //    }
+        //    HttpResponseMessage responde = new HttpResponseMessage();
 
-            //public async Task<HttpResponseMessage> GetContext()
-            //{
-            //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-            //    {
-            //        var web = clientContext.Web;
-            //        clientContext.Load(web);
-            //        clientContext.ExecuteQuery();
-            //        if (clientContext.Web.IsPropertyAvailable("Title"))
-            //        {
-            //            Console.WriteLine("Found title");
-            //        }
-            //        Console.WriteLine("Title: {0}", web.Title);
-            //    }
-            //    HttpResponseMessage responde = new HttpResponseMessage();
-
-            //    return responde;
-            //}
+        //    return responde;
+        //}
     }
 }

@@ -10,6 +10,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 const restaurants: any = [];
 
+interface Restaurant {
+  id: number;
+  stared: boolean;
+  restaurant: string;
+  category: string;
+  address: string;
+  promotion: string;
+  open: string;
+  delivery_id: number;
+  url_rewrite_name: string;
+}
+
 @Component({
   selector: 'app-list-restaurant',
   templateUrl: './list-restaurant.component.html',
@@ -19,7 +31,7 @@ export class ListRestaurantComponent implements OnInit {
   sortNameOrder: number;
   sortCategoryOrder: number;
   categorys: any;
-  displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open', 'menu'];
+  displayedColumns: string[] = ['id','restaurant', 'category', 'promotion', 'open', 'menu', 'addEvent'];
   dataSource: any = new MatTableDataSource<Restaurant>(restaurants);
   favoriteOnlyDataSource: Restaurant[];
   baseDataSource: Restaurant[];

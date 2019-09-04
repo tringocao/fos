@@ -1,4 +1,4 @@
-﻿using FOS.API.App_Start;
+using FOS.API.App_Start;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
 using FOS.Model.Util;

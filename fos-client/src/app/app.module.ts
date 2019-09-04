@@ -35,7 +35,6 @@ import {
   MatListModule,
   MatInputModule
 } from '@angular/material';
-import { EventFormComponent } from './event-form/event-form.component';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
@@ -59,6 +58,8 @@ import { FoodCategoriesComponent } from './components/dialog/food-categories/foo
 import { LoadingComponent } from './components/loading/loading.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { MenuEventComponent } from './components/menu-event/menu-event.component';
+import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,6 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     ServiceTabComponent,
     HeaderComponent,
     SidenavListComponent,
-    EventFormComponent,
     OrdersPageComponent,
     MealsPageComponent,
     SearchComponent,
@@ -77,7 +77,9 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     MenuComponent,
     FoodCategoriesComponent,
     LoadingComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
+    MenuEventComponent,
+    EventDialogComponent
   ],
     // declarations: [
     //     AppComponent,
@@ -125,7 +127,7 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     ReactiveFormsModule,
     FormsModule,
     MatInputModule,
-    MatSnackBarModule,
+    MatSnackBarModule
   ],
   providers: [
     OrderService, 
@@ -136,9 +138,9 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     useClass: TokenInterceptor,
     multi: true
   }],
-  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent],
+  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent,MenuEventComponent,EventDialogComponent],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent],
+  entryComponents: [DialogComponent,EventDialogComponent],
 
 })
 export class AppModule {}

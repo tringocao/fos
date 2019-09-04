@@ -54,7 +54,7 @@ namespace FOS.API.Controllers
 
         [HttpPost]
         [Route("AddEventListItem")]
-        public ApiResponse AddEventListItem(string Id, [FromBody]EventList item)
+        public ApiResponse AddEventListItem(string Id, [FromBody]EventListItem item)
         {
             try
             {
