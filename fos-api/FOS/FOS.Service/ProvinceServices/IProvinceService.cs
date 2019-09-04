@@ -1,19 +1,20 @@
 ﻿using FOS.Model.Dto;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FOS.Services.ProvinceServices
 {
     public interface IProvinceService
     {
-        Province GetMetadataById(int city_id);
+        Task<Province> GetMetadataByIdAsync(int city_id);
         string GetExternalServiceById(int IdService);
-        List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> categories);
-        List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant);
-        List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant);
-        List<RestaurantCategory> GetMetadataForCategory();
+        Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> categories);
+        Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant);
+        Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(List<Restaurant> restaurant);
+        Task<List<RestaurantCategory>> GetMetadataForCategoryAsync();
 
-        List<Province> GetMetadataForProvince();
-        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
+        Task<List<Province>> GetMetadataForProvinceAsync();
+        Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
 
 
     }

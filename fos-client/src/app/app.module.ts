@@ -55,6 +55,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     DialogComponent,
     MenuComponent,
     FoodCategoriesComponent,
-    LoadingComponent
+    LoadingComponent,
+    OrderDetailComponent
   ],
     // declarations: [
     //     AppComponent,
@@ -103,6 +106,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatProgressBarModule,
+    MatAutocompleteModule,
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,

@@ -9,17 +9,22 @@ namespace FOS.Services.ExternalServices.GrabFoodService
 {
     public class GrabFoodService : IExternalService
     {
-        public List<FoodCategory> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
+        public Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
         {
             throw new NotImplementedException();
         }
 
-        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
+        public Task<List<FoodCategory>> GetFoodFromDelivery(List<DeliveryInfos> deliveries)
         {
             throw new NotImplementedException();
         }
 
-        public List<Province> GetMetadata()
+        public Task<List<RestaurantCategory>> GetMetadataForCategoryAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Province>> GetMetadataForProvinceAsync()
         {
             throw new NotImplementedException();
         }
@@ -29,32 +34,17 @@ namespace FOS.Services.ExternalServices.GrabFoodService
             throw new NotImplementedException();
         }
 
-        public List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant)
+        public Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant)
         {
             throw new NotImplementedException();
         }
 
-        public List<Restaurant> GetRestaurants(Province province)
+        public Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> category)
         {
             throw new NotImplementedException();
         }
 
-        public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Province> GetMetadataForProvince()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<RestaurantCategory> GetMetadataForCategory()
+        public Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(List<Restaurant> restaurant)
         {
             throw new NotImplementedException();
         }

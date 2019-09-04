@@ -162,6 +162,8 @@
     <Compile Include="ProvinceServices\ProvinceService.cs" />
     <Compile Include="RestaurantServices\IRestaurantService.cs" />
     <Compile Include="RestaurantServices\RestaurantService.cs" />
+    <Compile Include="SendEmailServices\ISendEmailService.cs" />
+    <Compile Include="SendEmailServices\SendEmailService.cs" />
     <Compile Include="SharePointContext.cs" />
     <Compile Include="SPListService\ISPListService.cs" />
     <Compile Include="SPListService\SPListService.cs" />
