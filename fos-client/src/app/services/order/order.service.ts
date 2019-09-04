@@ -20,10 +20,10 @@ export class OrderService {
     return this.http.get<any>(environment.apiUrl + 'api/splist/getallorder');
   }
 
-  mapResponseDataToEvent(response: string) {
-    const responseJson = JSON.parse(response);
-    let result: Event[] = [];
-    responseJson.forEach(element => {
+  mapResponseDataToEvent(response: any) {
+    // const responseJson = JSON.parse(response.Data);
+    const result: Event[] = [];
+    response.forEach(element => {
       const event: Event = {
         restaurant: element.Restaurant,
         category: element.Category,
@@ -33,8 +33,9 @@ export class OrderService {
         hostName: element.HostName,
         hostId: element.HostId,
         name: element.Name,
-        createdBy: element.CreateBy,
-        eventId: element.EventId
+        createdBy: element.CreatedBy,
+        eventId: element.EventId,
+        status: element.Status
       };
       result.push(event);
     });

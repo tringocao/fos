@@ -10,6 +10,6 @@ namespace FOS.Services.EventServices
 {
     public interface IEventService
     {
-        IEnumerable<EventModel> MapSharepointEventListToEventModel(ListItemCollection eventList);
+        IEnumerable<EventModel> GetAllEvent();
     }
 }

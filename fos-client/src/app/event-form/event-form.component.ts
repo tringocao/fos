@@ -4,12 +4,11 @@ import { ThrowStmt } from '@angular/compiler';
 import { HttpClient } from '@angular/common/http';
 import { EventFormService } from '../services/event-form/event-form.service';
 import { ViewChild } from '@angular/core';
- 
+
 import { MatDialog, MatTable } from '@angular/material';
 import { Alert } from 'selenium-webdriver';
 
 import { environment } from 'src/environments/environment';
-
 
 @Component({
   selector: 'app-event-form',
@@ -17,7 +16,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./event-form.component.less']
 })
 export class EventFormComponent implements OnInit {
-  @ViewChild(MatTable,{static:true}) table: MatTable<any>;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   eventusers: EventUser[] = [
     // { name: 'Salah', email: 'Liverpool' },
@@ -34,18 +33,18 @@ export class EventFormComponent implements OnInit {
     { id: 5, name: 'six}' }
   ];
   selected: number = 0;
-  EventTitle: string ="Event Title";
-  Host: string ="Host";
-  Restaurant: string = "Restaurant";
+  EventTitle: string = 'Event Title';
+  Host: string = 'Host';
+  Restaurant: string = 'Restaurant';
   maximunBudget: number = 100000;
   // dateTimeToClose: Date = new Date();
   // dateTimeToReminder: Date = new Date();
   settings = {
     bigBanner: true,
     timePicker: true,
-    format: 'dd-MM-yyyy HH:mm',
+    format: 'dd-MM-yyyy HH:mm'
     // defaultOpen: true
-  }
+  };
   dropdownList = [];
   selectedItems = [];
   dropdownSettings = {};
@@ -56,18 +55,18 @@ export class EventFormComponent implements OnInit {
   eventforms: EventUser[];
 
   displayedColumns = ['name', 'email'];
-  
 
- 
-  
   dataSource: EventUser[] = [
     { name: 'Salah', email: 'Liverpool' },
     { name: 'Kane', email: 'Tottenham Hospur' },
     { name: 'Hazard', email: 'Real Madrid' },
-    { name: 'Griezmann', email: 'Barcelona' },
+    { name: 'Griezmann', email: 'Barcelona' }
   ];
 
-  constructor(private http: HttpClient,private eventFormService: EventFormService) {
+  constructor(
+    private http: HttpClient,
+    private eventFormService: EventFormService
+  ) {
     // this.date = new Date().toLocaleString();
     this.dateTimeToClose = this.toDateString(new Date());
     this.dateToReminder = this.toDateString(new Date());
@@ -77,23 +76,27 @@ export class EventFormComponent implements OnInit {
     // this.eventFormService.getUsers()
     // .subscribe(eventusers => this.eventusers = eventusers);
 
-    console.log("request data");
+    console.log('request data');
 
-    this.http.get(environment.apiUrl + 'api/SPUser/GetUsers').subscribe(data => {
-      console.log("request data");
-      var objects = JSON.stringify(data);
-      // console.log(objects);
-      var jsonData = JSON.parse(objects);
-      // console.log(jsonData);
-      for (var i = 0; i < jsonData.value.length; i++) {
-        
-        var counter = jsonData.value[i];
-        // console.log(counter);
-        // console.log(counter.displayName);
-        this.dropdownList.push({ 'itemName': counter.displayName, 'id': counter.mail });
-        // this.table.renderRows();
-      }
-    });
+    this.http
+      .get(environment.apiUrl + 'api/SPUser/GetUsers')
+      .subscribe(data => {
+        console.log('request data');
+        var objects = JSON.stringify(data);
+        // console.log(objects);
+        var jsonData = JSON.parse(objects);
+        // console.log(jsonData);
+        for (var i = 0; i < jsonData.value.length; i++) {
+          var counter = jsonData.value[i];
+          // console.log(counter);
+          // console.log(counter.displayName);
+          this.dropdownList.push({
+            itemName: counter.displayName,
+            id: counter.mail
+          });
+          // this.table.renderRows();
+        }
+      });
   }
   private toDateString(date: Date): string {
     // var dateSaveToSharePoint = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
@@ -101,11 +104,16 @@ export class EventFormComponent implements OnInit {
     // var dateTimeSaveToSharePoint = dateSaveToSharePoint+' '+timeSaveToSharePoint;
     // return dateTimeSaveToSharePoint;
 
-    return (date.getFullYear().toString() + '-' 
-       + ("0" + (date.getMonth() + 1)).slice(-2) + '-' 
-       + ("0" + (date.getDate())).slice(-2))
-       + 'T' + date.toTimeString().slice(0,5);
-}
+    return (
+      date.getFullYear().toString() +
+      '-' +
+      ('0' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('0' + date.getDate()).slice(-2) +
+      'T' +
+      date.toTimeString().slice(0, 5)
+    );
+  }
 
   ngOnInit() {
     // var yearSelect = document.querySelector('#party');
@@ -126,44 +134,43 @@ export class EventFormComponent implements OnInit {
     ];
     this.dropdownSettings = {
       singleSelection: false,
-      text: "Select user",
+      text: 'Select user',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       enableSearchFilter: true,
-      classes: "myclass custom-class"
+      classes: 'myclass custom-class'
     };
-
   }
   AddUserToTable(): void {
-    console.log("Nhan add card");
+    console.log('Nhan add card');
     // this.eventusers.push({ 'name': 'aaaa', 'email': 'aaa' });
 
     // this.eventusers.push({
     //   name:'abc',
     //   email:'abc'
     // });
-    
 
     console.log(this.eventusers);
     for (var s in this.selectedItems) {
       var flag = false;
       for (var e in this.eventusers) {
         if (this.selectedItems[s].itemName == this.eventusers[e].name) {
-          flag = true
+          flag = true;
         }
       }
       if (flag == false) {
-        this.eventusers.push({ 'name': this.selectedItems[s].itemName, 'email': this.selectedItems[s].id });
+        this.eventusers.push({
+          name: this.selectedItems[s].itemName,
+          email: this.selectedItems[s].id
+        });
         this.table.renderRows();
       }
     }
   }
 
   DeleteUserInTable(): void {
-
     for (var i = 0; i < this.selectedItems.length; i++) {
       console.log(this.selectedItems[i].id);
-
 
       for (var j = 0; j < this.eventusers.length; j++) {
         if (this.selectedItems[i].itemName == this.eventusers[j].name) {
@@ -178,20 +185,18 @@ export class EventFormComponent implements OnInit {
       // this.table.renderRows();
     }
 
-
     // this.eventusers = [];
     // this.selectedItems = [];
   }
 
   showSelectValue(id: string) {
     //getted from event
-    console.log("option thay doi");
+    console.log('option thay doi');
 
     //getted from binding
     // console.log(this.number)
   }
   SaveToSharePointEventList(): void {
-
     // this.http.post<any>('https://localhost:44398/api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
     //   {
     //     EventTitle: this.EventTitle,
@@ -199,29 +204,33 @@ export class EventFormComponent implements OnInit {
     //     EventMaximumBudget: this.maximunBudget
     //   },
     // )
-    let a = JSON.stringify( {fields: {
-      EventTitle: this.EventTitle,
-      EventRestaurant: this.Restaurant,
-      EventMaximumBudget: this.maximunBudget, 
-    }}).toString();
-    console.log(a)
-    this.http.post(environment.apiUrl + 'api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
-    {data: a}
-)
+    let a = JSON.stringify({
+      fields: {
+        EventTitle: this.EventTitle,
+        EventRestaurant: this.Restaurant,
+        EventMaximumBudget: this.maximunBudget
+      }
+    }).toString();
+    console.log(a);
+    this.http
+      .post(
+        environment.apiUrl +
+          'api/SPList/AddListItem/3a8b82cb-655b-429c-a774-9a3d2af07289',
+        { data: a }
+      )
       .subscribe(
-        (val) => {
-          console.log("POST call successful value returned in body",
-            val);
+        val => {
+          console.log('POST call successful value returned in body', val);
         },
         response => {
-          console.log("POST call in error", response);
+          console.log('POST call in error', response);
         },
         () => {
-          console.log("The POST observable is now completed.");
-        });
+          console.log('The POST observable is now completed.');
+        }
+      );
 
-
-    console.log("add item to list");
+    console.log('add item to list');
     // var _dateTimeToReminder = this.dateTimeToReminder;
 
     // console.log(this.dateToReminder.replace("T", " "));

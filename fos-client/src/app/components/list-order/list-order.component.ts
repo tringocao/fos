@@ -7,7 +7,6 @@ import { FormControl } from '@angular/forms';
 import { RestaurantService } from './../../services/restaurant/restaurant.service';
 import * as moment from 'moment';
 import 'moment/locale/vi';
-import { Category } from './../search/search.component';
 import Event from '../../models/event';
 
 moment.locale('vi');
@@ -25,10 +24,11 @@ export class ListOrderComponent implements OnInit, OnChanges {
     'date',
     'participants',
     'maximumBudget',
+    'status',
     'host'
   ];
   dataSource: any = new MatTableDataSource([]);
-  isLoading = false;
+  isLoading = true;
   currency = 'VND';
   userId: any;
   allOrder: Event[];
@@ -56,7 +56,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.restaurantService.getCurrentUserId().subscribe(value => {
-      this.userId = value.id;
+      this.userId = value.Data.id;
       this.getOrders();
     });
   }
@@ -65,7 +65,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.categoryList = [];
     if (!this.isMyOrder) {
       if (!this.displayedColumns.includes('host')) {
+        this.displayedColumns.pop();
         this.displayedColumns.push('host');
+        this.displayedColumns.push('status');
       }
       this.setDataSource(this.allOrder);
       this.allOrderCategories.forEach(item => {
@@ -74,6 +76,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
     } else {
       if (this.displayedColumns.includes('host')) {
         this.displayedColumns.pop();
+        this.displayedColumns.pop();
+        this.displayedColumns.push('status');
       }
       this.setDataSource(this.myOrder);
       this.myOrderCategories.forEach(item => {
@@ -92,7 +96,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   getOrders() {
     this.orderService.getAllOrder().subscribe(response => {
-      this.allOrder = this.orderService.mapResponseDataToEvent(response);
+      this.allOrder = this.orderService.mapResponseDataToEvent(response.Data);
+      console.log('all order: ', this.allOrder);
       this.myOrder = this.allOrder.filter(item => {
         return item.createdBy === this.userId || item.hostId === this.userId;
       });
@@ -100,14 +105,18 @@ export class ListOrderComponent implements OnInit, OnChanges {
       this.getCateroriesFromOrders(this.allOrder, false);
       this.setDataSource(this.myOrder);
       this.categoryList = this.myOrderCategories;
+      this.isLoading = false;
     });
   }
 
   getCateroriesFromOrders(orders: Event[], isMyOrder: boolean) {
     const categories = [];
     orders.forEach(element => {
-      categories.push(element.category);
+      if (element.category !== null && element.category.length > 0) {
+        categories.push(element.category);
+      }
     });
+    console.log('category ', categories);
     const myCategories = [...new Set(categories)].filter(
       arrayItem => arrayItem !== undefined
     );
@@ -172,6 +181,18 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   toStandardDate(date: Date) {
-    return moment(date).format('DD/MM/YYYY HH:MM');
+    return moment(date).format('DD/MM/YYYY HH:mm');
+  }
+
+  showOrder(row: any) {
+    console.log('row: ', row);
+  }
+
+  remind(event: any, element: any) {
+    event.stopPropagation();
+  }
+
+  close(event: any, element: any) {
+    event.stopPropagation();
   }
 }

@@ -9,4 +9,5 @@ export default interface Event {
   name: string;
   createdBy: string;
   eventId: string;
+  status: string;
 }

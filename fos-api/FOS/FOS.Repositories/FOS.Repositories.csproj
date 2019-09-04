@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="DataModel\ExternalServiceAPI.cs" />
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
+    <Compile Include="DataModel\LoggingData.cs" />
     <Compile Include="DataModel\Order.cs" />
     <Compile Include="FosContext.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
@@ -64,6 +65,10 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
+    <Compile Include="Migrations\201908290840378_nw.cs" />
+    <Compile Include="Migrations\201908290840378_nw.Designer.cs">
+      <DependentUpon>201908290840378_nw.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +97,11 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="obj\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201908290840378_nw.resx">
+      <DependentUpon>201908290840378_nw.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

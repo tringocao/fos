@@ -18,5 +18,6 @@ namespace FOS.Services.Models
         public string CreatedBy { get; set; }
         public DateTime? Date { get; set; }
         public string EventId { get; set; }
+        public string Status { get; set; }
     }
 }

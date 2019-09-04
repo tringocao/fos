@@ -1,9 +1,10 @@
 ﻿using FOS.Common;
 using FOS.Model.Domain;
+using FOS.Model.Util;
 using FOS.Services;
-using FOS.Services.EventServices;
 using FOS.Services.Providers;
-using Microsoft.SharePoint.Client;
+using FOS.Services.EventServices;
+using FOS.Services.SPListService;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,44 +20,64 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [RoutePrefix("api/splist")]
+
     public class SPListController : ApiController
     {
-        IOAuthService _oAuthService;
-        IGraphApiProvider _graphApiProvider;
-        ISharepointContextProvider _sharepointContextProvider;
+        ISPListService _spListService;
         IEventService _eventService;
 
-        public SPListController(IOAuthService oAuthService, IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IEventService eventService)
+        public SPListController(ISPListService spListService, IEventService eventService)
         {
-            _oAuthService = oAuthService;
-            _graphApiProvider = graphApiProvider;
-            _sharepointContextProvider = sharepointContextProvider;
+            _spListService = spListService;
             _eventService = eventService;
         }
-        // GET api/splist/getlist/{list-id}
-        public async Task<HttpResponseMessage> GetList(string Id)
-        {
-            return await _graphApiProvider.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
-        }
+        //// GET api/splist/getlist/{list-id}
+        //public async Task<HttpResponseMessage> GetList(string Id)
+        //{
+        //    return await _spListService.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
+        //}
+
         // POST api/splist/addlistitem/{list-id}/
-        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]JSONRequest item)
+        [HttpPost]
+        [Route("AddListItem")]
+        public async Task<ApiResponse> AddListItem(string Id, [FromBody]JSONRequest item)
         {
-            return await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
-        }
-        public string GetAllOrder()
-        {
-            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            try
             {
-                var web = clientContext.Web;
-                var list = web.Lists.GetByTitle("Event List");
-                clientContext.Load(list);
-                clientContext.ExecuteQuery();
+                await _spListService.AddListItem(Id, item);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
 
-                var collListItem = list.GetItems(CamlQuery.CreateAllItemsQuery());
-                clientContext.Load(collListItem);
-                clientContext.ExecuteQuery();
-
-                return JsonConvert.SerializeObject(_eventService.MapSharepointEventListToEventModel(collListItem));
+        [HttpPost]
+        [Route("AddEventListItem")]
+        public ApiResponse AddEventListItem(string Id, [FromBody]EventList item)
+        {
+            try
+            {
+                _spListService.AddEventListItem(Id, item);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        public ApiResponse<IEnumerable<Services.Models.EventModel>> GetAllOrder()
+        {
+            try
+            {
+                var result = _eventService.GetAllEvent();
+                return ApiUtil<IEnumerable<Services.Models.EventModel>>.CreateSuccessfulResult(result);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<Services.Models.EventModel>>.CreateFailResult(e.ToString());
             }
         }
     }

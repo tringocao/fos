@@ -5,12 +5,11 @@ import { EventFormComponent } from './event-form/event-form.component';
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { MealsPageComponent } from './pages/meals-page/meals-page.component';
 
-
 const routes: Routes = [
-    {
-        path: 'event-form',
-        component: EventFormComponent
-    },
+  {
+    path: 'event-form',
+    component: EventFormComponent
+  },
   {
     path: 'home',
     component: RestaurantsPageComponent
@@ -21,19 +20,21 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'orders',
+    path: 'events',
     component: OrdersPageComponent
   },
   {
     path: 'meals',
     component: MealsPageComponent
+  },
+  {
+    path: 'events/detail/:id',
+    component: EventFormComponent
   }
 ];
 
-
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes),],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

@@ -50,14 +50,18 @@
     <Reference Include="Microsoft.Online.SharePoint.Client.Tenant, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.Online.SharePoint.Client.Tenant.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SharePoint.Client, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SharePoint.Client, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.SharePoint.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SharePoint.Client.DocumentManagement, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.SharePoint.Client.DocumentManagement.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Publishing, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.SharePoint.Client.Publishing.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Search, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.SharePoint.Client.Search.dll</HintPath>
     </Reference>
@@ -132,6 +136,7 @@
   <ItemGroup>
     <Compile Include="DeliveryServices\DeliveryService.cs" />
     <Compile Include="DeliveryServices\IDeliveryService.cs" />
+    <Compile Include="EventServices\EventService.cs" />
     <Compile Include="EventServices\IEventService.cs" />
     <Compile Include="ExternalServices\ExternalServiceFactory.cs" />
     <Compile Include="ExternalServices\GrabFoodService\GrabFoodService.cs" />
@@ -146,7 +151,6 @@
     <Compile Include="FoodServices\IFoodService.cs" />
     <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="ConfigurationProvider.cs" />
-    <Compile Include="EventServices\EventService.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Providers\GraphApiProvider.cs" />
     <Compile Include="Providers\IGraphApiProvider.cs" />
@@ -162,6 +166,10 @@
     <Compile Include="RestaurantServices\IRestaurantService.cs" />
     <Compile Include="RestaurantServices\RestaurantService.cs" />
     <Compile Include="SharePointContext.cs" />
+    <Compile Include="SPListService\ISPListService.cs" />
+    <Compile Include="SPListService\SPListService.cs" />
+    <Compile Include="SPUserService\ISPUserService.cs" />
+    <Compile Include="SPUserService\SPUserService.cs" />
     <Compile Include="TokenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +193,6 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="obj\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

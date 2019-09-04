@@ -51,8 +51,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\ApiResponse.cs" />
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\EventList.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\JSONRequest.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Domain\TokenResource.cs" />
+    <Compile Include="Domain\User.cs" />
     <Compile Include="Dto\APIs.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DiscountPrice.cs" />
@@ -80,6 +83,7 @@
     <Compile Include="Mapping\JsonDtoMapper.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ApiUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
