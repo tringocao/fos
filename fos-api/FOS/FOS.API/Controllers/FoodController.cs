@@ -1,4 +1,7 @@
 ﻿using FOS.API.App_Start;
+using FOS.Model.Domain;
+using FOS.Model.Dto;
+using FOS.Model.Util;
 using FOS.Services.FoodServices;
 using Newtonsoft.Json;
 using System;
@@ -6,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -13,27 +17,45 @@ namespace FOS.API.Controllers
     [LogActionWebApiFilter]
     public class FoodController : ApiController
     {
-        IFoodService _craw;
-        public FoodController(IFoodService craw)
+        IFoodService _foodService;
+        public FoodController(IFoodService foodService)
         {
-            _craw = craw;
+            _foodService = foodService;
         }
         // GET: api/Food
         [HttpGet]
         [Route("GetFoodCatalogues")]
-        public string GetFoodCatalogues(int IdService, int delivery_id)
+        public async Task<ApiResponse<List<FoodCategory>>> GetFoodCataloguesAsync(int IdService, int delivery_id)
         {
-            _craw.GetExternalServiceById(IdService);
-            return JsonConvert.SerializeObject(_craw.GetFoodCataloguesFromDeliveryId(delivery_id));
+            try
+            {
+                _foodService.GetExternalServiceById(IdService);
+                return ApiUtil<List<FoodCategory>>.CreateSuccessfulResult(
+                  await _foodService.GetFoodCataloguesFromDeliveryIdAsync(delivery_id)
+                );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<FoodCategory>>.CreateFailResult(e.ToString());
+            }
         }
 
         // GET: api/Food/5
         [HttpGet]
         [Route("GetFood")]
-        public string GetFood(int IdService, int delivery_id, int dish_type_id)
+        public async Task<ApiResponse<List<Food>>> GetFoodAsync(int IdService, int delivery_id, int dish_type_id)
         {
-            _craw.GetExternalServiceById(IdService);
-            return JsonConvert.SerializeObject(_craw.GetFoodFromCatalogue(delivery_id, dish_type_id));
+            try
+            {
+                _foodService.GetExternalServiceById(IdService);
+                return ApiUtil<List<Food>>.CreateSuccessfulResult(
+                  await _foodService.GetFoodFromCatalogueAsync(delivery_id, dish_type_id)
+                );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Food>>.CreateFailResult(e.ToString());
+            }
         }
 
         // POST: api/Food

@@ -1,5 +1,5 @@
 <div class="restaurants ">
-    <app-search [loading]="load" (change)='getRes($event)'></app-search>
+    <app-search [loading]="load" (change)='getRestaurant($event)'></app-search>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
