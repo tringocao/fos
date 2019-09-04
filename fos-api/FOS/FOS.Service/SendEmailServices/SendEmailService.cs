@@ -14,6 +14,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 
 namespace FOS.Services.SendEmailServices
 {
@@ -57,12 +58,18 @@ namespace FOS.Services.SendEmailServices
             {
                 await GetDataByEventIdAsync(clientContext, idEvent);
                 var emailp = new EmailProperties();
-                foreach(var user in emailTemplate.UsersEmail)
+                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+
+                foreach (var user in emailTemplate.UsersEmail)
                 {
                     emailp.To = new List<string>() { user.mail };
                     emailp.From = emailTemplate.HostUserEmail.mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.mail };
-                    emailp.Body = String.Format(emailTemplate.Html.ToString(),emailTemplate.EventTitle.ToString(), emailTemplate.EventRestaurant.ToString(), user.mail.ToString());
+                    emailp.Body = String.Format(emailTemplate.Html.ToString(),
+                        emailTemplate.EventTitle.ToString(),
+                        emailTemplate.EventRestaurant.ToString(),
+                        user.mail.ToString(),
+                        hostname + "make-order/1");
                     emailp.Subject = emailTemplate.Subject;
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
