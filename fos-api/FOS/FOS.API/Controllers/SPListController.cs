@@ -1,10 +1,9 @@
 ﻿using FOS.Common;
 using FOS.Model.Domain;
+using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.Providers;
-using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.UserProfiles;
-using Microsoft.SharePoint.Client.Utilities;
+using FOS.Services.SPListService;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,65 +19,50 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [RoutePrefix("api/splist")]
+
     public class SPListController : ApiController
     {
-        IOAuthService _oAuthService;
-        IGraphApiProvider _graphApiProvider;
-        ISharepointContextProvider _sharepointContextProvider;
+        ISPListService _spListService;
+        public SPListController(ISPListService spListService)
+        {
+            _spListService = spListService;
+        }
+        //// GET api/splist/getlist/{list-id}
+        //public async Task<HttpResponseMessage> GetList(string Id)
+        //{
+        //    return await _spListService.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
+        //}
 
-        public SPListController(IOAuthService oAuthService, IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider)
-        {
-            _oAuthService = oAuthService;
-            _graphApiProvider = graphApiProvider;
-            _sharepointContextProvider = sharepointContextProvider;
-        }
-        // GET api/splist/getlist/{list-id}
-        public async Task<HttpResponseMessage> GetList(string Id)
-        {
-            return await _graphApiProvider.SendAsync(HttpMethod.Get, "sites/lists/" + Id, null);
-        }
         // POST api/splist/addlistitem/{list-id}/
-        public async Task<HttpResponseMessage> AddListItem(string Id, [FromBody]JSONRequest item)
+        [HttpPost]
+        [Route("AddListItem")]
+        public async Task<ApiResponse> AddListItem(string Id, [FromBody]JSONRequest item)
         {
-            return await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
-        }
-        // POST api/splist/AddListItemCSOM/{list-id}/
-        public async Task<HttpResponseMessage> AddListItemCSOM(string Id, [FromBody]EventList item)
-        {
-            var eventData = item;
-            using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            try
             {
-                Web web = context.Web;
-                var loginName = "i:0#.f|membership|" + item.eventHost;
-                //string email = eventData.eventHost;
-                //PeopleManager peopleManager = new PeopleManager(context);
-                //ClientResult<PrincipalInfo> principal = Utility.ResolvePrincipal(context, web, email, PrincipalType.User, PrincipalSource.All, web.SiteUsers, true);
-                //context.ExecuteQuery();
-
-                User newUser = context.Web.EnsureUser(loginName);
-                context.Load(newUser);
-                context.ExecuteQuery();
-
-                FieldUserValue userValue = new FieldUserValue();
-                userValue.LookupId = newUser.Id;
-
-                List members = context.Web.Lists.GetByTitle("Event List");
-                Microsoft.SharePoint.Client.ListItem listItem = members.AddItem(new ListItemCreationInformation());
-                listItem["EventHost"] = userValue;
-                listItem["EventTitle"] = eventData.eventTitle;
-                listItem["EventId"] = 1;
-                listItem["EventRestaurant"] = eventData.eventRestaurant;
-                listItem["EventMaximumBudget"] = eventData.eventMaximumBudget;
-                listItem["EventTimeToClose"] = eventData.eventTimeToClose;
-                listItem["EventTimeToReminder"] = eventData.eventTimeToReminder;
-                listItem["EventParticipants"] = eventData.eventParticipants;
-                listItem.Update();
-                context.ExecuteQuery();
+                await _spListService.AddListItem(Id, item);
+                return ApiUtil.CreateSuccessfulResult();
             }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
 
-            HttpResponseMessage responde = Request.CreateResponse(HttpStatusCode.OK, "Create list item successfully");
-            return responde;
-
+        [HttpPost]
+        [Route("AddEventListItem")]
+        public ApiResponse AddEventListItem(string Id, [FromBody]EventListItem item)
+        {
+            try
+            {
+                _spListService.AddEventListItem(Id, item);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
         }
     }
 }

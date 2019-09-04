@@ -1,16 +1,17 @@
 ﻿using FOS.Model.Dto;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FOS.Services.DeliveryServices
 {
     public interface IDeliveryService
     {
-        List<DeliveryInfos> GetRestaurantDeliveryInfor(int city_id, int restaurant_id);
+        Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(int city_id, int restaurant_id);
         string GetExternalServiceById(int IdService);
-        DeliveryInfos GetRestaurantFirstDeliveryInfor(int city_id, int restaurant_id);
-        List<DeliveryInfos> GetRestaurantDeliveryInforByPaging(int city_id, int pagenum, int pageSize);
-        List<DeliveryInfos> GetRestaurantsDeliveryInfor(int city_id, List<Restaurant> restaurant_ids);
-        List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery);
+        Task<DeliveryInfos> GetRestaurantFirstDeliveryInforAsync(int city_id, int restaurant_id);
+        Task<List<DeliveryInfos>> GetRestaurantDeliveryInforByPagingAsync(int city_id, int pagenum, int pageSize);
+        Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(int city_id, List<Restaurant> restaurant_ids);
+        Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
 
     }
 }
