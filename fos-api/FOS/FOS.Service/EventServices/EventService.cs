@@ -36,27 +36,7 @@ namespace FOS.Services.EventServices
                 var listEvent = new List<EventModel>();
                 foreach (var element in collListItem)
                 {
-                    var host = element["EventHost"] as FieldLookupValue;
-                    if(host == null)
-                    {
-                        host = new FieldLookupValue();
-                    }
-                    var dateString = element["EventTimeToClose"].ToString();
-                    Nullable<DateTime> date = DateTime.Parse(dateString).ToLocalTime();
-                    var eventModel = new EventModel();
-
-                    eventModel.Name = ElementAttributeToString(element["EventTitle"]);
-                    eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
-                    eventModel.Category = ElementAttributeToString(element["EventCategory"]);
-                    eventModel.Date = date;
-                    eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
-                    eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
-                    eventModel.EventId = ElementAttributeToString(element["ID"]);
-                    eventModel.HostName = ElementAttributeToString(host.LookupValue);
-                    eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
-                    eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
-                    eventModel.Status = ElementAttributeToString(element["status"]);
-
+                    var eventModel = ListItemToEventModel(element);
                     listEvent.Add(eventModel);
                 }
                 return listEvent;
@@ -65,6 +45,51 @@ namespace FOS.Services.EventServices
         private string ElementAttributeToString(Object element)
         {
             return element != null ? element.ToString() : "";
+        }
+
+        public EventModel ListItemToEventModel(ListItem element)
+        {
+            var host = element["EventHost"] as FieldLookupValue;
+            if (host == null)
+            {
+                host = new FieldLookupValue();
+            }
+            var dateString = element["EventTimeToClose"].ToString();
+            Nullable<DateTime> date = DateTime.Parse(dateString).ToLocalTime();
+            var eventModel = new EventModel();
+
+            eventModel.Name = ElementAttributeToString(element["EventTitle"]);
+            eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
+            eventModel.Category = ElementAttributeToString(element["EventCategory"]);
+            eventModel.Date = date;
+            eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
+            eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
+            eventModel.EventId = ElementAttributeToString(element["ID"]);
+            eventModel.HostName = ElementAttributeToString(host.LookupValue);
+            eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
+            eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
+            eventModel.Status = ElementAttributeToString(element["status"]);
+
+            return eventModel;
+        }
+
+        public EventModel GetEvent(int id)
+        {
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
+            {
+                var web = clientContext.Web;
+                var list = web.Lists.GetByTitle("Event List");
+                clientContext.Load(list);
+                clientContext.ExecuteQuery();
+
+                var item = list.GetItemById(id);
+                clientContext.Load(item);
+                clientContext.ExecuteQuery();
+
+                var result = ListItemToEventModel(item);
+
+                return result;
+            }
         }
     }
 }

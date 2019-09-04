@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { OrderService } from './../../services/order/order.service';
 import { FormControl } from '@angular/forms';
-import { RestaurantService } from './../../services/restaurant/restaurant.service';
+import { UserService } from './../../services/user/user.service';
 import * as moment from 'moment';
 import 'moment/locale/vi';
 import Event from '../../models/event';
@@ -49,14 +49,14 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   constructor(
     private orderService: OrderService,
-    private restaurantService: RestaurantService
+    private userService: UserService
   ) {}
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.restaurantService.getCurrentUserId().subscribe(value => {
-      this.userId = value.Data.id;
+    this.userService.getCurrentUserId().then((response: User) => {
+      this.userId = response.id;
       this.getOrders();
     });
   }

@@ -92,22 +92,22 @@ namespace FOS.API.Controllers
             }
         }
 
-        //public async Task<HttpResponseMessage> GetContext()
-        //{
-        //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-        //    {
-        //        var web = clientContext.Web;
-        //        clientContext.Load(web);
-        //        clientContext.ExecuteQuery();
-        //        if (clientContext.Web.IsPropertyAvailable("Title"))
-        //        {
-        //            Console.WriteLine("Found title");
-        //        }
-        //        Console.WriteLine("Title: {0}", web.Title);
-        //    }
-        //    HttpResponseMessage responde = new HttpResponseMessage();
+            //public async Task<HttpResponseMessage> GetContext()
+            //{
+            //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            //    {
+            //        var web = clientContext.Web;
+            //        clientContext.Load(web);
+            //        clientContext.ExecuteQuery();
+            //        if (clientContext.Web.IsPropertyAvailable("Title"))
+            //        {
+            //            Console.WriteLine("Found title");
+            //        }
+            //        Console.WriteLine("Title: {0}", web.Title);
+            //    }
+            //    HttpResponseMessage responde = new HttpResponseMessage();
 
-        //    return responde;
-        //}
+            //    return responde;
+            //}
     }
 }

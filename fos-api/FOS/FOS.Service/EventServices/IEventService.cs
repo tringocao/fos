@@ -11,5 +11,6 @@ namespace FOS.Services.EventServices
     public interface IEventService
     {
         IEnumerable<EventModel> GetAllEvent();
+        EventModel GetEvent(int id);
     }
 }

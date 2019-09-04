@@ -29,29 +29,29 @@ namespace FOS.Services.ExternalServices
             //var re4 = service.GetFoods(restaurant);
             //----------------Test----------------------
         }
-        public List<Province> GetMetadataForProvince()
+        public async Task<List<Province>> GetMetadataForProvinceAsync()
         {
-            return service.GetMetadataForProvince();
+            return await service.GetMetadataForProvinceAsync();
         }
-        public List<RestaurantCategory> GetMetadataForCategory()
+        public async Task<List<RestaurantCategory>> GetMetadataForCategoryAsync()
         {
-            return service.GetMetadataForCategory();
+            return await service.GetMetadataForCategoryAsync();
         }
-        public List<Restaurant> GetRestaurants(Province province, string keyword, List<RestaurantCategory> category)
+        public async Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> category)
         {
-            return service.GetRestaurants(province, keyword, category);
+            return await service.GetRestaurantsAsync(province, keyword, category);
         }
-        public List<DeliveryInfos> GetRestaurantDeliveryInfor(Restaurant restaurant)
+        public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant)
         {
-            return service.GetRestaurantDeliveryInfor(restaurant);
+            return await service.GetRestaurantDeliveryInforAsync(restaurant);
         }
-        public List<DeliveryInfos> GetRestaurantsDeliveryInfor(List<Restaurant> restaurant)
+        public async Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(List<Restaurant> restaurant)
         {
-            return service.GetRestaurantsDeliveryInfor(restaurant);
+            return await service.GetRestaurantsDeliveryInforAsync(restaurant);
         }
-        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
+        public async Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
         {
-            return service.GetFoodCatalogues(delivery);
+            return await service.GetFoodCataloguesAsync(delivery);
         }
         private IExternalService GetExternalService(APIs api)
         {

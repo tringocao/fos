@@ -22,18 +22,18 @@ namespace FOS.Services.FoodServices
             this.IdService = IdService;
             return "DeliveryService in " + _deliveryService.GetExternalServiceById(IdService) + "is ready";
         }
-        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
+        public async Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
         {
-            return _deliveryService.GetFoodCatalogues(delivery);
+            return await _deliveryService.GetFoodCataloguesAsync(delivery);
         }
-        public List<FoodCategory> GetFoodCataloguesFromDeliveryId(int delivery_id)
-        {          
-            return GetFoodCatalogues(
+        public async Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int delivery_id)
+        {
+            return await GetFoodCataloguesAsync(
                 new DeliveryInfos() { delivery_id = delivery_id.ToString()});
         }
-        public List<Food> GetFoodFromCatalogue(int delivery_id, int dish_type_id)
+        public async Task<List<Food>> GetFoodFromCatalogueAsync(int delivery_id, int dish_type_id)
         {
-            var listFoodCatalogue = GetFoodCataloguesFromDeliveryId(delivery_id);
+            var listFoodCatalogue = await GetFoodCataloguesFromDeliveryIdAsync(delivery_id);
             return listFoodCatalogue
                 .Where(fc => fc.dish_type_id == dish_type_id.ToString())
                 .FirstOrDefault()

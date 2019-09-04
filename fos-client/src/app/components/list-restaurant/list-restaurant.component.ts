@@ -1,22 +1,21 @@
 import { RestaurantService } from './../../services/restaurant/restaurant.service';
-import { Component, OnInit, ViewChild, OnChanges, Input } from '@angular/core';
+import { FavoriteService } from './../../services/favorite/favorite.service';
+import { UserService } from './../../services/user/user.service';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  Input,
+  ChangeDetectorRef
+} from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+// import { FavoriteRestaurant } from '../../models/favoriteRestaurant';
 
 const restaurants: any = [];
-
-interface Restaurant {
-  id: string;
-  stared: boolean;
-  restaurant: string;
-  category: string;
-  address: string;
-  promotion: string;
-  open: string;
-  delivery_id: string;
-  url_rewrite_name: string;
-}
 
 @Component({
   selector: 'app-list-restaurant',
@@ -35,10 +34,15 @@ export class ListRestaurantComponent implements OnInit {
     'open',
     'menu'
   ];
-  dataSource: any = new MatTableDataSource(restaurants);
+  dataSource: any = new MatTableDataSource<Restaurant>(restaurants);
+  favoriteOnlyDataSource: Restaurant[];
+  baseDataSource: Restaurant[];
   userId: string;
   load: boolean;
   favoriteRestaurants: string[];
+  favoriteOnly: boolean;
+  topic: string;
+  keyword: string;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   ngOnInit() {
@@ -50,73 +54,104 @@ export class ListRestaurantComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.userId = '';
     this.favoriteRestaurants = [];
+    this.favoriteOnly = false;
+    this.topic = JSON.parse('[]');
+    this.keyword = '';
 
-    this.restaurantService.getCurrentUserId().subscribe(response => {
+    this.userService.getCurrentUserId().then((response: User) => {
       console.log(response.id);
       this.userId = response.id;
-      this.restaurantService.getFavorite(this.userId).subscribe(response => {
+      this.favoriteService.getFavorite(this.userId).then(response => {
         console.log(response);
-        response.map(item => {
+        response.map((item: FavoriteRestaurant) => {
           this.favoriteRestaurants.push(item.RestaurantId);
         });
         console.log(this.favoriteRestaurants);
       });
     });
-    this.getRestaurant();
+    this.getRestaurant({ topic: this.topic, keyword: this.keyword });
   }
 
-  constructor(private restaurantService: RestaurantService) {}
+  constructor(
+    private changeDetectorRefs: ChangeDetectorRef,
+    private _snackBar: MatSnackBar,
+    private restaurantService: RestaurantService,
+    private userService: UserService,
+    private favoriteService: FavoriteService
+  ) {}
+
+  toast(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
 
   addToFavorite(event, restaurantId: string) {
     console.log('add', restaurantId);
-    this.restaurantService
+    this.favoriteService
       .addFavoriteRestaurant(this.userId, restaurantId)
-      .subscribe(response => {
-        console.log(response);
-        this.favoriteRestaurants = [];
-        this.restaurantService.getFavorite(this.userId).subscribe(response => {
-          console.log(response);
-          response.map(item => {
-            if (!this.favoriteRestaurants.includes(item)) {
-              this.favoriteRestaurants.push(item.RestaurantId);
+      .then(response => {
+        // console.log(this.dataSource.data);
+        if (response != null && response.ErrorMessage != null) {
+          this.toast('Error happnened ', 'Dismiss');
+        } else {
+          this.dataSource.data.forEach(data => {
+            // console.log(data)
+            if (data.id == restaurantId) {
+              data.stared = true;
+              this.toast(data.restaurant + ' added! ', 'Dismiss');
             }
           });
-          console.log(this.favoriteRestaurants);
-          this.getRestaurant();
-        });
+        }
       });
+  }
+  filterByFavorite(event) {
+    this.favoriteOnly = event.checked;
+    if (this.favoriteOnly) {
+      this.favoriteOnlyDataSource = this.dataSource.data.filter(
+        restaurant => restaurant.stared
+      );
+      this.baseDataSource = this.dataSource.data;
+      this.dataSource.data = this.favoriteOnlyDataSource;
+      this.toast('Filtered by favorite! ', 'Dismiss');
+    } else {
+      this.dataSource.data = this.baseDataSource;
+    }
+    // this.getRestaurant({topic: this.topic, keyword: this.keyword});
   }
 
   removeFromFavorite(event, restaurantId: string) {
     console.log('remove', restaurantId);
-    this.restaurantService
+    this.favoriteService
       .removeFavoriteRestaurant(this.userId, restaurantId)
-      .subscribe(response => {
-        console.log(response);
-        this.favoriteRestaurants = [];
-        this.restaurantService.getFavorite(this.userId).subscribe(response => {
-          console.log(response);
-          response.map(item => {
-            if (!this.favoriteRestaurants.includes(item)) {
-              this.favoriteRestaurants.push(item.RestaurantId);
+      .then(response => {
+        // console.log(this.dataSource.data);
+        if (response != null && response.ErrorMessage != null) {
+          this.toast('Error happnened ', 'Dismiss');
+        } else {
+          this.dataSource.data.forEach(data => {
+            // console.log(data)
+            if (data.id == restaurantId) {
+              data.stared = false;
+              this.toast(data.restaurant + ' removed! ', 'Dismiss');
             }
           });
-          console.log(this.favoriteRestaurants);
-          this.getRestaurant();
-        });
+        }
       });
   }
 
-  getRestaurant() {
-    this.restaurantService
-      .getRestaurantIds(JSON.parse('[]'), '')
-      .subscribe(response => {
-        this.restaurantService.getRestaurants(response).subscribe(result => {
-          if (result != null && result != '') {
-            const jsonData = JSON.parse(result);
-            this.dataSource = [];
+  getRestaurant($event) {
+    if ($event.topic != undefined && $event.keyword != undefined) {
+      this.load = true;
+
+      this.topic = $event.topic;
+      this.keyword = $event.keyword;
+      this.restaurantService
+        .getRestaurantIds($event.topic, $event.keyword)
+        .then(response => {
+          this.restaurantService.getRestaurants(response).then(result => {
             const dataSourceTemp = [];
-            jsonData.forEach((element, index) => {
+            result.forEach((element, index) => {
               let restaurantItem: Restaurant = {
                 id: element.restaurant_id,
                 delivery_id: element.delivery_id,
@@ -139,56 +174,23 @@ export class ListRestaurantComponent implements OnInit {
               };
               dataSourceTemp.push(restaurantItem);
             });
-            console.log(dataSourceTemp);
-            this.dataSource = new MatTableDataSource(dataSourceTemp);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            this.load = false;
-          }
-        });
-      });
-  }
+            console.log(
+              dataSourceTemp.filter(
+                (restaurant: Restaurant) => restaurant.stared
+              )
+            );
+            this.dataSource.data = this.favoriteOnly
+              ? dataSourceTemp.filter(
+                  (restaurant: Restaurant) => restaurant.stared
+                )
+              : dataSourceTemp;
 
-  getRes($event) {
-    this.load = true;
-    this.restaurantService
-      .getRestaurantIds($event.topic, $event.keyword)
-      .subscribe(response => {
-        this.restaurantService.getRestaurants(response).subscribe(result => {
-          if (result != null && result != '') {
-            const jsonData = JSON.parse(result);
-            this.dataSource = [];
-            const dataSourceTemp = [];
-            jsonData.forEach((element, index) => {
-              // tslint:disable-next-line:prefer-const
-              let restaurantItem: Restaurant = {
-                id: element.restaurant_id,
-                delivery_id: element.delivery_id,
-                stared: this.favoriteRestaurants.includes(
-                  element.restaurant_id
-                ),
-                restaurant: element.name,
-                address: element.address,
-                category:
-                  element.categories.length > 0 ? element.categories[0] : '',
-                promotion:
-                  element.promotion_groups.length > 0
-                    ? element.promotion_groups[0].text
-                    : '',
-                open:
-                  (element.operating.open_time || '?') +
-                  '-' +
-                  (element.operating.close_time || '?'),
-                url_rewrite_name: ''
-              };
-              dataSourceTemp.push(restaurantItem);
-            });
-            this.dataSource = new MatTableDataSource(dataSourceTemp);
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
             this.load = false;
-          }
+          });
+          this.changeDetectorRefs.detectChanges();
         });
-      });
+    }
   }
 }

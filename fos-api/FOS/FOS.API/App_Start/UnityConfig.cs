@@ -100,6 +100,14 @@ namespace FOS.API
             container.RegisterType<Services.EventServices.IEventService, Services.EventServices.EventService>();
 
 
+            container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
+            container.RegisterType<Services.SendEmailServices.ISendEmailService, Services.SendEmailServices.SendEmailService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
             //container.RegisterType<Services.ICrawlLinksService, Services.CrawlLinksService>();
             //container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.GetMethod> ("GetMethod");

@@ -25,32 +25,32 @@ namespace FOS.Services.DeliveryServices
             return "DeliveryService in " + _restaurantService.GetExternalServiceById(IdService) + "is ready";
         }
 
-        public List<DeliveryInfos> GetRestaurantDeliveryInfor(int city_id, int restaurant_id)
+        public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(int city_id, int restaurant_id)
         {
-            return _restaurantService.GetRestaurantDeliveryInfor(
-                _restaurantService.GetRestaurantsById(city_id, restaurant_id));
+            return await _restaurantService.GetRestaurantDeliveryInforAsync(await
+                _restaurantService.GetRestaurantsByIdAsync(city_id, restaurant_id));
         }
-        public List<DeliveryInfos> GetRestaurantsDeliveryInfor(int city_id, List<Restaurant> restaurant_ids)
+        public async Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(int city_id, List<Restaurant> restaurant_ids)
         {
-            deliveryInfos = _restaurantService.GetRestaurantsDeliveryInfor(restaurant_ids);
+            deliveryInfos = await _restaurantService.GetRestaurantsDeliveryInforAsync(restaurant_ids);
             return deliveryInfos;
         }
-        public DeliveryInfos GetRestaurantFirstDeliveryInfor(int city_id, int restaurant_id)
+        public async Task<DeliveryInfos> GetRestaurantFirstDeliveryInforAsync(int city_id, int restaurant_id)
         {
-            return GetRestaurantDeliveryInfor(city_id, restaurant_id).FirstOrDefault();
+            return (await GetRestaurantDeliveryInforAsync(city_id, restaurant_id)).FirstOrDefault();
         }
-        public List<DeliveryInfos> GetRestaurantDeliveryInforByPaging(int city_id, int pagenum, int pageSize)
+        public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforByPagingAsync(int city_id, int pagenum, int pageSize)
         {
-            var listRestaurant = _restaurantService.GetRestaurantsByProvince(city_id);
-            var result = listRestaurant.Skip((pagenum - 1) * pageSize).Take(pageSize);         
-            return GetRestaurantsDeliveryInfor(city_id, result.ToList());
+            var listRestaurant = await _restaurantService.GetRestaurantsByProvinceAsync(city_id);
+            var result = listRestaurant.Skip((pagenum - 1) * pageSize).Take(pageSize);
+            return await GetRestaurantsDeliveryInforAsync(city_id, result.ToList());
         }
 
-        public List<FoodCategory> GetFoodCatalogues(DeliveryInfos delivery)
+        public async Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
         {
-            return _restaurantService.GetFoodCatalogues(delivery);
+            return await _restaurantService.GetFoodCataloguesAsync(delivery);
         }
-        public List<DeliveryInfos> SearchByName(string nameDelivery)
+        public async Task<List<DeliveryInfos>> SearchByNameAsync(string nameDelivery)
         {
             return deliveryInfos.FindAll(d => d.name.Contains(nameDelivery));            
         }

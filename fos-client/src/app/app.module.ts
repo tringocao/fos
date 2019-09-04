@@ -12,6 +12,8 @@ import { ServiceTabComponent } from './components/service-tab/service-tab.compon
 import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/TokenInterceptor';
 
@@ -65,6 +67,8 @@ import { FoodCategoriesComponent } from './components/dialog/food-categories/foo
 import { LoadingComponent } from './components/loading/loading.component';
 import { OrderTabComponent } from './components/order-tab/order-tab.component';
 import { ListOrderComponent } from './components/list-order/list-order.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +88,8 @@ import { ListOrderComponent } from './components/list-order/list-order.component
     FoodCategoriesComponent,
     LoadingComponent,
     OrderTabComponent,
-    ListOrderComponent
+    ListOrderComponent,
+    OrderDetailComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -115,6 +120,7 @@ import { ListOrderComponent } from './components/list-order/list-order.component
     MatProgressSpinnerModule,
     MatSelectModule,
     MatProgressBarModule,
+    MatAutocompleteModule,
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,
@@ -130,7 +136,8 @@ import { ListOrderComponent } from './components/list-order/list-order.component
     MatListModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
   ],
   providers: [
     OrderService,

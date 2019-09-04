@@ -85,8 +85,8 @@
           <button
             class="remind"
             *ngIf="element.status === 'Opened'"
-            mat-mini-fab
             (click)="remind($event, element)"
+            mat-icon-button
           >
             <mat-icon aria-hidden="false" aria-label="Notification icon"
               >notifications_none</mat-icon
@@ -95,8 +95,8 @@
           <button
             class="close"
             *ngIf="element.status === 'Opened'"
-            mat-mini-fab
             (click)="close($event, element)"
+            mat-icon-button
           >
             <mat-icon aria-hidden="false" aria-label="Close icon"
               >close</mat-icon
