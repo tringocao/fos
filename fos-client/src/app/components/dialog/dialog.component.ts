@@ -4,7 +4,6 @@ import { Observable, Observer } from 'rxjs';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { EventDialogComponent } from '../event-dialog/event-dialog.component';
-
 interface FoodCategory {
   dish_type_name: string;
   dish_type_id:string;
@@ -19,14 +18,14 @@ interface Food {
 }
 
 interface Restaurant {
-  id: string;
+  id: number;
   stared: boolean;
   restaurant: string;
   category: string;
   address: string;
   promotion: string;
   open: string;
-  delivery_id: string;
+  delivery_id: number;
   url_rewrite_name: string;
 }
 
@@ -55,29 +54,8 @@ export class DialogComponent implements OnInit {
     async ngOnInit(): Promise<void> {
       console.log("-------------------------------------")
 
-      this.restaurantService.getFood(this.data.delivery_id).subscribe(result => {
-        const dataSourceTemp = [];
-        const jsonData = JSON.parse(result);
-        jsonData.forEach((element, index) => {
-          // tslint:disable-next-line:prefer-const
-          let dataSourceTemp2 = [];
-          element.dishes.forEach(e => {
-            let Category: Food = {
-              name: e.name,
-              id: e.id,
-              photos: e.photos,
-              description: e.description,
-              price:e.price.text
-            };
-            dataSourceTemp2.push(Category);
-          });
-          let categoriesItem: FoodCategory = {
-              dish_type_name: element.dish_type_name,
-              dish_type_id: element.dish_type_id,
-              dishes: dataSourceTemp2,
-          };
-          this.foodCategory.push(categoriesItem);
-        });
+      this.restaurantService.getFood(Number(this.data.delivery_id)).then(result => {
+        this.foodCategory = result;
         this.showAll(this.foodCategory);
       });
   }
@@ -107,6 +85,16 @@ export class DialogComponent implements OnInit {
     this.load = false;
   }
 
+
+  
+  doSth(){
+    this.restaurantService.setEmail(1);
+    console.log("Sent!");
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(EventDialogComponent, {
       // scrollStrategy: this.overlay.scrollStrategies.noop(),
@@ -121,10 +109,4 @@ export class DialogComponent implements OnInit {
     });
   }
   
-
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }

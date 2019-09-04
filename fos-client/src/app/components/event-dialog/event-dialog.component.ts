@@ -17,11 +17,13 @@ import {
   Validators,
   FormBuilder
 } from '@angular/forms';
-import { EventUser } from '../../eventuser';
+import { EventUser } from '../../models/eventuser';
 import { EventFormService } from '../../services/event-form/event-form.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { EventList } from 'src/app/models/eventList';
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 
 interface Restaurant {
   id: string;
@@ -71,7 +73,8 @@ export class EventDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Restaurant,
     private fb: FormBuilder,
     private eventFormService: EventFormService,
-    private http: HttpClient
+    private http: HttpClient,
+    private restaurantService: RestaurantService
   ) { }
   
   createdUser = {"id": ""};
@@ -146,9 +149,14 @@ export class EventDialogComponent implements OnInit {
   ];
 
   displayedColumns = ['avatar', 'name', 'email', 'action'];
+  isLoading = false;
+  restaurant$: Restaurant[];
 
   office365User: userPicker[] = [];
   office365Group: userPicker[] = [];
+  displayFn(user: Restaurant) {
+    if (user) { return user.restaurant; }
+  }
   ngOnInit() {
     this.dateTimeToClose = this.toDateString(new Date());
     this.dateToReminder = this.toDateString(new Date());
@@ -165,7 +173,8 @@ export class EventDialogComponent implements OnInit {
       host: new FormControl(''),
       dateTimeToClose: new FormControl(''),
       participants: new FormControl(''),
-      restaurant: new FormControl('')
+      restaurant: new FormControl(''),
+      userInput: new FormControl('')
     });
 
     const toSelect = this.restaurantPickerGroup.find(c => c.id == this.data.id);
@@ -207,14 +216,54 @@ export class EventDialogComponent implements OnInit {
     this.userPickerGroups.push({ name: 'Office 365 Group', userpicker: this.office365Group });
 
     //avatar
-    console.log("get avatar");
-    this.http.get(environment.apiUrl + 'api/SPUser/GetAvatar').subscribe((data: any) => {
-      console.log("get avatar");
+    // console.log("get avatar");
+    // this.http.get(environment.apiUrl + 'api/SPUser/GetAvatar').subscribe((data: any) => {
+    //   console.log("get avatar");
 
-      console.log(data);
-      var dataImg = "data:image/png;base64," + data.Data;
-      console.log(dataImg);
-    });
+    //   console.log(data);
+    //   var dataImg = "data:image/png;base64," + data.Data;
+    //   console.log(dataImg);
+    // });
+
+    this.ownerForm.get('userInput').setValue(this.data);
+    this.ownerForm
+    .get('userInput')
+    .valueChanges
+    .pipe(
+      debounceTime(300),
+      tap(() => this.isLoading = true),
+      switchMap(value => this.restaurantService.SearchRestaurantName(value, 4)
+      .pipe(
+        finalize(() => this.isLoading = true),
+        )
+      )
+    ).subscribe(
+      data => this.restaurantService.getRestaurants(data.Data).then(result => {
+        var dataSourceTemp = [];
+        result.forEach((element, index) => {
+          // tslint:disable-next-line:prefer-const
+          let restaurantItem: Restaurant = {
+            id: element.restaurant_id,
+            delivery_id: element.delivery_id,
+            stared: false,
+            restaurant: element.name,
+            address: element.address,
+            category:
+              element.categories.length > 0 ? element.categories[0] : '',
+            promotion:
+              element.promotion_groups.length > 0
+                ? element.promotion_groups[0].text
+                : '',
+            open:
+                  (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?"),
+              url_rewrite_name:""
+          };
+          dataSourceTemp.push(restaurantItem);
+        });
+        this.restaurant$ = dataSourceTemp;
+        this.isLoading = false;
+      }))
+      
   }
   public hasError = (controlName: string, errorName: string) => {
     return this.ownerForm.controls[controlName].hasError(errorName);
@@ -326,24 +375,24 @@ export class EventDialogComponent implements OnInit {
     console.log('get dateToReminder: ');
     console.log(dateToReminder);
 
-    var restaurant = this.data.restaurant;
+    var restaurant = this.ownerForm.get('userInput').value.restaurant;
     console.log('get restaurant: ');
-    console.log(dateToReminder);
+    console.log(restaurant);
 
-    var restaurantId = this.data.id;
+    var restaurantId = this.ownerForm.get('userInput').value.id;
     console.log('get restaurantId: ');
     console.log(restaurantId);
     
-    var category = this.data.category;
+    var category = this.ownerForm.get('userInput').value.category;
     console.log('get category: ');
     console.log(category);
 
-    var deliveryId = this.data.delivery_id;
+    var deliveryId = this.ownerForm.get('userInput').value.delivery_id;
     console.log('get deliveryId: ');
     console.log(deliveryId);
 
     var serciveId = 1;
-    console.log('get deliveryId: ');
+    console.log('get serciveId: ');
     console.log(serciveId);
 
     var hostId = this.ownerForm.get('host').value.id;

@@ -29,13 +29,27 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
+          <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='userInput'>
+        </mat-form-field>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let restaurant of restaurant$" [value]="restaurant">
+                  <app-menu   [restaurant]="restaurant"></app-menu>
+              <span>{{ restaurant.restaurant }}</span>
+              <small> | ID: {{restaurant.id}}</small>
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+
+        <!-- <mat-form-field class="full-width">
           <mat-select placeholder="Restaurant" formControlName="restaurant" (selectionChange)="changeRestaurant($event)">
             <mat-option *ngFor="let restaurant of restaurantPickerGroup" [value]="restaurant">
               {{restaurant.name}}
 
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field class="full-width">
           <mat-label>Maximum Budget</mat-label>

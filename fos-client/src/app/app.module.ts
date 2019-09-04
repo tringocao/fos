@@ -54,8 +54,11 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { MenuEventComponent } from './components/menu-event/menu-event.component';
+import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,8 +75,9 @@ import { MenuEventComponent } from './components/menu-event/menu-event.component
     MenuComponent,
     FoodCategoriesComponent,
     LoadingComponent,
-    EventDialogComponent,
-    MenuEventComponent
+    OrderDetailComponent,
+    MenuEventComponent,
+    EventDialogComponent
   ],
     // declarations: [
     //     AppComponent,
@@ -104,6 +108,7 @@ import { MenuEventComponent } from './components/menu-event/menu-event.component
     MatProgressSpinnerModule,
     MatSelectModule,
     MatProgressBarModule,
+    MatAutocompleteModule,
     MatGridListModule,
     SelectAutocompleteModule,
     MatSortModule,
@@ -130,7 +135,7 @@ import { MenuEventComponent } from './components/menu-event/menu-event.component
     useClass: TokenInterceptor,
     multi: true
   }],
-  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent,EventDialogComponent],
+  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent,MenuEventComponent,EventDialogComponent],
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent,EventDialogComponent],
 
