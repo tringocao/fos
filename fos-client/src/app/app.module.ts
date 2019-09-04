@@ -12,6 +12,8 @@ import { ServiceTabComponent } from './components/service-tab/service-tab.compon
 import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/TokenInterceptor';
 
@@ -118,7 +120,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     MatListModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule,
   ],
   providers: [
     OrderService, 
