@@ -51,7 +51,6 @@ export class DialogComponent implements OnInit {
   displayedColumns2: string[] = ["picture", "name", "description", "price"];
   dataSource2: any;
   userId: string;
-  currentRate = 3.14;
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,

@@ -17,6 +17,7 @@ namespace FOS.Model.Dto
         public string Subject { get; set; }
         public string EventTitle { get; set; }
         public string EventRestaurant { get; set; }
+        public int OrderId { get; set; }
 
     }
 }

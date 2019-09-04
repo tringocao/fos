@@ -6,6 +6,7 @@ class Restaurant {
   address: string;
   promotion: string;
   open: string;
+  picture: string;
   delivery_id: number;
   url_rewrite_name: string;
 }

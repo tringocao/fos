@@ -1,18 +1,10 @@
 <h1>{{ data.restaurant.restaurant }}</h1>
-<h3>
-  Rating: {{ data.detail.rating }} & Review: {{ data.detail.total_review }}
-</h3>
-<ng-template #t let-fill="fill">
-  <span class="star" [class.full]="fill === 100">
-    <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
-  </span>
-</ng-template>
-<ngb-rating
-  [(rate)]="currentRate"
-  [starTemplate]="t"
+<h3>Total reviews on Foody: {{ data.detail.total_review }}</h3>
+<ngx-stars
   [readonly]="true"
-  max="5"
-></ngb-rating>
+  [maxStars]="5"
+  [initialStars]="data.detail.rating"
+></ngx-stars>
 
 <div class="restaurants ">
   <app-food-categories

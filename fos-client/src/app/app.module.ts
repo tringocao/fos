@@ -65,6 +65,7 @@ import { FoodCategoriesComponent } from "./components/dialog/food-categories/foo
 import { LoadingComponent } from "./components/loading/loading.component";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { OrderDetailComponent } from "./components/order-detail/order-detail.component";
+import { NgxStarsModule } from "ngx-stars";
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { OrderDetailComponent } from "./components/order-detail/order-detail.com
     MatProgressBarModule,
     MatAutocompleteModule,
     MatGridListModule,
+    NgxStarsModule,
     SelectAutocompleteModule,
     MatSortModule,
     MatPaginatorModule,

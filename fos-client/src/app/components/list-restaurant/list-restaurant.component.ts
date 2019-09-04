@@ -16,6 +16,7 @@ interface Restaurant {
   open: string;
   delivery_id: number;
   url_rewrite_name: string;
+  picture: string;
 }
 
 @Component({
@@ -29,9 +30,9 @@ export class ListRestaurantComponent implements OnInit {
   categorys: any;
   displayedColumns: string[] = [
     "id",
+    "picture",
     "restaurant",
     "category",
-    "address",
     "promotion",
     "open",
     "menu"
@@ -136,7 +137,8 @@ export class ListRestaurantComponent implements OnInit {
                   (element.operating.open_time || "?") +
                   "-" +
                   (element.operating.close_time || "?"),
-                url_rewrite_name: ""
+                url_rewrite_name: "",
+                picture: element.photos[0].value
               };
               dataSourceTemp.push(restaurantItem);
             });

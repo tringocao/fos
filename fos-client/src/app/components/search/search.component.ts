@@ -94,7 +94,8 @@ export class SearchComponent implements OnInit, OnChanges {
                 (element.operating.open_time || "?") +
                 "-" +
                 (element.operating.close_time || "?"),
-              url_rewrite_name: ""
+              url_rewrite_name: "",
+              picture: ""
             };
             dataSourceTemp.push(restaurantItem);
           });
@@ -140,9 +141,9 @@ export class SearchComponent implements OnInit, OnChanges {
       ? this.getCondition(this.toppings.value)
       : "[]";
     console.log(cod);
-    let keyword = "";
+    var keyword = "";
     if (this.usersForm.get("userInput").value != null) {
-      let keyword = this.usersForm.get("userInput").value.restaurant
+      keyword = this.usersForm.get("userInput").value.restaurant
         ? this.usersForm.get("userInput").value.restaurant
         : this.usersForm.get("userInput").value;
     }

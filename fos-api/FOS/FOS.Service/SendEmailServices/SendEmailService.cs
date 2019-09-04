@@ -58,18 +58,47 @@ namespace FOS.Services.SendEmailServices
             {
                 await GetDataByEventIdAsync(clientContext, idEvent);
                 var emailp = new EmailProperties();
-                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                string hostName = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
 
                 foreach (var user in emailTemplate.UsersEmail)
                 {
                     emailp.To = new List<string>() { user.mail };
                     emailp.From = emailTemplate.HostUserEmail.mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.mail };
+                    emailTemplate.OrderId = 1;
                     emailp.Body = String.Format(emailTemplate.Html.ToString(),
                         emailTemplate.EventTitle.ToString(),
                         emailTemplate.EventRestaurant.ToString(),
                         user.mail.ToString(),
-                        hostname + "make-order/1");
+                        hostName + "make-order/" + emailTemplate.OrderId);
+                    emailp.Subject = emailTemplate.Subject;
+                    Utility.SendEmail(clientContext, emailp);
+                    clientContext.ExecuteQuery();
+                }
+
+            }
+        }
+
+        public async Task SendEmail2UserListAsync(string html, List<Model.Domain.User> users, string idEvent)
+        {
+            ReadEmailTemplate(html);
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                await GetDataByEventIdAsync(clientContext, idEvent);
+                var emailp = new EmailProperties();
+                string hostName = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                var currentUser = await _sPUserService.GetCurrentUser();
+                foreach (Model.Domain.User user in users)
+                {
+                    emailp.To = new List<string>() { user.mail };
+                    emailp.From = currentUser.mail;
+                    emailp.BCC = new List<string> { currentUser.mail };
+                    emailTemplate.OrderId = 1;
+                    emailp.Body = String.Format(emailTemplate.Html.ToString(),
+                        emailTemplate.EventTitle.ToString(),
+                        emailTemplate.EventRestaurant.ToString(),
+                        user.mail.ToString(),
+                        hostName + "make-order/" + emailTemplate.OrderId);
                     emailp.Subject = emailTemplate.Subject;
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
