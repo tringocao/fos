@@ -1,0 +1,38 @@
+<div id="search-component">
+        <form class="example-form" (ngSubmit)="onSubmit()" [formGroup]='usersForm'>
+            <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Search" [matAutocomplete]="auto" formControlName='userInput'>
+                      </mat-form-field>
+
+                      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+                        <ng-container *ngIf="!isLoading">
+                          <mat-option *ngFor="let restaurant of restaurant$" [value]="restaurant">
+                                <app-menu   [restaurant]="restaurant"></app-menu>
+                            <span>{{ restaurant.restaurant }}</span>
+                            <small> | ID: {{restaurant.id}}</small>
+                          </mat-option>
+                        </ng-container>
+            </mat-autocomplete>
+            <mat-form-field class="example-full-width">
+                <mat-select placeholder="Toppings" [formControl]="toppings" (openedChange)="openedChange($event)" multiple>
+                    <mat-select-trigger>
+                        {{toppings.value ? toppings.value[0] ? toppings.value[0].name : '' : ''}}
+                        <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+                            (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-optgroup *ngFor="let group of toppingList" [label]="group.name">
+                        <mat-option *ngFor="let category of group.categories" [value]="category" >
+                        {{category.name}}
+                        </mat-option>
+                    </mat-optgroup>
+                    <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+
+    </form>
+    <app-loading [loading] = "loading"></app-loading>
+
+</div>
+  

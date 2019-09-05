@@ -11,7 +11,7 @@ namespace FOS.Repositories
     public class FosContext : DbContext
     {
         public FosContext()
-            : base("FosContext")
+            : base("name=FosContext")
         {
 
         }
@@ -22,7 +22,9 @@ namespace FOS.Repositories
 
         }
 
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<DataModel.Order> Orders { get; set; }
+        public DbSet<ExternalServiceAPI> ExternalServiceAPIs { get; set; }
+        public DbSet<FavoriteRestaurant> FavoriteRestaurants { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

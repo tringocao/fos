@@ -11,6 +11,7 @@ namespace FOS.Services
     public interface IOrderService
     {
         bool AddOrder(Model.Order order);
+        Repositories.DataModel.Order GetOrder(int id);
     }
 
     public class OrderService : IOrderService
@@ -24,6 +25,11 @@ namespace FOS.Services
         public bool AddOrder(Order order)
         {
             throw new NotImplementedException();
+        }
+
+        public Repositories.DataModel.Order GetOrder(int id)
+        {
+            return _repository.GetOrder(id);
         }
     }
 }

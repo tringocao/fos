@@ -1,18 +1,45 @@
-﻿using System;
+﻿using FOS.Common;
+using FOS.Model.Domain;
+using FOS.Services;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace FOS.API.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        IOAuthService _oAuthService;
+        public HomeController(IOAuthService oAuthService)
         {
-            ViewBag.Title = "Home Page";
+            _oAuthService = oAuthService;
+        }
 
-            return View();
+        public async Task<ActionResult> Index()
+        {
+            var authenticated = await _oAuthService.CheckAuthenticationAsync();
+
+            if (!authenticated)
+            {
+                return Redirect(_oAuthService.GetAuthCodePath(new State(
+                    WebConfigurationManager.AppSettings[OAuth.WEBAPI_HOME_URI]
+                )));
+            }
+            //response.Content = new ObjectContent<AuthClientRespond>(
+            //    new AuthClientRespond()
+            //    {
+            //        redirect = !authenticated,
+            //        redirectUrl = _oAuthService.GetAuthCodePath(new State(
+            //            WebConfigurationManager.AppSettings[OAuth.HOME_URI]
+            //        ))
+            //    }, new JsonMediaTypeFormatter(), "application/json"
+            //);
+            else return View();
         }
     }
 }

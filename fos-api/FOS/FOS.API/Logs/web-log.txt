@@ -1,0 +1,144 @@
+INFO  2019-09-02 21:09:53,431  6828ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:09:53 PM
+INFO  2019-09-02 21:09:53,431  6828ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:09:53 PM
+INFO  2019-09-02 21:09:53,434  6831ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:09:53 PM
+INFO  2019-09-02 21:09:53,586  6982ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:09:53 PM
+INFO  2019-09-02 21:09:53,586  6982ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:09:53 PM
+INFO  2019-09-02 21:09:54,024  7420ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:09:54 PM
+INFO  2019-09-02 21:09:54,023  7419ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:09:54 PM
+INFO  2019-09-02 21:09:54,027  7423ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns  for 592.136
+INFO  2019-09-02 21:09:54,035  7431ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns  for 11.9681
+INFO  2019-09-02 21:09:53,992  7388ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:09:53 PM
+INFO  2019-09-02 21:09:54,036  7432ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 450.025
+INFO  2019-09-02 21:09:54,035  7431ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns  for 9.9742
+INFO  2019-09-02 21:09:53,993  7389ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:09:53 PM
+INFO  2019-09-02 21:09:54,038  7434ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 452.0219
+INFO  2019-09-02 21:09:54,039  7435ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns  for 45.8772
+INFO  2019-09-02 21:09:54,040  7436ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 610.0924
+INFO  2019-09-02 21:09:54,036  7432ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns  for 43.8823
+INFO  2019-09-02 21:09:54,091  7488ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 661.9537
+INFO  2019-09-02 21:10:05,048 18445ms LoggingInterceptor     WriteInfoLog       - Profiler: Start SaveTokenResource at 9:10:05 PM
+INFO  2019-09-02 21:10:05,065 18462ms LoggingInterceptor     WriteInfoLog       - Profiler: Method SaveTokenResource returns  for 17.1675
+INFO  2019-09-02 21:10:07,197 20594ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:10:07 PM
+INFO  2019-09-02 21:10:07,200 20597ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 2.9943
+INFO  2019-09-02 21:10:07,213 20610ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:10:07 PM
+INFO  2019-09-02 21:10:07,217 20614ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:10:07 PM
+INFO  2019-09-02 21:10:07,217 20614ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:10:07 PM
+INFO  2019-09-02 21:10:07,222 20619ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 4.9825
+INFO  2019-09-02 21:10:07,225 20622ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 11.9666
+INFO  2019-09-02 21:10:07,220 20617ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:10:07 PM
+INFO  2019-09-02 21:10:07,231 20628ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 10.9674
+INFO  2019-09-02 21:10:07,234 20631ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 16.9506
+INFO  2019-09-02 21:10:07,214 20611ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:10:07 PM
+DEBUG 2019-09-02 21:10:07,232 20629ms LogActionWebApiFilter  OnActionExecuting  - Request GET https://localhost:44366/api/SPUser/GetAvatarById?Id=aaa7e581-b0aa-4367-879c-ef6a1745436d&size=48x48
+INFO  2019-09-02 21:10:07,214 20611ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:10:07 PM
+INFO  2019-09-02 21:10:07,250 20647ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:10:07 PM
+INFO  2019-09-02 21:10:07,253 20650ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 2.9936
+INFO  2019-09-02 21:10:07,255 20652ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 40.8977
+INFO  2019-09-02 21:10:07,243 20640ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:10:07 PM
+INFO  2019-09-02 21:10:07,265 20662ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 21.9421
+INFO  2019-09-02 21:10:07,253 20650ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetAvatarById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,264 20661ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,276 20673ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,380 20777ms LoggingInterceptor     WriteInfoLog       - Profiler: Start SendAsync at 9:10:07 PM
+INFO  2019-09-02 21:10:07,380 20777ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,384 20781ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenByResourceUrl at 9:10:07 PM
+INFO  2019-09-02 21:10:07,386 20783ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 1.9951
+INFO  2019-09-02 21:10:07,381 20778ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,392 20789ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,378 20775ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 163.5591
+DEBUG 2019-09-02 21:10:07,396 20793ms LogActionWebApiFilter  OnActionExecuting  - Request GET https://localhost:44366/api/spuser/GetCurrentUser
+INFO  2019-09-02 21:10:07,395 20792ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,399 20795ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetCurrentUser at 9:10:07 PM
+INFO  2019-09-02 21:10:07,390 20787ms LoggingInterceptor     WriteInfoLog       - Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 9.9642
+INFO  2019-09-02 21:10:07,410 20806ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetAvatarById returns System.Threading.Tasks.Task`1[System.String] for 156.5793
+INFO  2019-09-02 21:10:07,384 20781ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,415 20811ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,417 20813ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetFOSCrawlLinksById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,408 20804ms LoggingInterceptor     WriteInfoLog       - Profiler: Start SendAsync at 9:10:07 PM
+INFO  2019-09-02 21:10:07,421 20817ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenByResourceUrl at 9:10:07 PM
+INFO  2019-09-02 21:10:07,401 20797ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetFOSCrawlLinksById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,423 20819ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 1.9957
+INFO  2019-09-02 21:10:07,433 20829ms LoggingInterceptor     WriteInfoLog       - Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 24.9322
+INFO  2019-09-02 21:10:07,435 20831ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetCurrentUser returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 35.9015
+DEBUG 2019-09-02 21:10:07,911 21308ms LogActionWebApiFilter  OnActionExecuted   - https://localhost:44366/api/SPUser/GetAvatarById?Id=aaa7e581-b0aa-4367-879c-ef6a1745436d&size=48x48 Response Code: OK
+DEBUG 2019-09-02 21:10:07,911 21308ms LogActionWebApiFilter  OnActionExecuted   - https://localhost:44366/api/spuser/GetCurrentUser Response Code: OK
+INFO  2019-09-02 21:10:07,972 21369ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:10:07 PM
+INFO  2019-09-02 21:10:07,974 21371ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:10:07 PM
+INFO  2019-09-02 21:10:07,976 21373ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 1.9963
+INFO  2019-09-02 21:10:07,977 21374ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 4.9844
+INFO  2019-09-02 21:10:07,979 21376ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetFavoriteRestaurantsById at 9:10:07 PM
+INFO  2019-09-02 21:10:07,982 21379ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetAll at 9:10:07 PM
+INFO  2019-09-02 21:10:08,273 21670ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetFOSCrawlLinksById returns  for 856.4851
+INFO  2019-09-02 21:10:08,273 21670ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetFOSCrawlLinksById returns  for 873.4397
+ERROR 2019-09-02 21:10:10,475 23872ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetById returns exception Object reference not set to an instance of an object. for 3060.4995
+ERROR 2019-09-02 21:10:10,644 24041ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetById returns exception Object reference not set to an instance of an object. for 3248.9881
+ERROR 2019-09-02 21:10:10,933 24330ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 3549.2287
+INFO  2019-09-02 21:10:11,212 24609ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetAll returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 3230.0556
+INFO  2019-09-02 21:10:11,614 25010ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetFavoriteRestaurantsById returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 3634.4749
+ERROR 2019-09-02 21:10:11,612 25008ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 4231.9115
+ERROR 2019-09-02 21:10:11,210 24607ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 3818.4935
+ERROR 2019-09-02 21:10:11,884 25281ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 4620.303
+ERROR 2019-09-02 21:10:12,143 25539ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 4761.815
+ERROR 2019-09-02 21:10:13,064 26461ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 5788.4924
+INFO  2019-09-02 21:12:25,321 158718ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:12:25 PM
+INFO  2019-09-02 21:12:25,325 158722ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 3.9784
+INFO  2019-09-02 21:12:25,336 158733ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:12:25 PM
+INFO  2019-09-02 21:12:25,340 158737ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:12:25 PM
+INFO  2019-09-02 21:12:25,343 158740ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:12:25 PM
+INFO  2019-09-02 21:12:25,344 158741ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:12:25 PM
+INFO  2019-09-02 21:12:25,345 158742ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 0.9964
+INFO  2019-09-02 21:12:25,339 158736ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:12:25 PM
+INFO  2019-09-02 21:12:25,340 158737ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:12:25 PM
+INFO  2019-09-02 21:12:25,348 158745ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:12:25 PM
+INFO  2019-09-02 21:12:25,350 158747ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 1.9978
+INFO  2019-09-02 21:12:25,352 158749ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 10.9688
+INFO  2019-09-02 21:12:25,346 158743ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 2.9914
+INFO  2019-09-02 21:12:25,347 158744ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:12:25 PM
+INFO  2019-09-02 21:12:25,358 158755ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 10.9774
+INFO  2019-09-02 21:12:25,361 158758ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 21.9418
+DEBUG 2019-09-02 21:12:25,362 158759ms LogActionWebApiFilter  OnActionExecuting  - Request GET https://localhost:44366/api/spuser/GetCurrentUser
+INFO  2019-09-02 21:12:25,363 158760ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetCurrentUser at 9:12:25 PM
+INFO  2019-09-02 21:12:25,343 158740ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 2.9908
+INFO  2019-09-02 21:12:25,353 158750ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:12:25 PM
+INFO  2019-09-02 21:12:25,355 158752ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:12:25 PM
+INFO  2019-09-02 21:12:25,499 158896ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:12:25 PM
+INFO  2019-09-02 21:12:25,500 158897ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:12:25 PM
+INFO  2019-09-02 21:12:25,501 158898ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetById at 9:12:25 PM
+INFO  2019-09-02 21:12:25,502 158899ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetFOSCrawlLinksById at 9:12:25 PM
+INFO  2019-09-02 21:12:25,497 158894ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 160.524
+DEBUG 2019-09-02 21:12:25,506 158903ms LogActionWebApiFilter  OnActionExecuting  - Request GET https://localhost:44366/api/SPUser/GetAvatarById?Id=aaa7e581-b0aa-4367-879c-ef6a1745436d&size=48x48
+INFO  2019-09-02 21:12:25,508 158905ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetAvatarById at 9:12:25 PM
+INFO  2019-09-02 21:12:25,509 158906ms LoggingInterceptor     WriteInfoLog       - Profiler: Start SendAsync at 9:12:25 PM
+INFO  2019-09-02 21:12:25,510 158907ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenByResourceUrl at 9:12:25 PM
+INFO  2019-09-02 21:12:25,511 158908ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 0.9971
+INFO  2019-09-02 21:12:25,512 158909ms LoggingInterceptor     WriteInfoLog       - Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 2.9914
+INFO  2019-09-02 21:12:25,514 158911ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetAvatarById returns System.Threading.Tasks.Task`1[System.String] for 5.9665
+INFO  2019-09-02 21:12:25,507 158904ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetFOSCrawlLinksById returns  for 4.9868
+INFO  2019-09-02 21:12:25,495 158892ms LoggingInterceptor     WriteInfoLog       - Profiler: Start SendAsync at 9:12:25 PM
+INFO  2019-09-02 21:12:26,810 160206ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenByResourceUrl at 9:12:26 PM
+INFO  2019-09-02 21:12:26,812 160208ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenByResourceUrl returns FOS.API.Models.Token for 1.9948
+INFO  2019-09-02 21:12:26,813 160209ms LoggingInterceptor     WriteInfoLog       - Profiler: Method SendAsync returns System.Threading.Tasks.Task`1[System.Net.Http.HttpResponseMessage] for 1317.7374
+INFO  2019-09-02 21:12:26,815 160211ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetCurrentUser returns System.Threading.Tasks.Task`1[FOS.Model.Domain.User] for 1451.3775
+ERROR 2019-09-02 21:12:26,805 160201ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetById returns exception Object reference not set to an instance of an object. for 1303.7731
+INFO  2019-09-02 21:12:25,498 158895ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:12:25 PM
+INFO  2019-09-02 21:12:27,113 160510ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetExternalServiceById at 9:12:27 PM
+INFO  2019-09-02 21:12:27,117 160514ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetById at 9:12:27 PM
+INFO  2019-09-02 21:12:27,121 160518ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetFOSCrawlLinksById at 9:12:27 PM
+INFO  2019-09-02 21:12:27,125 160522ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetFOSCrawlLinksById returns  for 3.9881
+ERROR 2019-09-02 21:12:27,089 160486ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 1588.2076
+ERROR 2019-09-02 21:12:27,369 160766ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetById returns exception Object reference not set to an instance of an object. for 251.8405
+ERROR 2019-09-02 21:12:27,602 160999ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 2103.3444
+ERROR 2019-09-02 21:12:27,908 161305ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 794.8668
+ERROR 2019-09-02 21:12:28,155 161552ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 2799.5366
+ERROR 2019-09-02 21:12:28,457 161853ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 2958.8532
+DEBUG 2019-09-02 21:12:27,908 161305ms LogActionWebApiFilter  OnActionExecuted   - https://localhost:44366/api/SPUser/GetAvatarById?Id=aaa7e581-b0aa-4367-879c-ef6a1745436d&size=48x48 Response Code: OK
+DEBUG 2019-09-02 21:12:28,178 161574ms LogActionWebApiFilter  OnActionExecuted   - https://localhost:44366/api/spuser/GetCurrentUser Response Code: OK
+ERROR 2019-09-02 21:12:29,027 162424ms LoggingInterceptor     WriteErrorLog      - Profiler: Method GetExternalServiceById returns exception Object reference not set to an instance of an object. for 3673.9752
+INFO  2019-09-02 21:12:29,380 162777ms LoggingInterceptor     WriteInfoLog       - Profiler: Start CheckAuthenticationAsync at 9:12:29 PM
+INFO  2019-09-02 21:12:29,384 162781ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetTokenResourceFromRequest at 9:12:29 PM
+INFO  2019-09-02 21:12:29,386 162783ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetTokenResourceFromRequest returns FOS.Model.Domain.TokenResource for 1.9986
+INFO  2019-09-02 21:12:29,387 162784ms LoggingInterceptor     WriteInfoLog       - Profiler: Method CheckAuthenticationAsync returns System.Threading.Tasks.Task`1[System.Boolean] for 7.0033
+INFO  2019-09-02 21:12:29,388 162785ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetFavoriteRestaurantsById at 9:12:29 PM
+INFO  2019-09-02 21:12:29,390 162787ms LoggingInterceptor     WriteInfoLog       - Profiler: Start GetAll at 9:12:29 PM
+INFO  2019-09-02 21:12:29,392 162789ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetAll returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 1.9952
+INFO  2019-09-02 21:12:29,394 162791ms LoggingInterceptor     WriteInfoLog       - Profiler: Method GetFavoriteRestaurantsById returns System.Collections.Generic.List`1[FOS.Model.Domain.FavoriteRestaurant] for 5.9522
