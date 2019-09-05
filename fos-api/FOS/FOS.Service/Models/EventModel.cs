@@ -10,6 +10,7 @@ namespace FOS.Services.Models
     {
         public string Name { get; set; }
         public string Restaurant { get; set; }
+        public string RestaurantId { get; set; }
         public string Category { get; set; }
         public string Participants { get; set; }
         public string MaximumBudget { get; set; }

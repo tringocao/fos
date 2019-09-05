@@ -21,11 +21,11 @@ export class OrderService {
   }
 
   mapResponseDataToEvent(response: any) {
-    // const responseJson = JSON.parse(response.Data);
     const result: Event[] = [];
     response.forEach(element => {
       const event: Event = {
         restaurant: element.Restaurant,
+        restaurantId: element.RestaurantId,
         category: element.Category,
         date: element.Date,
         participants: element.Participants,

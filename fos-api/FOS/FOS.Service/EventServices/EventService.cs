@@ -64,6 +64,7 @@ namespace FOS.Services.EventServices
 
             eventModel.Name = ElementAttributeToString(element["EventTitle"]);
             eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
+            eventModel.RestaurantId = ElementAttributeToString(element["EventRestaurantId"]);
             eventModel.Category = ElementAttributeToString(element["EventCategory"]);
             eventModel.Date = closeDate;
             eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);

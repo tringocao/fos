@@ -94,7 +94,8 @@ export class SearchComponent implements OnInit, OnChanges {
                 (element.operating.open_time || '?') +
                 '-' +
                 (element.operating.close_time || '?'),
-              url_rewrite_name: ''
+              url_rewrite_name: '',
+              picture: "",
             };
             dataSourceTemp.push(restaurantItem);
           });

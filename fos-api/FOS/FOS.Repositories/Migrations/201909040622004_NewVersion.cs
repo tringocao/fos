@@ -51,7 +51,6 @@ namespace FOS.Repositories.Migrations
                     OrderDate = c.DateTime(nullable: false),
                 })
                 .PrimaryKey(t => t.Id);
-
         }
 
         public override void Down()

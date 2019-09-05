@@ -8,6 +8,7 @@ import { UserService } from './../../services/user/user.service';
 import * as moment from 'moment';
 import 'moment/locale/vi';
 import { EventDialogComponent } from '../event-dialog/event-dialog.component';
+import { EventSummaryDialogComponent } from '../event-summary-dialog/event-summary-dialog.component';
 import { Overlay } from '@angular/cdk/overlay';
 import {
   MatDialog,
@@ -49,6 +50,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
   categoryList = [];
   searchQuery = '';
   categorySelected = null;
+
+  eventListItem: EventList;
 
   @Input() isMyOrder: any;
 
@@ -208,7 +211,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   showEvent(row: any) {
-    const event: EventList = {
+    // console.log(row);
+    this.eventListItem = {
       eventTitle: row.name,
       eventId: row.eventId,
       eventRestaurant: row.restaurant,
@@ -218,7 +222,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
       eventHost: row.hostName,
       eventParticipants: row.participants,
       eventCategory: row.category,
-      eventRestaurantId: '',
+      eventRestaurantId: row.restaurantId,
       eventServiceId: '1',
       eventDeliveryId: '',
       eventCreatedUserId: this.userId,
@@ -228,7 +232,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(EventDialogViewComponent, {
       maxHeight: '98vh',
       width: '80%',
-      data: event
+      data: this.eventListItem
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -241,6 +245,15 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   close(event: any, element: any) {
+    const eventSummaryDialog = this.dialog.open(EventSummaryDialogComponent, {
+      maxHeight: '98vh',
+      width: '80%',
+      data: this.eventListItem
+    });
+
+    eventSummaryDialog.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
     event.stopPropagation();
   }
 

@@ -26,6 +26,7 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { MealsPageComponent } from './pages/meals-page/meals-page.component';
 
+
 import {
   MatTableModule,
   MatSortModule,
@@ -72,6 +73,7 @@ import { MenuEventComponent } from './components/menu-event/menu-event.component
 import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
 import { EventDialogViewComponent } from './components/event-dialog-view/event-dialog-view.component';
 import { NgxStarsModule } from 'ngx-stars';
+import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,8 @@ import { NgxStarsModule } from 'ngx-stars';
     OrderTabComponent,
     ListOrderComponent,
     OrderDetailComponent,
-    EventDialogViewComponent
+    EventDialogViewComponent,
+    EventSummaryDialogComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -170,7 +173,8 @@ import { NgxStarsModule } from 'ngx-stars';
   entryComponents: [
     DialogComponent,
     EventDialogComponent,
-    EventDialogViewComponent
+    EventDialogViewComponent,
+    EventSummaryDialogComponent
   ]
 })
 export class AppModule {}
