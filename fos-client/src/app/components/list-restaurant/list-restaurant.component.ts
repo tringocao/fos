@@ -17,6 +17,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 const restaurants: any = [];
 
+interface Restaurant {
+  id: number;
+  stared: boolean;
+  restaurant: string;
+  category: string;
+  address: string;
+  promotion: string;
+  open: string;
+  delivery_id: number;
+  url_rewrite_name: string;
+  picture: string;
+}
+
 @Component({
   selector: 'app-list-restaurant',
   templateUrl: './list-restaurant.component.html',
@@ -28,11 +41,13 @@ export class ListRestaurantComponent implements OnInit {
   categorys: any;
   displayedColumns: string[] = [
     'id',
+    'picture',
     'restaurant',
     'category',
     'promotion',
     'open',
-    'menu'
+    'menu',
+    'addEvent'
   ];
   dataSource: any = new MatTableDataSource<Restaurant>(restaurants);
   favoriteOnlyDataSource: Restaurant[];
@@ -170,7 +185,8 @@ export class ListRestaurantComponent implements OnInit {
                   (element.operating.open_time || '?') +
                   '-' +
                   (element.operating.close_time || '?'),
-                url_rewrite_name: ''
+                url_rewrite_name: '',
+                picture: element.photos[0].value
               };
               dataSourceTemp.push(restaurantItem);
             });

@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnChanges
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +9,8 @@ export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   title = 'angular-theme';
   appId = 'theme1';
+  @Output() change = new EventEmitter();
+
   constructor() {}
 
   ngOnInit() {}
@@ -25,6 +21,6 @@ export class HeaderComponent implements OnInit {
   };
   switchTheme(appId: string) {
     this.appId = appId;
+    this.change.emit({ theme: appId });
   }
-
 }

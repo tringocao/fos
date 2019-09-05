@@ -33,6 +33,7 @@
     "ng-uikit": "^0.1.6",
     "ng2-select": "^2.0.0",
     "ngx-cookie-service": "^2.2.0",
+    "ngx-stars": "^1.4.3",
     "open-iconic": "^1.1.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

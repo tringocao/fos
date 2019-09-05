@@ -7,7 +7,16 @@ import { FormControl } from '@angular/forms';
 import { UserService } from './../../services/user/user.service';
 import * as moment from 'moment';
 import 'moment/locale/vi';
-import Event from '../../models/event';
+import { EventDialogComponent } from '../event-dialog/event-dialog.component';
+import { Overlay } from '@angular/cdk/overlay';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
+import { EventList } from 'src/app/models/eventList';
+import Event from './../../models/event';
+import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
 
 moment.locale('vi');
 
@@ -49,7 +58,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   constructor(
     private orderService: OrderService,
-    private userService: UserService
+    private userService: UserService,
+    public dialog: MatDialog,
+    overlay: Overlay
   ) {}
 
   ngOnInit() {
@@ -184,8 +195,45 @@ export class ListOrderComponent implements OnInit, OnChanges {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
 
-  showOrder(row: any) {
-    console.log('row: ', row);
+  private toDateString(date: Date): string {
+    return (
+      date.getFullYear().toString() +
+      '-' +
+      ('0' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('0' + date.getDate()).slice(-2) +
+      'T' +
+      date.toTimeString().slice(0, 5)
+    );
+  }
+
+  showEvent(row: any) {
+    const event: EventList = {
+      eventTitle: row.name,
+      eventId: row.eventId,
+      eventRestaurant: row.restaurant,
+      eventMaximumBudget: row.maximumBudget,
+      eventTimeToClose: row.date,
+      eventTimeToReminder: row.timeToRemind,
+      eventHost: row.hostName,
+      eventParticipants: row.participants,
+      eventCategory: row.category,
+      eventRestaurantId: '',
+      eventServiceId: '1',
+      eventDeliveryId: '',
+      eventCreatedUserId: this.userId,
+      eventHostId: row.hostId
+    };
+
+    const dialogRef = this.dialog.open(EventDialogViewComponent, {
+      maxHeight: '98vh',
+      width: '80%',
+      data: event
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   remind(event: any, element: any) {
@@ -194,5 +242,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   close(event: any, element: any) {
     event.stopPropagation();
+  }
+
+  getNumberOfParticipant(participants: string) {
+    return participants.split(';#').length;
   }
 }

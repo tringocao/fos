@@ -140,9 +140,13 @@ export class SearchComponent implements OnInit, OnChanges {
       ? this.getCondition(this.toppings.value)
       : '[]';
     console.log(cod);
-    let keyword = this.usersForm.get('userInput').value.restaurant
-      ? this.usersForm.get('userInput').value.restaurant
-      : this.usersForm.get('userInput').value;
+    var keyword = '';
+    if (this.usersForm.get('userInput').value != null) {
+      keyword = this.usersForm.get('userInput').value.restaurant
+        ? this.usersForm.get('userInput').value.restaurant
+        : this.usersForm.get('userInput').value;
+    }
+
     this.change.emit({ topic: JSON.parse(cod), keyword: keyword });
   }
   getCondition(term: Category[]): string {

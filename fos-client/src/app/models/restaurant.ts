@@ -8,6 +8,7 @@ class Restaurant {
   open: string;
   delivery_id: number;
   url_rewrite_name: string;
+  picture: string;
 }
 // class RestaurantSearch {
 //   id: number;

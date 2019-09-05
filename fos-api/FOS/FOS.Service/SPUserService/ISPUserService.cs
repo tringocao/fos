@@ -11,6 +11,7 @@ namespace FOS.Services.SPUserService
         Task<string> GetUsers();
         Task<Model.Domain.User> GetCurrentUser();
         Task<Model.Domain.User> GetUserById(string Id);
-        Task<string> GetAvatarById(string Id, string size);
+        Task<string> GetGroups();
+        Task<byte[]> GetAvatarByUserId(string Id);
     }
 }

@@ -54,14 +54,18 @@ namespace FOS.Services.EventServices
             {
                 host = new FieldLookupValue();
             }
-            var dateString = element["EventTimeToClose"].ToString();
-            Nullable<DateTime> date = DateTime.Parse(dateString).ToLocalTime();
+            var closeDateString = element["EventTimeToClose"].ToString();
+            Nullable<DateTime> closeDate = DateTime.Parse(closeDateString).ToLocalTime();
+
+            var remindDateString = element["EventTimeToReminder"].ToString();
+            Nullable<DateTime> remindDate = DateTime.Parse(remindDateString).ToLocalTime();
+
             var eventModel = new EventModel();
 
             eventModel.Name = ElementAttributeToString(element["EventTitle"]);
             eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
             eventModel.Category = ElementAttributeToString(element["EventCategory"]);
-            eventModel.Date = date;
+            eventModel.Date = closeDate;
             eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
             eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
             eventModel.EventId = ElementAttributeToString(element["ID"]);
@@ -69,6 +73,7 @@ namespace FOS.Services.EventServices
             eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
             eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
             eventModel.Status = ElementAttributeToString(element["status"]);
+            eventModel.TimeToRemind = remindDate;
 
             return eventModel;
         }

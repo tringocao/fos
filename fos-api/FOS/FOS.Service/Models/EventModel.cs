@@ -19,5 +19,6 @@ namespace FOS.Services.Models
         public DateTime? Date { get; set; }
         public string EventId { get; set; }
         public string Status { get; set; }
+        public DateTime? TimeToRemind { get; set; }
     }
 }

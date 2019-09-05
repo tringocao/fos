@@ -35,7 +35,8 @@ export class OrderService {
         name: element.Name,
         createdBy: element.CreatedBy,
         eventId: element.EventId,
-        status: element.Status
+        status: element.Status,
+        timeToRemind: element.TimeToRemind
       };
       result.push(event);
     });

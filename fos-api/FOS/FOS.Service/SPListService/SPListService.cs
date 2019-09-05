@@ -32,14 +32,14 @@ namespace FOS.Services.SPListService
         {
             await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
         }
-
-        public void AddEventListItem(string Id, EventList item)
+        public void AddEventListItem(string Id, EventListItem item)
         {
             var eventData = item;
             using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {
                 Web web = context.Web;
-                var loginName = "i:0#.f|membership|" + item.eventHost;
+                var loginName = item.eventHost;
+                //var loginName = "i:0#.f|membership|" + item.eventHost;
                 //string email = eventData.eventHost;
                 //PeopleManager peopleManager = new PeopleManager(context);
                 //ClientResult<PrincipalInfo> principal = Utility.ResolvePrincipal(context, web, email, PrincipalType.User, PrincipalSource.All, web.SiteUsers, true);
@@ -62,6 +62,13 @@ namespace FOS.Services.SPListService
                 listItem["EventTimeToClose"] = eventData.eventTimeToClose;
                 listItem["EventTimeToReminder"] = eventData.eventTimeToReminder;
                 listItem["EventParticipants"] = eventData.eventParticipants;
+                listItem["EventCategory"] = eventData.eventCategory;
+
+                listItem["EventRestaurantId"] = eventData.eventRestaurantId;
+                listItem["EventServiceId"] = eventData.eventServiceId;
+                listItem["EventDeliveryId"] = eventData.eventDeliveryId;
+                listItem["EventCreatedUserId"] = eventData.eventCreatedUserId;
+                listItem["EventHostId"] = eventData.eventHostId;
                 listItem.Update();
                 context.ExecuteQuery();
             }

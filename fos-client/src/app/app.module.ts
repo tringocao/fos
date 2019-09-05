@@ -35,7 +35,6 @@ import {
   MatListModule,
   MatInputModule
 } from '@angular/material';
-import { EventFormComponent } from './event-form/event-form.component';
 import {
   DlDateTimeDateModule,
   DlDateTimePickerModule
@@ -69,6 +68,10 @@ import { OrderTabComponent } from './components/order-tab/order-tab.component';
 import { ListOrderComponent } from './components/list-order/list-order.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { MenuEventComponent } from './components/menu-event/menu-event.component';
+import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
+import { EventDialogViewComponent } from './components/event-dialog-view/event-dialog-view.component';
+import { NgxStarsModule } from 'ngx-stars';
 
 @NgModule({
   declarations: [
@@ -79,7 +82,6 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     ServiceTabComponent,
     HeaderComponent,
     SidenavListComponent,
-    EventFormComponent,
     OrdersPageComponent,
     MealsPageComponent,
     SearchComponent,
@@ -87,9 +89,13 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     MenuComponent,
     FoodCategoriesComponent,
     LoadingComponent,
+    OrderDetailComponent,
+    MenuEventComponent,
+    EventDialogComponent,
     OrderTabComponent,
     ListOrderComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
+    EventDialogViewComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -125,6 +131,7 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     SelectAutocompleteModule,
     MatSortModule,
     MatPaginatorModule,
+    NgxStarsModule,
     MatTabsModule,
     HttpClientModule,
     MatCheckboxModule,
@@ -154,9 +161,16 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    DialogComponent
+    DialogComponent,
+    MenuEventComponent,
+    EventDialogComponent,
+    EventDialogViewComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent]
+  entryComponents: [
+    DialogComponent,
+    EventDialogComponent,
+    EventDialogViewComponent
+  ]
 })
 export class AppModule {}
