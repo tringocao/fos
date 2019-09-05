@@ -26,7 +26,7 @@ namespace FOS.API.Controllers
         {
             try
             {
-                string html = System.IO.File.ReadAllText(@"C:\Users\trn1\Documents\GitHub\fos\fos-api\FOS\FOS.API\App_Data\email_template.txt");
+                string html = System.IO.File.ReadAllText(@"D:\Training project\Project\FOS2\fos\fos-api\FOS\FOS.API\App_Data\email_template.txt");
                 await _sendEmailService.SendEmailAsync(eventId, html);
                 return ApiUtil.CreateSuccessfulResult();
             }

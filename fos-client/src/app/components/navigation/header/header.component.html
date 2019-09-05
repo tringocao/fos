@@ -2,16 +2,40 @@
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
   rel="stylesheet"
 />
-<mat-toolbar color="primary" class="header">
-  <mat-toolbar-row>
-    <button mat-icon-button>
-      <mat-icon (click)="sidenavlist.toggle()">menu</mat-icon>
-    </button>
-    <span class="menu-spacer"></span>
-    <div>
-      <a mat-button [routerLink]="'/home'"> Home </a>
-      <a mat-button [routerLink]="'/orders'"> Orders </a>
-      <a mat-button [routerLink]="'/meals'"> Meals </a>
-    </div>
-  </mat-toolbar-row>
-</mat-toolbar>
+<div class="header">
+  <mat-toolbar color="warn">
+    <mat-toolbar-row>
+      <!-- <button
+        mat-icon-button
+        (click)="sidenav.toggle()"
+        fxShow="true"
+        fxHide.gt-sm
+      >
+        <mat-icon>menu</mat-icon>
+      </button> -->
+      <span class="ml5">
+        <img class="logo" src="../../../../assets/pficon.png" alt="Logo" />
+      </span>
+      <div>
+        <a mat-button [routerLink]="'/home'"> Home </a>
+        <a mat-button [routerLink]="'/events'"> Events </a>
+        <a mat-button [routerLink]="'/meals'"> Meals </a>
+      </div>
+      <span class="example-spacer"></span>
+
+      <div>
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>format_color_fill</mat-icon>Select Theme
+        </button>
+        <mat-menu #menu="matMenu">
+          <button value="theme1" mat-menu-item (click)="switchTheme('theme1')">
+            Theme 1
+          </button>
+          <button value="theme2" mat-menu-item (click)="switchTheme('theme2')">
+            Theme 2
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild, Input } from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA,
+  MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { Observable, Observer } from 'rxjs';
 import {
@@ -75,9 +75,9 @@ export class EventDialogComponent implements OnInit {
     private eventFormService: EventFormService,
     private http: HttpClient,
     private restaurantService: RestaurantService
-  ) { }
-  
-  createdUser = {"id": ""};
+  ) {}
+
+  createdUser = { id: '' };
   dateTimeToClose: string;
   dateToReminder: string;
   maximumBudget: number;
@@ -155,9 +155,37 @@ export class EventDialogComponent implements OnInit {
   office365User: userPicker[] = [];
   office365Group: userPicker[] = [];
   displayFn(user: Restaurant) {
-    if (user) { return user.restaurant; }
+    if (user) {
+      return user.restaurant;
+    }
   }
   ngOnInit() {
+    var users = JSON.parse(localStorage.getItem('users'));
+    console.log(users);
+
+    users.map(user => {
+      this.hostPickerGroup.push({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        img: user.img,
+        principalName: user.principalName
+      });
+      this.office365User.push({
+        name: user.name,
+        email: user.email,
+        img: user.img
+      });
+    });
+    this.userPickerGroups.push({
+      name: 'User',
+      userpicker: this.office365User
+    });
+    console.log(this.hostPickerGroup);
+    console.log(this.office365User);
+
+    // this.office365User.push({ name: userDisplayName, email: userMail, img: dataImg});
+
     this.dateTimeToClose = this.toDateString(new Date());
     this.dateToReminder = this.toDateString(new Date());
     this.maximumBudget = 0;
@@ -177,43 +205,55 @@ export class EventDialogComponent implements OnInit {
       userInput: new FormControl('')
     });
 
-    const toSelect = this.restaurantPickerGroup.find(c => c.id == this.data.id);
-    console.log(toSelect);
-    this.ownerForm.get('restaurant').setValue(toSelect);
-    let currentDisplayName = "";
+    // const toSelect = this.restaurantPickerGroup.find(c => c.id == this.data.id);
+    // console.log(toSelect);
+    // this.ownerForm.get('restaurant').setValue(toSelect);
+    // let currentDisplayName = "";
     // find current user
 
-
-    
-    
-
-    console.log(this.createdUser);
-    this.eventFormService.setUserInfo(this.hostPickerGroup,this.office365User,this.userPickerGroups,currentDisplayName,this.ownerForm,this.createdUser);
-    
-
-    
+    // console.log(this.createdUser);
+    // this.eventFormService.setUserInfo(this.hostPickerGroup,this.office365User,this.userPickerGroups,currentDisplayName,this.ownerForm,this.createdUser);
 
     //get Group
-    this.http.get(environment.apiUrl + '/api/SPUser/GetGroups').subscribe((data: any) => {
-      console.log("request data");
-      var jsonData = JSON.parse(data.Data);
-      console.log(jsonData);
-      for (var i = 0; i < jsonData.value.length; i++) {
-        var counter = jsonData.value[i];
+    this.http
+      .get(environment.apiUrl + '/api/SPUser/GetGroups')
+      .subscribe((data: any) => {
+        console.log('request data');
+        var jsonData = JSON.parse(data.Data);
+        console.log(jsonData);
+        for (var i = 0; i < jsonData.value.length; i++) {
+          var counter = jsonData.value[i];
 
-        // console.log("check email: " + counter.displayName);
-        if (Boolean(counter.mail)) {
-          // this.dropdownListNewUser.push({ 'itemName': counter.displayName, 'id': counter.mail });
-          // this.office365User.push({ name: counter.displayName, email: counter.mail });
-          // this.userLogin.push({ name: counter.displayName, loginName: counter.userPrincipalName });
-          this.office365Group.push({ name: counter.displayName, email: counter.mail, img: "" });
+          // console.log("check email: " + counter.displayName);
+          if (Boolean(counter.mail)) {
+            // this.dropdownListNewUser.push({ 'itemName': counter.displayName, 'id': counter.mail });
+            // this.office365User.push({ name: counter.displayName, email: counter.mail });
+            // this.userLogin.push({ name: counter.displayName, loginName: counter.userPrincipalName });
+            this.office365Group.push({
+              name: counter.displayName,
+              email: counter.mail,
+              img: ''
+            });
+          } else {
+            // console.log("khong co email: " + counter.displayName);
+          }
         }
-        else {
-          // console.log("khong co email: " + counter.displayName);
-        }
-      }
+      });
+    this.userPickerGroups.push({
+      name: 'Office 365 Group',
+      userpicker: this.office365Group
     });
-    this.userPickerGroups.push({ name: 'Office 365 Group', userpicker: this.office365Group });
+
+    this.http
+      .get(environment.apiUrl + 'api/SPUser/GetCurrentUser')
+      .subscribe((data: any) => {
+        console.log(this.hostPickerGroup);
+        var selectHost = this.hostPickerGroup.find(
+          c => c.name == data.Data.displayName
+        );
+        console.log(selectHost);
+        this.ownerForm.get('host').setValue(selectHost);
+      });
 
     //avatar
     // console.log("get avatar");
@@ -227,43 +267,45 @@ export class EventDialogComponent implements OnInit {
 
     this.ownerForm.get('userInput').setValue(this.data);
     this.ownerForm
-    .get('userInput')
-    .valueChanges
-    .pipe(
-      debounceTime(300),
-      tap(() => this.isLoading = true),
-      switchMap(value => this.restaurantService.SearchRestaurantName(value, 4)
-      .pipe(
-        finalize(() => this.isLoading = true),
+      .get('userInput')
+      .valueChanges.pipe(
+        debounceTime(300),
+        tap(() => (this.isLoading = true)),
+        switchMap(value =>
+          this.restaurantService
+            .SearchRestaurantName(value, 4)
+            .pipe(finalize(() => (this.isLoading = true)))
         )
       )
-    ).subscribe(
-      data => this.restaurantService.getRestaurants(data.Data).then(result => {
-        var dataSourceTemp = [];
-        result.forEach((element, index) => {
-          // tslint:disable-next-line:prefer-const
-          let restaurantItem: Restaurant = {
-            id: element.restaurant_id,
-            delivery_id: element.delivery_id,
-            stared: false,
-            restaurant: element.name,
-            address: element.address,
-            category:
-              element.categories.length > 0 ? element.categories[0] : '',
-            promotion:
-              element.promotion_groups.length > 0
-                ? element.promotion_groups[0].text
-                : '',
-            open:
-                  (element.operating.open_time || "?") + '-' + (element.operating.close_time || "?"),
-              url_rewrite_name:""
-          };
-          dataSourceTemp.push(restaurantItem);
-        });
-        this.restaurant$ = dataSourceTemp;
-        this.isLoading = false;
-      }))
-      
+      .subscribe(data =>
+        this.restaurantService.getRestaurants(data.Data).then(result => {
+          var dataSourceTemp = [];
+          result.forEach((element, index) => {
+            // tslint:disable-next-line:prefer-const
+            let restaurantItem: Restaurant = {
+              id: element.restaurant_id,
+              delivery_id: element.delivery_id,
+              stared: false,
+              restaurant: element.name,
+              address: element.address,
+              category:
+                element.categories.length > 0 ? element.categories[0] : '',
+              promotion:
+                element.promotion_groups.length > 0
+                  ? element.promotion_groups[0].text
+                  : '',
+              open:
+                (element.operating.open_time || '?') +
+                '-' +
+                (element.operating.close_time || '?'),
+              url_rewrite_name: ''
+            };
+            dataSourceTemp.push(restaurantItem);
+          });
+          this.restaurant$ = dataSourceTemp;
+          this.isLoading = false;
+        })
+      );
   }
   public hasError = (controlName: string, errorName: string) => {
     return this.ownerForm.controls[controlName].hasError(errorName);
@@ -285,9 +327,7 @@ export class EventDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  doSth(): void {
-    console.log('do some thing');
-  }
+
   // private executeOwnerCreation = ownerFormValue => {
   //   let owner: OwnerForCreation = {
   //     name: ownerFormValue.name,
@@ -311,18 +351,24 @@ export class EventDialogComponent implements OnInit {
   }
 
   changeClient(event) {
-    console.log("change client");
-    
+    console.log('change client');
 
     let target = event.source.selected._element.nativeElement;
     this.userSelect = [];
 
-
     const toSelect = this.office365User.find(c => c.email == event.value);
-    if(toSelect != null){
-      this.userSelect.push({ name: target.innerText.trim(), email: event.value, img: toSelect.img});
-    }else{
-      this.userSelect.push({ name: target.innerText.trim(), email: event.value, img: ""});
+    if (toSelect != null) {
+      this.userSelect.push({
+        name: target.innerText.trim(),
+        email: event.value,
+        img: toSelect.img
+      });
+    } else {
+      this.userSelect.push({
+        name: target.innerText.trim(),
+        email: event.value,
+        img: ''
+      });
     }
   }
 
@@ -367,11 +413,11 @@ export class EventDialogComponent implements OnInit {
     console.log('get maximumBudget: ');
     console.log(maximumBudget);
 
-    var dateTimeToClose = this.dateTimeToClose.replace("T"," ");
+    var dateTimeToClose = this.dateTimeToClose.replace('T', ' ');
     console.log('get dateTimeToClose: ');
     console.log(dateTimeToClose);
 
-    var dateToReminder = this.dateToReminder.replace("T"," ");
+    var dateToReminder = this.dateToReminder.replace('T', ' ');
     console.log('get dateToReminder: ');
     console.log(dateToReminder);
 
@@ -382,7 +428,7 @@ export class EventDialogComponent implements OnInit {
     var restaurantId = this.ownerForm.get('userInput').value.id;
     console.log('get restaurantId: ');
     console.log(restaurantId);
-    
+
     var category = this.ownerForm.get('userInput').value.category;
     console.log('get category: ');
     console.log(category);
@@ -429,11 +475,20 @@ export class EventDialogComponent implements OnInit {
       eventServiceId: '1',
       eventDeliveryId: deliveryId,
       eventCreatedUserId: this.createdUser.id,
-      eventHostId: hostId,
+      eventHostId: hostId
     };
-    this.eventFormService.addEventListItem(eventlistitem);
-  }
+    this.eventFormService.addEventListItem(eventlistitem).then(r => {
+      setTimeout(() => {
+        this.SendEmail(title);
+      }, 5000);
+    });
 
+    //send mail
+  }
+  SendEmail(title: string) {
+    this.restaurantService.setEmail(title);
+    console.log('Sent!');
+  }
   changeHost(event) {
     let target = event.source.selected._element.nativeElement;
     console.log('host: ' + target.innerText.trim() + ' ' + event.value.email);
@@ -443,7 +498,7 @@ export class EventDialogComponent implements OnInit {
     console.log('host: ' + target.innerText.trim() + ' ' + event.value.id);
   }
 
-  changeParticipants( user) {
+  changeParticipants(user) {
     console.log(user);
   }
 }

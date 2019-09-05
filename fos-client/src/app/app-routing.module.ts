@@ -5,7 +5,6 @@ import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { MealsPageComponent } from './pages/meals-page/meals-page.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
-
 const routes: Routes = [
   {
     path: 'make-order/:id',
@@ -21,7 +20,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'orders',
+    path: 'events',
     component: OrdersPageComponent
   },
   {
@@ -30,10 +29,8 @@ const routes: Routes = [
   }
 ];
 
-
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes),],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

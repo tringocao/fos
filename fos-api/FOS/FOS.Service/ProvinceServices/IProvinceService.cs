@@ -16,6 +16,7 @@ namespace FOS.Services.ProvinceServices
         Task<List<Province>> GetMetadataForProvinceAsync();
         Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
 
+        Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant);
 
     }
 }

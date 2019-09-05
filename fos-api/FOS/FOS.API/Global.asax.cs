@@ -23,7 +23,10 @@ namespace FOS.API
             log4net.Config.XmlConfigurator.Configure();
             
         }
-
+        protected void Application_PostAuthorizeRequest()
+        {
+            System.Web.HttpContext.Current.SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior.Required);
+        }
         protected void Application_PostAcquireRequestState(object sender, EventArgs e)
         {
             //if (Context.Handler is IRequiresSessionState)

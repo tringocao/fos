@@ -4,6 +4,7 @@ using FOS.Model.Domain;
 using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.Providers;
+using FOS.Services.EventServices;
 using FOS.Services.SPListService;
 using Newtonsoft.Json;
 using System;
@@ -26,9 +27,12 @@ namespace FOS.API.Controllers
     public class SPListController : ApiController
     {
         ISPListService _spListService;
-        public SPListController(ISPListService spListService)
+        IEventService _eventService;
+
+        public SPListController(ISPListService spListService, IEventService eventService)
         {
             _spListService = spListService;
+            _eventService = eventService;
         }
         //// GET api/splist/getlist/{list-id}
         //public async Task<HttpResponseMessage> GetList(string Id)
@@ -64,6 +68,31 @@ namespace FOS.API.Controllers
             catch (Exception e)
             {
                 return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        public ApiResponse<IEnumerable<Services.Models.EventModel>> GetAllOrder()
+        {
+            try
+            {
+                var result = _eventService.GetAllEvent();
+                return ApiUtil<IEnumerable<Services.Models.EventModel>>.CreateSuccessfulResult(result);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<Services.Models.EventModel>>.CreateFailResult(e.ToString());
+            }
+        }
+
+        public ApiResponse<Services.Models.EventModel> GetEvent(int id)
+        {
+            try
+            {
+                var result = _eventService.GetEvent(id);
+                return ApiUtil<Services.Models.EventModel>.CreateSuccessfulResult(result);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<Services.Models.EventModel>.CreateFailResult(e.ToString());
             }
         }
     }

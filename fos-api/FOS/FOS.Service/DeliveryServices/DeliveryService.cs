@@ -54,5 +54,10 @@ namespace FOS.Services.DeliveryServices
         {
             return deliveryInfos.FindAll(d => d.name.Contains(nameDelivery));            
         }
+
+        public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        {
+            return await _restaurantService.GetRestaurantDetailAsync(restaurant);
+        }
     }
 }

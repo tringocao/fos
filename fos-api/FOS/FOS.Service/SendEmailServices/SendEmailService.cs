@@ -28,11 +28,11 @@ namespace FOS.Services.SendEmailServices
             _sharepointContextProvider = sharepointContextProvider;
             _sPUserService = sPUserService;
         }
-        private async Task GetDataByEventIdAsync(ClientContext clientContext, string idEvent = "1")
+        private async Task GetDataByEventIdAsync(ClientContext clientContext, string idEvent)
         {
             List list = clientContext.Web.Lists.GetByTitle("Event List");
             CamlQuery camlQuery = new CamlQuery();
-            camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='EventId'/>" +
+            camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='EventTitle'/>" +
                 "<Value Type='Text'>" + idEvent + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
             ListItemCollection collListItem = list.GetItems(camlQuery);
             clientContext.Load(collListItem);

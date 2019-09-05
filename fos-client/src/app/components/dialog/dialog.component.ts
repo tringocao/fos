@@ -1,12 +1,16 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
 import { Observable, Observer } from 'rxjs';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { EventDialogComponent } from '../event-dialog/event-dialog.component';
 interface FoodCategory {
   dish_type_name: string;
-  dish_type_id:string;
+  dish_type_id: string;
   dishes: Food[];
 }
 interface Food {
@@ -28,7 +32,10 @@ interface Restaurant {
   delivery_id: number;
   url_rewrite_name: string;
 }
-
+interface RestaurantMore {
+  restaurant: Restaurant;
+  detail: RestaurantDetail;
+}
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -37,34 +44,38 @@ interface Restaurant {
 export class DialogComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  foodCategory: FoodCategory[]= [];
+  foodCategory: FoodCategory[] = [];
   load = true;
   sortNameOrder: number;
   sortCategoryOrder: number;
   categorys: any;
-  displayedColumns2: string[] = ['picture','name', 'description', 'price'];
+  displayedColumns2: string[] = ['picture', 'name', 'description', 'price'];
   dataSource2: any;
   userId: string;
+
   constructor(
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
     private restaurantService: RestaurantService,
-    @Inject(MAT_DIALOG_DATA) public data: Restaurant,
-    public dialog: MatDialog) { }
+    @Inject(MAT_DIALOG_DATA) public data: RestaurantMore
+  ) {}
 
-    async ngOnInit(): Promise<void> {
-      console.log("-------------------------------------")
+  async ngOnInit(): Promise<void> {
+    console.log('-------------------------------------');
 
-      this.restaurantService.getFood(Number(this.data.delivery_id)).then(result => {
-        this.foodCategory = result;
+    this.restaurantService
+      .getFood(Number(this.data.restaurant.delivery_id))
+      .then(result => {
+        result.forEach(c => this.foodCategory.push(c));
         this.showAll(this.foodCategory);
       });
   }
-  showAll(dataSourceTemp:any[]){
+  showAll(dataSourceTemp: any[]) {
     console.log(dataSourceTemp);
     this.dataSource2 = new MatTableDataSource();
-    
-    dataSourceTemp.forEach(f =>  {
-      if(f.dishes != null){
+
+    dataSourceTemp.forEach(f => {
+      if (f.dishes != null) {
         f.dishes.forEach(d => this.dataSource2.data.push(d));
       }
     });
@@ -72,7 +83,7 @@ export class DialogComponent implements OnInit {
     this.dataSource2.paginator = this.paginator;
     this.load = false;
   }
-  updateTable(dataSourceTemp:any[]){
+  updateTable(dataSourceTemp: any[]) {
     console.log(dataSourceTemp);
     this.dataSource2 = new MatTableDataSource(dataSourceTemp);
     this.dataSource2.sort = this.sort;
@@ -80,16 +91,9 @@ export class DialogComponent implements OnInit {
     this.load = false;
   }
   setFood($event) {
-    if($event.topic == 0) this.showAll(this.foodCategory);
+    if ($event.topic == 0) this.showAll(this.foodCategory);
     else this.updateTable(this.foodCategory[$event.topic].dishes);
     this.load = false;
-  }
-
-
-  
-  doSth(){
-    this.restaurantService.setEmail(1);
-    console.log("Sent!");
   }
 
   onNoClick(): void {
@@ -108,5 +112,4 @@ export class DialogComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-  
 }

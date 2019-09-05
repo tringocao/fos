@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/fos-api/FOS/.vs/FOS
+/fos-api/FOS/FOS.API/Areas/HelpPage/Views
+/fos-api/FOS/FOS.API/bin
+/fos-api/FOS/FOS.API/obj/Debug
+/fos-api/FOS/FOS.API/obj/Release/Package/PackageTmp
+/fos-api/FOS/FOS.API/obj/Release/TransformWebConfig
+/fos-api/FOS/FOS.API/Properties/PublishProfiles
+/fos-api/FOS/FOS.Common/bin
+/fos-api/FOS/FOS.Common/obj/Debug
+/fos-api/FOS/FOS.Common/obj/Release
+/fos-api/FOS/FOS.Model/bin
+/fos-api/FOS/FOS.Repositories/bin
+/fos-api/FOS/FOS.Repositories/obj
+/fos-api/FOS/FOS.Service/bin
+/fos-api/FOS/FOS.Service/obj
+/fos-api/FOS/packages
+/fos-api/FOS/FOS.Model/obj/Release
+/fos-api/FOS/FOS.Model/obj/Debug

@@ -61,6 +61,23 @@ namespace FOS.API.Controllers
 
         }
         [HttpGet]
+        [Route("GetDeliveryDetail")]
+        public async Task<ApiResponse<DeliveryDetail>> GetRestaurantDetailAsync(int IdService, int delivery_id)
+        {
+            try
+            {
+                _deliveryService.GetExternalServiceById(IdService);
+                return ApiUtil<DeliveryDetail>.CreateSuccessfulResult(
+                  await _deliveryService.GetRestaurantDetailAsync(new Restaurant() { delivery_id = delivery_id.ToString()})
+                );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<DeliveryDetail>.CreateFailResult(e.ToString());
+            }
+
+        }
+        [HttpGet]
         [Route("GetPageDelivery")]
         public async Task<ApiResponse<List<DeliveryInfos>>> GetPageDeliveryAsync(int IdService, int city_id, int pagenum, int pagesize)
         {

@@ -7,6 +7,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
+  title = 'angular-theme';
+  appId = 'theme1';
+  @Output() change = new EventEmitter();
 
   constructor() {}
 
@@ -16,4 +19,8 @@ export class HeaderComponent implements OnInit {
     this.sidenavToggle.emit();
     // tslint:disable-next-line:semicolon
   };
+  switchTheme(appId: string) {
+    this.appId = appId;
+    this.change.emit({ theme: appId });
+  }
 }

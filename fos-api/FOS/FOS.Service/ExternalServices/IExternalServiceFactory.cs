@@ -14,5 +14,6 @@ namespace FOS.Services.ExternalServices
         Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant);
         Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
         Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(List<Restaurant> restaurant);
+        Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant);
     }
 }

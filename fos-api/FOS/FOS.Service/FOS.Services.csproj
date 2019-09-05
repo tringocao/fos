@@ -136,6 +136,8 @@
   <ItemGroup>
     <Compile Include="DeliveryServices\DeliveryService.cs" />
     <Compile Include="DeliveryServices\IDeliveryService.cs" />
+    <Compile Include="EventServices\EventService.cs" />
+    <Compile Include="EventServices\IEventService.cs" />
     <Compile Include="ExternalServices\ExternalServiceFactory.cs" />
     <Compile Include="ExternalServices\GrabFoodService\GrabFoodService.cs" />
     <Compile Include="ExternalServices\IExternalService.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="FoodServices\IFoodService.cs" />
     <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="ConfigurationProvider.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Providers\GraphApiProvider.cs" />
     <Compile Include="Providers\IGraphApiProvider.cs" />
     <Compile Include="Providers\ISharepointContextProvider.cs" />

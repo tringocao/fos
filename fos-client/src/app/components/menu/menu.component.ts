@@ -27,6 +27,7 @@ interface Restaurant {
   delivery_id: number;
   url_rewrite_name: string;
 }
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -34,24 +35,32 @@ interface Restaurant {
 })
 export class MenuComponent{
   overlay: Overlay;
-  foodCategory: FoodCategory[];
   @Input('restaurant') restaurant : Restaurant;
+  resDetail: RestaurantDetail;
 
-  constructor(public dialog: MatDialog, overlay: Overlay) {
-    this.overlay = overlay;    
+  constructor(public dialog: MatDialog, overlay: Overlay,private restaurantService: RestaurantService) {
+    this.overlay = overlay;
+    let restaurantItem: RestaurantDetail = {rating : 0, total_review : 0}
+
+    this.resDetail = restaurantItem;
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      scrollStrategy: this.overlay.scrollStrategies.noop(),
-      autoFocus: false,
-      maxHeight: '98vh',
-      width: '80%',
-      data: this.restaurant
+    this.restaurantService.getRestaurantDetail(Number(this.restaurant.delivery_id)).then(result =>{
+      this.resDetail.rating = Number(result.rating.avg)
+      this.resDetail.total_review = Number(result.rating.total_review)
+      const dialogRef = this.dialog.open(DialogComponent, {
+        scrollStrategy: this.overlay.scrollStrategies.noop(),
+        autoFocus: false,
+        maxHeight: '98vh',
+        width: '80%',
+        data: {restaurant: this.restaurant, detail: this.resDetail}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    
   }
 }

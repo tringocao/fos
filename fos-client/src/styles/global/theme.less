@@ -1,0 +1,12 @@
+.mat-core();
+@primary: mat-palette(@mat-red);
+@accent: mat-palette(@mat-pink, 500, 900, A100);
+@warn: mat-palette(@mat-blue);
+@theme: mat-light-theme(@primary, @accent, @warn);
+.angular-material-theme(@theme);
+.alternate-theme {
+  @alternate-primary: mat-palette(@mat-light-blue);
+  @alternate-accent: mat-palette(@mat-yellow, 400);
+  @alternate-theme: mat-light-theme(@alternate-primary, @alternate-accent);
+  .angular-material-theme(@alternate-theme);
+}

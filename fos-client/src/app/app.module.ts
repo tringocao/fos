@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,31 +35,43 @@ import {
   MatListModule,
   MatInputModule
 } from '@angular/material';
-import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
+import {
+  DlDateTimeDateModule,
+  DlDateTimePickerModule
+} from 'angular-bootstrap-datetimepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './components/search/search.component';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule,
-  MatToolbarModule, MatMenuModule,MatIconModule, MatProgressSpinnerModule
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
+  MatToolbarModule,
+  MatMenuModule,
+  MatIconModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
-import {MatSelectModule} from '@angular/material/select';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { MenuComponent } from './components/menu/menu.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { OrderTabComponent } from './components/order-tab/order-tab.component';
+import { ListOrderComponent } from './components/list-order/list-order.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { MenuEventComponent } from './components/menu-event/menu-event.component';
 import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
+import { EventDialogViewComponent } from './components/event-dialog-view/event-dialog-view.component';
+import { NgxStarsModule } from 'ngx-stars';
 
 @NgModule({
   declarations: [
@@ -79,16 +91,20 @@ import { EventDialogComponent } from './components/event-dialog/event-dialog.com
     LoadingComponent,
     OrderDetailComponent,
     MenuEventComponent,
-    EventDialogComponent
+    EventDialogComponent,
+    OrderTabComponent,
+    ListOrderComponent,
+    OrderDetailComponent,
+    EventDialogViewComponent
   ],
-    // declarations: [
-    //     AppComponent,
-    //     TestComponent,
-    //     ListRestaurantComponent,
-    //     RestaurantsPageComponent,
-    //     ServiceTabComponent,
-    //     EventFormComponent
-    // ],
+  // declarations: [
+  //     AppComponent,
+  //     TestComponent,
+  //     ListRestaurantComponent,
+  //     RestaurantsPageComponent,
+  //     ServiceTabComponent,
+  //     EventFormComponent
+  // ],
   imports: [
     NgbModule,
     BrowserModule,
@@ -115,6 +131,7 @@ import { EventDialogComponent } from './components/event-dialog/event-dialog.com
     SelectAutocompleteModule,
     MatSortModule,
     MatPaginatorModule,
+    NgxStarsModule,
     MatTabsModule,
     HttpClientModule,
     MatCheckboxModule,
@@ -130,17 +147,30 @@ import { EventDialogComponent } from './components/event-dialog/event-dialog.com
     MatSnackBarModule
   ],
   providers: [
-    OrderService, 
+    OrderService,
     CookieService,
     AuthService,
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true
-  }],
-  exports: [HeaderComponent, MatToolbarModule, MatButtonModule, MatIconModule, DialogComponent,MenuEventComponent,EventDialogComponent],
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
+  exports: [
+    HeaderComponent,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    DialogComponent,
+    MenuEventComponent,
+    EventDialogComponent,
+    EventDialogViewComponent
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent,EventDialogComponent],
-
+  entryComponents: [
+    DialogComponent,
+    EventDialogComponent,
+    EventDialogViewComponent
+  ]
 })
 export class AppModule {}

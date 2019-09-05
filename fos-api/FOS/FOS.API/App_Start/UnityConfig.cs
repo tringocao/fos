@@ -97,6 +97,9 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
+            container.RegisterType<Services.EventServices.IEventService, Services.EventServices.EventService>();
+
+
             container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
