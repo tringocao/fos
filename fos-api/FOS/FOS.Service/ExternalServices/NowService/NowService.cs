@@ -63,7 +63,7 @@ namespace FOS.Services.ExternalServices.NowService
             return response.Content.ReadAsStringAsync().Result;
         }
         public async Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> category)
-        {
+      {
             //Get function
             APIDetail api = apisJson.SearchRestaurantsInProvince;
             //Set Fields

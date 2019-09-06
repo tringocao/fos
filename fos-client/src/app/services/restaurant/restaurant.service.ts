@@ -103,6 +103,28 @@ export class RestaurantService {
         .catch(alert => console.log(alert));
     });
   }
+  getRestaurantDetailById(restaurantId: number, cityId:number= 217, idService: number = 1): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<any>>(
+          environment.apiUrl + 'api/Delivery/GetFirstId',
+          {
+            params: {
+              IdService: JSON.stringify(idService),
+              city_Id: JSON.stringify(cityId),
+              restaurant_id: JSON.stringify(restaurantId)
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
   getRestaurants(
     ids: Array<number>,
     IdService: number = 1,

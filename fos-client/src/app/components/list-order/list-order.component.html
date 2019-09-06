@@ -94,16 +94,17 @@
               >notifications_none</mat-icon
             >
           </button>
+          <a routerLink="/summary" [state]="{data:element}">
           <button
             class="close"
             *ngIf="element.status === 'Opened'"
-            (click)="close($event, element)"
             mat-icon-button
           >
             <mat-icon aria-hidden="false" aria-label="Close icon"
               >close</mat-icon
             >
           </button>
+          </a>
           <div *ngIf="element.status === 'Closed'">
             <mat-icon aria-hidden="false" aria-label="Error icon" class="closed"
               >done</mat-icon

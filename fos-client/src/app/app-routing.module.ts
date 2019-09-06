@@ -4,6 +4,7 @@ import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-p
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { MealsPageComponent } from './pages/meals-page/meals-page.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'meals',
     component: MealsPageComponent
+  },
+  {
+    path: 'summary',
+    component: EventSummaryDialogComponent
   }
 ];
 

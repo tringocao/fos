@@ -18,6 +18,7 @@ import {
 import { EventList } from 'src/app/models/eventList';
 import Event from './../../models/event';
 import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
+import { Router } from '@angular/router';
 
 moment.locale('vi');
 
@@ -63,6 +64,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     private orderService: OrderService,
     private userService: UserService,
     public dialog: MatDialog,
+    private router: Router,
     overlay: Overlay
   ) {}
 
@@ -212,6 +214,20 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   showEvent(row: any) {
     // console.log(row);
+    this.mapRowToEventList(row);
+
+    const dialogRef = this.dialog.open(EventDialogViewComponent, {
+      maxHeight: '98vh',
+      width: '80%',
+      data: this.eventListItem
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  mapRowToEventList(row:any) {
     this.eventListItem = {
       eventTitle: row.name,
       eventId: row.eventId,
@@ -228,33 +244,26 @@ export class ListOrderComponent implements OnInit, OnChanges {
       eventCreatedUserId: this.userId,
       eventHostId: row.hostId
     };
-
-    const dialogRef = this.dialog.open(EventDialogViewComponent, {
-      maxHeight: '98vh',
-      width: '80%',
-      data: this.eventListItem
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 
   remind(event: any, element: any) {
     event.stopPropagation();
   }
 
-  close(event: any, element: any) {
-    const eventSummaryDialog = this.dialog.open(EventSummaryDialogComponent, {
-      maxHeight: '98vh',
-      width: '80%',
-      data: this.eventListItem
-    });
-
-    eventSummaryDialog.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-    event.stopPropagation();
+  close(row:any) {
+    // const eventSummaryDialog = this.dialog.open(EventSummaryDialogComponent, {
+    //   maxHeight: '98vh',
+    //   width: '80%',
+    //   data: this.eventListItem
+    // });
+    // this.router.navigate([]).then(result => { window.open('/summary', '_blank'); });
+    // this.mapRowToEventList(row);
+    // this.router.navigate(['/summary'], {state: {data: this.eventListItem}})
+    // eventSummaryDialog.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+      
+    // });
+    // event.stopPropagation();
   }
 
   getNumberOfParticipant(participants: string) {

@@ -117,7 +117,7 @@ namespace FOS.API.Controllers
                     item.restaurant_id = id.ToString();
                     newList.Add(item);
                 }
-                return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
+                    return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
                   await _deliveryService.GetRestaurantsDeliveryInforAsync(city_id, newList)
                 );
             }
