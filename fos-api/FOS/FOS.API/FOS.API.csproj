@@ -59,6 +59,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -325,21 +331,21 @@
     <Compile Include="CustomAuthentication.cs" />
     <Compile Include="CustomLogHandler.cs" />
     <Compile Include="Filters\SharePointContextFilterAttribute.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LogCreation.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoggingInterceptor.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharePointContext.cs" />
     <Compile Include="TokenHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\email_template.txt" />
+    <Content Include="App_Data\email_template.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\AutoMapper.dll" />
@@ -472,9 +478,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="obj\Debug\FOS.API.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\FOS.API.dll" />
-    <Content Include="obj\Debug\FOS.API.pdb" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -498,10 +501,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="obj\Debug\FOS.API.csproj.CopyComplete" />
-    <Content Include="obj\Debug\FOS.API.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\FOS.API.csprojAssemblyReference.cache" />
     <Content Include="bin\FOS.API.dll.config" />
     <Content Include="bin\FOS.Repositories.dll.config" />
     <Content Include="bin\FOS.Services.dll.config" />
@@ -556,8 +555,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="obj\Release\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">

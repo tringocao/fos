@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit, OnChanges {
     this.usersForm
       .get('userInput')
       .valueChanges.pipe(
-        debounceTime(300),
+        debounceTime(500),
         tap(() => (this.isLoading = true)),
         switchMap(value =>
           this.restaurantService
@@ -94,7 +94,8 @@ export class SearchComponent implements OnInit, OnChanges {
                 (element.operating.open_time || '?') +
                 '-' +
                 (element.operating.close_time || '?'),
-              url_rewrite_name: ''
+              url_rewrite_name: '',
+              picture:''
             };
             dataSourceTemp.push(restaurantItem);
           });

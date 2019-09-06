@@ -11,7 +11,7 @@ namespace FOS.Repositories.Repositories
 {
     public interface IFOSFoodServiceAPIsRepository
     {
-        IEnumerable<APIs> GetAllFOSCrawlLinks();
-        APIs GetFOSCrawlLinksById(int businessId);
+        IEnumerable<Apis> GetAllFOSCrawlLinks();
+        Apis GetFOSCrawlLinksById(int businessId);
     }
 }

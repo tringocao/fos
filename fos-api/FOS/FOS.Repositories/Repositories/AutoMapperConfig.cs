@@ -16,7 +16,7 @@ namespace FOS.Repositories.Repositories
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<ExternalServiceAPI, APIs>()
+                config.CreateMap<ExternalServiceAPI, Apis>()
                 .ForMember(model => model.TypeService, cfig => cfig.MapFrom(e => e.TypeService))
                 //.ForMember(model => model.header, cfig => cfig.MapFrom(c => new Dictionary<string,
                 //    string>(c.FOSHeaderLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))

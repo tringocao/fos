@@ -9,13 +9,13 @@ namespace FOS.Model.Mapping
 {
     public interface IAPIsDtoMapper
     {
-        Model.APIs ToModel(Dto.APIs order);
-        Dto.APIs ToDto(Model.APIs order);
+        Model.Apis ToModel(Dto.APIs order);
+        Dto.APIs ToDto(Model.Apis order);
     }
 
     public class APIsDtoMapper : IAPIsDtoMapper
     {
-        public Dto.APIs ToDto(APIs api)
+        public Dto.APIs ToDto(Apis api)
         {
             return new Dto.APIs()
             {
@@ -26,9 +26,9 @@ namespace FOS.Model.Mapping
             };
         }
 
-        public APIs ToModel(Dto.APIs api)
+        public Apis ToModel(Dto.APIs api)
         {
-            return new Model.APIs()
+            return new Model.Apis()
             {
                 ID = api.ID,
                 JSONData = api.JSONData,

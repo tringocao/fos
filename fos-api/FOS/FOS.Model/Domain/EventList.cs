@@ -8,7 +8,7 @@ namespace FOS.Model.Domain
 {
     public class EventList
     {
-        public string eventTitle;
+        public string eventTitles { get; set; }
         public string eventId;
         public string eventRestaurant;
         public int eventMaximumBudget;

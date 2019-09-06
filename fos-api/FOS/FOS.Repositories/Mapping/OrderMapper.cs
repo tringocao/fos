@@ -10,18 +10,18 @@ namespace FOS.Repositories.Mapping
 {
     public interface IOrderMapper
     {
-        Model.Order MapToDomain(DataModel.Order efObject);
-        void MapToEfObject(DataModel.Order efObject, Model.Order domObject);
+        Model.Domain.Order MapToDomain(DataModel.Order efObject);
+        void MapToEfObject(DataModel.Order efObject, Model.Domain.Order domObject);
     }
 
     public class OrderMapper : IOrderMapper
     {
-        public Model.Order MapToDomain(DataModel.Order efObject)
+        public Model.Domain.Order MapToDomain(DataModel.Order efObject)
         {
             throw new NotImplementedException();
         }
 
-        public void MapToEfObject(DataModel.Order efObject, Model.Order domObject)
+        public void MapToEfObject(DataModel.Order efObject, Model.Domain.Order domObject)
         {
             throw new NotImplementedException();
         }
