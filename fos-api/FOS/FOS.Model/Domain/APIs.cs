@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FOS.Model
 {
-    public class APIs
+    public class Apis
     {
         public int ID { get; set; }
         public string Name { get; set; }

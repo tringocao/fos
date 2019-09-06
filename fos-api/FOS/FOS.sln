@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.API", "FOS.API\FOS.API.csproj", "{91B3E6D6-8BE5-431B-9712-25BCF92DB476}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.Common", "FOS.Common\FOS.Common.csproj", "{867C7A27-0781-4A5A-8F2F-8251DE4EDDD6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.Repositories", "FOS.Repositories\FOS.Repositories.csproj", "{602CD065-C5FE-4DD0-A5CE-B9CAEF2F56F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.Client", "FOS.Client\FOS.Client.csproj", "{A4B85777-4012-4361-87C6-F8C2F8D38583}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{602CD065-C5FE-4DD0-A5CE-B9CAEF2F56F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{602CD065-C5FE-4DD0-A5CE-B9CAEF2F56F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{602CD065-C5FE-4DD0-A5CE-B9CAEF2F56F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4B85777-4012-4361-87C6-F8C2F8D38583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4B85777-4012-4361-87C6-F8C2F8D38583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4B85777-4012-4361-87C6-F8C2F8D38583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4B85777-4012-4361-87C6-F8C2F8D38583}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

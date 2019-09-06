@@ -55,13 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\ApiResponse.cs" />
-    <Compile Include="Domain\APIs.cs" />
+    <Compile Include="Domain\Apis.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
     <Compile Include="Domain\EventList.cs" />
     <Compile Include="Domain\EventListItem.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
     <Compile Include="Domain\Host.cs" />
-    <Compile Include="Domain\JSONRequest.cs" />
+    <Compile Include="Domain\JsonRequest.cs" />
     <Compile Include="Domain\LogMetadata.cs" />
     <Compile Include="Domain\OAuthResponse.cs" />
     <Compile Include="Domain\Order.cs" />
@@ -69,7 +69,10 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="Dto\APIs.cs" />
     <Compile Include="Dto\DeliveryDetail.cs" />
-    <Compile Include="Dto\DeliveryInfos.cs" />
+    <Compile Include="Dto\DeliveryInfos.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>DeliveryInfos.cs.d.ts</LastGenOutput>
+    </Compile>
     <Compile Include="Dto\DiscountPrice.cs" />
     <Compile Include="Dto\EmailTemplate.cs" />
     <Compile Include="Dto\Food.cs" />
@@ -103,8 +106,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
     <Folder Include="obj\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Dto\DeliveryInfos.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DeliveryInfos.cs</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

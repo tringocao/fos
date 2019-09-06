@@ -8,7 +8,7 @@ namespace FOS.Model.Domain
 {
     public class AuthClientRespond
     {
-        public bool redirect;
-        public string redirectUrl;
+        public bool redirect { get; set; }
+        public string redirectUrl { get; set; }
     }
 }

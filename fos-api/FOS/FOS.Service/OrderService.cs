@@ -10,7 +10,7 @@ namespace FOS.Services
 {
     public interface IOrderService
     {
-        bool AddOrder(Model.Order order);
+        bool AddOrder(Model.Domain.Order order);
         Repositories.DataModel.Order GetOrder(int id);
     }
 
@@ -22,7 +22,7 @@ namespace FOS.Services
             _repository = repository;
         }
 
-        public bool AddOrder(Order order)
+        public bool AddOrder(Model.Domain.Order order)
         {
             throw new NotImplementedException();
         }

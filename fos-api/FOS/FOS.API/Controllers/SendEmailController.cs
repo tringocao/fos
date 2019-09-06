@@ -1,6 +1,8 @@
-﻿using FOS.Model.Domain;
+﻿using FOS.Common.Constants;
+using FOS.Model.Domain;
 using FOS.Model.Util;
 using FOS.Services.SendEmailServices;
+using Glimpse.AspNet.Tab;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -26,7 +29,8 @@ namespace FOS.API.Controllers
         {
             try
             {
-                string html = System.IO.File.ReadAllText(@"D:\Training project\Project\FOS2\fos\fos-api\FOS\FOS.API\App_Data\email_template.txt");
+                string path  = System.Web.HttpContext.Current.Server.MapPath(Constant.email_template);
+                string html = System.IO.File.ReadAllText(path);
                 await _sendEmailService.SendEmailAsync(eventId, html);
                 return ApiUtil.CreateSuccessfulResult();
             }

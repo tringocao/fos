@@ -43,7 +43,7 @@ namespace FOS.API.Controllers
         // POST api/splist/addlistitem/{list-id}/
         [HttpPost]
         [Route("AddListItem")]
-        public async Task<ApiResponse> AddListItem(string Id, [FromBody]JSONRequest item)
+        public async Task<ApiResponse> AddListItem(string Id, [FromBody]JsonRequest item)
         {
             try
             {
