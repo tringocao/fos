@@ -1,5 +1,6 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
+using FOS.Model.Domain.NowModel;
 using FOS.Model.Dto;
 using FOS.Model.Util;
 using FOS.Services.DeliveryServices;
@@ -68,7 +69,7 @@ namespace FOS.API.Controllers
             {
                 _deliveryService.GetExternalServiceById(IdService);
                 return ApiUtil<DeliveryDetail>.CreateSuccessfulResult(
-                  await _deliveryService.GetRestaurantDetailAsync(new Restaurant() { delivery_id = delivery_id.ToString()})
+                  await _deliveryService.GetRestaurantDetailAsync(new Restaurant() { DeliveryId = delivery_id.ToString()})
                 );
             }
             catch (Exception e)
@@ -109,12 +110,12 @@ namespace FOS.API.Controllers
                 _deliveryService.GetExternalServiceById(IdService);
                 List<Restaurant> newList = new List<Restaurant>();
 
-                if (data.restaurant_ids.Count() < 1) ApiUtil<List<DeliveryInfos>>.CreateFailResult("");
+                if (data.RestaurantIds.Count() < 1) ApiUtil<List<DeliveryInfos>>.CreateFailResult("");
      
-                foreach (var id in data.restaurant_ids)//get the fisrt catalogue
+                foreach (var id in data.RestaurantIds)//get the fisrt catalogue
                 {
                     Restaurant item = new Restaurant();
-                    item.restaurant_id = id.ToString();
+                    item.RestaurantId = id.ToString();
                     newList.Add(item);
                 }
                 return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(

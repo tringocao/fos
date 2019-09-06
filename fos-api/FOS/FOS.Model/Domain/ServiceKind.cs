@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Dto
+namespace FOS.Model.Domain
 {
-    public class Photo
+    public enum ServiceKind
     {
-        public string value { get; set; }
-
+        Now,
+        GrabFood
     }
 }

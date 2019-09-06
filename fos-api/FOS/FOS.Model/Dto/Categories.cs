@@ -5,19 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Params
+namespace FOS.Model.Dto
 {
-    public class Categories
+    class Category
     {
-        [JsonProperty("code")]
-        public string Code { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("id")]
         public string Id { get; set; }
-        [JsonProperty("parent_category_id")]
-        public string ParentCategoryId { get; set; }
+        [JsonProperty("code")]
+        public string Code { get; set; }
+    }
+    class CategoryGroup
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("code")]
+        public string Code { get; set; }
         [JsonProperty("categories")]
-        public List<Categories> CategoriesList { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

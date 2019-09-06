@@ -36,7 +36,7 @@ namespace FOS.Services.ProvinceServices
         public async Task<Province> GetMetadataByIdAsync(int city_id)
         {
             var listProvinces = await GetMetadataForProvinceAsync();
-            return  listProvinces.Where(p => p.id == city_id.ToString()).FirstOrDefault();
+            return  listProvinces.Where(p => p.Id == city_id.ToString()).FirstOrDefault();
         }
 
         public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant)

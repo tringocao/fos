@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public enum ServiceKind
+    class FavoriteRestaurant
     {
-        Now,
-        GrabFood,
-        Kichi
+        public string UserId { get; set; }
+        public string RestaurantId { get; set; }
+
     }
 }

@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Params
+namespace FOS.Model.Domain.NowModel
 {
-    public class Categories
+{
+    public class RestaurantCategory
     {
         [JsonProperty("code")]
         public string Code { get; set; }
@@ -18,6 +19,7 @@ namespace FOS.Model.Params
         [JsonProperty("parent_category_id")]
         public string ParentCategoryId { get; set; }
         [JsonProperty("categories")]
-        public List<Categories> CategoriesList { get; set; }
+        public List<RestaurantCategory> Categories { get; set; }
+
     }
 }

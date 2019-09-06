@@ -1,4 +1,5 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain;
+using FOS.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FOS.Model.Mapping
 {
     public interface IAPIsDtoMapper
     {
-        Model.Apis ToModel(Dto.APIs order);
+        Model..Apis ToModel(Dto.APIs order);
         Dto.APIs ToDto(Model.Apis order);
     }
 

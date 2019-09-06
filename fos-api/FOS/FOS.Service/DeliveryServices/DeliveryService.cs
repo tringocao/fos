@@ -52,7 +52,7 @@ namespace FOS.Services.DeliveryServices
         }
         public async Task<List<DeliveryInfos>> SearchByNameAsync(string nameDelivery)
         {
-            return deliveryInfos.FindAll(d => d.name.Contains(nameDelivery));            
+            return deliveryInfos.FindAll(d => d.Name.Contains(nameDelivery));            
         }
 
         public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)

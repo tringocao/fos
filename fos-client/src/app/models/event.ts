@@ -1,5 +1,6 @@
 export default interface Event {
   restaurant: string;
+  restaurantId: string;
   category: string;
   date: Date;
   participants: string;

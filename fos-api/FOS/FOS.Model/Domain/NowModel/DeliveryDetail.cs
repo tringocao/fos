@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Dto
+namespace FOS.Model.Domain.NowModel
 {
-    public class ListRestaurant
+    public class DeliveryDetail
     {
-        [JsonProperty("restaurant_id")]
-        public IEnumerable<int> RestaurantIds { get; set; }
+        [JsonProperty("rating")]
+
+        public dynamic Rating { get; set; }
+
     }
 }

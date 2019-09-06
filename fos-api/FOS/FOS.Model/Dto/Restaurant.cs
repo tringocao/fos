@@ -6,12 +6,24 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public class Restaurant
+    class Restaurant
     {
-        public string restaurant_id { get; set; }
-        //public int delivery_id { get; set; }
-        //public dynamic delivery_id { get; set; }
-        public string delivery_id { get; set; }
+        public int Id { get; set; }
+        public bool Stared { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string Address { get; set; }
+        public string Promotion { get; set; }
+        public string Open { get; set; }
+        public string Delivery_id { get; set; }
+        public string UrlRewriteName { get; set; }
+        public string Picture { get; set; }
+
+    }
+    class RestaurantDetail
+    {
+        public int Rating { get; set; }
+        public int TotalReview { get; set; }
 
     }
 }

@@ -68,27 +68,33 @@
     <Compile Include="Domain\TokenResource.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Dto\APIs.cs" />
-    <Compile Include="Dto\DeliveryDetail.cs" />
-    <Compile Include="Dto\DeliveryInfos.cs">
+    <Compile Include="Domain\NowModel\DeliveryDetail.cs" />
+    <Compile Include="Domain\NowModel\DeliveryInfos.cs">
       <Generator>DtsGenerator</Generator>
       <LastGenOutput>DeliveryInfos.cs.d.ts</LastGenOutput>
     </Compile>
-    <Compile Include="Dto\DiscountPrice.cs" />
-    <Compile Include="Dto\EmailTemplate.cs" />
+    <Compile Include="Domain\NowModel\DiscountPrice.cs" />
+    <Compile Include="Domain\EmailTemplate.cs" />
+    <Compile Include="Domain\NowModel\Food.cs" />
+    <Compile Include="Domain\NowModel\FoodCategory.cs" />
+    <Compile Include="Dto\Categories.cs" />
+    <Compile Include="Dto\FavoriteRestaurant.cs" />
     <Compile Include="Dto\Food.cs" />
     <Compile Include="Dto\FoodCategory.cs" />
+    <Compile Include="Dto\Restaurant.cs" />
+    <Compile Include="Dto\User.cs" />
     <Compile Include="Params\Categories.cs" />
     <Compile Include="Params\ListRestaurant.cs" />
-    <Compile Include="Dto\Photo.cs" />
-    <Compile Include="Dto\RestaurantCategory.cs" />
+    <Compile Include="Domain\NowModel\Photo.cs" />
+    <Compile Include="Domain\NowModel\RestaurantCategory.cs" />
     <Compile Include="Domain\State.cs" />
     <Compile Include="Domain\Token.cs" />
-    <Compile Include="Dto\Order.cs" />
-    <Compile Include="Dto\Price.cs" />
-    <Compile Include="Dto\Province.cs" />
-    <Compile Include="Dto\RequestMethod.cs" />
-    <Compile Include="Dto\Restaurant.cs" />
-    <Compile Include="Dto\ServiceKind.cs" />
+    <Compile Include="Domain\NowModel\Order.cs" />
+    <Compile Include="Domain\NowModel\Price.cs" />
+    <Compile Include="Domain\NowModel\Province.cs" />
+    <Compile Include="Domain\RequestMethod.cs" />
+    <Compile Include="Domain\NowModel\Restaurant.cs" />
+    <Compile Include="Domain\ServiceKind.cs" />
     <Compile Include="Mapping\APIsDtoMapper.cs" />
     <Compile Include="Mapping\Config.cs" />
     <Compile Include="Mapping\JsonDtoMapper.cs" />
@@ -109,7 +115,7 @@
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Dto\DeliveryInfos.cs.d.ts">
+    <TypeScriptCompile Include="Domain\NowModel\DeliveryInfos.cs.d.ts">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DeliveryInfos.cs</DependentUpon>

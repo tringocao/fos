@@ -37,7 +37,7 @@ namespace FOS.API.Controllers
             {
                 _restaurantService.GetExternalServiceById(IdService);
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
-                  (await  _restaurantService.GetRestaurantsByProvinceAsync(province_id)).Select(l => Int32.Parse(l.restaurant_id))
+                  (await  _restaurantService.GetRestaurantsByProvinceAsync(province_id)).Select(l => Int32.Parse(l.RestaurantId))
                 );
             }
             catch (Exception e)
@@ -71,7 +71,7 @@ namespace FOS.API.Controllers
             {
                _restaurantService.GetExternalServiceById(IdService);
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
-                  (await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword)).Select(l => Int32.Parse(l.restaurant_id)).Take(limit)
+                  (await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword)).Select(l => Int32.Parse(l.RestaurantId)).Take(limit)
                 );
             }
             catch (Exception e)
@@ -107,22 +107,22 @@ namespace FOS.API.Controllers
             {
                 List<Restaurant> listR = new List<Restaurant>();
                 _restaurantService.GetExternalServiceById(IdService);
-                if (categories.categories == null) return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
+                if (categories.CategoriesList == null) return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
                    new int[] {}
                 );
-                if (categories.categories.Count() < 1)
+                if (categories.CategoriesList.Count() < 1)
                 {
                     listR = await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword);
                 }
                 List<RestaurantCategory> newList = new List<RestaurantCategory>();
                 JsonDtoMapper<RestaurantCategory> map = new JsonDtoMapper<RestaurantCategory>();
-                foreach (var category in categories.categories)//get the fisrt catalogue
+                foreach (var category in categories.CategoriesList)//get the fisrt catalogue
                 {
                     newList.Add(map.ToDto(category));
                 }
                 listR = await _restaurantService.GetRestaurantsByCategoriesKeywordAsync(city_id, newList, keyword);
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
-                    listR.Select(l => Int32.Parse(l.restaurant_id))
+                    listR.Select(l => Int32.Parse(l.RestaurantId))
                 );
             }
             catch (Exception e)

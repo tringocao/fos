@@ -8,16 +8,16 @@ namespace FOS.Model.Domain
 {
     public class EventList
     {
-        public string eventTitles { get; set; }
-        public string eventId;
-        public string eventRestaurant;
-        public int eventMaximumBudget;
-        public DateTime eventTimeToClose;
-        public DateTime eventTimeToReminder;
-        public string eventHost;
-        public string eventParticipants;
-        public string eventRestaurantId;
-        public string eventServiceId;
-        public int eventCategory;
+        public string EventTitles { get; set; }
+        public string EventId { get; set; }
+        public string EventRestaurant { get; set; }
+        public int EventMaximumBudget { get; set; }
+        public DateTime EventTimeToClose { get; set; }
+        public DateTime EventTimeToReminder { get; set; }
+        public string EventHost { get; set; }
+        public string EventParticipants { get; set; }
+        public string EventRestaurantId { get; set; }
+        public string EventServiceId { get; set; }
+        public int EventCategory { get; set; }
     }
 }

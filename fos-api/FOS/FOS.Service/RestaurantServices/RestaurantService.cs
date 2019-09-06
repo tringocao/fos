@@ -26,7 +26,7 @@ namespace FOS.Services.RestaurantServices
         }
         public async Task<List<Restaurant>> GetRestaurantsByProvinceAsync(int city_id)
         {
-            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(city_id), "", null);
+            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(city_id), "\"\"", null);
         }
         public async Task<List<Restaurant>> GetRestaurantsByKeywordAsync(int city_id, string keyword)
         {
@@ -45,7 +45,7 @@ namespace FOS.Services.RestaurantServices
         public async Task<Restaurant> GetRestaurantsByIdAsync(int city_id, int restaurant_id)
         {
             var listRestaurants = await GetRestaurantsByProvinceAsync(city_id);
-            return listRestaurants.Where(p => p.restaurant_id == restaurant_id.ToString()).FirstOrDefault();
+            return listRestaurants.Where(p => p.RestaurantId == restaurant_id.ToString()).FirstOrDefault();
         }
 
         public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant)
