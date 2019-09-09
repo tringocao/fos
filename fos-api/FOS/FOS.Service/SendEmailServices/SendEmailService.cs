@@ -1,4 +1,5 @@
 ﻿using FOS.Common;
+using FOS.Model.Domain.NowModel;
 using FOS.Model.Dto;
 using FOS.Services.Providers;
 using FOS.Services.SPUserService;

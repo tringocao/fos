@@ -1,5 +1,4 @@
 ﻿using FOS.Model.Domain.NowModel;
-using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using Newtonsoft.Json.Linq;
 using System;

@@ -282,25 +282,25 @@ export class EventDialogComponent implements OnInit {
           var dataSourceTemp = [];
           result.forEach((element, index) => {
             // tslint:disable-next-line:prefer-const
-            let restaurantItem: Restaurant = {
-              id: element.restaurant_id,
-              delivery_id: element.delivery_id,
-              stared: false,
-              restaurant: element.name,
-              address: element.address,
-              category:
-                element.categories.length > 0 ? element.categories[0] : '',
-              promotion:
-                element.promotion_groups.length > 0
-                  ? element.promotion_groups[0].text
-                  : '',
-              open:
-                (element.operating.open_time || '?') +
-                '-' +
-                (element.operating.close_time || '?'),
-              url_rewrite_name: ''
-            };
-            dataSourceTemp.push(restaurantItem);
+            // let restaurantItem: Restaurant = {
+            //   id: element.restaurant_id,
+            //   delivery_id: element.delivery_id,
+            //   stared: false,
+            //   restaurant: element.name,
+            //   address: element.address,
+            //   category:
+            //     element.categories.length > 0 ? element.categories[0] : '',
+            //   promotion:
+            //     element.promotion_groups.length > 0
+            //       ? element.promotion_groups[0].text
+            //       : '',
+            //   open:
+            //     (element.operating.open_time || '?') +
+            //     '-' +
+            //     (element.operating.close_time || '?'),
+            //   url_rewrite_name: ''
+            // };
+            // dataSourceTemp.push(restaurantItem);
           });
           this.restaurant$ = dataSourceTemp;
           this.isLoading = false;

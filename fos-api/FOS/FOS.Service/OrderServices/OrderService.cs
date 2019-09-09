@@ -19,7 +19,7 @@ namespace FOS.Services.OrderServices
 
         public bool AddOrder(Model.Domain.Order order)
         {
-            
+            return true;
         }
 
         public Repositories.DataModel.Order GetOrder(int id)

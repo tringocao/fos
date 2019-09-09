@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    class FavoriteRestaurant
+    public class FavoriteRestaurant
     {
         public string UserId { get; set; }
         public string RestaurantId { get; set; }

@@ -4,6 +4,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { NoopScrollStrategy, Overlay } from '@angular/cdk/overlay';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { Observable } from 'rxjs';
+import { RestaurantDetail } from 'src/app/models/restaurant-detail';
 interface FoodCategory {
   name: string;
   id:string;
@@ -40,7 +41,7 @@ export class MenuComponent{
 
   constructor(public dialog: MatDialog, overlay: Overlay,private restaurantService: RestaurantService) {
     this.overlay = overlay;
-    let restaurantItem: RestaurantDetail = {rating : 0, total_review : 0}
+    let restaurantItem: RestaurantDetail = {rating : 0, totalReview : 0}
 
     this.resDetail = restaurantItem;
   }
@@ -48,7 +49,7 @@ export class MenuComponent{
   openDialog(): void {
     this.restaurantService.getRestaurantDetail(Number(this.restaurant.delivery_id)).then(result =>{
       this.resDetail.rating = Number(result.rating.avg)
-      this.resDetail.total_review = Number(result.rating.total_review)
+      this.resDetail.totalReview = Number(result.rating.total_review)
       const dialogRef = this.dialog.open(DialogComponent, {
         scrollStrategy: this.overlay.scrollStrategies.noop(),
         autoFocus: false,

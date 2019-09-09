@@ -19,6 +19,7 @@ import { EventList } from 'src/app/models/eventList';
 import Event from './../../models/event';
 import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 
 moment.locale('vi');
 

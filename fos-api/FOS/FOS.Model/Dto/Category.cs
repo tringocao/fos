@@ -10,7 +10,7 @@ namespace FOS.Model.Dto
     public class Category
     {
         public string Name { get; set; }
-        public string Isssd { get; set; }
+        public string Id { get; set; }
         public string Code { get; set; }
     }
    

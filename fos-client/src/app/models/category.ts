@@ -13,7 +13,7 @@
     export class Category    {
            
         public name: string = null;   
-        public isssd: string = null;   
+        public id: string = null;   
         public code: string = null;
     }
          

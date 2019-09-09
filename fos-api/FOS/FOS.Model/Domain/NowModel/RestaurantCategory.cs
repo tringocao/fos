@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Domain.NowModel
 {
-{
     public class RestaurantCategory
     {
         [JsonProperty("code")]

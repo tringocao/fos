@@ -61,7 +61,7 @@ namespace FOS.API
             container.RegisterType<Repositories.FosContext, Repositories.FosContext>(
                 new PerResolveLifetimeManager());
             container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
-            container.RegisterType<Repositories.IOrderRepository, Repositories.OrderRepository>();
+            container.RegisterType<Repositories.Repositories.IOrderRepository, Repositories.Repositories.OrderRepository>();
             container.RegisterType<Repositories.Infrastructor.IDbFactory, Repositories.Infrastructor.DbFactory>();
             container.RegisterType<Repositories.Repositories.IFOSFoodServiceAPIsRepository, Repositories.Repositories.FOSFoodServiceAPIsRepository>(
                 new TransientLifetimeManager(),
@@ -112,7 +112,7 @@ namespace FOS.API
             //container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.GetMethod> ("GetMethod");
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.PostMethod>("PostMethod");
-            container.RegisterType<Services.IOrderService, Services.OrderService>();
+            container.RegisterType<Services.OrderServices.IOrderService, Services.OrderServices.OrderService>();
             container.RegisterType<Services.IOAuthService, Services.OAuthService>(
                 new HierarchicalLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),

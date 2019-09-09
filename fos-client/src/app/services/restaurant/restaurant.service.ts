@@ -4,6 +4,8 @@ import { environment } from "src/environments/environment";
 import { Observable, of } from "rxjs";
 import { tap, filter } from "rxjs/operators";
 import { DeliveryInfos } from "src/app/models/delivery-infos";
+import { FoodCategory } from 'src/app/models/food-category';
+import { CategoryGroup } from 'src/app/models/category-group';
 
 @Injectable({
   providedIn: "root"
