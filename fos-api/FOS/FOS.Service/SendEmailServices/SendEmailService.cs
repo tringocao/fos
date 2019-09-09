@@ -72,6 +72,7 @@ namespace FOS.Services.SendEmailServices
                         user.Mail.ToString(),
                         hostname + "make-order/1");
                     emailp.Subject = emailTemplate.Subject;
+                    
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
                 }

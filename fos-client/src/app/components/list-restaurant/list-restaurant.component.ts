@@ -14,6 +14,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { User } from 'src/app/models/user';
+import { FavoriteRestaurant } from 'src/app/models/favorite-restaurant';
 // import { FavoriteRestaurant } from '../../models/favoriteRestaurant';
 
 const restaurants: any = [];
@@ -80,7 +81,7 @@ export class ListRestaurantComponent implements OnInit {
       this.favoriteService.getFavorite(this.userId).then(response => {
         console.log(response);
         response.map((item: FavoriteRestaurant) => {
-          this.favoriteRestaurants.push(item.RestaurantId);
+          this.favoriteRestaurants.push(item.restaurantId);
         });
         console.log(this.favoriteRestaurants);
       });
@@ -104,8 +105,11 @@ export class ListRestaurantComponent implements OnInit {
 
   addToFavorite(event, restaurantId: string) {
     console.log("add", restaurantId);
+    var favoriteRestaurant:FavoriteRestaurant = new FavoriteRestaurant();
+    favoriteRestaurant.restaurantId = restaurantId;
+    favoriteRestaurant.userId = this.userId; //add to remove
     this.favoriteService
-      .addFavoriteRestaurant(this.userId, restaurantId)
+      .addFavoriteRestaurant(favoriteRestaurant)
       .then(response => {
         // console.log(this.dataSource.data);
         if (response != null && response.ErrorMessage != null) {
@@ -138,8 +142,11 @@ export class ListRestaurantComponent implements OnInit {
 
   removeFromFavorite(event, restaurantId: string) {
     console.log("remove", restaurantId);
+    var favoriteRestaurant:FavoriteRestaurant = new FavoriteRestaurant();
+    favoriteRestaurant.restaurantId = restaurantId;
+    favoriteRestaurant.userId = this.userId; //add to remove
     this.favoriteService
-      .removeFavoriteRestaurant(this.userId, restaurantId)
+      .removeFavoriteRestaurant(favoriteRestaurant)
       .then(response => {
         // console.log(this.dataSource.data);
         if (response != null && response.ErrorMessage != null) {

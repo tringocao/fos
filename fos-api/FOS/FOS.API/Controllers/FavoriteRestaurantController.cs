@@ -1,5 +1,6 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
+using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.FavoriteService;
 using System;
@@ -16,51 +17,59 @@ namespace FOS.API.Controllers
     public class FavoriteRestaurantController : ApiController
     {
         IFavoriteService _favoriteService;
-        public FavoriteRestaurantController(IFavoriteService favoriteService)
+        IFavoriteRestaurantDtoMapper _favoriteRestaurantDtoMapper;
+        public FavoriteRestaurantController(IFavoriteService favoriteService, IFavoriteRestaurantDtoMapper favoriteRestaurantDtoMapper)
         {
             _favoriteService = favoriteService;
+            _favoriteRestaurantDtoMapper = favoriteRestaurantDtoMapper;
         }
 
         // GET: api/favoriterestaurant/getall
         [HttpGet]
         [Route("GetAll")]
-        public ApiResponse<List<FavoriteRestaurant>> GetAll()
+        public ApiResponse<List<Model.Dto.FavoriteRestaurant>> GetAll()
         {
             try
             {
                 var favoriteRestaurants = _favoriteService.GetFavoriteRestaurants();
-                return ApiUtil<List<FavoriteRestaurant>>.CreateSuccessfulResult(favoriteRestaurants);
+                var favoriteRestaurantsDto = favoriteRestaurants.Select(
+                    favoriteRestaurant => _favoriteRestaurantDtoMapper.ToDto(favoriteRestaurant)
+                ).ToList();
+                return ApiUtil<List<Model.Dto.FavoriteRestaurant>>.CreateSuccessfulResult(favoriteRestaurantsDto);
             }
             catch (Exception e)
             {
-                return ApiUtil<List<FavoriteRestaurant>>.CreateFailResult(e.ToString());
+                return ApiUtil<List<Model.Dto.FavoriteRestaurant>>.CreateFailResult(e.ToString());
             }
         }
 
         // GET: api/favoriterestaurant/GetAllById/{userId}
         [HttpGet]
         [Route("GetAllById/{userId}")]
-        public ApiResponse<List<FavoriteRestaurant>> GetAllById(string userId)
+        public ApiResponse<List<Model.Dto.FavoriteRestaurant>> GetAllById(string userId)
         {
             try
             {
                 var favoriteRestaurants = _favoriteService.GetFavoriteRestaurantsById(userId);
-                return ApiUtil<List<FavoriteRestaurant>>.CreateSuccessfulResult(favoriteRestaurants);
+                var favoriteRestaurantsDto = favoriteRestaurants.Select(
+                    favoriteRestaurant => _favoriteRestaurantDtoMapper.ToDto(favoriteRestaurant)
+                ).ToList();
+                return ApiUtil<List<Model.Dto.FavoriteRestaurant>>.CreateSuccessfulResult(favoriteRestaurantsDto);
             }
             catch (Exception e)
             {
-                return ApiUtil<List<FavoriteRestaurant>>.CreateFailResult(e.ToString());
+                return ApiUtil<List<Model.Dto.FavoriteRestaurant>>.CreateFailResult(e.ToString());
             }
         }
 
         // POST: api/favoriterestaurant/add/
         [HttpPost]
         [Route("add")]
-        public ApiResponse Add([FromBody] FavoriteRestaurant favoriteRestaurant)
+        public ApiResponse Add([FromBody]Model.Dto.FavoriteRestaurant favoriteRestaurant)
         {
             try
             {
-                _favoriteService.AddFavoriteRestaurant(favoriteRestaurant);
+                _favoriteService.AddFavoriteRestaurant(_favoriteRestaurantDtoMapper.ToModel(favoriteRestaurant));
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
@@ -72,11 +81,11 @@ namespace FOS.API.Controllers
         // POST: api/favoriterestaurant/remove/
         [HttpPost]
         [Route("remove")]
-        public ApiResponse Remove([FromBody] FavoriteRestaurant favoriteRestaurant)
+        public ApiResponse Remove([FromBody] Model.Dto.FavoriteRestaurant favoriteRestaurant)
         {
             try
             {
-                _favoriteService.RemoveFavoriteRestaurant(favoriteRestaurant);
+                _favoriteService.RemoveFavoriteRestaurant(_favoriteRestaurantDtoMapper.ToModel(favoriteRestaurant));
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

@@ -121,6 +121,7 @@ namespace FOS.API
 
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
+            container.RegisterType<Model.Mapping.IFavoriteRestaurantDtoMapper, Model.Mapping.FavoriteRestaurantDtoMapper>();
 
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(
                 new TransientLifetimeManager(),
