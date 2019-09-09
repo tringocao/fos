@@ -7,16 +7,11 @@ import { FormControl } from '@angular/forms';
 import { UserService } from './../../services/user/user.service';
 import * as moment from 'moment';
 import 'moment/locale/vi';
-import { EventDialogComponent } from '../event-dialog/event-dialog.component';
-import { Overlay } from '@angular/cdk/overlay';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { EventList } from 'src/app/models/eventList';
 import Event from './../../models/event';
 import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
+import { MatSelectChange } from '@angular/material/select';
 
 moment.locale('vi');
 
@@ -30,16 +25,16 @@ export class ListOrderComponent implements OnInit, OnChanges {
     'name',
     'restaurant',
     'category',
-    'date',
     'participants',
+    'closeTime',
     'maximumBudget',
     'status',
     'host'
   ];
-  dataSource: any = new MatTableDataSource([]);
+  dataSource: MatTableDataSource<Event>;
   isLoading = true;
   currency = 'VND';
-  userId: any;
+  userId: string;
   allOrder: Event[];
   myOrder: Event[];
   myOrderCategories = [];
@@ -50,7 +45,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
   searchQuery = '';
   categorySelected = null;
 
-  @Input() isMyOrder: any;
+  @Input() isMyOrder: boolean;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -59,11 +54,11 @@ export class ListOrderComponent implements OnInit, OnChanges {
   constructor(
     private orderService: OrderService,
     private userService: UserService,
-    public dialog: MatDialog,
-    overlay: Overlay
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource<Event>([]);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.userService.getCurrentUserId().then((response: User) => {
@@ -99,26 +94,73 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.categorySelected = null;
   }
 
-  setDataSource(data: any) {
+  setDataSource(data: Event[]) {
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
   getOrders() {
-    this.orderService.getAllOrder().subscribe(response => {
+    this.orderService.getAllEvent(this.userId).subscribe(response => {
       this.allOrder = this.orderService.mapResponseDataToEvent(response.Data);
-      console.log('all order: ', this.allOrder);
       this.myOrder = this.allOrder.filter(item => {
-        return item.createdBy === this.userId || item.hostId === this.userId;
+        return item.isMyEvent === true;
       });
+
       this.getCateroriesFromOrders(this.myOrder, true);
       this.getCateroriesFromOrders(this.allOrder, false);
+
+      this.sortEventByDateAndStatus(this.myOrder, true);
+      this.sortEventByDateAndStatus(this.allOrder, false);
+
       this.setDataSource(this.myOrder);
       this.categoryList = this.myOrderCategories;
       this.isLoading = false;
     });
   }
+
+  sortEventByDateAndStatus(events: Event[], isMyOrder: boolean) {
+    const eventOpen: Event[] = [];
+    const eventError: Event[] = [];
+    const eventClose: Event[] = [];
+    events.forEach(item => {
+      if (item.status === 'Opened') {
+        eventOpen.push(item);
+      } else if (item.status === 'Closed') {
+        eventClose.push(item);
+      } else {
+        eventError.push(item);
+      }
+    });
+    events = [];
+
+    const openEventSorted = eventOpen.sort(this.sortDateAsc);
+    const closeEventSorted = eventClose.sort(this.sortDateAsc);
+    const errorEventSorted = eventError.sort(this.sortDateAsc);
+    events.push(...openEventSorted);
+    events.push(...errorEventSorted);
+    events.push(...closeEventSorted);
+
+    if (isMyOrder) {
+      this.myOrder = events;
+    } else {
+      this.allOrder = events;
+    }
+  }
+
+  sortDateAsc = (first: Event, second: Event) => {
+    const firstDate = new Date(first.closeTime);
+    const secondDate = new Date(second.closeTime);
+    return Number(firstDate.getTime()) - Number(secondDate.getTime());
+    // tslint:disable-next-line:semicolon
+  };
+
+  sortDateDesc = (first: Event, second: Event) => {
+    const firstDate = new Date(first.closeTime);
+    const secondDate = new Date(second.closeTime);
+    return Number(secondDate.getTime()) - Number(firstDate.getTime());
+    // tslint:disable-next-line:semicolon
+  };
 
   getCateroriesFromOrders(orders: Event[], isMyOrder: boolean) {
     const categories = [];
@@ -127,7 +169,6 @@ export class ListOrderComponent implements OnInit, OnChanges {
         categories.push(element.category);
       }
     });
-    console.log('category ', categories);
     const myCategories = [...new Set(categories)].filter(
       arrayItem => arrayItem !== undefined
     );
@@ -138,7 +179,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     }
   }
 
-  async categoryChange(event: any) {
+  async categoryChange(event: MatSelectChange) {
     await this.sleep(500);
     this.filterBoth();
     this.dataSource.filter = event.value;
@@ -147,7 +188,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     }
   }
 
-  sleep(ms) {
+  sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
@@ -182,7 +223,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     }
   }
 
-  async onSearchChange(event: any) {
+  async onSearchChange(event: string) {
     await this.sleep(500);
     this.filterBoth();
     this.dataSource.filter = event;
@@ -191,30 +232,18 @@ export class ListOrderComponent implements OnInit, OnChanges {
     }
   }
 
-  toStandardDate(date: Date) {
+  toStandardDate(date: number) {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
 
-  private toDateString(date: Date): string {
-    return (
-      date.getFullYear().toString() +
-      '-' +
-      ('0' + (date.getMonth() + 1)).slice(-2) +
-      '-' +
-      ('0' + date.getDate()).slice(-2) +
-      'T' +
-      date.toTimeString().slice(0, 5)
-    );
-  }
-
-  showEvent(row: any) {
+  showEvent(row: Event) {
     const event: EventList = {
       eventTitle: row.name,
       eventId: row.eventId,
       eventRestaurant: row.restaurant,
       eventMaximumBudget: row.maximumBudget,
-      eventTimeToClose: row.date,
-      eventTimeToReminder: row.timeToRemind,
+      eventTimeToClose: row.closeTime.toString(),
+      eventTimeToReminder: row.remindTime.toString(),
       eventHost: row.hostName,
       eventParticipants: row.participants,
       eventCategory: row.category,
@@ -236,15 +265,26 @@ export class ListOrderComponent implements OnInit, OnChanges {
     });
   }
 
-  remind(event: any, element: any) {
+  remind(event: any, element: Event) {
+    console.log('type of: ', event);
     event.stopPropagation();
   }
 
-  close(event: any, element: any) {
+  close(event: any, element: Event) {
+    event.stopPropagation();
+  }
+
+  showListAction(event: any) {
     event.stopPropagation();
   }
 
   getNumberOfParticipant(participants: string) {
     return participants.split(';#').length;
+  }
+
+  formatCurrency(value: string) {
+    return Number(value)
+      .toFixed(0)
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
   }
 }

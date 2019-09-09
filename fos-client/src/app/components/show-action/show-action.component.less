@@ -1,0 +1,23 @@
+@import '../../../styles/global/variables.less';
+.show-action {
+  position: relative;
+  .action-button {
+    display: none;
+  }
+  .action-list {
+    position: absolute;
+    padding: 0;
+    width: 10rem;
+    background-color: @white;
+    z-index: 1000;
+    .mat-list {
+      padding: 0;
+    }
+    .mat-list-item:hover {
+      background-color: @white-smoke;
+    }
+  }
+  .mat-list-base .mat-list-item {
+    height: 2.5rem;
+  }
+}

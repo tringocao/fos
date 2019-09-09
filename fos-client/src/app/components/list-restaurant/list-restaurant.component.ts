@@ -156,6 +156,16 @@ export class ListRestaurantComponent implements OnInit {
   }
 
   getRestaurant($event) {
+    if ($event.isChecked) {
+      this.favoriteOnlyDataSource = this.dataSource.data.filter(
+        restaurant => restaurant.stared
+      );
+      this.baseDataSource = this.dataSource.data;
+      this.dataSource.data = this.favoriteOnlyDataSource;
+      this.toast('Filtered by favorite! ', 'Dismiss');
+    } else {
+      this.dataSource.data = this.baseDataSource;
+    }
     if ($event.topic != undefined && $event.keyword != undefined) {
       this.load = true;
 

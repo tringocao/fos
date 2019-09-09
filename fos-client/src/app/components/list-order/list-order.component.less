@@ -2,6 +2,9 @@
 
 .orders {
   padding: 1rem;
+  .mat-elevation-z8 {
+    box-shadow: none;
+  }
   table {
     width: 100%;
   }
@@ -16,23 +19,23 @@
     flex-direction: row;
     justify-content: flex-end;
     .search {
-      width: 15rem;
+      width: 23.5rem;
       margin-right: 1rem;
       -webkit-transition: 0.5s; /* For Safari 3.1 to 6.0 */
       transition: 0.5s;
     }
-    .mat-focused {
-      width: 20rem;
-    }
     .category {
-      width: 15rem;
+      width: 23.5rem;
     }
   }
   .close {
-    color: @red;
+    background-color: @red;
+    color: @white;
   }
   .remind {
-    color: @black;
+    background-color: @orange;
+    color: @white;
+    margin-right: 0.5rem;
   }
   .closed {
     font-size: 2rem;
@@ -53,5 +56,25 @@
     height: 2rem;
     color: @orange;
     margin-left: 0.3rem;
+  }
+  .name {
+    position: relative;
+    .show-event-action {
+      position: absolute;
+      right: 0;
+      top: 45%;
+      transform: translate(0, -45%);
+      color: @lightBlack;
+    }
+  }
+  .mat-row:hover {
+    background-color: @white-smoke;
+    .show-event-action {
+      .show-action {
+        .action-button {
+          display: block;
+        }
+      }
+    }
   }
 }

@@ -70,11 +70,11 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
-        public ApiResponse<IEnumerable<Services.Models.EventModel>> GetAllOrder()
+        public async Task<ApiResponse<IEnumerable<Services.Models.EventModel>>> GetAllEvent(string userId)
         {
             try
             {
-                var result = _eventService.GetAllEvent();
+                var result = await _eventService.GetAllEvent(userId);
                 return ApiUtil<IEnumerable<Services.Models.EventModel>>.CreateSuccessfulResult(result);
             }
             catch (Exception e)

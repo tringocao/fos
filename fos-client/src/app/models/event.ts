@@ -1,7 +1,7 @@
 export default interface Event {
   restaurant: string;
   category: string;
-  date: Date;
+  closeTime: Date;
   participants: string;
   maximumBudget: number;
   hostName: string;
@@ -10,5 +10,28 @@ export default interface Event {
   createdBy: string;
   eventId: string;
   status: string;
-  timeToRemind: Date;
+  remindTime: Date;
+  isMyEvent: boolean;
+}
+
+export interface EventModel {
+  Restaurant: string;
+  Category: string;
+  CloseTime: Date;
+  Participants: string;
+  MaximumBudget: number;
+  HostName: string;
+  HostId: string;
+  Name: string;
+  CreatedBy: string;
+  EventId: string;
+  Status: string;
+  RemindTime: Date;
+  IsMyEvent: boolean;
+}
+
+export interface EventResponse {
+  Data: EventModel[];
+  Success: boolean;
+  ErrorMessage: string;
 }

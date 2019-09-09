@@ -1,0 +1,21 @@
+<div class="show-action">
+  <button
+    class="action-button"
+    mat-icon-button
+    aria-label="Icon show actions"
+    (click)="showListAction($event)"
+  >
+    <mat-icon matTooltip="Show action" [matTooltipPosition]="position.value"
+      >more_vert</mat-icon
+    >
+  </button>
+  <mat-card class="action-list" *ngIf="isShowListAction">
+    <mat-list role="list">
+      <mat-list-item role="listitem">View event</mat-list-item>
+      <mat-list-item role="listitem">Edit event</mat-list-item>
+      <mat-list-item role="listitem">Send reminder</mat-list-item>
+      <mat-list-item role="listitem">Make order</mat-list-item>
+      <mat-list-item role="listitem">Close event</mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>

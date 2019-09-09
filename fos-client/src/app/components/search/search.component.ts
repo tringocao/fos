@@ -44,6 +44,9 @@ export class SearchComponent implements OnInit, OnChanges {
   @Output() change = new EventEmitter();
   submitted = false;
   isOpen = false;
+  isChecked = false;
+  isMyFavorite = false;
+
   ngOnInit(): void {
     this.restaurantService.GetMetadataForCategory().then(result => {
       result.forEach((element, index) => {
@@ -94,7 +97,8 @@ export class SearchComponent implements OnInit, OnChanges {
                 (element.operating.open_time || '?') +
                 '-' +
                 (element.operating.close_time || '?'),
-              url_rewrite_name: ''
+              url_rewrite_name: '',
+              picture: ''
             };
             dataSourceTemp.push(restaurantItem);
           });
@@ -126,6 +130,12 @@ export class SearchComponent implements OnInit, OnChanges {
     if (user) {
       return user.restaurant;
     }
+  }
+
+  filterByFavorite(event) {
+    console.log(event);
+    this.change.emit({ isChecked: event.value === true });
+    //this.change.emit({ isChecked: event.checked });
   }
 
   openedChange(opened: boolean) {
