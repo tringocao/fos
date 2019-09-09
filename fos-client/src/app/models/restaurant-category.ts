@@ -10,9 +10,12 @@
     
           
 
-    export class Restaurant    {
+    export class RestaurantCategory    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public code: string = null;   
+        public name: string = null;   
+        public id: string = null;   
+        public parent_category_id: string = null;   
+        public categories: RestaurantCategory[] = [];
     }
          

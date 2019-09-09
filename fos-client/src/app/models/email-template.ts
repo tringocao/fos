@@ -8,11 +8,15 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
+          import { User } from './user';
 
-    export class Restaurant    {
+    export class EmailTemplate    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public usersEmail: User[] = [];   
+        public hostUserEmail: User = null;   
+        public html: string = null;   
+        public subject: string = null;   
+        public eventTitle: string = null;   
+        public eventRestaurant: string = null;
     }
          

@@ -10,9 +10,8 @@
     
           
 
-    export class Restaurant    {
+    export class Photo    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public value: string = null;
     }
          

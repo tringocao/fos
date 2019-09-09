@@ -10,9 +10,8 @@
     
           
 
-    export class Restaurant    {
+    export class ListRestaurant    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public restaurant_ids: number[] = [];
     }
          

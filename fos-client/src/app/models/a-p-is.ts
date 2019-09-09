@@ -8,11 +8,13 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
+          import { ServiceKind } from './service-kind';
 
-    export class Restaurant    {
+    export class APIs    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public id: number = 0;   
+        public name: string = null;   
+        public typeService: ServiceKind = null;   
+        public jsonData: string = null;
     }
          

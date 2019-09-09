@@ -8,11 +8,9 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
-
-    export class Restaurant    {
-           
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        
+    export enum ServiceKind {
+       Now = 0,
+       GrabFood = 1,
     }
-         
+     

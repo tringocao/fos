@@ -10,9 +10,7 @@
     
           
 
-    export class Restaurant    {
-           
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
-    }
+    // export class DiscountPrice extends Price   {
+        
+    // }
          

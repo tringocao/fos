@@ -10,9 +10,8 @@
     
           
 
-    export class Restaurant    {
+    export class DeliveryDetail    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public rating: any = null;
     }
          

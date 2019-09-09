@@ -10,9 +10,9 @@
     
           
 
-    export class Restaurant    {
+    export class Order    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public id: number = 0;   
+        public orderDate: Date = new Date(0);
     }
          

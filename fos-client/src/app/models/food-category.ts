@@ -8,11 +8,12 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
+          import { Food } from './food';
 
-    export class Restaurant    {
+    export class FoodCategory    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public dish_type_id: string = null;   
+        public dish_type_name: string = null;   
+        public dishes: Food[] = [];
     }
          

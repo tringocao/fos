@@ -10,9 +10,10 @@
     
           
 
-    export class Restaurant    {
+    export class Price    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public text: string = null;   
+        public unit: string = null;   
+        public value: number = 0;
     }
          

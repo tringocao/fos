@@ -10,9 +10,13 @@
     
           
 
-    export class Restaurant    {
+    export class Province    {
            
-        public restaurant_id: string = null;   
-        public delivery_id: string = null;
+        public country_id: string = null;   
+        public id: string = null;   
+        public name: string = null;   
+        public name_url: string = null;   
+        public service: any = null;   
+        public district: any = null;
     }
          

@@ -26,19 +26,10 @@ namespace FOS.Services.Providers
         public TokenResource GetTokenResourceFromRequest()
         {
             HttpCookie tokenCookieFromRequest = HttpContext.Current.Request.Cookies["token_key"];
-            var tokenCookieFromHeader = HttpContext.Current.Request.Headers.GetValues("token_key");
 
             if (tokenCookieFromRequest != null)
             {
                 TokenResource token = (TokenResource)MemoryCache.Default.Get(tokenCookieFromRequest.Value);
-                if (token != null)
-                {
-                    return token;
-                }
-            }
-            else if (tokenCookieFromHeader != null)
-            {
-                TokenResource token = (TokenResource)MemoryCache.Default.Get(tokenCookieFromHeader.FirstOrDefault());
                 if (token != null)
                 {
                     return token;
