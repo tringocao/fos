@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public class Food
+    public class CategoryGroup
     {
-        public string Id { get; set; }
         public string Name { get; set; }
-        public string Photos { get; set; }
-        public string Description { get; set; }
-        public string Price { get; set; }
-
+        public string Id { get; set; }
+        public string Code { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

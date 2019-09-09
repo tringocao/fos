@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    class FoodCategory
+    public class FoodCategory
     {
         public string DishTypeName { get; set; }
         public string DishTypeId { get; set; }

@@ -1,4 +1,6 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
+using FOS.Model.Domain;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,8 +12,8 @@ namespace FOS.Services.DeliveryServices
         string GetExternalServiceById(int IdService);
         Task<DeliveryInfos> GetRestaurantFirstDeliveryInforAsync(int city_id, int restaurant_id);
         Task<List<DeliveryInfos>> GetRestaurantDeliveryInforByPagingAsync(int city_id, int pagenum, int pageSize);
-        Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(int city_id, List<Restaurant> restaurant_ids);
+        Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(int cityId, Model.Dto.ListRestaurant data);
         Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
-        Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant);
+        Task<DeliveryDetail> GetDetailAsync(int deliveryId);
     }
 }

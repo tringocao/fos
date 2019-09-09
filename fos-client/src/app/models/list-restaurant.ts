@@ -10,18 +10,9 @@
     
           
 
-    export class User    {
+    export class ListRestaurant    {
            
-        public id: string = null;   
-        public mail: string = null;   
-        public displayName: string = null;   
-        public givenName: string = null;   
-        public jobTitle: string = null;   
-        public mobilePhone: string = null;   
-        public officeLocation: string = null;   
-        public preferredLanguage: string = null;   
-        public surname: string = null;   
-        public userPrincipalNamde: string = null;
+        public restaurantIds: number[] = [];
     }
          
         

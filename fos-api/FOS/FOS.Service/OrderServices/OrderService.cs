@@ -4,16 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FOS.Model;
-using FOS.Repositories;
+using FOS.Repositories.Repositories;
 
-namespace FOS.Services
+namespace FOS.Services.OrderServices
 {
-    public interface IOrderService
-    {
-        bool AddOrder(Model.Domain.Order order);
-        Repositories.DataModel.Order GetOrder(int id);
-    }
-
+  
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
@@ -24,7 +19,7 @@ namespace FOS.Services
 
         public bool AddOrder(Model.Domain.Order order)
         {
-            throw new NotImplementedException();
+            
         }
 
         public Repositories.DataModel.Order GetOrder(int id)

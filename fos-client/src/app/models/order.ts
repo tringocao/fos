@@ -10,18 +10,12 @@
     
           
 
-    export class User    {
+    export class Order    {
            
-        public id: string = null;   
-        public mail: string = null;   
-        public displayName: string = null;   
-        public givenName: string = null;   
-        public jobTitle: string = null;   
-        public mobilePhone: string = null;   
-        public officeLocation: string = null;   
-        public preferredLanguage: string = null;   
-        public surname: string = null;   
-        public userPrincipalNamde: string = null;
+        public id: number = 0;   
+        public orderDate: Date = new Date(0);   
+        public idUser: number = 0;   
+        public foodDetail: { [key: string]: { [key: string]: string; }; } = {};
     }
          
         

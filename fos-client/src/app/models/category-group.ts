@@ -8,20 +8,14 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
+          import { Category } from './category';
 
-    export class User    {
+    export class CategoryGroup    {
            
+        public name: string = null;   
         public id: string = null;   
-        public mail: string = null;   
-        public displayName: string = null;   
-        public givenName: string = null;   
-        public jobTitle: string = null;   
-        public mobilePhone: string = null;   
-        public officeLocation: string = null;   
-        public preferredLanguage: string = null;   
-        public surname: string = null;   
-        public userPrincipalNamde: string = null;
+        public code: string = null;   
+        public categories: Category[] = [];
     }
          
         

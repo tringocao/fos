@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using FOS.Services.ExternalServices;
 using FOS.Services.ProvinceServices;
 using System;
@@ -67,9 +67,9 @@ namespace FOS.Services.RestaurantServices
             return await _provinceService.GetMetadataForCategoryAsync();
         }
 
-        public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        public async Task<DeliveryDetail> GetDeliveryDetailAsync(Restaurant restaurant)
         {
-            return await _provinceService.GetRestaurantDetailAsync(restaurant);
+            return await _provinceService.GetDeliveryDetailAsync(restaurant);
         }
     }
 }

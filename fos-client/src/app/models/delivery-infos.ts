@@ -10,13 +10,21 @@
     
           
 
-    export class Food    {
+    export class DeliveryInfos    {
            
-        public id: string = null;   
+        public cityId: string = null;   
+        public restaurantId: string = null;   
+        public isOpen: string = null;   
+        public isFoodyDelivery: string = null;   
+        public campaigns: string = null;   
+        public promotionGroups: string = null;   
+        public photo: string = null;   
+        public operating: string = null;   
+        public address: string = null;   
+        public deliveryId: string = null;   
+        public categories: string = null;   
         public name: string = null;   
-        public photos: string = null;   
-        public description: string = null;   
-        public price: string = null;
+        public urlRewriteName: string = null;
     }
          
         

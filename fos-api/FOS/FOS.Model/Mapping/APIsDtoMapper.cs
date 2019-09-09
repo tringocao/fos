@@ -10,7 +10,7 @@ namespace FOS.Model.Mapping
 {
     public interface IAPIsDtoMapper
     {
-        Model..Apis ToModel(Dto.APIs order);
+        Model.Apis ToModel(Dto.APIs order);
         Dto.APIs ToDto(Model.Apis order);
     }
 

@@ -8,12 +8,9 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
-
-    export class Restaurant    {
-           
-        public id: number = 0;   
-        public deliveryId: string = null;
-    }
          
-        
+       
+    export interface Interface1 {$Values[
+       Interface1 = $Value,]
+    }
+     

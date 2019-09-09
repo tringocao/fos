@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FOS.Model.Domain.NowModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace FOS.Model.Domain
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
-    
+        public int IdUser { get; set; }
+        public Dictionary<Food, Dictionary<string, string>> FoodDetail { get; set; }
+
     }
 }
