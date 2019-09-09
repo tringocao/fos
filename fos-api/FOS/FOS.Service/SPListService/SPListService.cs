@@ -28,7 +28,7 @@ namespace FOS.Services.SPListService
         //    return ApiUtil.CreateSuccessfulResult();
         //}
 
-        public async Task AddListItem(string Id, JSONRequest item)
+        public async Task AddListItem(string Id, JsonRequest item)
         {
             await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
         }

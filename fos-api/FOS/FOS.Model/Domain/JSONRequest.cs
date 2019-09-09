@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Domain
 {
-    public class JSONRequest
+    public class JsonRequest
     {
         public string data;
     }

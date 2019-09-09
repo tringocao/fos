@@ -9,6 +9,7 @@ namespace FOS.Model.Dto
     public enum ServiceKind
     {
         Now,
-        GrabFood
+        GrabFood,
+        Kichi
     }
 }

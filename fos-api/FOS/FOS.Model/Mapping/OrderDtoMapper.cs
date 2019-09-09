@@ -9,18 +9,18 @@ namespace FOS.Model.Mapping
 {
     public interface IOrderDtoMapper
     {
-        Model.Order ToModel(Dto.Order order);
-        Dto.Order ToDto(Model.Order order);
+        Model.Domain.Order ToModel(Dto.Order order);
+        Dto.Order ToDto(Model.Domain.Order order);
     }
 
     public class OrderDtoMapper : IOrderDtoMapper
     {
-        public Dto.Order ToDto(Order order)
+        public Dto.Order ToDto(Model.Domain.Order order)
         {
             throw new NotImplementedException();
         }
 
-        public Order ToModel(Dto.Order order)
+        public Model.Domain.Order ToModel(Dto.Order order)
         {
             throw new NotImplementedException();
         }

@@ -19,20 +19,20 @@ namespace FOS.Repositories.Repositories
         }
         //private AdventureWorks2014Entities DbContext2 = new AdventureWorks2014Entities();
 
-        public IEnumerable<APIs> GetAllFOSCrawlLinks()
+        public IEnumerable<Apis> GetAllFOSCrawlLinks()
         {
             //throw new NotImplementedException();
             var list = DbContext.ExternalServiceAPIs.Take(1).ToList();
-            return Mapper.Map<IEnumerable<ExternalServiceAPI>, IEnumerable<APIs>>(list);
+            return Mapper.Map<IEnumerable<ExternalServiceAPI>, IEnumerable<Apis>>(list);
         }
 
-        public APIs GetFOSCrawlLinksById(int businessId)
+        public Apis GetFOSCrawlLinksById(int businessId)
         {
             //throw new NotImplementedException();
 
             var emp = DbContext.ExternalServiceAPIs.Find(businessId);
             //var emp = new FOSCrawlLink() { id = 1, link = "https://gappapi.deliverynow.vn/api/delivery/get_infos" };
-            return Mapper.Map<ExternalServiceAPI, APIs>(emp);
+            return Mapper.Map<ExternalServiceAPI, Apis>(emp);
         }
     }
 }
