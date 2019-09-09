@@ -58,23 +58,16 @@
     margin-left: 0.3rem;
   }
   .name {
-    position: relative;
+    p {
+      width: calc(100% - 40px);
+      display: inline-block;
+    }
     .show-event-action {
-      position: absolute;
-      right: 0;
-      top: 45%;
-      transform: translate(0, -45%);
       color: @lightBlack;
+      display: inline-block;
     }
   }
   .mat-row:hover {
     background-color: @white-smoke;
-    .show-event-action {
-      .show-action {
-        .action-button {
-          display: block;
-        }
-      }
-    }
   }
 }

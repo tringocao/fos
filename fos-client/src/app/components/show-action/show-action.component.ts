@@ -21,11 +21,11 @@ export class ShowActionComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   clickout(event) {
-    if (this.eRef.nativeElement.contains(event.target)) {
-      console.log('event: ', event);
-    } else {
-      this.isShowListAction = false;
-    }
+    // if (this.eRef.nativeElement.contains()) {
+    //   this.isShowListAction = !this.isShowListAction;
+    // } else {
+    //   this.isShowListAction = false;
+    // }
   }
 
   constructor(private eRef: ElementRef) {}
