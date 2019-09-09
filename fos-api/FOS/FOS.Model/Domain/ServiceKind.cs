@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Dto
+namespace FOS.Model.Domain
 {
-    public class DiscountPrice:Price
-    {  }
+    public enum ServiceKind
+    {
+        Now,
+        GrabFood
+    }
 }

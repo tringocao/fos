@@ -13,6 +13,9 @@
     export class Order    {
            
         public id: number = 0;   
-        public orderDate: Date = new Date(0);
+        public orderDate: Date = new Date(0);   
+        public idUser: number = 0;   
+        public foodDetail: { [key: string]: { [key: string]: string; }; } = {};
     }
          
+        

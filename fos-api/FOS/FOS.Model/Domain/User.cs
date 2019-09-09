@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,16 +9,36 @@ namespace FOS.Model.Domain
 {
     public class User
     {
-        public string id { get; set; }
-        public string mail { get; set; }
-        public string displayName { get; set; }
-        public string givenName { get; set; }
-        public string jobTitle { get; set; }
-        public string mobilePhone { get; set; }
-        public string officeLocation { get; set; }
-        public string preferredLanguage { get; set; }
-        public string surname { get; set; }
-        public string userPrincipalName { get; set; }
+        [JsonProperty("id")]
+
+        public string Id { get; set; }
+        [JsonProperty("mail")]
+
+        public string Mail { get; set; }
+        [JsonProperty("displayName")]
+
+        public string DisplayName { get; set; }
+        [JsonProperty("givenName")]
+
+        public string GivenName { get; set; }
+        [JsonProperty("jobTitle")]
+
+        public string JobTitle { get; set; }
+        [JsonProperty("mobilePhone")]
+
+        public string MobilePhone { get; set; }
+        [JsonProperty("officeLocation")]
+
+        public string OfficeLocation { get; set; }
+        [JsonProperty("preferredLanguage")]
+
+        public string PreferredLanguage { get; set; }
+        [JsonProperty("surname")]
+
+        public string Surname { get; set; }
+        [JsonProperty("userPrincipalName")]
+
+        public string UserPrincipalName { get; set; }
         //public List<string> businessPhones { get; set; }
     }
 }

@@ -5,19 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Params
+namespace FOS.Model.Domain.NowModel
 {
-    public class Categories
+{
+    public class RestaurantCategory
     {
         [JsonProperty("code")]
-        public string code { get; set; }
+        public string Code { get; set; }
         [JsonProperty("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
         [JsonProperty("id")]
-        public string id { get; set; }
+        public string Id { get; set; }
         [JsonProperty("parent_category_id")]
-        public string parent_category_id { get; set; }
+        public string ParentCategoryId { get; set; }
         [JsonProperty("categories")]
-        public List<Categories> categories { get; set; }
+        public List<RestaurantCategory> Categories { get; set; }
+
     }
 }

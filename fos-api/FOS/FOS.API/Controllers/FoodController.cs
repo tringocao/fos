@@ -1,6 +1,7 @@
 using FOS.API.App_Start;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
+using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.FoodServices;
 using Newtonsoft.Json;
@@ -18,9 +19,13 @@ namespace FOS.API.Controllers
     public class FoodController : ApiController
     {
         IFoodService _foodService;
-        public FoodController(IFoodService foodService)
+        IFoodDtoMapper _foodDtoMapper;
+        IFoodCategoryDtoMapper _foodCategoryDtoMapper;
+        public FoodController(IFoodService foodService, IFoodDtoMapper foodDtoMapper, IFoodCategoryDtoMapper foodCategoryDtoMapper)
         {
             _foodService = foodService;
+            _foodDtoMapper = foodDtoMapper;
+            _foodCategoryDtoMapper = foodCategoryDtoMapper;
         }
         // GET: api/Food
         [HttpGet]
@@ -30,8 +35,9 @@ namespace FOS.API.Controllers
             try
             {
                 _foodService.GetExternalServiceById(IdService);
+                var list = await _foodService.GetFoodCataloguesFromDeliveryIdAsync(delivery_id);
                 return ApiUtil<List<FoodCategory>>.CreateSuccessfulResult(
-                  await _foodService.GetFoodCataloguesFromDeliveryIdAsync(delivery_id)
+                    list.Select(f => _foodCategoryDtoMapper.ToDto(f)).ToList()
                 );
             }
             catch (Exception e)
@@ -48,8 +54,11 @@ namespace FOS.API.Controllers
             try
             {
                 _foodService.GetExternalServiceById(IdService);
+                var list = await _foodService.GetFoodFromCatalogueAsync(delivery_id, dish_type_id);
+
                 return ApiUtil<List<Food>>.CreateSuccessfulResult(
-                  await _foodService.GetFoodFromCatalogueAsync(delivery_id, dish_type_id)
+                    list.Select(f => _foodDtoMapper.ToDto(f)).ToList()
+
                 );
             }
             catch (Exception e)

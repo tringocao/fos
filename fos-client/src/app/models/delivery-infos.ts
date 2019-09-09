@@ -12,19 +12,19 @@
 
     export class DeliveryInfos    {
            
-        public city_id: string = null;   
-        public cuisines: any = null;   
-        public restaurant_id: string = null;   
-        public is_open: string = null;   
-        public is_foody_delivery: string = null;   
-        public campaigns: any = null;   
-        public promotion_groups: any = null;   
-        public photos: any = null;   
-        public operating: any = null;   
+        public cityId: string = null;   
+        public restaurantId: string = null;   
+        public isOpen: string = null;   
+        public isFoodyDelivery: string = null;   
+        public campaigns: string = null;   
+        public promotionGroups: string = null;   
+        public photo: string = null;   
+        public operating: string = null;   
         public address: string = null;   
-        public delivery_id: string = null;   
-        public categories: any = null;   
+        public deliveryId: string = null;   
+        public categories: string = null;   
         public name: string = null;   
-        public url_rewrite_name: string = null;
+        public urlRewriteName: string = null;
     }
          
+        

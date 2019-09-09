@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public static class RequestMethod
+    class FavoriteRestaurant
     {
-        public const string Post = "Post";
-        public const string Get = "Get";
+        public string UserId { get; set; }
+        public string RestaurantId { get; set; }
 
     }
 }

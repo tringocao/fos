@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public enum ServiceKind
+   public class RestaurantDetail
     {
-        Now,
-        GrabFood,
-        Kichi
+        public int Rating { get; set; }
+        public int TotalReview { get; set; }
     }
 }

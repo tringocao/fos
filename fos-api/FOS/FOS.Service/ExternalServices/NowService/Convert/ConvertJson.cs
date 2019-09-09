@@ -1,4 +1,5 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
+using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using Newtonsoft.Json.Linq;
 using System;
@@ -35,7 +36,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
                 foreach (var id in data.reply.search_result[0].restaurant_ids)//get the fisrt catalogue
                 {
                     Restaurant item = new Restaurant();
-                    item.restaurant_id = id;
+                    item.RestaurantId = id;
                     newList.Add(item);
                 }
             }

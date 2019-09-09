@@ -8,23 +8,15 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          import { Photo } from './photo';
-import { Price } from './price';
-import { DiscountPrice } from './discount-price';
+          
 
     export class Food    {
            
-        public description: string = null;   
-        public id: number = 0;   
-        public is_available: boolean = false;   
-        public is_group_discount_item: boolean = false;   
-        public photos: Photo[] = [];   
-        public price: Price = null;   
-        public discount_price: DiscountPrice = null;   
+        public id: string = null;   
         public name: string = null;   
-        public time: string = null;   
-        public options: string = null;   
-        public properties: string = null;   
-        public quantity: string = null;
+        public photos: string = null;   
+        public description: string = null;   
+        public price: string = null;
     }
          
+        

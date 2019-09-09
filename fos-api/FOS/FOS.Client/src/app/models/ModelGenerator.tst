@@ -15,6 +15,7 @@
      string PrintDebugInfo(Typewriter.CodeModel.File f){
           return debugInfo;        
      }
+     
     // Custom extension methods can be used in the template by adding a $ prefix e.g. $LoudName
     string LoudName(Property property)
     {
@@ -26,7 +27,7 @@
             .Select(p => p.Type)
             .Where(t => !t.IsPrimitive || t.IsEnum)
             .Select(t => t.IsGeneric ? t.TypeArguments.First() : t)
-            .Where(t => t.Name != c.Name)
+            .Where(t => t.Name != c.Name && t.Name != "any")
             .Distinct();
         return string.Join(Environment.NewLine, types.Select(t => $"import {{ {t.Name} }} from './{SpacesFromCamel(t.Name)}';").Distinct());
     }
@@ -43,7 +44,7 @@
                 // Extract correct namespace to create corresponding output directory, according to my target Angular/TypeScript project
                 foreach (var item in fileParts) {
                     if (!item.Equals(last)) {
-                        if (string.Equals(item, "Domain", StringComparison.OrdinalIgnoreCase)) {
+                        if (string.Equals(item, "Dto", StringComparison.OrdinalIgnoreCase)) {
                             startNamespaceAppending = true;
                         } else if (startNamespaceAppending) {
                             prefixFolder += SpacesFromCamel(item) + "/";
@@ -59,7 +60,7 @@
                 } else if (file.Enums.Count > 0) {
                     typeName = file.Enums.First().Name;
                 }
-                string fileName = "..\\..\\..\\..\\..\\..\\fos-client\\src\\app\\models\\"+ SpacesFromCamel(typeName) + ".ts";
+                string fileName = "..\\..\\..\\..\\..\\..\\fos-client\\src\\app\\models\\" + prefixFolder + SpacesFromCamel(typeName) + ".ts";
                 // Creates target directory if it does not exist
                 //Regex rgx = new Regex("^(.*)(FOS\\.[\\w\\.]+\\\\Models)(.*)$");
                 //string pathFileName = Path.GetDirectoryName(file.FullName);
@@ -102,10 +103,10 @@
 
     // More info: http://frhagn.github.io/Typewriter/
 
-    $Classes(*)[
+    $Classes(*M)[
           $Imports
 
-    export class $Name$TypeParameters $BaseClass[extends $Name$TypeArguments] implements $Name$TypeArguments   {
+    export class $Name$TypeParameters $BaseClass[extends $Name$TypeArguments]   {
         $Properties[   
         public $name: $Type = $Type[$Default];]
     }]

@@ -12,11 +12,12 @@
 
     export class Province    {
            
-        public country_id: string = null;   
+        public countryId: string = null;   
         public id: string = null;   
         public name: string = null;   
-        public name_url: string = null;   
-        public service: any = null;   
-        public district: any = null;
+        public nameUrl: string = null;   
+        public service: string = null;   
+        public district: string = null;
     }
          
+        

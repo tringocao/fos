@@ -1,4 +1,5 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain;
+using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using FOS.Repositories.Repositories;
 using System;
@@ -12,7 +13,7 @@ namespace FOS.Services
     public interface IFOSFoodServiceAPIsService
     {
         //string GetByIdAsync(int businessId);
-        APIs GetById(int Id);
+        Apis GetById(int Id);
     }
     public class FOSFoodServiceAPIsService : IFOSFoodServiceAPIsService
     {

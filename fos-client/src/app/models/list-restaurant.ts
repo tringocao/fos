@@ -12,6 +12,7 @@
 
     export class ListRestaurant    {
            
-        public restaurant_ids: number[] = [];
+        public restaurantIds: number[] = [];
     }
          
+        

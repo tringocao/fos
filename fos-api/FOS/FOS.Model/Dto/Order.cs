@@ -11,7 +11,7 @@ namespace FOS.Model.Dto
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public int IdUser { get; set; }
-        public Dictionary<Food,Dictionary<string, string>> FoodDetail { get; set; }
+        public Dictionary<string, Dictionary<string, string>> FoodDetail { get; set; }
 
     }
 }

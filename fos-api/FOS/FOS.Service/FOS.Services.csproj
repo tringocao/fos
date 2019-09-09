@@ -153,6 +153,7 @@
     <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="ConfigurationProvider.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="OrderServices\IOrderService.cs" />
     <Compile Include="Providers\GraphApiProvider.cs" />
     <Compile Include="Providers\IGraphApiProvider.cs" />
     <Compile Include="Providers\ISharepointContextProvider.cs" />
@@ -160,7 +161,7 @@
     <Compile Include="Providers\SharepointContextProvider.cs" />
     <Compile Include="Providers\TokenProvider.cs" />
     <Compile Include="OAuthService.cs" />
-    <Compile Include="OrderService.cs" />
+    <Compile Include="OrderServices\OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvinceServices\IProvinceService.cs" />
     <Compile Include="ProvinceServices\ProvinceService.cs" />

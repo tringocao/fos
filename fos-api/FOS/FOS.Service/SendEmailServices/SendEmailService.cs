@@ -39,7 +39,7 @@ namespace FOS.Services.SendEmailServices
             clientContext.ExecuteQuery();
 
             var users = Regex.Split(collListItem.FirstOrDefault()["EventParticipants"].ToString(), ";#");
-            emailTemplate.UsersEmail = users.Select(u => new Model.Domain.User() { mail = u }).ToList();
+            emailTemplate.UsersEmail = users.Select(u => new Model.Domain.User() { Mail = u }).ToList();
 
             string userId = collListItem.FirstOrDefault()["EventHostId"].ToString();
             var user = await _sPUserService.GetUserById(userId);
@@ -62,13 +62,13 @@ namespace FOS.Services.SendEmailServices
 
                 foreach (var user in emailTemplate.UsersEmail)
                 {
-                    emailp.To = new List<string>() { user.mail };
-                    emailp.From = emailTemplate.HostUserEmail.mail;
-                    emailp.BCC = new List<string> { emailTemplate.HostUserEmail.mail };
+                    emailp.To = new List<string>() { user.Mail };
+                    emailp.From = emailTemplate.HostUserEmail.Mail;
+                    emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
                     emailp.Body = String.Format(emailTemplate.Html.ToString(),
                         emailTemplate.EventTitle.ToString(),
                         emailTemplate.EventRestaurant.ToString(),
-                        user.mail.ToString(),
+                        user.Mail.ToString(),
                         hostname + "make-order/1");
                     emailp.Subject = emailTemplate.Subject;
                     Utility.SendEmail(clientContext, emailp);

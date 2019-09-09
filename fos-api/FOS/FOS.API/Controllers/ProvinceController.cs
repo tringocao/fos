@@ -1,6 +1,7 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
+using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.ExternalServices;
 using FOS.Services.ProvinceServices;
@@ -21,7 +22,8 @@ namespace FOS.API.Controllers
     public class ProvinceController : ApiController
     {
         IProvinceService _provinceService;
-        public ProvinceController(IProvinceService provinceService)
+        IProvinceDtoMapper _provinceDtoMapper;
+        public ProvinceController(IProvinceService provinceService, IProvinceDtoMapper provinceDtoMapper)
         {
             _provinceService = provinceService;
         }
@@ -33,8 +35,9 @@ namespace FOS.API.Controllers
             try
             {
                 _provinceService.GetExternalServiceById(IdService);
+                var list = await _provinceService.GetMetadataForProvinceAsync();
                 return ApiUtil<List<Province>>.CreateSuccessfulResult(
-                    await _provinceService.GetMetadataForProvinceAsync()
+                    list.Select(p => _provinceDtoMapper.ToDto(p)).ToList()
                 );
             }
             catch (Exception e)
@@ -52,7 +55,7 @@ namespace FOS.API.Controllers
             {
                 _provinceService.GetExternalServiceById(IdService);
                 return ApiUtil<Province>.CreateSuccessfulResult(
-                    await _provinceService.GetMetadataByIdAsync(id)
+                    _provinceDtoMapper.ToDto(await _provinceService.GetMetadataByIdAsync(id))
                 );
             }
             catch (Exception e)

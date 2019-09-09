@@ -50,17 +50,89 @@
     <Folder Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\apis.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\Apis.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\apis.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\Apis.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\auth-client-respond.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>..\FOS.Model\Domain\AuthClientRespond.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\delivery-detail.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\DeliveryDetail.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\delivery-infos.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\DeliveryInfos.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\discount-price.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\DiscountPrice.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\email-template.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\EmailTemplate.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\event-list.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>..\FOS.Model\Domain\EventList.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\food-category.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\FoodCategory.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\food.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\Food.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\json-request.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>..\FOS.Model\Domain\JSONRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\list-restaurant.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Params\ListRestaurant.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\photo.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\Photo.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\price.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\Price.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\province.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\Province.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\restaurant-category.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\RestaurantCategory.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\restaurant.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\NowModel\Restaurant.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\service-kind.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\ServiceKind.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\service-kind.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\ServiceKind.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\user.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Domain\User.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\app\models\..\..\..\..\..\..\fos-client\src\app\models\user.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>..\FOS.Model\Dto\User.cs</CustomToolNamespace>
     </TypeScriptCompile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

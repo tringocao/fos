@@ -116,3 +116,8 @@
        $Name = $Value,]
     }
     ] 
+       $Interfaces(FOS.Model.Dto.*)[
+    export interface $Name {$Values[
+       $Name = $Value,]
+    }
+    ] 

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public class DeliveryDetail
+    public interface Interface1
     {
-        public dynamic rating { get; set; }
-
+        int id { get; set; }
     }
 }

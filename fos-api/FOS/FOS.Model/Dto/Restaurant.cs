@@ -8,10 +8,11 @@ namespace FOS.Model.Dto
 {
     public class Restaurant
     {
-        public string restaurant_id { get; set; }
-        //public int delivery_id { get; set; }
-        //public dynamic delivery_id { get; set; }
-        public string delivery_id { get; set; }
+        public int Id { get; set; }
+
+        public string DeliveryId { get; set; }
+
 
     }
+ 
 }
