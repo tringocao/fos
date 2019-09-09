@@ -89,7 +89,6 @@
     <Compile Include="Dto\FavoriteRestaurant.cs" />
     <Compile Include="Dto\Food.cs" />
     <Compile Include="Dto\FoodCategory.cs" />
-    <Compile Include="Dto\Interface1.cs" />
     <Compile Include="Dto\Order.cs" />
     <Compile Include="Dto\Province.cs" />
     <Compile Include="Dto\Restaurant.cs" />
@@ -202,10 +201,6 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\food.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Food.cs</CustomToolNamespace>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\interface1.ts">
-      <DependentUpon>ModelGenerator.tst</DependentUpon>
-      <CustomToolNamespace>Dto\Interface1.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\list-restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

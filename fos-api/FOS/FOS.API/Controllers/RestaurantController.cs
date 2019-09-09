@@ -2,7 +2,6 @@
 using FOS.Model.Domain;
 using FOS.Model.Dto;
 using FOS.Model.Mapping;
-using FOS.Model.Params;
 using FOS.Model.Util;
 using FOS.Services.ExternalServices;
 using FOS.Services.RestaurantServices;
@@ -28,10 +27,12 @@ namespace FOS.API.Controllers
         IRestaurantDetailDtoMapper _restaurantDetailDtoMapper;
         ICategoryGroupDtoMapper _categoryGroupDtoMapper;
         ICategoryDtoMapper _categoryDtoMapper;
+        IRestaurantDtoMapper _restaurantDtoMapper;
         public RestaurantController(IRestaurantService restaurantService,
             IRestaurantDetailDtoMapper restaurantDetailDtoMapper,
             ICategoryGroupDtoMapper categoryGroupDtoMapper,
-            ICategoryDtoMapper categoryDtoMapper)
+            ICategoryDtoMapper categoryDtoMapper,
+            IRestaurantDtoMapper restaurantDtoMapper)
         {
             _restaurantService = restaurantService;
             _restaurantDetailDtoMapper = restaurantDetailDtoMapper;
@@ -65,7 +66,7 @@ namespace FOS.API.Controllers
             {
                 _restaurantService.GetExternalServiceById(IdService);
                 return ApiUtil<Restaurant>.CreateSuccessfulResult(
-                  await _restaurantService.GetRestaurantsByIdAsync(province_id, restaurant_id)
+                  _restaurantDtoMapper.ToDto(await _restaurantService.GetRestaurantsByIdAsync(province_id, restaurant_id))
                 );
             }
             catch (Exception e)
@@ -123,11 +124,13 @@ namespace FOS.API.Controllers
                 );
                 if (categories.Categories.Count() < 1)
                 {
-                    listR = await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword);
+                    var list = await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword);
+                    listR = list.Select(r => _restaurantDtoMapper.ToDto(r)).ToList();
                 }
                 else
                 {
-                    listR = await _restaurantService.GetRestaurantsByCategoriesKeywordAsync(city_id, categories.Categories.Select(c => _categoryDtoMapper.ToModel(c)).ToList(), keyword);
+                    var list = await _restaurantService.GetRestaurantsByCategoriesKeywordAsync(city_id, categories.Categories.Select(c => _categoryDtoMapper.ToModel(c)).ToList(), keyword);
+                    listR = list.Select(r => _restaurantDtoMapper.ToDto(r)).ToList();
                 }
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
                     listR.Select(l =>l.Id)
