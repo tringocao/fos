@@ -16,7 +16,11 @@ namespace FOS.Model.Domain.NowModel
         public string Html { get; set; }
         public string Subject { get; set; }
         public string EventTitle { get; set; }
+        public string EventId { get; set; }
+
         public string EventRestaurant { get; set; }
+        public string EventRestaurantId { get; set; }
+        public string EventDeliveryId { get; set; }
 
     }
 }

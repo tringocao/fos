@@ -12,9 +12,12 @@
 
     export class Order    {
            
-        public Id: number = 0;   
+        public Id: string = null;   
         public OrderDate: Date = new Date(0);   
-        public IdUser: number = 0;   
-        public FoodDetail: { [key: string]: { [key: string]: string; }; } = {};
+        public IdUser: string = null;   
+        public IdEvent: string = null;   
+        public IdRestaurant: number = 0;   
+        public IdDelivery: number = 0;   
+        public FoodDetail: { [key: number]: { [key: string]: string; }; } = {};
     }
          
