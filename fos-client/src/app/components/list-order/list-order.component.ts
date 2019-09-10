@@ -9,9 +9,12 @@ import * as moment from 'moment';
 import 'moment/locale/vi';
 import { MatDialog } from '@angular/material/dialog';
 import { EventList } from 'src/app/models/eventList';
-import Event from './../../models/event';
+import { Event } from './../../models/event';
 import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
+import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 import { MatSelectChange } from '@angular/material/select';
+import { Overlay } from '@angular/cdk/overlay';
 
 moment.locale('vi');
 
@@ -45,7 +48,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
   searchQuery = '';
   categorySelected = null;
 
-  @Input() isMyOrder: boolean;
+  eventListItem: EventList;
+
+  @Input() isMyOrder: any;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -54,7 +59,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
   constructor(
     private orderService: OrderService,
     private userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    overlay: Overlay
   ) {}
 
   ngOnInit() {
@@ -62,7 +69,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.userService.getCurrentUserId().then((response: User) => {
-      this.userId = response.id;
+      this.userId = response.Id;
       this.getOrders();
     });
   }
@@ -102,9 +109,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   getOrders() {
     this.orderService.getAllEvent(this.userId).subscribe(response => {
-      this.allOrder = this.orderService.mapResponseDataToEvent(response.Data);
+      this.allOrder = response.Data;
       this.myOrder = this.allOrder.filter(item => {
-        return item.isMyEvent === true;
+        return item.IsMyEvent === true;
       });
 
       this.getCateroriesFromOrders(this.myOrder, true);
@@ -124,9 +131,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
     const eventError: Event[] = [];
     const eventClose: Event[] = [];
     events.forEach(item => {
-      if (item.status === 'Opened') {
+      if (item.Status === 'Opened') {
         eventOpen.push(item);
-      } else if (item.status === 'Closed') {
+      } else if (item.Status === 'Closed') {
         eventClose.push(item);
       } else {
         eventError.push(item);
@@ -149,15 +156,15 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   sortDateAsc = (first: Event, second: Event) => {
-    const firstDate = new Date(first.closeTime);
-    const secondDate = new Date(second.closeTime);
+    const firstDate = new Date(first.CloseTime);
+    const secondDate = new Date(second.CloseTime);
     return Number(firstDate.getTime()) - Number(secondDate.getTime());
     // tslint:disable-next-line:semicolon
   };
 
   sortDateDesc = (first: Event, second: Event) => {
-    const firstDate = new Date(first.closeTime);
-    const secondDate = new Date(second.closeTime);
+    const firstDate = new Date(first.CloseTime);
+    const secondDate = new Date(second.CloseTime);
     return Number(secondDate.getTime()) - Number(firstDate.getTime());
     // tslint:disable-next-line:semicolon
   };
@@ -165,8 +172,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
   getCateroriesFromOrders(orders: Event[], isMyOrder: boolean) {
     const categories = [];
     orders.forEach(element => {
-      if (element.category !== null && element.category.length > 0) {
-        categories.push(element.category);
+      if (element.Category !== null && element.Category.length > 0) {
+        categories.push(element.Category);
       }
     });
     const myCategories = [...new Set(categories)].filter(
@@ -196,29 +203,29 @@ export class ListOrderComponent implements OnInit, OnChanges {
     if (this.searchQuery !== '' && this.categorySelected !== null) {
       this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return (
-          dataFilter.category === this.categorySelected &&
-          (dataFilter.restaurant
-            .toLowerCase()
-            .indexOf(this.searchQuery.toLowerCase()) > -1 ||
-            dataFilter.name
-              .toLowerCase()
-              .indexOf(this.searchQuery.toLowerCase()) > -1)
+          dataFilter.Category === this.categorySelected &&
+          (dataFilter.Restaurant.toLowerCase().indexOf(
+            this.searchQuery.toLowerCase()
+          ) > -1 ||
+            dataFilter.Name.toLowerCase().indexOf(
+              this.searchQuery.toLowerCase()
+            ) > -1)
         );
       };
     } else if (this.searchQuery !== '' && this.categorySelected === null) {
       this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return (
-          dataFilter.restaurant
-            .toLowerCase()
-            .indexOf(this.searchQuery.toLowerCase()) > -1 ||
-          dataFilter.name
-            .toLowerCase()
-            .indexOf(this.searchQuery.toLowerCase()) > -1
+          dataFilter.Restaurant.toLowerCase().indexOf(
+            this.searchQuery.toLowerCase()
+          ) > -1 ||
+          dataFilter.Name.toLowerCase().indexOf(
+            this.searchQuery.toLowerCase()
+          ) > -1
         );
       };
     } else if (this.categorySelected !== null && this.searchQuery === '') {
       this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
-        return dataFilter.category === this.categorySelected;
+        return dataFilter.Category === this.categorySelected;
       };
     }
   }
@@ -236,8 +243,35 @@ export class ListOrderComponent implements OnInit, OnChanges {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
 
-  showEvent(row: Event) {
-    const event: EventList = {
+  private toDateString(date: Date): string {
+    return (
+      date.getFullYear().toString() +
+      '-' +
+      ('0' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('0' + date.getDate()).slice(-2) +
+      'T' +
+      date.toTimeString().slice(0, 5)
+    );
+  }
+
+  showEvent(row: any) {
+    // console.log(row);
+    this.mapRowToEventList(row);
+
+    const dialogRef = this.dialog.open(EventDialogViewComponent, {
+      maxHeight: '98vh',
+      width: '80%',
+      data: this.eventListItem
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  mapRowToEventList(row: any) {
+    this.eventListItem = {
       eventTitle: row.name,
       eventId: row.eventId,
       eventRestaurant: row.restaurant,
@@ -247,34 +281,16 @@ export class ListOrderComponent implements OnInit, OnChanges {
       eventHost: row.hostName,
       eventParticipants: row.participants,
       eventCategory: row.category,
-      eventRestaurantId: '',
+      eventRestaurantId: row.restaurantId,
       eventServiceId: '1',
       eventDeliveryId: '',
       eventCreatedUserId: this.userId,
       eventHostId: row.hostId
     };
-
-    const dialogRef = this.dialog.open(EventDialogViewComponent, {
-      maxHeight: '98vh',
-      width: '80%',
-      data: event
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 
   remind(event: any, element: Event) {
     console.log('type of: ', event);
-    event.stopPropagation();
-  }
-
-  close(event: any, element: Event) {
-    event.stopPropagation();
-  }
-
-  showListAction(event: any) {
     event.stopPropagation();
   }
 

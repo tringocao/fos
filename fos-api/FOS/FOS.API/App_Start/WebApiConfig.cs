@@ -26,7 +26,7 @@ namespace FOS.API
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
+            config.EnableCors(new EnableCorsAttribute("https://localhost:4200", "*", "*") { SupportsCredentials = true });
             // resolve customauth
             config.Filters.Add((IAuthenticationFilter)UnityConfig.Container.Resolve<ICustomAuthentication>());
             //config.MessageHandlers.Add(new CrossDomainHandler());

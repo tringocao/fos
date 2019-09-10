@@ -5,7 +5,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using FOS.Model.Dto;
+using FOS.Model.Domain;
+using FOS.Model.Domain.NowModel;
 using FOS.Model.Mapping;
 using FOS.Services.ExternalServices.NowService.Convert;
 using Newtonsoft.Json;
@@ -15,9 +16,9 @@ namespace FOS.Services.ExternalServices.NowService
 {
     public class NowService : IExternalService
     {
-        APIs _apis;
+        Apis _apis;
         NowServiceConfiguration apisJson;
-        public NowService(APIs apis)
+        public NowService(Apis apis)
         {
             _apis = apis;
             apisJson = JsonConvert.DeserializeObject<NowServiceConfiguration>(_apis.JSONData);
@@ -28,7 +29,7 @@ namespace FOS.Services.ExternalServices.NowService
             APIDetail api = apisJson.GetRestaurantDetail;
             //Set Fields
             api.AvailableParams.Where(a => a.FieldName == "request_id").FirstOrDefault().ValueDefault
-                = restaurant.delivery_id.ToString();
+                = restaurant.DeliveryId.ToString();
             //Call API
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = await method.CallApiAsync();
@@ -42,7 +43,7 @@ namespace FOS.Services.ExternalServices.NowService
             APIDetail api = apisJson.GetDeliveryDishes;
             //Set Fields
             api.AvailableParams.Where(a => a.FieldName == "request_id").FirstOrDefault().ValueDefault
-                = delivery.delivery_id.ToString();
+                = delivery.DeliveryId.ToString();
             //Call API
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = await method.CallApiAsync();
@@ -56,19 +57,19 @@ namespace FOS.Services.ExternalServices.NowService
             APIDetail api = apisJson.GetDeliveryFromUrl;
             //Set Fields
             api.AvailableParams.Where(a => a.FieldName == "url").FirstOrDefault().ValueDefault
-                = province.name_url + "/" + delivery.url_rewrite_name;
+                = province.NameUrl + "/" + delivery.UrlRewriteName;
             //Call API
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = await method.CallApiAsync();
             return response.Content.ReadAsStringAsync().Result;
         }
         public async Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> category)
-        {
+      {
             //Get function
             APIDetail api = apisJson.SearchRestaurantsInProvince;
             //Set Fields
             api.AvailableBodys.Where(a => a.FieldName == "city_id").FirstOrDefault().ValueDefault
-                = province.id.ToString();// 217 is id of HCM city
+                = province.Id.ToString();// 217 is id of HCM city
             api.AvailableBodys.Where(a => a.FieldName == "keyword").FirstOrDefault().ValueDefault
                 = "" + keyword + "";
             if (category !=null )
@@ -76,7 +77,7 @@ namespace FOS.Services.ExternalServices.NowService
                 StringBuilder icate = new StringBuilder();
                 foreach (var c in category)
                 {
-                    icate.Append(",{\"code\":" + c.code + ",\"id\":" + c.id + "}");
+                    icate.Append(",{\"code\":" + c.Code + ",\"id\":" + c.Id + "}");
                 }
                 if (category.Count() != 0) icate.Remove(0, 1);// remove the first comma
                 api.AvailableBodys.Where(a => a.FieldName == "combine_categories").FirstOrDefault().ValueDefault
@@ -95,7 +96,7 @@ namespace FOS.Services.ExternalServices.NowService
             APIDetail api = apisJson.GetRestaurantDeliveryInfor;
             //Set Fields
             api.AvailableBodys.Where(a => a.FieldName == "restaurant_ids").FirstOrDefault().ValueDefault
-                = "[" + restaurant.restaurant_id.ToString() + "]";// 217 is id of HCM city
+                = "[" + restaurant.RestaurantId.ToString() + "]";// 217 is id of HCM city
             //Call API
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = await method.CallApiAsync();
@@ -137,7 +138,7 @@ namespace FOS.Services.ExternalServices.NowService
             StringBuilder rid = new StringBuilder();
             foreach (var r in restaurant)
             {
-                rid.Append("," + r.restaurant_id);
+                rid.Append("," + r.RestaurantId);
             }
             if (restaurant.Count() != 0) rid.Remove(0, 1);// remove the first comma
             api.AvailableBodys.Where(a => a.FieldName == "restaurant_ids").FirstOrDefault().ValueDefault
@@ -146,6 +147,7 @@ namespace FOS.Services.ExternalServices.NowService
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = await method.CallApiAsync();
             var result = response.Content.ReadAsStringAsync().Result;
+            
             return ConvertJson.ConvertString2ListDeliveryInfos(result);
 
         }

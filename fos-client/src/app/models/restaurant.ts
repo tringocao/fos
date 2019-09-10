@@ -1,21 +1,18 @@
-class Restaurant {
-  id: number;
-  stared: boolean;
-  restaurant: string;
-  category: string;
-  address: string;
-  promotion: string;
-  open: string;
-  delivery_id: number;
-  url_rewrite_name: string;
-  picture: string;
-}
-// class RestaurantSearch {
-//   id: number;
-//   restaurant: string;
-//   delivery_id: number;
-// }
-class RestaurantDetail {
-  rating: number;
-  total_review: number;
-}
+﻿
+
+    // $Classes/Enums/Interfaces(filter)[template][separator]
+    // filter (optional): Matches the name or full name of the current item. * = match any, wrap in [] to match attributes or prefix with : to match interfaces or base classes.
+    // template: The template to repeat for each matched item
+    // separator (optional): A separator template that is placed between all templates e.g. $Properties[public $name: $Type][, ]
+
+    // More info: http://frhagn.github.io/Typewriter/
+
+    
+          
+
+    export class Restaurant    {
+           
+        public Id: number = 0;   
+        public DeliveryId: string = null;
+    }
+         

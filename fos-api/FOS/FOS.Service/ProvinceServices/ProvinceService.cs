@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using FOS.Services.ExternalServices;
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace FOS.Services.ProvinceServices
         public async Task<Province> GetMetadataByIdAsync(int city_id)
         {
             var listProvinces = await GetMetadataForProvinceAsync();
-            return  listProvinces.Where(p => p.id == city_id.ToString()).FirstOrDefault();
+            return  listProvinces.Where(p => p.Id == city_id.ToString()).FirstOrDefault();
         }
 
         public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant)
@@ -59,7 +59,7 @@ namespace FOS.Services.ProvinceServices
             return await _craw.GetMetadataForCategoryAsync();
         }
 
-        public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        public async Task<DeliveryDetail> GetDeliveryDetailAsync(Restaurant restaurant)
         {
             return await _craw.GetRestaurantDetailAsync(restaurant);
 

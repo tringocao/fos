@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,6 +16,6 @@ namespace FOS.Services.RestaurantServices
         Task<List<Restaurant>> GetRestaurantsByKeywordAsync(int city_id, string keyword);
         Task<List<RestaurantCategory>> GetMetadataForCategoryAsync();
         Task<List<Restaurant>> GetRestaurantsByCategoriesKeywordAsync(int city_id, List<RestaurantCategory> categories, string keyword);
-        Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant);
+        Task<DeliveryDetail> GetDeliveryDetailAsync(Restaurant restaurant);
     }
 }

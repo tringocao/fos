@@ -1,6 +1,7 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
+using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.DeliveryServices;
 using Newtonsoft.Json;
@@ -20,9 +21,13 @@ namespace FOS.API.Controllers
     public class DeliveryController : ApiController
     {
         IDeliveryService _deliveryService;
-        public DeliveryController(IDeliveryService deliveryService)
+        IDeliveryInfosDtoMapper _deliveryInfosDtoMapper;
+        IRestaurantDetailDtoMapper _restaurantDetailDtoMapper;
+        public DeliveryController(IDeliveryService deliveryService, IDeliveryInfosDtoMapper deliveryInfosDtoMapper, IRestaurantDetailDtoMapper restaurantDetailDtoMapper)
         {
             _deliveryService = deliveryService;
+            _deliveryInfosDtoMapper = deliveryInfosDtoMapper;
+            _restaurantDetailDtoMapper = restaurantDetailDtoMapper;
         }
         // GET: api/Delivery
         [HttpGet]
@@ -32,8 +37,9 @@ namespace FOS.API.Controllers
             try
             {
                 _deliveryService.GetExternalServiceById(IdService);
+                var list = await _deliveryService.GetRestaurantDeliveryInforAsync(city_id, restaurant_id);
                 return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
-                  await _deliveryService.GetRestaurantDeliveryInforAsync(city_id, restaurant_id)
+                    list.Select(d => _deliveryInfosDtoMapper.ToDto(d)).ToList()
                 );
             }
             catch (Exception e)
@@ -50,9 +56,11 @@ namespace FOS.API.Controllers
             try
             {
                 _deliveryService.GetExternalServiceById(IdService);
+                var delivery = await _deliveryService.GetRestaurantFirstDeliveryInforAsync(city_id, restaurant_id);
+
                 return ApiUtil<DeliveryInfos>.CreateSuccessfulResult(
-                  await _deliveryService.GetRestaurantFirstDeliveryInforAsync(city_id, restaurant_id)
-                );
+                    _deliveryInfosDtoMapper.ToDto(delivery)
+                ); 
             }
             catch (Exception e)
             {
@@ -62,18 +70,18 @@ namespace FOS.API.Controllers
         }
         [HttpGet]
         [Route("GetDeliveryDetail")]
-        public async Task<ApiResponse<DeliveryDetail>> GetRestaurantDetailAsync(int IdService, int delivery_id)
+        public async Task<ApiResponse<RestaurantDetail>> GetRestaurantDetailAsync(int IdService, int delivery_id)
         {
             try
             {
                 _deliveryService.GetExternalServiceById(IdService);
-                return ApiUtil<DeliveryDetail>.CreateSuccessfulResult(
-                  await _deliveryService.GetRestaurantDetailAsync(new Restaurant() { delivery_id = delivery_id.ToString()})
+                return ApiUtil<RestaurantDetail>.CreateSuccessfulResult(
+                   _restaurantDetailDtoMapper.ToDto(await _deliveryService.GetDetailAsync(delivery_id))
                 );
             }
             catch (Exception e)
             {
-                return ApiUtil<DeliveryDetail>.CreateFailResult(e.ToString());
+                return ApiUtil<RestaurantDetail>.CreateFailResult(e.ToString());
             }
 
         }
@@ -84,8 +92,9 @@ namespace FOS.API.Controllers
             try
             {
                 _deliveryService.GetExternalServiceById(IdService);
+                var list = await _deliveryService.GetRestaurantDeliveryInforByPagingAsync(city_id, pagenum, pagesize);
                 return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
-                  await _deliveryService.GetRestaurantDeliveryInforByPagingAsync(city_id, pagenum, pagesize)
+                  list.Select(d => _deliveryInfosDtoMapper.ToDto(d)).ToList()
                 );
             }
             catch (Exception e)
@@ -107,18 +116,19 @@ namespace FOS.API.Controllers
             try
             {
                 _deliveryService.GetExternalServiceById(IdService);
-                List<Restaurant> newList = new List<Restaurant>();
+                List<Model.Domain.NowModel.Restaurant> newList = new List<Model.Domain.NowModel.Restaurant>();
 
-                if (data.restaurant_ids.Count() < 1) ApiUtil<List<DeliveryInfos>>.CreateFailResult("");
+                if (data.RestaurantIds.Count() < 1) ApiUtil<List<DeliveryInfos>>.CreateFailResult("");
      
-                foreach (var id in data.restaurant_ids)//get the fisrt catalogue
+                foreach (var id in data.RestaurantIds)//get the fisrt catalogue.
                 {
-                    Restaurant item = new Restaurant();
-                    item.restaurant_id = id.ToString();
+                    Model.Domain.NowModel.Restaurant item = new Model.Domain.NowModel.Restaurant();
+                    item.RestaurantId = id.ToString();
                     newList.Add(item);
                 }
+                var list = await _deliveryService.GetRestaurantsDeliveryInforAsync(city_id, newList);
                 return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
-                  await _deliveryService.GetRestaurantsDeliveryInforAsync(city_id, newList)
+                    list.Select(d => _deliveryInfosDtoMapper.ToDto(d)).ToList()
                 );
             }
             catch (Exception e)

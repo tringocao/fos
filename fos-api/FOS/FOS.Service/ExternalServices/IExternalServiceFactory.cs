@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,5 +1,6 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using FOS.Model.Mapping;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             DeliveryDetail deliveryInfos = new DeliveryDetail();
             if (data.result == "success")
             {
-                deliveryInfos = map.ToDto(data.reply.delivery_detail);
+                deliveryInfos = JsonConvert.DeserializeObject<DeliveryDetail>(data.reply.delivery_detail.ToString());
             }
             return deliveryInfos;
         }
@@ -35,7 +36,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
                 foreach (var id in data.reply.search_result[0].restaurant_ids)//get the fisrt catalogue
                 {
                     Restaurant item = new Restaurant();
-                    item.restaurant_id = id;
+                    item.RestaurantId = id;
                     newList.Add(item);
                 }
             }
@@ -49,7 +50,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
 
             foreach (var dish in data.reply.menu_infos)
             {
-                newList.Add(map.ToDto(dish));
+                newList.Add(JsonConvert.DeserializeObject<FoodCategory>(dish.ToString()));
             }
             return newList;
         }
@@ -62,7 +63,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             {
                 foreach (var delivery in data.reply.delivery_infos)
                 {
-                    newList.Add(map.ToDto(delivery));
+                    newList.Add(JsonConvert.DeserializeObject<DeliveryInfos>(delivery.ToString()));
 
                 }
             }
@@ -75,7 +76,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             JsonDtoMapper<Province> map = new JsonDtoMapper<Province>();
             foreach (var province in data.reply.metadata.province)
             {
-                newList.Add(map.ToDto(province));
+                newList.Add(JsonConvert.DeserializeObject<Province>(province.ToString()));
             }
             return newList;
         }
@@ -86,7 +87,7 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             JsonDtoMapper<RestaurantCategory> map = new JsonDtoMapper<RestaurantCategory>();
             foreach (var categories in data.reply.country.now_services[0].categories)
             {
-                newList.Add(map.ToDto(categories));
+                newList.Add(JsonConvert.DeserializeObject<RestaurantCategory>(categories.ToString()));
             }
             return newList;
         }

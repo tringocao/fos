@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,7 +16,7 @@ namespace FOS.Services.ProvinceServices
         Task<List<Province>> GetMetadataForProvinceAsync();
         Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
 
-        Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant);
+        Task<DeliveryDetail> GetDeliveryDetailAsync(Restaurant restaurant);
 
     }
 }

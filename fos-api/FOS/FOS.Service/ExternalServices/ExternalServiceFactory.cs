@@ -1,4 +1,5 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain;
+using FOS.Model.Domain.NowModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace FOS.Services.ExternalServices
         }
         public string GetExternalServiceById(int id)
         {
-            APIs apis = _foodServiceAPIsService.GetById(id);
+            Apis apis = _foodServiceAPIsService.GetById(id);
             service = GetExternalService(apis);
             return service.GetNameService();
             //----------------Test----------------------
@@ -57,7 +58,7 @@ namespace FOS.Services.ExternalServices
         {
             return await service.GetRestaurantDetailAsync(restaurant);
         }
-        private IExternalService GetExternalService(APIs api)
+        private IExternalService GetExternalService(Apis api)
         {
             switch (api.TypeService)
             {

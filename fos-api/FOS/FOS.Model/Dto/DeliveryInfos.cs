@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +9,18 @@ namespace FOS.Model.Dto
 {
     public class DeliveryInfos
     {
-        public string city_id { get; set; }
-        public dynamic cuisines { get; set; }
-        public string restaurant_id { get; set; }
-        public string is_open { get; set; }
-        public string is_foody_delivery { get; set; }
-        public dynamic campaigns { get; set; }
-        public dynamic promotion_groups { get; set; }
-        public dynamic photos { get; set; }
-        public dynamic operating { get; set; }
-
-        public string address { get; set; }
-        public string delivery_id { get; set; }
-        public dynamic categories { get; set; }
-
-        public string name { get; set; }
-        public string url_rewrite_name { get; set; }
+        public string CityId { get; set; }
+        public string RestaurantId { get; set; }
+        public string IsOpen { get; set; }
+        public string IsFoodyDelivery { get; set; }
+        public string Campaigns { get; set; }
+        public string PromotionGroups { get; set; }
+        public string Photo { get; set; }
+        public string Operating { get; set; }
+        public string Address { get; set; }
+        public string DeliveryId { get; set; }
+        public string Categories { get; set; }
+        public string Name { get; set; }
+        public string UrlRewriteName { get; set; }
     }
 }

@@ -1,37 +1,30 @@
-export default interface Event {
-  restaurant: string;
-  category: string;
-  closeTime: Date;
-  participants: string;
-  maximumBudget: number;
-  hostName: string;
-  hostId: string;
-  name: string;
-  createdBy: string;
-  eventId: string;
-  status: string;
-  remindTime: Date;
-  isMyEvent: boolean;
-}
+﻿
 
-export interface EventModel {
-  Restaurant: string;
-  Category: string;
-  CloseTime: Date;
-  Participants: string;
-  MaximumBudget: number;
-  HostName: string;
-  HostId: string;
-  Name: string;
-  CreatedBy: string;
-  EventId: string;
-  Status: string;
-  RemindTime: Date;
-  IsMyEvent: boolean;
-}
+    // $Classes/Enums/Interfaces(filter)[template][separator]
+    // filter (optional): Matches the name or full name of the current item. * = match any, wrap in [] to match attributes or prefix with : to match interfaces or base classes.
+    // template: The template to repeat for each matched item
+    // separator (optional): A separator template that is placed between all templates e.g. $Properties[public $name: $Type][, ]
 
-export interface EventResponse {
-  Data: EventModel[];
-  Success: boolean;
-  ErrorMessage: string;
-}
+    // More info: http://frhagn.github.io/Typewriter/
+
+    
+          
+
+    export class Event    {
+           
+        public Name: string = null;   
+        public Restaurant: string = null;   
+        public RestaurantId: string = null;   
+        public Category: string = null;   
+        public Participants: string = null;   
+        public MaximumBudget: string = null;   
+        public HostName: string = null;   
+        public HostId: string = null;   
+        public CreatedBy: string = null;   
+        public CloseTime: Date = null;   
+        public EventId: string = null;   
+        public Status: string = null;   
+        public RemindTime: Date = null;   
+        public IsMyEvent: boolean = false;
+    }
+         

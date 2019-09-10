@@ -8,18 +8,11 @@ namespace FOS.Model.Dto
 {
     public class Food
     {
-        public string description { get; set; }
-        public int id { get; set; }
-        public bool is_available { get; set; }
-        public bool is_group_discount_item { get; set; }
-        public List<Photo> photos { get; set; }
-        public Price price { get; set; }
-        public DiscountPrice discount_price { get; set; }
-        public string name { get; set; }
-        public string time { get; set; }
-        public string options { get; set; }
-        public string properties { get; set; }
-        public string quantity { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Photos { get; set; }
+        public string Description { get; set; }
+        public string Price { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain;
 using FOS.Model.Mapping;
 using System;
 using System.Collections.Generic;

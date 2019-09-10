@@ -10,5 +10,9 @@ namespace FOS.Repositories.DataModel
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
+        public int IdUser { get; set; }
+        public int IdRestaurant { get; set; }
+        public int IdDelivery { get; set; }
+        public string FoodDetail { get; set; }
     }
 }

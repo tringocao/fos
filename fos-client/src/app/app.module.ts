@@ -74,6 +74,7 @@ import { EventDialogComponent } from './components/event-dialog/event-dialog.com
 import { EventDialogViewComponent } from './components/event-dialog-view/event-dialog-view.component';
 import { NgxStarsModule } from 'ngx-stars';
 import { ShowActionComponent } from './components/show-action/show-action.component';
+import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
 
 @NgModule({
   declarations: [
@@ -97,8 +98,9 @@ import { ShowActionComponent } from './components/show-action/show-action.compon
     OrderTabComponent,
     ListOrderComponent,
     OrderDetailComponent,
+    ShowActionComponent,
     EventDialogViewComponent,
-    ShowActionComponent
+    EventSummaryDialogComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -174,7 +176,8 @@ import { ShowActionComponent } from './components/show-action/show-action.compon
   entryComponents: [
     DialogComponent,
     EventDialogComponent,
-    EventDialogViewComponent
+    EventDialogViewComponent,
+    EventSummaryDialogComponent
   ]
 })
 export class AppModule {}

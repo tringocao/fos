@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model
+namespace FOS.Model.Domain
 {
-    public class APIs
+    public class Apis
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string TypeService { get; set; }
+        public ServiceKind TypeService { get; set; }
         public string JSONData { get; set; }
 
     }

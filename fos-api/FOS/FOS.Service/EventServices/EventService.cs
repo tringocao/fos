@@ -1,5 +1,4 @@
-﻿using FOS.Services.Models;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,7 @@ using FOS.Common;
 using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Dynamic;
+using FOS.Model.Dto;
 
 namespace FOS.Services.EventServices
 {
@@ -23,7 +23,7 @@ namespace FOS.Services.EventServices
             _graphApiProvider = graphApiProvider;
             _sharepointContextProvider = sharepointContextProvider;
         }
-        public async Task<IEnumerable<EventModel>> GetAllEvent(string userId)
+        public async Task<IEnumerable<Event>> GetAllEvent(string userId)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
@@ -43,7 +43,7 @@ namespace FOS.Services.EventServices
                 //JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
                 //dynamic groupList = jsonSerializer.Deserialize<dynamic>(data.Result);
 
-                var listEvent = new List<EventModel>();
+                var listEvent = new List<Event>();
                 foreach (var element in collListItem)
                 {
                     //var participant = ElementAttributeToString(element["EventParticipants"]).Split(seperator).ToList();
@@ -91,7 +91,7 @@ namespace FOS.Services.EventServices
             return element != null ? element.ToString() : "";
         }
 
-        private EventModel ListItemToEventModel(ListItem element, string userId)
+        private Event ListItemToEventModel(ListItem element, string userId)
         {
             var host = element["EventHost"] as FieldLookupValue;
             if (host == null)
@@ -104,10 +104,11 @@ namespace FOS.Services.EventServices
             var remindDateString = element["EventTimeToReminder"].ToString();
             Nullable<DateTime> remindDate = DateTime.Parse(remindDateString).ToLocalTime();
 
-            var eventModel = new EventModel();
+            var eventModel = new Event();
 
             eventModel.Name = ElementAttributeToString(element["EventTitle"]);
             eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
+            eventModel.RestaurantId = ElementAttributeToString(element["EventRestaurantId"]);
             eventModel.Category = ElementAttributeToString(element["EventCategory"]);
             eventModel.CloseTime = closeDate;
             eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
@@ -127,7 +128,7 @@ namespace FOS.Services.EventServices
             return eventModel;
         }
 
-        public EventModel GetEvent(int id)
+        public Event GetEvent(int id)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {

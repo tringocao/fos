@@ -1,4 +1,5 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain;
+using FOS.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +10,31 @@ namespace FOS.Model.Mapping
 {
     public interface IAPIsDtoMapper
     {
-        Model.APIs ToModel(Dto.APIs order);
-        Dto.APIs ToDto(Model.APIs order);
+        Domain.Apis ToModel(Dto.APIs order);
+        Dto.APIs ToDto(Domain.Apis order);
     }
 
     public class APIsDtoMapper : IAPIsDtoMapper
     {
-        public Dto.APIs ToDto(APIs api)
+        public Dto.APIs ToDto(Apis api)
         {
             return new Dto.APIs()
             {
                 ID = api.ID,
                 JSONData = api.JSONData,
                 Name = api.Name,
-                TypeService = Config.ToEnum<ServiceKind>(api.TypeService)
+                TypeService = Config.ToEnum<ServiceKind>(api.TypeService.GetType().FullName)
             };
         }
 
-        public APIs ToModel(Dto.APIs api)
+        public Apis ToModel(Dto.APIs api)
         {
-            return new Model.APIs()
+            return new Domain.Apis()
             {
                 ID = api.ID,
                 JSONData = api.JSONData,
                 Name = api.Name,
-                TypeService = api.TypeService.GetType().FullName
+                TypeService = api.TypeService
             };
         }
        

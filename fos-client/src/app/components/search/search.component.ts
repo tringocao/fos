@@ -20,6 +20,9 @@ import {
 } from 'rxjs/operators';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { stringify } from '@angular/compiler/src/util';
+import { Restaurant } from 'src/app/models/restaurant';
+import { CategoryGroup } from 'src/app/models/category-group';
+import { Category } from 'src/app/models/category';
 
 @Component({
   selector: 'app-search',
@@ -50,13 +53,13 @@ export class SearchComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.restaurantService.GetMetadataForCategory().then(result => {
       result.forEach((element, index) => {
-        if (element.categories.length < 1) {
+        if (element.Categories.length < 1) {
           let selectAll: Category = {
-            name: 'All',
-            id: element.id,
-            code: element.code
+            Name: 'All',
+            Id: element.Id,
+            Code: element.Code
           };
-          element.categories.push(selectAll);
+          element.Categories.push(selectAll);
         }
       });
       this.toppingList = result;
@@ -68,7 +71,7 @@ export class SearchComponent implements OnInit, OnChanges {
     this.usersForm
       .get('userInput')
       .valueChanges.pipe(
-        debounceTime(300),
+        debounceTime(500),
         tap(() => (this.isLoading = true)),
         switchMap(value =>
           this.restaurantService
@@ -78,32 +81,32 @@ export class SearchComponent implements OnInit, OnChanges {
       )
       .subscribe(data =>
         this.restaurantService.getRestaurants(data.Data).then(result => {
-          var dataSourceTemp = [];
-          result.forEach((element, index) => {
-            // tslint:disable-next-line:prefer-const
-            let restaurantItem: Restaurant = {
-              id: element.restaurant_id,
-              delivery_id: element.delivery_id,
-              stared: false,
-              restaurant: element.name,
-              address: element.address,
-              category:
-                element.categories.length > 0 ? element.categories[0] : '',
-              promotion:
-                element.promotion_groups.length > 0
-                  ? element.promotion_groups[0].text
-                  : '',
-              open:
-                (element.operating.open_time || '?') +
-                '-' +
-                (element.operating.close_time || '?'),
-              url_rewrite_name: '',
-              picture: ''
-            };
-            dataSourceTemp.push(restaurantItem);
-          });
-          this.restaurant$ = dataSourceTemp;
-          this.isLoading = false;
+          // var dataSourceTemp = [];
+          // result.forEach((element, index) => {
+          //   // tslint:disable-next-line:prefer-const
+          //   let restaurantItem: Restaurant = {
+          //     // id: element.restaurant_id,
+          //     // delivery_id: element.delivery_id,
+          //     // stared: false,
+          //     // restaurant: element.name,
+          //     // address: element.address,
+          //     // category:
+          //     //   element.categories.length > 0 ? element.categories[0] : '',
+          //     // promotion:
+          //     //   element.promotion_groups.length > 0
+          //     //     ? element.promotion_groups[0].text
+          //     //     : '',
+          //     // open:
+          //     //   (element.operating.open_time || '?') +
+          //     //   '-' +
+          //     //   (element.operating.close_time || '?'),
+          //     // url_rewrite_name: '',
+          //     // picture:''
+          //   };
+          //   dataSourceTemp.push(restaurantItem);
+          // });
+          // this.restaurant$ = dataSourceTemp;
+          // this.isLoading = false;
         })
       );
     // this.restaurant$ = this.searchTerms.pipe(
@@ -127,9 +130,9 @@ export class SearchComponent implements OnInit, OnChanges {
     private restaurantService: RestaurantService
   ) {}
   displayFn(user: Restaurant) {
-    if (user) {
-      return user.restaurant;
-    }
+    // if (user) {
+    //   return user.Restaurant;
+    // }
   }
 
   filterByFavorite(event) {
@@ -162,7 +165,7 @@ export class SearchComponent implements OnInit, OnChanges {
   getCondition(term: Category[]): string {
     let getCod = '';
     term.forEach(e => {
-      getCod = getCod + ',{"code":' + e.code + ',"id":' + e.id + '}';
+      getCod = getCod + ',{"code":' + e.Code + ',"id":' + e.Id + '}';
     });
     getCod = getCod.substr(1);
     return '[' + getCod + ']';

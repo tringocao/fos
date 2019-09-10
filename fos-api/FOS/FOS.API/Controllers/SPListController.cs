@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
+using FOS.Model.Dto;
 
 namespace FOS.API.Controllers
 {
@@ -43,7 +44,7 @@ namespace FOS.API.Controllers
         // POST api/splist/addlistitem/{list-id}/
         [HttpPost]
         [Route("AddListItem")]
-        public async Task<ApiResponse> AddListItem(string Id, [FromBody]JSONRequest item)
+        public async Task<ApiResponse> AddListItem(string Id, [FromBody]JsonRequest item)
         {
             try
             {
@@ -70,29 +71,29 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
-        public async Task<ApiResponse<IEnumerable<Services.Models.EventModel>>> GetAllEvent(string userId)
+        public async Task<ApiResponse<IEnumerable<Event>>> GetAllEvent(string userId)
         {
             try
             {
                 var result = await _eventService.GetAllEvent(userId);
-                return ApiUtil<IEnumerable<Services.Models.EventModel>>.CreateSuccessfulResult(result);
+                return ApiUtil<IEnumerable<Event>>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
             {
-                return ApiUtil<IEnumerable<Services.Models.EventModel>>.CreateFailResult(e.ToString());
+                return ApiUtil<IEnumerable<Event>>.CreateFailResult(e.ToString());
             }
         }
 
-        public ApiResponse<Services.Models.EventModel> GetEvent(int id)
+        public ApiResponse<Event> GetEvent(int id)
         {
             try
             {
                 var result = _eventService.GetEvent(id);
-                return ApiUtil<Services.Models.EventModel>.CreateSuccessfulResult(result);
+                return ApiUtil<Event>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
             {
-                return ApiUtil<Services.Models.EventModel>.CreateFailResult(e.ToString());
+                return ApiUtil<Event>.CreateFailResult(e.ToString());
             }
         }
     }
