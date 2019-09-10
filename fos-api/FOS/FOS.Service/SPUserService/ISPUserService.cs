@@ -10,7 +10,7 @@ namespace FOS.Services.SPUserService
     public interface ISPUserService
     {
         Task<List<Model.Dto.User>> GetUsers();
-        Task<Model.Dto.User> GetCurrentUser();
+        Task<Model.Dto.GraphUser> GetCurrentUser();
         Task<User> GetUserById(string Id);
         Task<List<Model.Dto.User>> GetGroups();
         Task<byte[]> GetAvatarByUserId(string Id);

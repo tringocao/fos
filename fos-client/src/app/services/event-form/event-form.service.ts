@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { switchMap, debounceTime, tap, finalize } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
+import { GraphUser } from 'src/app/models/graph-user';
 @Injectable({
   providedIn: 'root'
 })
@@ -91,13 +92,13 @@ export class EventFormService {
       );
   }
 
-  getCurrentUser(): Observable<ApiOperationResult<User>> {
+  getCurrentUser(): Observable<ApiOperationResult<GraphUser>> {
     return this.http
-      .get<ApiOperationResult<User>>(
+      .get<ApiOperationResult<GraphUser>>(
         environment.apiUrl + 'api/SPUser/GetCurrentUser'
       )
       .pipe(
-        tap((response: ApiOperationResult<User>) => {
+        tap((response: ApiOperationResult<GraphUser>) => {
           return response;
         })
       );

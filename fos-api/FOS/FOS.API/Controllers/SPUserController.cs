@@ -47,16 +47,16 @@ namespace FOS.API.Controllers
         // GET api/spuser/GetCurrentUser
         [HttpGet]
         [Route("GetCurrentUser")]
-        public async Task<ApiResponse<Model.Dto.User>> GetCurrentUser()
+        public async Task<ApiResponse<Model.Dto.GraphUser>> GetCurrentUser()
         {
             try
             {
                 var user = await _sPUserService.GetCurrentUser();
-                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(user);
+                return ApiUtil<Model.Dto.GraphUser>.CreateSuccessfulResult(user);
             }
             catch (Exception e)
             {
-                return ApiUtil<Model.Dto.User>.CreateFailResult(e.ToString());
+                return ApiUtil<Model.Dto.GraphUser>.CreateFailResult(e.ToString());
             }
         }
 
@@ -99,10 +99,10 @@ namespace FOS.API.Controllers
             try
             {
                 var avatar = await _sPUserService.GetAvatarByUserId(userId);
-
                 
                 result.Content = new ByteArrayContent(avatar);
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                result.Headers.CacheControl = new CacheControlHeaderValue { Public = true, MaxAge = TimeSpan.FromDays(1) };
 
                 return result;
             }

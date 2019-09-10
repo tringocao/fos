@@ -20,8 +20,8 @@
         <mat-form-field>
           <mat-label>Event type</mat-label>
           <mat-select [(value)]="_eventSelected">
-            <mat-option value="FIKA">FIKA</mat-option>
-            <mat-option value="Tech lunch">Tech lunch</mat-option>
+            <mat-option value="Open">Open</mat-option>
+            <mat-option value="Close">Close</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -53,28 +53,19 @@
           </mat-select>
         </mat-form-field> -->
 
-        <!-- <mat-form-field class="full-width">
+        <mat-form-field class="full-width">
           <input matInput placeholder="Restaurant" [matAutocomplete]="autoTest" formControlName='userInput'>
         </mat-form-field>
         <mat-autocomplete  #autoTest="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
-          <ng-container *ngIf="!isLoading">
+          <mat-option *ngIf="_isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+          <ng-container *ngIf="!_isLoading">
             <mat-option *ngFor="let restaurant of _restaurant" [value]="restaurant">
                   <app-menu   [restaurant]="restaurant"></app-menu>
-              <span>{{ restaurant.restaurant }}</span>
-              <small> | ID: {{restaurant.id}}</small>
+              <span>{{ restaurant.Name }}</span>
+              <small> | ID: {{restaurant.RestaurantId}}</small>
             </mat-option>
           </ng-container>
-        </mat-autocomplete> -->
-
-        <!-- <mat-form-field class="full-width">
-          <mat-select placeholder="Restaurant" formControlName="restaurant" (selectionChange)="changeRestaurant($event)">
-            <mat-option *ngFor="let restaurant of restaurantPickerGroup" [value]="restaurant">
-              {{restaurant.name}}
-
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
+        </mat-autocomplete>
 
         <mat-form-field class="full-width">
           <mat-label>Maximum Budget</mat-label>
@@ -105,9 +96,9 @@
             <mat-form-field class="full-width">
               <mat-select required placeholder="Pick user/group" formControlName="participants"
                 (selectionChange)="ChangeClient($event)">
-                <mat-optgroup *ngFor="let group of _userPickerGroups" [label]="group.name">
-                  <mat-option style="width:4500px" *ngFor="let user of group.userpicker" [value]="user.Email">
-                    <img id="youtubeimg" height="50" width="50" src="https://localhost:44366/api/SPUser/GetAvatarByUserId?Id={{user.Id}}" />
+                <mat-optgroup *ngFor="let group of _userPickerGroups" [label]="group.Name">
+                  <mat-option style="width:4500px" *ngFor="let user of group.UserPicker" [value]="user.Email">
+                    <img id="youtubeimg" height="50" width="50" src="https://localhost:44366/api/SPUser/GetAvatarByUserId?userId={{user.Id}}" />
                     {{user.Name}}
                   </mat-option>
                 </mat-optgroup>
@@ -168,4 +159,3 @@
 
   </mat-card>
 </section>
-<img src="https://localhost:44366/api/SPUser/GetAvatarByUserId?userId=e618f708-8dde-4f04-9d9b-5c5bc3a4905d"/>

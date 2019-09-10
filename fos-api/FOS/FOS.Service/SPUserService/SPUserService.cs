@@ -42,17 +42,15 @@ namespace FOS.Services.SPUserService
             }
         }
 
-        public async Task<Model.Dto.User> GetCurrentUser()
+        public async Task<Model.Dto.GraphUser> GetCurrentUser()
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "me", null);
             if (result.IsSuccessStatusCode)
             {
                 var resultGroup = await result.Content.ReadAsStringAsync();
-                dynamic response = JsonConvert.DeserializeObject(resultGroup);
+                Model.Dto.GraphUser response = JsonConvert.DeserializeObject<Model.Dto.GraphUser>(resultGroup);
 
-                Model.Dto.User jsonUsers = response.value.ToObject<Model.Dto.User>();
-
-                return jsonUsers;
+                return response;
             }
             else
             {
