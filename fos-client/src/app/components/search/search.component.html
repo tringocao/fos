@@ -1,22 +1,5 @@
 <div id="search-component">
   <form class="example-form" (ngSubmit)="onSubmit()" [formGroup]="usersForm">
-    <!-- <mat-checkbox
-      class="checkbox"
-      color="primary"
-      (change)="filterByFavorite($event)"
-      >My favorite</mat-checkbox
-    > -->
-    <mat-form-field class="favorite">
-      <mat-select
-        placeholder="Favorite"
-        (selectionChange)="filterByFavorite($event)"
-      >
-        <mat-option [value]="null"></mat-option>
-        <mat-option [value]="true">
-          My favorite
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
     <mat-form-field class="example-full-width">
       <input
         matInput
@@ -33,8 +16,8 @@
       <ng-container *ngIf="!isLoading">
         <mat-option *ngFor="let restaurant of restaurant$" [value]="restaurant">
           <app-menu [restaurant]="restaurant"></app-menu>
-          <span>{{ restaurant.restaurant }}</span>
-          <small> | ID: {{ restaurant.id }}</small>
+          <span>{{ restaurant.Name }}</span>
+          <small> | ID: {{ restaurant.RestaurantId }}</small>
         </mat-option>
       </ng-container>
     </mat-autocomplete>
@@ -49,24 +32,24 @@
           {{
             toppings.value
               ? toppings.value[0]
-                ? toppings.value[0].name
-                : ''
-              : ''
+                ? toppings.value[0].Name
+                : ""
+              : ""
           }}
           <span
             *ngIf="toppings.value?.length > 1"
             class="example-additional-selection"
           >
             (+{{ toppings.value.length - 1 }}
-            {{ toppings.value?.length === 2 ? 'other' : 'others' }})
+            {{ toppings.value?.length === 2 ? "other" : "others" }})
           </span>
         </mat-select-trigger>
-        <mat-optgroup *ngFor="let group of toppingList" [label]="group.name">
+        <mat-optgroup *ngFor="let group of toppingList" [label]="group.Name">
           <mat-option
-            *ngFor="let category of group.categories"
+            *ngFor="let category of group.Categories"
             [value]="category"
           >
-            {{ category.name }}
+            {{ category.Name }}
           </mat-option>
         </mat-optgroup>
         <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->

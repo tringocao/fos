@@ -25,14 +25,7 @@ namespace FOS.Model.Domain.NowModel
         public DiscountPrice DiscountPrice { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
-        [JsonProperty("time")]
-        public string Time { get; set; }
-        [JsonProperty("options")]
-        public string Options { get; set; }
-        [JsonProperty("properties")]
-        public string Properties { get; set; }
-        [JsonProperty("quantity")]
-        public string Quantity { get; set; }
+
 
     }
 }
