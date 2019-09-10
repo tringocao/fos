@@ -30,33 +30,33 @@ namespace FOS.API.Controllers
 
         // GET api/spuser/getusers
         [HttpGet]
-        [Route("getusers")]
-        public async Task<ApiResponse<string>> GetUsers()
+        [Route("GetUsers")]
+        public async Task<ApiResponse<List<Model.Dto.User>>> GetUsers()
         {
             try
             {
                 var users = await _sPUserService.GetUsers();
-                return ApiUtil<string>.CreateSuccessfulResult(users);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(users);
             }
             catch (Exception e)
             {
-                return ApiUtil<string>.CreateFailResult(e.ToString());
+                return ApiUtil<List<Model.Dto.User>>.CreateFailResult(e.ToString());
             }
         }
 
         // GET api/spuser/GetCurrentUser
         [HttpGet]
         [Route("GetCurrentUser")]
-        public async Task<ApiResponse<Model.Domain.User>> GetCurrentUser()
+        public async Task<ApiResponse<Model.Dto.User>> GetCurrentUser()
         {
             try
             {
                 var user = await _sPUserService.GetCurrentUser();
-                return ApiUtil<Model.Domain.User>.CreateSuccessfulResult(user);
+                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(user);
             }
             catch (Exception e)
             {
-                return ApiUtil<Model.Domain.User>.CreateFailResult(e.ToString());
+                return ApiUtil<Model.Dto.User>.CreateFailResult(e.ToString());
             }
         }
 
@@ -79,48 +79,53 @@ namespace FOS.API.Controllers
         // GET api/spuser/GetAvatarById/Id
         [HttpGet]
         [Route("GetGroups")]
-        public async Task<ApiResponse<string>> GetGroups()
+        public async Task<ApiResponse<List<Model.Dto.User>>> GetGroups()
         {
             try
             {
                 var group = await _sPUserService.GetGroups();
-                return ApiUtil<string>.CreateSuccessfulResult(group);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(group);
             }
             catch (Exception e)
             {
-                return ApiUtil<string>.CreateFailResult(e.ToString());
+                return ApiUtil<List<Model.Dto.User>>.CreateFailResult(e.ToString());
             }
         }
         [HttpGet]
         [Route("GetAvatarByUserId")]
-        public async Task<ApiResponse<byte[]>> GetAvatarByUserId(string Id)
+        public async Task<HttpResponseMessage> GetAvatarByUserId(string userId)
         {
+            var result = new HttpResponseMessage();
             try
             {
-                var avatar = await _sPUserService.GetAvatarByUserId(Id);
-                return ApiUtil<byte[]>.CreateSuccessfulResult(avatar);
+                var avatar = await _sPUserService.GetAvatarByUserId(userId);
+
+                
+                result.Content = new ByteArrayContent(avatar);
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
+                return result;
             }
             catch (Exception e)
             {
-                return null;
+                result.StatusCode = HttpStatusCode.NotFound;
+                return result;
             }
         }
-        //public async Task<HttpResponseMessage> GetContext()
-        //{
-        //    using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-        //    {
-        //        var web = clientContext.Web;
-        //        clientContext.Load(web);
-        //        clientContext.ExecuteQuery();
-        //        if (clientContext.Web.IsPropertyAvailable("Title"))
-        //        {
-        //            Console.WriteLine("Found title");
-        //        }
-        //        Console.WriteLine("Title: {0}", web.Title);
-        //    }
-        //    HttpResponseMessage responde = new HttpResponseMessage();
 
-        //    return responde;
-        //}
+        [HttpGet]
+        [Route("GetUsersByName")]
+        public async Task<ApiResponse<List<Model.Dto.User>>> GetUsersByName(string searchName)
+        {
+            try
+            {
+                var user = await _sPUserService.GetUsersByName(searchName);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(user);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Model.Dto.User>>.CreateFailResult(e.ToString());
+            }
+        }
     }
 }

@@ -79,20 +79,20 @@ export class EventDialogViewComponent implements OnInit {
 
     console.log(groups, users);
 
-    for (var j = 0; j < groups.length; j++) {
-      this.eventusers.push({
-        name: groups[j].name,
-        email: groups[j].email,
-        img: groups[j].img
-      });
-    }
-    for (var j = 0; j < users.length; j++) {
-      this.eventusers.push({
-        name: users[j].name,
-        email: users[j].email,
-        img: users[j].img
-      });
-    }
+    // for (var j = 0; j < groups.length; j++) {
+    //   this.eventusers.push({
+    //     name: groups[j].name,
+    //     email: groups[j].email,
+    //     img: groups[j].img
+    //   });
+    // }
+    // for (var j = 0; j < users.length; j++) {
+    //   this.eventusers.push({
+    //     name: users[j].name,
+    //     email: users[j].email,
+    //     img: users[j].img
+    //   });
+    // }
     // this.eventusers.push({
     //   name: 'abc',
     //   email: 'email',

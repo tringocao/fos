@@ -24,6 +24,8 @@ import { environment } from 'src/environments/environment';
 import { EventList } from 'src/app/models/eventList';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+import { parseSelectorToR3Selector } from '@angular/compiler/src/core';
+import { User } from 'src/app/models/user';
 
 interface Restaurant {
   id: string;
@@ -45,20 +47,17 @@ export interface OwnerForCreation {
   restaurant: string;
 }
 
-interface SelectItem {
-  label: string;
-  value: any;
-}
-
 export interface userPicker {
-  name: string;
-  email: string;
-  img: string;
+  Name: string;
+  Email: string;
+  Img: string;
+  Id: string;
+  IsGroup: number;
 }
 
 export interface userPickerGroup {
-  name: string;
-  userpicker: userPicker[];
+  Name: string;
+  UserPicker: userPicker[];
 }
 @Component({
   selector: 'app-event-dialog',
@@ -77,30 +76,15 @@ export class EventDialogComponent implements OnInit {
     private restaurantService: RestaurantService
   ) {}
 
-  createdUser = { id: '' };
-  dateTimeToClose: string;
-  dateToReminder: string;
-  maximumBudget: number;
-  userSelect = [];
-  userPickerGroups: userPickerGroup[] = [
-    // {
-    //   name: 'Office 365 group',
-    //   userpicker: [
-    //     { name: 'Group1', email: 'group1@gmail.com' },
-    //     { name: 'Group2', email: 'group2@gmail.com' },
-    //     { name: 'Group3', email: 'group3@gmail.com' }
-    //   ]
-    // },
-    // {
-    //   name: 'User',
-    //   userpicker: [
-    //     { name: 'user1', email: 'user1@gmail.com' },
-    //     { name: 'user2', email: 'user2@gmail.com' },
-    //     { name: 'user3', email: 'user3@gmail.com' }
-    //   ]
-    // }
-  ];
-  private toDateString(date: Date): string {
+  _eventSelected = 'FIKA';
+  _createdUser = { id: '' };
+  _dateTimeToClose: string;
+  _dateToReminder: string;
+  _maximumBudget: number;
+  _userSelect = [];
+  _userPickerGroups: userPickerGroup[] = [];
+
+  private ToDateString(date: Date): string {
     return (
       date.getFullYear().toString() +
       '-' +
@@ -112,89 +96,83 @@ export class EventDialogComponent implements OnInit {
     );
   }
 
-  eventusers: EventUser[] = [
-    // { name: 'Salah', email: 'Liverpool' },
-    // { name: 'Kane', email: 'Tottenham Hospur' },
-    // { name: 'Hazard', email: 'Real Madrid' },
-    // { name: 'Griezmann', email: 'Barcelona' }
-  ];
-  public restaurantPickerGroup = [
-    {
-      id: 'id1',
-      name: 'restaurant 1'
-    },
-    {
-      id: 'id2',
-      name: 'restaurant 2'
-    },
-    {
-      id: 'id3',
-      name: 'restaurant 3'
-    }
-  ];
+  _eventUsers: EventUser[] = [];
 
-  hostPickerGroup = [
-    // {
-    //   name: 'name 1',
-    //   email: 'description 1',
-    // },
-    // {
-    //   name: 'name 2',
-    //   email: 'description 2'
-    // },
-    // {
-    //   name: 'name 3',
-    //   email: 'description 3'
-    // }
-  ];
+  _hostPickerGroup = [];
 
-  displayedColumns = ['avatar', 'name', 'email', 'action'];
-  isLoading = false;
-  restaurant$: Restaurant[];
+  _displayedColumns = ['avatar', 'name', 'email', 'order status', 'action'];
 
-  office365User: userPicker[] = [];
-  office365Group: userPicker[] = [];
+  _isLoading = false;
+  _isHostLoading = false;
+  _restaurant: Restaurant[];
+  _userHost: userPicker[];
+  _office365User: userPicker[] = [];
+  _office365Group: userPicker[] = [];
+
   displayFn(user: Restaurant) {
     if (user) {
       return user.restaurant;
     }
   }
+
+  displayUser(user: userPicker) {
+    if (user) {
+      return user.Name;
+    }
+  }
+
   ngOnInit() {
+    var self = this;
     var users = JSON.parse(localStorage.getItem('users'));
-    console.log(users);
 
-    users.map(user => {
-      this.hostPickerGroup.push({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        img: user.img,
-        principalName: user.principalName
-      });
-      this.office365User.push({
-        name: user.name,
-        email: user.email,
-        img: user.img
-      });
+    // users.map(user => {
+    //   // this._hostPickerGroup.push({
+    //   //   id: user.id,
+    //   //   name: user.name,
+    //   //   email: user.email,
+    //   //   principalName: user.principalName
+    //   // });
+    //   this._office365User.push({
+    //     Name: user.name,
+    //     Email: user.email,
+    //     Img: '',
+    //     Id: user.id,
+    //     IsGroup: 0
+    //   });
+    // });
+    
+    this.eventFormService.GetUsers().toPromise().then(
+      u =>{
+        console.log('get user ', u.Data);
+        u.Data.map( us =>{
+          if(us.Mail){
+            this._office365User.push({
+              Name: us.DisplayName,
+              Email: us.Mail,
+              Img: '',
+              Id: us.Id,
+              IsGroup: 0
+            });
+          }
+          
+        })
+      }
+    )
+
+
+    this._userPickerGroups.push({
+      Name: 'User',
+      UserPicker: this._office365User
     });
-    this.userPickerGroups.push({
-      name: 'User',
-      userpicker: this.office365User
-    });
-    console.log(this.hostPickerGroup);
-    console.log(this.office365User);
 
-    // this.office365User.push({ name: userDisplayName, email: userMail, img: dataImg});
-
-    this.dateTimeToClose = this.toDateString(new Date());
-    this.dateToReminder = this.toDateString(new Date());
-    this.maximumBudget = 0;
+    this._dateTimeToClose = this.ToDateString(new Date());
+    this._dateToReminder = this.ToDateString(new Date());
+    this._maximumBudget = 0;
 
     // -----
     this.ownerForm = new FormGroup({
       title: new FormControl('', [
         Validators.required
-        // Validators.maxLength(60)
       ]),
       dateOfBirth: new FormControl(new Date()),
       address: new FormControl('', []),
@@ -202,147 +180,183 @@ export class EventDialogComponent implements OnInit {
       dateTimeToClose: new FormControl(''),
       participants: new FormControl(''),
       restaurant: new FormControl(''),
-      userInput: new FormControl('')
+      userInput: new FormControl(''),
+      userInputHost: new FormControl('')
     });
 
-    // const toSelect = this.restaurantPickerGroup.find(c => c.id == this.data.id);
-    // console.log(toSelect);
-    // this.ownerForm.get('restaurant').setValue(toSelect);
-    // let currentDisplayName = "";
-    // find current user
+    // get User
 
-    // console.log(this.createdUser);
-    // this.eventFormService.setUserInfo(this.hostPickerGroup,this.office365User,this.userPickerGroups,currentDisplayName,this.ownerForm,this.createdUser);
 
-    //get Group
-    this.http
-      .get(environment.apiUrl + '/api/SPUser/GetGroups')
-      .subscribe((data: any) => {
-        console.log('request data');
-        var jsonData = JSON.parse(data.Data);
-        console.log(jsonData);
-        for (var i = 0; i < jsonData.value.length; i++) {
-          var counter = jsonData.value[i];
-
-          // console.log("check email: " + counter.displayName);
-          if (Boolean(counter.mail)) {
-            // this.dropdownListNewUser.push({ 'itemName': counter.displayName, 'id': counter.mail });
-            // this.office365User.push({ name: counter.displayName, email: counter.mail });
-            // this.userLogin.push({ name: counter.displayName, loginName: counter.userPrincipalName });
-            this.office365Group.push({
-              name: counter.displayName,
-              email: counter.mail,
-              img: ''
+    // get Group
+      this.eventFormService.GetGroups().toPromise().then(value =>{
+        value.Data.map(user =>{
+          
+          if(user.Id && user.Mail){
+            this._office365Group.push({
+              Name: user.DisplayName,
+              Email: user.Mail,
+              Img: '',
+              Id: user.Id,
+              IsGroup: 1
             });
-          } else {
-            // console.log("khong co email: " + counter.displayName);
           }
-        }
-      });
-    this.userPickerGroups.push({
-      name: 'Office 365 Group',
-      userpicker: this.office365Group
+        })
+      })
+      console.log('group ', this._office365Group)
+    this._userPickerGroups.push({
+      Name: 'Office 365 Group',
+      UserPicker: this._office365Group
     });
 
-    this.http
-      .get(environment.apiUrl + 'api/SPUser/GetCurrentUser')
-      .subscribe((data: any) => {
-        console.log(this.hostPickerGroup);
-        var selectHost = this.hostPickerGroup.find(
-          c => c.name == data.Data.displayName
-        );
-        console.log(selectHost);
-        this.ownerForm.get('host').setValue(selectHost);
+    //get currentUser
+    this.eventFormService
+      .getCurrentUser()
+      .toPromise()
+      .then(function(value: any) {
+        var dataSourceTemp: userPicker = {
+          Name: value.Data.displayName,
+          Email: value.Data.mail,
+          Img: value.Data.AvatarUrl,
+          Id: value.Data.id,
+          IsGroup: 0
+        };
+        console.log('curentuser', dataSourceTemp);
+        self.ownerForm.get('userInputHost').setValue(dataSourceTemp);
       });
-
-    //avatar
-    // console.log("get avatar");
-    // this.http.get(environment.apiUrl + 'api/SPUser/GetAvatar').subscribe((data: any) => {
-    //   console.log("get avatar");
-
-    //   console.log(data);
-    //   var dataImg = "data:image/png;base64," + data.Data;
-    //   console.log(dataImg);
-    // });
 
     this.ownerForm.get('userInput').setValue(this.data);
+
+    var userHost2: userPicker[];
+
     this.ownerForm
-      .get('userInput')
+      .get('userInputHost')
       .valueChanges.pipe(
         debounceTime(300),
-        tap(() => (this.isLoading = true)),
+        tap(() => (this._isHostLoading = true)),
         switchMap(value =>
-          this.restaurantService
-            .SearchRestaurantName(value, 4)
-            .pipe(finalize(() => (this.isLoading = true)))
+          this.eventFormService
+            .GetUsersByName(value)
+            .pipe(finalize(() => (this._isHostLoading = false)))
         )
       )
-      .subscribe(data =>
-        this.restaurantService.getRestaurants(data.Data).then(result => {
-          var dataSourceTemp = [];
-          result.forEach((element, index) => {
-            // tslint:disable-next-line:prefer-const
-            // let restaurantItem: Restaurant = {
-            //   id: element.restaurant_id,
-            //   delivery_id: element.delivery_id,
-            //   stared: false,
-            //   restaurant: element.name,
-            //   address: element.address,
-            //   category:
-            //     element.categories.length > 0 ? element.categories[0] : '',
-            //   promotion:
-            //     element.promotion_groups.length > 0
-            //       ? element.promotion_groups[0].text
-            //       : '',
-            //   open:
-            //     (element.operating.open_time || '?') +
-            //     '-' +
-            //     (element.operating.close_time || '?'),
-            //   url_rewrite_name: ''
-            // };
-            // dataSourceTemp.push(restaurantItem);
-          });
-          this.restaurant$ = dataSourceTemp;
-          this.isLoading = false;
-        })
+      .subscribe(
+        (data: ApiOperationResult<Array<User>>) => {
+          if (data && data.Data) {
+            var dataSourceTemp: userPicker[] = [];
+            console.log(data.Data);
+
+            data.Data.map(user => {
+              if (user.UserPrincipalName) {
+                dataSourceTemp.push({
+                  Name: user.DisplayName,
+                  Email: user.UserPrincipalName,
+                  Img: '',
+                  Id: user.Id,
+                  IsGroup: 0
+                });
+              }
+            })
+
+            self._userHost = dataSourceTemp;
+            console.log( 'loading', self._userHost);
+            this._isHostLoading = false;
+          }
+        }
+
+        // this.restaurantService.getRestaurants(data.Data).then(result => {
+        //   var dataSourceTemp = [];
+        //   result.forEach((element, index) => {
+        //     // tslint:disable-next-line:prefer-const
+        //     let restaurantItem: Restaurant = {
+        //       id: element.restaurant_id,
+        //       delivery_id: element.delivery_id,
+        //       stared: false,
+        //       restaurant: element.name,
+        //       address: element.address,
+        //       category:
+        //         element.categories.length > 0 ? element.categories[0] : '',
+        //       promotion:
+        //         element.promotion_groups.length > 0
+        //           ? element.promotion_groups[0].text
+        //           : '',
+        //       open:
+        //         (element.operating.open_time || '?') +
+        //         '-' +
+        //         (element.operating.close_time || '?'),
+        //       url_rewrite_name: ''
+        //     };
+        //     dataSourceTemp.push(restaurantItem);
+        //   });
+        //   this.restaurant$ = dataSourceTemp;
+        //   this.isHostLoading = false;
+        // })
       );
+
+    // this.ownerForm
+    //   .get('userInput')
+    //   .valueChanges.pipe(
+    //     debounceTime(300),
+    //     tap(() => (this.isLoading = true)),
+    //     switchMap(value =>
+    //       this.restaurantService
+    //         .SearchRestaurantName(value, 4)
+    //         .pipe(finalize(() => (this.isLoading = true)))
+    //     )
+    //   )
+    //   .subscribe(data =>
+    //     this.restaurantService.getRestaurants(data.Data).then(result => {
+    //       var dataSourceTemp = [];
+    //       result.forEach((element, index) => {
+    //         // tslint:disable-next-line:prefer-const
+    //         let restaurantItem: Restaurant = {
+    //           id: element.restaurantId,
+    //           delivery_id: element.deliveryId,
+    //           stared: false,
+    //           restaurant: element.name,
+    //           address: element.address,
+    //           category:
+    //             element.categories.length > 0 ? element.categories[0] : '',
+    //           promotion:
+    //             element.promotionGroups.length > 0
+    //               ? element.promotionGroups[0]
+    //               : '',
+    //           open:
+    //             (element. || '?') +
+    //             '-' +
+    //             (element.operating.close_time || '?'),
+    //           url_rewrite_name: ''
+    //         };
+    //         dataSourceTemp.push(restaurantItem);
+    //       });
+    //       this.restaurant$ = dataSourceTemp;
+    //       this.isLoading = false;
+    //     })
+    //   );
   }
-  public hasError = (controlName: string, errorName: string) => {
+  public HasError = (controlName: string, errorName: string) => {
     return this.ownerForm.controls[controlName].hasError(errorName);
   };
 
-  public onCancel = () => {
+  public OnCancel = () => {
     console.log('click cancel');
-    if (this.ownerForm.valid && this.eventusers.length > 0) {
+    if (this.ownerForm.valid && this._eventUsers.length > 0) {
       console.log('pass');
     }
   };
 
-  public createOwner = ownerFormValue => {
+  public CreateOwner = ownerFormValue => {
     if (this.ownerForm.valid) {
-      // this.executeOwnerCreation(ownerFormValue);
       console.log('pass');
     }
   };
-  onNoClick(): void {
+  OnNoClick(): void {
     this.dialogRef.close();
   }
 
-  // private executeOwnerCreation = ownerFormValue => {
-  //   let owner: OwnerForCreation = {
-  //     name: ownerFormValue.name,
-  //     dateOfBirth: ownerFormValue.dateOfBirth,
-  //     address: ownerFormValue.address,
-  //     host: ownerFormValue.host,
-  //     dateTimeToClose: this.toDateString(new Date()),
-  //     hostNew: ownerFormValue.hostNew
-  //   };
-  // };
-
-  deleteUserInTable(name: string): void {
-    for (var j = 0; j < this.eventusers.length; j++) {
-      if (name == this.eventusers[j].name) {
-        this.eventusers.splice(j, 1);
+  DeleteUserInTable(name: string): void {
+    for (var j = 0; j < this._eventUsers.length; j++) {
+      if (name == this._eventUsers[j].Name) {
+        this._eventUsers.splice(j, 1);
 
         j--;
         this.table.renderRows();
@@ -350,24 +364,29 @@ export class EventDialogComponent implements OnInit {
     }
   }
 
-  changeClient(event) {
+  ChangeClient(event) {
     console.log('change client');
 
     let target = event.source.selected._element.nativeElement;
-    this.userSelect = [];
+    this._userSelect = [];
 
-    const toSelect = this.office365User.find(c => c.email == event.value);
+    const toSelect = this._office365User.find(c => c.Email == event.value);
+    const toSelectGroup = this._office365Group.find(c => c.Email == event.value);
     if (toSelect != null) {
-      this.userSelect.push({
+      this._userSelect.push({
         name: target.innerText.trim(),
         email: event.value,
-        img: toSelect.img
+        img: '',
+        id: toSelect.Id,
+        isGroup: 0
       });
     } else {
-      this.userSelect.push({
+      this._userSelect.push({
         name: target.innerText.trim(),
         email: event.value,
-        img: ''
+        img: '',
+        isGroup: 1,
+        id: toSelectGroup.Id
       });
     }
   }
@@ -375,20 +394,24 @@ export class EventDialogComponent implements OnInit {
   AddUserToTable(): void {
     console.log('Nhan add card');
 
-    console.log(this.userSelect);
+    // console.log(this.userSelect);
 
-    for (var s in this.userSelect) {
+    for (var s in this._userSelect) {
       var flag = false;
-      for (var e in this.eventusers) {
-        if (this.userSelect[s].name == this.eventusers[e].name) {
+      for (var e in this._eventUsers) {
+        if (this._userSelect[s].name == this._eventUsers[e].Name) {
           flag = true;
         }
       }
       if (flag == false) {
-        this.eventusers.push({
-          name: this.userSelect[s].name,
-          email: this.userSelect[s].email,
-          img: this.userSelect[s].img
+
+
+        this._eventUsers.push({
+          Name: this._userSelect[s].Name,
+          Email: this._userSelect[s].Email,
+          Img: '',
+          Id: this._userSelect[s].id,
+          IsGroup: this._userSelect[s].isGroup,
         });
         this.table.renderRows();
       }
@@ -396,7 +419,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   SaveToSharePointEventList(): void {
-    if (this.eventusers.length == 0) {
+    if (this._eventUsers.length == 0) {
       alert('Please choose participants!');
       return;
     }
@@ -409,15 +432,15 @@ export class EventDialogComponent implements OnInit {
     console.log('get title: ');
     console.log(title);
 
-    var maximumBudget = this.maximumBudget;
+    var maximumBudget = this._maximumBudget;
     console.log('get maximumBudget: ');
     console.log(maximumBudget);
 
-    var dateTimeToClose = this.dateTimeToClose.replace('T', ' ');
+    var dateTimeToClose = this._dateTimeToClose.replace('T', ' ');
     console.log('get dateTimeToClose: ');
     console.log(dateTimeToClose);
 
-    var dateToReminder = this.dateToReminder.replace('T', ' ');
+    var dateToReminder = this._dateToReminder.replace('T', ' ');
     console.log('get dateToReminder: ');
     console.log(dateToReminder);
 
@@ -446,14 +469,12 @@ export class EventDialogComponent implements OnInit {
     console.log(hostId);
 
     console.log('get createUserId: ');
-    console.log(this.createdUser.id);
+    console.log(this._createdUser.id);
 
     var participantList = '';
-    for (var j = 0; j < this.eventusers.length; j++) {
-      if (this.eventusers[j].email) {
-        participantList = participantList.concat(
-          this.eventusers[j].email + ';#'
-        );
+    for (var j = 0; j < this._eventUsers.length; j++) {
+      if (this._eventUsers[j].Email) {
+        console.log(this._eventUsers[j].Email, this._eventUsers[j].IsGroup);
       }
     }
 
@@ -461,7 +482,7 @@ export class EventDialogComponent implements OnInit {
 
     console.log('participant list: ' + newParticipantList);
 
-    var eventlistitem: EventList = {
+    var eventListitem: EventList = {
       eventTitle: title,
       eventId: title,
       eventRestaurant: restaurant,
@@ -474,31 +495,31 @@ export class EventDialogComponent implements OnInit {
       eventRestaurantId: restaurantId,
       eventServiceId: '1',
       eventDeliveryId: deliveryId,
-      eventCreatedUserId: this.createdUser.id,
+      eventCreatedUserId: this._createdUser.id,
       eventHostId: hostId
     };
-    this.eventFormService.addEventListItem(eventlistitem).then(r => {
-      setTimeout(() => {
-        this.SendEmail(title);
-      }, 5000);
-    });
 
-    //send mail
+
+    // this.eventFormService.addEventListItem(eventlistitem).then(r => {
+    //   setTimeout(() => {
+    //     this.SendEmail(title);
+    //   }, 5000);
+    // });
   }
   SendEmail(title: string) {
     this.restaurantService.setEmail(title);
     console.log('Sent!');
   }
-  changeHost(event) {
+  ChangeHost(event) {
     let target = event.source.selected._element.nativeElement;
     console.log('host: ' + target.innerText.trim() + ' ' + event.value.email);
   }
-  changeRestaurant(event) {
+  ChangeRestaurant(event) {
     let target = event.source.selected._element.nativeElement;
     console.log('host: ' + target.innerText.trim() + ' ' + event.value.id);
   }
 
-  changeParticipants(user) {
+  ChangeParticipants(user) {
     console.log(user);
   }
 }

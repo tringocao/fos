@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FOS.Model.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,11 @@ namespace FOS.Services.SPUserService
 {
     public interface ISPUserService
     {
-        Task<string> GetUsers();
-        Task<Model.Domain.User> GetCurrentUser();
-        Task<Model.Domain.User> GetUserById(string Id);
-        Task<string> GetGroups();
+        Task<List<Model.Dto.User>> GetUsers();
+        Task<Model.Dto.User> GetCurrentUser();
+        Task<User> GetUserById(string Id);
+        Task<List<Model.Dto.User>> GetGroups();
         Task<byte[]> GetAvatarByUserId(string Id);
+        Task<List<Model.Dto.User>> GetUsersByName(string searchName);
     }
 }
