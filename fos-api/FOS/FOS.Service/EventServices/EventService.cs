@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Dynamic;
 using FOS.Model.Dto;
+using FOS.Model.Mapping;
 
 namespace FOS.Services.EventServices
 {
@@ -18,12 +19,14 @@ namespace FOS.Services.EventServices
     {
         IGraphApiProvider _graphApiProvider;
         ISharepointContextProvider _sharepointContextProvider;
-        public EventService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider)
+        IEventDtoMapper _eventDtoMapper;
+        public EventService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IEventDtoMapper eventDtoMapper)
         {
             _graphApiProvider = graphApiProvider;
             _sharepointContextProvider = sharepointContextProvider;
+            _eventDtoMapper = eventDtoMapper;
         }
-        public async Task<IEnumerable<Event>> GetAllEvent(string userId)
+        public IEnumerable<Event> GetAllEvent(string userId)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
@@ -36,96 +39,17 @@ namespace FOS.Services.EventServices
                 clientContext.Load(collListItem);
                 clientContext.ExecuteQuery();
 
-                //char[] seperator = { ';', '#' };
-
-                //var groups = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups", null);
-                //var data = groups.Content.ReadAsStringAsync();
-                //JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
-                //dynamic groupList = jsonSerializer.Deserialize<dynamic>(data.Result);
-
                 var listEvent = new List<Event>();
                 foreach (var element in collListItem)
                 {
-                    //var participant = ElementAttributeToString(element["EventParticipants"]).Split(seperator).ToList();
-                    //participant.RemoveAll(item => item == "");
-
-                    //var isBelongMyEvent = false;
-                    //foreach (var item in participant)
-                    //{
-                    //    isBelongMyEvent  = await IsUserBelongGroupParticipant(item, groupList);
-                    //    if (isBelongMyEvent)
-                    //    {
-                    //        break;
-                    //    }
-                    //}
-                    var eventModel = ListItemToEventModel(element, userId);
+                    var eventModel = _eventDtoMapper.ListItemToEventModel(element);
+                    eventModel.IsMyEvent = eventModel.EventParticipantsJson.Contains(userId)
+                        || eventModel.HostId == userId
+                        || eventModel.CreatedBy == userId;
                     listEvent.Add(eventModel);
                 }
                 return listEvent;
             }
-        }
-        private async Task<Boolean> IsUserBelongGroupParticipant(string mail, dynamic groupList)
-        {
-
-            foreach (var item in groupList["value"])
-            {
-                if(Equals(item["mail"], mail))
-                {
-                    var groupId = "\'" + item["id"] + "\'";
-                    var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "me/memberOf?$filter=id eq " + groupId, null);
-                    var data = result.Content.ReadAsStringAsync();
-
-                    JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
-                    dynamic group = jsonSerializer.Deserialize<dynamic>(data.Result);
-
-                    if(group["value"][0] != null)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        private string ElementAttributeToString(Object element)
-        {
-            return element != null ? element.ToString() : "";
-        }
-
-        private Event ListItemToEventModel(ListItem element, string userId)
-        {
-            var host = element["EventHost"] as FieldLookupValue;
-            if (host == null)
-            {
-                host = new FieldLookupValue();
-            }
-            var closeDateString = element["EventTimeToClose"].ToString();
-            Nullable<DateTime> closeDate = DateTime.Parse(closeDateString).ToLocalTime();
-
-            var remindDateString = element["EventTimeToReminder"].ToString();
-            Nullable<DateTime> remindDate = DateTime.Parse(remindDateString).ToLocalTime();
-
-            var eventModel = new Event();
-
-            eventModel.Name = ElementAttributeToString(element["EventTitle"]);
-            eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
-            eventModel.RestaurantId = ElementAttributeToString(element["EventRestaurantId"]);
-            eventModel.Category = ElementAttributeToString(element["EventCategory"]);
-            eventModel.CloseTime = closeDate;
-            eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
-            eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
-            eventModel.EventId = ElementAttributeToString(element["ID"]);
-            eventModel.HostName = ElementAttributeToString(host.LookupValue);
-            eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
-            eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
-            eventModel.Status = ElementAttributeToString(element["status"]);
-            eventModel.RemindTime = remindDate;
-
-            eventModel.IsMyEvent = 
-                eventModel.Participants.Contains(userId) 
-                || eventModel.HostId == userId 
-                || eventModel.CreatedBy == userId;
-
-            return eventModel;
         }
 
         public Event GetEvent(int id)
@@ -141,7 +65,7 @@ namespace FOS.Services.EventServices
                 clientContext.Load(item);
                 clientContext.ExecuteQuery();
 
-                var result = ListItemToEventModel(item, null);
+                var result = _eventDtoMapper.ListItemToEventModel(item);
 
                 return result;
             }
