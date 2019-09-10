@@ -76,6 +76,7 @@ import { NgxStarsModule } from "ngx-stars";
 import { ShowActionComponent } from "./components/show-action/show-action.component";
 import { EventSummaryDialogComponent } from "./components/event-summary-dialog/event-summary-dialog.component";
 import { FoodComponent } from "./components/dialog/food/food.component";
+import { ListOrderedFoodsComponent } from './components/order-detail/list-ordered-foods/list-ordered-foods.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { FoodComponent } from "./components/dialog/food/food.component";
     ShowActionComponent,
     EventDialogViewComponent,
     EventSummaryDialogComponent,
-    FoodComponent
+    FoodComponent,
+    ListOrderedFoodsComponent
   ],
   // declarations: [
   //     AppComponent,

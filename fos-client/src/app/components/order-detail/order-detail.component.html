@@ -1,2 +1,3 @@
-<p>order-detail works! with ID = {{ id }}</p>
-<app-food [data]="data"></app-food>
+<div *ngIf="isDataAvailable">
+    <app-food [data]="data"></app-food>
+</div>
