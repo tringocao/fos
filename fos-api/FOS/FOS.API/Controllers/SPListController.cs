@@ -71,11 +71,11 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
-        public async Task<ApiResponse<IEnumerable<Event>>> GetAllEvent(string userId)
+        public ApiResponse<IEnumerable<Event>> GetAllEvent(string userId)
         {
             try
             {
-                var result = await _eventService.GetAllEvent(userId);
+                var result = _eventService.GetAllEvent(userId);
                 return ApiUtil<IEnumerable<Event>>.CreateSuccessfulResult(result);
             }
             catch (Exception e)

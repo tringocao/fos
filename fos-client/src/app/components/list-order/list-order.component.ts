@@ -243,18 +243,6 @@ export class ListOrderComponent implements OnInit, OnChanges {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
 
-  private toDateString(date: Date): string {
-    return (
-      date.getFullYear().toString() +
-      '-' +
-      ('0' + (date.getMonth() + 1)).slice(-2) +
-      '-' +
-      ('0' + date.getDate()).slice(-2) +
-      'T' +
-      date.toTimeString().slice(0, 5)
-    );
-  }
-
   showEvent(row: any) {
     // console.log(row);
     this.mapRowToEventList(row);

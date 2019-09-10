@@ -25,6 +25,9 @@
         public EventId: string = null;   
         public Status: string = null;   
         public RemindTime: Date = null;   
-        public IsMyEvent: boolean = false;
+        public IsMyEvent: boolean = false;   
+        public EventType: string = null;   
+        public EventDate: Date = null;   
+        public EventParticipantsJson: string = null;
     }
          
