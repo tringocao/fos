@@ -3,6 +3,9 @@ import { HttpClient, XhrFactory } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { tap, filter } from 'rxjs/operators';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
+import { FoodCategory } from 'src/app/models/food-category';
+import { CategoryGroup } from 'src/app/models/category-group';
 
 @Injectable({
   providedIn: 'root'
@@ -103,17 +106,43 @@ export class RestaurantService {
         .catch(alert => console.log(alert));
     });
   }
+  getRestaurantDetailById(
+    restaurantId: number,
+    cityId: number = 217,
+    idService: number = 1
+  ): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<any>>(
+          environment.apiUrl + 'api/Delivery/GetFirstId',
+          {
+            params: {
+              IdService: JSON.stringify(idService),
+              city_Id: JSON.stringify(cityId),
+              restaurant_id: JSON.stringify(restaurantId)
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
   getRestaurants(
     ids: Array<number>,
     IdService: number = 1,
     city_id: number = 217
-  ): Promise<Array<any>> {
-    return new Promise<Array<any>>((resolve, reject) => {
+  ): Promise<Array<DeliveryInfos>> {
+    return new Promise<Array<DeliveryInfos>>((resolve, reject) => {
       this.http
-        .put<ApiOperationResult<Array<any>>>(
+        .put<ApiOperationResult<Array<DeliveryInfos>>>(
           environment.apiUrl + 'api/Delivery/PutRestaurantIds',
           {
-            restaurant_ids: ids
+            restaurant_id: ids
           },
           {
             params: {
@@ -126,7 +155,7 @@ export class RestaurantService {
         .then(result => {
           if (result.Success) {
             resolve(result.Data);
-          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+          }
         })
         .catch(alert => console.log(alert));
     });

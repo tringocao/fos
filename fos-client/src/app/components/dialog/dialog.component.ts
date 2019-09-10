@@ -8,6 +8,7 @@ import { Observable, Observer } from 'rxjs';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { EventDialogComponent } from '../event-dialog/event-dialog.component';
+import { RestaurantDetail } from 'src/app/models/restaurant-detail';
 interface FoodCategory {
   dish_type_name: string;
   dish_type_id: string;
@@ -66,7 +67,7 @@ export class DialogComponent implements OnInit {
     this.restaurantService
       .getFood(Number(this.data.restaurant.delivery_id))
       .then(result => {
-        result.forEach(c => this.foodCategory.push(c));
+        // result.forEach(c => this.foodCategory.push(c));
         this.showAll(this.foodCategory);
       });
   }

@@ -13,6 +13,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/models/user';
 // import { FavoriteRestaurant } from '../../models/favoriteRestaurant';
 
 const restaurants: any = [];
@@ -49,7 +50,7 @@ export class ListRestaurantComponent implements OnInit {
     'menu',
     'addEvent'
   ];
-  dataSource: any = new MatTableDataSource<Restaurant>(restaurants);
+  dataSource: any = new MatTableDataSource<Restaurant>();
   favoriteOnlyDataSource: Restaurant[];
   baseDataSource: Restaurant[];
   userId: string;
@@ -74,8 +75,8 @@ export class ListRestaurantComponent implements OnInit {
     this.keyword = '';
 
     this.userService.getCurrentUserId().then((response: User) => {
-      console.log(response.id);
-      this.userId = response.id;
+      console.log(response.Id);
+      this.userId = response.Id;
       this.favoriteService.getFavorite(this.userId).then(response => {
         console.log(response);
         response.map((item: FavoriteRestaurant) => {
@@ -156,6 +157,16 @@ export class ListRestaurantComponent implements OnInit {
   }
 
   getRestaurant($event) {
+    if ($event.isChecked) {
+      this.favoriteOnlyDataSource = this.dataSource.data.filter(
+        restaurant => restaurant.stared
+      );
+      this.baseDataSource = this.dataSource.data;
+      this.dataSource.data = this.favoriteOnlyDataSource;
+      this.toast('Filtered by favorite! ', 'Dismiss');
+    } else {
+      this.dataSource.data = this.baseDataSource;
+    }
     if ($event.topic != undefined && $event.keyword != undefined) {
       this.load = true;
 
@@ -165,41 +176,18 @@ export class ListRestaurantComponent implements OnInit {
         .getRestaurantIds($event.topic, $event.keyword)
         .then(response => {
           this.restaurantService.getRestaurants(response).then(result => {
-            const dataSourceTemp = [];
-            result.forEach((element, index) => {
-              let restaurantItem: Restaurant = {
-                id: element.restaurant_id,
-                delivery_id: element.delivery_id,
-                stared: this.favoriteRestaurants.includes(
-                  element.restaurant_id
-                ),
-                restaurant: element.name,
-                address: element.address,
-                category:
-                  element.categories.length > 0 ? element.categories[0] : '',
-                promotion:
-                  element.promotion_groups.length > 0
-                    ? element.promotion_groups[0].text
-                    : '',
-                open:
-                  (element.operating.open_time || '?') +
-                  '-' +
-                  (element.operating.close_time || '?'),
-                url_rewrite_name: '',
-                picture: element.photos[0].value
-              };
-              dataSourceTemp.push(restaurantItem);
-            });
-            console.log(
-              dataSourceTemp.filter(
-                (restaurant: Restaurant) => restaurant.stared
-              )
-            );
-            this.dataSource.data = this.favoriteOnly
-              ? dataSourceTemp.filter(
-                  (restaurant: Restaurant) => restaurant.stared
-                )
-              : dataSourceTemp;
+            const dataSourceTemp = result;
+            this.dataSource.data = dataSourceTemp;
+            // console.log(
+            //   dataSourceTemp.filter(
+            //     (restaurant: Restaurant) => restaurant.stared
+            //   )
+            // );
+            // this.dataSource.data = this.favoriteOnly
+            //   ? dataSourceTemp.filter(
+            //       (restaurant: Restaurant) => restaurant.stared
+            //     )
+            //   : dataSourceTemp;
 
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;

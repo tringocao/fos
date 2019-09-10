@@ -65,12 +65,12 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909050750387_Initial.cs" />
-    <Compile Include="Migrations\201909050750387_Initial.Designer.cs">
-      <DependentUpon>201909050750387_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201909091055158_update.cs" />
+    <Compile Include="Migrations\201909091055158_update.Designer.cs">
+      <DependentUpon>201909091055158_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="OrderRepository.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AutoMapperConfig.cs" />
     <Compile Include="Repositories\FOSFavoriteRestaurantRepository.cs" />
@@ -98,8 +98,8 @@
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909050750387_Initial.resx">
-      <DependentUpon>201909050750387_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909091055158_update.resx">
+      <DependentUpon>201909091055158_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

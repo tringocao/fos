@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using FOS.Services.FoodServices;
 using FOS.Services.RestaurantServices;
 using System;
@@ -52,12 +52,12 @@ namespace FOS.Services.DeliveryServices
         }
         public async Task<List<DeliveryInfos>> SearchByNameAsync(string nameDelivery)
         {
-            return deliveryInfos.FindAll(d => d.name.Contains(nameDelivery));            
+            return deliveryInfos.FindAll(d => d.Name.Contains(nameDelivery));            
         }
 
-        public async Task<DeliveryDetail> GetRestaurantDetailAsync(Restaurant restaurant)
+        public async Task<DeliveryDetail> GetDetailAsync(int deliveryId)
         {
-            return await _restaurantService.GetRestaurantDetailAsync(restaurant);
+            return await _restaurantService.GetDeliveryDetailAsync(new Restaurant() { DeliveryId = deliveryId.ToString() });
         }
     }
 }

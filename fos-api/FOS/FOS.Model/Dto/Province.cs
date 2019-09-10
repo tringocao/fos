@@ -8,14 +8,11 @@ namespace FOS.Model.Dto
 {
     public class Province
     {
-        public string country_id { get; set; }
-        public string id { get; set; }
+        public string CountryId { get; set; }
+        public string Id { get; set; }
         //public int province_id { get; set; }
-
-        public string name { get; set; }
-        public string name_url { get; set; }
-        public dynamic service { get; set; }
-        public dynamic district { get; set; }
-
+        public string Name { get; set; }
+        public string NameUrl { get; set; }
+  
     }
 }

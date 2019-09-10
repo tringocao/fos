@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FOS.Model;
+using FOS.Model.Domain;
 using FOS.Repositories.DataModel;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace FOS.Repositories.Repositories
                 //    string>(c.FOSBodyFieldLinks.ToDictionary(dic => dic.Name, dic => dic.DefaultValue))))
                 .ReverseMap();
 
-                config.CreateMap<FavoriteRestaurant, Model.Domain.FavoriteRestaurant>().ReverseMap();
+                config.CreateMap<Model.Dto.FavoriteRestaurant, Model.Domain.FavoriteRestaurant>().ReverseMap();
 
             });
         }

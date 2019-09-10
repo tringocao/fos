@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain.NowModel;
 using FOS.Services.DeliveryServices;
 using System;
 using System.Collections.Generic;
@@ -29,15 +29,15 @@ namespace FOS.Services.FoodServices
         public async Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int delivery_id)
         {
             return await GetFoodCataloguesAsync(
-                new DeliveryInfos() { delivery_id = delivery_id.ToString()});
+                new DeliveryInfos() { DeliveryId = delivery_id});
         }
         public async Task<List<Food>> GetFoodFromCatalogueAsync(int delivery_id, int dish_type_id)
         {
             var listFoodCatalogue = await GetFoodCataloguesFromDeliveryIdAsync(delivery_id);
             return listFoodCatalogue
-                .Where(fc => fc.dish_type_id == dish_type_id.ToString())
+                .Where(fc => fc.DishTypeId == dish_type_id.ToString())
                 .FirstOrDefault()
-                .dishes;
+                .Dishes;
         }
     }
 }
