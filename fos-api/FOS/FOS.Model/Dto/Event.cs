@@ -22,5 +22,8 @@ namespace FOS.Model.Dto
         public string Status { get; set; }
         public DateTime? RemindTime { get; set; }
         public Boolean IsMyEvent { get; set; }
+        public string EventType { get; set; }
+        public DateTime? EventDate { get; set; }
+        public string EventParticipantsJson { get; set; }
     }
 }

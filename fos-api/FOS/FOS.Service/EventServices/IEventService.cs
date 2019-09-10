@@ -10,7 +10,7 @@ namespace FOS.Services.EventServices
 {
     public interface IEventService
     {
-        Task<IEnumerable<Event>> GetAllEvent(string id);
+        IEnumerable<Event> GetAllEvent(string id);
         Event GetEvent(int id);
     }
 }

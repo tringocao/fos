@@ -31,10 +31,10 @@ namespace FOS.Services.SPUserService
             return jsonString;
         }
 
-        public async Task<Model.Domain.User> GetCurrentUser()
+        public async Task<Model.Dto.User> GetCurrentUser()
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "me", null);
-            return await result.Content.ReadAsAsync<Model.Domain.User>();
+            return await result.Content.ReadAsAsync<Model.Dto.User>();
         }
 
         public async Task<Model.Domain.User> GetUserById(string Id)
