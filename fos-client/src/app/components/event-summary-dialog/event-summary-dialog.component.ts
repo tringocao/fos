@@ -243,14 +243,14 @@ export class EventSummaryDialogComponent implements OnInit {
  
     this.restaurantService.getRestaurants([Number(this.eventDetail.eventRestaurantId)]).then(result => {
       console.log(result[0])
-      this.restaurant.address = result[0].address;
+      this.restaurant.address = result[0].Address;
       this.restaurant.phoneNumber = "01234";
-    });
+    }); 
     
     // this.restaurantService.getRestaurantDetailById(Number(this.eventDetail.eventRestaurantId), 217, 1).then(result =>{
     //   // this.restaurant.address = result.address;
     //   // this.restaurant. = result.
-
+    
     //   console.log(result);
     // });
 

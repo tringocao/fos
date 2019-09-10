@@ -81,7 +81,7 @@ export class ListRestaurantComponent implements OnInit {
       this.favoriteService.getFavorite(this.userId).then(response => {
         console.log(response);
         response.map((item: FavoriteRestaurant) => {
-          this.favoriteRestaurants.push(item.restaurantId);
+          this.favoriteRestaurants.push(item.RestaurantId);
         });
         console.log(this.favoriteRestaurants);
       });
@@ -106,8 +106,8 @@ export class ListRestaurantComponent implements OnInit {
   addToFavorite(event, restaurantId: string) {
     console.log("add", restaurantId);
     var favoriteRestaurant:FavoriteRestaurant = new FavoriteRestaurant();
-    favoriteRestaurant.restaurantId = restaurantId;
-    favoriteRestaurant.userId = this.userId; //add to remove
+    favoriteRestaurant.RestaurantId = restaurantId;
+    favoriteRestaurant.UserId = this.userId; //add to remove
     this.favoriteService
       .addFavoriteRestaurant(favoriteRestaurant)
       .then(response => {
@@ -143,8 +143,8 @@ export class ListRestaurantComponent implements OnInit {
   removeFromFavorite(event, restaurantId: string) {
     console.log("remove", restaurantId);
     var favoriteRestaurant:FavoriteRestaurant = new FavoriteRestaurant();
-    favoriteRestaurant.restaurantId = restaurantId;
-    favoriteRestaurant.userId = this.userId; //add to remove
+    favoriteRestaurant.RestaurantId = restaurantId;
+    favoriteRestaurant.UserId = this.userId; //add to remove
     this.favoriteService
       .removeFavoriteRestaurant(favoriteRestaurant)
       .then(response => {
