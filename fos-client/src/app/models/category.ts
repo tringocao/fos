@@ -12,9 +12,8 @@
 
     export class Category    {
            
-        public name: string = null;   
-        public id: string = null;   
-        public code: string = null;
+        public Name: string = null;   
+        public Id: string = null;   
+        public Code: string = null;
     }
          
-        

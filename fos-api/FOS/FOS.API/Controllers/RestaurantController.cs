@@ -34,10 +34,11 @@ namespace FOS.API.Controllers
             ICategoryDtoMapper categoryDtoMapper,
             IRestaurantDtoMapper restaurantDtoMapper)
         {
-            _restaurantService = restaurantService;
             _restaurantDetailDtoMapper = restaurantDetailDtoMapper;
             _categoryGroupDtoMapper = categoryGroupDtoMapper;
             _categoryDtoMapper = categoryDtoMapper;
+            _restaurantService = restaurantService;
+            _restaurantDtoMapper = restaurantDtoMapper;
         }
         // GET: api/Restaurant
         [HttpGet]

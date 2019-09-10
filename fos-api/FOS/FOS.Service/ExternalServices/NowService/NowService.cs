@@ -147,6 +147,7 @@ namespace FOS.Services.ExternalServices.NowService
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = await method.CallApiAsync();
             var result = response.Content.ReadAsStringAsync().Result;
+            
             return ConvertJson.ConvertString2ListDeliveryInfos(result);
 
         }

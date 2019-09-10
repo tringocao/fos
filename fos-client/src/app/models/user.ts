@@ -12,16 +12,15 @@
 
     export class User    {
            
-        public id: string = null;   
-        public mail: string = null;   
-        public displayName: string = null;   
-        public givenName: string = null;   
-        public jobTitle: string = null;   
-        public mobilePhone: string = null;   
-        public officeLocation: string = null;   
-        public preferredLanguage: string = null;   
-        public surname: string = null;   
-        public userPrincipalNamde: string = null;
+        public Id: string = null;   
+        public Mail: string = null;   
+        public DisplayName: string = null;   
+        public GivenName: string = null;   
+        public JobTitle: string = null;   
+        public MobilePhone: string = null;   
+        public OfficeLocation: string = null;   
+        public PreferredLanguage: string = null;   
+        public Surname: string = null;   
+        public UserPrincipalNamde: string = null;
     }
          
-        

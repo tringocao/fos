@@ -18,10 +18,7 @@ namespace FOS.Model.Domain.NowModel
         public string Name { get; set; }
         [JsonProperty("name_url")]
         public string NameUrl { get; set; }
-        [JsonProperty("service")]
-        public string Service { get; set; }
-        [JsonProperty("district")]
-        public string District { get; set; }
+
 
     }
 }

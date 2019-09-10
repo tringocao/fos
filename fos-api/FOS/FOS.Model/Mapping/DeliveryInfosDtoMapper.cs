@@ -15,17 +15,16 @@ namespace FOS.Model.Mapping
             return new Dto.DeliveryInfos()
             {
                 Address = deliveryInfos.Address,
-                Campaigns = deliveryInfos.Campaigns,
-                Categories = deliveryInfos.Categories,
-                CityId = deliveryInfos.CityId,
-                DeliveryId = deliveryInfos.DeliveryId,
-                IsFoodyDelivery = deliveryInfos.IsFoodyDelivery,
-                IsOpen = deliveryInfos.IsOpen,
+                Categories = deliveryInfos.Categories.Count() > 0 ? deliveryInfos.Categories[0] : "",
+                CityId = deliveryInfos.CityId.ToString(),
+                DeliveryId = deliveryInfos.DeliveryId.ToString(),
+                IsFoodyDelivery = deliveryInfos.IsFoodyDelivery.ToString(),
+                IsOpen = deliveryInfos.IsOpen.ToString(),
                 Name = deliveryInfos.Name,
-                Operating = deliveryInfos.Operating,
+                Operating = deliveryInfos.Operating.OpenTime + "-" + deliveryInfos.Operating.CloseTime,
                 Photo = deliveryInfos.Photos.FirstOrDefault().Value,
-                PromotionGroups = deliveryInfos.PromotionGroups,
-                RestaurantId = deliveryInfos.RestaurantId,
+                PromotionGroups = deliveryInfos.PromotionGroups.Count() > 0 ? deliveryInfos.PromotionGroups[0].Text : "",
+                RestaurantId = deliveryInfos.RestaurantId.ToString(),
                 UrlRewriteName = deliveryInfos.UrlRewriteName
             };
         }

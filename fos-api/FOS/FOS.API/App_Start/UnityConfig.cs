@@ -122,7 +122,15 @@ namespace FOS.API
 
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
+            container.RegisterType<Model.Mapping.ICategoryDtoMapper, Model.Mapping.CategoryDtoMapper>();
+            container.RegisterType<Model.Mapping.ICategoryGroupDtoMapper, Model.Mapping.CategoryGroupDtoMapper>();
+            container.RegisterType<Model.Mapping.IDeliveryInfosDtoMapper, Model.Mapping.DeliveryInfosDtoMapper>();
             container.RegisterType<Model.Mapping.IFavoriteRestaurantDtoMapper, Model.Mapping.FavoriteRestaurantDtoMapper>();
+            container.RegisterType<Model.Mapping.IFoodCategoryDtoMapper, Model.Mapping.FoodCategoryDtoMapper>();
+            container.RegisterType<Model.Mapping.IFoodDtoMapper, Model.Mapping.FoodDtoMapper>();
+            container.RegisterType<Model.Mapping.IProvinceDtoMapper, Model.Mapping.ProvinceDtoMapper>();
+            container.RegisterType<Model.Mapping.IRestaurantDetailDtoMapper, Model.Mapping.RestaurantDetailDtoMapper>();
+            container.RegisterType<Model.Mapping.IRestaurantDtoMapper, Model.Mapping.RestaurantDtoMapper>();
 
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(
                 new TransientLifetimeManager(),

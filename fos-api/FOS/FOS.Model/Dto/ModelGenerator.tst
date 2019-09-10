@@ -109,15 +109,10 @@
 
     export class $Name$TypeParameters $BaseClass[extends $Name$TypeArguments]   {
         $Properties[   
-        public $name: $Type = $Type[$Default];]
+        public $Name: $Type = $Type[$Default];]
     }]
         $Enums(FOS.Model.Dto.*)[
     export enum $Name {$Values[
-       $Name = $Value,]
-    }
-    ] 
-       $Interfaces(FOS.Model.Dto.*)[
-    export interface $Name {$Values[
        $Name = $Value,]
     }
     ] 

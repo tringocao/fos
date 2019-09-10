@@ -1,4 +1,4 @@
-﻿using FOS.Services.Models;
+﻿using FOS.Model.Dto;
 using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace FOS.Services.EventServices
 {
     public interface IEventService
     {
-        IEnumerable<EventModel> GetAllEvent();
-        EventModel GetEvent(int id);
+        Task<IEnumerable<Event>> GetAllEvent(string id);
+        Event GetEvent(int id);
     }
 }

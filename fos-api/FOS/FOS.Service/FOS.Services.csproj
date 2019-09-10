@@ -152,7 +152,6 @@
     <Compile Include="FoodServices\IFoodService.cs" />
     <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="ConfigurationProvider.cs" />
-    <Compile Include="Models\EventModel.cs" />
     <Compile Include="OrderServices\IOrderService.cs" />
     <Compile Include="Providers\GraphApiProvider.cs" />
     <Compile Include="Providers\IGraphApiProvider.cs" />

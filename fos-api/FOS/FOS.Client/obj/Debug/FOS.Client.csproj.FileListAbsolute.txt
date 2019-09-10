@@ -1,6 +1,0 @@
-C:\Users\trn1\source\repos\fos\fos-api\FOS\FOS.Client\bin\Debug\FOS.Client.dll
-C:\Users\trn1\source\repos\fos\fos-api\FOS\FOS.Client\bin\Debug\FOS.Client.pdb
-C:\Users\trn1\source\repos\fos\fos-api\FOS\FOS.Client\obj\Debug\FOS.Client.csproj.CoreCompileInputs.cache
-C:\Users\trn1\source\repos\fos\fos-api\FOS\FOS.Client\obj\Debug\FOS.Client.dll
-C:\Users\trn1\source\repos\fos\fos-api\FOS\FOS.Client\obj\Debug\FOS.Client.pdb
-C:\Users\trn1\source\repos\fos\fos-api\FOS\FOS.Client\obj\Debug\FOS.Client.csprojAssemblyReference.cache

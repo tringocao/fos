@@ -47,16 +47,19 @@ export class SearchComponent implements OnInit, OnChanges {
   @Output() change = new EventEmitter();
   submitted = false;
   isOpen = false;
+  isChecked = false;
+  isMyFavorite = false;
+
   ngOnInit(): void {
     this.restaurantService.GetMetadataForCategory().then(result => {
       result.forEach((element, index) => {
-        if (element.categories.length < 1) {
+        if (element.Categories.length < 1) {
           let selectAll: Category = {
-            name: 'All',
-            id: element.id,
-            code: element.code
+            Name: 'All',
+            Id: element.Id,
+            Code: element.Code
           };
-          element.categories.push(selectAll);
+          element.Categories.push(selectAll);
         }
       });
       this.toppingList = result;
@@ -132,6 +135,12 @@ export class SearchComponent implements OnInit, OnChanges {
     // }
   }
 
+  filterByFavorite(event) {
+    console.log(event);
+    this.change.emit({ isChecked: event.value === true });
+    //this.change.emit({ isChecked: event.checked });
+  }
+
   openedChange(opened: boolean) {
     console.log(opened ? 'opened' : 'closed');
     if (!opened) {
@@ -156,7 +165,7 @@ export class SearchComponent implements OnInit, OnChanges {
   getCondition(term: Category[]): string {
     let getCod = '';
     term.forEach(e => {
-      getCod = getCod + ',{"code":' + e.code + ',"id":' + e.id + '}';
+      getCod = getCod + ',{"code":' + e.Code + ',"id":' + e.Id + '}';
     });
     getCod = getCod.substr(1);
     return '[' + getCod + ']';

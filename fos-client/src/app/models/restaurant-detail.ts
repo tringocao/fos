@@ -12,8 +12,7 @@
 
     export class RestaurantDetail    {
            
-        public rating: number = 0;   
-        public totalReview: number = 0;
+        public Rating: number = 0;   
+        public TotalReview: number = 0;
     }
          
-        

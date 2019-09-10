@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Services.Models
+namespace FOS.Model.Dto
 {
-    public class EventModel
+    public class Event
     {
         public string Name { get; set; }
         public string Restaurant { get; set; }
@@ -17,9 +17,10 @@ namespace FOS.Services.Models
         public string HostName { get; set; }
         public string HostId { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime? CloseTime { get; set; }
         public string EventId { get; set; }
         public string Status { get; set; }
-        public DateTime? TimeToRemind { get; set; }
+        public DateTime? RemindTime { get; set; }
+        public Boolean IsMyEvent { get; set; }
     }
 }

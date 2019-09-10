@@ -1,5 +1,4 @@
-﻿using FOS.Services.Models;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +7,10 @@ using System.Threading.Tasks;
 using FOS.Services.Providers;
 using FOS.Model.Util;
 using FOS.Common;
+using System.Net.Http;
+using System.Web.Script.Serialization;
+using System.Dynamic;
+using FOS.Model.Dto;
 
 namespace FOS.Services.EventServices
 {
@@ -20,7 +23,7 @@ namespace FOS.Services.EventServices
             _graphApiProvider = graphApiProvider;
             _sharepointContextProvider = sharepointContextProvider;
         }
-        public IEnumerable<EventModel> GetAllEvent()
+        public async Task<IEnumerable<Event>> GetAllEvent(string userId)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
@@ -33,21 +36,62 @@ namespace FOS.Services.EventServices
                 clientContext.Load(collListItem);
                 clientContext.ExecuteQuery();
 
-                var listEvent = new List<EventModel>();
+                //char[] seperator = { ';', '#' };
+
+                //var groups = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups", null);
+                //var data = groups.Content.ReadAsStringAsync();
+                //JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                //dynamic groupList = jsonSerializer.Deserialize<dynamic>(data.Result);
+
+                var listEvent = new List<Event>();
                 foreach (var element in collListItem)
                 {
-                    var eventModel = ListItemToEventModel(element);
+                    //var participant = ElementAttributeToString(element["EventParticipants"]).Split(seperator).ToList();
+                    //participant.RemoveAll(item => item == "");
+
+                    //var isBelongMyEvent = false;
+                    //foreach (var item in participant)
+                    //{
+                    //    isBelongMyEvent  = await IsUserBelongGroupParticipant(item, groupList);
+                    //    if (isBelongMyEvent)
+                    //    {
+                    //        break;
+                    //    }
+                    //}
+                    var eventModel = ListItemToEventModel(element, userId);
                     listEvent.Add(eventModel);
                 }
                 return listEvent;
             }
+        }
+        private async Task<Boolean> IsUserBelongGroupParticipant(string mail, dynamic groupList)
+        {
+
+            foreach (var item in groupList["value"])
+            {
+                if(Equals(item["mail"], mail))
+                {
+                    var groupId = "\'" + item["id"] + "\'";
+                    var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "me/memberOf?$filter=id eq " + groupId, null);
+                    var data = result.Content.ReadAsStringAsync();
+
+                    JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+                    dynamic group = jsonSerializer.Deserialize<dynamic>(data.Result);
+
+                    if(group["value"][0] != null)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         private string ElementAttributeToString(Object element)
         {
             return element != null ? element.ToString() : "";
         }
 
-        public EventModel ListItemToEventModel(ListItem element)
+        private Event ListItemToEventModel(ListItem element, string userId)
         {
             var host = element["EventHost"] as FieldLookupValue;
             if (host == null)
@@ -60,13 +104,13 @@ namespace FOS.Services.EventServices
             var remindDateString = element["EventTimeToReminder"].ToString();
             Nullable<DateTime> remindDate = DateTime.Parse(remindDateString).ToLocalTime();
 
-            var eventModel = new EventModel();
+            var eventModel = new Event();
 
             eventModel.Name = ElementAttributeToString(element["EventTitle"]);
             eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
             eventModel.RestaurantId = ElementAttributeToString(element["EventRestaurantId"]);
             eventModel.Category = ElementAttributeToString(element["EventCategory"]);
-            eventModel.Date = closeDate;
+            eventModel.CloseTime = closeDate;
             eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
             eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
             eventModel.EventId = ElementAttributeToString(element["ID"]);
@@ -74,12 +118,17 @@ namespace FOS.Services.EventServices
             eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
             eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
             eventModel.Status = ElementAttributeToString(element["status"]);
-            eventModel.TimeToRemind = remindDate;
+            eventModel.RemindTime = remindDate;
+
+            eventModel.IsMyEvent = 
+                eventModel.Participants.Contains(userId) 
+                || eventModel.HostId == userId 
+                || eventModel.CreatedBy == userId;
 
             return eventModel;
         }
 
-        public EventModel GetEvent(int id)
+        public Event GetEvent(int id)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
@@ -92,7 +141,7 @@ namespace FOS.Services.EventServices
                 clientContext.Load(item);
                 clientContext.ExecuteQuery();
 
-                var result = ListItemToEventModel(item);
+                var result = ListItemToEventModel(item, null);
 
                 return result;
             }

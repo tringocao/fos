@@ -26,7 +26,6 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { MealsPageComponent } from './pages/meals-page/meals-page.component';
 
-
 import {
   MatTableModule,
   MatSortModule,
@@ -34,7 +33,8 @@ import {
   MatTabsModule,
   MatSidenavModule,
   MatListModule,
-  MatInputModule
+  MatInputModule,
+  MatTooltipModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
@@ -73,6 +73,7 @@ import { MenuEventComponent } from './components/menu-event/menu-event.component
 import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
 import { EventDialogViewComponent } from './components/event-dialog-view/event-dialog-view.component';
 import { NgxStarsModule } from 'ngx-stars';
+import { ShowActionComponent } from './components/show-action/show-action.component';
 import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
 
 @NgModule({
@@ -97,6 +98,7 @@ import { EventSummaryDialogComponent } from './components/event-summary-dialog/e
     OrderTabComponent,
     ListOrderComponent,
     OrderDetailComponent,
+    ShowActionComponent,
     EventDialogViewComponent,
     EventSummaryDialogComponent
   ],
@@ -147,7 +149,8 @@ import { EventSummaryDialogComponent } from './components/event-summary-dialog/e
     ReactiveFormsModule,
     FormsModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [
     OrderService,
