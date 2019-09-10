@@ -4,7 +4,7 @@
       <mat-card-title>Summary Event</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-grid-list cols="2">
+      <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
         <mat-grid-tile>
           <mat-card class="card">
             <mat-card-header>
@@ -12,7 +12,7 @@
               <mat-card-subtitle></mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-              <mat-grid-list cols="2" rowHeight="2:1">
+              <mat-grid-list cols="2" rowHeight="40px">
                 <div class="grid-tile-row">
                   <mat-grid-tile>Name</mat-grid-tile>
                   <mat-grid-tile>{{ eventDetail.eventTitle }}</mat-grid-tile>
@@ -34,7 +34,7 @@
               <mat-card-subtitle></mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-              <mat-grid-list cols="2" rowHeight="2:1">
+              <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
                 <mat-grid-tile>Name</mat-grid-tile>
                 <mat-grid-tile>{{ eventDetail.eventRestaurant }}</mat-grid-tile>
                 <mat-grid-tile>Address</mat-grid-tile>
@@ -113,7 +113,7 @@
       </mat-tab-group>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button (click)="toPdf()" mat-raised-button color="primary">Send to my email</button>
+      <button (click)="sendEmail()" mat-raised-button color="primary">Send to my email</button>
       <button mat-raised-button color="warn">Close</button>
     </mat-card-actions>
   </mat-card>

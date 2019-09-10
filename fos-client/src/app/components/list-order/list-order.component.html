@@ -94,7 +94,7 @@
               >notifications_none</mat-icon
             >
           </button>
-          <a routerLink="/summary" [state]="{data:element}">
+          <a target="_blank" routerLink="/summary/{{element.eventId}}" [state]="{data:element}">
           <button
             class="close"
             *ngIf="element.status === 'Opened'"

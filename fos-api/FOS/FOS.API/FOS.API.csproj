@@ -326,6 +326,7 @@
     <Compile Include="Controllers\SendEmailController.cs" />
     <Compile Include="Controllers\SPListController.cs" />
     <Compile Include="Controllers\SPUserController.cs" />
+    <Compile Include="Controllers\SummaryController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="CrossDomainHandler.cs" />
     <Compile Include="CustomAuthentication.cs" />
