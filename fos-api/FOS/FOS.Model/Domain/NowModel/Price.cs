@@ -14,7 +14,7 @@ namespace FOS.Model.Domain.NowModel
         [JsonProperty("unit")]
         public string Unit { get; set; }
         [JsonProperty("value")]
-        public int Value { get; set; }
+        public float Value { get; set; }
 
     }
 }

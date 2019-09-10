@@ -1,46 +1,24 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input } from "@angular/core";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
-} from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
-import { NoopScrollStrategy, Overlay } from '@angular/cdk/overlay';
-import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
-import { Observable } from 'rxjs';
-import { RestaurantDetail } from 'src/app/models/restaurant-detail';
-interface FoodCategory {
-  name: string;
-  id: string;
-  dishes: Food[];
-}
-interface Food {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  price: string;
-}
-interface Restaurant {
-  id: number;
-  stared: boolean;
-  restaurant: string;
-  category: string;
-  address: string;
-  promotion: string;
-  open: string;
-  delivery_id: number;
-  url_rewrite_name: string;
-}
+} from "@angular/material/dialog";
+import { DialogComponent } from "../dialog/dialog.component";
+import { NoopScrollStrategy, Overlay } from "@angular/cdk/overlay";
+import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
+import { Observable } from "rxjs";
+import { RestaurantDetail } from "src/app/models/restaurant-detail";
+import { DeliveryInfos } from "src/app/models/delivery-infos";
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.less']
+  selector: "app-menu",
+  templateUrl: "./menu.component.html",
+  styleUrls: ["./menu.component.less"]
 })
 export class MenuComponent {
   overlay: Overlay;
-  @Input('restaurant') restaurant: Restaurant;
+  @Input("restaurant") restaurant: DeliveryInfos;
   resDetail: RestaurantDetail;
 
   constructor(
@@ -56,20 +34,20 @@ export class MenuComponent {
 
   openDialog(): void {
     this.restaurantService
-      .getRestaurantDetail(Number(this.restaurant.delivery_id))
+      .getRestaurantDetail(Number(this.restaurant.DeliveryId))
       .then(result => {
-        this.resDetail.Rating = Number(result.rating.avg);
-        this.resDetail.TotalReview = Number(result.rating.total_review);
+        this.resDetail.Rating = Number(result.Rating);
+        this.resDetail.TotalReview = Number(result.TotalReview);
         const dialogRef = this.dialog.open(DialogComponent, {
           scrollStrategy: this.overlay.scrollStrategies.noop(),
           autoFocus: false,
-          maxHeight: '98vh',
-          width: '80%',
+          maxHeight: "98vh",
+          width: "80%",
           data: { restaurant: this.restaurant, detail: this.resDetail }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
+          console.log("The dialog was closed");
         });
       });
   }
