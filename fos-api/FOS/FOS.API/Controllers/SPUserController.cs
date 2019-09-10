@@ -127,5 +127,20 @@ namespace FOS.API.Controllers
                 return ApiUtil<List<Model.Dto.User>>.CreateFailResult(e.ToString());
             }
         }
+
+        [HttpGet]
+        [Route("GroupListMemers")]
+        public async Task<ApiResponse<List<Model.Dto.User>>> GroupListMemers(string groupId)
+        {
+            try
+            {
+                var user = await _sPUserService.GroupListMemers(groupId);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(user);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Model.Dto.User>>.CreateFailResult(e.ToString());
+            }
+        }
     }
 }

@@ -127,5 +127,23 @@ namespace FOS.Services.SPUserService
                 throw new Exception(await result.Content.ReadAsStringAsync());
             }
         }
+
+        public async Task<List<Model.Dto.User>> GroupListMemers(string groupId)
+        {
+            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups/"+ groupId + "/members", null);
+            if (result.IsSuccessStatusCode)
+            {
+                var resultGroup = await result.Content.ReadAsStringAsync();
+                dynamic response = JsonConvert.DeserializeObject(resultGroup);
+
+                List<Model.Dto.User> jsonUsers = response.value.ToObject<List<Model.Dto.User>>();
+
+                return jsonUsers;
+            }
+            else
+            {
+                throw new Exception(await result.Content.ReadAsStringAsync());
+            }
+        }
     }
 }

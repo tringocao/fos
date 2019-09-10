@@ -15,5 +15,7 @@ namespace FOS.Services.SPUserService
         Task<List<Model.Dto.User>> GetGroups();
         Task<byte[]> GetAvatarByUserId(string Id);
         Task<List<Model.Dto.User>> GetUsersByName(string searchName);
+
+        Task<List<Model.Dto.User>> GroupListMemers(string groupId);
     }
 }

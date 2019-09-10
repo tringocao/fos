@@ -203,27 +203,29 @@ export class EventSummaryDialogComponent implements OnInit {
   ngOnInit() {
     console.log(history.state);
     this.eventDetail = {
-      eventTitle: 'FIKA2',
-      eventId: '11',
-      eventRestaurant: 'Morico - Contemporary Japanese Lifestyle - Lê Lợi',
-      eventMaximumBudget: 20000,
-      eventTimeToClose: '2019-09-04T11:35:00+07:00',
-      eventTimeToReminder: '2019-09-04T11:35:00+07:00',
-      eventHost: 'Amie Perigo',
-      eventParticipants:
+      EventTitle: 'FIKA2',
+      EventId: '11',
+      EventRestaurant: 'Morico - Contemporary Japanese Lifestyle - Lê Lợi',
+      EventMaximumBudget: 20000,
+      EventTimeToClose: '2019-09-04T11:35:00+07:00',
+      EventTimeToReminder: '2019-09-04T11:35:00+07:00',
+      EventHost: 'Amie Perigo',
+      EventParticipants:
         'owner123@devpreciovn.onmicrosoft.com;#member@devpreciovn.onmicrosoft.com;#toandh3xco@gmail.com',
-      eventCategory: 'Café/Dessert',
-      eventRestaurantId: '595',
-      eventServiceId: '1',
-      eventDeliveryId: '',
-      eventCreatedUserId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
-      eventHostId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb'
+      EventCategory: 'Café/Dessert',
+      EventRestaurantId: '595',
+      EventServiceId: '1',
+      EventDeliveryId: '',
+      EventCreatedUserId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
+      EventHostId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
+      EventDate: '2019-09-04T11:35:00+07:00',
+      EventParticipantsJson: '',
     };
 
     this.restaurant = {};
 
     this.restaurantService
-      .getRestaurants([Number(this.eventDetail.eventRestaurantId)])
+      .getRestaurants([Number(this.eventDetail.EventRestaurantId)])
       .then(result => {
         console.log(result[0]);
         this.restaurant.address = result[0].Address;

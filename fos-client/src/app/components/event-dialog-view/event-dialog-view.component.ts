@@ -41,43 +41,43 @@ export class EventDialogViewComponent implements OnInit {
   ];
   ngOnInit() {
     console.log(this.data);
-    this.eventTitle = this.data.eventTitle;
-    this.eventHost = this.data.eventHost;
-    this.eventRestaurant = this.data.eventRestaurant;
-    this.maximumBudget = this.data.eventMaximumBudget.toString();
-    this.dateTimeToClose = this.data.eventTimeToClose
-      .toString()
-      .replace('T', ' ')
-      .replace('+07:00', '');
-    this.dateToReminder = this.data.eventTimeToReminder
-      .toString()
-      .replace('T', ' ')
-      .replace('+07:00', '');
-    var emails = [];
-    var users = [];
-    var groups = [];
-    var participants = this.data.eventParticipants;
-    emails = participants.split(';#');
-    var usersLocalStorage = JSON.parse(localStorage.getItem('users'));
-    var groupsLocalStorage = JSON.parse(localStorage.getItem('groups'));
+    // this.eventTitle = this.data.eventTitle;
+    // this.eventHost = this.data.eventHost;
+    // this.eventRestaurant = this.data.eventRestaurant;
+    // this.maximumBudget = this.data.eventMaximumBudget.toString();
+    // this.dateTimeToClose = this.data.eventTimeToClose
+    //   .toString()
+    //   .replace('T', ' ')
+    //   .replace('+07:00', '');
+    // this.dateToReminder = this.data.eventTimeToReminder
+    //   .toString()
+    //   .replace('T', ' ')
+    //   .replace('+07:00', '');
+    // var emails = [];
+    // var users = [];
+    // var groups = [];
+    // var participants = this.data.eventParticipants;
+    // emails = participants.split(';#');
+    // var usersLocalStorage = JSON.parse(localStorage.getItem('users'));
+    // var groupsLocalStorage = JSON.parse(localStorage.getItem('groups'));
 
-    emails.map(email => {
-      // console.log(email);
-      usersLocalStorage.map(_user => {
-        // console.log(_user);
-        if (_user.email === email) {
-          users.push(_user);
-        }
-        // console.log(_user.email + '----------' + email);
-      });
-      groupsLocalStorage.map(_group => {
-        if (_group.email === email) {
-          groups.push(_group);
-        }
-      });
-    });
+    // emails.map(email => {
+    //   // console.log(email);
+    //   usersLocalStorage.map(_user => {
+    //     // console.log(_user);
+    //     if (_user.email === email) {
+    //       users.push(_user);
+    //     }
+    //     // console.log(_user.email + '----------' + email);
+    //   });
+    //   groupsLocalStorage.map(_group => {
+    //     if (_group.email === email) {
+    //       groups.push(_group);
+    //     }
+    //   });
+    // });
 
-    console.log(groups, users);
+    // console.log(groups, users);
 
     // for (var j = 0; j < groups.length; j++) {
     //   this.eventusers.push({

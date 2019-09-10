@@ -44,21 +44,23 @@ export class EventFormService {
           environment.apiUrl +
           'api/SPList/AddEventListItem?Id=d7415c0c-8295-4851-bbe8-6717e939f7f6',
           {
-            eventTitle: eventlist.eventTitle,
-            eventRestaurant: eventlist.eventRestaurant,
-            eventMaximumBudget: eventlist.eventMaximumBudget,
+            EventTitle: eventlist.EventTitle,
+            EventRestaurant: eventlist.EventRestaurant,
+            EventMaximumBudget: eventlist.EventMaximumBudget,
 
-            eventTimeToClose: eventlist.eventTimeToClose,
-            eventTimeToReminder: eventlist.eventTimeToReminder,
-            eventHost: eventlist.eventHost,
-            eventParticipants: eventlist.eventParticipants,
+            EventTimeToClose: eventlist.EventTimeToClose,
+            EventTimeToReminder: eventlist.EventTimeToReminder,
+            EventHost: eventlist.EventHost,
+            EventParticipants: eventlist.EventParticipants,
 
-            eventCategory: eventlist.eventCategory,
-            eventRestaurantId: eventlist.eventRestaurantId,
-            eventServiceId: eventlist.eventServiceId,
-            eventDeliveryId: eventlist.eventDeliveryId,
-            eventCreatedUserId: eventlist.eventCreatedUserId,
-            eventHostId: eventlist.eventHostId
+            EventCategory: eventlist.EventCategory,
+            EventRestaurantId: eventlist.EventRestaurantId,
+            EventServiceId: eventlist.EventServiceId,
+            EventDeliveryId: eventlist.EventDeliveryId,
+            EventCreatedUserId: eventlist.EventCreatedUserId,
+            EventHostId: eventlist.EventHostId,
+            EventDate: eventlist.EventDate,
+            EventParticipantsJson: eventlist.EventParticipantsJson
           }
         )
         .subscribe(
@@ -154,6 +156,23 @@ export class EventFormService {
     return this.http
       .get<ApiOperationResult<Array<User>>>(
         environment.apiUrl + '/api/SPUser/GetUsers'
+      )
+      .pipe(
+        tap((response: ApiOperationResult<Array<User>>) => {
+          return response;
+        })
+      );
+  }
+
+  GroupListMemers(groupId: string): Observable<ApiOperationResult<Array<User>>> {
+    return this.http
+      .get<ApiOperationResult<Array<User>>>(
+        environment.apiUrl + '/api/SPUser/GroupListMemers',
+        {
+          params: {
+            groupId: groupId
+          }
+        }
       )
       .pipe(
         tap((response: ApiOperationResult<Array<User>>) => {

@@ -69,6 +69,10 @@ namespace FOS.Services.SPListService
                 listItem["EventDeliveryId"] = eventData.EventDeliveryId;
                 listItem["EventCreatedUserId"] = eventData.EventCreatedUserId;
                 listItem["EventHostId"] = eventData.EventHostId;
+                listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
+                listItem["EventDate"] = eventData.EventDate;
+                listItem["EventStatus"] = "Opened";
+                listItem["EventTypes"] = "Open";
                 listItem.Update();
                 context.ExecuteQuery();
             }
