@@ -126,7 +126,7 @@ namespace FOS.API.Controllers
                     item.RestaurantId = id.ToString();
                     newList.Add(item);
                 }
-                var list = await _deliveryService.GetRestaurantsDeliveryInforAsync(city_id, data);
+                var list = await _deliveryService.GetRestaurantsDeliveryInforAsync(city_id, newList);
                 return ApiUtil<List<DeliveryInfos>>.CreateSuccessfulResult(
                     list.Select(d => _deliveryInfosDtoMapper.ToDto(d)).ToList()
                 );

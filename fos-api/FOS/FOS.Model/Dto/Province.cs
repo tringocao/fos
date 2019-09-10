@@ -13,7 +13,6 @@ namespace FOS.Model.Dto
         //public int province_id { get; set; }
         public string Name { get; set; }
         public string NameUrl { get; set; }
-        public string Service { get; set; }
-        public string District { get; set; }
+  
     }
 }

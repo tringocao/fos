@@ -12,11 +12,10 @@
 
     export class Food    {
            
-        public id: string = null;   
-        public name: string = null;   
-        public photos: string = null;   
-        public description: string = null;   
-        public price: string = null;
+        public Id: string = null;   
+        public Name: string = null;   
+        public Photos: string = null;   
+        public Description: string = null;   
+        public Price: string = null;
     }
          
-        

@@ -12,10 +12,9 @@
 
     export class APIs    {
            
-        public id: number = 0;   
-        public name: string = null;   
-        public typeService: ServiceKind = null;   
-        public jsonData: string = null;
+        public ID: number = 0;   
+        public Name: string = null;   
+        public TypeService: ServiceKind = null;   
+        public JSONData: string = null;
     }
          
-        

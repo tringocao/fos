@@ -61,7 +61,7 @@ namespace FOS.API
             container.RegisterType<Repositories.FosContext, Repositories.FosContext>(
                 new PerResolveLifetimeManager());
             container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
-            container.RegisterType<Repositories.IOrderRepository, Repositories.OrderRepository>();
+            container.RegisterType<Repositories.Repositories.IOrderRepository, Repositories.Repositories.OrderRepository>();
             container.RegisterType<Repositories.Infrastructor.IDbFactory, Repositories.Infrastructor.DbFactory>();
             container.RegisterType<Repositories.Repositories.IFOSFoodServiceAPIsRepository, Repositories.Repositories.FOSFoodServiceAPIsRepository>(
                 new TransientLifetimeManager(),
@@ -112,7 +112,7 @@ namespace FOS.API
             //container.RegisterType<Repositories.APIExternalServiceEntities, Repositories.APIExternalServiceEntities>(new PerResolveLifetimeManager());
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.GetMethod> ("GetMethod");
             //container.RegisterType<Services.RequestMethods.IRequestMethod, Services.RequestMethods.PostMethod>("PostMethod");
-            container.RegisterType<Services.IOrderService, Services.OrderService>();
+            container.RegisterType<Services.OrderServices.IOrderService, Services.OrderServices.OrderService>();
             container.RegisterType<Services.IOAuthService, Services.OAuthService>(
                 new HierarchicalLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
@@ -121,6 +121,16 @@ namespace FOS.API
 
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
+            container.RegisterType<Model.Mapping.ICategoryDtoMapper, Model.Mapping.CategoryDtoMapper>();
+            container.RegisterType<Model.Mapping.ICategoryGroupDtoMapper, Model.Mapping.CategoryGroupDtoMapper>();
+            container.RegisterType<Model.Mapping.IDeliveryInfosDtoMapper, Model.Mapping.DeliveryInfosDtoMapper>();
+            container.RegisterType<Model.Mapping.IFavoriteRestaurantDtoMapper, Model.Mapping.FavoriteRestaurantDtoMapper>();
+            container.RegisterType<Model.Mapping.IFoodCategoryDtoMapper, Model.Mapping.FoodCategoryDtoMapper>();
+            container.RegisterType<Model.Mapping.IFoodDtoMapper, Model.Mapping.FoodDtoMapper>();
+            container.RegisterType<Model.Mapping.IProvinceDtoMapper, Model.Mapping.ProvinceDtoMapper>();
+            container.RegisterType<Model.Mapping.IRestaurantDetailDtoMapper, Model.Mapping.RestaurantDetailDtoMapper>();
+            container.RegisterType<Model.Mapping.IRestaurantDtoMapper, Model.Mapping.RestaurantDtoMapper>();
+            container.RegisterType<Model.Mapping.IEventDtoMapper, Model.Mapping.EventDtoMapper>();
 
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(
                 new TransientLifetimeManager(),

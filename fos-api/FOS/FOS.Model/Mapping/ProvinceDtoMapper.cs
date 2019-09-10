@@ -8,18 +8,16 @@ using FOS.Model.Dto;
 
 namespace FOS.Model.Mapping
 {
-    class ProvinceDtoMapper : IProvinceDtoMapper
+    public class ProvinceDtoMapper : IProvinceDtoMapper
     {
         public Dto.Province ToDto(Domain.NowModel.Province province)
         {
             return new Dto.Province()
             {
                 CountryId = province.CountryId,
-                District = province.District,
                 Id = province.Id,
                 Name = province.Name,
                 NameUrl = province.NameUrl,
-                Service = province.Service
             };
         }
     }

@@ -11,7 +11,7 @@ namespace FOS.Model.Mapping
     public class CategoryGroupDtoMapper: ICategoryGroupDtoMapper
     {
         ICategoryDtoMapper _categoryDtoMapper;
-        CategoryGroupDtoMapper(ICategoryDtoMapper categoryDtoMapper)
+        public CategoryGroupDtoMapper(ICategoryDtoMapper categoryDtoMapper)
         {
             _categoryDtoMapper = categoryDtoMapper;
         }

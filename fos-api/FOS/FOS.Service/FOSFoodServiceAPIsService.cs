@@ -24,9 +24,9 @@ namespace FOS.Services
             _iFOSFood = iFOSFood;
             _aPIsDto = aPIsDto;
         }
-        public APIs GetById(int Id)
+        public Apis GetById(int Id)
         {
-            return _aPIsDto.ToDto(_iFOSFood.GetFOSCrawlLinksById(Id));
+            return _iFOSFood.GetFOSCrawlLinksById(Id);
         }
 
     }

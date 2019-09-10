@@ -152,7 +152,6 @@
     <Compile Include="FoodServices\IFoodService.cs" />
     <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="ConfigurationProvider.cs" />
-    <Compile Include="Models\EventModel.cs" />
     <Compile Include="OrderServices\IOrderService.cs" />
     <Compile Include="Providers\GraphApiProvider.cs" />
     <Compile Include="Providers\IGraphApiProvider.cs" />
@@ -175,6 +174,8 @@
     <Compile Include="SPUserService\ISPUserService.cs" />
     <Compile Include="SPUserService\SPUserService.cs" />
     <Compile Include="TokenHelper.cs" />
+    <Compile Include="UserContextService\IUserContextService.cs" />
+    <Compile Include="UserContextService\UserContextService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">

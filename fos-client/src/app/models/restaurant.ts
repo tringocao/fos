@@ -12,8 +12,7 @@
 
     export class Restaurant    {
            
-        public id: number = 0;   
-        public deliveryId: string = null;
+        public Id: number = 0;   
+        public DeliveryId: string = null;
     }
          
-        

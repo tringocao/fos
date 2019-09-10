@@ -10,30 +10,30 @@ export class FavoriteService {
 
   constructor(private http: HttpClient) { }
 
-  addFavoriteRestaurant(userId:string, restaurantId): Promise<ApiOperationResult<any>> {
-      return new Promise<ApiOperationResult<any>>((resolve,reject)=>{
-        this.http.post<ApiOperationResult<any>>(environment.apiUrl + 'api/favorite/add', 
+  addFavoriteRestaurant(userId:string, restaurantId): Promise<ApiOperationResult<void>> {
+      return new Promise<ApiOperationResult<void>>((resolve,reject)=>{
+        this.http.post<ApiOperationResult<void>>(environment.apiUrl + 'api/favorite/add', 
         {
           userId,
           restaurantId
         }
       )
       .toPromise().then(result => {
-        if(result.Success){resolve(result.Data)}
+        if(result.Success){resolve(null)}
         else reject(new Error(JSON.stringify(result.ErrorMessage)));        
       }).catch(alert => console.log(alert))
     });
   }
-  removeFavoriteRestaurant(userId: any, restaurantId: any) {
-    return new Promise<ApiOperationResult<any>>((resolve,reject)=>{
-      this.http.post<ApiOperationResult<any>>(environment.apiUrl + 'api/favorite/remove', 
+  removeFavoriteRestaurant(userId: string, restaurantId: string) {
+    return new Promise<ApiOperationResult<void>>((resolve,reject)=>{
+      this.http.post<ApiOperationResult<void>>(environment.apiUrl + 'api/favorite/remove', 
         {
           UserId: userId,
           RestaurantId: restaurantId,
         }
       )
       .toPromise().then(result => {
-        if(result.Success){resolve(result.Data)}
+        if(result.Success){resolve(null)}
         else reject(new Error(JSON.stringify(result.ErrorMessage)));        
       }).catch(alert => console.log(alert))
     });

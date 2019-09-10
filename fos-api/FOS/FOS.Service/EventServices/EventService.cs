@@ -1,5 +1,4 @@
-﻿using FOS.Services.Models;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +7,11 @@ using System.Threading.Tasks;
 using FOS.Services.Providers;
 using FOS.Model.Util;
 using FOS.Common;
+using System.Net.Http;
+using System.Web.Script.Serialization;
+using System.Dynamic;
+using FOS.Model.Dto;
+using FOS.Model.Mapping;
 
 namespace FOS.Services.EventServices
 {
@@ -15,12 +19,14 @@ namespace FOS.Services.EventServices
     {
         IGraphApiProvider _graphApiProvider;
         ISharepointContextProvider _sharepointContextProvider;
-        public EventService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider)
+        IEventDtoMapper _eventDtoMapper;
+        public EventService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IEventDtoMapper eventDtoMapper)
         {
             _graphApiProvider = graphApiProvider;
             _sharepointContextProvider = sharepointContextProvider;
+            _eventDtoMapper = eventDtoMapper;
         }
-        public IEnumerable<EventModel> GetAllEvent()
+        public IEnumerable<Event> GetAllEvent(string userId)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
@@ -33,52 +39,20 @@ namespace FOS.Services.EventServices
                 clientContext.Load(collListItem);
                 clientContext.ExecuteQuery();
 
-                var listEvent = new List<EventModel>();
+                var listEvent = new List<Event>();
                 foreach (var element in collListItem)
                 {
-                    var eventModel = ListItemToEventModel(element);
+                    var eventModel = _eventDtoMapper.ListItemToEventModel(element);
+                    eventModel.IsMyEvent = eventModel.EventParticipantsJson.Contains(userId)
+                        || eventModel.HostId == userId
+                        || eventModel.CreatedBy == userId;
                     listEvent.Add(eventModel);
                 }
                 return listEvent;
             }
         }
-        private string ElementAttributeToString(Object element)
-        {
-            return element != null ? element.ToString() : "";
-        }
 
-        public EventModel ListItemToEventModel(ListItem element)
-        {
-            var host = element["EventHost"] as FieldLookupValue;
-            if (host == null)
-            {
-                host = new FieldLookupValue();
-            }
-            var closeDateString = element["EventTimeToClose"].ToString();
-            Nullable<DateTime> closeDate = DateTime.Parse(closeDateString).ToLocalTime();
-
-            var remindDateString = element["EventTimeToReminder"].ToString();
-            Nullable<DateTime> remindDate = DateTime.Parse(remindDateString).ToLocalTime();
-
-            var eventModel = new EventModel();
-
-            eventModel.Name = ElementAttributeToString(element["EventTitle"]);
-            eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
-            eventModel.Category = ElementAttributeToString(element["EventCategory"]);
-            eventModel.Date = closeDate;
-            eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
-            eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
-            eventModel.EventId = ElementAttributeToString(element["ID"]);
-            eventModel.HostName = ElementAttributeToString(host.LookupValue);
-            eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
-            eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
-            eventModel.Status = ElementAttributeToString(element["status"]);
-            eventModel.TimeToRemind = remindDate;
-
-            return eventModel;
-        }
-
-        public EventModel GetEvent(int id)
+        public Event GetEvent(int id)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
@@ -91,7 +65,7 @@ namespace FOS.Services.EventServices
                 clientContext.Load(item);
                 clientContext.ExecuteQuery();
 
-                var result = ListItemToEventModel(item);
+                var result = _eventDtoMapper.ListItemToEventModel(item);
 
                 return result;
             }

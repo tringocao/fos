@@ -33,7 +33,8 @@ import {
   MatTabsModule,
   MatSidenavModule,
   MatListModule,
-  MatInputModule
+  MatInputModule,
+  MatTooltipModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
@@ -72,6 +73,8 @@ import { MenuEventComponent } from './components/menu-event/menu-event.component
 import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
 import { EventDialogViewComponent } from './components/event-dialog-view/event-dialog-view.component';
 import { NgxStarsModule } from 'ngx-stars';
+import { ShowActionComponent } from './components/show-action/show-action.component';
+import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +98,9 @@ import { NgxStarsModule } from 'ngx-stars';
     OrderTabComponent,
     ListOrderComponent,
     OrderDetailComponent,
-    EventDialogViewComponent
+    ShowActionComponent,
+    EventDialogViewComponent,
+    EventSummaryDialogComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -144,7 +149,8 @@ import { NgxStarsModule } from 'ngx-stars';
     ReactiveFormsModule,
     FormsModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [
     OrderService,
@@ -170,7 +176,8 @@ import { NgxStarsModule } from 'ngx-stars';
   entryComponents: [
     DialogComponent,
     EventDialogComponent,
-    EventDialogViewComponent
+    EventDialogViewComponent,
+    EventSummaryDialogComponent
   ]
 })
 export class AppModule {}

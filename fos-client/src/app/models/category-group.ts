@@ -12,10 +12,9 @@
 
     export class CategoryGroup    {
            
-        public name: string = null;   
-        public id: string = null;   
-        public code: string = null;   
-        public categories: Category[] = [];
+        public Name: string = null;   
+        public Id: string = null;   
+        public Code: string = null;   
+        public Categories: Category[] = [];
     }
          
-        

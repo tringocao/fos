@@ -1,12 +1,14 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, XhrFactory } from "@angular/common/http";
-import { environment } from "src/environments/environment";
-import { Observable, of } from "rxjs";
-import { tap, filter } from "rxjs/operators";
-import { DeliveryInfos } from "src/app/models/delivery-infos";
+import { Injectable } from '@angular/core';
+import { HttpClient, XhrFactory } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Observable, of } from 'rxjs';
+import { tap, filter } from 'rxjs/operators';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
+import { FoodCategory } from 'src/app/models/food-category';
+import { CategoryGroup } from 'src/app/models/category-group';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class RestaurantService {
   ids: any;
@@ -15,7 +17,7 @@ export class RestaurantService {
   setEmail(title: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.http
-        .get<ApiOperationResult<any>>(environment.apiUrl + "SendEmail", {
+        .get<ApiOperationResult<any>>(environment.apiUrl + 'SendEmail', {
           params: {
             eventId: title
           }
@@ -36,7 +38,7 @@ export class RestaurantService {
     return new Promise<Array<FoodCategory>>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Array<FoodCategory>>>(
-          environment.apiUrl + "GetFoodCatalogues",
+          environment.apiUrl + 'GetFoodCatalogues',
           {
             params: {
               IdService: JSON.stringify(IdService),
@@ -62,7 +64,7 @@ export class RestaurantService {
     return new Promise<Array<number>>((resolve, reject) => {
       this.http
         .put<ApiOperationResult<Array<number>>>(
-          environment.apiUrl + "api/Restaurant/PutCategorySearch",
+          environment.apiUrl + 'api/Restaurant/PutCategorySearch',
           {
             categories: topic
           },
@@ -87,11 +89,37 @@ export class RestaurantService {
     return new Promise<any>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<any>>(
-          environment.apiUrl + "api/Delivery/GetDeliveryDetail",
+          environment.apiUrl + 'api/Delivery/GetDeliveryDetail',
           {
             params: {
               IdService: JSON.stringify(IdService),
               delivery_id: JSON.stringify(id)
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
+  getRestaurantDetailById(
+    restaurantId: number,
+    cityId: number = 217,
+    idService: number = 1
+  ): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<any>>(
+          environment.apiUrl + 'api/Delivery/GetFirstId',
+          {
+            params: {
+              IdService: JSON.stringify(idService),
+              city_Id: JSON.stringify(cityId),
+              restaurant_id: JSON.stringify(restaurantId)
             }
           }
         )
@@ -112,9 +140,9 @@ export class RestaurantService {
     return new Promise<Array<DeliveryInfos>>((resolve, reject) => {
       this.http
         .put<ApiOperationResult<Array<DeliveryInfos>>>(
-          environment.apiUrl + "api/Delivery/PutRestaurantIds",
+          environment.apiUrl + 'api/Delivery/PutRestaurantIds',
           {
-            restaurant_ids: ids
+            restaurant_id: ids
           },
           {
             params: {
@@ -127,7 +155,7 @@ export class RestaurantService {
         .then(result => {
           if (result.Success) {
             resolve(result.Data);
-          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+          }
         })
         .catch(alert => console.log(alert));
     });
@@ -136,7 +164,7 @@ export class RestaurantService {
     return new Promise<Array<CategoryGroup>>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Array<CategoryGroup>>>(
-          environment.apiUrl + "api/Restaurant/GetMetadataForCategory",
+          environment.apiUrl + 'api/Restaurant/GetMetadataForCategory',
           {
             params: {
               IdService: JSON.stringify(IdService)
@@ -161,7 +189,7 @@ export class RestaurantService {
   ): Observable<ApiOperationResult<Array<number>>> {
     return this.http
       .get<ApiOperationResult<Array<number>>>(
-        environment.apiUrl + "api/Restaurant/GetByKeywordLimit",
+        environment.apiUrl + 'api/Restaurant/GetByKeywordLimit',
         {
           params: {
             IdService: JSON.stringify(IdService),

@@ -20,7 +20,7 @@ namespace FOS.Model.Domain
 
         public string EventRestaurantId { get; set; }
         public string EventServiceId { get; set; }
-        public string EeventCategory { get; set; }
+        public string EventCategory { get; set; }
 
         public string EventDeliveryId { get; set; }
         public string EventCreatedUserId { get; set; }

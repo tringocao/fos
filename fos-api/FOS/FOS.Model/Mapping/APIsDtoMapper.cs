@@ -10,8 +10,8 @@ namespace FOS.Model.Mapping
 {
     public interface IAPIsDtoMapper
     {
-        Model.Apis ToModel(Dto.APIs order);
-        Dto.APIs ToDto(Model.Apis order);
+        Domain.Apis ToModel(Dto.APIs order);
+        Dto.APIs ToDto(Domain.Apis order);
     }
 
     public class APIsDtoMapper : IAPIsDtoMapper
@@ -23,18 +23,18 @@ namespace FOS.Model.Mapping
                 ID = api.ID,
                 JSONData = api.JSONData,
                 Name = api.Name,
-                TypeService = Config.ToEnum<ServiceKind>(api.TypeService)
+                TypeService = Config.ToEnum<ServiceKind>(api.TypeService.GetType().FullName)
             };
         }
 
         public Apis ToModel(Dto.APIs api)
         {
-            return new Model.Apis()
+            return new Domain.Apis()
             {
                 ID = api.ID,
                 JSONData = api.JSONData,
                 Name = api.Name,
-                TypeService = api.TypeService.GetType().FullName
+                TypeService = api.TypeService
             };
         }
        

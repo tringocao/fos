@@ -64,7 +64,7 @@ namespace FOS.Services.ExternalServices.NowService
             return response.Content.ReadAsStringAsync().Result;
         }
         public async Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> category)
-        {
+      {
             //Get function
             APIDetail api = apisJson.SearchRestaurantsInProvince;
             //Set Fields
@@ -147,6 +147,7 @@ namespace FOS.Services.ExternalServices.NowService
             RequestMethodFactory method = new RequestMethodFactory(api);
             var response = await method.CallApiAsync();
             var result = response.Content.ReadAsStringAsync().Result;
+            
             return ConvertJson.ConvertString2ListDeliveryInfos(result);
 
         }

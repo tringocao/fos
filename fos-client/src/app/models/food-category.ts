@@ -12,9 +12,8 @@
 
     export class FoodCategory    {
            
-        public dishTypeName: string = null;   
-        public dishTypeId: string = null;   
-        public dishes: Food[] = [];
+        public DishTypeName: string = null;   
+        public DishTypeId: string = null;   
+        public Dishes: Food[] = [];
     }
          
-        

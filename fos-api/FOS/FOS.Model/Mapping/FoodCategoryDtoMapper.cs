@@ -11,7 +11,7 @@ namespace FOS.Model.Mapping
     public class FoodCategoryDtoMapper : IFoodCategoryDtoMapper
     {
         IFoodDtoMapper _foodDtoMapper;
-        FoodCategoryDtoMapper(IFoodDtoMapper foodDtoMapper)
+        public FoodCategoryDtoMapper(IFoodDtoMapper foodDtoMapper)
         {
             _foodDtoMapper = foodDtoMapper;
         }
