@@ -1,5 +1,7 @@
 export class EventUser {
-    name: string;
-    email: string;
-    img: string
+    Name: string;
+    Email: string;
+    Img: string;
+    Id: string;
+    IsGroup;
 }

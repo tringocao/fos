@@ -18,6 +18,7 @@
         public Category: string = null;   
         public Participants: string = null;   
         public MaximumBudget: string = null;   
+        public DeliveryId: string = null;   
         public HostName: string = null;   
         public HostId: string = null;   
         public CreatedBy: string = null;   

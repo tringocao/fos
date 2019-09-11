@@ -260,20 +260,22 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   mapRowToEventList(row: any) {
     this.eventListItem = {
-      eventTitle: row.name,
-      eventId: row.eventId,
-      eventRestaurant: row.restaurant,
-      eventMaximumBudget: row.maximumBudget,
-      eventTimeToClose: row.closeTime.toString(),
-      eventTimeToReminder: row.remindTime.toString(),
-      eventHost: row.hostName,
-      eventParticipants: row.participants,
-      eventCategory: row.category,
-      eventRestaurantId: row.restaurantId,
-      eventServiceId: '1',
-      eventDeliveryId: '',
-      eventCreatedUserId: this.userId,
-      eventHostId: row.hostId
+      EventTitle: row.name,
+      EventId: row.eventId,
+      EventRestaurant: row.restaurant,
+      EventMaximumBudget: row.maximumBudget,
+      EventTimeToClose: row.closeTime.toString(),
+      EventTimeToReminder: row.remindTime.toString(),
+      EventHost: row.hostName,
+      EventParticipants: row.participants,
+      EventCategory: row.category,
+      EventRestaurantId: row.restaurantId,
+      EventServiceId: '1',
+      EventDeliveryId: '',
+      EventCreatedUserId: this.userId,
+      EventHostId: row.hostId,
+      EventDate: row.closeTime.toString(),
+      EventParticipantsJson: '',
     };
   }
 

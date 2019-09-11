@@ -1,7 +1,4 @@
-<!-- <p>event-dialog works!</p> -->
 <h2>{{data.restaurant}}</h2>
-<!-- <h2>{{data.delivery_id}}</h2>
-<h2>{{data.id}}</h2> -->
 
 
 <section fxLayout="row wrap" fxLayoutAlign="center center">
@@ -32,26 +29,12 @@
           <mat-option *ngIf="_isHostLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
           <ng-container *ngIf="!_isHostLoading">
             <mat-option *ngFor="let user of _userHost" [value]="user">
-                <!-- <img id="youtubeimg" height="50" width="50" src="https://localhost:44366/api/SPUser/GetAvatarByUserId?Id={{user.id}}" /> -->
                 <img height="50" width="50" src="https://localhost:44366/api/SPUser/GetAvatarByUserId?userId={{user.Id}}" />
               <span>{{ user.Name }}</span>
               <small> | email: {{user.Email}}</small>
-              <!-- <small> | email: {{user.id}}</small> -->
-              <!-- <span>{{ user.mail }}</span> -->
-              <!-- <small> | ID: {{restaurant.id}}</small> -->
             </mat-option>
           </ng-container>
         </mat-autocomplete>
-
-        <!-- <mat-form-field class="full-width">
-          <mat-select placeholder="Host" formControlName="host" (selectionChange)="changeHost($event)">
-            <mat-option *ngFor="let user of hostPickerGroup" [value]="user">
-              <img height="50" width="50"
-              src="https://localhost:44366/api/SPUser/GetAvatarByUserId?Id={{user.id}}" />
-              {{user.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
 
         <mat-form-field class="full-width">
           <input matInput placeholder="Restaurant" [matAutocomplete]="autoTest" formControlName='userInput'>
@@ -75,7 +58,7 @@
 
         <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
-          <input required id="party" matInput type="datetime-local" [(ngModel)]="_dateTimeToClose"
+          <input required id="party" matInput type="datetime-local" [(ngModel)]="_dateEventTime"
             formcontrolname="dateTimeToClose" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
 
@@ -150,8 +133,7 @@
 
         </table>
         <mat-card-actions align="right">
-          <button mat-raised-button color="primary" [disabled]="!ownerForm.valid" (click)="SaveToSharePointEventList()">Create</button>
-          <!-- <button type="button" mat-raised-button color="warn" (click)="onCancel()">Create</button> -->
+          <button mat-raised-button color="primary">Update</button>
           <button type="button" mat-raised-button color="warn" (click)="OnNoClick()">Cancel</button>
         </mat-card-actions>
       </div>

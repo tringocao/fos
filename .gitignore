@@ -20,3 +20,5 @@
 /fos-api/FOS/packages
 /fos-api/FOS/FOS.Model/obj/Release
 /fos-api/FOS/FOS.Model/obj/Debug
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite

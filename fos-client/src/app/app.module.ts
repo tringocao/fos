@@ -78,6 +78,7 @@ import { EventSummaryDialogComponent } from './components/event-summary-dialog/e
 import { FoodComponent } from './components/dialog/food/food.component';
 import { ListOrderedFoodsComponent } from './components/order-detail/list-ordered-foods/list-ordered-foods.component';
 import { ReminderDialogComponent } from './components/reminder-dialog/reminder-dialog.component';
+import { EventDialogEditComponent } from './components/event-dialog-edit/event-dialog-edit.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { ReminderDialogComponent } from './components/reminder-dialog/reminder-d
     EventSummaryDialogComponent,
     FoodComponent,
     ListOrderedFoodsComponent,
-    ReminderDialogComponent
+    ReminderDialogComponent,
+    EventDialogEditComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -177,7 +179,8 @@ import { ReminderDialogComponent } from './components/reminder-dialog/reminder-d
     MenuEventComponent,
     EventDialogComponent,
     EventDialogViewComponent,
-    ReminderDialogComponent
+    ReminderDialogComponent,
+    EventDialogEditComponent
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -185,7 +188,8 @@ import { ReminderDialogComponent } from './components/reminder-dialog/reminder-d
     EventDialogComponent,
     EventDialogViewComponent,
     EventSummaryDialogComponent,
-    ReminderDialogComponent
+    ReminderDialogComponent,
+    EventDialogEditComponent
   ]
 })
 export class AppModule {}

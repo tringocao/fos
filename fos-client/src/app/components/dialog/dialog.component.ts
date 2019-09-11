@@ -43,7 +43,7 @@ export class DialogComponent implements OnInit {
       // autoFocus: false,
       maxHeight: "98vh",
       width: "80%",
-      data: this.data
+      data: this.data.restaurant
     });
 
     dialogRef.afterClosed().subscribe(result => {

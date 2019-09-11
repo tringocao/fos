@@ -59,16 +59,16 @@ namespace FOS.API.Controllers
 
         [HttpPost]
         [Route("AddEventListItem")]
-        public ApiResponse AddEventListItem(string Id, [FromBody]EventListItem item)
+        public ApiResponse<string> AddEventListItem(string Id, [FromBody]EventListItem item)
         {
             try
             {
-                _spListService.AddEventListItem(Id, item);
-                return ApiUtil.CreateSuccessfulResult();
+                var result = _spListService.AddEventListItem(Id, item);
+                return ApiUtil<string>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
             {
-                return ApiUtil.CreateFailResult(e.ToString());
+                return ApiUtil<string>.CreateFailResult(e.ToString());
             }
         }
         public ApiResponse<IEnumerable<Event>> GetAllEvent(string userId)
