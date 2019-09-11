@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FOS.Model;
 using FOS.Repositories.DataModel;
+using Newtonsoft.Json;
 
 namespace FOS.Repositories.Mapping
 {
@@ -18,12 +19,27 @@ namespace FOS.Repositories.Mapping
     {
         public Model.Domain.Order MapToDomain(DataModel.Order efObject)
         {
-            throw new NotImplementedException();
+            return new Model.Domain.Order()
+            {
+                Id = Guid.Parse(efObject.Id),
+                IdDelivery = efObject.IdDelivery,
+                IdEvent = efObject.IdEvent,
+                IdRestaurant = efObject.IdRestaurant,
+                IdUser = efObject.IdUser,
+                OrderDate = efObject.OrderDate,
+                FoodDetail = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(efObject.FoodDetail)
+            };
         }
 
         public void MapToEfObject(DataModel.Order efObject, Model.Domain.Order domObject)
         {
-            throw new NotImplementedException();
+            efObject.Id = domObject.Id.ToString();
+            efObject.IdDelivery = domObject.IdDelivery;
+            efObject.IdEvent = domObject.IdEvent;
+            efObject.IdRestaurant = domObject.IdRestaurant;
+            efObject.IdUser = domObject.IdUser;
+            efObject.OrderDate = domObject.OrderDate;
+            efObject.FoodDetail = domObject.FoodDetail!= null ? JsonConvert.SerializeObject(domObject.FoodDetail):"";
         }
     }
 }

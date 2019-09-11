@@ -12,8 +12,9 @@ namespace FOS.Repositories.Repositories
     public interface IOrderRepository
     {
         bool AddOrder(DataModel.Order order);
-        DataModel.Order GetOrder(int id);
-        IEnumerable<Model.Domain.Order> GetAllOrder();
+        DataModel.Order GetOrder(Guid id);
+        IEnumerable<Order> GetAllOrder();
+        bool UpdateOrder(DataModel.Order order);
     }
 
     public class OrderRepository : IOrderRepository
@@ -29,6 +30,8 @@ namespace FOS.Repositories.Repositories
             try
             {
                 _context.Orders.Add(order);
+                _context.SaveChanges();
+
                 return true;
             }
             catch (Exception e)
@@ -36,16 +39,31 @@ namespace FOS.Repositories.Repositories
                 throw e;
             }
         }
-
-        public DataModel.Order GetOrder(int id)
+        public bool UpdateOrder(DataModel.Order order)
         {
-            return _context.Orders.Find(id);
+            try
+            {
+                Order updateOrder = _context.Orders.FirstOrDefault(o => o.Id == order.Id);
+                updateOrder = order;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
-        public IEnumerable<Model.Domain.Order> GetAllOrder()
+        public DataModel.Order GetOrder(Guid id)
+        {
+            return _context.Orders.Find(id.ToString());
+        }
+        public IEnumerable<DataModel.Order> GetAllOrder()
         {
             var list = _context.Orders.ToList();
-            return Mapper.Map<IEnumerable<DataModel.Order>, IEnumerable<Model.Domain.Order>>(list);
+            return list;
 
         }
+
+    
     }
 }
