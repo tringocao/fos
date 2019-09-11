@@ -1,4 +1,5 @@
-﻿using FOS.Common.Constants;
+﻿using FOS.API.App_Start;
+using FOS.Common.Constants;
 using FOS.Model.Domain;
 using FOS.Model.Util;
 using FOS.Services.SendEmailServices;
@@ -16,6 +17,7 @@ using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
+    [LogActionWebApiFilter]
     public class SendEmailController : ApiController
     {
         ISendEmailService _sendEmailService;

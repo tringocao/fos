@@ -8,13 +8,12 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          import { ServiceKind } from './service-kind';
+          
 
-    export class APIs    {
+    export class Report    {
            
-        public ID: number = 0;   
-        public Name: string = null;   
-        public TypeService: ServiceKind = null;   
-        public JSONData: string = null;
+        public Subject: string = null;   
+        public Html: string = null;   
+        public Attachment: string = null;
     }
          

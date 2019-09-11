@@ -8,11 +8,10 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
+    
 
     export class FavoriteRestaurant    {
            
-        public UserId: string = null;   
         public RestaurantId: string = null;
     }
          

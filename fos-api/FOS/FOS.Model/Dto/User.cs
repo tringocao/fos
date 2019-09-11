@@ -18,7 +18,7 @@ namespace FOS.Model.Dto
         public string OfficeLocation { get; set; }
         public string PreferredLanguage { get; set; }
         public string Surname { get; set; }
-        public string UserPrincipalNamde { get; set; }
+        public string UserPrincipalName { get; set; }
         //public List<string> businessPhones { get; set; }
     }
 }
