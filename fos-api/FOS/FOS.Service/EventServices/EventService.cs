@@ -43,9 +43,24 @@ namespace FOS.Services.EventServices
                 foreach (var element in collListItem)
                 {
                     var eventModel = _eventDtoMapper.ListItemToEventModel(element);
-                    eventModel.IsMyEvent = eventModel.EventParticipantsJson.Contains(userId)
-                        || eventModel.HostId == userId
+
+                    var isParticipant = eventModel.EventParticipantsJson.Contains(userId);
+                    var isHost = eventModel.HostId == userId;
+
+                    eventModel.IsMyEvent = isParticipant
+                        || isHost
                         || eventModel.CreatedBy == userId;
+
+                    eventModel.Action = new EventAction
+                    {
+                        CanViewEvent = true,
+                        CanEditEvent = isHost,
+                        CanCloseEvent = isHost,
+                        CanSendRemind = isHost,
+                        CanMakeOrder =
+                        isParticipant || isHost || eventModel.EventType == "Open"
+                    };
+
                     listEvent.Add(eventModel);
                 }
                 return listEvent;

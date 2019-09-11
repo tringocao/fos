@@ -8,7 +8,7 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    
+          import { EventAction } from './event-action';
 
     export class Event    {
            
@@ -28,6 +28,7 @@
         public IsMyEvent: boolean = false;   
         public EventType: string = null;   
         public EventDate: Date = null;   
-        public EventParticipantsJson: string = null;
+        public EventParticipantsJson: string = null;   
+        public Action: EventAction = null;
     }
          

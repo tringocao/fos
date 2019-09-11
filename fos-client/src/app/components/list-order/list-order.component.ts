@@ -70,7 +70,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.dataSource.paginator = this.paginator;
     this.userService.getCurrentUserId().then((response: User) => {
       this.userId = response.Id;
-      this.getOrders();
+      this.getAllEvent();
     });
   }
 
@@ -107,9 +107,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.dataSource.paginator = this.paginator;
   }
 
-  getOrders() {
-    this.orderService.getAllEvent(this.userId).subscribe(response => {
-      this.allOrder = response.Data;
+  getAllEvent() {
+    this.orderService.getAllEvent(this.userId).then(response => {
+      this.allOrder = response;
       this.myOrder = this.allOrder.filter(item => {
         return item.IsMyEvent === true;
       });

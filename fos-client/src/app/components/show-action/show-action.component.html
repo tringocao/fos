@@ -1,4 +1,4 @@
-<div [className]="'show-action ' + rowId">
+<div [className]="'show-action ' + event.EventId">
   <button
     class="action-button"
     mat-icon-button
@@ -11,11 +11,35 @@
   </button>
   <mat-card class="action-list" *ngIf="isShowListAction">
     <mat-list role="list">
-      <mat-list-item role="listitem">View event</mat-list-item>
-      <mat-list-item role="listitem">Edit event</mat-list-item>
-      <mat-list-item role="listitem">Send reminder</mat-list-item>
-      <mat-list-item role="listitem">Make order</mat-list-item>
-      <mat-list-item role="listitem">Close event</mat-list-item>
+      <mat-list-item
+        role="listitem"
+        *ngIf="event.Action.CanViewEvent"
+        (click)="viewEvent($event)"
+        >View event</mat-list-item
+      >
+      <mat-list-item
+        role="listitem"
+        *ngIf="event.Action.CanEditEvent"
+        (click)="editEvent($event)"
+        >Edit event</mat-list-item
+      >
+      <mat-list-item
+        role="listitem"
+        *ngIf="event.Action.CanSendRemind"
+        (click)="sendReminder($event)"
+        >Send reminder</mat-list-item
+      >
+      <mat-list-item
+        role="listitem"
+        *ngIf="event.Action.CanMakeOrder"
+        (click)="makeOrder($event)"
+        >Make order</mat-list-item
+      >
+      <mat-list-item role="listitem" *ngIf="event.Action.CanCloseEvent">
+        <a target="_blank" routerLink="/events/summary/{{ event.EventId }}"
+          >Close event</a
+        ></mat-list-item
+      >
     </mat-list>
   </mat-card>
 </div>
