@@ -3,13 +3,20 @@ import {
   OnInit,
   ElementRef,
   HostListener,
-  Input
+  Input,
+  Inject
 } from '@angular/core';
-import { TooltipPosition, MatDialog } from '@angular/material';
+import { TooltipPosition } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Event } from './../../models/event';
 import { EventDialogViewComponent } from '../event-dialog-view/event-dialog-view.component';
 import { EventDialogComponent } from '../event-dialog/event-dialog.component';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
+import { ReminderDialogComponent } from '../reminder-dialog/reminder-dialog.component';
 @Component({
   selector: 'app-show-action',
   templateUrl: './show-action.component.html',
@@ -58,6 +65,7 @@ export class ShowActionComponent implements OnInit {
     //   console.log('The dialog was closed');
     // });
     alert('view event: ' + this.event.EventId);
+    this.isShowListAction = false;
   }
 
   editEvent($event) {
@@ -71,22 +79,24 @@ export class ShowActionComponent implements OnInit {
     //   console.log('The dialog was closed');
     // });
     alert('edit event: ' + this.event.EventId);
+    this.isShowListAction = false;
   }
 
   sendReminder($event) {
-    // const dialogRef = this.dialog.open(EventDialogComponent, {
-    //   maxHeight: '98vh',
-    //   width: '80%',
-    //   data: null
-    // });
+    const dialogRef = this.dialog.open(ReminderDialogComponent, {
+      maxHeight: '98vh',
+      width: '50%',
+      data: this.event.EventParticipantsJson
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
-    alert('send reminder event: ' + this.event.EventId);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+    this.isShowListAction = false;
   }
 
   makeOrder($event) {
     alert('make order event: ' + this.event.EventId);
+    this.isShowListAction = false;
   }
 }
