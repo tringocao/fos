@@ -3,11 +3,13 @@ using FOS.Model.Domain;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.FavoriteService;
+using FOS.Services.SPUserService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -17,11 +19,13 @@ namespace FOS.API.Controllers
     public class FavoriteRestaurantController : ApiController
     {
         IFavoriteService _favoriteService;
+        ISPUserService _spUserService;
         IFavoriteRestaurantDtoMapper _favoriteRestaurantDtoMapper;
-        public FavoriteRestaurantController(IFavoriteService favoriteService, IFavoriteRestaurantDtoMapper favoriteRestaurantDtoMapper)
+        public FavoriteRestaurantController(IFavoriteService favoriteService, IFavoriteRestaurantDtoMapper favoriteRestaurantDtoMapper, ISPUserService spUserService)
         {
             _favoriteService = favoriteService;
             _favoriteRestaurantDtoMapper = favoriteRestaurantDtoMapper;
+            _spUserService = spUserService;
         }
 
         // GET: api/favoriterestaurant/getall
@@ -62,14 +66,34 @@ namespace FOS.API.Controllers
             }
         }
 
-        // POST: api/favoriterestaurant/add/
-        [HttpPost]
-        [Route("add")]
-        public ApiResponse Add([FromBody]Model.Dto.FavoriteRestaurant favoriteRestaurant)
+        [HttpGet]
+        [Route("GetAllByCurrentUser")]
+        public async Task<ApiResponse<List<Model.Dto.FavoriteRestaurant>>> GetAllByCurrentUser()
         {
             try
             {
-                _favoriteService.AddFavoriteRestaurant(_favoriteRestaurantDtoMapper.ToModel(favoriteRestaurant));
+                var currrentUser = await _spUserService.GetCurrentUser();
+                var favoriteRestaurants = _favoriteService.GetFavoriteRestaurantsById(currrentUser.Id);
+                var favoriteRestaurantsDto = favoriteRestaurants.Select(
+                    favoriteRestaurant => _favoriteRestaurantDtoMapper.ToDto(favoriteRestaurant)
+                ).ToList();
+                return ApiUtil<List<Model.Dto.FavoriteRestaurant>>.CreateSuccessfulResult(favoriteRestaurantsDto);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Model.Dto.FavoriteRestaurant>>.CreateFailResult(e.ToString());
+            }
+        }
+
+        // POST: api/favoriterestaurant/add/
+        [HttpPost]
+        [Route("add")]
+        public async Task<ApiResponse> Add([FromBody]Model.Dto.FavoriteRestaurant favoriteRestaurant)
+        {
+            try
+            {
+                var currrentUser = await _spUserService.GetCurrentUser();
+                _favoriteService.AddFavoriteRestaurant(_favoriteRestaurantDtoMapper.ToModel(favoriteRestaurant, currrentUser.Id));
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
@@ -81,11 +105,12 @@ namespace FOS.API.Controllers
         // POST: api/favoriterestaurant/remove/
         [HttpPost]
         [Route("remove")]
-        public ApiResponse Remove([FromBody] Model.Dto.FavoriteRestaurant favoriteRestaurant)
+        public async Task<ApiResponse> Remove([FromBody] Model.Dto.FavoriteRestaurant favoriteRestaurant)
         {
             try
             {
-                _favoriteService.RemoveFavoriteRestaurant(_favoriteRestaurantDtoMapper.ToModel(favoriteRestaurant));
+                var currrentUser = await _spUserService.GetCurrentUser();
+                _favoriteService.RemoveFavoriteRestaurant(_favoriteRestaurantDtoMapper.ToModel(favoriteRestaurant, currrentUser.Id));
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

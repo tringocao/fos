@@ -12,7 +12,6 @@
 
     export class FavoriteRestaurant    {
            
-        public UserId: string = null;   
         public RestaurantId: string = null;
     }
          

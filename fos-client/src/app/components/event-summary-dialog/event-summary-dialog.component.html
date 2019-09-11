@@ -48,7 +48,7 @@
           </mat-card>
         </mat-grid-tile>
       </mat-grid-list>
-      <mat-tab-group dynamicHeight>
+      <mat-tab-group dynamicHeight #tabGroup>
         <mat-tab label="Dishes Group View">
           <table mat-table [dataSource]="dishGroupViewdataSource">
             <ng-container matColumnDef="picture">

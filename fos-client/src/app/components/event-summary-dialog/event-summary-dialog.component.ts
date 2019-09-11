@@ -156,7 +156,7 @@ export class EventSummaryDialogComponent implements OnInit {
   async sendEmail() {
     const page = document.getElementById('report');
     const options = {background: "white", height: page.clientHeight, width: page.clientWidth, letterRendering: 1};
-
+    console.log(this.userGroupTab)
     // pageSource.toDataURL("image/PNG")
     // let doc = new jsPDF();
     // var html = '<html> <a href="'+ window.location.href + '">Click here to go to event report' + '</a></html>';

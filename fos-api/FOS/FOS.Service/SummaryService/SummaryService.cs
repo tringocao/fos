@@ -48,10 +48,11 @@ namespace FOS.Services.SummaryService
 
         public string BuildHtmlEmail(string reportUrl, string eventId, string reportId)
         {
-            var imageUrl = WebConfigurationManager.AppSettings[OAuth.WEBAPI_HOME_URI] + "/api/summary/GetImage/" + reportId;
+            var imageUrl = WebConfigurationManager.AppSettings[OAuth.WEBAPI_HOME_URI] + "api/summary/GetImage/" + reportId;
             var html = "<html> <a href='" + reportUrl + "'>Click here to go to event report" + "</a>" +
-                "</a></br><img style='width: 500px; height: 500px;' src='" + imageUrl + "' />"+
-                "</html>";
+                "</a></br><img data-imagetype='External' style='width: 500px; height: 500px;' src='" + imageUrl + "' />"+
+                "</br>Click <a href='" + imageUrl + "' target='_blank'>here </a> if you couldn't see the image" +
+            "</html>";
             return html;
         }
 

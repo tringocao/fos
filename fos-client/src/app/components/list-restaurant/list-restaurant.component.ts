@@ -53,7 +53,6 @@ export class ListRestaurantComponent implements OnInit {
   dataSource: any = new MatTableDataSource<DeliveryInfos>([]);
   favoriteOnlyDataSource: DeliveryInfos[];
   baseDataSource: DeliveryInfos[];
-  userId: string;
   load: boolean;
   favoriteRestaurants: string[];
   favoriteOnly: boolean;
@@ -74,24 +73,27 @@ export class ListRestaurantComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Restaurant>(restaurants);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.userId = "";
     this.favoriteRestaurants = [];
     this.favoriteOnly = false;
     this.topic = JSON.parse("[]");
     this.keyword = "";
 
-    this.userService.getCurrentUserId().then((response: User) => {
-      console.log(response.Id);
-      this.userId = response.Id;
-      this.favoriteService.getFavorite(this.userId).then(response => {
+    
+
+    // this.getRestaurant({ topic: this.topic, keyword: this.keyword });
+
+    // this.userService.getCurrentUserId().then((response: User) => {
+      this.favoriteService.getFavorite().then(response => {
         console.log(response);
         response.map((item: FavoriteRestaurant) => {
           this.favoriteRestaurants.push(item.RestaurantId);
         });
         console.log(this.favoriteRestaurants);
+      })
+      .then(() => {
+        this.getRestaurant({ topic: this.topic, keyword: this.keyword });
       });
-    });
-    this.getRestaurant({ topic: this.topic, keyword: this.keyword });
+    // })
   }
 
   constructor(
@@ -110,69 +112,69 @@ export class ListRestaurantComponent implements OnInit {
 
   addToFavorite(event, restaurantId: string) {
     console.log('add', restaurantId);
+    this.dataSource.data.forEach(data => {
+      console.log(data)
+      if (data.RestaurantId == restaurantId) {
+        data.IsFavorite = true;
+        this.toast(data.Name + " added! ", "Dismiss");
+      }
+    });
     this.favoriteService
-      .addFavoriteRestaurant(this.userId, restaurantId)
+      .addFavoriteRestaurant(restaurantId)
       .then(response => {
         // console.log(this.dataSource.data);
         if (response != null && response.ErrorMessage != null) {
           this.toast("Error happnened ", "Dismiss");
-        } else {
-          this.dataSource.data.forEach(data => {
-            console.log(data)
-            if (data.RestaurantId == restaurantId) {
-              data.IsFavorite = true;
-              this.toast(data.Name + " added! ", "Dismiss");
-            }
-          });
         }
       });
   }
-  filterByFavorite(event) {
-    this.favoriteOnly = event.checked;
-    if (this.favoriteOnly) {
-      this.favoriteOnlyDataSource = this.dataSource.data.filter(
-        restaurant => restaurant.IsFavorite
-      );
-      this.baseDataSource = this.dataSource.data;
-      this.dataSource.data = this.favoriteOnlyDataSource;
-      this.toast("Filtered by favorite! ", "Dismiss");
-    } else {
-      this.dataSource.data = this.baseDataSource;
-    }
-    this.getRestaurant({topic: this.topic, keyword: this.keyword});
-  }
+  // filterByFavorite(event) {
+  //   this.favoriteOnly = event.checked;
+  //   if (this.favoriteOnly) {
+  //     this.favoriteOnlyDataSource = this.dataSource.data.filter(
+  //       restaurant => restaurant.IsFavorite
+  //     );
+  //     this.baseDataSource = this.dataSource.data;
+  //     this.dataSource.data = this.favoriteOnlyDataSource;
+  //     this.toast("Filtered by favorite! ", "Dismiss");
+  //   } else {
+  //     this.dataSource.data = this.baseDataSource;
+  //   }
+  //   this.getRestaurant({topic: this.topic, keyword: this.keyword});
+  // }
 
   removeFromFavorite(event, restaurantId: string) {
     console.log("remove", restaurantId);
+    this.dataSource.data.forEach(data => {
+      console.log(data)
+      if (data.RestaurantId == restaurantId) {
+        data.IsFavorite = false;
+        this.toast(data.Name + " removed! ", "Dismiss");
+      }
+    });
     this.favoriteService
-      .removeFavoriteRestaurant(this.userId, restaurantId)
+      .removeFavoriteRestaurant(restaurantId)
       .then(response => {
         // console.log(this.dataSource.data);
         if (response != null && response.ErrorMessage != null) {
           this.toast("Error happnened ", "Dismiss");
-        } else {
-          this.dataSource.data.forEach(data => {
-            console.log(data)
-            if (data.RestaurantId == restaurantId) {
-              data.IsFavorite = false;
-              this.toast(data.Name + " removed! ", "Dismiss");
-            }
-          });
         }
       });
   }
 
   getRestaurant($event) {
-    // if ($event.isChecked) {
-    //   this.favoriteOnlyDataSource = this.dataSource.data.filter(
-    //     restaurant => restaurant.IsFavorite
-    //   );
-    //   this.baseDataSource = this.dataSource.data;
-    //   this.dataSource.data = this.favoriteOnlyDataSource;
-    //   this.toast("Filtered by favorite! ", "Dismiss");
-    // } else {
-    //   this.dataSource.data = this.baseDataSource;
-    // }
+    if ($event.isChecked) {
+      this.favoriteOnlyDataSource = this.dataSource.data && this.dataSource.data.filter(
+        restaurant => restaurant.IsFavorite
+      );
+      this.baseDataSource = this.dataSource.data;
+      this.dataSource.data = this.favoriteOnlyDataSource;
+      this.toast("Filtered by favorite! ", "Dismiss");
+    } 
+    else {
+      this.dataSource.data = this.baseDataSource;
+    }
+    console.log($event.isChecked)
     if ($event.topic != undefined && $event.keyword != undefined) {
       this.load = true;
 
@@ -182,13 +184,21 @@ export class ListRestaurantComponent implements OnInit {
         .getRestaurantIds($event.topic, $event.keyword)
         .then(response => {
           this.restaurantService.getRestaurants(response).then(result => {
-            const dataSourceTemp = result;
-            this.dataSource.data = dataSourceTemp.map((item) => {
+            var dataSourceTemp = [];
+            dataSourceTemp = result.map((item) => {
               if (this.favoriteRestaurants.includes(item.RestaurantId)) {
                 item.IsFavorite = true
               }
               return item;
             });
+            // console.log(dataSourceTemp)
+            // this.dataSource.data = dataSourceTemp.filter(item => {
+            //   if ($event.isChecked) {
+            //     return item.IsFavorite;
+            //   }
+            //   return true;
+            // });
+            this.dataSource.data = dataSourceTemp
             console.log(this.dataSource.data)
             console.log(dataSourceTemp)
             // console.log(

@@ -15,16 +15,15 @@ namespace FOS.Model.Mapping
             return new Dto.FavoriteRestaurant()
             {
                 RestaurantId = favoriteRestaurant.RestaurantId,
-                UserId = favoriteRestaurant.UserId
             };
         }
 
-        public Domain.FavoriteRestaurant ToModel(Dto.FavoriteRestaurant favoriteRestaurant)
+        public Domain.FavoriteRestaurant ToModel(Dto.FavoriteRestaurant favoriteRestaurant, string userId)
         {
             return new Domain.FavoriteRestaurant()
             {
                 RestaurantId = favoriteRestaurant.RestaurantId,
-                UserId = favoriteRestaurant.UserId
+                UserId = userId
             };
         }
     }
@@ -32,6 +31,6 @@ namespace FOS.Model.Mapping
     public interface IFavoriteRestaurantDtoMapper
     {
         Dto.FavoriteRestaurant ToDto(Model.Domain.FavoriteRestaurant favoriteRestaurant);
-        Domain.FavoriteRestaurant ToModel(Dto.FavoriteRestaurant favoriteRestaurant);
+        Domain.FavoriteRestaurant ToModel(Dto.FavoriteRestaurant favoriteRestaurant, string userId);
     }
 }
