@@ -67,9 +67,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909110139150_init2.cs" />
-    <Compile Include="Migrations\201909110139150_init2.Designer.cs">
-      <DependentUpon>201909110139150_init2.cs</DependentUpon>
+    <Compile Include="Migrations\201909110744553_newdb.cs" />
+    <Compile Include="Migrations\201909110744553_newdb.Designer.cs">
+      <DependentUpon>201909110744553_newdb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -91,11 +91,6 @@
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909110139150_init2.resx">
-      <DependentUpon>201909110139150_init2.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
       <Project>{867c7a27-0781-4a5a-8f2f-8251de4eddd6}</Project>
       <Name>FOS.Common</Name>
@@ -104,6 +99,11 @@
       <Project>{8252d347-1bad-4276-a6e3-180fb9f0a3db}</Project>
       <Name>FOS.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201909110744553_newdb.resx">
+      <DependentUpon>201909110744553_newdb.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
