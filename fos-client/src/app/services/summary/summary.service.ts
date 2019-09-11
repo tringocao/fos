@@ -22,12 +22,6 @@ export class SummaryService {
     }).catch(alert => console.log(alert))
   });
   }
-  // sendEmail(report:Report) {  
-  //   console.log(report)
-  //     this.http.post(environment.apiUrl + 'api/summary/sendreport',
-  //       {Subject: 'abc'}
-  //     ).subscribe(result => console.log(result));
-  // }
 
   addReport(eventId:string, reportUrl:string, content:string) : Promise<void> {
     return new Promise<void>((resolve,reject)=> {
@@ -49,16 +43,6 @@ export class SummaryService {
     }).catch(alert => console.log(alert))
   });
   }
-
-  // downloadReport():Promise<any> {
-  //   return new Promise<any>((resolve,reject)=> {
-  //     this.http.get<ApiOperationResult<any>>(environment.apiUrl + 'api/summary/downloadreport')
-  //     .toPromise().then(result => {
-  //     if(result.Success){resolve(result.Data)}
-  //     else reject(new Error(JSON.stringify(result.ErrorMessage)));        
-  //   }).catch(alert => console.log(alert))
-  // });
-  // }
 
   getEventById(id:string):Promise<any> {
     return new Promise<any>((resolve,reject)=> {

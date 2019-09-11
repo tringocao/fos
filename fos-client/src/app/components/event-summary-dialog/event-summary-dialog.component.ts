@@ -68,6 +68,7 @@ export class EventSummaryDialogComponent implements OnInit {
     console.log(router.routerState);
   }
 
+  printMode:boolean;
   dishGroupViewdataSource: any = new MatTableDataSource([]);
   personGroupViewdataSource: any = new MatTableDataSource([]);
 
@@ -135,6 +136,88 @@ export class EventSummaryDialogComponent implements OnInit {
       price: 40000,
       payExtra: 5000,
       comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },{
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },{
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
+    },
+    {
+      user: 'admin',
+      food: '1xChicken rice + 1x coca',
+      price: 40000,
+      payExtra: 5000,
+      comment: 'không hành'
     }
   ];
 
@@ -153,9 +236,24 @@ export class EventSummaryDialogComponent implements OnInit {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
  
+  printToPdf() {
+    // this.printMode = true;
+    const printContent = document.getElementById("print");
+    console.log(printContent)
+    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    // WindowPrt.document.write('<link rel="stylesheet" type="text/css" href="event-summary-dialog.component.css">');
+    WindowPrt.document.write(printContent.innerHTML);
+    WindowPrt.document.close();
+    console.log(window.document)
+    WindowPrt.focus();
+    WindowPrt.print();
+    WindowPrt.close();
+  }
+
   async sendEmail() {
-    const page = document.getElementById('report');
-    const options = {background: "white", height: page.clientHeight, width: page.clientWidth, letterRendering: 1};
+    const page = document.getElementById('print');
+    const options = {
+      background: "white", height: 800, width: page.clientWidth, letterRendering: 1, scale: 2,};
     console.log(this.userGroupTab)
     // pageSource.toDataURL("image/PNG")
     // let doc = new jsPDF();
@@ -188,57 +286,44 @@ export class EventSummaryDialogComponent implements OnInit {
     // });
   }
 
-  pageToImage() {
-    window['html2canvas'] = html2canvas;
+  // pageToImage() {
+  //   window['html2canvas'] = html2canvas;
 
-    console.log(this.userGroupTab)
+  //   console.log(this.userGroupTab)
 
-    const page = document.getElementById('report');
-    // const userGroupTab = document.get('personGroupView');
-    const options = {background: "white", height: page.clientHeight, width: page.clientWidth, letterRendering: 1};
-    // const options2 = {background: "white", height: this.userGroupTab.nativeElement.clientHeight, width: this.userGroupTab.nativeElement.clientWidth};
+  //   const page = document.getElementById('report');
+  //   // const userGroupTab = document.get('personGroupView');
+  //   const options = {background: "white", height: page.clientHeight, width: page.clientWidth, letterRendering: 1};
+  //   // const options2 = {background: "white", height: this.userGroupTab.nativeElement.clientHeight, width: this.userGroupTab.nativeElement.clientWidth};
 
-    html2canvas(page, options).then(pageSource => {
-      // html2canvas(userGroupTab, options2).then((userTabSource) => {
-        //Initialize JSPDF
-        let doc = new jsPDF();
-        //Converting canvas to Image
-        var pageData = pageSource.toDataURL("image/PNG");
-        // let userGroupData = userTabSource.toDataURL("image/PNG")
-        // Add image Canvas to PDF%
-        doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
-        // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
+  //   html2canvas(page, options).then(pageSource => {
+  //     // html2canvas(userGroupTab, options2).then((userTabSource) => {
+  //       //Initialize JSPDF
+  //       let doc = new jsPDF();
+  //       //Converting canvas to Image
+  //       var pageData = pageSource.toDataURL("image/PNG");
+  //       // let userGroupData = userTabSource.toDataURL("image/PNG")
+  //       // Add image Canvas to PDF%
+  //       doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
+  //       // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
 
-        let pdfOutput = doc.output();
-        let buffer = new ArrayBuffer(pdfOutput.length);
-        let array = new Uint8Array(buffer);
-        for (let i = 0; i < pdfOutput.length; i++) {
-            array[i] = pdfOutput.charCodeAt(i);
-        }
-        const fileName = "report.pdf";
-        // doc.save(fileName);
-      });
-    // })
-  }
+  //       let pdfOutput = doc.output();
+  //       let buffer = new ArrayBuffer(pdfOutput.length);
+  //       let array = new Uint8Array(buffer);
+  //       for (let i = 0; i < pdfOutput.length; i++) {
+  //           array[i] = pdfOutput.charCodeAt(i);
+  //       }
+  //       const fileName = "report.pdf";
+  //       // doc.save(fileName);
+  //     });
+  //   // })
+  // }
 
   ngOnInit() {
-    this.eventDetail = {
-      eventTitle: 'FIKA2',
-      eventId: '11',
-      eventRestaurant: 'Morico - Contemporary Japanese Lifestyle - Lê Lợi',
-      eventMaximumBudget: 20000,
-      eventTimeToClose: '2019-09-04T11:35:00+07:00',
-      eventTimeToReminder: '2019-09-04T11:35:00+07:00',
-      eventHost: 'Amie Perigo',
-      eventParticipants:
-        'owner123@devpreciovn.onmicrosoft.com;#member@devpreciovn.onmicrosoft.com;#toandh3xco@gmail.com',
-      eventCategory: 'Café/Dessert',
-      eventRestaurantId: '595',
-      eventServiceId: '1',
-      eventDeliveryId: '',
-      eventCreatedUserId: "4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb",
-      eventHostId: "4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb"
-    }
+    this.restaurant = { }
+    this.eventDetail = new EventList();
+    this.restaurant.isLoaded = false;
+    this.printMode = false;
 
     this.route.params.subscribe(params => {
       var id = params['id'];
@@ -259,25 +344,23 @@ export class EventSummaryDialogComponent implements OnInit {
           eventCreatedUserId: "4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb",
           eventHostId: "4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb"
         }
+
+        this.restaurantService.getRestaurants([Number(this.eventDetail.eventRestaurantId)]).then(result => {
+          console.log(result[0])
+          this.restaurant = result[0];
+          this.restaurant.address = result[0].Address;
+
+          this.restaurantService.getRestaurantDetail(Number(this.restaurant.DeliveryId))
+          .then(result => {
+            this.restaurant.Rating = Number(result.Rating);
+            this.restaurant.TotalReview = Number(result.TotalReview);
+            this.restaurant.isLoaded = true;
+          });
+          console.log(this.restaurant)
+          // this.restaurant.RestaurantUrl = "01234";
+        }); 
       });
     })
-
- 
-    this.restaurant = {
-    }
- 
-    this.restaurantService.getRestaurants([Number(this.eventDetail.eventRestaurantId)]).then(result => {
-      console.log(result[0])
-      this.restaurant.address = result[0].Address;
-      this.restaurant.phoneNumber = "01234";
-    }); 
-    
-    // this.restaurantService.getRestaurantDetailById(Number(this.eventDetail.eventRestaurantId), 217, 1).then(result =>{
-    //   // this.restaurant.address = result.address;
-    //   // this.restaurant. = result.
-    
-    //   console.log(result);
-    // });
 
     this.dishGroupViewdataSource = this.orderByDish;
     this.personGroupViewdataSource = this.orderByPerson;

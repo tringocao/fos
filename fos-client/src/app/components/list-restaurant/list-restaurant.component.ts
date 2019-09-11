@@ -51,7 +51,7 @@ export class ListRestaurantComponent implements OnInit {
     "addEvent"
   ];
   dataSource: any = new MatTableDataSource<DeliveryInfos>([]);
-  favoriteOnlyDataSource: DeliveryInfos[];
+  favoriteOnlyDataSource:any = new MatTableDataSource<DeliveryInfos>([]);
   baseDataSource:any = new MatTableDataSource<DeliveryInfos>([]);
   load: boolean;
   favoriteRestaurants: string[];
@@ -144,9 +144,8 @@ export class ListRestaurantComponent implements OnInit {
   // }
 
   removeFromFavorite(event, restaurantId: string) {
-    console.log("remove", restaurantId);
+    console.log("remove", this.dataSource.data);
     this.dataSource.data.forEach(data => {
-      console.log(data)
       if (data.RestaurantId == restaurantId) {
         data.IsFavorite = false;
         this.toast(data.Name + " removed! ", "Dismiss");
@@ -164,11 +163,14 @@ export class ListRestaurantComponent implements OnInit {
 
   getRestaurant($event) {
     if ($event.isChecked) {
-      this.favoriteOnlyDataSource = this.dataSource.data && this.dataSource.data.filter(
+      this.favoriteOnlyDataSource.data = this.dataSource.data && this.dataSource.data.filter(
         restaurant => restaurant.IsFavorite
       );
+      this.favoriteOnlyDataSource.sort = this.sort;
+      this.favoriteOnlyDataSource.paginator = this.paginator;
       this.baseDataSource = this.dataSource;
       this.dataSource = this.favoriteOnlyDataSource;
+      // console.log(this.dataSource)
       this.toast("Filtered by favorite! ", "Dismiss");
     } 
     else {
