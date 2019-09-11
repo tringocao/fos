@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace FOS.Repositories.Mapping
                 IdEvent = efObject.IdEvent,
                 IdRestaurant = efObject.IdRestaurant,
                 IdUser = efObject.IdUser,
-                OrderDate = efObject.OrderDate,
+                OrderDate = DateTime.Parse(efObject.OrderDate),
                 FoodDetail = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(efObject.FoodDetail)
             };
         }
@@ -38,8 +39,8 @@ namespace FOS.Repositories.Mapping
             efObject.IdEvent = domObject.IdEvent;
             efObject.IdRestaurant = domObject.IdRestaurant;
             efObject.IdUser = domObject.IdUser;
-            efObject.OrderDate = domObject.OrderDate;
-            efObject.FoodDetail = domObject.FoodDetail!= null ? JsonConvert.SerializeObject(domObject.FoodDetail):"";
+            efObject.OrderDate = domObject.OrderDate.ToString();
+            efObject.FoodDetail = domObject.FoodDetail != null ? JsonConvert.SerializeObject(domObject.FoodDetail) : "";
         }
     }
 }

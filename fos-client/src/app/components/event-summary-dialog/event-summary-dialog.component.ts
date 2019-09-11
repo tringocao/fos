@@ -21,7 +21,7 @@ import { SummaryService } from 'src/app/services/summary/summary.service';
 import { environment } from 'src/environments/environment';
 import { Report } from 'src/app/models/report';
 import { async } from 'q';
- 
+
 const database: any[] = [
   {
     userId: 'e618f708-8dde-4f04-9d9b-5c5bc3a4905d',
@@ -61,10 +61,14 @@ const database: any[] = [
   styleUrls: ['./event-summary-dialog.component.less']
 })
 export class EventSummaryDialogComponent implements OnInit {
- 
-  @ViewChild('personGroupView', {static: false}) userGroupTab: ElementRef;
+  @ViewChild('personGroupView', { static: false }) userGroupTab: ElementRef;
 
-  constructor(private router: Router, private restaurantService:RestaurantService, private summaryService:SummaryService, private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private restaurantService: RestaurantService,
+    private summaryService: SummaryService,
+    private route: ActivatedRoute
+  ) {
     console.log(router.routerState);
   }
 
@@ -258,17 +262,17 @@ export class EventSummaryDialogComponent implements OnInit {
     // pageSource.toDataURL("image/PNG")
     // let doc = new jsPDF();
     // var html = '<html> <a href="'+ window.location.href + '">Click here to go to event report' + '</a></html>';
-    html2canvas(page, options).then((pageSource) => {
+    html2canvas(page, options).then(pageSource => {
       //Converting canvas to Image
-      var pageData = pageSource.toDataURL("image/PNG");
+      var pageData = pageSource.toDataURL('image/PNG');
       // let userGroupData = userTabSource.toDataURL("image/PNG")
       // Add image Canvas to PDF%
       // doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
 
       this.summaryService.addReport(this.eventDetail.eventId, window.location.href, pageData)
       // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
-      console.log('html2canvas')
-    })
+      console.log('html2canvas');
+    });
     // .then(async() => {
     //   let pdfOutput = await doc.output();
     //   console.log('output')
@@ -280,7 +284,7 @@ export class EventSummaryDialogComponent implements OnInit {
     //     console.log(report)
     //     // await this.summaryService.sendEmail(report);
     //     // this.summaryService.downloadReport();
-        
+
     //     this.summaryService.addReport(this.eventDetail.eventId, pdfOutput)
     //   }
     // });

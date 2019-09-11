@@ -36,7 +36,8 @@ namespace FOS.Services.OrderServices
                 IdDelivery = Int32.Parse(DeliveyId),
                 IdRestaurant = Int32.Parse(RestaurantId),
                 IdUser = UserId,
-                IdEvent = EventId
+                IdEvent = EventId,
+                OrderDate = DateTime.Now
             };
             _orderMapper.MapToEfObject(efOrder, newOrder);
             return _repository.AddOrder(efOrder);

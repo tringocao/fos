@@ -10,12 +10,11 @@
     
      
 
-    export class EventAction    {
+    export class GraphUser    {
            
-        public CanViewEvent: boolean = false;   
-        public CanEditEvent: boolean = false;   
-        public CanCloseEvent: boolean = false;   
-        public CanMakeOrder: boolean = false;   
-        public CanSendRemind: boolean = false;
+        public id: string = null;   
+        public mail: string = null;   
+        public displayName: string = null;   
+        public userPrincipalName: string = null;
     }
          

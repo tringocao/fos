@@ -14,6 +14,7 @@ namespace FOS.Model.Dto
         public string Category { get; set; }
         public string Participants { get; set; }
         public string MaximumBudget { get; set; }
+        public string DeliveryId { get; set; }
         public string HostName { get; set; }
         public string HostId { get; set; }
         public string CreatedBy { get; set; }

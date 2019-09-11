@@ -1,0 +1,34 @@
+<div class="reminder-dialog">
+  <div class="dialog-header">
+    <h2>User not ordered yet</h2>
+    <button mat-icon-button (click)="closeDialog($event)" class="close">
+      <mat-icon>
+        close
+      </mat-icon>
+    </button>
+  </div>
+  <mat-list class="users">
+    <mat-list-item *ngFor="let user of participants">
+      <img height="50" width="50" src="{{ user.img }}" />
+      {{ user.displayName }}
+    </mat-list-item>
+  </mat-list>
+  <div class="dialog-actions">
+    <button
+      class="remind"
+      mat-raised-button
+      (click)="remind($event)"
+      cdkFocusInitial
+    >
+      Send
+    </button>
+    <button
+      class="cancel"
+      mat-raised-button
+      color="warn"
+      (click)="closeDialog($event)"
+    >
+      Cancel
+    </button>
+  </div>
+</div>
