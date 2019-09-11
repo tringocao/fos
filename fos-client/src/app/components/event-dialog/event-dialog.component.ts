@@ -9,7 +9,8 @@ import {
   MatSort,
   MatPaginator,
   MatTableDataSource,
-  MatTable
+  MatTable,
+  MatSnackBar
 } from '@angular/material';
 import {
   FormControl,
@@ -75,7 +76,8 @@ export class EventDialogComponent implements OnInit {
     private fb: FormBuilder,
     private eventFormService: EventFormService,
     private http: HttpClient,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private _snackBar: MatSnackBar,
   ) {}
 
   _eventSelected = 'Open';
@@ -499,7 +501,15 @@ export class EventDialogComponent implements OnInit {
       .toPromise()
       .then(newId => {
         console.log('new Id', newId.Data);
-      });
+        this.toast("added new event!", "Dismiss");
+        this.dialogRef.close();
+      }
+    )
+  }
+  toast(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000
+    });
   }
   SendEmail(title: string) {
     this.restaurantService.setEmail(title);
