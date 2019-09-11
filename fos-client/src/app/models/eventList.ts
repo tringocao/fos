@@ -6,7 +6,7 @@ export class EventList {
   EventTimeToClose: string;
   EventTimeToReminder: string;
   EventHost: string;
-  EventParticipants: string;
+  EventParticipants: Number;
   EventCategory: string;
   EventRestaurantId: string;
   EventServiceId: string;

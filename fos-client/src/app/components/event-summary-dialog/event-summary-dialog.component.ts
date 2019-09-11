@@ -210,8 +210,7 @@ export class EventSummaryDialogComponent implements OnInit {
       EventTimeToClose: '2019-09-04T11:35:00+07:00',
       EventTimeToReminder: '2019-09-04T11:35:00+07:00',
       EventHost: 'Amie Perigo',
-      EventParticipants:
-        'owner123@devpreciovn.onmicrosoft.com;#member@devpreciovn.onmicrosoft.com;#toandh3xco@gmail.com',
+      EventParticipants:1,
       EventCategory: 'Café/Dessert',
       EventRestaurantId: '595',
       EventServiceId: '1',

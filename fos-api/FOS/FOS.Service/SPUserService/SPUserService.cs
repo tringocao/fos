@@ -42,7 +42,7 @@ namespace FOS.Services.SPUserService
             }
         }
 
-        public async Task<Model.Dto.GraphUser> GetCurrentUser()
+        public async Task<Model.Dto.GraphUser> GetCurrentUserGraph()
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "me", null);
             if (result.IsSuccessStatusCode)
@@ -57,7 +57,21 @@ namespace FOS.Services.SPUserService
                 throw new Exception(await result.Content.ReadAsStringAsync());
             }
         }
+        public async Task<Model.Dto.User> GetCurrentUser()
+        {
+            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "me", null);
+            if (result.IsSuccessStatusCode)
+            {
+                var resultGroup = await result.Content.ReadAsStringAsync();
+                Model.Dto.User response = JsonConvert.DeserializeObject<Model.Dto.User>(resultGroup);
 
+                return response;
+            }
+            else
+            {
+                throw new Exception(await result.Content.ReadAsStringAsync());
+            }
+        }
         public async Task<Model.Domain.User> GetUserById(string Id)
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "users/" + Id, null);

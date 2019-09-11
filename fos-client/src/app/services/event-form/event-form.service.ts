@@ -37,9 +37,8 @@ export class EventFormService {
   //     );
   // }
 
-  AddEventListItem(eventlist: EventList): Promise<ApiOperationResult<void>> {
-    return new Promise<ApiOperationResult<void>>((resolve, reject) => {
-      this.http
+  AddEventListItem(eventlist: EventList): Observable<ApiOperationResult<string>> {
+    return this.http
         .post(
           environment.apiUrl +
           'api/SPList/AddEventListItem?Id=d7415c0c-8295-4851-bbe8-6717e939f7f6',
@@ -62,19 +61,11 @@ export class EventFormService {
             EventDate: eventlist.EventDate,
             EventParticipantsJson: eventlist.EventParticipantsJson
           }
-        )
-        .subscribe(
-          val => {
-            this.toast('Create event successfuly ', 'Dismiss');
-          },
-          response => {
-            console.log('POST call in error', response);
-          },
-          () => {
-            console.log('The POST observable is now completed.');
-          }
+        ).pipe(
+          tap((response: ApiOperationResult<string>) => {
+            return response;
+          })
         );
-    })
   }
 
   SearchUserByName(searchText: string): Observable<ApiOperationResult<Array<User>>> {
@@ -97,7 +88,7 @@ export class EventFormService {
   getCurrentUser(): Observable<ApiOperationResult<GraphUser>> {
     return this.http
       .get<ApiOperationResult<GraphUser>>(
-        environment.apiUrl + 'api/SPUser/GetCurrentUser'
+        environment.apiUrl + 'api/SPUser/GetCurrentUserGraph'
       )
       .pipe(
         tap((response: ApiOperationResult<GraphUser>) => {

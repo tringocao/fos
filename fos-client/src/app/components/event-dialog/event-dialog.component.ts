@@ -126,30 +126,11 @@ export class EventDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    var self = this;
-    var users = JSON.parse(localStorage.getItem('users'));
-
-    // users.map(user => {
-    //   // this._hostPickerGroup.push({
-    //   //   id: user.id,
-    //   //   name: user.name,
-    //   //   email: user.email,
-    //   //   principalName: user.principalName
-    //   // });
-    //   this._office365User.push({
-    //     Name: user.name,
-    //     Email: user.email,
-    //     Img: '',
-    //     Id: user.id,
-    //     IsGroup: 0
-    //   });
-    // });
-    
+    var self = this;    
     this.eventFormService.GetUsers().toPromise().then(
-      u =>{
-        
-        u.Data.map( us =>{
-          if(us.Mail){
+      u => {
+        u.Data.map(us => {
+          if (us.Mail) {
             this._office365User.push({
               Name: us.DisplayName,
               Email: us.Mail,
@@ -158,7 +139,6 @@ export class EventDialogComponent implements OnInit {
               IsGroup: 0
             });
           }
-          
         })
       }
     )
@@ -272,34 +252,6 @@ export class EventDialogComponent implements OnInit {
             this._isHostLoading = false;
           }
         }
-
-        // this.restaurantService.getRestaurants(data.Data).then(result => {
-        //   var dataSourceTemp = [];
-        //   result.forEach((element, index) => {
-        //     // tslint:disable-next-line:prefer-const
-        //     let restaurantItem: Restaurant = {
-        //       id: element.restaurant_id,
-        //       delivery_id: element.delivery_id,
-        //       stared: false,
-        //       restaurant: element.name,
-        //       address: element.address,
-        //       category:
-        //         element.categories.length > 0 ? element.categories[0] : '',
-        //       promotion:
-        //         element.promotion_groups.length > 0
-        //           ? element.promotion_groups[0].text
-        //           : '',
-        //       open:
-        //         (element.operating.open_time || '?') +
-        //         '-' +
-        //         (element.operating.close_time || '?'),
-        //       url_rewrite_name: ''
-        //     };
-        //     dataSourceTemp.push(restaurantItem);
-        //   });
-        //   this.restaurant$ = dataSourceTemp;
-        //   this.isHostLoading = false;
-        // })
       );
 
       this.ownerForm.get('userInput').setValue(this.data);
@@ -465,7 +417,7 @@ export class EventDialogComponent implements OnInit {
     console.log('get createUserId: ');
     console.log(this._createdUser.id);
     var jsonParticipants: GraphUser[] = [];
-    var participantList = '';
+    var numberParticipant = 0;
 
     for (var j = 0; j < this._eventUsers.length; j++) {
       if (this._eventUsers[j].Email) {
@@ -497,6 +449,7 @@ export class EventDialogComponent implements OnInit {
                   userPrincipalName: user.UserPrincipalName
                 }
                 jsonParticipants.push(p);
+                numberParticipant++;
               }
             })
           })
@@ -516,14 +469,15 @@ export class EventDialogComponent implements OnInit {
               userPrincipalName: self._eventUsers[j].Name
             } 
             jsonParticipants.push(participant);
+            numberParticipant++;
           }
         }
       }
     }
 
-    let newParticipantList = participantList.slice(0, -2);
 
     console.log('participant list: ', jsonParticipants);
+
     var myJSON = JSON.stringify(jsonParticipants);
     console.log('final',myJSON);
 
@@ -535,7 +489,7 @@ export class EventDialogComponent implements OnInit {
       EventTimeToClose: dateTimeToClose,
       EventTimeToReminder: dateToReminder,
       EventHost: host,
-      EventParticipants: newParticipantList,
+      EventParticipants: numberParticipant,
       EventCategory: category,
       EventRestaurantId: restaurantId,
       EventServiceId: '1',
@@ -547,12 +501,11 @@ export class EventDialogComponent implements OnInit {
     };
     
     
-    this.eventFormService.AddEventListItem(eventListitem).then(r => {
-      console.log('Add new Item');
-      // setTimeout(() => {
-      //   this.SendEmail(title);
-      // }, 5000);
-    });
+    this.eventFormService.AddEventListItem(eventListitem).toPromise().then(
+      newId =>{
+        console.log('new Id', newId.Data);
+      }
+    )
   }
   SendEmail(title: string) {
     this.restaurantService.setEmail(title);

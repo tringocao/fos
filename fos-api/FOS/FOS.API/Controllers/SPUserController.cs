@@ -46,17 +46,32 @@ namespace FOS.API.Controllers
 
         // GET api/spuser/GetCurrentUser
         [HttpGet]
-        [Route("GetCurrentUser")]
-        public async Task<ApiResponse<Model.Dto.GraphUser>> GetCurrentUser()
+        [Route("GetCurrentUserGraph")]
+        public async Task<ApiResponse<Model.Dto.GraphUser>> GetCurrentUserGraph()
         {
             try
             {
-                var user = await _sPUserService.GetCurrentUser();
+                var user = await _sPUserService.GetCurrentUserGraph();
                 return ApiUtil<Model.Dto.GraphUser>.CreateSuccessfulResult(user);
             }
             catch (Exception e)
             {
                 return ApiUtil<Model.Dto.GraphUser>.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("GetCurrentUser")]
+        public async Task<ApiResponse<Model.Dto.User>> GetCurrentUser()
+        {
+            try
+            {
+                var user = await _sPUserService.GetCurrentUser();
+                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(user);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<Model.Dto.User>.CreateFailResult(e.ToString());
             }
         }
 
