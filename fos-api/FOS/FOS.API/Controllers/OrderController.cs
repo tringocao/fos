@@ -59,6 +59,24 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
             }
         }
+
+        [HttpPost]
+        [Route("UpdateOrder")]
+        public ApiResponse UpdateOrder([FromBody]Order order)
+        {
+            try
+            {
+               
+                Order order = _orderService.UpdateOrder(mapper.ToModel(order));
+                return ApiUtil.CreateSuccessfulResult();
+
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+
         //// GET: api/Order/5
         //public Model.Dto.Order Get(int id)
         //{

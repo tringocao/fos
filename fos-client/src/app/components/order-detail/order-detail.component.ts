@@ -29,7 +29,7 @@ export class OrderDetailComponent implements OnInit {
   order: Order;
   resDetail: RestaurantDetail;
   isDataAvailable: boolean = false;
-
+  totalBudget: Number;
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
@@ -52,6 +52,7 @@ export class OrderDetailComponent implements OnInit {
               this.data.detail = restaurantd;
               this.userService.getUserById(order.IdUser).then(user => {
                 this.user = user;
+                this.totalBudget = 350000;
                 this.isDataAvailable = true;
               });
             });
@@ -68,5 +69,9 @@ export class OrderDetailComponent implements OnInit {
     } else {
       this.foodorderlist.DeleteFoodDetail(food.food);
     }
+  }
+  Save(){
+    this.order.FoodDetail = this.foodorderlist.getAllFoodDetail();
+    this.orderService.SetOrder(this.order);
   }
 }

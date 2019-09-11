@@ -24,7 +24,26 @@ export class OrderService {
       }
     });
   }
-
+  SetOrder(order:Order): Promise<void>{
+    return new Promise<void>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<void>>(
+          environment.apiUrl + "api/Order/UpDateOrder",
+          {
+            params: {
+              order: JSON.stringify(order) 
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
   GetOrder(orderId: string): Promise<Order> {
     return new Promise<Order>((resolve, reject) => {
       this.http
