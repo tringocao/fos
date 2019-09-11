@@ -19,6 +19,8 @@ import 'moment/locale/vi';
 import { SummaryService } from 'src/app/services/summary/summary.service';
 
 import { environment } from 'src/environments/environment';
+import { Report } from 'src/app/models/report';
+import { async } from 'q';
  
 const database: any[] = [
   {
@@ -151,15 +153,39 @@ export class EventSummaryDialogComponent implements OnInit {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
  
-  sendEmail() {
+  async sendEmail() {
     const page = document.getElementById('report');
     const options = {background: "white", height: page.clientHeight, width: page.clientWidth, letterRendering: 1};
 
+    // pageSource.toDataURL("image/PNG")
+    // let doc = new jsPDF();
+    // var html = '<html> <a href="'+ window.location.href + '">Click here to go to event report' + '</a></html>';
     html2canvas(page, options).then((pageSource) => {
-      var html = '<html> <a href="'+ window.location.href + '">Click here to go to event report' + '</a></br><img style="width:500px;height:500px;" src="' + pageSource.toDataURL("image/PNG") + '" /></html>';
-      console.log(html)
-      this.summaryService.sendEmail(html);
-    });
+      //Converting canvas to Image
+      var pageData = pageSource.toDataURL("image/PNG");
+      // let userGroupData = userTabSource.toDataURL("image/PNG")
+      // Add image Canvas to PDF%
+      // doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
+
+      this.summaryService.addReport(this.eventDetail.eventId, window.location.href, pageData)
+      // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
+      console.log('html2canvas')
+    })
+    // .then(async() => {
+    //   let pdfOutput = await doc.output();
+    //   console.log('output')
+    //   var report = new Report();
+    //   report.Subject = "Report for " + this.eventDetail.eventTitle;
+    //   report.Html = html;
+    //   report.Attachment = pdfOutput;
+    //   if (report.Html && report.Subject && report.Attachment) {
+    //     console.log(report)
+    //     // await this.summaryService.sendEmail(report);
+    //     // this.summaryService.downloadReport();
+        
+    //     this.summaryService.addReport(this.eventDetail.eventId, pdfOutput)
+    //   }
+    // });
   }
 
   pageToImage() {
@@ -177,20 +203,19 @@ export class EventSummaryDialogComponent implements OnInit {
         //Initialize JSPDF
         let doc = new jsPDF();
         //Converting canvas to Image
-        return pageSource.toDataURL("image/PNG");
+        var pageData = pageSource.toDataURL("image/PNG");
         // let userGroupData = userTabSource.toDataURL("image/PNG")
-        // console.log(imgData)
-        //Add image Canvas to PDF%
-        // doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
+        // Add image Canvas to PDF%
+        doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
         // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
 
-        // let pdfOutput = doc.output();
-        // let buffer = new ArrayBuffer(pdfOutput.length);
-        // let array = new Uint8Array(buffer);
-        // for (let i = 0; i < pdfOutput.length; i++) {
-        //     array[i] = pdfOutput.charCodeAt(i);
-        // }
-        // const fileName = "report.pdf";
+        let pdfOutput = doc.output();
+        let buffer = new ArrayBuffer(pdfOutput.length);
+        let array = new Uint8Array(buffer);
+        for (let i = 0; i < pdfOutput.length; i++) {
+            array[i] = pdfOutput.charCodeAt(i);
+        }
+        const fileName = "report.pdf";
         // doc.save(fileName);
       });
     // })

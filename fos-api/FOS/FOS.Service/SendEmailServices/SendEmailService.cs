@@ -80,24 +80,6 @@ namespace FOS.Services.SendEmailServices
             }
         }
 
-        public void SendReport(string userEmail, string html)
-        {
-            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-            {
-                var emailp = new EmailProperties();
-                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
-
-                emailp.To = new List<string>() { userEmail };
-                emailp.From = userEmail;
-                emailp.Body = String.Format(html);
-                emailp.Subject = "Event Report";
-
-                Utility.SendEmail(clientContext, emailp);
-                clientContext.ExecuteQuery();
-
-            }
-        }
-
         public void ReadEmailTemplate(string html)
         {
             emailTemplate = JsonConvert.DeserializeObject<EmailTemplate>(html);

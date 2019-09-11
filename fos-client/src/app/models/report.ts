@@ -11,7 +11,9 @@
           
 
     export class Report    {
-        
+           
+        public Subject: string = null;   
+        public Html: string = null;   
+        public Attachment: string = null;
     }
          
-        

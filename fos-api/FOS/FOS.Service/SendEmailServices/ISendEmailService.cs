@@ -9,6 +9,5 @@ namespace FOS.Services.SendEmailServices
     public interface ISendEmailService
     {
         Task SendEmailAsync(string idEvent, string html);
-        void SendReport(string userEmail, string html);
     }
 }

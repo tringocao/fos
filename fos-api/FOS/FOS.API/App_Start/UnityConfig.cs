@@ -68,6 +68,12 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
+
+            container.RegisterType<Repositories.Repositories.IReportFileRepository, Repositories.Repositories.ReportFileRepository>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
+
             container.RegisterType<Repositories.Repositories.IFOSFavoriteRestaurantRepository, Repositories.Repositories.FOSFavoriteRestaurantRepository>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),

@@ -29,7 +29,7 @@ const routes: Routes = [
     component: MealsPageComponent
   },
   {
-    path: 'summary/:id',
+    path: 'events/summary/:id',
     component: EventSummaryDialogComponent
   }
 ];

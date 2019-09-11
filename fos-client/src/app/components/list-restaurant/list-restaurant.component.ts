@@ -51,7 +51,7 @@ export class ListRestaurantComponent implements OnInit {
     'menu',
     'addEvent'
   ];
-  dataSource: any = new MatTableDataSource<Restaurant>();
+  dataSource:MatTableDataSource<Restaurant>;
   favoriteOnlyDataSource: Restaurant[];
   baseDataSource: Restaurant[];
   userId: string;
@@ -67,6 +67,11 @@ export class ListRestaurantComponent implements OnInit {
     this.categorys = ['a', 'b', 'c', 'd'];
     this.sortNameOrder = 0;
     this.sortCategoryOrder = 0;
+
+
+
+    var restaurants : Restaurant[] = [];
+    this.dataSource = new MatTableDataSource<Restaurant>(restaurants);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.userId = '';
@@ -117,7 +122,7 @@ export class ListRestaurantComponent implements OnInit {
         } else {
           this.dataSource.data.forEach(data => {
             // console.log(data)
-            if (data.id == restaurantId) {
+            if (data.id.toString() == restaurantId) {
               data.stared = true;
               this.toast(data.restaurant + ' added! ', 'Dismiss');
             }
@@ -154,7 +159,7 @@ export class ListRestaurantComponent implements OnInit {
         } else {
           this.dataSource.data.forEach(data => {
             // console.log(data)
-            if (data.id == restaurantId) {
+            if (data.id.toString() == restaurantId) {
               data.stared = false;
               this.toast(data.restaurant + ' removed! ', 'Dismiss');
             }
@@ -165,7 +170,7 @@ export class ListRestaurantComponent implements OnInit {
 
   getRestaurant($event) {
     if ($event.isChecked) {
-      this.favoriteOnlyDataSource = this.dataSource.data.filter(
+      this.favoriteOnlyDataSource = this.dataSource && this.dataSource.data && this.dataSource.data.filter(
         restaurant => restaurant.stared
       );
       this.baseDataSource = this.dataSource.data;
@@ -184,7 +189,7 @@ export class ListRestaurantComponent implements OnInit {
         .then(response => {
           this.restaurantService.getRestaurants(response).then(result => {
             const dataSourceTemp = result;
-            this.dataSource.data = dataSourceTemp;
+            // this.dataSource.data = dataSourceTemp;
             // console.log(
             //   dataSourceTemp.filter(
             //     (restaurant: Restaurant) => restaurant.stared
