@@ -13,6 +13,7 @@ namespace FOS.Model.Dto
         public string Photos { get; set; }
         public string Description { get; set; }
         public string Price { get; set; }
+        public bool IsChecked { get; set; }
 
     }
 }

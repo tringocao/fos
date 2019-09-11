@@ -13,13 +13,14 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Food } from "src/app/models/food";
 import { SelectionModel } from "@angular/cdk/collections";
+
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
 }
 interface FoodCheck {
-  value: Food;
-  checked: Boolean;
+  food: Food;
+  checked: boolean;
 }
 @Component({
   selector: "app-food",
@@ -35,7 +36,9 @@ export class FoodComponent implements OnInit {
   @Input("data") data: RestaurantMore;
   @Input("isOrder") isOrder: boolean;
   @Output() valueChange = new EventEmitter<FoodCheck>();
-
+  docsOnThisPage: any[] = [];
+  from: number;
+  pageSize: number;
   constructor(private restaurantService: RestaurantService) {}
   displayedColumns2: string[] = [
     "select",
@@ -54,14 +57,28 @@ export class FoodComponent implements OnInit {
     return numSelected === numRows;
   }
   length = 1;
-  isSomeSelected(ref, row) {
+  IsSomeSelected(ref, row) {
     var checked = this.selection.isSelected(row);
     ref.checked = checked;
     console.log(checked, row);
     this.valueChange.emit({
-      value: this.selection.selected[this.selection.selected.length - 1],
+      food: row,
       checked: checked
     });
+  }
+  checked(row: Food) {
+    this.selection.select(row);
+    var found = this.selection.selected.find(x => x.Id == row.Id);
+    if (found) found.IsChecked = true;
+  }
+  isChecked(row: Food) {
+    var found = this.selection.selected.find(x => x.Id == row.Id);
+    if (found) return found.IsChecked;
+  }
+  unChecked(row: Food) {
+    var found = this.selection.selected.find(x => x.Id == row.Id);
+    if (found) found.IsChecked = false;
+    this.selection.deselect(found);
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   // masterToggle(ref) {
@@ -80,10 +97,8 @@ export class FoodComponent implements OnInit {
   // }
   // dsth() {}
   // /** The label for the checkbox on the passed row */
-  // checkboxLabel(row?: Food, index?: number): string {
-  //   if (!row) {
-  //     return `${this.isAllSelected() ? "select" : "deselect"} all`;
-  //   }
+
+  // checkboxLabel(row: Food, index: number): string {
   //   return `${
   //     this.selection.isSelected(row) ? "deselect" : "select"
   //   } row ${index + 2}`;

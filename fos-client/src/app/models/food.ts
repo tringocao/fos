@@ -16,6 +16,7 @@
         public Name: string = null;   
         public Photos: string = null;   
         public Description: string = null;   
-        public Price: string = null;
+        public Price: string = null;   
+        public IsChecked: boolean = false;
     }
          

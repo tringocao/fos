@@ -14,8 +14,8 @@ interface RestaurantMore {
   detail: RestaurantDetail;
 }
 interface FoodCheck {
-  value: Food;
-  checked: Boolean;
+  food: Food;
+  checked: boolean;
 }
 @Component({
   selector: "app-order-detail",
@@ -61,6 +61,12 @@ export class OrderDetailComponent implements OnInit {
   @ViewChild(ListOrderedFoodsComponent, { static: false })
   foodorderlist: ListOrderedFoodsComponent;
   GetFoodFromMenu(food: FoodCheck): void {
-    //console.log(food);
+    if (food.checked) {
+      this.foodorderlist.AddFoodDetail(
+        this.foodorderlist.MapFoodCheck2FoodDetail(food.food)
+      );
+    } else {
+      this.foodorderlist.DeleteFoodDetail(food.food);
+    }
   }
 }

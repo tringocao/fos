@@ -24,8 +24,10 @@
             color="warn"
             (click)="$event.stopPropagation()"
             (change)="
-              $event ? selection.toggle(row) : null; isSomeSelected(ref, row)
+              $event.checked ? checked(row) : unChecked(row);
+              IsSomeSelected(ref, row)
             "
+            [checked]="isChecked(row)"
           >
           </mat-checkbox>
         </td>
