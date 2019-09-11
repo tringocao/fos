@@ -52,7 +52,7 @@ export class ListRestaurantComponent implements OnInit {
   ];
   dataSource: any = new MatTableDataSource<DeliveryInfos>([]);
   favoriteOnlyDataSource: DeliveryInfos[];
-  baseDataSource: DeliveryInfos[];
+  baseDataSource:any = new MatTableDataSource<DeliveryInfos>([]);
   load: boolean;
   favoriteRestaurants: string[];
   favoriteOnly: boolean;
@@ -167,12 +167,12 @@ export class ListRestaurantComponent implements OnInit {
       this.favoriteOnlyDataSource = this.dataSource.data && this.dataSource.data.filter(
         restaurant => restaurant.IsFavorite
       );
-      this.baseDataSource = this.dataSource.data;
-      this.dataSource.data = this.favoriteOnlyDataSource;
+      this.baseDataSource = this.dataSource;
+      this.dataSource = this.favoriteOnlyDataSource;
       this.toast("Filtered by favorite! ", "Dismiss");
     } 
     else {
-      this.dataSource.data = this.baseDataSource;
+      this.dataSource = this.baseDataSource;
     }
     console.log($event.isChecked)
     if ($event.topic != undefined && $event.keyword != undefined) {
