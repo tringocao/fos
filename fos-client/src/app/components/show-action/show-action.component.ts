@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { Event } from './../../models/event';
 import { EventDialogViewComponent } from '../event-dialog-view/event-dialog-view.component';
 import { EventDialogComponent } from '../event-dialog/event-dialog.component';
+import { EventDialogEditComponent } from '../event-dialog-edit/event-dialog-edit.component';
 @Component({
   selector: 'app-show-action',
   templateUrl: './show-action.component.html',
@@ -48,29 +49,29 @@ export class ShowActionComponent implements OnInit {
   }
 
   viewEvent() {
-    // const dialogRef = this.dialog.open(EventDialogViewComponent, {
-    //   maxHeight: '98vh',
-    //   width: '80%',
-    //   data: this.event
-    // });
+    const dialogRef = this.dialog.open(EventDialogViewComponent, {
+      maxHeight: '98vh',
+      width: '80%',
+      data: this.event
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
-    alert('view event: ' + this.event.EventId);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+    // alert('view event: ' + this.event.EventId);
   }
 
   editEvent($event) {
-    // const dialogRef = this.dialog.open(EventDialogComponent, {
-    //   maxHeight: '98vh',
-    //   width: '80%',
-    //   data: this.event
-    // });
+    const dialogRef = this.dialog.open(EventDialogEditComponent, {
+      maxHeight: '98vh',
+      width: '80%',
+      data: this.event
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
-    alert('edit event: ' + this.event.EventId);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+    // alert('edit event: ' + this.event.EventId);
   }
 
   sendReminder($event) {

@@ -126,7 +126,8 @@ export class EventDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    var self = this;    
+    var self = this;
+    //get user    
     this.eventFormService.GetUsers().toPromise().then(
       u => {
         u.Data.map(us => {
@@ -142,9 +143,6 @@ export class EventDialogComponent implements OnInit {
         })
       }
     )
-    
-    console.log('get user ', this._office365User);
-
     this._userPickerGroups.push({
       Name: 'User',
       UserPicker: this._office365User
@@ -171,9 +169,6 @@ export class EventDialogComponent implements OnInit {
       EventType: new FormControl(''),
     });
 
-    // get User
-
-
     // get Group
       this.eventFormService.GetGroups().toPromise().then(value =>{
         value.Data.map(user =>{
@@ -189,7 +184,6 @@ export class EventDialogComponent implements OnInit {
           }
         })
       })
-      console.log('group ', this._office365Group)
     this._userPickerGroups.push({
       Name: 'Office 365 Group',
       UserPicker: this._office365Group
