@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { TooltipPosition } from '@angular/material';
 import { FormControl } from '@angular/forms';
+import { EventAction } from './../../models/event-action';
 
 @Component({
   selector: 'app-show-action',
@@ -24,7 +25,8 @@ export class ShowActionComponent implements OnInit {
     'right'
   ];
   position = new FormControl(this.positionOptions[2]);
-  @Input() rowId: string;
+  @Input() eventId: string;
+  @Input() actionList: EventAction;
 
   @HostListener('document:click', ['$event'])
   clickout(event) {
@@ -44,4 +46,12 @@ export class ShowActionComponent implements OnInit {
   showListAction($event) {
     this.isShowListAction = !this.isShowListAction;
   }
+
+  viewEvent($event) {}
+
+  editEvent($event) {}
+
+  createEvent($event) {}
+
+  makeOrder() {}
 }

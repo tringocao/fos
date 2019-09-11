@@ -1,4 +1,7 @@
-<mat-tab-group (selectedTabChange)="selectedTabChange($event)">
+<mat-tab-group
+  (selectedTabChange)="selectedTabChange($event)"
+  class="event-tab"
+>
   <mat-tab label="My event">
     <app-list-order [isMyOrder]="isMyOrder"></app-list-order>
   </mat-tab>

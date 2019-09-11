@@ -21,14 +21,14 @@ namespace FOS.Model.Mapping
             {
                 host = new FieldLookupValue();
             }
-            var closeDateString = element["EventTimeToClose"].ToString();
-            Nullable<DateTime> closeDate = DateTime.Parse(closeDateString).ToLocalTime();
+            var closeDateString = ElementAttributeToString(element["EventTimeToClose"]);
+            Nullable<DateTime> closeDate = SetDate(closeDateString);
 
-            var remindDateString = element["EventTimeToReminder"].ToString();
-            Nullable<DateTime> remindDate = DateTime.Parse(remindDateString).ToLocalTime();
+            var remindDateString = ElementAttributeToString(element["EventTimeToReminder"]);
+            Nullable<DateTime> remindDate = SetDate(remindDateString);
 
-            var eventDateString = element["EventDate"].ToString();
-            Nullable<DateTime> eventDate = DateTime.Parse(remindDateString).ToLocalTime();
+            var eventDateString = ElementAttributeToString(element["EventDate"]);
+            Nullable<DateTime> eventDate = SetDate(eventDateString);
 
             var eventModel = new Event();
 
@@ -44,7 +44,7 @@ namespace FOS.Model.Mapping
             eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
             eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
             eventModel.Status = ElementAttributeToString(element["EventStatus"]);
-            eventModel.EventType = ElementAttributeToString(element["EventType"]);
+            eventModel.EventType = ElementAttributeToString(element["EventTypes"]);
             eventModel.EventDate = eventDate;
             eventModel.EventParticipantsJson = ElementAttributeToString(element["EventParticipantsJson"]);
             eventModel.RemindTime = remindDate;
@@ -55,6 +55,19 @@ namespace FOS.Model.Mapping
         private string ElementAttributeToString(Object element)
         {
             return element != null ? element.ToString() : "";
+        }
+        private Nullable<DateTime> SetDate(string dateString)
+        {
+            var nullableDate = new Nullable<DateTime>();
+            if(dateString.Length > 0)
+            {
+                nullableDate = DateTime.Parse(dateString).ToLocalTime();
+            }
+            else
+            {
+                nullableDate = null;
+            }
+            return nullableDate;
         }
     }
 }
