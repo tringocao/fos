@@ -8,14 +8,13 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-     
+     import { ServiceKind } from './service-kind';
 
-    export class EventAction    {
+    export class APIs    {
            
-        public CanViewEvent: boolean = false;   
-        public CanEditEvent: boolean = false;   
-        public CanCloseEvent: boolean = false;   
-        public CanMakeOrder: boolean = false;   
-        public CanSendRemind: boolean = false;
+        public ID: number = 0;   
+        public Name: string = null;   
+        public TypeService: ServiceKind = null;   
+        public JSONData: string = null;
     }
          

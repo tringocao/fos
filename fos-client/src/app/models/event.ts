@@ -8,7 +8,7 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          import { EventAction } from './event-action';
+     import { EventAction } from './event-action';
 
     export class Event    {
            

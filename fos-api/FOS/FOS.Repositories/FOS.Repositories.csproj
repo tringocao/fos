@@ -67,9 +67,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909110744553_newdb.cs" />
-    <Compile Include="Migrations\201909110744553_newdb.Designer.cs">
-      <DependentUpon>201909110744553_newdb.cs</DependentUpon>
+    <Compile Include="Migrations\201909110906418_newver.cs" />
+    <Compile Include="Migrations\201909110906418_newver.Designer.cs">
+      <DependentUpon>201909110906418_newver.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -101,8 +101,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909110744553_newdb.resx">
-      <DependentUpon>201909110744553_newdb.cs</DependentUpon>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201909110906418_newver.resx">
+      <DependentUpon>201909110906418_newver.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
