@@ -96,5 +96,20 @@ namespace FOS.API.Controllers
                 return ApiUtil<Event>.CreateFailResult(e.ToString());
             }
         }
+
+        [HttpPost]
+        [Route("UpdateListItem")]
+        public async Task<ApiResponse> UpdateListItem(string Id, [FromBody]EventListItem Item)
+        {
+            try
+            {
+                await _spListService.UpdateListItem(Id, Item);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
     }
 }

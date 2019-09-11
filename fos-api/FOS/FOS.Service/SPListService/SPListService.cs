@@ -35,51 +35,115 @@ namespace FOS.Services.SPListService
 
         public string AddEventListItem(string Id, EventListItem item)
         {
-            var eventData = item;
-            using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            try
             {
-                Web web = context.Web;
-                var loginName = item.EventHost;
+                var eventData = item;
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    Web web = context.Web;
+                    var loginName = item.EventHost;
 
-                //var loginName = "i:0#.f|membership|" + item.eventHost;
-                //string email = eventData.eventHost;
-                //PeopleManager peopleManager = new PeopleManager(context);
-                //ClientResult<PrincipalInfo> principal = Utility.ResolvePrincipal(context, web, email, PrincipalType.User, PrincipalSource.All, web.SiteUsers, true);
-                //context.ExecuteQuery();
+                    //var loginName = "i:0#.f|membership|" + item.eventHost;
+                    //string email = eventData.eventHost;
+                    //PeopleManager peopleManager = new PeopleManager(context);
+                    //ClientResult<PrincipalInfo> principal = Utility.ResolvePrincipal(context, web, email, PrincipalType.User, PrincipalSource.All, web.SiteUsers, true);
+                    //context.ExecuteQuery();
 
-                Microsoft.SharePoint.Client.User newUser = context.Web.EnsureUser(loginName);
-                context.Load(newUser);
-                context.ExecuteQuery();
+                    Microsoft.SharePoint.Client.User newUser = context.Web.EnsureUser(loginName);
+                    context.Load(newUser);
+                    context.ExecuteQuery();
 
-                FieldUserValue userValue = new FieldUserValue();
-                userValue.LookupId = newUser.Id;
+                    FieldUserValue userValue = new FieldUserValue();
+                    userValue.LookupId = newUser.Id;
 
-                List members = context.Web.Lists.GetByTitle("Event List");
-                Microsoft.SharePoint.Client.ListItem listItem = members.AddItem(new ListItemCreationInformation());
-                listItem["EventHost"] = userValue;
-                listItem["EventTitle"] = eventData.EventTitle;
-                listItem["EventId"] = 1;
-                listItem["EventRestaurant"] = eventData.EventRestaurant;
-                listItem["EventMaximumBudget"] = eventData.EventMaximumBudget;
-                listItem["EventTimeToClose"] = eventData.EventTimeToClose;
-                listItem["EventTimeToReminder"] = eventData.EventTimeToReminder;
-                listItem["EventParticipants"] = eventData.EventParticipants;
-                listItem["EventCategory"] = eventData.EventCategory;
+                    List members = context.Web.Lists.GetByTitle("Event List");
+                    Microsoft.SharePoint.Client.ListItem listItem = members.AddItem(new ListItemCreationInformation());
+                    listItem["EventHost"] = userValue;
+                    listItem["EventTitle"] = eventData.EventTitle;
+                    listItem["EventId"] = 1;
+                    listItem["EventRestaurant"] = eventData.EventRestaurant;
+                    listItem["EventMaximumBudget"] = eventData.EventMaximumBudget;
+                    listItem["EventTimeToClose"] = eventData.EventTimeToClose;
+                    listItem["EventTimeToReminder"] = eventData.EventTimeToReminder;
+                    listItem["EventParticipants"] = eventData.EventParticipants;
+                    listItem["EventCategory"] = eventData.EventCategory;
 
-                listItem["EventRestaurantId"] = eventData.EventRestaurantId;
-                listItem["EventServiceId"] = eventData.EventServiceId;
-                listItem["EventDeliveryId"] = eventData.EventDeliveryId;
-                listItem["EventCreatedUserId"] = eventData.EventCreatedUserId;
-                listItem["EventHostId"] = eventData.EventHostId;
-                listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
-                listItem["EventDate"] = eventData.EventDate;
-                listItem["EventStatus"] = "Opened";
-                listItem["EventTypes"] = "Open";
-                listItem.Update();
-                context.ExecuteQuery();
+                    listItem["EventRestaurantId"] = eventData.EventRestaurantId;
+                    listItem["EventServiceId"] = eventData.EventServiceId;
+                    listItem["EventDeliveryId"] = eventData.EventDeliveryId;
+                    listItem["EventCreatedUserId"] = eventData.EventCreatedUserId;
+                    listItem["EventHostId"] = eventData.EventHostId;
+                    listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
+                    listItem["EventDate"] = eventData.EventDate;
+                    listItem["EventStatus"] = "Opened";
+                    listItem["EventTypes"] = "Open";
+                    listItem.Update();
+                    context.ExecuteQuery();
 
-                return listItem.Id.ToString();
+                    return listItem.Id.ToString();
+                }
             }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task UpdateListItem(string Id, EventListItem item)
+        {
+            try
+            {
+                var eventData = item;
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    Web web = context.Web;
+                    var loginName = item.EventHost;
+
+                    //var loginName = "i:0#.f|membership|" + item.eventHost;
+                    //string email = eventData.eventHost;
+                    //PeopleManager peopleManager = new PeopleManager(context);
+                    //ClientResult<PrincipalInfo> principal = Utility.ResolvePrincipal(context, web, email, PrincipalType.User, PrincipalSource.All, web.SiteUsers, true);
+                    //context.ExecuteQuery();
+
+                    Microsoft.SharePoint.Client.User newUser = context.Web.EnsureUser(loginName);
+                    context.Load(newUser);
+                    context.ExecuteQuery();
+
+                    FieldUserValue userValue = new FieldUserValue();
+                    userValue.LookupId = newUser.Id;
+
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(Id);
+
+                    listItem["EventHost"] = userValue;
+                    listItem["EventTitle"] = eventData.EventTitle;
+                    listItem["EventId"] = 1;
+                    listItem["EventRestaurant"] = eventData.EventRestaurant;
+                    listItem["EventMaximumBudget"] = eventData.EventMaximumBudget;
+                    listItem["EventTimeToClose"] = eventData.EventTimeToClose;
+                    listItem["EventTimeToReminder"] = eventData.EventTimeToReminder;
+                    listItem["EventParticipants"] = eventData.EventParticipants;
+                    listItem["EventCategory"] = eventData.EventCategory;
+
+                    listItem["EventRestaurantId"] = eventData.EventRestaurantId;
+                    listItem["EventServiceId"] = eventData.EventServiceId;
+                    listItem["EventDeliveryId"] = eventData.EventDeliveryId;
+                    listItem["EventCreatedUserId"] = eventData.EventCreatedUserId;
+                    listItem["EventHostId"] = eventData.EventHostId;
+                    listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
+                    listItem["EventDate"] = eventData.EventDate;
+                    listItem["EventStatus"] = "Opened";
+                    listItem["EventTypes"] = "Open";
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
         }
     }
 }

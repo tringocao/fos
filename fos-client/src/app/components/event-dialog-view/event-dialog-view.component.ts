@@ -20,11 +20,7 @@ import { EventUser } from 'src/app/models/eventuser';
 })
 export class EventDialogViewComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
-  eventusers: EventUser[] = [
-    {
-      Name: 'abc', Email: "a@gmail.com", Img: '', IsGroup: 0, Id: "abc"
-    }
-  ];
+  eventusers: EventUser[] = [];
   constructor(@Inject(MAT_DIALOG_DATA) public data: Event,public dialogRef: MatDialogRef<EventDialogViewComponent>) {}
   eventTitle = '';
   eventHost = '';

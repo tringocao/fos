@@ -3,7 +3,8 @@ import {
   MatSort,
   MatPaginator,
   MatTableDataSource,
-  MatTable
+  MatTable,
+  MatSnackBar
 } from '@angular/material';
 import {
   MatDialog,
@@ -24,6 +25,8 @@ import { EventUser } from 'src/app/models/eventuser';
 import { DeliveryInfos } from 'src/app/models/delivery-infos';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
+import { GraphUser } from 'src/app/models/graph-user';
+import { EventList } from 'src/app/models/eventList';
 @Component({
   selector: 'app-event-dialog-edit',
   templateUrl: './event-dialog-edit.component.html',
@@ -35,7 +38,8 @@ export class EventDialogEditComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: Event,
   private eventFormService: EventFormService,
   private restaurantService: RestaurantService,
-  public dialogRef: MatDialogRef<EventDialogEditComponent>) { }
+  public dialogRef: MatDialogRef<EventDialogEditComponent>,
+  private _snackBar: MatSnackBar) { }
   //global
   _eventSelected = 'Open';
   _createdUser = { id: '' };
@@ -255,5 +259,228 @@ export class EventDialogEditComponent implements OnInit {
 
   OnNoClick(): void {
     this.dialogRef.close();
+  }
+
+  UpdateToSharePointEventList(): void {
+    if (this._eventUsers.length == 0) {
+      alert('Please choose participants!');
+      return;
+    }
+    var self = this;
+
+    var host = this.ownerForm.get('userInputHost').value.Name;
+    console.log('get host: ', host);
+
+    var title = this.ownerForm.get('title').value;
+    console.log('get title: ',title);
+
+    var EventType = this.ownerForm.get('EventType').value;
+    console.log('get title: ',EventType);
+
+    var maximumBudget = this._maximumBudget;
+    console.log('get maximumBudget: ',maximumBudget);
+
+    var eventDate = this._dateEventTime;
+    console.log('get eventDate: ',eventDate);
+
+    var dateTimeToClose = this._dateTimeToClose.replace('T', ' ');
+    console.log('get dateTimeToClose: ',dateTimeToClose);
+
+    var dateToReminder = this._dateToReminder.replace('T', ' ');
+    console.log('get dateToReminder: ',dateToReminder);
+
+    var restaurant = this.ownerForm.get('userInput').value.Name;
+    console.log('get restaurant: ');
+    console.log(restaurant);
+
+    var restaurantId = this.ownerForm.get('userInput').value.RestaurantId;
+    console.log('get restaurantId: ');
+    console.log(restaurantId);
+
+    var category = this.ownerForm.get('userInput').value.Categories;
+    console.log('get category: ');
+    console.log(category);
+
+    var deliveryId = this.ownerForm.get('userInput').value.DeliveryId;
+    console.log('get deliveryId: ');
+    console.log(deliveryId);
+
+    var serciveId = 1;
+    console.log('get serciveId: ');
+    console.log(serciveId);
+
+    var hostId = this.ownerForm.get('userInputHost').value.Id;
+    console.log('get hostId: ');
+    console.log(hostId);
+
+    console.log('get createUserId: ');
+    console.log(this._createdUser.id);
+    var jsonParticipants: GraphUser[] = [];
+    var numberParticipant = 0;
+
+    for (var j = 0; j < this._eventUsers.length; j++) {
+      if (this._eventUsers[j].Email) {
+        console.log(this._eventUsers[j].Email, this._eventUsers[j].IsGroup);
+        // get Group
+        if(this._eventUsers[j].IsGroup == 1){
+
+          var participant:GraphUser = {id: self._eventUsers[j].Id,
+            displayName: self._eventUsers[j].Name,
+            mail: self._eventUsers[j].Email,
+            userPrincipalName: self._eventUsers[j].Name
+          } 
+          jsonParticipants.push(participant);
+
+          this.eventFormService.GroupListMemers(this._eventUsers[j].Id).toPromise().then(value => {
+            value.Data.map(user => {
+              console.log('member in group', user.DisplayName);
+              var flagCheck = false;
+              jsonParticipants.map(check => {
+                if (check.displayName === user.DisplayName) {
+                  flagCheck = true;
+                }
+              })
+              if(flagCheck === false){
+                var p: GraphUser = {
+                  id: user.Id,
+                  displayName: user.DisplayName,
+                  mail: user.Mail,
+                  userPrincipalName: user.UserPrincipalName
+                }
+                jsonParticipants.push(p);
+                numberParticipant++;
+              }
+            })
+          })
+        }else{
+          console.log('user khac', this._eventUsers[j].Name);
+          var check = false;
+          jsonParticipants.map(mem=>{
+            if(mem.displayName === this._eventUsers[j].Name){
+              check = true;
+            }
+          })
+          if(check === false){
+            var participant: GraphUser = {
+              id: self._eventUsers[j].Id,
+              displayName: self._eventUsers[j].Name,
+              mail: self._eventUsers[j].Email,
+              userPrincipalName: self._eventUsers[j].Name
+            } 
+            jsonParticipants.push(participant);
+            numberParticipant++;
+          }
+        }
+      }
+    }
+
+    var myJSON = JSON.stringify(jsonParticipants);
+    console.log('final',myJSON);
+
+    var eventListitem: EventList = {
+      EventTitle: title,
+      EventId: title,
+      EventRestaurant: restaurant,
+      EventMaximumBudget: maximumBudget,
+      EventTimeToClose: dateTimeToClose,
+      EventTimeToReminder: dateToReminder,
+      EventHost: host,
+      EventParticipants: numberParticipant,
+      EventCategory: category,
+      EventRestaurantId: restaurantId,
+      EventServiceId: '1',
+      EventDeliveryId: deliveryId,
+      EventCreatedUserId: this._createdUser.id,
+      EventHostId: hostId,
+      EventDate: eventDate,
+      EventParticipantsJson: myJSON
+    };
+    
+    
+    this.eventFormService.UpdateEventListItem(this.data.EventId, eventListitem).toPromise().then(
+      result =>{
+        console.log('Update', result);
+        this.toast("update new event!", "Dismiss");
+        this.dialogRef.close();
+      }
+    )
+  }
+  toast(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
+  AddUserToTable(): void {
+    console.log('Nhan add card');
+
+    console.log(this._userSelect);
+
+    for (var s in this._userSelect) {
+      var flag = false;
+      for (var e in this._eventUsers) {
+        if (this._userSelect[s].Name == this._eventUsers[e].Name) {
+          flag = true;
+        }
+      }
+
+      if (flag == false) {
+
+        console.log(this._userSelect[s]);
+
+        this._eventUsers.push({
+          Name: this._userSelect[s].Name,
+          Email: this._userSelect[s].Email,
+          Img: '',
+          Id: this._userSelect[s].Id,
+          IsGroup: this._userSelect[s].IsGroup,
+        });
+        this.table.renderRows();
+      }
+    }
+  }
+  DeleteUserInTable(name: string): void {
+
+    console.log('xoa ', name);
+    for (var j = 0; j < this._eventUsers.length; j++) {
+      if (name == this._eventUsers[j].Name) {
+        this._eventUsers.splice(j, 1);
+
+        j--;
+        this.table.renderRows();
+      }
+    }
+  }
+
+  public CreateOwner = ownerFormValue => {
+    if (this.ownerForm.valid) {
+      console.log('pass');
+    }
+  };
+
+  ChangeClient(event) {
+    console.log('change client');
+
+    let target = event.source.selected._element.nativeElement;
+    this._userSelect = [];
+
+    const toSelect = this._office365User.find(c => c.Email == event.value);
+    const toSelectGroup = this._office365Group.find(c => c.Email == event.value);
+    if (toSelect != null) {
+      this._userSelect.push({
+        Name: target.innerText.trim(),
+        Email: event.value,
+        Img: '',
+        Id: toSelect.Id,
+        IsGroup: 0
+      });
+    } else {
+      this._userSelect.push({
+        Name: target.innerText.trim(),
+        Email: event.value,
+        Img: '',
+        IsGroup: 1,
+        Id: toSelectGroup.Id
+      });
+    }
   }
 }

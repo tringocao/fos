@@ -68,6 +68,37 @@ export class EventFormService {
         );
   }
 
+  UpdateEventListItem(Id: String, eventlist: EventList): Observable<ApiOperationResult<void>> {
+    return this.http
+        .post(
+          environment.apiUrl +
+          'api/SPList/UpdateListItem?Id=' + Id,
+          {
+            EventTitle: eventlist.EventTitle,
+            EventRestaurant: eventlist.EventRestaurant,
+            EventMaximumBudget: eventlist.EventMaximumBudget,
+
+            EventTimeToClose: eventlist.EventTimeToClose,
+            EventTimeToReminder: eventlist.EventTimeToReminder,
+            EventHost: eventlist.EventHost,
+            EventParticipants: eventlist.EventParticipants,
+
+            EventCategory: eventlist.EventCategory,
+            EventRestaurantId: eventlist.EventRestaurantId,
+            EventServiceId: eventlist.EventServiceId,
+            EventDeliveryId: eventlist.EventDeliveryId,
+            EventCreatedUserId: eventlist.EventCreatedUserId,
+            EventHostId: eventlist.EventHostId,
+            EventDate: eventlist.EventDate,
+            EventParticipantsJson: eventlist.EventParticipantsJson
+          }
+        ).pipe(
+          tap((response: ApiOperationResult<void>) => {
+            return response;
+          })
+        );
+  }
+
   SearchUserByName(searchText: string): Observable<ApiOperationResult<Array<User>>> {
     return this.http
       .get<ApiOperationResult<Array<User>>>(
