@@ -111,52 +111,52 @@ export class ListRestaurantComponent implements OnInit {
   addToFavorite(event, restaurantId: string) {
     console.log('add', restaurantId);
     this.favoriteService
-      .addFavoriteRestaurant(favoriteRestaurant)
+      .addFavoriteRestaurant(this.userId, restaurantId)
       .then(response => {
         // console.log(this.dataSource.data);
         if (response != null && response.ErrorMessage != null) {
           this.toast("Error happnened ", "Dismiss");
         } else {
           this.dataSource.data.forEach(data => {
-            // console.log(data)
-            // if (data.id == restaurantId) {
-            //   data.stared = true;
-            //   this.toast(data.restaurant + " added! ", "Dismiss");
-            // }
+            console.log(data)
+            if (data.RestaurantId == restaurantId) {
+              data.IsFavorite = true;
+              this.toast(data.Name + " added! ", "Dismiss");
+            }
           });
         }
       });
   }
   filterByFavorite(event) {
-    // this.favoriteOnly = event.checked;
-    // if (this.favoriteOnly) {
-    //   this.favoriteOnlyDataSource = this.dataSource.data.filter(
-    //     restaurant => restaurant.stared
-    //   );
-    //   this.baseDataSource = this.dataSource.data;
-    //   this.dataSource.data = this.favoriteOnlyDataSource;
-    //   this.toast("Filtered by favorite! ", "Dismiss");
-    // } else {
-    //   this.dataSource.data = this.baseDataSource;
-    // }
-    // this.getRestaurant({topic: this.topic, keyword: this.keyword});
+    this.favoriteOnly = event.checked;
+    if (this.favoriteOnly) {
+      this.favoriteOnlyDataSource = this.dataSource.data.filter(
+        restaurant => restaurant.IsFavorite
+      );
+      this.baseDataSource = this.dataSource.data;
+      this.dataSource.data = this.favoriteOnlyDataSource;
+      this.toast("Filtered by favorite! ", "Dismiss");
+    } else {
+      this.dataSource.data = this.baseDataSource;
+    }
+    this.getRestaurant({topic: this.topic, keyword: this.keyword});
   }
 
   removeFromFavorite(event, restaurantId: string) {
     console.log("remove", restaurantId);
     this.favoriteService
-      .removeFavoriteRestaurant(favoriteRestaurant)
+      .removeFavoriteRestaurant(this.userId, restaurantId)
       .then(response => {
         // console.log(this.dataSource.data);
         if (response != null && response.ErrorMessage != null) {
           this.toast("Error happnened ", "Dismiss");
         } else {
           this.dataSource.data.forEach(data => {
-            // console.log(data)
-            // if (data.id == restaurantId) {
-            //   data.stared = false;
-            //   this.toast(data.restaurant + " removed! ", "Dismiss");
-            // }
+            console.log(data)
+            if (data.RestaurantId == restaurantId) {
+              data.IsFavorite = false;
+              this.toast(data.Name + " removed! ", "Dismiss");
+            }
           });
         }
       });
@@ -164,9 +164,9 @@ export class ListRestaurantComponent implements OnInit {
 
   getRestaurant($event) {
     // if ($event.isChecked) {
-    //   // this.favoriteOnlyDataSource = this.dataSource.data.filter(
-    //   //   restaurant => restaurant.stared
-    //   // );
+    //   this.favoriteOnlyDataSource = this.dataSource.data.filter(
+    //     restaurant => restaurant.IsFavorite
+    //   );
     //   this.baseDataSource = this.dataSource.data;
     //   this.dataSource.data = this.favoriteOnlyDataSource;
     //   this.toast("Filtered by favorite! ", "Dismiss");
@@ -183,7 +183,14 @@ export class ListRestaurantComponent implements OnInit {
         .then(response => {
           this.restaurantService.getRestaurants(response).then(result => {
             const dataSourceTemp = result;
-            // this.dataSource.data = dataSourceTemp;
+            this.dataSource.data = dataSourceTemp.map((item) => {
+              if (this.favoriteRestaurants.includes(item.RestaurantId)) {
+                item.IsFavorite = true
+              }
+              return item;
+            });
+            console.log(this.dataSource.data)
+            console.log(dataSourceTemp)
             // console.log(
             //   dataSourceTemp.filter(
             //     (restaurant: Restaurant) => restaurant.stared
