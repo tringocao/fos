@@ -31,8 +31,7 @@
           <p>{{ element.Name }}</p>
           <app-show-action
             class="show-event-action"
-            [eventId]="element.EventId"
-            [actionList]="element.Action"
+            [event]="element"
           ></app-show-action>
         </td>
       </ng-container>
