@@ -17,11 +17,24 @@ export class OrderService {
     // this.baseUrl = envService.getApiUrl() + "/api/order";
   }
 
-  getAllEvent(userId: string) {
-    return this.http.get<any>(environment.apiUrl + 'api/splist/getallevent', {
-      params: {
-        userId
-      }
+  getAllEvent(userId: string): Promise<Array<Event>> {
+    return new Promise<Array<Event>>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<Array<Event>>>(
+          environment.apiUrl + 'api/splist/getallevent',
+          {
+            params: {
+              userId
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          }
+        })
+        .catch(alert => console.log(alert));
     });
   }
 
