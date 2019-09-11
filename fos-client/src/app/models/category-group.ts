@@ -8,7 +8,7 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    import { Category } from './category';
+     import { Category } from './category';
 
     export class CategoryGroup    {
            

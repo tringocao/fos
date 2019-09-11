@@ -12,13 +12,25 @@ namespace FOS.Model.Mapping
     {
         public Dto.FavoriteRestaurant ToDto(Domain.FavoriteRestaurant favoriteRestaurant)
         {
-            throw new NotImplementedException();
+            return new Dto.FavoriteRestaurant()
+            {
+                RestaurantId = favoriteRestaurant.RestaurantId,
+            };
+        }
+
+        public Domain.FavoriteRestaurant ToModel(Dto.FavoriteRestaurant favoriteRestaurant, string userId)
+        {
+            return new Domain.FavoriteRestaurant()
+            {
+                RestaurantId = favoriteRestaurant.RestaurantId,
+                UserId = userId
+            };
         }
     }
 
     public interface IFavoriteRestaurantDtoMapper
     {
         Dto.FavoriteRestaurant ToDto(Model.Domain.FavoriteRestaurant favoriteRestaurant);
-
+        Domain.FavoriteRestaurant ToModel(Dto.FavoriteRestaurant favoriteRestaurant, string userId);
     }
 }

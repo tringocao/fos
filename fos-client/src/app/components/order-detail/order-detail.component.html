@@ -1,2 +1,13 @@
-<p>order-detail works! with ID = {{ id }}</p>
-<app-food [data]="data"></app-food>
+<app-loading [loading]="!isDataAvailable"></app-loading>
+<div *ngIf="isDataAvailable">
+  <app-food
+    [data]="data"
+    [isOrder]="true"
+    (valueChange)="GetFoodFromMenu($event)"
+  ></app-food>
+  <app-list-ordered-foods
+    #foodorderlist
+    [user]="user"
+    [order]="order"
+  ></app-list-ordered-foods>
+</div>

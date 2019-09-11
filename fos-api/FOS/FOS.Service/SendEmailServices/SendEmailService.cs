@@ -1,6 +1,7 @@
 ﻿using FOS.Common;
 using FOS.Model.Domain.NowModel;
 using FOS.Model.Dto;
+using FOS.Services.OrderServices;
 using FOS.Services.Providers;
 using FOS.Services.SPUserService;
 using Microsoft.SharePoint.Client;
@@ -23,11 +24,13 @@ namespace FOS.Services.SendEmailServices
     {
         ISharepointContextProvider _sharepointContextProvider;
         ISPUserService _sPUserService;
+        IOrderService _orderService;
         EmailTemplate emailTemplate;
-        public SendEmailService(ISharepointContextProvider sharepointContextProvider, ISPUserService sPUserService)
+        public SendEmailService(ISharepointContextProvider sharepointContextProvider, ISPUserService sPUserService, IOrderService orderService)
         {
             _sharepointContextProvider = sharepointContextProvider;
             _sPUserService = sPUserService;
+            _orderService = orderService;
         }
         private async Task GetDataByEventIdAsync(ClientContext clientContext, string idEvent)
         {
@@ -39,21 +42,25 @@ namespace FOS.Services.SendEmailServices
             clientContext.Load(collListItem);
             clientContext.ExecuteQuery();
 
-            var users = Regex.Split(collListItem.FirstOrDefault()["EventParticipants"].ToString(), ";#");
-            emailTemplate.UsersEmail = users.Select(u => new Model.Domain.User() { Mail = u }).ToList();
-
-            string userId = collListItem.FirstOrDefault()["EventHostId"].ToString();
+            await SetValueForEmailAsync(collListItem.FirstOrDefault());
+        }
+        private async Task SetValueForEmailAsync(ListItem item)
+        {
+            var users = item["EventParticipantsJson"].ToString();
+            emailTemplate.UsersEmail = JsonConvert.DeserializeObject<List<Model.Domain.User>>(users);
+            string userId = item["EventHostId"].ToString();
             var user = await _sPUserService.GetUserById(userId);
             emailTemplate.HostUserEmail = user;
-
-            emailTemplate.EventTitle = collListItem.FirstOrDefault()["EventTitle"].ToString();
-
+            emailTemplate.EventTitle = item["EventTitle"].ToString();
+            emailTemplate.EventId = item["ID"].ToString();
             emailTemplate.Subject = "subject";
-
-            emailTemplate.EventRestaurant = collListItem.FirstOrDefault()["EventRestaurant"].ToString();
+            emailTemplate.EventRestaurant = item["EventRestaurant"].ToString();
+            emailTemplate.EventRestaurantId = item["EventRestaurantId"].ToString();
+            emailTemplate.EventDeliveryId = item["EventDeliveryId"].ToString();
         }
         public async Task SendEmailAsync(string idEvent, string html)
         {
+            idEvent = "FIKA2";
             ReadEmailTemplate(html);
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {
@@ -63,6 +70,7 @@ namespace FOS.Services.SendEmailServices
 
                 foreach (var user in emailTemplate.UsersEmail)
                 {
+                    Guid idOrder = Guid.NewGuid();
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
@@ -70,14 +78,21 @@ namespace FOS.Services.SendEmailServices
                         emailTemplate.EventTitle.ToString(),
                         emailTemplate.EventRestaurant.ToString(),
                         user.Mail.ToString(),
-                        hostname + "make-order/1");
+                        hostname + "make-order/"+ idOrder);
                     emailp.Subject = emailTemplate.Subject;
+                    
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
+
+                    _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id, 
+                        emailTemplate.EventRestaurantId, 
+                        emailTemplate.EventDeliveryId, 
+                        emailTemplate.EventRestaurantId); ;
                 }
 
             }
         }
+
         public void ReadEmailTemplate(string html)
         {
             emailTemplate = JsonConvert.DeserializeObject<EmailTemplate>(html);

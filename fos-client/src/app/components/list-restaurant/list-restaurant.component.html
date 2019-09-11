@@ -9,8 +9,8 @@
             mat-icon-button
             color="primary"
             aria-label="Example icon-button with a heart icon"
-            *ngIf="element.stared; else elseBlock"
-            (click)="removeFromFavorite(event, element.id)"
+            *ngIf="element.IsFavorite; else elseBlock"
+            (click)="removeFromFavorite(event, element.RestaurantId)"
           >
             <mat-icon matTooltip="Unlike">star</mat-icon>
             <!-- <ng-template #elseBlock><mat-icon>star_border</mat-icon></ng-template> -->
@@ -20,7 +20,7 @@
               mat-icon-button
               color="warn"
               aria-label="Example icon-button with a heart icon"
-              (click)="addToFavorite(event, element.id)"
+              (click)="addToFavorite(event, element.RestaurantId)"
             >
               <mat-icon matTooltip="Like">star_border</mat-icon>
             </button>

@@ -87,7 +87,7 @@ export class RestaurantService {
     });
   }
   getRestaurantDetail(
-    id: number,
+    deliveryId: number,
     IdService: number = 1
   ): Promise<RestaurantDetail> {
     return new Promise<RestaurantDetail>((resolve, reject) => {
@@ -97,7 +97,7 @@ export class RestaurantService {
           {
             params: {
               IdService: JSON.stringify(IdService),
-              delivery_id: JSON.stringify(id)
+              delivery_id: JSON.stringify(deliveryId)
             }
           }
         )

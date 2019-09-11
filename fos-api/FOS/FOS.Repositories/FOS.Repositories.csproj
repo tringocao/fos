@@ -40,6 +40,7 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -59,15 +60,16 @@
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
     <Compile Include="DataModel\LoggingData.cs" />
     <Compile Include="DataModel\Order.cs" />
+    <Compile Include="DataModel\ReportFile.cs" />
     <Compile Include="FosContext.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909101003301_fos.cs" />
-    <Compile Include="Migrations\201909101003301_fos.Designer.cs">
-      <DependentUpon>201909101003301_fos.cs</DependentUpon>
+    <Compile Include="Migrations\201909110906418_newver.cs" />
+    <Compile Include="Migrations\201909110906418_newver.Designer.cs">
+      <DependentUpon>201909110906418_newver.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -76,10 +78,17 @@
     <Compile Include="Repositories\FOSFavoriteRestaurantRepository.cs" />
     <Compile Include="Repositories\FOSFoodServiceAPIsRepository.cs" />
     <Compile Include="Repositories\IFOSFoodServiceAPIsRepository.cs" />
+    <Compile Include="Repositories\ReportFileRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
@@ -95,11 +104,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="obj\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909101003301_fos.resx">
-      <DependentUpon>201909101003301_fos.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909110906418_newver.resx">
+      <DependentUpon>201909110906418_newver.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

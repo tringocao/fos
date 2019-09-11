@@ -10,10 +10,17 @@ import { EventList } from 'src/app/models/eventList';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+import { ActivatedRoute } from '@angular/router';
+
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as moment from 'moment';
 import 'moment/locale/vi';
+import { SummaryService } from 'src/app/services/summary/summary.service';
+
+import { environment } from 'src/environments/environment';
+import { Report } from 'src/app/models/report';
+import { async } from 'q';
 
 const database: any[] = [
   {
@@ -58,7 +65,9 @@ export class EventSummaryDialogComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private summaryService: SummaryService,
+    private route: ActivatedRoute
   ) {
     console.log(router.routerState);
   }
@@ -148,16 +157,52 @@ export class EventSummaryDialogComponent implements OnInit {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
 
-  toPdf() {
-    window['html2canvas'] = html2canvas;
-    // var report = new jsPDF('p', 'pt', 'a4');
+  async sendEmail() {
+    const page = document.getElementById('report');
+    const options = {
+      background: 'white',
+      height: page.clientHeight,
+      width: page.clientWidth,
+      letterRendering: 1
+    };
+    console.log(this.userGroupTab);
+    // pageSource.toDataURL("image/PNG")
+    // let doc = new jsPDF();
+    // var html = '<html> <a href="'+ window.location.href + '">Click here to go to event report' + '</a></html>';
+    html2canvas(page, options).then(pageSource => {
+      //Converting canvas to Image
+      var pageData = pageSource.toDataURL('image/PNG');
+      // let userGroupData = userTabSource.toDataURL("image/PNG")
+      // Add image Canvas to PDF%
+      // doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
 
-    //   report.html(document.getElementById('report'), {
-    //     callback: function (doc) {
-    //       console.log(doc);
-    //       doc.save();
-    //     }
-    //  })
+      this.summaryService.addReport(
+        this.eventDetail.EventId,
+        window.location.href,
+        pageData
+      );
+      // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
+      console.log('html2canvas');
+    });
+    // .then(async() => {
+    //   let pdfOutput = await doc.output();
+    //   console.log('output')
+    //   var report = new Report();
+    //   report.Subject = "Report for " + this.eventDetail.eventTitle;
+    //   report.Html = html;
+    //   report.Attachment = pdfOutput;
+    //   if (report.Html && report.Subject && report.Attachment) {
+    //     console.log(report)
+    //     // await this.summaryService.sendEmail(report);
+    //     // this.summaryService.downloadReport();
+
+    //     this.summaryService.addReport(this.eventDetail.eventId, pdfOutput)
+    //   }
+    // });
+  }
+
+  pageToImage() {
+    window['html2canvas'] = html2canvas;
 
     console.log(this.userGroupTab);
 
@@ -169,74 +214,84 @@ export class EventSummaryDialogComponent implements OnInit {
       width: page.clientWidth,
       letterRendering: 1
     };
-    const options2 = {
-      background: 'white',
-      height: this.userGroupTab.nativeElement.clientHeight,
-      width: this.userGroupTab.nativeElement.clientWidth
-    };
+    // const options2 = {background: "white", height: this.userGroupTab.nativeElement.clientHeight, width: this.userGroupTab.nativeElement.clientWidth};
 
     html2canvas(page, options).then(pageSource => {
       // html2canvas(userGroupTab, options2).then((userTabSource) => {
       //Initialize JSPDF
       let doc = new jsPDF();
       //Converting canvas to Image
-      let pageData = pageSource.toDataURL('image/PNG');
+      var pageData = pageSource.toDataURL('image/PNG');
       // let userGroupData = userTabSource.toDataURL("image/PNG")
-      // console.log(imgData)
-      //Add image Canvas to PDF
-      doc.addImage(pageData, 'PNG', 20, 20, 200, 200);
+      // Add image Canvas to PDF%
+      doc.addImage(
+        pageData,
+        'PNG',
+        0,
+        0,
+        window.innerWidth * 0.25,
+        window.innerHeight * 0.25
+      );
       // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
 
       let pdfOutput = doc.output();
-      // using ArrayBuffer will allow you to put image inside PDF
       let buffer = new ArrayBuffer(pdfOutput.length);
       let array = new Uint8Array(buffer);
       for (let i = 0; i < pdfOutput.length; i++) {
         array[i] = pdfOutput.charCodeAt(i);
       }
       const fileName = 'report.pdf';
-      doc.save(fileName);
+      // doc.save(fileName);
     });
     // })
   }
 
   ngOnInit() {
-    console.log(history.state);
-    this.eventDetail = {
-      EventTitle: 'FIKA2',
-      EventId: '11',
-      EventRestaurant: 'Morico - Contemporary Japanese Lifestyle - Lê Lợi',
-      EventMaximumBudget: 20000,
-      EventTimeToClose: '2019-09-04T11:35:00+07:00',
-      EventTimeToReminder: '2019-09-04T11:35:00+07:00',
-      EventHost: 'Amie Perigo',
-      EventParticipants:1,
-      EventCategory: 'Café/Dessert',
-      EventRestaurantId: '595',
-      EventServiceId: '1',
-      EventDeliveryId: '',
-      EventCreatedUserId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
-      EventHostId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
-      EventDate: '2019-09-04T11:35:00+07:00',
-      EventParticipantsJson: '',
-    };
-
     this.restaurant = {};
+    this.eventDetail = new EventList();
+    this.restaurant.isLoaded = false;
 
-    this.restaurantService
-      .getRestaurants([Number(this.eventDetail.EventRestaurantId)])
-      .then(result => {
-        console.log(result[0]);
-        this.restaurant.address = result[0].Address;
-        this.restaurant.phoneNumber = '01234';
+    this.route.params.subscribe(params => {
+      var id = params['id'];
+      this.summaryService.getEventById(id).then(result => {
+        this.eventDetail = {
+          EventTitle: result.Name,
+          EventId: result.EventId,
+          EventRestaurant: result.Restaurant,
+          EventMaximumBudget: result.MaximumBudget,
+          EventTimeToClose: result.Date,
+          EventTimeToReminder: result.TimeToRemind,
+          EventHost: result.HostName,
+          EventParticipants: result.Participants,
+          EventCategory: result.Category,
+          EventRestaurantId: result.RestaurantId,
+          EventServiceId: '1',
+          EventDeliveryId: '',
+          EventCreatedUserId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
+          EventHostId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
+          EventParticipantsJson: '',
+          EventDate: null
+        };
+
+        this.restaurantService
+          .getRestaurants([Number(this.eventDetail.EventRestaurantId)])
+          .then(result => {
+            console.log(result[0]);
+            this.restaurant = result[0];
+            this.restaurant.address = result[0].Address;
+
+            this.restaurantService
+              .getRestaurantDetail(Number(this.restaurant.DeliveryId))
+              .then(result => {
+                this.restaurant.Rating = Number(result.Rating);
+                this.restaurant.TotalReview = Number(result.TotalReview);
+                this.restaurant.isLoaded = true;
+              });
+            console.log(this.restaurant);
+            // this.restaurant.RestaurantUrl = "01234";
+          });
       });
-
-    // this.restaurantService.getRestaurantDetailById(Number(this.eventDetail.eventRestaurantId), 217, 1).then(result =>{
-    //   // this.restaurant.address = result.address;
-    //   // this.restaurant. = result.
-
-    //   console.log(result);
-    // });
+    });
 
     this.dishGroupViewdataSource = this.orderByDish;
     this.personGroupViewdataSource = this.orderByPerson;
