@@ -60,6 +60,7 @@ namespace FOS.Services.SendEmailServices
         }
         public async Task SendEmailAsync(string idEvent, string html)
         {
+            idEvent = "FIKA2";
             ReadEmailTemplate(html);
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {

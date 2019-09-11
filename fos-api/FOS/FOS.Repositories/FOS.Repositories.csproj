@@ -66,9 +66,13 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909100954484_init3.cs" />
-    <Compile Include="Migrations\201909100954484_init3.Designer.cs">
-      <DependentUpon>201909100954484_init3.cs</DependentUpon>
+    <Compile Include="Migrations\201909110229304_update5.cs" />
+    <Compile Include="Migrations\201909110229304_update5.Designer.cs">
+      <DependentUpon>201909110229304_update5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909110233210_update6.cs" />
+    <Compile Include="Migrations\201909110233210_update6.Designer.cs">
+      <DependentUpon>201909110233210_update6.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -99,8 +103,11 @@
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909100954484_init3.resx">
-      <DependentUpon>201909100954484_init3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909110229304_update5.resx">
+      <DependentUpon>201909110229304_update5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909110233210_update6.resx">
+      <DependentUpon>201909110233210_update6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

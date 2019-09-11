@@ -18,19 +18,6 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { User } from "src/app/models/user";
 // import { FavoriteRestaurant } from '../../models/favoriteRestaurant';
 
-interface Restaurant {
-  id: number;
-  stared: boolean;
-  restaurant: string;
-  category: string;
-  address: string;
-  promotion: string;
-  open: string;
-  delivery_id: number;
-  url_rewrite_name: string;
-  picture: string;
-}
-
 @Component({
   selector: "app-list-restaurant",
   templateUrl: "./list-restaurant.component.html",
