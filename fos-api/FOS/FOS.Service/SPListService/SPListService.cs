@@ -32,13 +32,15 @@ namespace FOS.Services.SPListService
         {
             await _graphApiProvider.SendAsync(HttpMethod.Post, "sites/lists/" + Id + "/items/", item.data);
         }
-        public void AddEventListItem(string Id, EventListItem item)
+
+        public string AddEventListItem(string Id, EventListItem item)
         {
             var eventData = item;
             using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {
                 Web web = context.Web;
                 var loginName = item.EventHost;
+
                 //var loginName = "i:0#.f|membership|" + item.eventHost;
                 //string email = eventData.eventHost;
                 //PeopleManager peopleManager = new PeopleManager(context);
@@ -69,8 +71,14 @@ namespace FOS.Services.SPListService
                 listItem["EventDeliveryId"] = eventData.EventDeliveryId;
                 listItem["EventCreatedUserId"] = eventData.EventCreatedUserId;
                 listItem["EventHostId"] = eventData.EventHostId;
+                listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
+                listItem["EventDate"] = eventData.EventDate;
+                listItem["EventStatus"] = "Opened";
+                listItem["EventTypes"] = "Open";
                 listItem.Update();
                 context.ExecuteQuery();
+
+                return listItem.Id.ToString();
             }
         }
     }

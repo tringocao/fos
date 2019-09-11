@@ -1,100 +1,37 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
-} from '@angular/material/dialog';
-import { Observable, Observer } from 'rxjs';
-import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
-import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
-import { EventDialogComponent } from '../event-dialog/event-dialog.component';
-import { RestaurantDetail } from 'src/app/models/restaurant-detail';
-interface FoodCategory {
-  dish_type_name: string;
-  dish_type_id: string;
-  dishes: Food[];
-}
-interface Food {
-  id: string;
-  name: string;
-  photos: string;
-  description: string;
-  price: string;
-}
+} from "@angular/material/dialog";
+import { Observable, Observer } from "rxjs";
+import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
+import { EventDialogComponent } from "../event-dialog/event-dialog.component";
+import { RestaurantDetail } from "src/app/models/restaurant-detail";
+import { DeliveryInfos } from "src/app/models/delivery-infos";
 
-interface Restaurant {
-  id: number;
-  stared: boolean;
-  restaurant: string;
-  category: string;
-  address: string;
-  promotion: string;
-  open: string;
-  delivery_id: number;
-  url_rewrite_name: string;
-}
 interface RestaurantMore {
-  restaurant: Restaurant;
+  restaurant: DeliveryInfos;
   detail: RestaurantDetail;
 }
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.less']
+  selector: "app-dialog",
+  templateUrl: "./dialog.component.html",
+  styleUrls: ["./dialog.component.less"]
 })
 export class DialogComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  foodCategory: FoodCategory[] = [];
   load = true;
-  sortNameOrder: number;
-  sortCategoryOrder: number;
-  categorys: any;
-  displayedColumns2: string[] = ['picture', 'name', 'description', 'price'];
-  dataSource2: any;
+
   userId: string;
 
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
-    private restaurantService: RestaurantService,
     @Inject(MAT_DIALOG_DATA) public data: RestaurantMore
   ) {}
 
   async ngOnInit(): Promise<void> {
-    console.log('-------------------------------------');
-
-    this.restaurantService
-      .getFood(Number(this.data.restaurant.delivery_id))
-      .then(result => {
-        // result.forEach(c => this.foodCategory.push(c));
-        this.showAll(this.foodCategory);
-      });
-  }
-  showAll(dataSourceTemp: any[]) {
-    console.log(dataSourceTemp);
-    this.dataSource2 = new MatTableDataSource();
-
-    dataSourceTemp.forEach(f => {
-      if (f.dishes != null) {
-        f.dishes.forEach(d => this.dataSource2.data.push(d));
-      }
-    });
-    this.dataSource2.sort = this.sort;
-    this.dataSource2.paginator = this.paginator;
-    this.load = false;
-  }
-  updateTable(dataSourceTemp: any[]) {
-    console.log(dataSourceTemp);
-    this.dataSource2 = new MatTableDataSource(dataSourceTemp);
-    this.dataSource2.sort = this.sort;
-    this.dataSource2.paginator = this.paginator;
-    this.load = false;
-  }
-  setFood($event) {
-    if ($event.topic == 0) this.showAll(this.foodCategory);
-    else this.updateTable(this.foodCategory[$event.topic].dishes);
-    this.load = false;
+    console.log("-------------------------------------");
   }
 
   onNoClick(): void {
@@ -104,13 +41,13 @@ export class DialogComponent implements OnInit {
     const dialogRef = this.dialog.open(EventDialogComponent, {
       // scrollStrategy: this.overlay.scrollStrategies.noop(),
       // autoFocus: false,
-      maxHeight: '98vh',
-      width: '80%',
-      data: this.data
+      maxHeight: "98vh",
+      width: "80%",
+      data: this.data.restaurant
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log("The dialog was closed");
     });
   }
 }

@@ -105,7 +105,7 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     $Classes(FOS.Model.Dto.*)[
-          $Imports
+     $Imports
 
     export class $Name$TypeParameters $BaseClass[extends $Name$TypeArguments]   {
         $Properties[   

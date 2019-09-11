@@ -17,12 +17,29 @@ namespace FOS.Model.Mapping
     {
         public Dto.Order ToDto(Model.Domain.Order order)
         {
-            throw new NotImplementedException();
+
+            return new Dto.Order()
+            {
+                Id = order.Id.ToString(),
+                IdDelivery = order.IdDelivery,
+                IdRestaurant = order.IdRestaurant,
+                IdUser = order.IdUser,
+                OrderDate = order.OrderDate,
+                FoodDetail = order.FoodDetail
+            };
         }
 
         public Model.Domain.Order ToModel(Dto.Order order)
         {
-            throw new NotImplementedException();
+            return new Domain.Order()
+            {
+                Id = Guid.Parse(order.Id),
+                IdDelivery = order.IdDelivery,
+                IdRestaurant = order.IdRestaurant,
+                IdUser = order.IdUser,
+                OrderDate = order.OrderDate,
+                FoodDetail = order.FoodDetail
+            };
         }
     }
 }

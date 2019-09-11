@@ -8,7 +8,7 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          import { ServiceKind } from './service-kind';
+     import { ServiceKind } from './service-kind';
 
     export class APIs    {
            

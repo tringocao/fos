@@ -33,6 +33,9 @@ export class MenuEventComponent implements OnInit {
 
   ngOnInit() {}
   openDialog(): void {
+
+    console.log('restaurant', this.restaurant);
+
     const dialogRef = this.dialog.open(EventDialogComponent, {
       // scrollStrategy: this.overlay.scrollStrategies.noop(),
       // autoFocus: false,

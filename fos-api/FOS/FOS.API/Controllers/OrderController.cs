@@ -1,5 +1,7 @@
 ﻿using FOS.API.App_Start;
+using FOS.Model.Domain;
 using FOS.Model.Mapping;
+using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.OrderServices;
 using System;
@@ -7,26 +9,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
 {
     [LogActionWebApiFilter]
+    [RoutePrefix("api/Order")]
     public class OrderController : ApiController
     {
-        private readonly IOrderDtoMapper _mapper;
-        private readonly IOrderService _service;
+        private readonly IOrderDtoMapper _orderDtoMapper;
+        private readonly IOrderService _orderService;
         public OrderController(IOrderDtoMapper mapper, IOrderService service)
         {
-            _mapper = mapper;
-            _service = service;
+            _orderDtoMapper = mapper;
+            _orderService = service;
         }
-        // GET: api/Order
-        //public IEnumerable<Model.Dto.Order> Get()
-        //{
-        //    return new List<Model.Dto.Order>();
-        //}
-
+        [HttpGet]
+        [Route("GetById")]
+        public  ApiResponse<Model.Dto.Order> GetById(string orderId)
+        {
+            try
+            {
+                Guid id = Guid.Parse(orderId);
+                Order order = _orderService.GetOrder(id);
+                return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
+                    _orderDtoMapper.ToDto(_orderService.GetOrder(id))
+               );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpGet]
+        [Route("SendOrderById")]
+        public ApiResponse<Model.Dto.Order> GetdById(string orderId)
+        {
+            try
+            {
+                Guid id = Guid.Parse(orderId);
+                Order order = _orderService.GetOrder(id);
+                return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
+                    _orderDtoMapper.ToDto(_orderService.GetOrder(id))
+               );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
+            }
+        }
         //// GET: api/Order/5
         //public Model.Dto.Order Get(int id)
         //{

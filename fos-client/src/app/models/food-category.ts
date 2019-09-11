@@ -8,7 +8,7 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          import { Food } from './food';
+     import { Food } from './food';
 
     export class FoodCategory    {
            

@@ -8,12 +8,13 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-          
+     
 
     export class DeliveryInfos    {
            
         public CityId: string = null;   
         public RestaurantId: string = null;   
+        public IsFavorite: boolean = false;   
         public IsOpen: string = null;   
         public IsFoodyDelivery: string = null;   
         public Campaigns: string = null;   
