@@ -143,6 +143,8 @@
           </tr>
 
         </table>
+        
+
         <mat-card-actions align="right">
           <button mat-raised-button color="primary" [disabled]="!ownerForm.valid" (click)="SaveToSharePointEventList()">Create</button>
           <!-- <button type="button" mat-raised-button color="warn" (click)="onCancel()">Create</button> -->
@@ -153,3 +155,4 @@
 
   </mat-card>
 </section>
+<app-loading [loading]="_loading"></app-loading>

@@ -113,7 +113,7 @@ export class EventDialogComponent implements OnInit {
   _userHost: userPicker[];
   _office365User: userPicker[] = [];
   _office365Group: userPicker[] = [];
-
+  _loading: boolean
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -365,7 +365,7 @@ export class EventDialogComponent implements OnInit {
       return;
     }
     var self = this;
-
+    this._loading = true;
     var host = this.ownerForm.get('userInputHost').value.Name;
     console.log('get host: ', host);
 

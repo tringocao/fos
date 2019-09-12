@@ -77,7 +77,7 @@ export class EventDialogEditComponent implements OnInit {
   _userHost: userPicker[];
   _office365User: userPicker[] = [];
   _office365Group: userPicker[] = [];
-
+  _loading: boolean;
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -267,6 +267,7 @@ export class EventDialogEditComponent implements OnInit {
       this.toast("Please choose participants!", "Dismiss");
       return;
     }
+    this._loading = true;
     var self = this;
 
     var host = this.ownerForm.get('userInputHost').value.Name;
