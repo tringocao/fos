@@ -45,9 +45,12 @@ namespace FOS.Repositories.Repositories
             try
             {
                 Order updateOrder = _context.Orders.FirstOrDefault(o => o.Id == order.Id);
-                updateOrder = order;
-                _context.SaveChanges();
-                return true;
+                {
+                    _context.Entry(updateOrder).CurrentValues.SetValues(order);
+                    _context.SaveChanges();
+                    return true;
+                }
+
             }
             catch (Exception e)
             {

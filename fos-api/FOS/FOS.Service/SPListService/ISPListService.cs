@@ -11,5 +11,6 @@ namespace FOS.Services.SPListService
     {
         Task AddListItem(string Id, JsonRequest item);
         string AddEventListItem(string Id, EventListItem item);
+        Task UpdateListItem(string Id, EventListItem item);
     }
 }

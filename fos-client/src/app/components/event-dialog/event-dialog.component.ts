@@ -1,33 +1,34 @@
-import { Component, Inject, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, Input } from "@angular/core";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
-} from '@angular/material/dialog';
-import { Observable, Observer } from 'rxjs';
+} from "@angular/material/dialog";
+import { Observable, Observer } from "rxjs";
 import {
   MatSort,
   MatPaginator,
   MatTableDataSource,
-  MatTable
-} from '@angular/material';
+  MatTable,
+  MatSnackBar
+} from "@angular/material";
 import {
   FormControl,
   FormGroup,
   Validators,
   FormBuilder
-} from '@angular/forms';
-import { EventUser } from '../../models/eventuser';
-import { EventFormService } from '../../services/event-form/event-form.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { EventList } from 'src/app/models/eventList';
-import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
-import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
-import { parseSelectorToR3Selector } from '@angular/compiler/src/core';
-import { User } from 'src/app/models/user';
-import { DeliveryInfos } from 'src/app/models/delivery-infos';
-import { GraphUser } from 'src/app/models/graph-user';
+} from "@angular/forms";
+import { EventUser } from "../../models/eventuser";
+import { EventFormService } from "../../services/event-form/event-form.service";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { EventList } from "src/app/models/eventList";
+import { debounceTime, tap, switchMap, finalize } from "rxjs/operators";
+import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
+import { parseSelectorToR3Selector } from "@angular/compiler/src/core";
+import { User } from "src/app/models/user";
+import { DeliveryInfos } from "src/app/models/delivery-infos";
+import { GraphUser } from "src/app/models/graph-user";
 
 interface Restaurant {
   id: string;
@@ -62,9 +63,9 @@ export interface userPickerGroup {
   UserPicker: userPicker[];
 }
 @Component({
-  selector: 'app-event-dialog',
-  templateUrl: './event-dialog.component.html',
-  styleUrls: ['./event-dialog.component.less']
+  selector: "app-event-dialog",
+  templateUrl: "./event-dialog.component.html",
+  styleUrls: ["./event-dialog.component.less"]
 })
 export class EventDialogComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -75,11 +76,12 @@ export class EventDialogComponent implements OnInit {
     private fb: FormBuilder,
     private eventFormService: EventFormService,
     private http: HttpClient,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private _snackBar: MatSnackBar
   ) {}
 
-  _eventSelected = 'Open';
-  _createdUser = { id: '' };
+  _eventSelected = "Open";
+  _createdUser = { id: "" };
   _dateEventTime: string;
   _dateTimeToClose: string;
   _dateToReminder: string;
@@ -90,11 +92,11 @@ export class EventDialogComponent implements OnInit {
   private ToDateString(date: Date): string {
     return (
       date.getFullYear().toString() +
-      '-' +
-      ('0' + (date.getMonth() + 1)).slice(-2) +
-      '-' +
-      ('0' + date.getDate()).slice(-2) +
-      'T' +
+      "-" +
+      ("0" + (date.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + date.getDate()).slice(-2) +
+      "T" +
       date.toTimeString().slice(0, 5)
     );
   }
@@ -103,7 +105,7 @@ export class EventDialogComponent implements OnInit {
 
   _hostPickerGroup = [];
 
-  _displayedColumns = ['avatar', 'name', 'email', 'order status', 'action'];
+  _displayedColumns = ["avatar", "name", "email", "order status", "action"];
 
   _isLoading = false;
   _isHostLoading = false;
@@ -136,7 +138,7 @@ export class EventDialogComponent implements OnInit {
             this._office365User.push({
               Name: us.DisplayName,
               Email: us.Mail,
-              Img: '',
+              Img: "",
               Id: us.Id,
               IsGroup: 0
             });
@@ -144,7 +146,7 @@ export class EventDialogComponent implements OnInit {
         });
       });
     this._userPickerGroups.push({
-      Name: 'User',
+      Name: "User",
       UserPicker: this._office365User
     });
 
@@ -155,16 +157,16 @@ export class EventDialogComponent implements OnInit {
 
     // -----
     this.ownerForm = new FormGroup({
-      title: new FormControl('', [Validators.required]),
+      title: new FormControl("", [Validators.required]),
       dateOfBirth: new FormControl(new Date()),
-      address: new FormControl('', []),
-      host: new FormControl(''),
-      dateTimeToClose: new FormControl(''),
-      participants: new FormControl(''),
-      restaurant: new FormControl(''),
-      userInput: new FormControl(''),
-      userInputHost: new FormControl(''),
-      EventType: new FormControl('')
+      address: new FormControl("", []),
+      host: new FormControl(""),
+      dateTimeToClose: new FormControl(""),
+      participants: new FormControl(""),
+      restaurant: new FormControl(""),
+      userInput: new FormControl(""),
+      userInputHost: new FormControl(""),
+      EventType: new FormControl("")
     });
 
     // get Group
@@ -177,7 +179,7 @@ export class EventDialogComponent implements OnInit {
             this._office365Group.push({
               Name: user.DisplayName,
               Email: user.Mail,
-              Img: '',
+              Img: "",
               Id: user.Id,
               IsGroup: 1
             });
@@ -185,7 +187,7 @@ export class EventDialogComponent implements OnInit {
         });
       });
     this._userPickerGroups.push({
-      Name: 'Office 365 Group',
+      Name: "Office 365 Group",
       UserPicker: this._office365Group
     });
 
@@ -199,21 +201,21 @@ export class EventDialogComponent implements OnInit {
         var dataSourceTemp: userPicker = {
           Name: value.Data.displayName,
           Email: value.Data.mail,
-          Img: '',
+          Img: "",
           Id: value.Data.id,
           IsGroup: 0
         };
-        console.log('curentuser', dataSourceTemp);
-        self.ownerForm.get('userInputHost').setValue(dataSourceTemp);
+        console.log("curentuser", dataSourceTemp);
+        self.ownerForm.get("userInputHost").setValue(dataSourceTemp);
       });
 
-    this.ownerForm.get('EventType').setValue('Open');
-    this.ownerForm.get('userInput').setValue(this.data);
+    this.ownerForm.get("EventType").setValue("Open");
+    this.ownerForm.get("userInput").setValue(this.data);
     // this.ownerForm.get('EventType').setValue('Open');
     var userHost2: userPicker[];
 
     this.ownerForm
-      .get('userInputHost')
+      .get("userInputHost")
       .valueChanges.pipe(
         debounceTime(300),
         tap(() => (this._isHostLoading = true)),
@@ -233,7 +235,7 @@ export class EventDialogComponent implements OnInit {
               dataSourceTemp.push({
                 Name: user.DisplayName,
                 Email: user.UserPrincipalName,
-                Img: '',
+                Img: "",
                 Id: user.Id,
                 IsGroup: 0
               });
@@ -241,14 +243,14 @@ export class EventDialogComponent implements OnInit {
           });
 
           self._userHost = dataSourceTemp;
-          console.log('loading', self._userHost);
+          console.log("loading", self._userHost);
           this._isHostLoading = false;
         }
       });
 
-    this.ownerForm.get('userInput').setValue(this.data);
+    this.ownerForm.get("userInput").setValue(this.data);
     this.ownerForm
-      .get('userInput')
+      .get("userInput")
       .valueChanges.pipe(
         debounceTime(300),
         tap(() => (this._isLoading = true)),
@@ -278,7 +280,7 @@ export class EventDialogComponent implements OnInit {
 
   public CreateOwner = ownerFormValue => {
     if (this.ownerForm.valid) {
-      console.log('pass');
+      console.log("pass");
     }
   };
   OnNoClick(): void {
@@ -286,7 +288,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   DeleteUserInTable(name: string): void {
-    console.log('xoa ', name);
+    console.log("xoa ", name);
     for (var j = 0; j < this._eventUsers.length; j++) {
       if (name == this._eventUsers[j].Name) {
         this._eventUsers.splice(j, 1);
@@ -298,7 +300,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   ChangeClient(event) {
-    console.log('change client');
+    console.log("change client");
 
     let target = event.source.selected._element.nativeElement;
     this._userSelect = [];
@@ -311,7 +313,7 @@ export class EventDialogComponent implements OnInit {
       this._userSelect.push({
         Name: target.innerText.trim(),
         Email: event.value,
-        Img: '',
+        Img: "",
         Id: toSelect.Id,
         IsGroup: 0
       });
@@ -319,7 +321,7 @@ export class EventDialogComponent implements OnInit {
       this._userSelect.push({
         Name: target.innerText.trim(),
         Email: event.value,
-        Img: '',
+        Img: "",
         IsGroup: 1,
         Id: toSelectGroup.Id
       });
@@ -327,7 +329,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   AddUserToTable(): void {
-    console.log('Nhan add card');
+    console.log("Nhan add card");
 
     console.log(this._userSelect);
 
@@ -345,7 +347,7 @@ export class EventDialogComponent implements OnInit {
         this._eventUsers.push({
           Name: this._userSelect[s].Name,
           Email: this._userSelect[s].Email,
-          Img: '',
+          Img: "",
           Id: this._userSelect[s].Id,
           IsGroup: this._userSelect[s].IsGroup
         });
@@ -356,57 +358,57 @@ export class EventDialogComponent implements OnInit {
 
   SaveToSharePointEventList(): void {
     if (this._eventUsers.length == 0) {
-      alert('Please choose participants!');
+      alert("Please choose participants!");
       return;
     }
     var self = this;
 
-    var host = this.ownerForm.get('userInputHost').value.Name;
-    console.log('get host: ', host);
+    var host = this.ownerForm.get("userInputHost").value.Name;
+    console.log("get host: ", host);
 
-    var title = this.ownerForm.get('title').value;
-    console.log('get title: ', title);
+    var title = this.ownerForm.get("title").value;
+    console.log("get title: ", title);
 
-    var EventType = this.ownerForm.get('EventType').value;
-    console.log('get title: ', EventType);
+    var EventType = this.ownerForm.get("EventType").value;
+    console.log("get title: ", EventType);
 
     var maximumBudget = this._maximumBudget;
-    console.log('get maximumBudget: ', maximumBudget);
+    console.log("get maximumBudget: ", maximumBudget);
 
     var eventDate = this._dateEventTime;
-    console.log('get eventDate: ', eventDate);
+    console.log("get eventDate: ", eventDate);
 
-    var dateTimeToClose = this._dateTimeToClose.replace('T', ' ');
-    console.log('get dateTimeToClose: ', dateTimeToClose);
+    var dateTimeToClose = this._dateTimeToClose.replace("T", " ");
+    console.log("get dateTimeToClose: ", dateTimeToClose);
 
-    var dateToReminder = this._dateToReminder.replace('T', ' ');
-    console.log('get dateToReminder: ', dateToReminder);
+    var dateToReminder = this._dateToReminder.replace("T", " ");
+    console.log("get dateToReminder: ", dateToReminder);
 
-    var restaurant = this.ownerForm.get('userInput').value.Name;
-    console.log('get restaurant: ');
+    var restaurant = this.ownerForm.get("userInput").value.Name;
+    console.log("get restaurant: ");
     console.log(restaurant);
 
-    var restaurantId = this.ownerForm.get('userInput').value.RestaurantId;
-    console.log('get restaurantId: ');
+    var restaurantId = this.ownerForm.get("userInput").value.RestaurantId;
+    console.log("get restaurantId: ");
     console.log(restaurantId);
 
-    var category = this.ownerForm.get('userInput').value.Categories;
-    console.log('get category: ');
+    var category = this.ownerForm.get("userInput").value.Categories;
+    console.log("get category: ");
     console.log(category);
 
-    var deliveryId = this.ownerForm.get('userInput').value.DeliveryId;
-    console.log('get deliveryId: ');
+    var deliveryId = this.ownerForm.get("userInput").value.DeliveryId;
+    console.log("get deliveryId: ");
     console.log(deliveryId);
 
     var serciveId = 1;
-    console.log('get serciveId: ');
+    console.log("get serciveId: ");
     console.log(serciveId);
 
-    var hostId = this.ownerForm.get('userInputHost').value.Id;
-    console.log('get hostId: ');
+    var hostId = this.ownerForm.get("userInputHost").value.Id;
+    console.log("get hostId: ");
     console.log(hostId);
 
-    console.log('get createUserId: ');
+    console.log("get createUserId: ");
     console.log(this._createdUser.id);
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
@@ -429,7 +431,7 @@ export class EventDialogComponent implements OnInit {
             .toPromise()
             .then(value => {
               value.Data.map(user => {
-                console.log('member in group', user.DisplayName);
+                console.log("member in group", user.DisplayName);
                 var flagCheck = false;
                 jsonParticipants.map(check => {
                   if (check.displayName === user.DisplayName) {
@@ -449,7 +451,7 @@ export class EventDialogComponent implements OnInit {
               });
             });
         } else {
-          console.log('user khac', this._eventUsers[j].Name);
+          console.log("user khac", this._eventUsers[j].Name);
           var check = false;
           jsonParticipants.map(mem => {
             if (mem.displayName === this._eventUsers[j].Name) {
@@ -470,10 +472,10 @@ export class EventDialogComponent implements OnInit {
       }
     }
 
-    console.log('participant list: ', jsonParticipants);
+    console.log("participant list: ", jsonParticipants);
 
     var myJSON = JSON.stringify(jsonParticipants);
-    console.log('final', myJSON);
+    console.log("final", myJSON);
 
     var eventListitem: EventList = {
       EventTitle: title,
@@ -486,7 +488,7 @@ export class EventDialogComponent implements OnInit {
       EventParticipants: numberParticipant,
       EventCategory: category,
       EventRestaurantId: restaurantId,
-      EventServiceId: '1',
+      EventServiceId: "1",
       EventDeliveryId: deliveryId,
       EventCreatedUserId: this._createdUser.id,
       EventHostId: hostId,
@@ -498,20 +500,28 @@ export class EventDialogComponent implements OnInit {
       .AddEventListItem(eventListitem)
       .toPromise()
       .then(newId => {
-        console.log('new Id', newId.Data);
+        console.log("new Id", newId.Data);
+        this.SendEmail(newId.Data);
+        this.toast("added new event!", "Dismiss");
+        this.dialogRef.close();
       });
   }
-  SendEmail(title: string) {
-    this.restaurantService.setEmail(title);
-    console.log('Sent!');
+  toast(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
+  SendEmail(id: string) {
+    this.restaurantService.setEmail(id);
+    console.log("Sent!");
   }
   ChangeHost(event) {
     let target = event.source.selected._element.nativeElement;
-    console.log('host: ' + target.innerText.trim() + ' ' + event.value.email);
+    console.log("host: " + target.innerText.trim() + " " + event.value.email);
   }
   ChangeRestaurant(event) {
     let target = event.source.selected._element.nativeElement;
-    console.log('host: ' + target.innerText.trim() + ' ' + event.value.id);
+    console.log("host: " + target.innerText.trim() + " " + event.value.id);
   }
 
   ChangeParticipants(user) {

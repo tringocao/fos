@@ -38,7 +38,7 @@ namespace FOS.Services.SendEmailServices
         {
             List list = clientContext.Web.Lists.GetByTitle("Event List");
             CamlQuery camlQuery = new CamlQuery();
-            camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='EventTitle'/>" +
+            camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='ID'/>" +
                 "<Value Type='Text'>" + idEvent + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
             ListItemCollection collListItem = list.GetItems(camlQuery);
             clientContext.Load(collListItem);
@@ -51,7 +51,7 @@ namespace FOS.Services.SendEmailServices
             var users = item["EventParticipantsJson"].ToString();
             emailTemplate.UsersEmail = JsonConvert.DeserializeObject<List<Model.Domain.User>>(users);
             string userId = item["EventHostId"].ToString();
-            var user = await _sPUserService.GetUserById(userId);
+            var user = await _sPUserService.GetUserByIdsDomain(userId);
             emailTemplate.HostUserEmail = user;
             emailTemplate.EventTitle = item["EventTitle"].ToString();
             emailTemplate.EventId = item["ID"].ToString();
@@ -62,7 +62,6 @@ namespace FOS.Services.SendEmailServices
         }
         public async Task SendEmailAsync(string idEvent, string html)
         {
-            idEvent = "FIKA2";
             ReadEmailTemplate(html);
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {

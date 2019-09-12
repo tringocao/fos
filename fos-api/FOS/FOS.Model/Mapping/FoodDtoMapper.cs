@@ -18,7 +18,8 @@ namespace FOS.Model.Mapping
                 Id = food.Id.ToString(),
                 Name = food.Name,
                 Photos = food.Photos.FirstOrDefault().Value,
-                Price = food.Price.Text
+                Price = food.Price.Value,
+                IsChecked = false
             };
         }
     }

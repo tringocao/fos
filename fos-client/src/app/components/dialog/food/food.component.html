@@ -24,8 +24,10 @@
             color="warn"
             (click)="$event.stopPropagation()"
             (change)="
-              $event ? selection.toggle(row) : null; isSomeSelected(ref, row)
+              $event.checked ? checked(row) : unChecked(row);
+              IsSomeSelected(ref, row)
             "
+            [checked]="isChecked(row)"
           >
           </mat-checkbox>
         </td>
@@ -49,7 +51,9 @@
 
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-        <td mat-cell *matCellDef="let element">{{ element.Price }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ numberWithCommas2(element.Price).toString() + "đ" }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
