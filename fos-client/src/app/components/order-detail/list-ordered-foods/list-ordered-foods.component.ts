@@ -27,6 +27,9 @@ export class ListOrderedFoodsComponent implements OnInit {
   displayedColumns2: string[] = ["name", "price", "amount", "total", "comment"];
   dataSource2: MatTableDataSource<FoodDetailJson>;
   public FoodOfAmount: any = {};
+  day: number;
+  month: number;
+  year: number;
   constructor() {}
   load = true;
   @Input() totalBudget: Number;
@@ -94,7 +97,13 @@ export class ListOrderedFoodsComponent implements OnInit {
   //     f.Value["Total"] = (Number(f.Value["Amount"])*Number(f.Value["Price"])).toString()
   //   })
   // }
+  setDate(date: Date) {
+    this.day = date.getUTCDate();
+    this.month = date.getUTCMonth();
+    this.year = date.getUTCFullYear();
+  }
   updateTable() {
+    this.setDate(new Date(this.event.CloseTime));
     this.dataSource2.data = this.order.FoodDetail;
     this.dataSource2.sort = this.sort;
     this.dataSource2.paginator = this.paginator;

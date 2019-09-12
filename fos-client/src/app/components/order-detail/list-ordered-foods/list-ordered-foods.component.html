@@ -1,6 +1,10 @@
 <div>
+  <h1>Place to edit My Order</h1>
   <h2>Host: {{ user.DisplayName }}</h2>
-  <h3>Time to close: {{ event.CloseTime.toString() }}</h3>
+  <h3>
+    Time to close:
+    {{ day }}/{{ month }}/{{ year }}
+  </h3>
 </div>
 
 <app-loading [loading]="load"></app-loading>
@@ -25,7 +29,7 @@
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
         <td mat-cell *matCellDef="let element; let i = index">
-          <mat-form-field>
+          <mat-form-field class="amount-form-field">
             <input
               [disabled]="!isOrder"
               matInput
@@ -50,7 +54,7 @@
       <ng-container matColumnDef="comment">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Comment</th>
         <td mat-cell *matCellDef="let element">
-          <mat-form-field>
+          <mat-form-field class="comment-form-field">
             <input
               [disabled]="!isOrder"
               matInput
@@ -131,7 +135,7 @@
 
     <mat-paginator
       showFirstLastButtons
-      [pageSize]="4"
+      [pageSize]="3"
       [hidePageSize]="true"
     ></mat-paginator>
   </div>
