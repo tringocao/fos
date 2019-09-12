@@ -119,9 +119,7 @@ namespace FOS.Services.SPUserService
             }
             else
             {
-                //throw new Exception(await result.Content.ReadAsStringAsync());
-                
-                String[] spearator = {" "};
+                String[] spearator = { " " };
 
                 String[] strlist = avatarName.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
                 string avatarUrl = "";
@@ -144,35 +142,8 @@ namespace FOS.Services.SPUserService
                 await Task.Run(async () => response = await http.GetByteArrayAsync(avatarUrl));
 
                 return response;
-
-
-
-
-                //byte[] imageBytes = null;
-
-                
-                //var webClient = new System.Net.WebClient();
-                //imageBytes = webClient.DownloadData(someUrl);
-
-                //return imageBytes;
-
-
-
-
             }
         }
-
-        public async Task<byte[]> GetAvatarWithLetter()
-        {
-            byte[] imageBytes = null;
-
-            string someUrl = "https://ui-avatars.com/api/?name=John+Doe";
-            var webClient = new System.Net.WebClient();
-            imageBytes =  webClient.DownloadData(someUrl);
-
-            return imageBytes;
-        }
-
 
         public async Task<List<Model.Dto.User>> GetUsersByName(string searchName)
         {
@@ -194,7 +165,7 @@ namespace FOS.Services.SPUserService
 
         public async Task<List<Model.Dto.User>> GroupListMemers(string groupId)
         {
-             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups/"+ groupId + "/members", null);
+            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups/" + groupId + "/members", null);
             if (result.IsSuccessStatusCode)
             {
                 var resultGroup = await result.Content.ReadAsStringAsync();
@@ -202,7 +173,7 @@ namespace FOS.Services.SPUserService
 
                 List<Model.Dto.User> jsonUsers = response.value.ToObject<List<Model.Dto.User>>();
 
-                return  jsonUsers;
+                return jsonUsers;
             }
             else
             {

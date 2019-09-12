@@ -373,37 +373,6 @@ export class EventDialogEditComponent implements OnInit {
         }
       }
     )
-
-    // var myJSON = JSON.stringify(jsonParticipants);
-    // console.log('final',myJSON);
-
-    // var eventListitem: EventList = {
-    //   EventTitle: title,
-    //   EventId: title,
-    //   EventRestaurant: restaurant,
-    //   EventMaximumBudget: maximumBudget,
-    //   EventTimeToClose: dateTimeToClose,
-    //   EventTimeToReminder: dateToReminder,
-    //   EventHost: host,
-    //   EventParticipants: numberParticipant,
-    //   EventCategory: category,
-    //   EventRestaurantId: restaurantId,
-    //   EventServiceId: '1',
-    //   EventDeliveryId: deliveryId,
-    //   EventCreatedUserId: this._createdUser.id,
-    //   EventHostId: hostId,
-    //   EventDate: eventDate,
-    //   EventParticipantsJson: myJSON
-    // };
-    
-    
-    // this.eventFormService.UpdateEventListItem(this.data.EventId, eventListitem).toPromise().then(
-    //   result =>{
-    //     console.log('Update', result);
-    //     this.toast("update new event!", "Dismiss");
-    //     this.dialogRef.close();
-    //   }
-    // )
     
     setTimeout(function () {
       console.log('final', jsonParticipants);
@@ -446,6 +415,7 @@ export class EventDialogEditComponent implements OnInit {
       duration: 2000
     });
   }
+  
   AddUserToTable(): void {
     console.log('Nhan add card');
 
@@ -460,7 +430,6 @@ export class EventDialogEditComponent implements OnInit {
       }
 
       if (flag == false) {
-
         console.log(this._userSelect[s]);
 
         this._eventUsers.push({
@@ -468,12 +437,13 @@ export class EventDialogEditComponent implements OnInit {
           Email: this._userSelect[s].Email,
           Img: '',
           Id: this._userSelect[s].Id,
-          IsGroup: this._userSelect[s].IsGroup,
+          IsGroup: this._userSelect[s].IsGroup
         });
         this.table.renderRows();
       }
     }
   }
+
   DeleteUserInTable(name: string): void {
 
     console.log('xoa ', name);
@@ -494,25 +464,30 @@ export class EventDialogEditComponent implements OnInit {
   };
 
   ChangeClient(event) {
-    console.log('change client');
+    console.log('change client', event.value);
 
     let target = event.source.selected._element.nativeElement;
     this._userSelect = [];
 
-    const toSelect = this._office365User.find(c => c.Email == event.value);
-    const toSelectGroup = this._office365Group.find(c => c.Email == event.value);
+    const toSelect = this._office365User.find(c => c.Email == event.value.Email);
+    const toSelectGroup = this._office365Group.find(
+      c => c.Email == event.value.Email
+    );
+
+    console.log('toSelect', toSelect);
+    console.log('toSelectGroup', toSelectGroup);
     if (toSelect != null) {
       this._userSelect.push({
-        Name: target.innerText.trim(),
-        Email: event.value,
+        Name: toSelect.Name,
+        Email: toSelect.Email,
         Img: '',
         Id: toSelect.Id,
         IsGroup: 0
       });
     } else {
       this._userSelect.push({
-        Name: target.innerText.trim(),
-        Email: event.value,
+        Name: toSelectGroup.Name,
+        Email: toSelectGroup.Email,
         Img: '',
         IsGroup: 1,
         Id: toSelectGroup.Id

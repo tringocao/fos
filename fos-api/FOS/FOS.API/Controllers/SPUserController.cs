@@ -117,21 +117,12 @@ namespace FOS.API.Controllers
                 
                 result.Content = new ByteArrayContent(avatar);
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                //result.Headers.CacheControl = new CacheControlHeaderValue { Public = true, MaxAge = TimeSpan.FromDays(1) };
+                result.Headers.CacheControl = new CacheControlHeaderValue { Public = true, MaxAge = TimeSpan.FromDays(1) };
 
                 return result;
             }
             catch (Exception e)
             {
-
-
-
-                //var avatar = await _sPUserService.GetAvatarWithLetter();
-                //result.Content = new ByteArrayContent(avatar);
-                //result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                //return result;
-
-
                 result.StatusCode = HttpStatusCode.NotFound;
                 return result;
             }

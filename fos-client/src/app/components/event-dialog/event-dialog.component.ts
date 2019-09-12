@@ -300,27 +300,30 @@ export class EventDialogComponent implements OnInit {
   }
 
   ChangeClient(event) {
-    console.log('change client');
+    console.log('change client', event.value);
 
     let target = event.source.selected._element.nativeElement;
     this._userSelect = [];
 
-    const toSelect = this._office365User.find(c => c.Email == event.value);
+    const toSelect = this._office365User.find(c => c.Email == event.value.Email);
     const toSelectGroup = this._office365Group.find(
-      c => c.Email == event.value
+      c => c.Email == event.value.Email
     );
+
+    console.log('toSelect', toSelect);
+    console.log('toSelectGroup', toSelectGroup);
     if (toSelect != null) {
       this._userSelect.push({
-        Name: target.innerText.trim(),
-        Email: event.value,
+        Name: toSelect.Name,
+        Email: toSelect.Email,
         Img: '',
         Id: toSelect.Id,
         IsGroup: 0
       });
     } else {
       this._userSelect.push({
-        Name: target.innerText.trim(),
-        Email: event.value,
+        Name: toSelectGroup.Name,
+        Email: toSelectGroup.Email,
         Img: '',
         IsGroup: 1,
         Id: toSelectGroup.Id
@@ -413,86 +416,6 @@ export class EventDialogComponent implements OnInit {
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
 
-    // for (var j = 0; j < this._eventUsers.length; j++) {
-    //   if (this._eventUsers[j].Email) {
-    //     console.log(this._eventUsers[j].Email, this._eventUsers[j].IsGroup);
-    //     // get Group
-    //     if (this._eventUsers[j].IsGroup == 1) {
-    //       var participant: GraphUser = {
-    //         id: self._eventUsers[j].Id,
-    //         displayName: self._eventUsers[j].Name,
-    //         mail: self._eventUsers[j].Email,
-    //         userPrincipalName: self._eventUsers[j].Name
-    //       };
-    //       jsonParticipants.push(participant);
-
-    //       this.eventFormService
-    //         .GroupListMemers(this._eventUsers[j].Id)
-    //         .toPromise()
-    //         .then(value => {
-    //           value.Data.map(user => {
-    //             console.log('member in group', user.DisplayName);
-    //             var flagCheck = false;
-    //             jsonParticipants.map(check => {
-    //               if (check.displayName === user.DisplayName) {
-    //                 flagCheck = true;
-    //               }
-    //             });
-    //             if (flagCheck === false) {
-    //               var p: GraphUser = {
-    //                 id: user.Id,
-    //                 displayName: user.DisplayName,
-    //                 mail: user.Mail,
-    //                 userPrincipalName: user.UserPrincipalName
-    //               };
-    //               jsonParticipants.push(p);
-    //               numberParticipant++;
-    //             }
-    //           });
-    //         });
-    //     } else {
-    //       console.log('user khac', this._eventUsers[j].Name);
-    //       var check = false;
-    //       jsonParticipants.map(mem => {
-    //         if (mem.displayName === this._eventUsers[j].Name) {
-    //           check = true;
-    //         }
-    //       });
-    //       if (check === false) {
-    //         var participant: GraphUser = {
-    //           id: self._eventUsers[j].Id,
-    //           displayName: self._eventUsers[j].Name,
-    //           mail: self._eventUsers[j].Email,
-    //           userPrincipalName: self._eventUsers[j].Name
-    //         };
-    //         jsonParticipants.push(participant);
-    //         numberParticipant++;
-    //       }
-    //     }
-    //   }
-    // }
-    // var promise1 = null;
-    // this._eventUsers.map(
-    //   user =>{
-    //     if(user.IsGroup ===1){
-    //       promise1  =  this.eventFormService.GroupListMemers(user.Id).toPromise().then(
-    //         value =>{
-    //           value.Data.map(
-    //             u =>{
-    //               console.log('user in group', u.DisplayName);
-    //             }
-    //           )
-    //         }
-    //       )
-    //     }
-    //   }
-    // )
-
-    // Promise.all([promise1]).then(function(values) {
-    //   console.log('all promise', values);
-    // });
-
-
     this._eventUsers.map(
       user => {
         if (user.IsGroup === 0) {
@@ -540,15 +463,6 @@ export class EventDialogComponent implements OnInit {
                     jsonParticipants.push(participant);
                     numberParticipant++;
                   }
-
-                  // console.log('user in group', u.DisplayName);
-                  // var participant: GraphUser = {
-                  //   id: u.Id,
-                  //   displayName: u.DisplayName,
-                  //   mail: u.Mail,
-                  //   userPrincipalName: u.DisplayName
-                  // };
-                  // jsonParticipants.push(participant);
                 }
               )
             }
@@ -590,7 +504,7 @@ export class EventDialogComponent implements OnInit {
         }
         )
     }, 3000)
-    
+
     // console.log('participant list: ', jsonParticipants);
 
     

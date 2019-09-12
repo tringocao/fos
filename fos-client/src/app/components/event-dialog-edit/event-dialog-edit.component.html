@@ -3,7 +3,7 @@
 
 <section fxLayout="row wrap" fxLayoutAlign="center center">
   <mat-card fxFlex="500px" fxFlex.xs="100%">
-    <mat-card-title>Create a new event</mat-card-title>
+    <mat-card-title>Update event</mat-card-title>
 
     <form [formGroup]="ownerForm" autocomplete="off" novalidate (ngSubmit)="CreateOwner(ownerForm.value)">
       <div class="tp-container">
@@ -28,11 +28,15 @@
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
           <mat-option *ngIf="_isHostLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
           <ng-container *ngIf="!_isHostLoading">
-            <mat-option *ngFor="let user of _userHost" [value]="user">
-                <img height="50" width="50" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatarByUserId?userId={{user.Id}}" />
-              <span>{{ user.Name }}</span>
-              <small> | email: {{user.Email}}</small>
-            </mat-option>
+              <mat-option style="height: 5em" *ngFor="let user of _userHost" [value]="user">
+                  <div class="format-avatar">
+                      <img id="avatar" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
+                      <div class="format-avatar-right">
+                          <span>{{ user.Name }}</span>
+                          <small>email: {{user.Email}}</small>
+                      </div>
+                  </div>
+              </mat-option>
           </ng-container>
         </mat-autocomplete>
 
@@ -80,10 +84,15 @@
               <mat-select required placeholder="Pick user/group" formControlName="participants"
                 (selectionChange)="ChangeClient($event)">
                 <mat-optgroup *ngFor="let group of _userPickerGroups" [label]="group.Name">
-                  <mat-option style="width:4500px" *ngFor="let user of group.UserPicker" [value]="user.Email">
-                    <img id="youtubeimg" class="MakeCircleAvatar" height="50" width="50" src="https://localhost:44366/api/SPUser/GetAvatarByUserId?userId={{user.Id}}" />
-                    {{user.Name}}
-                  </mat-option>
+                    <mat-option style="width:4500px; height: 5em;" *ngFor="let user of group.UserPicker" [value]="user">
+                        <div class="format-avatar">
+                            <img id="avatar" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
+                            <div class="format-avatar-right">
+                                <span>{{ user.Name }}</span>
+                                <small> email: {{user.Email}}</small>
+                            </div>
+                        </div>
+                    </mat-option>
                 </mat-optgroup>
               </mat-select>
               </mat-form-field>
@@ -98,8 +107,7 @@
           <ng-container matColumnDef="avatar">
             <th mat-header-cell *matHeaderCellDef> Avatar </th>
             <td mat-cell *matCellDef="let element">
-              <img height="50" width="50" class="MakeCircleAvatar"
-              src="https://localhost:44366/api/SPUser/GetAvatarByUserId?userId={{element.Id}}"/>
+                <img id="avatar" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{element.Id}}&avatarName={{element.Name}}" />
             </td>
           </ng-container>
 

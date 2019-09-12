@@ -32,26 +32,16 @@
           <mat-option *ngIf="_isHostLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
           <ng-container *ngIf="!_isHostLoading">
             <mat-option style="height: 5em" *ngFor="let user of _userHost" [value]="user">
-                <!-- <img id="youtubeimg" height="50" width="50" src="https://localhost:44366/api/SPUser/GetAvatarByUserId?Id={{user.id}}" /> -->
-                <img id="avatar" height="50" width="50" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
-              <span>{{ user.Name }}</span>
-              <small> | email: {{user.Email}}</small>
-              <!-- <small> | email: {{user.id}}</small> -->
-              <!-- <span>{{ user.mail }}</span> -->
-              <!-- <small> | ID: {{restaurant.id}}</small> -->
+                <div class="format-avatar">
+                    <img id="avatar" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
+                    <div class="format-avatar-right">
+                        <span>{{ user.Name }}</span>
+                        <small>email: {{user.Email}}</small>
+                    </div>
+                </div>
             </mat-option>
           </ng-container>
         </mat-autocomplete>
-
-        <!-- <mat-form-field class="full-width">
-          <mat-select placeholder="Host" formControlName="host" (selectionChange)="changeHost($event)">
-            <mat-option *ngFor="let user of hostPickerGroup" [value]="user">
-              <img height="50" width="50"
-              src="https://localhost:44366/api/SPUser/GetAvatarByUserId?Id={{user.id}}" />
-              {{user.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
 
         <mat-form-field class="full-width">
           <input matInput placeholder="Restaurant" [matAutocomplete]="autoTest" formControlName='userInput'>
@@ -97,9 +87,14 @@
               <mat-select required placeholder="Pick user/group" formControlName="participants"
                 (selectionChange)="ChangeClient($event)">
                 <mat-optgroup *ngFor="let group of _userPickerGroups" [label]="group.Name">
-                  <mat-option style="width:4500px; height: 5em;" *ngFor="let user of group.UserPicker" [value]="user.Email">
-                    <img id="avatar" height="50" width="50" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
-                    {{user.Name}}
+                  <mat-option style="width:4500px; height: 5em;" *ngFor="let user of group.UserPicker" [value]="user">
+                      <div class="format-avatar">
+                          <img id="avatar" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
+                          <div class="format-avatar-right">
+                              <span>{{ user.Name }}</span>
+                              <small> email: {{user.Email}}</small>
+                          </div>
+                      </div>
                   </mat-option>
                 </mat-optgroup>
               </mat-select>
@@ -115,7 +110,7 @@
           <ng-container matColumnDef="avatar">
             <th mat-header-cell *matHeaderCellDef> Avatar </th>
             <td mat-cell *matCellDef="let element">
-              <img id="avatar" height="50" width="50" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{element.Id}}&avatarName={{element.Name}}" />
+              <img id="avatar" class="MakeCircleAvatar" src="https://localhost:44366/api/SPUser/GetAvatar?Id={{element.Id}}&avatarName={{element.Name}}" />
             </td>
           </ng-container>
 
