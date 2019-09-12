@@ -39,11 +39,12 @@ export class OrderService {
         .catch(alert => console.log(alert));
     });
   }
-  SetOrder(order: Order): Promise<void> {
+  SetOrder(order: Order, isWildOrder:boolean): Promise<void> {
+    var apiUrl = isWildOrder ? 'AddWildOrder' : 'UpDateOrder'
     return new Promise<void>((resolve, reject) => {
       this.http
         .post<ApiOperationResult<void>>(
-          environment.apiUrl + "api/Order/UpDateOrder",
+          environment.apiUrl + "api/Order/" + apiUrl,
           order
         )
         .toPromise()

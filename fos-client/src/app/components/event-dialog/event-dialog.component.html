@@ -17,13 +17,27 @@
           <mat-error *ngIf="HasError('title', 'required')">Event title is required.</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <!-- <mat-form-field floatPlaceholder="always" class="mat-form-field--no-underline"> -->
           <mat-label>Event type</mat-label>
-          <mat-select  formControlName="EventType">
+          <!-- <input matInput style="display: none" > -->
+          <mat-radio-group
+            aria-labelledby="Event Type"
+            class="radio-group"
+            formControlName="EventType"
+            [(ngModel)]="_eventType"
+            >
+            <mat-radio-button class="radio-button" value="Open">
+              Free For All
+            </mat-radio-button>
+            <mat-radio-button class="radio-button" value="Close">
+              Invited Only
+            </mat-radio-button>
+          </mat-radio-group>
+          <!-- <mat-select  formControlName="EventType">
             <mat-option value="Open">Open</mat-option>
             <mat-option value="Close">Close</mat-option>
-          </mat-select>
-        </mat-form-field>
+          </mat-select> -->
+        <!-- </mat-form-field> -->
 
         <mat-form-field class="full-width">
           <input matInput placeholder="Host" [matAutocomplete]="auto" formControlName='userInputHost'>
@@ -69,26 +83,40 @@
 
         <mat-form-field class="full-width">
           <mat-label>Maximum Budget</mat-label>
-          <input matInput type="number" placeholder="Maximum Budget" [(ngModel)]="_maximumBudget"
-            [ngModelOptions]="{standalone: true}">
+          <input matInput type="number" placeholder="Maximum Budget" >
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
           <input required id="party" matInput type="datetime-local" [(ngModel)]="_dateEventTime"
-            formcontrolname="dateTimeToClose" [ngModelOptions]="{standalone: true}">
+            [ngModelOptions]="{standalone: true}"
+            formcontrolname="dateTimeEvent" 
+            (input)="onDateTimeChange($event.target.value)"
+            >
+            <mat-error *ngIf="HasError('dateTimeEvent', 'required')">Event title is required.</mat-error>
+            <mat-error *ngIf="HasError('dateTimeEvent', 'datimeRequired')">Event time is required</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label>Time To Close</mat-label>
-          <input required id="party" matInput type="datetime-local" [(ngModel)]="_dateTimeToClose"
-            formcontrolname="dateTimeToClose" [ngModelOptions]="{standalone: true}">
+          <input required [max]="_dateEventTime" required id="party" matInput type="datetime-local" [(ngModel)]="_dateTimeToClose"
+            [ngModelOptions]="{standalone: true}"
+            formcontrolname="dateTimeToClose" 
+            (input)="onDateTimeChange($event.target.value)"
+            >
+            <mat-error *ngIf="HasError('dateTimeToClose', 'invalidCloseTime')">Close Event time is invalid.</mat-error>
+            <mat-error *ngIf="HasError('dateTimeToClose', 'datimeRequired')">Close time is required</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
           <mat-label>Time To Reminder</mat-label>
-          <input id="party" matInput type="datetime-local" name="partydate" [(ngModel)]="_dateToReminder"
-            [ngModelOptions]="{standalone: true}">
+          <input required [max]="_dateTimeToClose" id="party" matInput type="datetime-local" name="partydate" [(ngModel)]="_dateToReminder"
+          [ngModelOptions]="{standalone: true}"
+          formcontrolname="dateTimeRemind"
+          (input)="onDateTimeChange($event.target.value)"
+          >
+          <mat-error *ngIf="HasError('dateTimeRemind', 'datimeRequired')">Reminder time is required</mat-error>
+          <mat-error *ngIf="HasError('dateTimeRemind', 'invalidRemindTime')">Reminder time is invalid</mat-error>
         </mat-form-field>
 
         <mat-grid-list cols="10" rowHeight="100px">

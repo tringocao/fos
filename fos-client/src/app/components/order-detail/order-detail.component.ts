@@ -38,6 +38,7 @@ export class OrderDetailComponent implements OnInit {
   resDetail: RestaurantDetail;
   isDataAvailable: boolean = false;
   totalBudget: Number;
+  isWildParticipant: boolean;
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
@@ -50,34 +51,77 @@ export class OrderDetailComponent implements OnInit {
   ngOnInit() {
     this.data = { restaurant: null, detail: null };
     this.idOrder = this.route.snapshot.paramMap.get("id");
-    this.orderService.GetOrder(this.idOrder).then(order => {
-      this.order = order;
-      this.checkedData = order.FoodDetail;
-      this.restaurantService
-        .getRestaurants([order.IdRestaurant])
+    this.isWildParticipant = false;
+    // check if wild guest order
+    if (this.idOrder.includes('ffa')) {
+      var eventId = this.idOrder.slice(3);
+      this.isWildParticipant = true;
+      this.eventFormService
+      .GetEventById(eventId)
+      .then(event => {
+        this.event = event;
+        console.log(this.event)
+        this.restaurantService.getRestaurants([Number(this.event.RestaurantId)])
         .then(restaurant => {
           this.data.restaurant = restaurant[0];
           this.restaurantService
-            .getRestaurantDetail(order.IdDelivery)
+            .getRestaurantDetail(Number(event.DeliveryId))
             .then(restaurantd => {
               this.data.detail = restaurantd;
-              this.userService.getUserById(order.IdUser).then(user => {
+              this.userService.getCurrentUserId().then(user => {
                 this.user = user;
-                this.eventFormService
-                  .GetEventById(order.IdEvent)
-                  .then(event => {
-                    this.event = event;
-                    if (this.isToday(new Date(event.CloseTime))) {
-                      this.isOrder = false;
-                    }
-                    this.isDataAvailable = true;
-                    this.loading = false;
-                    this.totalBudget = Number(event.MaximumBudget);
-                  });
+              }).then(() => {
+                this.order = {
+                  Id: '1',
+                  OrderDate:new Date(),
+                  IdUser: this.user.Id,
+                  IdEvent: this.event.EventId,
+                  IdRestaurant: Number(this.event.RestaurantId),
+                  IdDelivery: Number(this.event.DeliveryId),
+                  FoodDetail: [],
+                }
+                this.checkedData = this.order.FoodDetail;
+                if (this.isToday(new Date(event.CloseTime))) {
+                  this.isOrder = false;
+                }
+                this.isDataAvailable = true;
+                this.loading = false;
+                this.totalBudget = Number(event.MaximumBudget);
+              })
+            })
+          })
+      });
+    }
+    else {
+      this.orderService.GetOrder(this.idOrder).then(order => {
+        this.order = order;
+        this.checkedData = order.FoodDetail;
+        this.restaurantService
+          .getRestaurants([order.IdRestaurant])
+          .then(restaurant => {
+            this.data.restaurant = restaurant[0];
+            this.restaurantService
+              .getRestaurantDetail(order.IdDelivery)
+              .then(restaurantd => {
+                this.data.detail = restaurantd;
+                this.userService.getUserById(order.IdUser).then(user => {
+                  this.user = user;
+                  this.eventFormService
+                    .GetEventById(order.IdEvent)
+                    .then(event => {
+                      this.event = event;
+                      if (this.isToday(new Date(event.CloseTime))) {
+                        this.isOrder = false;
+                      }
+                      this.isDataAvailable = true;
+                      this.loading = false;
+                      this.totalBudget = Number(event.MaximumBudget);
+                    });
+                });
               });
-            });
-        });
-    });
+          });
+      });
+    }
   }
   isToday(dateParameter: Date) {
     var today = new Date();
@@ -108,7 +152,7 @@ export class OrderDetailComponent implements OnInit {
   }
   Save() {
     this.order.FoodDetail = this.foodorderlist.getAllFoodDetail();
-    this.orderService.SetOrder(this.order).then(result => {
+    this.orderService.SetOrder(this.order, this.isWildParticipant).then(result => {
       this.toast("Save!", "Dismiss");
     });
   }

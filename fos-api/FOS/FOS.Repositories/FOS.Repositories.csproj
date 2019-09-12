@@ -67,13 +67,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909120412312_neww3.cs" />
-    <Compile Include="Migrations\201909120412312_neww3.Designer.cs">
-      <DependentUpon>201909120412312_neww3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909110955429_CheckIsOrder.cs" />
-    <Compile Include="Migrations\201909110955429_CheckIsOrder.Designer.cs">
-      <DependentUpon>201909110955429_CheckIsOrder.cs</DependentUpon>
+    <Compile Include="Migrations\201909121222468_new.cs" />
+    <Compile Include="Migrations\201909121222468_new.Designer.cs">
+      <DependentUpon>201909121222468_new.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -108,11 +104,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909120412312_neww3.resx">
-      <DependentUpon>201909120412312_neww3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909110955429_CheckIsOrder.resx">
-      <DependentUpon>201909110955429_CheckIsOrder.cs</DependentUpon>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201909121222468_new.resx">
+      <DependentUpon>201909121222468_new.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

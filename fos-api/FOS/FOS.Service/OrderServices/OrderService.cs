@@ -27,6 +27,7 @@ namespace FOS.Services.OrderServices
             _repository.UpdateOrder(efOrder);
             return true;
         }
+
         public bool CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId)
         {
             Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
@@ -49,6 +50,13 @@ namespace FOS.Services.OrderServices
         public IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             return _repository.GetUserNotOrdered(eventId);
+        }
+
+        public bool CreateWildOrder(Order order)
+        {
+            Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
+            _orderMapper.MapToEfObject(efOrder, order);
+            return _repository.AddOrder(efOrder);
         }
     }
 }
