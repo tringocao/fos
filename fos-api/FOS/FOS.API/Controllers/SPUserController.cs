@@ -1,6 +1,7 @@
 ﻿using FOS.API.App_Start;
 using FOS.Common;
 using FOS.Model.Domain;
+using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.Providers;
@@ -22,10 +23,11 @@ namespace FOS.API.Controllers
     public class SPUserController : ApiController
     {
         ISPUserService _sPUserService;
-
-        public SPUserController(ISPUserService sPUserService)
+        IUserDtoMapper _userDtoMapper;
+        public SPUserController(ISPUserService sPUserService, IUserDtoMapper userDtoMapper)
         {
             _sPUserService = sPUserService;
+            _userDtoMapper = userDtoMapper;
         }
 
         // GET api/spuser/getusers
@@ -78,16 +80,16 @@ namespace FOS.API.Controllers
         // GET api/spuser/GetUserById/Id
         [HttpGet]
         [Route("GetUserById")]
-        public async Task<ApiResponse<Model.Domain.User>> GetUserById(string Id)
+        public async Task<ApiResponse<Model.Dto.User>> GetUserById(string Id)
         {
             try
             {
                 var user = await _sPUserService.GetUserById(Id);
-                return ApiUtil<Model.Domain.User>.CreateSuccessfulResult(user);
+                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(user);
             }
             catch (Exception e)
             {
-                return ApiUtil<Model.Domain.User>.CreateFailResult(e.ToString());
+                return ApiUtil<Model.Dto.User>.CreateFailResult(e.ToString());
             }
         }
 
