@@ -154,22 +154,16 @@
     <Compile Include="Mapping\ProvinceDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantDetailDtoMapper.cs" />
+    <Compile Include="Mapping\UserDtoMapper.cs" />
     <Compile Include="Params\ListRestaurant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ApiUtil.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
-      <Project>{867c7a27-0781-4a5a-8f2f-8251de4eddd6}</Project>
-      <Name>FOS.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dto\ModelGenerator.tst" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dto\..\..\..\..\fos-client\src\app\models\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
@@ -637,6 +631,12 @@
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\User.cs</CustomToolNamespace>
     </TypeScriptCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
+      <Project>{867c7a27-0781-4a5a-8f2f-8251de4eddd6}</Project>
+      <Name>FOS.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

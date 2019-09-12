@@ -15,12 +15,12 @@ export class RestaurantService {
   ids: any;
 
   constructor(private http: HttpClient) {}
-  setEmail(title: string): Promise<any> {
+  setEmail(id: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<any>>(environment.apiUrl + "SendEmail", {
           params: {
-            eventId: title
+            eventId: id
           }
         })
         .toPromise()
