@@ -24,14 +24,14 @@ moment.locale('vi');
 })
 export class ListOrderComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [
-    'name',
-    'restaurant',
-    'category',
-    'participants',
-    'closeTime',
-    'maximumBudget',
-    'status',
-    'host'
+    'Name',
+    'Restaurant',
+    'Category',
+    'Participants',
+    'CloseTime',
+    'MaximumBudget',
+    'Status',
+    'HostName'
   ];
   dataSource: MatTableDataSource<Event>;
   isLoading = true;
@@ -76,20 +76,20 @@ export class ListOrderComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.categoryList = [];
     if (!this.isMyOrder) {
-      if (!this.displayedColumns.includes('host')) {
+      if (!this.displayedColumns.includes('HostName')) {
         this.displayedColumns.pop();
-        this.displayedColumns.push('host');
-        this.displayedColumns.push('status');
+        this.displayedColumns.push('HostName');
+        this.displayedColumns.push('Status');
       }
       this.setDataSource(this.allOrder);
       this.allOrderCategories.forEach(item => {
         this.categoryList.push(item);
       });
     } else {
-      if (this.displayedColumns.includes('host')) {
+      if (this.displayedColumns.includes('HostName')) {
         this.displayedColumns.pop();
         this.displayedColumns.pop();
-        this.displayedColumns.push('status');
+        this.displayedColumns.push('Status');
       }
       this.setDataSource(this.myOrder);
       this.myOrderCategories.forEach(item => {
@@ -252,8 +252,10 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   formatCurrency(value: string) {
-    return Number(value)
-      .toFixed(0)
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return (
+      Number(value)
+        .toFixed(0)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' '
+    );
   }
 }

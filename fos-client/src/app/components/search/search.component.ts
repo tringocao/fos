@@ -6,10 +6,10 @@ import {
   EventEmitter,
   OnChanges,
   Input
-} from "@angular/core";
-import { Observable, Subject } from "rxjs";
-import { RestaurantService } from "./../../services/restaurant/restaurant.service";
-import { MatSelectModule } from "@angular/material/select";
+} from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { RestaurantService } from './../../services/restaurant/restaurant.service';
+import { MatSelectModule } from '@angular/material/select';
 
 import {
   debounceTime,
@@ -17,18 +17,18 @@ import {
   switchMap,
   tap,
   finalize
-} from "rxjs/operators";
-import { FormControl, FormBuilder, FormGroup } from "@angular/forms";
-import { stringify } from "@angular/compiler/src/util";
-import { Restaurant } from "src/app/models/restaurant";
-import { CategoryGroup } from "src/app/models/category-group";
-import { Category } from "src/app/models/category";
-import { DeliveryInfos } from "src/app/models/delivery-infos";
+} from 'rxjs/operators';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { stringify } from '@angular/compiler/src/util';
+import { Restaurant } from 'src/app/models/restaurant';
+import { CategoryGroup } from 'src/app/models/category-group';
+import { Category } from 'src/app/models/category';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
 
 @Component({
-  selector: "app-search",
-  templateUrl: "./search.component.html",
-  styleUrls: ["./search.component.less"]
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.less']
 })
 export class SearchComponent implements OnInit, OnChanges {
   restaurant$: DeliveryInfos[];
@@ -40,10 +40,10 @@ export class SearchComponent implements OnInit, OnChanges {
   isLoading = false;
 
   show$ = false;
-  color = "primary";
-  mode = "indeterminate";
+  color = 'primary';
+  mode = 'indeterminate';
   toppingList: CategoryGroup[];
-  @Input("loading") loading: boolean;
+  @Input('loading') loading: boolean;
   @ViewChild(MatSelectModule, { static: true }) x: MatSelectModule;
   @Output() change = new EventEmitter();
   submitted = false;
@@ -56,7 +56,7 @@ export class SearchComponent implements OnInit, OnChanges {
       result.forEach((element, index) => {
         if (element.Categories.length < 1) {
           let selectAll: Category = {
-            Name: "All",
+            Name: 'All',
             Id: element.Id,
             Code: element.Code
           };
@@ -70,7 +70,7 @@ export class SearchComponent implements OnInit, OnChanges {
     });
 
     this.usersForm
-      .get("userInput")
+      .get('userInput')
       .valueChanges.pipe(
         debounceTime(500),
         tap(() => (this.isLoading = true)),
@@ -96,7 +96,7 @@ export class SearchComponent implements OnInit, OnChanges {
     //   switchMap((term: string) =>this.restaurantService.SearchRestaurantName(term, 4)),
     //   );
   }
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
     console.log(changes);
   }
   onBlur() {
@@ -112,14 +112,14 @@ export class SearchComponent implements OnInit, OnChanges {
     }
   }
 
-  filterByFavorite(event) {
-    console.log(event);
-    this.change.emit({ isChecked: event.value === true });
+  filterByFavorite($event) {
+    console.log($event);
+    this.change.emit({ isChecked: $event.checked });
     //this.change.emit({ isChecked: event.checked });
   }
 
   openedChange(opened: boolean) {
-    console.log(opened ? "opened" : "closed");
+    console.log(opened ? 'opened' : 'closed');
     if (!opened) {
       this.onSubmit();
     }
@@ -128,24 +128,24 @@ export class SearchComponent implements OnInit, OnChanges {
     this.submitted = true;
     let cod = this.toppings.value
       ? this.getCondition(this.toppings.value)
-      : "[]";
+      : '[]';
     console.log(cod);
-    var keyword = "";
-    if (this.usersForm.get("userInput").value != null) {
-      keyword = this.usersForm.get("userInput").value.Name
-        ? this.usersForm.get("userInput").value.Name
-        : this.usersForm.get("userInput").value;
+    var keyword = '';
+    if (this.usersForm.get('userInput').value != null) {
+      keyword = this.usersForm.get('userInput').value.Name
+        ? this.usersForm.get('userInput').value.Name
+        : this.usersForm.get('userInput').value;
     }
 
     this.change.emit({ topic: JSON.parse(cod), keyword: keyword });
   }
   getCondition(term: Category[]): string {
-    let getCod = "";
+    let getCod = '';
     term.forEach(e => {
-      getCod = getCod + ',{"code":' + e.Code + ',"id":' + e.Id + "}";
+      getCod = getCod + ',{"code":' + e.Code + ',"id":' + e.Id + '}';
     });
     getCod = getCod.substr(1);
-    return "[" + getCod + "]";
+    return '[' + getCod + ']';
   }
   // Push a search term into the observable stream
 }

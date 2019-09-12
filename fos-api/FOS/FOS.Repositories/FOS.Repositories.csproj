@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201909111143379_new.Designer.cs">
       <DependentUpon>201909111143379_new.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909110955429_CheckIsOrder.cs" />
+    <Compile Include="Migrations\201909110955429_CheckIsOrder.Designer.cs">
+      <DependentUpon>201909110955429_CheckIsOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +113,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909111143379_new.resx">
       <DependentUpon>201909111143379_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909110955429_CheckIsOrder.resx">
+      <DependentUpon>201909110955429_CheckIsOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

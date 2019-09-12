@@ -30,11 +30,11 @@ export class ListRestaurantComponent implements OnInit {
   categorys: any;
   displayedColumns: string[] = [
     'id',
-    'picture',
-    'restaurant',
-    'category',
-    'promotion',
-    'open',
+    'Photo',
+    'Name',
+    'Categories',
+    'PromotionGroups',
+    'Operating',
     'menu',
     'addEvent'
   ];

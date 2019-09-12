@@ -10,12 +10,7 @@ import { TooltipPosition } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Event } from './../../models/event';
 import { EventDialogViewComponent } from '../event-dialog-view/event-dialog-view.component';
-import { EventDialogComponent } from '../event-dialog/event-dialog.component';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ReminderDialogComponent } from '../reminder-dialog/reminder-dialog.component';
 import { EventDialogEditComponent } from '../event-dialog-edit/event-dialog-edit.component';
 @Component({
@@ -38,9 +33,7 @@ export class ShowActionComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   clickout(event) {
-    if (this.eRef.nativeElement.contains(event.target)) {
-      console.log('');
-    } else {
+    if (!this.eRef.nativeElement.contains(event.target)) {
       this.isShowListAction = false;
     }
   }
@@ -84,8 +77,8 @@ export class ShowActionComponent implements OnInit {
   sendReminder($event) {
     const dialogRef = this.dialog.open(ReminderDialogComponent, {
       maxHeight: '98vh',
-      width: '50%',
-      data: this.event.EventParticipantsJson
+      minWidth: '50%',
+      data: this.event
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -97,5 +90,9 @@ export class ShowActionComponent implements OnInit {
   makeOrder($event) {
     alert('make order event: ' + this.event.EventId);
     this.isShowListAction = false;
+  }
+
+  viewOrder($event) {
+    alert('view order event: ' + this.event.EventId);
   }
 }
