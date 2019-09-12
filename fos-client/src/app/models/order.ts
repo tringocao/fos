@@ -18,6 +18,7 @@
         public IdEvent: string = null;   
         public IdRestaurant: number = 0;   
         public IdDelivery: number = 0;   
+        public IsOrdered: boolean = false;   
         public FoodDetail: { [key: number]: { [key: string]: string; }; } = {};
     }
          

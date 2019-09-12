@@ -15,6 +15,7 @@ namespace FOS.Repositories.Repositories
         DataModel.Order GetOrder(Guid id);
         IEnumerable<Order> GetAllOrder();
         bool UpdateOrder(DataModel.Order order);
+        IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
     }
 
     public class OrderRepository : IOrderRepository
@@ -63,7 +64,22 @@ namespace FOS.Repositories.Repositories
             return list;
 
         }
+        public IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId)
+        {
+            var orders = _context.Orders.Where(order => 
+            order.IdEvent == eventId && order.IsOrdered == false).ToList();
 
-    
+            var result = new List<Model.Dto.UserNotOrder>();
+            foreach(var order in orders)
+            {
+                var item = new Model.Dto.UserNotOrder();
+                item.OrderId = order.Id;
+                item.UserId = order.IdUser;
+                result.Add(item);
+            }
+
+            return result;
+        }
+
     }
 }

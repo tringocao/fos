@@ -10,13 +10,11 @@
     
      
 
-    export class EventAction    {
+    export class UserNotOrderMailInfo    {
            
-        public CanViewEvent: boolean = false;   
-        public CanEditEvent: boolean = false;   
-        public CanCloseEvent: boolean = false;   
-        public CanMakeOrder: boolean = false;   
-        public CanSendRemind: boolean = false;   
-        public CanViewOrder: boolean = false;
+        public UserMail: string = null;   
+        public OrderId: string = null;   
+        public EventTitle: string = null;   
+        public EventRestaurant: string = null;
     }
          

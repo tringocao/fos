@@ -1,22 +1,11 @@
 <div id="search-component">
   <form class="example-form" (ngSubmit)="onSubmit()" [formGroup]="usersForm">
-    <!-- <mat-checkbox
-      class="checkbox"
+    <mat-slide-toggle
       color="primary"
+      class="favorite"
       (change)="filterByFavorite($event)"
-      >My favorite</mat-checkbox
-    > -->
-    <mat-form-field class="favorite">
-      <mat-select
-        placeholder="Favorite"
-        (selectionChange)="filterByFavorite($event)"
-      >
-        <mat-option [value]="null"></mat-option>
-        <mat-option [value]="true">
-          My favorite
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      >My favorite</mat-slide-toggle
+    >
     <mat-form-field class="example-full-width">
       <input
         matInput
