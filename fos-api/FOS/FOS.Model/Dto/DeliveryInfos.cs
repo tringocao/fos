@@ -11,6 +11,7 @@ namespace FOS.Model.Dto
     {
         public string CityId { get; set; }
         public string RestaurantId { get; set; }
+        public bool IsFavorite { get; set; }
         public string IsOpen { get; set; }
         public string IsFoodyDelivery { get; set; }
         public string Campaigns { get; set; }

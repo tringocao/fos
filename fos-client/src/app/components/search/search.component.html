@@ -1,5 +1,22 @@
 <div id="search-component">
   <form class="example-form" (ngSubmit)="onSubmit()" [formGroup]="usersForm">
+    <!-- <mat-checkbox
+      class="checkbox"
+      color="primary"
+      (change)="filterByFavorite($event)"
+      >My favorite</mat-checkbox
+    > -->
+    <mat-form-field class="favorite">
+      <mat-select
+        placeholder="Favorite"
+        (selectionChange)="filterByFavorite($event)"
+      >
+        <mat-option [value]="null"></mat-option>
+        <mat-option [value]="true">
+          My favorite
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-form-field class="example-full-width">
       <input
         matInput
@@ -33,15 +50,15 @@
             toppings.value
               ? toppings.value[0]
                 ? toppings.value[0].Name
-                : ""
-              : ""
+                : ''
+              : ''
           }}
           <span
             *ngIf="toppings.value?.length > 1"
             class="example-additional-selection"
           >
             (+{{ toppings.value.length - 1 }}
-            {{ toppings.value?.length === 2 ? "other" : "others" }})
+            {{ toppings.value?.length === 2 ? 'other' : 'others' }})
           </span>
         </mat-select-trigger>
         <mat-optgroup *ngFor="let group of toppingList" [label]="group.Name">

@@ -1,6 +1,7 @@
 using FOS.Services.Providers;
 using FOS.Services.SPListService;
 using FOS.Services.SPUserService;
+using FOS.Services.SummaryService;
 using System;
 
 using Unity;
@@ -67,6 +68,12 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
+
+            container.RegisterType<Repositories.Repositories.IReportFileRepository, Repositories.Repositories.ReportFileRepository>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
+
             container.RegisterType<Repositories.Repositories.IFOSFavoriteRestaurantRepository, Repositories.Repositories.FOSFavoriteRestaurantRepository>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
@@ -149,6 +156,10 @@ namespace FOS.API
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<ISPUserService, SPUserService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
+            container.RegisterType<ISummaryService, SummaryService>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());

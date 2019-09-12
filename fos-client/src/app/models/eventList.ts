@@ -1,16 +1,18 @@
 export class EventList {
-  eventTitle: string;
-  eventId: string;
-  eventRestaurant: string;
-  eventMaximumBudget: number;
-  eventTimeToClose: string;
-  eventTimeToReminder: string;
-  eventHost: string;
-  eventParticipants: string;
-  eventCategory: string;
-  eventRestaurantId: string;
-  eventServiceId: string;
-  eventDeliveryId: string;
-  eventCreatedUserId: string;
-  eventHostId: string;
+  EventTitle: string;
+  EventId: string;
+  EventRestaurant: string;
+  EventMaximumBudget: number;
+  EventTimeToClose: string;
+  EventTimeToReminder: string;
+  EventHost: string;
+  EventParticipants: Number;
+  EventCategory: string;
+  EventRestaurantId: string;
+  EventServiceId: string;
+  EventDeliveryId: string;
+  EventCreatedUserId: string;
+  EventHostId: string;
+  EventParticipantsJson: string;
+  EventDate: string
 }

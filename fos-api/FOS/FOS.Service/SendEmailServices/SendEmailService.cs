@@ -80,6 +80,7 @@ namespace FOS.Services.SendEmailServices
                         user.Mail.ToString(),
                         hostname + "make-order/"+ idOrder);
                     emailp.Subject = emailTemplate.Subject;
+                    
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
 
@@ -91,6 +92,7 @@ namespace FOS.Services.SendEmailServices
 
             }
         }
+
         public void ReadEmailTemplate(string html)
         {
             emailTemplate = JsonConvert.DeserializeObject<EmailTemplate>(html);

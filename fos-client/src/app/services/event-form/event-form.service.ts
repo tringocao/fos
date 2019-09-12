@@ -3,11 +3,15 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { EventList } from 'src/app/models/eventList';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { Observable } from 'rxjs';
+import { switchMap, debounceTime, tap, finalize } from 'rxjs/operators';
+import { User } from 'src/app/models/user';
+import { GraphUser } from 'src/app/models/graph-user';
 @Injectable({
   providedIn: 'root'
 })
 export class EventFormService {
+
   toast(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 2000
@@ -15,154 +19,187 @@ export class EventFormService {
   }
 
   constructor(private http: HttpClient, private _snackBar: MatSnackBar) {}
-  getAvatar(userId: string): Promise<object> {
+
+  // GetAvatarByUserId(userId: string): Observable<ApiOperationResult<any>>{
+  //     return this.http
+  //     .get(
+  //       environment.apiUrl + 'api/SPUser/GetAvatarByUserId',
+  //       {
+  //         params: {
+  //           userId: userId
+  //         }
+  //       }
+  //     )
+  //     .pipe(
+  //       tap((response: ApiOperationResult<Array<any>>) => {
+  //         return response;
+  //       })
+  //     );
+  // }
+
+  AddEventListItem(eventlist: EventList): Observable<ApiOperationResult<string>> {
     return this.http
-      .get(environment.apiUrl + 'api/SPUser/GetAvatarByUserId?Id=' + userId)
-      .toPromise();
-  }
+        .post(
+          environment.apiUrl +
+          'api/SPList/AddEventListItem?Id=d7415c0c-8295-4851-bbe8-6717e939f7f6',
+          {
+            EventTitle: eventlist.EventTitle,
+            EventRestaurant: eventlist.EventRestaurant,
+            EventMaximumBudget: eventlist.EventMaximumBudget,
 
-  async setUserInfo(
-    hostPickerGroup: any,
-    office365User: any,
-    userPickerGroups: any,
-    currentDisplayName: any,
-    ownerForm: any,
-    createdUser: any
-  ) {
-    var currentDisplay = '';
+            EventTimeToClose: eventlist.EventTimeToClose,
+            EventTimeToReminder: eventlist.EventTimeToReminder,
+            EventHost: eventlist.EventHost,
+            EventParticipants: eventlist.EventParticipants,
 
-    await this.http
-      .get(environment.apiUrl + 'api/SPUser/GetCurrentUser')
-      .subscribe((data: any) => {
-        // console.log(data.Data.displayName);
-        currentDisplay = data.Data.displayName;
-        console.log('get current user');
-        console.log(createdUser);
-        createdUser.id = data.Data.id;
-        console.log(createdUser.id);
-      });
-
-    console.log('user hien tai: ' + currentDisplay);
-    // ownerForm.get('host').setValue(current);
-
-    this.http
-      .get(environment.apiUrl + '/api/SPUser/GetUsers')
-      .toPromise()
-      .then(async (data: any) => {
-        console.log('request data');
-        var jsonData = JSON.parse(data.Data).value;
-        console.log(jsonData);
-
-        await Promise.all(
-          jsonData.map(async user => {
-            var userId = user.id;
-            var currentPrincipalName = user.userPrincipalName;
-            if (Boolean(user.mail)) {
-              // AWAIT setaAVTAR(ID)
-              await this.setAvatar(
-                userId,
-                user.displayName,
-                user.mail,
-                currentPrincipalName,
-                hostPickerGroup,
-                office365User
-              );
-            }
+            EventCategory: eventlist.EventCategory,
+            EventRestaurantId: eventlist.EventRestaurantId,
+            EventServiceId: eventlist.EventServiceId,
+            EventDeliveryId: eventlist.EventDeliveryId,
+            EventCreatedUserId: eventlist.EventCreatedUserId,
+            EventHostId: eventlist.EventHostId,
+            EventDate: eventlist.EventDate,
+            EventParticipantsJson: eventlist.EventParticipantsJson
+          }
+        ).pipe(
+          tap((response: ApiOperationResult<string>) => {
+            return response;
           })
         );
-        setTimeout(() => {
-          this.setCurrentser(
-            userPickerGroups,
-            office365User,
-            hostPickerGroup,
-            currentDisplay,
-            ownerForm
-          );
-        }, 5000);
-      });
   }
 
-  async setCurrentser(
-    userPickerGroups: any,
-    office365User: any,
-    hostPickerGroup: any,
-    currentDisplayName: any,
-    ownerForm: any
-  ) {
-    userPickerGroups.push({ name: 'User', userpicker: office365User });
+  UpdateEventListItem(Id: String, eventlist: EventList): Observable<ApiOperationResult<void>> {
+    return this.http
+        .post(
+          environment.apiUrl +
+          'api/SPList/UpdateListItem?Id=' + Id,
+          {
+            EventTitle: eventlist.EventTitle,
+            EventRestaurant: eventlist.EventRestaurant,
+            EventMaximumBudget: eventlist.EventMaximumBudget,
 
-    console.log('load danh sach user xong');
-    console.log('tim duoc host: ' + currentDisplayName);
-    var selectHost = hostPickerGroup.find(c => c.name == currentDisplayName);
-    console.log(selectHost);
-    ownerForm.get('host').setValue(selectHost);
+            EventTimeToClose: eventlist.EventTimeToClose,
+            EventTimeToReminder: eventlist.EventTimeToReminder,
+            EventHost: eventlist.EventHost,
+            EventParticipants: eventlist.EventParticipants,
+
+            EventCategory: eventlist.EventCategory,
+            EventRestaurantId: eventlist.EventRestaurantId,
+            EventServiceId: eventlist.EventServiceId,
+            EventDeliveryId: eventlist.EventDeliveryId,
+            EventCreatedUserId: eventlist.EventCreatedUserId,
+            EventHostId: eventlist.EventHostId,
+            EventDate: eventlist.EventDate,
+            EventParticipantsJson: eventlist.EventParticipantsJson
+          }
+        ).pipe(
+          tap((response: ApiOperationResult<void>) => {
+            return response;
+          })
+        );
   }
 
-  async setAvatar(
-    userId: string,
-    userDisplayName: string,
-    userMail: string,
-    userPrincipalName: string,
-    hostPickerGroup: any,
-    office365User: any
-  ) {
-    await this.http
-      .get(environment.apiUrl + 'api/SPUser/GetAvatarByUserId?Id=' + userId)
-      .subscribe((data: any) => {
-        var dataImg = 'data:image/png;base64,' + data.Data;
-        console.log(dataImg);
-
-        hostPickerGroup.push({
-          id: userId,
-          name: userDisplayName,
-          email: userMail,
-          img: dataImg,
-          principalName: userPrincipalName
-        });
-        office365User.push({
-          name: userDisplayName,
-          email: userMail,
-          img: dataImg
-        });
-      });
-  }
-
-  async addEventListItem(eventlist: EventList): Promise<any> {
-    console.log('event list');
-    console.log(eventlist);
-
-    this.http
-      .post(
-        environment.apiUrl +
-          'api/SPList/AddEventListItem?Id=d7415c0c-8295-4851-bbe8-6717e939f7f6',
+  SearchUserByName(searchText: string): Observable<ApiOperationResult<Array<User>>> {
+    return this.http
+      .get<ApiOperationResult<Array<User>>>(
+        environment.apiUrl + 'api/SPUser/searchUserByName',
         {
-          eventTitle: eventlist.eventTitle,
-          eventRestaurant: eventlist.eventRestaurant,
-          eventMaximumBudget: eventlist.eventMaximumBudget,
-
-          eventTimeToClose: eventlist.eventTimeToClose,
-          eventTimeToReminder: eventlist.eventTimeToReminder,
-          eventHost: eventlist.eventHost,
-          eventParticipants: eventlist.eventParticipants,
-
-          eventCategory: eventlist.eventCategory,
-          eventRestaurantId: eventlist.eventRestaurantId,
-          eventServiceId: eventlist.eventServiceId,
-          eventDeliveryId: eventlist.eventDeliveryId,
-          eventCreatedUserId: eventlist.eventCreatedUserId,
-          eventHostId: eventlist.eventHostId
+          params: {
+            searchText: searchText
+          }
         }
       )
-      .subscribe(
-        val => {
-          this.toast('Create event successfuly ', 'Dismiss');
-        },
-        response => {
-          console.log('POST call in error', response);
-        },
-        () => {
-          console.log('The POST observable is now completed.');
+      .pipe(
+        tap((response: ApiOperationResult<Array<User>>) => {
+          return response;
+        })
+      );
+  }
+
+  getCurrentUser(): Observable<ApiOperationResult<GraphUser>> {
+    return this.http
+      .get<ApiOperationResult<GraphUser>>(
+        environment.apiUrl + 'api/SPUser/GetCurrentUserGraph'
+      )
+      .pipe(
+        tap((response: ApiOperationResult<GraphUser>) => {
+          return response;
+        })
+      );
+  }
+
+  GetMemberInGroups(groupId: string): Observable<ApiOperationResult<Array<User>>> {
+    return this.http
+      .get<ApiOperationResult<Array<User>>>(
+        environment.apiUrl + '/api/SPUser/GetMemberInGroups',
+        {
+          params: {
+            groupId: groupId
+          }
         }
+      )
+      .pipe(
+        tap((response: ApiOperationResult<Array<User>>) => {
+          return response;
+        })
+      );
+  }
+
+  GetUsersByName(searchName: string): Observable<ApiOperationResult<Array<User>>> {
+    return this.http
+      .get<ApiOperationResult<Array<User>>>(
+        environment.apiUrl + '/api/SPUser/GetUsersByName',
+        {
+          params: {
+            searchName: searchName
+          }
+        }
+      )
+      .pipe(
+        tap((response: ApiOperationResult<Array<User>>) => {
+          return response;
+        })
+      );
+  }
+
+  GetGroups(): Observable<ApiOperationResult<Array<User>>> {
+    return this.http
+      .get<ApiOperationResult<Array<User>>>(
+        environment.apiUrl + '/api/SPUser/GetGroups'
+      )
+      .pipe(
+        tap((response: ApiOperationResult<Array<User>>) => {
+          return response;
+        })
+      );
+  }
+
+  GetUsers(): Observable<ApiOperationResult<Array<User>>> {
+    return this.http
+      .get<ApiOperationResult<Array<User>>>(
+        environment.apiUrl + '/api/SPUser/GetUsers'
+      )
+      .pipe(
+        tap((response: ApiOperationResult<Array<User>>) => {
+          return response;
+        })
+      );
+  }
+
+  GroupListMemers(groupId: string): Observable<ApiOperationResult<Array<User>>> {
+    return this.http
+      .get<ApiOperationResult<Array<User>>>(
+        environment.apiUrl + '/api/SPUser/GroupListMemers',
+        {
+          params: {
+            groupId: groupId
+          }
+        }
+      )
+      .pipe(
+        tap((response: ApiOperationResult<Array<User>>) => {
+          return response;
+        })
       );
   }
 }

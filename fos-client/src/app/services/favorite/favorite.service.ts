@@ -10,7 +10,6 @@ export class FavoriteService {
   constructor(private http: HttpClient) {}
 
   addFavoriteRestaurant(
-    userId: string,
     restaurantId
   ): Promise<ApiOperationResult<void>> {
     return new Promise<ApiOperationResult<void>>((resolve, reject) => {
@@ -18,7 +17,6 @@ export class FavoriteService {
         .post<ApiOperationResult<void>>(
           environment.apiUrl + "api/favorite/add",
           {
-            userId,
             restaurantId
           }
         )
@@ -31,13 +29,12 @@ export class FavoriteService {
         .catch(alert => console.log(alert));
     });
   }
-  removeFavoriteRestaurant(userId: string, restaurantId: string) {
+  removeFavoriteRestaurant(restaurantId: string) {
     return new Promise<ApiOperationResult<void>>((resolve, reject) => {
       this.http
         .post<ApiOperationResult<void>>(
           environment.apiUrl + "api/favorite/remove",
           {
-            UserId: userId,
             RestaurantId: restaurantId
           }
         )
@@ -50,11 +47,11 @@ export class FavoriteService {
         .catch(alert => console.log(alert));
     });
   }
-  getFavorite(userId: any): Promise<Array<FavoriteRestaurant>> {
+  getFavorite(): Promise<Array<FavoriteRestaurant>> {
     return new Promise<Array<FavoriteRestaurant>>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Array<FavoriteRestaurant>>>(
-          environment.apiUrl + "api/favorite/GetAllById/" + userId
+          environment.apiUrl + "api/favorite/GetAllByCurrentUser/"
         )
         .toPromise()
         .then(result => {

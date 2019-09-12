@@ -14,6 +14,7 @@ namespace FOS.Model.Dto
         public string Category { get; set; }
         public string Participants { get; set; }
         public string MaximumBudget { get; set; }
+        public string DeliveryId { get; set; }
         public string HostName { get; set; }
         public string HostId { get; set; }
         public string CreatedBy { get; set; }
@@ -25,5 +26,6 @@ namespace FOS.Model.Dto
         public string EventType { get; set; }
         public DateTime? EventDate { get; set; }
         public string EventParticipantsJson { get; set; }
+        public EventAction Action { get; set; }
     }
 }
