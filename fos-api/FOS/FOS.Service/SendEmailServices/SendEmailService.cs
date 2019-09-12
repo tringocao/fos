@@ -53,7 +53,6 @@ namespace FOS.Services.SendEmailServices
             emailTemplate.HostUserEmail = user;
             emailTemplate.EventTitle = item["EventTitle"].ToString();
             emailTemplate.EventId = item["ID"].ToString();
-            emailTemplate.Subject = "subject";
             emailTemplate.EventRestaurant = item["EventRestaurant"].ToString();
             emailTemplate.EventRestaurantId = item["EventRestaurantId"].ToString();
             emailTemplate.EventDeliveryId = item["EventDeliveryId"].ToString();
@@ -70,15 +69,12 @@ namespace FOS.Services.SendEmailServices
                 foreach (var user in emailTemplate.UsersEmail)
                 {
                     Guid idOrder = Guid.NewGuid();
+                    emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
-                    emailp.Body = String.Format(emailTemplate.Html.ToString(),
-                        emailTemplate.EventTitle.ToString(),
-                        emailTemplate.EventRestaurant.ToString(),
-                        user.Mail.ToString(),
-                        hostname + "make-order/"+ idOrder);
-                    emailp.Subject = emailTemplate.Subject;
+                    emailp.Body = Parse(emailTemplate.Html.ToString());
+                    emailp.Subject = Parse(emailTemplate.Subject.ToString());
                     
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
@@ -95,6 +91,26 @@ namespace FOS.Services.SendEmailServices
         public void ReadEmailTemplate(string html)
         {
             emailTemplate = JsonConvert.DeserializeObject<EmailTemplate>(html);
+
+        }
+        private string Parse(string text)
+        {
+            var regex = new Regex(@"\[%Event.\S+%\]");
+            var match = regex.Match(text);
+            while (match.Success)
+            {
+                var value = match.Value;
+                var memberName = ParseMemberName(value); //Some code you write to parse out the member name from the match value
+                var propertyInfo = emailTemplate.GetType().GetProperty(memberName);
+                var memberValue = propertyInfo.GetValue(emailTemplate, null);
+                text = text.Replace(value, memberValue != null ? memberValue.ToString() : string.Empty);
+                match = match.NextMatch();
+            }
+            return text;
+        }
+        private string ParseMemberName(string value)
+        {
+            return value.Split('.')[1];
         }
     }
 }
