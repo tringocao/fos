@@ -8,7 +8,7 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    import { FoodDetailJson } from './food-detail-json';
+     import { FoodDetailJson } from './food-detail-json';
 
     export class Order    {
            
@@ -18,8 +18,7 @@
         public IdEvent: string = null;   
         public IdRestaurant: number = 0;   
         public IdDelivery: number = 0;   
-        public IsOrdered: boolean = false;   
-        public FoodDetail: { [key: number]: { [key: string]: string; }; } = {};
-        public FoodDetail: FoodDetailJson[] = [];
+        public FoodDetail: FoodDetailJson[] = [];   
+        public IsOrdered: boolean = false;
     }
          
