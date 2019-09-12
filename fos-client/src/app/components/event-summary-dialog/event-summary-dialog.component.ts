@@ -13,6 +13,7 @@ import { RestaurantService } from 'src/app/services/restaurant/restaurant.servic
 import { ActivatedRoute } from '@angular/router';
 
 import * as jsPDF from 'jspdf';
+// import * as printJs from 'printjs';
 import html2canvas from 'html2canvas';
 import * as moment from 'moment';
 import 'moment/locale/vi';
@@ -243,6 +244,8 @@ export class EventSummaryDialogComponent implements OnInit {
   printToPdf() {
     // this.printMode = true;
     const printContent = document.getElementById("print");
+
+    // printJs('print', 'html');
     console.log(printContent)
     const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
     // WindowPrt.document.write('<link rel="stylesheet" type="text/css" href="event-summary-dialog.component.css">');
@@ -269,7 +272,7 @@ export class EventSummaryDialogComponent implements OnInit {
       // Add image Canvas to PDF%
       // doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
 
-      this.summaryService.addReport(this.eventDetail.eventId, window.location.href, pageData)
+      this.summaryService.addReport(this.eventDetail.EventId, window.location.href, pageData)
       // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
       console.log('html2canvas');
     });
@@ -333,23 +336,26 @@ export class EventSummaryDialogComponent implements OnInit {
       var id = params['id'];
       this.summaryService.getEventById(id).then(result => {
         this.eventDetail = {
-          eventTitle: result.Name,
-          eventId: result.EventId,
-          eventRestaurant: result.Restaurant,
-          eventMaximumBudget: result.MaximumBudget,
-          eventTimeToClose: result.Date,
-          eventTimeToReminder: result.TimeToRemind,
-          eventHost: result.HostName,
-          eventParticipants: result.Participants,
-          eventCategory: result.Category,
-          eventRestaurantId: result.RestaurantId,
-          eventServiceId: '1',
-          eventDeliveryId: '',
-          eventCreatedUserId: "4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb",
-          eventHostId: "4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb"
-        }
+          EventTitle: result.Name,
+          EventId: result.EventId,
+          EventRestaurant: result.Restaurant,
+          EventMaximumBudget: result.MaximumBudget,
+          EventTimeToClose: result.Date,
+          EventTimeToReminder: result.TimeToRemind,
+          EventHost: result.HostName,
+          EventParticipants: result.Participants,
+          EventCategory: result.Category,
+          EventRestaurantId: result.RestaurantId,
+          EventServiceId: '1',
+          EventDeliveryId: '',
+          EventCreatedUserId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
+          EventHostId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
+          EventParticipantsJson: '',
+          EventDate: null
+        };
 
-        this.restaurantService.getRestaurants([Number(this.eventDetail.eventRestaurantId)]).then(result => {
+
+        this.restaurantService.getRestaurants([Number(this.eventDetail.EventRestaurantId)]).then(result => {
           console.log(result[0])
           this.restaurant = result[0];
           this.restaurant.address = result[0].Address;

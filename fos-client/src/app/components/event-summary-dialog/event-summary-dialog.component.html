@@ -8,20 +8,24 @@
       <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
         <mat-grid-tile>
           <mat-card class="card">
-            <mat-card-header>
+            <!-- <mat-card-header>
               <mat-card-title>Event</mat-card-title>
-              <mat-card-subtitle></mat-card-subtitle>
-            </mat-card-header>
+            </mat-card-header> -->
             <mat-card-content>
+
               <mat-grid-list cols="2" rowHeight="40px">
+                  <div class="grid-tile-row">
+                    <mat-grid-tile><div class="label-inside-grid">Event</div></mat-grid-tile>
+                    <mat-grid-tile></mat-grid-tile>
+                  </div>
                 <div class="grid-tile-row">
                   <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                  <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.eventTitle }}</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventTitle }}</div></mat-grid-tile>
                 </div>
                 <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.eventHost }}</div></mat-grid-tile>
+                <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventHost }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.eventTimeToClose) }}</div></mat-grid-tile>
+                <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.EventTimeToClose) }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
               </mat-grid-list>
@@ -30,14 +34,18 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-card class="card">
-            <mat-card-header>
+            <!-- <mat-card-header>
               <mat-card-title>Restaurant</mat-card-title>
               <mat-card-subtitle></mat-card-subtitle>
-            </mat-card-header>
+            </mat-card-header> -->
             <mat-card-content>
               <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
+                <div class="grid-tile-row">
+                  <mat-grid-tile><div class="label-inside-grid">Restaurant</div></mat-grid-tile>
+                  <mat-grid-tile></mat-grid-tile>
+                </div>
                 <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.eventRestaurant }}</div></mat-grid-tile>
+                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.EventRestaurant }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
                 <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Restaurant Url</div></mat-grid-tile>
@@ -133,54 +141,62 @@
       <mat-card-title>Summary Event</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
-        <mat-grid-tile>
-          <mat-card class="card">
-            <mat-card-header>
-              <mat-card-title>Event</mat-card-title>
-              <mat-card-subtitle></mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <mat-grid-list cols="2" rowHeight="40px">
-                <div class="grid-tile-row">
-                  <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                  <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.eventTitle }}</div></mat-grid-tile>
-                </div>
-                <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.eventHost }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.eventTimeToClose) }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
-              </mat-grid-list>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-card class="card">
-            <mat-card-header>
-              <mat-card-title>Restaurant</mat-card-title>
-              <mat-card-subtitle></mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
-                <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.eventRestaurant }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
-                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Rating</div></mat-grid-tile>
-                <mat-grid-tile *ngIf="restaurant.isLoaded">
-                  <div class="text-inside-grid"><ngx-stars
-                    [readonly]="true"
-                    [maxStars]="5"
-                    [initialStars]="restaurant.Rating"
-                  ></ngx-stars></div>
-                </mat-grid-tile>
-              </mat-grid-list>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-      </mat-grid-list>
+        <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
+            <mat-grid-tile>
+              <mat-card class="card">
+                <!-- <mat-card-header>
+                  <mat-card-title>Event</mat-card-title>
+                </mat-card-header> -->
+                <mat-card-content>
+    
+                  <mat-grid-list cols="2" rowHeight="40px">
+                      <div class="grid-tile-row">
+                        <mat-grid-tile><div class="label-inside-grid">Event</div></mat-grid-tile>
+                        <mat-grid-tile></mat-grid-tile>
+                      </div>
+                    <div class="grid-tile-row">
+                      <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventTitle }}</div></mat-grid-tile>
+                    </div>
+                    <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventHost }}</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.EventTimeToClose) }}</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
+                  </mat-grid-list>
+                </mat-card-content>
+              </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-card class="card">
+                <!-- <mat-card-header>
+                  <mat-card-title>Restaurant</mat-card-title>
+                  <mat-card-subtitle></mat-card-subtitle>
+                </mat-card-header> -->
+                <mat-card-content>
+                  <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
+                    <div class="grid-tile-row">
+                      <mat-grid-tile><div class="label-inside-grid">Restaurant</div></mat-grid-tile>
+                      <mat-grid-tile></mat-grid-tile>
+                    </div>
+                    <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
+                    <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.EventRestaurant }}</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
+                    <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">Rating</div></mat-grid-tile>
+                    <mat-grid-tile *ngIf="restaurant.isLoaded">
+                      <div class="text-inside-grid"><ngx-stars
+                        [readonly]="true"
+                        [maxStars]="5"
+                        [initialStars]="restaurant.Rating"
+                      ></ngx-stars></div>
+                    </mat-grid-tile>
+                  </mat-grid-list>
+                </mat-card-content>
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
           <table mat-table [dataSource]="dishGroupViewdataSource">
             <ng-container matColumnDef="picture">
               <th mat-header-cell *matHeaderCellDef> Picture</th>
