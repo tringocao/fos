@@ -17,6 +17,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using FOS.Common.Constants;
+using System.Web.Script.Serialization;
 
 namespace FOS.Services.SendEmailServices
 {
@@ -91,7 +93,39 @@ namespace FOS.Services.SendEmailServices
 
             }
         }
+        public async Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
+        {
+            var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
+            var templateBody = jsonTemplate.TryGetValue("Body", out object body);
+            ReadEmailTemplate(body.ToString());
+            var templateSubject = jsonTemplate.TryGetValue("Subject", out object subject);
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                var emailp = new EmailProperties();
+                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                var host = await _sPUserService.GetCurrentUser();
 
+                foreach (var user in users)
+                {
+                    emailp.To = new List<string>() { user.UserMail };
+                    emailp.From = host.Mail;
+                    emailp.BCC = new List<string> { host.Mail };
+                    emailp.Body = String.Format(emailTemplate.Html.ToString(),
+                        user.EventTitle,
+                        user.EventRestaurant,
+                        user.UserMail.ToString(),
+                        hostname + "make-order/" + user.OrderId);
+                    emailp.Subject = subject.ToString();
+
+                    Utility.SendEmail(clientContext, emailp);
+                    clientContext.ExecuteQuery();
+                }
+            }
+        }
+        private Dictionary<string, object> ReadEmailJsonTemplate(string json)
+        {
+            return JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+        }
         public void ReadEmailTemplate(string html)
         {
             emailTemplate = JsonConvert.DeserializeObject<EmailTemplate>(html);

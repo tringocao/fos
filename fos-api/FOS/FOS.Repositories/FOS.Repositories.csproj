@@ -71,6 +71,10 @@
     <Compile Include="Migrations\201909120412312_neww3.Designer.cs">
       <DependentUpon>201909120412312_neww3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909110955429_CheckIsOrder.cs" />
+    <Compile Include="Migrations\201909110955429_CheckIsOrder.Designer.cs">
+      <DependentUpon>201909110955429_CheckIsOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +110,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909120412312_neww3.resx">
       <DependentUpon>201909120412312_neww3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909110955429_CheckIsOrder.resx">
+      <DependentUpon>201909110955429_CheckIsOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

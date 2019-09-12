@@ -15,6 +15,7 @@ namespace FOS.Repositories.DataModel
         public string IdEvent { get; set; }
         public int IdRestaurant { get; set; }
         public int IdDelivery { get; set; }
+        public bool IsOrdered { get; set; }
         public string FoodDetail { get; set; }
     }
 }

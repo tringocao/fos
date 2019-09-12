@@ -25,14 +25,14 @@ moment.locale('vi');
 })
 export class ListOrderComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [
-    'name',
-    'restaurant',
-    'category',
-    'participants',
-    'closeTime',
-    'maximumBudget',
-    'status',
-    'host'
+    'Name',
+    'Restaurant',
+    'Category',
+    'Participants',
+    'CloseTime',
+    'MaximumBudget',
+    'Status',
+    'HostName'
   ];
   dataSource: MatTableDataSource<Event>;
   isLoading = true;
@@ -77,20 +77,20 @@ export class ListOrderComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.categoryList = [];
     if (!this.isMyOrder) {
-      if (!this.displayedColumns.includes('host')) {
+      if (!this.displayedColumns.includes('HostName')) {
         this.displayedColumns.pop();
-        this.displayedColumns.push('host');
-        this.displayedColumns.push('status');
+        this.displayedColumns.push('HostName');
+        this.displayedColumns.push('Status');
       }
       this.setDataSource(this.allOrder);
       this.allOrderCategories.forEach(item => {
         this.categoryList.push(item);
       });
     } else {
-      if (this.displayedColumns.includes('host')) {
+      if (this.displayedColumns.includes('HostName')) {
         this.displayedColumns.pop();
         this.displayedColumns.pop();
-        this.displayedColumns.push('status');
+        this.displayedColumns.push('Status');
       }
       this.setDataSource(this.myOrder);
       this.myOrderCategories.forEach(item => {
@@ -243,54 +243,15 @@ export class ListOrderComponent implements OnInit, OnChanges {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
 
-  showEvent(row: any) {
-    // console.log(row);
-    this.mapRowToEventList(row);
-
-    const dialogRef = this.dialog.open(EventDialogViewComponent, {
-      maxHeight: '98vh',
-      width: '80%',
-      data: this.eventListItem
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  mapRowToEventList(row: any) {
-    this.eventListItem = {
-      EventTitle: row.name,
-      EventId: row.eventId,
-      EventRestaurant: row.restaurant,
-      EventMaximumBudget: row.maximumBudget,
-      EventTimeToClose: row.closeTime.toString(),
-      EventTimeToReminder: row.remindTime.toString(),
-      EventHost: row.hostName,
-      EventParticipants: row.participants,
-      EventCategory: row.category,
-      EventRestaurantId: row.restaurantId,
-      EventServiceId: '1',
-      EventDeliveryId: '',
-      EventCreatedUserId: this.userId,
-      EventHostId: row.hostId,
-      EventDate: row.closeTime.toString(),
-      EventParticipantsJson: '',
-    };
-  }
-
-  remind(event: any, element: Event) {
-    console.log('type of: ', event);
-    event.stopPropagation();
-  }
-
   getNumberOfParticipant(participants: string) {
     return participants.split(';#').length;
   }
 
   formatCurrency(value: string) {
-    return Number(value)
-      .toFixed(0)
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return (
+      Number(value)
+        .toFixed(0)
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' '
+    );
   }
 }

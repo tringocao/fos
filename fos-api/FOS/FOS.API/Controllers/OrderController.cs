@@ -60,6 +60,21 @@ namespace FOS.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetUserNotOrdered")]
+        public ApiResponse<IEnumerable<Model.Dto.UserNotOrder>> GetUserNotOrdered(string eventId)
+        {
+            try
+            {
+                var result = _orderService.GetUserNotOrdered(eventId);
+                return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateSuccessfulResult(result);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateFailResult(e.ToString());
+            }
+        }
+
         [HttpPost]
         [Route("UpdateOrder")]
         public ApiResponse UpdateOrder([FromBody]Model.Dto.Order order)
