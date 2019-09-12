@@ -8,7 +8,6 @@ import { UserService } from './../../services/user/user.service';
 import * as moment from 'moment';
 import 'moment/locale/vi';
 import { MatDialog } from '@angular/material/dialog';
-import { EventList } from 'src/app/models/eventList';
 import { Event } from './../../models/event';
 import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
 import { Router } from '@angular/router';
@@ -48,7 +47,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
   searchQuery = '';
   categorySelected = null;
 
-  eventListItem: EventList;
+  eventListItem: Event;
 
   @Input() isMyOrder: any;
 
@@ -241,43 +240,6 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   toStandardDate(date: number) {
     return moment(date).format('DD/MM/YYYY HH:mm');
-  }
-
-  showEvent(row: any) {
-    // console.log(row);
-    this.mapRowToEventList(row);
-
-    const dialogRef = this.dialog.open(EventDialogViewComponent, {
-      maxHeight: '98vh',
-      width: '80%',
-      data: this.eventListItem
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  mapRowToEventList(row: any) {
-    this.eventListItem = {
-      EventTitle: row.name,
-      EventId: row.eventId,
-      EventRestaurant: row.restaurant,
-      EventMaximumBudget: row.maximumBudget,
-      EventTimeToClose: row.closeTime.toString(),
-      EventTimeToReminder: row.remindTime.toString(),
-      EventHost: row.hostName,
-      EventParticipants: row.participants,
-      EventCategory: row.category,
-      EventRestaurantId: row.restaurantId,
-      EventServiceId: '1',
-      EventDeliveryId: '',
-      EventCreatedUserId: this.userId,
-      EventHostId: row.hostId,
-      EventDate: row.closeTime.toString(),
-      EventParticipantsJson: '',
-      EventType: '',
-    };
   }
 
   remind(event: any, element: Event) {

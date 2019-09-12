@@ -6,7 +6,6 @@ import {
   ElementRef
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EventList } from 'src/app/models/eventList';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
@@ -18,10 +17,12 @@ import html2canvas from 'html2canvas';
 import * as moment from 'moment';
 import 'moment/locale/vi';
 import { SummaryService } from 'src/app/services/summary/summary.service';
+import { Event } from "src/app/models/event";
 
 import { environment } from 'src/environments/environment';
 import { Report } from 'src/app/models/report';
 import { async } from 'q';
+import { EventFormService } from 'src/app/services/event-form/event-form.service';
 
 const database: any[] = [
   {
@@ -68,7 +69,8 @@ export class EventSummaryDialogComponent implements OnInit {
     private router: Router,
     private restaurantService: RestaurantService,
     private summaryService: SummaryService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private eventFormService:EventFormService
   ) {
     console.log(router.routerState);
   }
@@ -95,7 +97,7 @@ export class EventSummaryDialogComponent implements OnInit {
 
   restaurant: any;
 
-  eventDetail: EventList;
+  eventDetail: Event;
 
   orderByDish: any[] = [
     {
@@ -142,88 +144,6 @@ export class EventSummaryDialogComponent implements OnInit {
       payExtra: 5000,
       comment: 'không hành'
     },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },{
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },{
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    }
   ];
 
   dishGroupView() {
@@ -276,87 +196,20 @@ export class EventSummaryDialogComponent implements OnInit {
       // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
       console.log('html2canvas');
     });
-    // .then(async() => {
-    //   let pdfOutput = await doc.output();
-    //   console.log('output')
-    //   var report = new Report();
-    //   report.Subject = "Report for " + this.eventDetail.eventTitle;
-    //   report.Html = html;
-    //   report.Attachment = pdfOutput;
-    //   if (report.Html && report.Subject && report.Attachment) {
-    //     console.log(report)
-    //     // await this.summaryService.sendEmail(report);
-    //     // this.summaryService.downloadReport();
-
-    //     this.summaryService.addReport(this.eventDetail.eventId, pdfOutput)
-    //   }
-    // });
   }
-
-  // pageToImage() {
-  //   window['html2canvas'] = html2canvas;
-
-  //   console.log(this.userGroupTab)
-
-  //   const page = document.getElementById('report');
-  //   // const userGroupTab = document.get('personGroupView');
-  //   const options = {background: "white", height: page.clientHeight, width: page.clientWidth, letterRendering: 1};
-  //   // const options2 = {background: "white", height: this.userGroupTab.nativeElement.clientHeight, width: this.userGroupTab.nativeElement.clientWidth};
-
-  //   html2canvas(page, options).then(pageSource => {
-  //     // html2canvas(userGroupTab, options2).then((userTabSource) => {
-  //       //Initialize JSPDF
-  //       let doc = new jsPDF();
-  //       //Converting canvas to Image
-  //       var pageData = pageSource.toDataURL("image/PNG");
-  //       // let userGroupData = userTabSource.toDataURL("image/PNG")
-  //       // Add image Canvas to PDF%
-  //       doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
-  //       // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
-
-  //       let pdfOutput = doc.output();
-  //       let buffer = new ArrayBuffer(pdfOutput.length);
-  //       let array = new Uint8Array(buffer);
-  //       for (let i = 0; i < pdfOutput.length; i++) {
-  //           array[i] = pdfOutput.charCodeAt(i);
-  //       }
-  //       const fileName = "report.pdf";
-  //       // doc.save(fileName);
-  //     });
-  //   // })
-  // }
 
   ngOnInit() {
     this.restaurant = { }
-    this.eventDetail = new EventList();
     this.restaurant.isLoaded = false;
     this.printMode = false;
 
     this.route.params.subscribe(params => {
       var id = params['id'];
-      this.summaryService.getEventById(id).then(result => {
-        this.eventDetail = {
-          EventTitle: result.Name,
-          EventId: result.EventId,
-          EventRestaurant: result.Restaurant,
-          EventMaximumBudget: result.MaximumBudget,
-          EventTimeToClose: result.Date,
-          EventTimeToReminder: result.TimeToRemind,
-          EventHost: result.HostName,
-          EventParticipants: result.Participants,
-          EventCategory: result.Category,
-          EventRestaurantId: result.RestaurantId,
-          EventServiceId: '1',
-          EventDeliveryId: '',
-          EventCreatedUserId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
-          EventHostId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
-          EventParticipantsJson: '',
-          EventDate: null,
-          EventType: null
-        };
-
-
-        this.restaurantService.getRestaurants([Number(this.eventDetail.EventRestaurantId)]).then(result => {
+      this.eventFormService
+      .GetEventById(id).then((result:Event) => {
+        console.log(result)
+        this.eventDetail = result;
+        this.restaurantService.getRestaurants([Number(this.eventDetail.RestaurantId)]).then(result => {
           console.log(result[0])
           this.restaurant = result[0];
           this.restaurant.address = result[0].Address;

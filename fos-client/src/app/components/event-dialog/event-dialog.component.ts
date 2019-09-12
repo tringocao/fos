@@ -24,13 +24,13 @@ import { EventUser } from '../../models/eventuser';
 import { EventFormService } from '../../services/event-form/event-form.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { EventList } from 'src/app/models/eventList';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { parseSelectorToR3Selector } from '@angular/compiler/src/core';
 import { User } from 'src/app/models/user';
 import { DeliveryInfos } from 'src/app/models/delivery-infos';
 import { GraphUser } from 'src/app/models/graph-user';
+import { Event } from "src/app/models/event";
 import * as moment from 'moment';
 
 interface Restaurant {
@@ -486,24 +486,27 @@ export class EventDialogComponent implements OnInit {
     var myJSON = JSON.stringify(jsonParticipants);
     console.log("final", myJSON);
 
-    var eventListitem: EventList = {
-      EventTitle: title,
+    var eventListitem: Event = {
+      Name: title,
       EventId: title,
-      EventRestaurant: restaurant,
-      EventMaximumBudget: maximumBudget,
-      EventTimeToClose: dateTimeToClose,
-      EventTimeToReminder: dateToReminder,
-      EventHost: host,
-      EventParticipants: numberParticipant,
-      EventCategory: category,
-      EventRestaurantId: restaurantId,
-      EventServiceId: "1",
-      EventDeliveryId: deliveryId,
-      EventCreatedUserId: this._createdUser.id,
-      EventHostId: hostId,
-      EventDate: eventDate,
+      Restaurant: restaurant,
+      MaximumBudget: maximumBudget.toString(),
+      CloseTime: new Date(dateTimeToClose),
+      RemindTime: new Date(dateToReminder),
+      HostName: host,
+      Participants: numberParticipant.toString(),
+      Category: category,
+      RestaurantId: restaurantId,
+      ServiceId: '1',
+      DeliveryId: deliveryId,
+      CreatedBy: this._createdUser.id,
+      HostId: hostId,
+      EventDate: new Date(eventDate),
       EventParticipantsJson: myJSON,
       EventType: eventType,
+      Action: null,
+      IsMyEvent: null,
+      Status: null
     };
 
     this.eventFormService

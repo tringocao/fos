@@ -29,7 +29,7 @@ import { DeliveryInfos } from 'src/app/models/delivery-infos';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { GraphUser } from 'src/app/models/graph-user';
-import { EventList } from 'src/app/models/eventList';
+
 @Component({
   selector: 'app-event-dialog-edit',
   templateUrl: './event-dialog-edit.component.html',
@@ -382,24 +382,27 @@ export class EventDialogEditComponent implements OnInit {
     var myJSON = JSON.stringify(jsonParticipants);
     console.log('final',myJSON);
 
-    var eventListitem: EventList = {
-      EventTitle: title,
+    var eventListitem: Event = {
+      Name: title,
       EventId: title,
-      EventRestaurant: restaurant,
-      EventMaximumBudget: maximumBudget,
-      EventTimeToClose: dateTimeToClose,
-      EventTimeToReminder: dateToReminder,
-      EventHost: host,
-      EventParticipants: numberParticipant,
-      EventCategory: category,
-      EventRestaurantId: restaurantId,
-      EventServiceId: '1',
-      EventDeliveryId: deliveryId,
-      EventCreatedUserId: this._createdUser.id,
-      EventHostId: hostId,
-      EventDate: eventDate,
+      Restaurant: restaurant,
+      MaximumBudget: maximumBudget.toString(),
+      CloseTime: new Date(dateTimeToClose),
+      RemindTime: new Date(dateToReminder),
+      HostName: host,
+      Participants: numberParticipant.toString(),
+      Category: category,
+      RestaurantId: restaurantId,
+      ServiceId: '1',
+      DeliveryId: deliveryId,
+      CreatedBy: this._createdUser.id,
+      HostId: hostId,
+      EventDate: new Date(eventDate),
       EventParticipantsJson: myJSON,
-      EventType: eventType
+      EventType: eventType,
+      Action: null,
+      IsMyEvent: null,
+      Status: null
     };
     
     

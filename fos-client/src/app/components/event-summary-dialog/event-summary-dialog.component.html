@@ -20,12 +20,12 @@
                   </div>
                 <div class="grid-tile-row">
                   <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                  <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventTitle }}</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.Name }}</div></mat-grid-tile>
                 </div>
                 <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventHost }}</div></mat-grid-tile>
+                <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.HostName }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.EventTimeToClose) }}</div></mat-grid-tile>
+                <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.CloseTime) }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
               </mat-grid-list>
@@ -45,7 +45,7 @@
                   <mat-grid-tile></mat-grid-tile>
                 </div>
                 <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.EventRestaurant }}</div></mat-grid-tile>
+                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.Restaurant }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
                 <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
                 <mat-grid-tile><div class="text-inside-grid">Restaurant Url</div></mat-grid-tile>
@@ -156,12 +156,12 @@
                       </div>
                     <div class="grid-tile-row">
                       <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                      <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventTitle }}</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.Name }}</div></mat-grid-tile>
                     </div>
                     <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.EventHost }}</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">{{ eventDetail.HostName }}</div></mat-grid-tile>
                     <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.EventTimeToClose) }}</div></mat-grid-tile>
+                    <mat-grid-tile><div class="text-inside-grid">{{ toStandardDate(eventDetail.CloseTime) }}</div></mat-grid-tile>
                     <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
                     <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
                   </mat-grid-list>
@@ -181,7 +181,7 @@
                       <mat-grid-tile></mat-grid-tile>
                     </div>
                     <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                    <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.EventRestaurant }}</div></mat-grid-tile>
+                    <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.Restaurant }}</div></mat-grid-tile>
                     <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
                     <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
                     <mat-grid-tile><div class="text-inside-grid">Rating</div></mat-grid-tile>

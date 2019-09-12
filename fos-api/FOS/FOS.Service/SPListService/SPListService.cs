@@ -145,5 +145,26 @@ namespace FOS.Services.SPListService
             }
             
         }
+
+        public async Task UpdateEventParticipant(string id, string participants)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(id);
+                    listItem["EventParticipantsJson"] = participants;
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
+        }
     }
 }

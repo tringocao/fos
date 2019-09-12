@@ -27,5 +27,6 @@ namespace FOS.Model.Dto
         public DateTime? EventDate { get; set; }
         public string EventParticipantsJson { get; set; }
         public EventAction Action { get; set; }
+        public string ServiceId { get; set; }
     }
 }
