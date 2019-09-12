@@ -27,5 +27,6 @@ namespace FOS.Model.Domain
         public string EventHostId { get; set; }
         public string EventParticipantsJson { get; set; }
         public DateTime EventDate { get; set; }
+        public string EventType { get; set; }
     }
 }

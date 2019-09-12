@@ -306,6 +306,10 @@ export class EventDialogEditComponent implements OnInit {
     console.log('get deliveryId: ');
     console.log(deliveryId);
 
+    var eventType = this.ownerForm.get('userInput').value.EventType;
+    console.log('get eventType: ');
+    console.log(eventType);
+
     var serciveId = 1;
     console.log('get serciveId: ');
     console.log(serciveId);
@@ -394,7 +398,8 @@ export class EventDialogEditComponent implements OnInit {
       EventCreatedUserId: this._createdUser.id,
       EventHostId: hostId,
       EventDate: eventDate,
-      EventParticipantsJson: myJSON
+      EventParticipantsJson: myJSON,
+      EventType: eventType
     };
     
     

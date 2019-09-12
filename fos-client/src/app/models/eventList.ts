@@ -14,5 +14,6 @@ export class EventList {
   EventCreatedUserId: string;
   EventHostId: string;
   EventParticipantsJson: string;
-  EventDate: string
+  EventDate: string;
+  EventType: string;
 }

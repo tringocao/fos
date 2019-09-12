@@ -88,6 +88,7 @@ export class EventDialogComponent implements OnInit {
   _dateEventTime: string;
   _dateTimeToClose: string;
   _dateToReminder: string;
+  _eventType:string;
   _maximumBudget: number;
   _userSelect = [];
   _userPickerGroups: userPickerGroup[] = [];
@@ -158,6 +159,7 @@ export class EventDialogComponent implements OnInit {
     this._dateTimeToClose = this.ToDateString(new Date());
     this._dateToReminder = this.ToDateString(new Date());
     this._maximumBudget = 0;
+    this._eventType = 'Open';
 
     // -----
     this.ownerForm = new FormGroup({
@@ -403,6 +405,10 @@ export class EventDialogComponent implements OnInit {
     console.log('get deliveryId: ');
     console.log(deliveryId);
 
+    var eventType = this._eventType;
+    console.log('get eventType: ');
+    console.log(eventType);
+
     var serciveId = 1;
     console.log('get serciveId: ');
     console.log(serciveId);
@@ -496,7 +502,8 @@ export class EventDialogComponent implements OnInit {
       EventCreatedUserId: this._createdUser.id,
       EventHostId: hostId,
       EventDate: eventDate,
-      EventParticipantsJson: myJSON
+      EventParticipantsJson: myJSON,
+      EventType: eventType,
     };
 
     this.eventFormService

@@ -351,7 +351,8 @@ export class EventSummaryDialogComponent implements OnInit {
           EventCreatedUserId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
           EventHostId: '4cf3230b-6dd5-4942-a0cd-bcb8db6dc8eb',
           EventParticipantsJson: '',
-          EventDate: null
+          EventDate: null,
+          EventType: null
         };
 
 

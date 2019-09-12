@@ -276,6 +276,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
       EventHostId: row.hostId,
       EventDate: row.closeTime.toString(),
       EventParticipantsJson: '',
+      EventType: '',
     };
   }
 

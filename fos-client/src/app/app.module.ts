@@ -34,7 +34,8 @@ import {
   MatSidenavModule,
   MatListModule,
   MatInputModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatRadioModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
@@ -158,7 +159,8 @@ import { EventDialogEditComponent } from './components/event-dialog-edit/event-d
     FormsModule,
     MatInputModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatRadioModule
   ],
   providers: [
     OrderService,

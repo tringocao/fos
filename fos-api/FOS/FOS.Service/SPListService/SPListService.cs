@@ -76,7 +76,7 @@ namespace FOS.Services.SPListService
                     listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
                     listItem["EventDate"] = eventData.EventDate;
                     listItem["EventStatus"] = "Opened";
-                    listItem["EventTypes"] = "Open";
+                    listItem["EventTypes"] = eventData.EventType;
                     listItem.Update();
                     context.ExecuteQuery();
 

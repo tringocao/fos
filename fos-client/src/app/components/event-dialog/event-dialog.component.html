@@ -12,18 +12,32 @@
       <div class="tp-container">
 
         <mat-form-field>
-          <input matInput type="text" placeholder="EventTitleeeeee" formControlName="title" id="title">
+          <input matInput type="text" placeholder="EventTitle" formControlName="title" id="title">
           <mat-hint align="end">Event title is required.</mat-hint>
           <mat-error *ngIf="HasError('title', 'required')">Event title is required.</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <!-- <mat-form-field floatPlaceholder="always" class="mat-form-field--no-underline"> -->
           <mat-label>Event type</mat-label>
-          <mat-select  formControlName="EventType">
+          <!-- <input matInput style="display: none" > -->
+          <mat-radio-group
+            aria-labelledby="Event Type"
+            class="radio-group"
+            formControlName="EventType"
+            [(ngModel)]="_eventType"
+            >
+            <mat-radio-button class="radio-button" value="Open">
+              Free For All
+            </mat-radio-button>
+            <mat-radio-button class="radio-button" value="Close">
+              Invited Only
+            </mat-radio-button>
+          </mat-radio-group>
+          <!-- <mat-select  formControlName="EventType">
             <mat-option value="Open">Open</mat-option>
             <mat-option value="Close">Close</mat-option>
-          </mat-select>
-        </mat-form-field>
+          </mat-select> -->
+        <!-- </mat-form-field> -->
 
         <mat-form-field class="full-width">
           <input matInput placeholder="Host" [matAutocomplete]="auto" formControlName='userInputHost'>
