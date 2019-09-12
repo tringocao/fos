@@ -83,7 +83,8 @@ namespace FOS.API.Controllers
                 return ApiUtil<IEnumerable<Event>>.CreateFailResult(e.ToString());
             }
         }
-
+        [HttpGet]
+        [Route("GetEventById")]
         public ApiResponse<Event> GetEvent(int id)
         {
             try
