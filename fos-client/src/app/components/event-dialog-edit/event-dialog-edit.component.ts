@@ -315,7 +315,7 @@ export class EventDialogEditComponent implements OnInit {
     console.log(hostId);
 
     console.log('get createUserId: ');
-    console.log(this._createdUser.id);
+    console.log(this.data.CreatedBy);
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
 
@@ -423,7 +423,7 @@ export class EventDialogEditComponent implements OnInit {
         EventRestaurantId: restaurantId,
         EventServiceId: '1',
         EventDeliveryId: deliveryId,
-        EventCreatedUserId: self._createdUser.id,
+        EventCreatedUserId: self.data.CreatedBy,
         EventHostId: hostId,
         EventDate: eventDate,
         EventParticipantsJson: myJSON
