@@ -18,7 +18,7 @@ namespace FOS.Model.Mapping
         public Dto.Order ToDto(Model.Domain.Order order)
         {
             List<FoodDetailJson> temp;
-            if(order.FoodDetail == null)
+            if (order.FoodDetail == null)
             {
                 temp = new List<FoodDetailJson>();
             }
@@ -33,7 +33,8 @@ namespace FOS.Model.Mapping
                 IdRestaurant = order.IdRestaurant,
                 IdUser = order.IdUser,
                 OrderDate = order.OrderDate,
-                FoodDetail = temp
+                FoodDetail = temp,
+                IdEvent = order.IdEvent
             };
         }
 
@@ -51,7 +52,9 @@ namespace FOS.Model.Mapping
                 IdRestaurant = order.IdRestaurant,
                 IdUser = order.IdUser,
                 OrderDate = order.OrderDate,
-                FoodDetail = foodDetail
+                FoodDetail = foodDetail,
+                IdEvent = order.IdEvent
+
             };
         }
     }

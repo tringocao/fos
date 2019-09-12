@@ -8,6 +8,7 @@ import {
   FLOAT,
   float
 } from "html2canvas/dist/types/css/property-descriptors/float";
+import { Event } from "src/app/models/event";
 
 @Component({
   selector: "app-list-ordered-foods",
@@ -16,14 +17,16 @@ import {
 })
 export class ListOrderedFoodsComponent implements OnInit {
   @Input() user: User;
+  @Input() event: Event;
   @Input() order: Order;
+  @Input("isOrder") isOrder: boolean;
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   foodOrdered: Food;
-  displayedColumns2: string[] = ["name", "price", "amount", "total"];
+  displayedColumns2: string[] = ["name", "price", "amount", "total", "comment"];
   dataSource2: MatTableDataSource<FoodDetailJson>;
   public FoodOfAmount: any = {};
-
   constructor() {}
   load = true;
   @Input() totalBudget: Number;
@@ -42,7 +45,8 @@ export class ListOrderedFoodsComponent implements OnInit {
         ["Name"]: food.Name,
         ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
-        ["Total"]: food.Price.toString()
+        ["Total"]: food.Price.toString(),
+        ["Comment"]: "Noté"
       }
     };
   }
@@ -56,16 +60,18 @@ export class ListOrderedFoodsComponent implements OnInit {
     this.dataSource2.filter = "";
   }
   numberWithCommas(x: Number) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
+    if (x != undefined) {
+      var parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    }
   }
   getTotalCost() {
     return this.dataSource2.data
       .map(t => Number(t.Value["Total"]))
       .reduce((acc, value) => acc + value, 0);
   }
-  onBlurMethod(amount: number, food: FoodDetailJson) {
+  onBlurMethodAmount(amount: number, food: FoodDetailJson) {
     var getItem = this.dataSource2.data.findIndex(x => x.IdFood == food.IdFood);
     var f = this.dataSource2.data[getItem];
     f.Value["Amount"] = amount.toString();
@@ -73,6 +79,11 @@ export class ListOrderedFoodsComponent implements OnInit {
       Number(f.Value["Amount"]) * Number(f.Value["Price"])
     ).toString();
     this.dataSource2.data[getItem] = f;
+    this.dataSource2.filter = "";
+  }
+  onBlurMethodComment(text: string, food: FoodDetailJson) {
+    var getItem = this.dataSource2.data.findIndex(x => x.IdFood == food.IdFood);
+    this.dataSource2.data[getItem].Value["Comment"] = text;
     this.dataSource2.filter = "";
   }
   getAllFoodDetail(): FoodDetailJson[] {

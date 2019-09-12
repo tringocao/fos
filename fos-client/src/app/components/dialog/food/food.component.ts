@@ -13,6 +13,7 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Food } from "src/app/models/food";
 import { SelectionModel } from "@angular/cdk/collections";
+import { FoodDetailJson } from "src/app/models/food-detail-json";
 
 interface RestaurantMore {
   restaurant: DeliveryInfos;
@@ -36,6 +37,8 @@ export class FoodComponent implements OnInit {
   @Input("data") data: RestaurantMore;
   @Input("isOrder") isOrder: boolean;
   @Output() valueChange = new EventEmitter<FoodCheck>();
+  @Input("checkedData") checkedData: FoodDetailJson[];
+
   docsOnThisPage: any[] = [];
   from: number;
   pageSize: number;
@@ -85,29 +88,6 @@ export class FoodComponent implements OnInit {
     if (found) found.IsChecked = false;
     this.selection.deselect(found);
   }
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  // masterToggle(ref) {
-  //   //if (this.isSomeSelected()) {
-  //   // console.log(
-  //   //   this.selection.selected ? this.selection.selected : "-----d",
-  //   //   this.count++
-  //   // );
-  //   //this.selection.clear();
-  //   //ref.checked = false;
-  //   //} else {
-  //   this.isAllSelected()
-  //     ? this.selection.clear()
-  //     : this.dataSource2.data.forEach(row => this.selection.select(row));
-  //   //}
-  // }
-  // dsth() {}
-  // /** The label for the checkbox on the passed row */
-
-  // checkboxLabel(row: Food, index: number): string {
-  //   return `${
-  //     this.selection.isSelected(row) ? "deselect" : "select"
-  //   } row ${index + 2}`;
-  // }
   ngOnInit() {
     if (this.isOrder) {
       this.displayedColumns2 = [
@@ -146,7 +126,17 @@ export class FoodComponent implements OnInit {
 
     dataSourceTemp.forEach(f => {
       if (f.Dishes != null) {
-        f.Dishes.forEach(d => this.dataSource2.data.push(d));
+        f.Dishes.forEach(d => {
+          if (this.isOrder) {
+            this.checkedData.forEach(cd => {
+              if (d.Id == cd.IdFood) {
+                d.IsChecked = true;
+                this.selection.select(d);
+              }
+            });
+          }
+          this.dataSource2.data.push(d);
+        });
       }
     });
     this.dataSource2.sort = this.sort;
