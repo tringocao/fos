@@ -9,10 +9,10 @@
     #foodorderlist
     [user]="user"
     [order]="order"
-    [totalBudget] = "totalBudget"
+    [totalBudget]="totalBudget"
   ></app-list-ordered-foods>
-  <div class="example-button-row">
-    <button mat-raised-button (click)="Save()">Save Order</button>
-    <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
-  </div>
+</div>
+<div class="example-button-row">
+  <button mat-raised-button color="warn" (click)="Save()">Save Order</button>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
 </div>

@@ -66,6 +66,11 @@ export class FoodComponent implements OnInit {
       checked: checked
     });
   }
+  numberWithCommas2(x: Number) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
   checked(row: Food) {
     this.selection.select(row);
     var found = this.selection.selected.find(x => x.Id == row.Id);

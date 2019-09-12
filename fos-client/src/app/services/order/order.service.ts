@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Event } from './../../models/event';
-import { Order } from 'src/app/models/order';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { Event } from "./../../models/event";
+import { Order } from "src/app/models/order";
 // import { EnvironmentService } from "../shared/service/environment.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class OrderService {
   private baseUrl: string;
@@ -18,22 +18,18 @@ export class OrderService {
   }
 
   getAllEvent(userId: string) {
-    return this.http.get<any>(environment.apiUrl + 'api/splist/getallevent', {
+    return this.http.get<any>(environment.apiUrl + "api/splist/getallevent", {
       params: {
         userId
       }
     });
   }
-  SetOrder(order:Order): Promise<void>{
+  SetOrder(order: Order): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http
-        .get<ApiOperationResult<void>>(
+        .post<ApiOperationResult<void>>(
           environment.apiUrl + "api/Order/UpDateOrder",
-          {
-            params: {
-              order: JSON.stringify(order) 
-            }
-          }
+          order
         )
         .toPromise()
         .then(result => {

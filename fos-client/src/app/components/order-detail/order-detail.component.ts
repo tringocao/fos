@@ -52,7 +52,7 @@ export class OrderDetailComponent implements OnInit {
               this.data.detail = restaurantd;
               this.userService.getUserById(order.IdUser).then(user => {
                 this.user = user;
-                this.totalBudget = 350000;
+                this.totalBudget = 35000;
                 this.isDataAvailable = true;
               });
             });
@@ -70,7 +70,7 @@ export class OrderDetailComponent implements OnInit {
       this.foodorderlist.DeleteFoodDetail(food.food);
     }
   }
-  Save(){
+  Save() {
     this.order.FoodDetail = this.foodorderlist.getAllFoodDetail();
     this.orderService.SetOrder(this.order);
   }

@@ -62,12 +62,12 @@ namespace FOS.API.Controllers
 
         [HttpPost]
         [Route("UpdateOrder")]
-        public ApiResponse UpdateOrder([FromBody]Order order)
+        public ApiResponse UpdateOrder([FromBody]Model.Dto.Order order)
         {
             try
             {
                
-                Order order = _orderService.UpdateOrder(mapper.ToModel(order));
+                _orderService.UpdateOrder(_orderDtoMapper.ToModel(order));
                 return ApiUtil.CreateSuccessfulResult();
 
             }

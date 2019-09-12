@@ -4,7 +4,10 @@ import { Order } from "src/app/models/order";
 import { MatSort, MatPaginator, MatTableDataSource } from "@angular/material";
 import { Food } from "src/app/models/food";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
-import { FLOAT, float } from 'html2canvas/dist/types/css/property-descriptors/float';
+import {
+  FLOAT,
+  float
+} from "html2canvas/dist/types/css/property-descriptors/float";
 
 @Component({
   selector: "app-list-ordered-foods",
@@ -19,7 +22,7 @@ export class ListOrderedFoodsComponent implements OnInit {
   foodOrdered: Food;
   displayedColumns2: string[] = ["name", "price", "amount", "total"];
   dataSource2: MatTableDataSource<FoodDetailJson>;
-  public FoodOfAmount : any = {};
+  public FoodOfAmount: any = {};
 
   constructor() {}
   load = true;
@@ -37,9 +40,9 @@ export class ListOrderedFoodsComponent implements OnInit {
       IdFood: food.Id,
       Value: {
         ["Name"]: food.Name,
-        ["Price"]: food.Price,
+        ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
-        ["Total"]: food.Price
+        ["Total"]: food.Price.toString()
       }
     };
   }
@@ -52,18 +55,27 @@ export class ListOrderedFoodsComponent implements OnInit {
     this.dataSource2.data.splice(deleteItem, 1);
     this.dataSource2.filter = "";
   }
+  numberWithCommas(x: Number) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
   getTotalCost() {
-    return this.dataSource2.data.map(t => parseFloat(t.Value["Price"].replace("đ",""))).reduce((acc, value) => acc + value, 0);
+    return this.dataSource2.data
+      .map(t => Number(t.Value["Total"]))
+      .reduce((acc, value) => acc + value, 0);
   }
-  onBlurMethod(amount:number, food: Food){
-    this.dataSource2.data.forEach(f =>{
-      if(f.IdFood == food.Id){
-        f.Value["Amount"] = amount.toString();
-        f.Value["Total"] = (Number(f.Value["Amount"])*Number(f.Value["Price"])).toString()
-      }
-    })
+  onBlurMethod(amount: number, food: FoodDetailJson) {
+    var getItem = this.dataSource2.data.findIndex(x => x.IdFood == food.IdFood);
+    var f = this.dataSource2.data[getItem];
+    f.Value["Amount"] = amount.toString();
+    f.Value["Total"] = (
+      Number(f.Value["Amount"]) * Number(f.Value["Price"])
+    ).toString();
+    this.dataSource2.data[getItem] = f;
+    this.dataSource2.filter = "";
   }
-  getAllFoodDetail():FoodDetailJson[]{
+  getAllFoodDetail(): FoodDetailJson[] {
     return this.dataSource2.data;
   }
   // setTotalPrice(){
