@@ -161,7 +161,7 @@ import { EventDialogEditComponent } from './components/event-dialog-edit/event-d
     MatInputModule,
     MatSnackBarModule,
     MatTooltipModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
     MatRadioModule
   ],
   providers: [
