@@ -109,10 +109,9 @@ namespace FOS.Services.SPUserService
             }
         }
 
-        public async Task<byte[]> GetAvatarByUserId(string Id)
+        public async Task<byte[]> GetAvatar(string Id, string avatarName)
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "users/" + Id + "/photos/48x48/$value", null);
-           
 
             if (result.IsSuccessStatusCode)
             {
@@ -120,9 +119,60 @@ namespace FOS.Services.SPUserService
             }
             else
             {
-                throw new Exception(await result.Content.ReadAsStringAsync());
+                //throw new Exception(await result.Content.ReadAsStringAsync());
+                
+                String[] spearator = {" "};
+
+                String[] strlist = avatarName.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
+                string avatarUrl = "";
+                if (strlist.Length == 1)
+                {
+                    string firstName = strlist[0];
+                    avatarUrl = "https://ui-avatars.com/api/?name=" + firstName;
+                }
+                else
+                {
+                    string firstName = strlist[0];
+                    string lastName = strlist[1];
+
+                    string fullNameUrl = firstName + "+" + lastName;
+                    avatarUrl = "https://ui-avatars.com/api/?name=" + fullNameUrl;
+                }
+
+                var http = new HttpClient();
+                byte[] response = { };
+                await Task.Run(async () => response = await http.GetByteArrayAsync(avatarUrl));
+
+                return response;
+
+
+
+
+                //byte[] imageBytes = null;
+
+                
+                //var webClient = new System.Net.WebClient();
+                //imageBytes = webClient.DownloadData(someUrl);
+
+                //return imageBytes;
+
+
+
+
             }
         }
+
+        public async Task<byte[]> GetAvatarWithLetter()
+        {
+            byte[] imageBytes = null;
+
+            string someUrl = "https://ui-avatars.com/api/?name=John+Doe";
+            var webClient = new System.Net.WebClient();
+            imageBytes =  webClient.DownloadData(someUrl);
+
+            return imageBytes;
+        }
+
 
         public async Task<List<Model.Dto.User>> GetUsersByName(string searchName)
         {

@@ -107,22 +107,31 @@ namespace FOS.API.Controllers
             }
         }
         [HttpGet]
-        [Route("GetAvatarByUserId")]
-        public async Task<HttpResponseMessage> GetAvatarByUserId(string userId)
+        [Route("GetAvatar")]
+        public async Task<HttpResponseMessage> GetAvatar(string Id, string avatarName)
         {
             var result = new HttpResponseMessage();
             try
             {
-                var avatar = await _sPUserService.GetAvatarByUserId(userId);
+                var avatar = await _sPUserService.GetAvatar(Id, avatarName);
                 
                 result.Content = new ByteArrayContent(avatar);
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                result.Headers.CacheControl = new CacheControlHeaderValue { Public = true, MaxAge = TimeSpan.FromDays(1) };
+                //result.Headers.CacheControl = new CacheControlHeaderValue { Public = true, MaxAge = TimeSpan.FromDays(1) };
 
                 return result;
             }
             catch (Exception e)
             {
+
+
+
+                //var avatar = await _sPUserService.GetAvatarWithLetter();
+                //result.Content = new ByteArrayContent(avatar);
+                //result.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                //return result;
+
+
                 result.StatusCode = HttpStatusCode.NotFound;
                 return result;
             }
