@@ -1,5 +1,6 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
+using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services;
@@ -36,7 +37,7 @@ namespace FOS.API.Controllers
             try
             {
                 Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
+                Model.Domain.Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
                     _orderDtoMapper.ToDto(_orderService.GetOrder(id))
                );
@@ -72,7 +73,7 @@ namespace FOS.API.Controllers
             try
             {
                 Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
+                Model.Domain.Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
                     _orderDtoMapper.ToDto(_orderService.GetOrder(id))
                );
@@ -106,8 +107,16 @@ namespace FOS.API.Controllers
             {
                 Guid idOrder = Guid.NewGuid();
                 order.Id = idOrder.ToString();
+
+                Model.Dto.User user;
+
                 _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
-                //_sPListService.UpdateEventParticipant()
+                //GraphUser user = new GraphUser()
+                //{
+                //    id = order.IdUser,
+                //    displayName =
+                //}
+                //_sPListService.UpdateEventParticipant();
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
