@@ -122,10 +122,9 @@ namespace FOS.Services.SPUserService
             }
         }
 
-        public async Task<byte[]> GetAvatarByUserId(string Id)
+        public async Task<byte[]> GetAvatar(string Id, string avatarName)
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "users/" + Id + "/photos/48x48/$value", null);
-           
 
             if (result.IsSuccessStatusCode)
             {
@@ -133,7 +132,29 @@ namespace FOS.Services.SPUserService
             }
             else
             {
-                throw new Exception(await result.Content.ReadAsStringAsync());
+                String[] spearator = { " " };
+
+                String[] strlist = avatarName.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
+                string avatarUrl = "";
+                if (strlist.Length == 1)
+                {
+                    string firstName = strlist[0];
+                    avatarUrl = "https://ui-avatars.com/api/?name=" + firstName;
+                }
+                else
+                {
+                    string firstName = strlist[0];
+                    string lastName = strlist[1];
+
+                    string fullNameUrl = firstName + "+" + lastName;
+                    avatarUrl = "https://ui-avatars.com/api/?name=" + fullNameUrl;
+                }
+
+                var http = new HttpClient();
+                byte[] response = { };
+                await Task.Run(async () => response = await http.GetByteArrayAsync(avatarUrl));
+
+                return response;
             }
         }
 
@@ -157,7 +178,7 @@ namespace FOS.Services.SPUserService
 
         public async Task<List<Model.Dto.User>> GroupListMemers(string groupId)
         {
-            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups/"+ groupId + "/members", null);
+            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups/" + groupId + "/members", null);
             if (result.IsSuccessStatusCode)
             {
                 var resultGroup = await result.Content.ReadAsStringAsync();

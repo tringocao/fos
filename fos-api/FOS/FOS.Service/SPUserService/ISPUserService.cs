@@ -15,7 +15,7 @@ namespace FOS.Services.SPUserService
         Task<Model.Dto.User> GetCurrentUser();
         Task<Model.Dto.User> GetUserById(string Id);
         Task<List<Model.Dto.User>> GetGroups();
-        Task<byte[]> GetAvatarByUserId(string Id);
+        Task<byte[]> GetAvatar(string Id, string avatarName);
         Task<List<Model.Dto.User>> GetUsersByName(string searchName);
 
         Task<List<Model.Dto.User>> GroupListMemers(string groupId);
