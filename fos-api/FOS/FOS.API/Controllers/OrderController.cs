@@ -36,7 +36,6 @@ namespace FOS.API.Controllers
             try
             {
                 Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
                     _orderDtoMapper.ToDto(_orderService.GetOrder(id))
                );
@@ -47,15 +46,13 @@ namespace FOS.API.Controllers
             }
         }
         [HttpGet]
-        [Route("SendOrderById")]
-        public ApiResponse<Model.Dto.Order> GetdById(string orderId)
+        [Route("GetByEventvsUserId")]
+        public ApiResponse<Model.Dto.Order> GetByEventvsUserId(string eventId, string userId)
         {
             try
             {
-                Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
-                    _orderDtoMapper.ToDto(_orderService.GetOrder(id))
+                    _orderDtoMapper.ToDto(_orderService.GetByEventvsUserId(eventId, userId))
                );
             }
             catch (Exception e)

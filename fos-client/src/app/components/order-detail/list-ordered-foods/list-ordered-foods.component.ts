@@ -22,7 +22,6 @@ export class ListOrderedFoodsComponent implements OnInit {
   @Input("isOrder") isOrder: boolean;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   foodOrdered: Food;
   displayedColumns2: string[] = ["name", "price", "amount", "total", "comment"];
   dataSource2: MatTableDataSource<FoodDetailJson>;
@@ -30,6 +29,8 @@ export class ListOrderedFoodsComponent implements OnInit {
   day: number;
   month: number;
   year: number;
+  hour: number;
+  minutes: number;
   constructor() {}
   load = true;
   @Input() totalBudget: Number;
@@ -49,7 +50,8 @@ export class ListOrderedFoodsComponent implements OnInit {
         ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
         ["Total"]: food.Price.toString(),
-        ["Comment"]: "Noté"
+        ["Comment"]: "",
+        ["Photo"]: food.Photos
       }
     };
   }
@@ -63,6 +65,7 @@ export class ListOrderedFoodsComponent implements OnInit {
     this.dataSource2.filter = "";
   }
   numberWithCommas(x: Number) {
+    if (x < 0) return 0;
     if (x != undefined) {
       var parts = x.toString().split(".");
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -101,12 +104,13 @@ export class ListOrderedFoodsComponent implements OnInit {
     this.day = date.getUTCDate();
     this.month = date.getUTCMonth();
     this.year = date.getUTCFullYear();
+    this.hour = date.getUTCHours();
+    this.minutes = date.getUTCMinutes();
   }
   updateTable() {
     this.setDate(new Date(this.event.CloseTime));
     this.dataSource2.data = this.order.FoodDetail;
     this.dataSource2.sort = this.sort;
-    this.dataSource2.paginator = this.paginator;
     this.load = false;
   }
 }

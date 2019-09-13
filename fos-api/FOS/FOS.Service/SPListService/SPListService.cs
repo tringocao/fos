@@ -83,9 +83,9 @@ namespace FOS.Services.SPListService
                     return listItem.Id.ToString();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                throw e;
             }
         }
 

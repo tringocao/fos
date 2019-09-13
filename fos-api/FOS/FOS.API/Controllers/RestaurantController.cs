@@ -43,11 +43,11 @@ namespace FOS.API.Controllers
         // GET: api/Restaurant
         [HttpGet]
         [Route("GetIds")]
-        public async Task<ApiResponse<IEnumerable<int>>> GetIdsAsync(int IdService, int province_id)
+        public async Task<ApiResponse<IEnumerable<int>>> GetIdsAsync(int idService, int province_id)
         {
             try
             {
-                _restaurantService.GetExternalServiceById(IdService);
+                _restaurantService.GetExternalServiceById(idService);
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
                   (await _restaurantService.GetRestaurantsByProvinceAsync(province_id)).Select(l => Int32.Parse(l.RestaurantId))
                 );
@@ -61,11 +61,11 @@ namespace FOS.API.Controllers
         // GET: api/Restaurant/5
         [HttpGet]
         [Route("GetById")]
-        public async Task<ApiResponse<Restaurant>> GetByIdAsync(int IdService, int province_id, int restaurant_id)
+        public async Task<ApiResponse<Restaurant>> GetByIdAsync(int idService, int province_id, int restaurant_id)
         {
             try
             {
-                _restaurantService.GetExternalServiceById(IdService);
+                _restaurantService.GetExternalServiceById(idService);
                 return ApiUtil<Restaurant>.CreateSuccessfulResult(
                   _restaurantDtoMapper.ToDto(await _restaurantService.GetRestaurantsByIdAsync(province_id, restaurant_id))
                 );
@@ -77,13 +77,13 @@ namespace FOS.API.Controllers
         }
         [HttpGet]
         [Route("GetByKeywordLimit")]
-        public async Task<ApiResponse<IEnumerable<int>>> GetByKeywordLimitAsync(int IdService, int city_id, string keyword, int limit)
+        public async Task<ApiResponse<IEnumerable<int>>> GetByKeywordLimitAsync(int idService, int cityId, string keyword, int limit)
         {
             try
             {
-                _restaurantService.GetExternalServiceById(IdService);
+                _restaurantService.GetExternalServiceById(idService);
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
-                  (await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword)).Select(l => Int32.Parse(l.RestaurantId)).Take(limit)
+                  (await _restaurantService.GetRestaurantsByKeywordAsync(cityId, keyword)).Select(l => Int32.Parse(l.RestaurantId)).Take(limit)
                 );
             }
             catch (Exception e)
@@ -93,11 +93,11 @@ namespace FOS.API.Controllers
         }
         [HttpGet]
         [Route("GetMetadataForCategory")]
-        public async Task<ApiResponse<List<CategoryGroup>>> GetMetadataCategoryAsync(int IdService)
+        public async Task<ApiResponse<List<CategoryGroup>>> GetMetadataCategoryAsync(int idService)
         {
             try
             {
-                _restaurantService.GetExternalServiceById(IdService);
+                _restaurantService.GetExternalServiceById(idService);
                 var list = await _restaurantService.GetMetadataForCategoryAsync();
                 return ApiUtil<List<CategoryGroup>>.CreateSuccessfulResult(
                   list.Select(c => _categoryGroupDtoMapper.ToDto(c)).ToList()
@@ -114,23 +114,23 @@ namespace FOS.API.Controllers
         }
         [HttpPut]
         [Route("PutCategorySearch")]
-        public async Task<ApiResponse<IEnumerable<int>>> PutCategorySearchAsync(int IdService, int city_id, string keyword, [FromBody]CategoryGroup categories)
+        public async Task<ApiResponse<IEnumerable<int>>> PutCategorySearchAsync(int idService, int cityId, string keyword, [FromBody]CategoryGroup categories)
         {
             try
             {
                 List<Restaurant> listR = new List<Restaurant>();
-                _restaurantService.GetExternalServiceById(IdService);
+                _restaurantService.GetExternalServiceById(idService);
                 if (categories.Categories == null) return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(
                    new int[] { }
                 );
                 if (categories.Categories.Count() < 1)
                 {
-                    var list = await _restaurantService.GetRestaurantsByKeywordAsync(city_id, keyword);
+                    var list = await _restaurantService.GetRestaurantsByKeywordAsync(cityId, keyword);
                     listR = list.Select(r => _restaurantDtoMapper.ToDto(r)).ToList();
                 }
                 else
                 {
-                    var list = await _restaurantService.GetRestaurantsByCategoriesKeywordAsync(city_id, categories.Categories.Select(c => _categoryDtoMapper.ToModel(c)).ToList(), keyword);
+                    var list = await _restaurantService.GetRestaurantsByCategoriesKeywordAsync(cityId, categories.Categories.Select(c => _categoryDtoMapper.ToModel(c)).ToList(), keyword);
                     listR = list.Select(r => _restaurantDtoMapper.ToDto(r)).ToList();
                 }
                 return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(

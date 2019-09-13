@@ -1,16 +1,16 @@
 <div>
-  <h1>Place to edit My Order</h1>
+  <h1><mat-icon>event_available</mat-icon>My Order</h1>
   <h2>Host: {{ user.DisplayName }}</h2>
   <h3>
     Time to close:
-    {{ day }}/{{ month }}/{{ year }}
+    {{ day }}/{{ month }}/{{ year }} {{ hour }}:{{ minutes }}
   </h3>
 </div>
 
 <app-loading [loading]="load"></app-loading>
 
 <div class="restaurants ">
-  <div class="mat-elevation-z8">
+  <div class="example-container mat-elevation-z8">
     <table mat-table [dataSource]="dataSource2" matSort>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -61,7 +61,6 @@
               (blur)="onBlurMethodComment($event.target.value, element)"
               type="text"
               [value]="element.Value['Comment']"
-              placeholder="Noté"
             />
           </mat-form-field>
         </td>
@@ -100,14 +99,21 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
       <ng-container matColumnDef="totalPayExtra">
-        <td mat-footer-cell *matFooterCellDef>
+        <td
+          mat-footer-cell
+          *matFooterCellDef
+          [style.color]="getTotalCost() - totalBudget > 0 ? 'red' : 'black'"
+        >
           {{ numberWithCommas(getTotalCost() - totalBudget) + "đ" }}
         </td>
       </ng-container>
       <ng-container matColumnDef="6">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns2; sticky: true"
+      ></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
       <tr
         mat-footer-row
@@ -132,11 +138,5 @@
       ></tr>
       <!-- <tr mat-footer-row *matFooterRowDef="['disclaimer3','disclaimer4']; sticky: true" class="example-second-footer-row"></tr> -->
     </table>
-
-    <mat-paginator
-      showFirstLastButtons
-      [pageSize]="3"
-      [hidePageSize]="true"
-    ></mat-paginator>
   </div>
 </div>

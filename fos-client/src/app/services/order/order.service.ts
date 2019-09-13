@@ -4,8 +4,8 @@ import { environment } from "src/environments/environment";
 import { Event } from "./../../models/event";
 import { Order } from "src/app/models/order";
 // import { EnvironmentService } from "../shared/service/environment.service";
-import { UserNotOrderMailInfo } from './../../models/user-not-order-mail-info';
-import { UserNotOrder } from 'src/app/models/user-not-order';
+import { UserNotOrderMailInfo } from "./../../models/user-not-order-mail-info";
+import { UserNotOrder } from "src/app/models/user-not-order";
 
 @Injectable({
   providedIn: "root"
@@ -23,7 +23,7 @@ export class OrderService {
     return new Promise<Array<Event>>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Array<Event>>>(
-          environment.apiUrl + 'api/splist/getallevent',
+          environment.apiUrl + "api/splist/getallevent",
           {
             params: {
               userId
@@ -39,8 +39,8 @@ export class OrderService {
         .catch(alert => console.log(alert));
     });
   }
-  SetOrder(order: Order, isWildOrder:boolean): Promise<void> {
-    var apiUrl = isWildOrder ? 'AddWildOrder' : 'UpDateOrder'
+  SetOrder(order: Order, isWildOrder: boolean): Promise<void> {
+    var apiUrl = isWildOrder ? "AddWildOrder" : "UpDateOrder";
     return new Promise<void>((resolve, reject) => {
       this.http
         .post<ApiOperationResult<void>>(
@@ -60,7 +60,7 @@ export class OrderService {
     return new Promise<Order>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Order>>(
-          environment.apiUrl + 'api/Order/GetById',
+          environment.apiUrl + "api/Order/GetById",
           {
             params: {
               orderId: orderId
@@ -80,7 +80,7 @@ export class OrderService {
     return new Promise<UserNotOrder[]>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<UserNotOrder[]>>(
-          environment.apiUrl + 'api/Order/GetUserNotOrdered',
+          environment.apiUrl + "api/Order/GetUserNotOrdered",
           {
             params: {
               eventId
@@ -100,13 +100,34 @@ export class OrderService {
     return new Promise<ApiOperationResult<void>>((resolve, reject) => {
       this.http
         .put<ApiOperationResult<void>>(
-          environment.apiUrl + 'SendEmailToNotOrderedUser',
+          environment.apiUrl + "SendEmailToNotOrderedUser",
           users
         )
         .toPromise()
         .then(result => {
           if (result.Success) {
             resolve(null);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
+  GetByEventvsUserId(eventId: string, userId: string) {
+    return new Promise<Order>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<Order>>(
+          environment.apiUrl + "api/Order/GetByEventvsUserId",
+          {
+            params: {
+              eventId: eventId,
+              userId: userId
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
         .catch(alert => console.log(alert));

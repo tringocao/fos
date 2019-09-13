@@ -11,5 +11,6 @@ namespace FOS.Services.OrderServices
         Order GetOrder(Guid id);
         bool UpdateOrder(Order order);
         IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
+        Order GetByEventvsUserId(string eventId, string userId);
     }
 }

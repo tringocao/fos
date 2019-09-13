@@ -10,7 +10,7 @@ using FOS.Repositories.Repositories;
 
 namespace FOS.Services.OrderServices
 {
-  
+
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
@@ -57,6 +57,12 @@ namespace FOS.Services.OrderServices
             Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
             _orderMapper.MapToEfObject(efOrder, order);
             return _repository.AddOrder(efOrder);
+        }
+
+
+        public Order GetByEventvsUserId(string eventId, string userId)
+        {
+            return _orderMapper.MapToDomain(_repository.GetOrderByEventIdvsUserId(eventId, userId));
         }
     }
 }
