@@ -497,14 +497,14 @@ export class EventDialogComponent implements OnInit {
       RestaurantId: restaurantId,
       ServiceId: '1',
       DeliveryId: deliveryId,
-      CreatedBy: this._createdUser.id,
+      CreatedBy: self._createdUser.id,
       HostId: hostId,
       EventDate: new Date(eventDate),
       EventParticipantsJson: myJSON,
       EventType: eventType,
       Action: null,
       IsMyEvent: null,
-      Status: null
+      Status: "Opened"
     };
 
       self.eventFormService
@@ -512,6 +512,10 @@ export class EventDialogComponent implements OnInit {
         .toPromise()
         .then(newId => {
           console.log('new Id', newId.Data);
+
+          self.SendEmail(newId.Data);
+
+
           self.toast("added new event!", "Dismiss");
           self.dialogRef.close();
         }

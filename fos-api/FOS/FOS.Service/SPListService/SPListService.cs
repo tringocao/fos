@@ -77,9 +77,9 @@ namespace FOS.Services.SPListService
                     return listItem.Id.ToString();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw ex;
             }
         }
 
@@ -92,12 +92,6 @@ namespace FOS.Services.SPListService
                 {
                     Web web = context.Web;
                     var loginName = item.HostName;
-
-                    //var loginName = "i:0#.f|membership|" + item.eventHost;
-                    //string email = eventData.eventHost;
-                    //PeopleManager peopleManager = new PeopleManager(context);
-                    //ClientResult<PrincipalInfo> principal = Utility.ResolvePrincipal(context, web, email, PrincipalType.User, PrincipalSource.All, web.SiteUsers, true);
-                    //context.ExecuteQuery();
 
                     Microsoft.SharePoint.Client.User newUser = context.Web.EnsureUser(loginName);
                     context.Load(newUser);
