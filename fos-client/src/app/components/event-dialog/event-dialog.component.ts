@@ -117,7 +117,7 @@ export class EventDialogComponent implements OnInit {
   _userHost: userPicker[];
   _office365User: userPicker[] = [];
   _office365Group: userPicker[] = [];
-
+  _loading: boolean
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -305,28 +305,31 @@ export class EventDialogComponent implements OnInit {
   }
 
   ChangeClient(event) {
-    console.log("change client");
+    console.log('change client', event.value);
 
     let target = event.source.selected._element.nativeElement;
     this._userSelect = [];
 
-    const toSelect = this._office365User.find(c => c.Email == event.value);
+    const toSelect = this._office365User.find(c => c.Email == event.value.Email);
     const toSelectGroup = this._office365Group.find(
-      c => c.Email == event.value
+      c => c.Email == event.value.Email
     );
+
+    console.log('toSelect', toSelect);
+    console.log('toSelectGroup', toSelectGroup);
     if (toSelect != null) {
       this._userSelect.push({
-        Name: target.innerText.trim(),
-        Email: event.value,
-        Img: "",
+        Name: toSelect.Name,
+        Email: toSelect.Email,
+        Img: '',
         Id: toSelect.Id,
         IsGroup: 0
       });
     } else {
       this._userSelect.push({
-        Name: target.innerText.trim(),
-        Email: event.value,
-        Img: "",
+        Name: toSelectGroup.Name,
+        Email: toSelectGroup.Email,
+        Img: '',
         IsGroup: 1,
         Id: toSelectGroup.Id
       });
@@ -367,9 +370,9 @@ export class EventDialogComponent implements OnInit {
       return;
     }
     var self = this;
-
-    var host = this.ownerForm.get("userInputHost").value.Name;
-    console.log("get host: ", host);
+    this._loading = true;
+    var host = this.ownerForm.get('userInputHost').value.Name;
+    console.log('get host: ', host);
 
     var title = this.ownerForm.get("title").value;
     console.log("get title: ", title);
@@ -422,69 +425,64 @@ export class EventDialogComponent implements OnInit {
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
 
-    for (var j = 0; j < this._eventUsers.length; j++) {
-      if (this._eventUsers[j].Email) {
-        console.log(this._eventUsers[j].Email, this._eventUsers[j].IsGroup);
-        // get Group
-        if (this._eventUsers[j].IsGroup == 1) {
-          var participant: GraphUser = {
-            id: self._eventUsers[j].Id,
-            displayName: self._eventUsers[j].Name,
-            mail: self._eventUsers[j].Email,
-            userPrincipalName: self._eventUsers[j].Name
-          };
-          jsonParticipants.push(participant);
-
-          this.eventFormService
-            .GroupListMemers(this._eventUsers[j].Id)
-            .toPromise()
-            .then(value => {
-              value.Data.map(user => {
-                console.log("member in group", user.DisplayName);
-                var flagCheck = false;
-                jsonParticipants.map(check => {
-                  if (check.displayName === user.DisplayName) {
-                    flagCheck = true;
-                  }
-                });
-                if (flagCheck === false) {
-                  var p: GraphUser = {
-                    id: user.Id,
-                    displayName: user.DisplayName,
-                    mail: user.Mail,
-                    userPrincipalName: user.UserPrincipalName
-                  };
-                  jsonParticipants.push(p);
-                  numberParticipant++;
-                }
-              });
-            });
-        } else {
-          console.log("user khac", this._eventUsers[j].Name);
+    this._eventUsers.map(
+      user => {
+        if (user.IsGroup === 0) {
           var check = false;
           jsonParticipants.map(mem => {
-            if (mem.displayName === this._eventUsers[j].Name) {
+                    
+            if (mem.displayName === user.Name) {
               check = true;
             }
           });
           if (check === false) {
             var participant: GraphUser = {
-              id: self._eventUsers[j].Id,
-              displayName: self._eventUsers[j].Name,
-              mail: self._eventUsers[j].Email,
-              userPrincipalName: self._eventUsers[j].Name
+              id: user.Id,
+              displayName: user.Name,
+              mail: user.Email,
+              userPrincipalName: user.Name
             };
             jsonParticipants.push(participant);
             numberParticipant++;
           }
         }
+      });
+
+    this._eventUsers.map(
+      user =>{
+        if(user.IsGroup ===1){
+          this.eventFormService.GroupListMemers(user.Id).toPromise().then(
+            value =>{
+              value.Data.map(
+                u =>{
+                  var check = false;
+                  jsonParticipants.map(mem => {
+                    
+                    if (mem.displayName === u.DisplayName) {
+                      check = true;
+                    }
+                  });
+                  if (check === false) {
+                    var participant: GraphUser = {
+                      id: u.Id,
+                      displayName: u.DisplayName,
+                      mail: u.Mail,
+                      userPrincipalName: u.DisplayName
+                    };
+                    jsonParticipants.push(participant);
+                    numberParticipant++;
+                  }
+                }
+              )
+            }
+          )
+        }
       }
-    }
-
-    console.log("participant list: ", jsonParticipants);
-
-    var myJSON = JSON.stringify(jsonParticipants);
-    console.log("final", myJSON);
+    )
+    setTimeout(function () {
+      console.log('final', jsonParticipants);
+      var myJSON = JSON.stringify(jsonParticipants);
+      console.log('final', myJSON);
 
     var eventListitem: Event = {
       Name: title,
@@ -499,25 +497,36 @@ export class EventDialogComponent implements OnInit {
       RestaurantId: restaurantId,
       ServiceId: '1',
       DeliveryId: deliveryId,
-      CreatedBy: this._createdUser.id,
+      CreatedBy: self._createdUser.id,
       HostId: hostId,
       EventDate: new Date(eventDate),
       EventParticipantsJson: myJSON,
       EventType: eventType,
       Action: null,
       IsMyEvent: null,
-      Status: null
+      Status: "Opened"
     };
 
-    this.eventFormService
-      .AddEventListItem(eventListitem)
-      .toPromise()
-      .then(newId => {
-        console.log("new Id", newId.Data);
-        this.SendEmail(newId.Data);
-        this.toast("added new event!", "Dismiss");
-        this.dialogRef.close();
-      });
+      self.eventFormService
+        .AddEventListItem(eventListitem)
+        .toPromise()
+        .then(newId => {
+          console.log('new Id', newId.Data);
+
+          self.SendEmail(newId.Data);
+
+
+          self.toast("added new event!", "Dismiss");
+          self.dialogRef.close();
+        }
+        )
+    }, 3000)
+
+    // console.log('participant list: ', jsonParticipants);
+
+    
+
+    
   }
   toast(message: string, action: string) {
     this._snackBar.open(message, action, {

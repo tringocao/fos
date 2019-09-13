@@ -97,8 +97,7 @@
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
-    <Compile Include="Domain\EventList.cs" />
-    <Compile Include="Domain\EventListItem.cs" />
+    <Compile Include="Domain\Event.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\JSONRequest.cs" />
@@ -313,6 +312,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event-action.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\EventAction.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\Event.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
