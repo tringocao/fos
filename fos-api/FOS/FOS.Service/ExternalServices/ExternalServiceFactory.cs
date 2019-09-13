@@ -25,7 +25,7 @@ namespace FOS.Services.ExternalServices
             //var re1 = service.GetMetadata().ToList().ToString();
             //Province province = new Province() { id = 217 };
             //var re2 = service.GetRestaurants(province).ToList().ToString();
-            //Restaurant restaurant = new Restaurant() { restaurant_id = 595, delivery_id = 607 };
+            //Restaurant restaurant = new Restaurant() { restaurant_id = 595, deliveryId = 607 };
             //var re3 = service.GetRestaurantDeliveryInfor(restaurant);
             //var re4 = service.GetFoods(restaurant);
             //----------------Test----------------------

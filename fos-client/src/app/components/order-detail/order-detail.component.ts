@@ -53,12 +53,10 @@ export class OrderDetailComponent implements OnInit {
     this.idOrder = this.route.snapshot.paramMap.get("id");
     this.isWildParticipant = false;
     // check if wild guest order
-    if (this.idOrder.includes('ffa')) {
+    if (this.idOrder.includes("ffa")) {
       var eventId = this.idOrder.slice(3);
       this.isWildParticipant = true;
-      this.eventFormService
-      .GetEventById(eventId)
-      .then(event => {
+      this.eventFormService.GetEventById(eventId).then(event => {
         this.event = event;
         console.log(this.event)
         this.restaurantService.getRestaurants([Number(this.event.RestaurantId)])
@@ -93,47 +91,50 @@ export class OrderDetailComponent implements OnInit {
           })
       });
     }
-    else {
-      this.orderService.GetOrder(this.idOrder).then(order => {
-        this.order = order;
-        this.checkedData = order.FoodDetail;
-        this.restaurantService
-          .getRestaurants([order.IdRestaurant])
-          .then(restaurant => {
-            this.data.restaurant = restaurant[0];
-            this.restaurantService
-              .getRestaurantDetail(order.IdDelivery)
-              .then(restaurantd => {
-                this.data.detail = restaurantd;
-                this.userService.getUserById(order.IdUser).then(user => {
-                  this.user = user;
-                  this.eventFormService
-                    .GetEventById(order.IdEvent)
-                    .then(event => {
-                      this.event = event;
-                      if (this.isToday(new Date(event.CloseTime))) {
-                        this.isOrder = false;
-                      }
-                      this.isDataAvailable = true;
-                      this.loading = false;
-                      this.totalBudget = Number(event.MaximumBudget);
-                    });
-                });
-              });
-          });
-      });
-    }
   }
-  isToday(dateParameter: Date) {
-    var today = new Date();
-    return (
-      dateParameter.getDate() === today.getDate() &&
-      dateParameter.getMonth() === today.getMonth() &&
-      dateParameter.getFullYear() === today.getFullYear() &&
-      dateParameter.getHours() == today.getHours() &&
-      dateParameter.getMinutes() == today.getMinutes() &&
-      dateParameter.getSeconds() == today.getSeconds()
-    );
+  getOrderInfor(idOrder: string) {
+    return this.orderService.GetOrder(this.idOrder).then(order => {
+      this.order = order;
+      this.checkedData = order.FoodDetail;
+      this.GetEventById(this.order.IdEvent);
+    });
+  }
+
+  getRestaurant(IdRestaurant: Array<number>) {
+    return this.restaurantService
+      .getRestaurants(IdRestaurant)
+      .then(restaurant => {
+        this.data.restaurant = restaurant[0];
+        this.getRestaurantDetail(this.order.IdDelivery);
+      });
+  }
+  getRestaurantDetail(IdDelivery: number) {
+    return this.restaurantService
+      .getRestaurantDetail(IdDelivery)
+      .then(restaurantd => {
+        this.data.detail = restaurantd;
+        this.isDataAvailable = true;
+        this.loading = false;
+        this.totalBudget = Number(this.event.MaximumBudget);
+      });
+  }
+  getUserById(IdUser: string) {
+    return this.userService.getUserById(IdUser).then(user => {
+      this.user = user;
+      this.getRestaurant([this.order.IdRestaurant]);
+    });
+  }
+  GetEventById(IdEvent: string) {
+    return this.eventFormService.GetEventById(IdEvent).then(event => {
+      this.event = event;
+      if (this.isClosed(new Date(event.CloseTime))) {
+        this.isOrder = false;
+      }
+      this.getUserById(this.event.HostId);
+    });
+  }
+  isClosed(dateParameter: Date) {
+    return new Date().getTime() > dateParameter.getTime();
   }
   @ViewChild(ListOrderedFoodsComponent, { static: false })
   foodorderlist: ListOrderedFoodsComponent;
@@ -153,8 +154,10 @@ export class OrderDetailComponent implements OnInit {
   }
   Save() {
     this.order.FoodDetail = this.foodorderlist.getAllFoodDetail();
-    this.orderService.SetOrder(this.order, this.isWildParticipant).then(result => {
-      this.toast("Save!", "Dismiss");
-    });
+    this.orderService
+      .SetOrder(this.order, this.isWildParticipant)
+      .then(result => {
+        this.toast("Save!", "Dismiss");
+      });
   }
 }

@@ -11,15 +11,15 @@ namespace FOS.Services.ProvinceServices
     public class ProvinceService : IProvinceService
     {
         IExternalServiceFactory _craw;
-        int IdService;
+        int idService;
         public ProvinceService(IExternalServiceFactory craw)
         {
             _craw = craw;
         }
-        public string GetExternalServiceById(int IdService)
+        public string GetExternalServiceById(int idService)
         {
-            this.IdService = IdService;
-            return "ProvinceService in " + _craw.GetExternalServiceById(IdService) + "is ready";
+            this.idService = idService;
+            return "ProvinceService in " + _craw.GetExternalServiceById(idService) + "is ready";
         }
 
         public async Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
@@ -33,10 +33,10 @@ namespace FOS.Services.ProvinceServices
             return await _craw.GetMetadataForProvinceAsync();
         }
 
-        public async Task<Province> GetMetadataByIdAsync(int city_id)
+        public async Task<Province> GetMetadataByIdAsync(int cityId)
         {
             var listProvinces = await GetMetadataForProvinceAsync();
-            return  listProvinces.Where(p => p.Id == city_id.ToString()).FirstOrDefault();
+            return  listProvinces.Where(p => p.Id == cityId.ToString()).FirstOrDefault();
         }
 
         public async Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant)

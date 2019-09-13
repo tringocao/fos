@@ -6,9 +6,9 @@ namespace FOS.Services.FoodServices
 {
     public interface IFoodService
     {
-        string GetExternalServiceById(int IdService);
+        string GetExternalServiceById(int idService);
         Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
-        Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int delivery_id);
-        Task<List<Food>> GetFoodFromCatalogueAsync(int delivery_id, int dish_type_id);
+        Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int deliveryId);
+        Task<List<Food>> GetFoodFromCatalogueAsync(int deliveryId, int dishTypeId);
     }
 }
