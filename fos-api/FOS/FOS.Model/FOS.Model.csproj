@@ -97,8 +97,6 @@
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
-    <Compile Include="Domain\EventList.cs" />
-    <Compile Include="Domain\EventListItem.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\JSONRequest.cs" />
@@ -168,7 +166,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dto\..\..\..\..\fos-client\src\app\models\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
