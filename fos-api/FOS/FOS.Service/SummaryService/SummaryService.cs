@@ -57,7 +57,7 @@ namespace FOS.Services.SummaryService
         }
 
 
-        public void SendReport(string userEmail, string html)
+        public void SendReport(string userEmail, string html, string subject = "Event Report")
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {
@@ -67,7 +67,7 @@ namespace FOS.Services.SummaryService
                 emailp.To = new List<string>() { userEmail };
                 emailp.From = userEmail;
                 emailp.Body = html;
-                emailp.Subject = "Event Report";
+                emailp.Subject = subject;
 
                 Utility.SendEmail(clientContext, emailp);
                 clientContext.ExecuteQuery();

@@ -79,6 +79,7 @@ export class OrderDetailComponent implements OnInit {
                   IdRestaurant: Number(this.event.RestaurantId),
                   IdDelivery: Number(this.event.DeliveryId),
                   FoodDetail: [],
+                  IsOrdered: false
                 }
                 this.checkedData = this.order.FoodDetail;
                 if (this.isToday(new Date(event.CloseTime))) {

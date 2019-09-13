@@ -76,6 +76,26 @@ export class OrderService {
         .catch(alert => console.log(alert));
     });
   }
+  GetOrdersByEventId(eventId: string): Promise<Order[]> {
+    return new Promise<Order[]>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<Order[]>>(
+          environment.apiUrl + 'api/Order/GetAllByEventId',
+          {
+            params: {
+              eventId
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
   GetUserNotOrdered(eventId: string) {
     return new Promise<UserNotOrder[]>((resolve, reject) => {
       this.http

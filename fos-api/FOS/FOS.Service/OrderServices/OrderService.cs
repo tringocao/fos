@@ -52,6 +52,12 @@ namespace FOS.Services.OrderServices
             return _repository.GetUserNotOrdered(eventId);
         }
 
+        public List<Order> GetOrders(string eventId)
+        {
+            var orders = _repository.GetAllOrderByEventId(eventId);
+            return orders.Select(order => _orderMapper.MapToDomain(order)).ToList();
+        }
+
         public bool CreateWildOrder(Order order)
         {
             Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();

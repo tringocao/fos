@@ -12,6 +12,6 @@ namespace FOS.Services.SPListService
         Task AddListItem(string Id, JsonRequest item);
         string AddEventListItem(string Id, EventListItem item);
         Task UpdateListItem(string Id, EventListItem item);
-        Task UpdateEventParticipant(string id, string participants);
+        Task UpdateEventParticipant(string id, Model.Dto.GraphUser participants);
     }
 }

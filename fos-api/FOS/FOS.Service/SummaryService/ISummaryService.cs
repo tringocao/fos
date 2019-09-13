@@ -12,7 +12,7 @@ namespace FOS.Services.SummaryService
         Task SendEmailReportAsync(Model.Dto.Report report);
         string GetReportContentByEventId(string eventId);
         Task<string> AddReport(ReportFile report);
-        void SendReport(string userEmail, string html);
+        void SendReport(string userEmail, string html, string subject);
         string BuildHtmlEmail(string reportUrl, string eventId, string reportId);
     }
 }
