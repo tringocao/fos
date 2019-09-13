@@ -13,6 +13,6 @@ namespace FOS.Services.SPListService
         Task AddListItem(string id, JsonRequest item);
         string AddEventListItem(string id, Model.Domain.Event eventItem);
         Task UpdateListItem(string id, Model.Domain.Event eventItem);
-        Task UpdateEventParticipant(string id, string participants);
+        Task UpdateEventParticipant(string id, Model.Dto.GraphUser participant);
     }
 }
