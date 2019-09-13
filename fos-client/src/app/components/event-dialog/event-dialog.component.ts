@@ -33,6 +33,7 @@ import { GraphUser } from 'src/app/models/graph-user';
 import { Event } from "src/app/models/event";
 import * as moment from 'moment';
 
+
 interface Restaurant {
   id: string;
   stared: boolean;
@@ -357,7 +358,8 @@ export class EventDialogComponent implements OnInit {
           Email: this._userSelect[s].Email,
           Img: "",
           Id: this._userSelect[s].Id,
-          IsGroup: this._userSelect[s].IsGroup
+          IsGroup: this._userSelect[s].IsGroup,
+          OrderStatus: 'Not Order'
         });
         this.table.renderRows();
       }
@@ -447,39 +449,41 @@ export class EventDialogComponent implements OnInit {
           }
         }
       });
-
-    this._eventUsers.map(
-      user =>{
-        if(user.IsGroup ===1){
-          this.eventFormService.GroupListMemers(user.Id).toPromise().then(
-            value =>{
-              value.Data.map(
-                u =>{
-                  var check = false;
-                  jsonParticipants.map(mem => {
-                    
-                    if (mem.displayName === u.DisplayName) {
-                      check = true;
+      let promises: Array<Promise<void>> = [];
+      this._eventUsers.map(
+        user =>{
+          if(user.IsGroup ===1){
+            let promise = this.eventFormService.GroupListMemers(user.Id).toPromise().then(
+              value =>{
+                value.Data.map(
+                  u =>{
+                    var check = false;
+                    jsonParticipants.map(mem => {
+                      
+                      if (mem.displayName === u.DisplayName) {
+                        check = true;
+                      }
+                    });
+                    if (check === false) {
+                      var participant: GraphUser = {
+                        id: u.Id,
+                        displayName: u.DisplayName,
+                        mail: u.Mail,
+                        userPrincipalName: u.DisplayName
+                      };
+                      jsonParticipants.push(participant);
+                      numberParticipant++;
                     }
-                  });
-                  if (check === false) {
-                    var participant: GraphUser = {
-                      id: u.Id,
-                      displayName: u.DisplayName,
-                      mail: u.Mail,
-                      userPrincipalName: u.DisplayName
-                    };
-                    jsonParticipants.push(participant);
-                    numberParticipant++;
                   }
-                }
-              )
-            }
-          )
+                );
+              }
+            )
+            promises.push(promise);
+          }
         }
-      }
-    )
-    setTimeout(function () {
+      )
+    
+    Promise.all(promises).then(function () {
       console.log('final', jsonParticipants);
       var myJSON = JSON.stringify(jsonParticipants);
       console.log('final', myJSON);
@@ -520,7 +524,7 @@ export class EventDialogComponent implements OnInit {
           self.dialogRef.close();
         }
         )
-    }, 3000)
+    })
 
     // console.log('participant list: ', jsonParticipants);
 

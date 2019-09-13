@@ -258,7 +258,8 @@ export class EventDialogEditComponent implements OnInit {
         Name: value.displayName,
         Img: '',
         Email: value.mail,
-        IsGroup: 0
+        IsGroup: 0,
+        OrderStatus: 'Not Order'
       });
     });
   }
@@ -449,7 +450,8 @@ export class EventDialogEditComponent implements OnInit {
           Email: this._userSelect[s].Email,
           Img: '',
           Id: this._userSelect[s].Id,
-          IsGroup: this._userSelect[s].IsGroup
+          IsGroup: this._userSelect[s].IsGroup,
+          OrderStatus: 'Not Order'
         });
         this.table.renderRows();
       }
