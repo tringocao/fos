@@ -10,6 +10,5 @@ namespace FOS.Model.Dto
     {
         public string IdFood { get; set; }
         public Dictionary<string, string> Value { get; set; }
-
     }
 }

@@ -3,12 +3,14 @@ using FOS.Model.Domain;
 using FOS.Model.Util;
 using FOS.Services.Providers;
 using Microsoft.SharePoint.Client;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace FOS.Services.SPListService
 {
@@ -134,7 +136,7 @@ namespace FOS.Services.SPListService
 
         }
 
-        public async Task UpdateEventParticipant(string id, string participants)
+        public async Task UpdateEventParticipant(string id, Model.Dto.GraphUser participant)
         {
             try
             {
@@ -143,7 +145,13 @@ namespace FOS.Services.SPListService
                     List members = context.Web.Lists.GetByTitle("Event List");
 
                     ListItem listItem = members.GetItemById(id);
-                    listItem["EventParticipantsJson"] = participants;
+                    context.Load(listItem, li => li["EventParticipantsJson"]);
+                    context.ExecuteQuery();
+
+                    var EventParticipantsJson = JsonConvert.DeserializeObject<List<Model.Dto.GraphUser>>(listItem.FieldValues["EventParticipantsJson"].ToString());
+                    EventParticipantsJson.Add(participant);
+
+                    listItem["EventParticipantsJson"] = JsonConvert.SerializeObject(EventParticipantsJson).ToString();
                     listItem.Update();
                     context.ExecuteQuery();
                 }

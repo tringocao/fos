@@ -46,7 +46,8 @@ export class ListOrderedFoodsComponent implements OnInit {
         ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
         ["Total"]: food.Price.toString(),
-        ["Comment"]: "Noté"
+        ["Comment"]: "Noté",
+        ["Photo"]: food.Photos,
       }
     };
   }

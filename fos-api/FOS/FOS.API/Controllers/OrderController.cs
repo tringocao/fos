@@ -1,10 +1,13 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
+using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.OrderServices;
 using FOS.Services.SPListService;
+using FOS.Services.SPUserService;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +24,15 @@ namespace FOS.API.Controllers
     {
         private readonly IOrderDtoMapper _orderDtoMapper;
         private readonly IOrderService _orderService;
-        private readonly ISPListService _sPListService;
+        private readonly ISPListService _spListService;
+        private readonly ISPUserService _spUserService;
 
-        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService sPListService)
+        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService spListService, ISPUserService spUserService)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
-            _sPListService = sPListService;
+            _spListService = spListService;
+            _spUserService = spUserService;
         }
         [HttpGet]
         [Route("GetById")]
@@ -36,7 +41,7 @@ namespace FOS.API.Controllers
             try
             {
                 Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
+                Model.Domain.Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
                     _orderDtoMapper.ToDto(_orderService.GetOrder(id))
                );
@@ -46,6 +51,25 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
             }
         }
+
+        [HttpGet]
+        [Route("GetAllByEventId")]
+        public ApiResponse<List<Model.Dto.Order>> GetAllByEventId(string eventId)
+        {
+            try
+            {
+                var orders = _orderService.GetOrders(eventId);
+                return ApiUtil<List<Model.Dto.Order>>.CreateSuccessfulResult(
+                    orders.Select(_order => 
+                    _orderDtoMapper.ToDto(_order)).ToList()
+               );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Model.Dto.Order>>.CreateFailResult(e.ToString());
+            }
+        }
+
         [HttpGet]
         [Route("SendOrderById")]
         public ApiResponse<Model.Dto.Order> GetdById(string orderId)
@@ -53,7 +77,7 @@ namespace FOS.API.Controllers
             try
             {
                 Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
+                Model.Domain.Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
                     _orderDtoMapper.ToDto(_orderService.GetOrder(id))
                );
@@ -81,14 +105,24 @@ namespace FOS.API.Controllers
 
         [HttpPost]
         [Route("AddWildOrder")]
-        public ApiResponse AddWildOrder([FromBody]Model.Dto.Order order)
+        public async Task<ApiResponse> AddWildOrder([FromBody]Model.Dto.Order order)
         {
             try
             {
                 Guid idOrder = Guid.NewGuid();
                 order.Id = idOrder.ToString();
+
+                var user = await _spUserService.GetCurrentUser();
+
                 _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
-                //_sPListService.UpdateEventParticipant()
+                GraphUser _user = new GraphUser()
+                {
+                    id = order.IdUser,
+                    displayName = user.DisplayName,
+                    mail = user.Mail,
+                    userPrincipalName = user.UserPrincipalName,
+                };
+                await _spListService.UpdateEventParticipant(order.IdEvent, _user);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

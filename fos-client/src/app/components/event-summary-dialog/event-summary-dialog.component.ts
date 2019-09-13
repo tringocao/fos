@@ -23,39 +23,10 @@ import { environment } from 'src/environments/environment';
 import { Report } from 'src/app/models/report';
 import { async } from 'q';
 import { EventFormService } from 'src/app/services/event-form/event-form.service';
+import { OrderService } from 'src/app/services/order/order.service';
+import { Food } from 'src/app/models/food';
+import { UserService } from 'src/app/services/user/user.service';
 
-const database: any[] = [
-  {
-    userId: 'e618f708-8dde-4f04-9d9b-5c5bc3a4905d',
-    payExtra: 10000,
-    comment: 'không hành',
-    orderDetail: [
-      { foodId: '', foodName: 'Chicken Rice', price: 30000 },
-      { foodId: '', foodName: 'Coka', price: 10000 },
-      { foodId: '', foodName: 'Draft beer', price: 20000 }
-    ]
-  },
-  {
-    userId: 'e618f708-8dde-4f04-9d9b-5c5bc3a4905d',
-    payExtra: 10000,
-    comment: 'không hành',
-    orderDetail: [
-      { foodId: '', foodName: 'Chicken Rice', img: '', price: 30000 },
-      { foodId: '', foodName: 'Coka', img: '', price: 10000 },
-      { foodId: '', foodName: 'Draft beer', img: '', price: 20000 }
-    ]
-  },
-  {
-    userId: 'e618f708-8dde-4f04-9d9b-5c5bc3a4905d',
-    payExtra: 10000,
-    comment: 'không hành',
-    orderDetail: [
-      { foodId: '', foodName: 'Chicken Rice', img: '', price: 30000 },
-      { foodId: '', foodName: 'Coka', img: '', price: 10000 },
-      { foodId: '', foodName: 'Draft beer', img: '', price: 20000 }
-    ]
-  }
-];
 
 @Component({
   selector: 'app-event-summary-dialog',
@@ -70,11 +41,16 @@ export class EventSummaryDialogComponent implements OnInit {
     private restaurantService: RestaurantService,
     private summaryService: SummaryService,
     private route: ActivatedRoute,
-    private eventFormService:EventFormService
+    private eventFormService:EventFormService,
+    private orderService: OrderService,
+    private userService: UserService,
   ) {
     console.log(router.routerState);
   }
 
+  eventDataAvailable:boolean;
+  dishViewDataAvailable:boolean;
+  personViewDataAvailable:boolean;
   printMode:boolean;
   dishGroupViewdataSource: any = new MatTableDataSource([]);
   personGroupViewdataSource: any = new MatTableDataSource([]);
@@ -85,7 +61,7 @@ export class EventSummaryDialogComponent implements OnInit {
     'amount',
     'price',
     'total',
-    'comment'
+    'totalComment'
   ];
   personGroupViewDisplayedColumns: string[] = [
     'user',
@@ -98,65 +74,10 @@ export class EventSummaryDialogComponent implements OnInit {
   restaurant: any;
 
   eventDetail: Event;
+  foods: any[];
+  orderByDish: any[] = [];
+  orderByPerson: any[] = [];
 
-  orderByDish: any[] = [
-    {
-      foodId: '',
-      picture:
-        'https://images.foody.vn/res/g1/595/prof/s60x60/foody-upload-api-foody-mobile-10-jpg-180508140146.jpg',
-      name: 'Coka',
-      amount: 4,
-      price: 10000,
-      total: 40000,
-      comment: '2x không gas, 1x không đường'
-    },
-    {
-      foodId: '',
-      picture:
-        'https://images.foody.vn/res/g1/595/prof/s60x60/foody-upload-api-foody-mobile-10-jpg-180508140146.jpg',
-      name: 'Coka',
-      amount: 4,
-      price: 10000,
-      total: 40000,
-      comment: '2x không gas, 1x không đường'
-    }
-  ];
-
-  orderByPerson: any[] = [
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-    {
-      user: 'admin',
-      food: '1xChicken rice + 1x coca',
-      price: 40000,
-      payExtra: 5000,
-      comment: 'không hành'
-    },
-  ];
-
-  dishGroupView() {
-    database.map(order => {
-      order.orderDetail.map(detail => {
-        if (
-          !this.orderByDish.includes(order => order.foodId == detail.foodId)
-        ) {
-          // this.orderData.push()
-        }
-      });
-    });
-  }
   toStandardDate(date: Date) {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
@@ -200,8 +121,11 @@ export class EventSummaryDialogComponent implements OnInit {
 
   ngOnInit() {
     this.restaurant = { }
+    this.eventDataAvailable = false;
     this.restaurant.isLoaded = false;
     this.printMode = false;
+    this.personViewDataAvailable = false;
+    this.dishViewDataAvailable = false;
 
     this.route.params.subscribe(params => {
       var id = params['id'];
@@ -209,6 +133,7 @@ export class EventSummaryDialogComponent implements OnInit {
       .GetEventById(id).then((result:Event) => {
         console.log(result)
         this.eventDetail = result;
+        this.eventDataAvailable = true;
         this.restaurantService.getRestaurants([Number(this.eventDetail.RestaurantId)]).then(result => {
           console.log(result[0])
           this.restaurant = result[0];
@@ -224,9 +149,85 @@ export class EventSummaryDialogComponent implements OnInit {
           // this.restaurant.RestaurantUrl = "01234";
         }); 
       });
+      this.orderService.GetOrdersByEventId(id).then(orders => {
+        console.log(orders);
+        this.foods = [];
+        var foodList:string[] = [];
+        orders.forEach(order => {
+          order.FoodDetail.forEach(food => {
+            var _food = {
+              foodId: food.IdFood,
+              name: food.Value.Name,
+              price: Number(food.Value.Price),
+              picture: food.Value.Photo,
+              comments: [
+                {
+                  comment: food.Value.Comment,
+                  amount: 1
+                }
+              ],
+              totalComment: food.Value.Comment,
+              amount: Number(food.Value.Amount),
+              total: 0
+            }
+            _food.total = _food.amount * _food.price
+            if (!foodList.includes(food.IdFood)) {
+              foodList.push(food.IdFood);
+              this.foods.push(_food)
+            }
+            else {
+              var selectedFood = this.foods.findIndex(f => f.foodId == food.IdFood);
+              console.log(selectedFood)
+              this.foods[selectedFood].amount += _food.amount;
+              this.foods[selectedFood].total += _food.total;
+              // this.foods[selectedFood].comments.forEach(_comment => {
+              //   // if (food.c) {
+
+              //   // }
+              // });
+              this.foods[selectedFood].totalComment += ' ' + _food.totalComment;
+              // if (comment == _food.comment) {
+              //   this.foods[selectedFood].comment = _food.tota
+              // }
+              // this.foods[selectedFood].comment += _food.tota
+            }
+          })
+        })
+        this.dishGroupViewdataSource = this.foods;
+        console.log(this.foods)
+        this.dishViewDataAvailable = true;
+
+        orders.forEach(order => {
+          var orderItem = {
+            user: 'admin',
+            food: '1xChicken rice + 1x coca',
+            price: 40000,
+            payExtra: 5000,
+            comment: 'không hành'
+          };
+          this.userService.getUserById(order.IdUser).then(user => {
+            orderItem.user = user.DisplayName;
+          }).then(() => {
+            var foods = "";
+            var comment = "";
+            var total = 0;
+            order.FoodDetail.forEach(food => {
+              foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
+              comment += ' ' + food.Value.Comment; // try if same name
+              total += Number(food.Value.Total);
+            })
+            orderItem.food = foods;
+            orderItem.payExtra = (Number(this.eventDetail.MaximumBudget) < total) ? (total - Number(this.eventDetail.MaximumBudget)) : 0;
+            orderItem.comment = comment;
+
+            this.orderByPerson.push(orderItem)
+            this.personViewDataAvailable = this.orderByPerson.length == orders.length;
+          })
+        })
+      })
     })
 
-    this.dishGroupViewdataSource = this.orderByDish;
+    // this.dishGroupViewdataSource = this.orderByDish;
     this.personGroupViewdataSource = this.orderByPerson;
   }
 }
