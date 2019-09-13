@@ -40,6 +40,7 @@ namespace FOS.Model.Mapping
             eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
             eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
             eventModel.EventId = ElementAttributeToString(element["ID"]);
+            eventModel.DeliveryId = ElementAttributeToString(element["EventDeliveryId"]);
             eventModel.HostName = ElementAttributeToString(host.LookupValue);
             eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
             eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);

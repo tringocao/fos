@@ -1,4 +1,5 @@
 ﻿using FOS.Model.Domain;
+using FOS.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;

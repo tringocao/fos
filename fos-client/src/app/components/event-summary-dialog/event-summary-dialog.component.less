@@ -1,5 +1,8 @@
 @import '../../../styles/global/variables.less';
 
+.container {
+  overflow: hidden;
+}
 .event-summary {
 
   .grid-card {
@@ -14,10 +17,30 @@
   .card {
     width: 80%;
     box-sizing: border-box;
+    box-shadow: none;
+    border-width: thin;
+    border-color: black;
+    border-style: solid;
   }
   .grid-tile-row
   {
     justify-content: flex-start !important ;
     align-items: flex-start !important;
   }
+  .text-inside-grid {
+    width: 100%; display: flex; align-items: flex-start;
+  }
+  .label-inside-grid {
+    .text-inside-grid;
+    font-size: 1.5rem
+  }
+  .mat-grid-tile {
+    overflow:visible;
+  }
+}
+
+.print-area {
+  .event-summary;
+  position: absolute;
+  left: -5000px;
 }

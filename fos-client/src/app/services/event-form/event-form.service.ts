@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { EventList } from "src/app/models/eventList";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
 import { switchMap, debounceTime, tap, finalize } from "rxjs/operators";
@@ -39,31 +38,13 @@ export class EventFormService {
   // }
 
   AddEventListItem(
-    eventlist: EventList
+    eventlist: Event
   ): Observable<ApiOperationResult<string>> {
     return this.http
       .post(
         environment.apiUrl +
           "api/SPList/AddEventListItem?Id=d7415c0c-8295-4851-bbe8-6717e939f7f6",
-        {
-          EventTitle: eventlist.EventTitle,
-          EventRestaurant: eventlist.EventRestaurant,
-          EventMaximumBudget: eventlist.EventMaximumBudget,
-
-          EventTimeToClose: eventlist.EventTimeToClose,
-          EventTimeToReminder: eventlist.EventTimeToReminder,
-          EventHost: eventlist.EventHost,
-          EventParticipants: eventlist.EventParticipants,
-
-          EventCategory: eventlist.EventCategory,
-          EventRestaurantId: eventlist.EventRestaurantId,
-          EventServiceId: eventlist.EventServiceId,
-          EventDeliveryId: eventlist.EventDeliveryId,
-          EventCreatedUserId: eventlist.EventCreatedUserId,
-          EventHostId: eventlist.EventHostId,
-          EventDate: eventlist.EventDate,
-          EventParticipantsJson: eventlist.EventParticipantsJson
-        }
+          eventlist
       )
       .pipe(
         tap((response: ApiOperationResult<string>) => {
@@ -74,28 +55,10 @@ export class EventFormService {
 
   UpdateEventListItem(
     Id: String,
-    eventlist: EventList
+    eventlist: Event
   ): Observable<ApiOperationResult<void>> {
     return this.http
-      .post(environment.apiUrl + "api/SPList/UpdateListItem?Id=" + Id, {
-        EventTitle: eventlist.EventTitle,
-        EventRestaurant: eventlist.EventRestaurant,
-        EventMaximumBudget: eventlist.EventMaximumBudget,
-
-        EventTimeToClose: eventlist.EventTimeToClose,
-        EventTimeToReminder: eventlist.EventTimeToReminder,
-        EventHost: eventlist.EventHost,
-        EventParticipants: eventlist.EventParticipants,
-
-        EventCategory: eventlist.EventCategory,
-        EventRestaurantId: eventlist.EventRestaurantId,
-        EventServiceId: eventlist.EventServiceId,
-        EventDeliveryId: eventlist.EventDeliveryId,
-        EventCreatedUserId: eventlist.EventCreatedUserId,
-        EventHostId: eventlist.EventHostId,
-        EventDate: eventlist.EventDate,
-        EventParticipantsJson: eventlist.EventParticipantsJson
-      })
+      .post(environment.apiUrl + "api/SPList/UpdateListItem?Id=" + Id, eventlist)
       .pipe(
         tap((response: ApiOperationResult<void>) => {
           return response;

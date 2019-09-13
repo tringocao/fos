@@ -76,7 +76,7 @@ namespace FOS.Services.SPListService
                     listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
                     listItem["EventDate"] = eventData.EventDate;
                     listItem["EventStatus"] = "Opened";
-                    listItem["EventTypes"] = "Open";
+                    listItem["EventTypes"] = eventData.EventType;
                     listItem.Update();
                     context.ExecuteQuery();
 
@@ -135,6 +135,27 @@ namespace FOS.Services.SPListService
                     listItem["EventDate"] = eventData.EventDate;
                     listItem["EventStatus"] = "Opened";
                     listItem["EventTypes"] = "Open";
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
+        }
+
+        public async Task UpdateEventParticipant(string id, string participants)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(id);
+                    listItem["EventParticipantsJson"] = participants;
                     listItem.Update();
                     context.ExecuteQuery();
                 }

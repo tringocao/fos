@@ -35,6 +35,12 @@
         (click)="makeOrder($event)"
         >Make order</mat-list-item
       >
+      <mat-list-item
+        role="listitem"
+        *ngIf="event.Action.CanViewOrder"
+        (click)="viewOrder($event)"
+        >View order</mat-list-item
+      >
       <mat-list-item role="listitem" *ngIf="event.Action.CanCloseEvent">
         <a target="_blank" routerLink="/events/summary/{{ event.EventId }}"
           >Close event</a

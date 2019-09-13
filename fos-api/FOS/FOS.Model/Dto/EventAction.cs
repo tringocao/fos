@@ -13,5 +13,6 @@ namespace FOS.Model.Dto
         public bool CanCloseEvent { get; set; }
         public bool CanMakeOrder { get; set; }
         public bool CanSendRemind { get; set; }
+        public bool CanViewOrder { get; set; }
     }
 }
