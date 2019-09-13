@@ -1,4 +1,5 @@
 ﻿using FOS.Model.Domain;
+using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,9 @@ namespace FOS.Services.SPListService
 {
     public interface ISPListService
     {
-        Task AddListItem(string Id, JsonRequest item);
-        string AddEventListItem(string Id, EventListItem item);
-        Task UpdateListItem(string Id, EventListItem item);
+        Task AddListItem(string id, JsonRequest item);
+        string AddEventListItem(string id, Model.Domain.Event eventItem);
+        Task UpdateListItem(string id, Model.Domain.Event eventItem);
+        Task UpdateEventParticipant(string id, string participants);
     }
 }

@@ -11,6 +11,7 @@ namespace FOS.Model.Mapping
     public interface IEventDtoMapper
     {
         Event ListItemToEventModel(ListItem element);
+        Model.Domain.Event ToModel(Dto.Event eventDto);
     }
     public class EventDtoMapper : IEventDtoMapper
     {
@@ -40,6 +41,7 @@ namespace FOS.Model.Mapping
             eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
             eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
             eventModel.EventId = ElementAttributeToString(element["ID"]);
+            eventModel.DeliveryId = ElementAttributeToString(element["EventDeliveryId"]);
             eventModel.HostName = ElementAttributeToString(host.LookupValue);
             eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
             eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
@@ -47,10 +49,36 @@ namespace FOS.Model.Mapping
             eventModel.EventType = ElementAttributeToString(element["EventTypes"]);
             eventModel.EventDate = eventDate;
             eventModel.EventParticipantsJson = ElementAttributeToString(element["EventParticipantsJson"]);
-            eventModel.DeliveryId = ElementAttributeToString(element["EventDeliveryId"]);
             eventModel.RemindTime = remindDate;
 
             return eventModel;
+        }
+
+        public Model.Domain.Event ToModel(Dto.Event eventDto)
+        {
+            return new Domain.Event()
+            {
+                HostId = eventDto.HostId,
+                HostName = eventDto.HostName,
+                Action = null,
+                Category = eventDto.Category,
+                CloseTime = eventDto.CloseTime,
+                RemindTime = eventDto.RemindTime,
+                CreatedBy = eventDto.CreatedBy,
+                DeliveryId = eventDto.DeliveryId,
+                Restaurant = eventDto.Restaurant,
+                RestaurantId = eventDto.RestaurantId,
+                IsMyEvent = false,
+                EventDate = eventDto.EventDate,
+                EventId = eventDto.EventId,
+                EventParticipantsJson = eventDto.EventParticipantsJson,
+                EventType = eventDto.EventType,
+                MaximumBudget = eventDto.MaximumBudget,
+                Name = eventDto.Name,
+                Participants = eventDto.Participants,
+                ServiceId = eventDto.ServiceId,
+                Status = eventDto.Status
+            };
         }
 
         private string ElementAttributeToString(Object element)
@@ -60,7 +88,7 @@ namespace FOS.Model.Mapping
         private Nullable<DateTime> SetDate(string dateString)
         {
             var nullableDate = new Nullable<DateTime>();
-            if(dateString.Length > 0)
+            if (dateString.Length > 0)
             {
                 nullableDate = DateTime.Parse(dateString).ToLocalTime();
             }

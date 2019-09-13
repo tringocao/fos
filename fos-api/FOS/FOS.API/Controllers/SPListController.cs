@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
 using FOS.Model.Dto;
+using FOS.Model.Mapping;
 
 namespace FOS.API.Controllers
 {
@@ -29,9 +30,12 @@ namespace FOS.API.Controllers
     {
         ISPListService _spListService;
         IEventService _eventService;
+        private readonly IEventDtoMapper _eventDtoMapper;
 
-        public SPListController(ISPListService spListService, IEventService eventService)
+
+        public SPListController(ISPListService spListService, IEventService eventService, IEventDtoMapper mapper)
         {
+            _eventDtoMapper = mapper;
             _spListService = spListService;
             _eventService = eventService;
         }
@@ -59,11 +63,12 @@ namespace FOS.API.Controllers
 
         [HttpPost]
         [Route("AddEventListItem")]
-        public ApiResponse<string> AddEventListItem(string Id, [FromBody]EventListItem item)
+        public ApiResponse<string> AddEventListItem(string id, [FromBody]Model.Dto.Event item)
         {
             try
             {
-                var result = _spListService.AddEventListItem(Id, item);
+                var itemModel = _eventDtoMapper.ToModel(item);
+                var result = _spListService.AddEventListItem(id, itemModel);
                 return ApiUtil<string>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
@@ -71,39 +76,41 @@ namespace FOS.API.Controllers
                 return ApiUtil<string>.CreateFailResult(e.ToString());
             }
         }
-        public ApiResponse<IEnumerable<Event>> GetAllEvent(string userId)
+        public ApiResponse<IEnumerable<Model.Dto.Event>> GetAllEvent(string userId)
         {
             try
             {
                 var result = _eventService.GetAllEvent(userId);
-                return ApiUtil<IEnumerable<Event>>.CreateSuccessfulResult(result);
+                return ApiUtil<IEnumerable<Model.Dto.Event>>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
             {
-                return ApiUtil<IEnumerable<Event>>.CreateFailResult(e.ToString());
+                return ApiUtil<IEnumerable<Model.Dto.Event>>.CreateFailResult(e.ToString());
             }
         }
-
-        public ApiResponse<Event> GetEvent(int id)
+        [HttpGet]
+        [Route("GetEventById")]
+        public ApiResponse<Model.Dto.Event> GetEvent(int id)
         {
             try
             {
                 var result = _eventService.GetEvent(id);
-                return ApiUtil<Event>.CreateSuccessfulResult(result);
+                return ApiUtil<Model.Dto.Event>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
             {
-                return ApiUtil<Event>.CreateFailResult(e.ToString());
+                return ApiUtil<Model.Dto.Event>.CreateFailResult(e.ToString());
             }
         }
 
         [HttpPost]
         [Route("UpdateListItem")]
-        public async Task<ApiResponse> UpdateListItem(string Id, [FromBody]EventListItem Item)
+        public async Task<ApiResponse> UpdateListItem(string id, [FromBody]Model.Dto.Event item)
         {
             try
             {
-                await _spListService.UpdateListItem(Id, Item);
+                var domainItem = _eventDtoMapper.ToModel(item);
+                await _spListService.UpdateListItem(id, domainItem);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
