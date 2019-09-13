@@ -102,7 +102,7 @@ export class ListOrderedFoodsComponent implements OnInit {
   // }
   setDate(date: Date) {
     this.day = date.getUTCDate();
-    this.month = date.getUTCMonth();
+    this.month = date.getUTCMonth() + 1;
     this.year = date.getUTCFullYear();
     this.hour = date.getUTCHours();
     this.minutes = date.getUTCMinutes();

@@ -58,38 +58,44 @@ export class OrderDetailComponent implements OnInit {
       this.isWildParticipant = true;
       this.eventFormService.GetEventById(eventId).then(event => {
         this.event = event;
-        console.log(this.event)
-        this.restaurantService.getRestaurants([Number(this.event.RestaurantId)])
-        .then(restaurant => {
-          this.data.restaurant = restaurant[0];
-          this.restaurantService
-            .getRestaurantDetail(Number(event.DeliveryId))
-            .then(restaurantd => {
-              this.data.detail = restaurantd;
-              this.userService.getCurrentUserId().then(user => {
-                this.user = user;
-              }).then(() => {
-                this.order = {
-                  Id: '1',
-                  OrderDate:new Date(),
-                  IdUser: this.user.Id,
-                  IdEvent: this.event.EventId,
-                  IdRestaurant: Number(this.event.RestaurantId),
-                  IdDelivery: Number(this.event.DeliveryId),
-                  FoodDetail: [],
-                  IsOrdered: false
-                }
-                this.checkedData = this.order.FoodDetail;
-                if (this.isToday(new Date(event.CloseTime))) {
-                  this.isOrder = false;
-                }
-                this.isDataAvailable = true;
-                this.loading = false;
-                this.totalBudget = Number(event.MaximumBudget);
-              })
-            })
-          })
+        console.log(this.event);
+        this.restaurantService
+          .getRestaurants([Number(this.event.RestaurantId)])
+          .then(restaurant => {
+            this.data.restaurant = restaurant[0];
+            this.restaurantService
+              .getRestaurantDetail(Number(event.DeliveryId))
+              .then(restaurantd => {
+                this.data.detail = restaurantd;
+                this.userService
+                  .getCurrentUserId()
+                  .then(user => {
+                    this.user = user;
+                  })
+                  .then(() => {
+                    this.order = {
+                      Id: "1",
+                      OrderDate: new Date(),
+                      IdUser: this.user.Id,
+                      IdEvent: this.event.EventId,
+                      IdRestaurant: Number(this.event.RestaurantId),
+                      IdDelivery: Number(this.event.DeliveryId),
+                      FoodDetail: [],
+                      IsOrdered: false
+                    };
+                    this.checkedData = this.order.FoodDetail;
+                    if (this.isClosed(new Date(event.CloseTime))) {
+                      this.isOrder = false;
+                    }
+                    this.isDataAvailable = true;
+                    this.loading = false;
+                    this.totalBudget = Number(event.MaximumBudget);
+                  });
+              });
+          });
       });
+    } else {
+      this.getOrderInfor(this.idOrder);
     }
   }
   getOrderInfor(idOrder: string) {
