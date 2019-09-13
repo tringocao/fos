@@ -17,6 +17,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using User = FOS.Model.Domain.User;
 
 namespace FOS.Services.SendEmailServices
 {
@@ -73,8 +74,8 @@ namespace FOS.Services.SendEmailServices
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
-                    emailp.Body = Parse(emailTemplate.Html.ToString());
-                    emailp.Subject = Parse(emailTemplate.Subject.ToString());
+                    emailp.Body = Parse(emailTemplate.Html.ToString(), user);
+                    emailp.Subject = Parse(emailTemplate.Subject.ToString(), null);
                     
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
@@ -93,7 +94,7 @@ namespace FOS.Services.SendEmailServices
             emailTemplate = JsonConvert.DeserializeObject<EmailTemplate>(html);
 
         }
-        private string Parse(string text)
+        private string Parse(string text, User user)
         {
             var regex = new Regex(@"\[%Event.\S+%\]");
             var match = regex.Match(text);
@@ -101,8 +102,19 @@ namespace FOS.Services.SendEmailServices
             {
                 var value = match.Value;
                 var memberName = ParseMemberName(value); //Some code you write to parse out the member name from the match value
-                var propertyInfo = emailTemplate.GetType().GetProperty(memberName);
-                var memberValue = propertyInfo.GetValue(emailTemplate, null);
+                System.Reflection.PropertyInfo propertyInfo;
+                object memberValue; 
+
+                if (memberName != "Mail")
+                {
+                    propertyInfo = emailTemplate.GetType().GetProperty(memberName);
+                    memberValue = propertyInfo.GetValue(emailTemplate, null);
+                }
+                else
+                {
+                    propertyInfo = user.GetType().GetProperty(memberName);
+                    memberValue = propertyInfo.GetValue(user, null);
+                }
                 text = text.Replace(value, memberValue != null ? memberValue.ToString() : string.Empty);
                 match = match.NextMatch();
             }
@@ -110,7 +122,7 @@ namespace FOS.Services.SendEmailServices
         }
         private string ParseMemberName(string value)
         {
-            return value.Split('.')[1];
+            return value.Split('.')[1].Split('%')[0];
         }
     }
 }
