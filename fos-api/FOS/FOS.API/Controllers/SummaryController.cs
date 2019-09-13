@@ -57,7 +57,7 @@ namespace FOS.API.Controllers
                 Model.Dto.User sender = await _spUserService.GetCurrentUser();
                 string reportId = await _summaryService.AddReport(report);
                 string html = _summaryService.BuildHtmlEmail(reportUrl, eventId, reportId);
-                _summaryService.SendReport(sender.UserPrincipalName, html);
+                _summaryService.SendReport(sender.UserPrincipalName, html, "Event Report");
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

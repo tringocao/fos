@@ -6,6 +6,8 @@ using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.OrderServices;
 using FOS.Services.SPListService;
+using FOS.Services.SPUserService;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +24,15 @@ namespace FOS.API.Controllers
     {
         private readonly IOrderDtoMapper _orderDtoMapper;
         private readonly IOrderService _orderService;
-        private readonly ISPListService _sPListService;
+        private readonly ISPListService _spListService;
+        private readonly ISPUserService _spUserService;
 
-        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService sPListService)
+        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService spListService, ISPUserService spUserService)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
-            _sPListService = sPListService;
+            _spListService = spListService;
+            _spUserService = spUserService;
         }
         [HttpGet]
         [Route("GetById")]
@@ -101,22 +105,24 @@ namespace FOS.API.Controllers
 
         [HttpPost]
         [Route("AddWildOrder")]
-        public ApiResponse AddWildOrder([FromBody]Model.Dto.Order order)
+        public async Task<ApiResponse> AddWildOrder([FromBody]Model.Dto.Order order)
         {
             try
             {
                 Guid idOrder = Guid.NewGuid();
                 order.Id = idOrder.ToString();
 
-                Model.Dto.User user;
+                var user = await _spUserService.GetCurrentUser();
 
                 _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
-                //GraphUser user = new GraphUser()
-                //{
-                //    id = order.IdUser,
-                //    displayName =
-                //}
-                //_sPListService.UpdateEventParticipant();
+                GraphUser _user = new GraphUser()
+                {
+                    id = order.IdUser,
+                    displayName = user.DisplayName,
+                    mail = user.Mail,
+                    userPrincipalName = user.UserPrincipalName,
+                };
+                await _spListService.UpdateEventParticipant(order.IdEvent, _user);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
