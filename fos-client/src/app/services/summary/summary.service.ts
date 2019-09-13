@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, XhrFactory } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Report } from 'src/app/models/report';
+import { Event } from "src/app/models/event";
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,6 @@ export class SummaryService {
     }).catch(alert => console.log(alert))
   });
   }
-  // sendEmail(report:Report) {  
-  //   console.log(report)
-  //     this.http.post(environment.apiUrl + 'api/summary/sendreport',
-  //       {Subject: 'abc'}
-  //     ).subscribe(result => console.log(result));
-  // }
 
   addReport(eventId:string, reportUrl:string, content:string) : Promise<void> {
     return new Promise<void>((resolve,reject)=> {
@@ -43,26 +38,6 @@ export class SummaryService {
           }
         }
       )
-      .toPromise().then(result => {
-      if(result.Success){resolve(result.Data)}
-      else reject(new Error(JSON.stringify(result.ErrorMessage)));        
-    }).catch(alert => console.log(alert))
-  });
-  }
-
-  // downloadReport():Promise<any> {
-  //   return new Promise<any>((resolve,reject)=> {
-  //     this.http.get<ApiOperationResult<any>>(environment.apiUrl + 'api/summary/downloadreport')
-  //     .toPromise().then(result => {
-  //     if(result.Success){resolve(result.Data)}
-  //     else reject(new Error(JSON.stringify(result.ErrorMessage)));        
-  //   }).catch(alert => console.log(alert))
-  // });
-  // }
-
-  getEventById(id:string):Promise<any> {
-    return new Promise<any>((resolve,reject)=> {
-      this.http.get<ApiOperationResult<any>>(environment.apiUrl + 'api/splist/getevent/' + id)
       .toPromise().then(result => {
       if(result.Success){resolve(result.Data)}
       else reject(new Error(JSON.stringify(result.ErrorMessage)));        

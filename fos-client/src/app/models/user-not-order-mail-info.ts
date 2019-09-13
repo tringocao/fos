@@ -10,13 +10,11 @@
     
      
 
-    export class Food    {
+    export class UserNotOrderMailInfo    {
            
-        public Id: string = null;   
-        public Name: string = null;   
-        public Photos: string = null;   
-        public Description: string = null;   
-        public Price: number = 0;   
-        public IsChecked: boolean = false;
+        public UserMail: string = null;   
+        public OrderId: string = null;   
+        public EventTitle: string = null;   
+        public EventRestaurant: string = null;
     }
          

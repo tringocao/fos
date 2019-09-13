@@ -34,7 +34,8 @@ import {
   MatSidenavModule,
   MatListModule,
   MatInputModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatRadioModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
@@ -53,7 +54,8 @@ import {
   MatToolbarModule,
   MatMenuModule,
   MatIconModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSlideToggleModule
 } from '@angular/material';
 
 import { MatSelectModule } from '@angular/material/select';
@@ -160,7 +162,9 @@ import { EventDialogConfirmComponent } from './components/event-dialog-confirm/e
     FormsModule,
     MatInputModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSlideToggleModule,
+    MatRadioModule
   ],
   providers: [
     OrderService,

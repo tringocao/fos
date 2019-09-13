@@ -4,6 +4,7 @@ using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.OrderServices;
+using FOS.Services.SPListService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,13 @@ namespace FOS.API.Controllers
     {
         private readonly IOrderDtoMapper _orderDtoMapper;
         private readonly IOrderService _orderService;
-        public OrderController(IOrderDtoMapper mapper, IOrderService service)
+        private readonly ISPListService _sPListService;
+
+        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService sPListService)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
+            _sPListService = sPListService;
         }
         [HttpGet]
         [Route("GetById")]
@@ -59,6 +63,57 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
             }
         }
+
+        [HttpGet]
+        [Route("GetUserNotOrdered")]
+        public ApiResponse<IEnumerable<Model.Dto.UserNotOrder>> GetUserNotOrdered(string eventId)
+        {
+            try
+            {
+                var result = _orderService.GetUserNotOrdered(eventId);
+                return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateSuccessfulResult(result);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("AddWildOrder")]
+        public ApiResponse AddWildOrder([FromBody]Model.Dto.Order order)
+        {
+            try
+            {
+                Guid idOrder = Guid.NewGuid();
+                order.Id = idOrder.ToString();
+                _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
+                //_sPListService.UpdateEventParticipant()
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateOrder")]
+        public ApiResponse UpdateOrder([FromBody]Model.Dto.Order order)
+        {
+            try
+            {
+                
+                _orderService.UpdateOrder(_orderDtoMapper.ToModel(order));
+                return ApiUtil.CreateSuccessfulResult();
+
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+
         //// GET: api/Order/5
         //public Model.Dto.Order Get(int id)
         //{

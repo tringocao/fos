@@ -10,13 +10,9 @@
     
      
 
-    export class Food    {
+    export class FoodDetailJson    {
            
-        public Id: string = null;   
-        public Name: string = null;   
-        public Photos: string = null;   
-        public Description: string = null;   
-        public Price: number = 0;   
-        public IsChecked: boolean = false;
+        public IdFood: string = null;   
+        public Value: { [key: string]: string; } = {};
     }
          

@@ -1,4 +1,5 @@
 ﻿using FOS.Common;
+using FOS.Model.Mapping;
 using FOS.Services.Providers;
 using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
@@ -17,11 +18,12 @@ namespace FOS.Services.SPUserService
     {
         IGraphApiProvider _graphApiProvider;
         ISharepointContextProvider _sharepointContextProvider;
-
-        public SPUserService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider)
+        IUserDtoMapper suserDtoMapper;
+        public SPUserService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IUserDtoMapper userDtoMapper)
         {
             _graphApiProvider = graphApiProvider;
             _sharepointContextProvider = sharepointContextProvider;
+            suserDtoMapper = userDtoMapper;
         }
 
         public async Task<List<Model.Dto.User>> GetUsers()
@@ -72,25 +74,36 @@ namespace FOS.Services.SPUserService
                 throw new Exception(await result.Content.ReadAsStringAsync());
             }
         }
-        public async Task<Model.Domain.User> GetUserById(string Id)
+        public async Task<Model.Dto.User> GetUserById(string Id)
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "users/" + Id, null);
             if (result.IsSuccessStatusCode)
             {
                 var resultGroup = await result.Content.ReadAsStringAsync();
-                dynamic response = JsonConvert.DeserializeObject(resultGroup);
+                var response = JsonConvert.DeserializeObject<Model.Domain.User>(resultGroup);
 
-
-                Model.Domain.User jsonUsers = response.value.ToObject<Model.Dto.User>();
-
-                return jsonUsers;
+                return suserDtoMapper.ToDto(response);
             }
             else
             {
                 throw new Exception(await result.Content.ReadAsStringAsync());
             }
         }
+        public async Task<Model.Domain.User> GetUserByIdsDomain(string Id)
+        {
+            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "users/" + Id, null);
+            if (result.IsSuccessStatusCode)
+            {
+                var resultGroup = await result.Content.ReadAsStringAsync();
+                var response = JsonConvert.DeserializeObject<Model.Domain.User>(resultGroup);
 
+                return response;
+            }
+            else
+            {
+                throw new Exception(await result.Content.ReadAsStringAsync());
+            }
+        }
         public async Task<List<Model.Dto.User>> GetGroups()
         {
             var result = await _graphApiProvider.SendAsync(HttpMethod.Get, "groups", null);

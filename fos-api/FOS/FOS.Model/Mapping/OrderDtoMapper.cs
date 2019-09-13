@@ -17,7 +17,15 @@ namespace FOS.Model.Mapping
     {
         public Dto.Order ToDto(Model.Domain.Order order)
         {
-
+            List<FoodDetailJson> temp;
+            if (order.FoodDetail == null)
+            {
+                temp = new List<FoodDetailJson>();
+            }
+            else
+            {
+                temp = order.FoodDetail.Select(x => new FoodDetailJson() { IdFood = x.Key.ToString(), Value = x.Value == null ? new Dictionary<string, string>() : x.Value }).ToList();
+            }
             return new Dto.Order()
             {
                 Id = order.Id.ToString(),
@@ -25,12 +33,18 @@ namespace FOS.Model.Mapping
                 IdRestaurant = order.IdRestaurant,
                 IdUser = order.IdUser,
                 OrderDate = order.OrderDate,
-                FoodDetail = order.FoodDetail
+                FoodDetail = temp,
+                IdEvent = order.IdEvent
             };
         }
 
         public Model.Domain.Order ToModel(Dto.Order order)
         {
+            Dictionary<int, Dictionary<string, string>> foodDetail = new Dictionary<int, Dictionary<string, string>>();
+            foreach (var food in order.FoodDetail)
+            {
+                foodDetail.Add(Int32.Parse(food.IdFood), food.Value);
+            }
             return new Domain.Order()
             {
                 Id = Guid.Parse(order.Id),
@@ -38,7 +52,9 @@ namespace FOS.Model.Mapping
                 IdRestaurant = order.IdRestaurant,
                 IdUser = order.IdUser,
                 OrderDate = order.OrderDate,
-                FoodDetail = order.FoodDetail
+                FoodDetail = foodDetail,
+                IdEvent = order.IdEvent
+
             };
         }
     }
