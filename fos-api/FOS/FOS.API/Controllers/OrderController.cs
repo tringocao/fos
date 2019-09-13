@@ -46,6 +46,25 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
             }
         }
+
+        [HttpGet]
+        [Route("GetAllByEventId")]
+        public ApiResponse<List<Model.Dto.Order>> GetAllByEventId(string eventId)
+        {
+            try
+            {
+                var orders = _orderService.GetOrders(eventId);
+                return ApiUtil<List<Model.Dto.Order>>.CreateSuccessfulResult(
+                    orders.Select(_order => 
+                    _orderDtoMapper.ToDto(_order)).ToList()
+               );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Model.Dto.Order>>.CreateFailResult(e.ToString());
+            }
+        }
+
         [HttpGet]
         [Route("SendOrderById")]
         public ApiResponse<Model.Dto.Order> GetdById(string orderId)
