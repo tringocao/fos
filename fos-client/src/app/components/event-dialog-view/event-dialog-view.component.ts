@@ -44,16 +44,14 @@ export class EventDialogViewComponent implements OnInit {
     var self = this;
     console.log('EventId', this.data.EventId);
     var participants = JSON.parse(this.data.EventParticipantsJson);
-    var userNotOrder = [];
     let promise = this.orderService
       .GetUserNotOrdered(this.data.EventId)
       .then(result => {
         result.forEach(element => {
           var participant = participants.filter(
-            item => item.id === element.UserId
+            item => item.id == element.UserId
           );
-
-          if (participant) {
+          if (participant != null) {
             const userOrder: EventUser = {
               Name: participant[0].displayName,
               Email: participant[0].mail,
@@ -95,33 +93,6 @@ export class EventDialogViewComponent implements OnInit {
         }
       });
     });
-
-    // setTimeout(function(){
-    //   // console.log(userNotOrder);
-    //   participants.map(
-    //     value =>{
-    //       userNotOrder.map(
-    //         NotOrder =>{
-    //           // console.log('not order', NotOrder);
-    //           if(value.id === NotOrder.UserId){
-    //             var userOrder: EventUser = {
-    //               Name: 'abc',
-    //               Email: 'mail',
-    //               Id: 'id1',
-    //               Img: '',
-    //               IsGroup: 0,
-    //               OrderStatus: 'not order'
-    //             }
-    //             self.eventusers.push(userOrder);
-    //           }
-    //         }
-    //       )
-    //     }
-    //   )
-
-    // },2000)
-
-    // console.log(self.eventusers);
     this.eventTitle = this.data.Name;
     this.eventHost = this.data.HostName;
     this.eventRestaurant = this.data.Restaurant;
@@ -138,18 +109,6 @@ export class EventDialogViewComponent implements OnInit {
       .replace('+07:00', '');
     this.EventStatus = this.data.Status;
     this.EventType = this.data.EventType;
-
-    // participants.map(value => {
-    //   console.log('paricipant ', value);
-    //   this.eventusers.push({
-    //     Id: value.id,
-    //     Name: value.displayName,
-    //     Img: '',
-    //     Email: value.mail,
-    //     IsGroup: 0,
-    //     OrderStatus: 'not order'
-    //   });
-    // })
   }
   OnNoClick(): void {
     this.dialogRef.close();

@@ -423,10 +423,10 @@ export class EventDialogEditComponent implements OnInit {
         }
       }
     });
-
+    let promises: Array<Promise<void>> = [];
     this._eventUsers.map(user => {
       if (user.IsGroup === 1) {
-        this.eventFormService
+        let promise = this.eventFormService
           .GroupListMemers(user.Id)
           .toPromise()
           .then(value => {
@@ -449,10 +449,11 @@ export class EventDialogEditComponent implements OnInit {
               }
             });
           });
+        promises.push(promise);
       }
     });
 
-    setTimeout(function() {
+    Promise.all(promises).then(function() {
       console.log('final', jsonParticipants);
       var myJSON = JSON.stringify(jsonParticipants);
       console.log('final', myJSON);
@@ -485,11 +486,18 @@ export class EventDialogEditComponent implements OnInit {
         .toPromise()
         .then(result => {
           console.log('Update', result);
+          self.SendEmail(self.data.EventId);
           self.toast('update new event!', 'Dismiss');
           self.dialogRef.close();
         });
-    }, 3000);
+    });
   }
+
+  SendEmail(id: string) {
+    this.restaurantService.setEmail(id);
+    console.log('Sent!');
+  }
+
   toast(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 2000

@@ -64,5 +64,9 @@ namespace FOS.Services.OrderServices
             _orderMapper.MapToEfObject(efOrder, order);
             return _repository.AddOrder(efOrder);
         }
+        public bool DeleteOrderByIdEvent(string idEvent)
+        {
+            return _repository.DeleteOrderByIdEvent(idEvent);
+        }
     }
 }
