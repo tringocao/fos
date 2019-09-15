@@ -33,6 +33,7 @@ import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { GraphUser } from 'src/app/models/graph-user';
 import { OrderService } from 'src/app/services/order/order.service';
+import { EventDialogConfirmComponent } from '../event-dialog-confirm/event-dialog-confirm.component';
 
 @Component({
   selector: 'app-event-dialog-edit',
@@ -48,7 +49,8 @@ export class EventDialogEditComponent implements OnInit {
     private restaurantService: RestaurantService,
     public dialogRef: MatDialogRef<EventDialogEditComponent>,
     private _snackBar: MatSnackBar,
-    private orderService: OrderService
+    private orderService: OrderService,
+    public dialog: MatDialog
   ) {}
   //global
   _eventSelected = 'Open';
@@ -85,6 +87,8 @@ export class EventDialogEditComponent implements OnInit {
   _office365User: userPicker[] = [];
   _office365Group: userPicker[] = [];
   _loading: boolean;
+  _eventListItem: Event = null;
+
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -458,7 +462,7 @@ export class EventDialogEditComponent implements OnInit {
       var myJSON = JSON.stringify(jsonParticipants);
       console.log('final', myJSON);
 
-      var eventListitem: Event = {
+      self._eventListItem = {
         Name: title,
         EventId: title,
         Restaurant: restaurant,
@@ -480,16 +484,43 @@ export class EventDialogEditComponent implements OnInit {
         IsMyEvent: null,
         Status: 'Opened'
       };
+      self._loading = false;
+      self.openDialog();
 
-      self.eventFormService
-        .UpdateEventListItem(self.data.EventId, eventListitem)
-        .toPromise()
-        .then(result => {
-          console.log('Update', result);
-          self.SendEmail(self.data.EventId);
-          self.toast('update new event!', 'Dismiss');
-          self.dialogRef.close();
-        });
+      // self.eventFormService
+      //   .UpdateEventListItem(self.data.EventId, eventListitem)
+      //   .toPromise()
+      //   .then(result => {
+      //     console.log('Update', result);
+      //     self.SendEmail(self.data.EventId);
+      //     self.toast('update new event!', 'Dismiss');
+      //     self.dialogRef.close();
+      //   });
+    });
+  }
+
+  openDialog(): void {
+    var self = this;
+    const dialogRef = this.dialog.open(EventDialogConfirmComponent, {
+      width: '450px',
+      data: Event
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (self._eventListItem) {
+          self._loading = true;
+          self.eventFormService
+            .UpdateEventListItem(self.data.EventId, self._eventListItem)
+            .toPromise()
+            .then(result => {
+              console.log('Update', result);
+              self.SendEmail(self.data.EventId);
+              self.toast('update new event!', 'Dismiss');
+              self.dialogRef.close();
+            });
+        }
+      }
     });
   }
 
