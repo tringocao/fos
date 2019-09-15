@@ -14,6 +14,7 @@ namespace FOS.Services
     {
         //string GetByIdAsync(int businessId);
         Apis GetById(int Id);
+        IEnumerable<Apis> GetAll();
     }
     public class FOSFoodServiceAPIsService : IFOSFoodServiceAPIsService
     {
@@ -28,6 +29,9 @@ namespace FOS.Services
         {
             return _iFOSFood.GetFOSCrawlLinksById(Id);
         }
-
+        public IEnumerable<Apis> GetAll()
+        {
+            return _iFOSFood.GetAllFOSCrawlLinks();
+        }
     }
 }

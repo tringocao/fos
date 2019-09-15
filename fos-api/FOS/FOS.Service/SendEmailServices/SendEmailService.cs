@@ -52,7 +52,7 @@ namespace FOS.Services.SendEmailServices
             var users = item["EventParticipantsJson"].ToString();
             emailTemplate.UsersEmail = JsonConvert.DeserializeObject<List<Model.Domain.User>>(users);
             string userId = item["EventHostId"].ToString();
-            var user = await _sPUserService.GetUserByIdsDomain(userId);
+            var user = await _sPUserService.GetUserById(userId);
             emailTemplate.HostUserEmail = user;
             emailTemplate.EventTitle = item["EventTitle"].ToString();
             emailTemplate.EventId = item["ID"].ToString();

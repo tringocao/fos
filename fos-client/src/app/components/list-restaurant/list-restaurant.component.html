@@ -80,6 +80,7 @@
         <th mat-header-cell *matHeaderCellDef>Add event</th>
         <td mat-cell *matCellDef="let element">
           <app-menu-event
+            [idService]="idService"
             matTooltip="Add event"
             [restaurant]="element"
           ></app-menu-event>

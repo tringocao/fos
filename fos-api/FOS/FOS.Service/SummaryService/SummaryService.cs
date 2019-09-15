@@ -80,7 +80,7 @@ namespace FOS.Services.SummaryService
         {
             byte[] fileBytes = Convert.FromBase64String(report.Attachment);
 
-            Model.Dto.User sender = await _spUserService.GetCurrentUser();
+            Model.Domain.User sender = await _spUserService.GetCurrentUser();
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY", EnvironmentVariableTarget.User);
             var client = new SendGridClient(apiKey);
             var from = new SendGrid.Helpers.Mail.EmailAddress(sender.Mail, sender.UserPrincipalName);

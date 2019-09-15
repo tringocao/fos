@@ -7,6 +7,7 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { FoodCategory } from "src/app/models/food-category";
 import { CategoryGroup } from "src/app/models/category-group";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
+import { Restaurant } from 'src/app/models/restaurant';
 
 @Injectable({
   providedIn: "root"
@@ -34,7 +35,7 @@ export class RestaurantService {
   }
   getFood(
     deliveryId: number,
-    idService: number = 1
+    idService: number
   ): Promise<Array<FoodCategory>> {
     return new Promise<Array<FoodCategory>>((resolve, reject) => {
       this.http
@@ -59,8 +60,8 @@ export class RestaurantService {
   getRestaurantIds(
     topic: any,
     keyword: string,
-    idService: number = 1,
-    cityId: number = 217
+    idService: number,
+    cityId: number
   ): Promise<Array<number>> {
     return new Promise<Array<number>>((resolve, reject) => {
       this.http
@@ -88,7 +89,7 @@ export class RestaurantService {
   }
   getRestaurantDetail(
     deliveryId: number,
-    idService: number = 1
+    idService: number
   ): Promise<RestaurantDetail> {
     return new Promise<RestaurantDetail>((resolve, reject) => {
       this.http
@@ -112,8 +113,8 @@ export class RestaurantService {
   }
   getRestaurantDetailById(
     restaurantId: number,
-    cityId: number = 217,
-    idService: number = 1
+    cityId: number,
+    idService: number
   ): Promise<DeliveryInfos> {
     return new Promise<DeliveryInfos>((resolve, reject) => {
       this.http
@@ -138,16 +139,16 @@ export class RestaurantService {
   }
   getRestaurants(
     ids: Array<number>,
-    idService: number = 1,
-    cityId: number = 217
+    idService: number,
+    cityId: number
   ): Promise<Array<DeliveryInfos>> {
+    var ress: Array<Restaurant>;
+    ids.forEach(id => ress.push({Id:id, DeliveryId: ""}))
     return new Promise<Array<DeliveryInfos>>((resolve, reject) => {
       this.http
         .put<ApiOperationResult<Array<DeliveryInfos>>>(
           environment.apiUrl + "api/Delivery/PutRestaurantIds",
-          {
-            restaurant_id: ids
-          },
+          ress,
           {
             params: {
               idService: JSON.stringify(idService),
@@ -188,8 +189,8 @@ export class RestaurantService {
   SearchRestaurantName(
     name: string,
     limit: number,
-    idService: number = 1,
-    cityId: number = 217
+    idService: number,
+    cityId: number
   ): Observable<ApiOperationResult<Array<number>>> {
     return this.http
       .get<ApiOperationResult<Array<number>>>(
