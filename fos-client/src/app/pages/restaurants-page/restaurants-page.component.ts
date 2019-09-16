@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { EventFormService } from 'src/app/services/event-form/event-form.service';
 
 @Component({
   selector: 'app-restaurants-page',
@@ -8,7 +9,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./restaurants-page.component.less']
 })
 export class RestaurantsPageComponent implements OnInit {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private eventFormServivce: EventFormService) {
     // this.http.get(environment.apiUrl + '/api/oauth/CheckAuth').subscribe((data: authRespond) => {
     //   console.log("request data");
     //   console.log(data.redirect);
@@ -26,6 +27,5 @@ export class RestaurantsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    
   }
 }

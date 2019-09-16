@@ -1,9 +1,13 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
+using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services;
 using FOS.Services.OrderServices;
+using FOS.Services.SPListService;
+using FOS.Services.SPUserService;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +24,15 @@ namespace FOS.API.Controllers
     {
         private readonly IOrderDtoMapper _orderDtoMapper;
         private readonly IOrderService _orderService;
-        public OrderController(IOrderDtoMapper mapper, IOrderService service)
+        private readonly ISPListService _spListService;
+        private readonly ISPUserService _spUserService;
+
+        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService spListService, ISPUserService spUserService)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
+            _spListService = spListService;
+            _spUserService = spUserService;
         }
         [HttpGet]
         [Route("GetById")]
@@ -32,7 +41,6 @@ namespace FOS.API.Controllers
             try
             {
                 Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
                     _orderDtoMapper.ToDto(_orderService.GetOrder(id))
                );
@@ -42,16 +50,33 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
             }
         }
+
         [HttpGet]
-        [Route("SendOrderById")]
-        public ApiResponse<Model.Dto.Order> GetdById(string orderId)
+        [Route("GetAllByEventId")]
+        public ApiResponse<List<Model.Dto.Order>> GetAllByEventId(string eventId)
         {
             try
             {
-                Guid id = Guid.Parse(orderId);
-                Order order = _orderService.GetOrder(id);
+                var orders = _orderService.GetOrders(eventId);
+                return ApiUtil<List<Model.Dto.Order>>.CreateSuccessfulResult(
+                    orders.Select(_order => 
+                    _orderDtoMapper.ToDto(_order)).ToList()
+               );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Model.Dto.Order>>.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("GetByEventvsUserId")]
+        public ApiResponse<Model.Dto.Order> GetByEventvsUserId(string eventId, string userId)
+        {
+            try
+            {
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
-                    _orderDtoMapper.ToDto(_orderService.GetOrder(id))
+                    _orderDtoMapper.ToDto(_orderService.GetByEventvsUserId(eventId, userId))
                );
             }
             catch (Exception e)
@@ -76,12 +101,40 @@ namespace FOS.API.Controllers
         }
 
         [HttpPost]
+        [Route("AddWildOrder")]
+        public async Task<ApiResponse> AddWildOrder([FromBody]Model.Dto.Order order)
+        {
+            try
+            {
+                Guid idOrder = Guid.NewGuid();
+                order.Id = idOrder.ToString();
+
+                var user = await _spUserService.GetCurrentUser();
+
+                _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
+                GraphUser _user = new GraphUser()
+                {
+                    id = order.IdUser,
+                    displayName = user.DisplayName,
+                    mail = user.Mail,
+                    userPrincipalName = user.UserPrincipalName,
+                };
+                await _spListService.UpdateEventParticipant(order.IdEvent, _user);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpPost]
         [Route("UpdateOrder")]
         public ApiResponse UpdateOrder([FromBody]Model.Dto.Order order)
         {
             try
             {
-               
+                
                 _orderService.UpdateOrder(_orderDtoMapper.ToModel(order));
                 return ApiUtil.CreateSuccessfulResult();
 

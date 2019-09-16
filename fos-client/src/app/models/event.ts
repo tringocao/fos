@@ -30,6 +30,7 @@
         public EventType: string = null;   
         public EventDate: Date = null;   
         public EventParticipantsJson: string = null;   
-        public Action: EventAction = null;
+        public Action: EventAction = null;   
+        public ServiceId: string = null;
     }
          

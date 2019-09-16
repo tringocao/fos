@@ -4,7 +4,6 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material/dialog';
-import { EventList } from 'src/app/models/eventList';
 import {
   MatSort,
   MatPaginator,

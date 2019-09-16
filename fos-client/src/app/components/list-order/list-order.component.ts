@@ -8,7 +8,6 @@ import { UserService } from './../../services/user/user.service';
 import * as moment from 'moment';
 import 'moment/locale/vi';
 import { MatDialog } from '@angular/material/dialog';
-import { EventList } from 'src/app/models/eventList';
 import { Event } from './../../models/event';
 import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
 import { Router } from '@angular/router';
@@ -48,7 +47,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
   searchQuery = '';
   categorySelected = null;
 
-  eventListItem: EventList;
+  eventListItem: Event;
 
   @Input() isMyOrder: any;
 
@@ -241,6 +240,11 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   toStandardDate(date: number) {
     return moment(date).format('DD/MM/YYYY HH:mm');
+  }
+
+  remind(event: any, element: Event) {
+    console.log('type of: ', event);
+    event.stopPropagation();
   }
 
   getNumberOfParticipant(participants: string) {

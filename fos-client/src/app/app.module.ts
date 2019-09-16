@@ -34,7 +34,8 @@ import {
   MatSidenavModule,
   MatListModule,
   MatInputModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatRadioModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
@@ -80,6 +81,7 @@ import { FoodComponent } from './components/dialog/food/food.component';
 import { ListOrderedFoodsComponent } from './components/order-detail/list-ordered-foods/list-ordered-foods.component';
 import { ReminderDialogComponent } from './components/reminder-dialog/reminder-dialog.component';
 import { EventDialogEditComponent } from './components/event-dialog-edit/event-dialog-edit.component';
+import { EventDialogConfirmComponent } from './components/event-dialog-confirm/event-dialog-confirm.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +111,8 @@ import { EventDialogEditComponent } from './components/event-dialog-edit/event-d
     FoodComponent,
     ListOrderedFoodsComponent,
     ReminderDialogComponent,
-    EventDialogEditComponent
+    EventDialogEditComponent,
+    EventDialogConfirmComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -160,7 +163,8 @@ import { EventDialogEditComponent } from './components/event-dialog-edit/event-d
     MatInputModule,
     MatSnackBarModule,
     MatTooltipModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatRadioModule
   ],
   providers: [
     OrderService,

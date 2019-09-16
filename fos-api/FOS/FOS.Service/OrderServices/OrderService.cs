@@ -10,7 +10,7 @@ using FOS.Repositories.Repositories;
 
 namespace FOS.Services.OrderServices
 {
-  
+
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
@@ -27,6 +27,7 @@ namespace FOS.Services.OrderServices
             _repository.UpdateOrder(efOrder);
             return true;
         }
+
         public bool CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId)
         {
             Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
@@ -49,6 +50,25 @@ namespace FOS.Services.OrderServices
         public IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             return _repository.GetUserNotOrdered(eventId);
+        }
+
+        public List<Order> GetOrders(string eventId)
+        {
+            var orders = _repository.GetAllOrderByEventId(eventId);
+            return orders.Select(order => _orderMapper.MapToDomain(order)).ToList();
+        }
+
+        public bool CreateWildOrder(Order order)
+        {
+            Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
+            _orderMapper.MapToEfObject(efOrder, order);
+            return _repository.AddOrder(efOrder);
+        }
+
+
+        public Order GetByEventvsUserId(string eventId, string userId)
+        {
+            return _orderMapper.MapToDomain(_repository.GetOrderByEventIdvsUserId(eventId, userId));
         }
     }
 }

@@ -14,13 +14,13 @@ namespace FOS.Model.Domain.NowModel
         public User HostUserEmail { get; set; }
         [JsonProperty("html")]
         public string Html { get; set; }
+        [JsonProperty("subject")]
         public string Subject { get; set; }
         public string EventTitle { get; set; }
         public string EventId { get; set; }
-
         public string EventRestaurant { get; set; }
         public string EventRestaurantId { get; set; }
         public string EventDeliveryId { get; set; }
-
+        public string MakeOrder { get; set; }
     }
 }
