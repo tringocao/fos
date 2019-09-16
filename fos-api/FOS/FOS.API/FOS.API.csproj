@@ -361,6 +361,7 @@
     <Compile Include="Controllers\OauthController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProvinceController.cs" />
+    <Compile Include="Controllers\RecurrenceEventController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\SendEmailController.cs" />
     <Compile Include="Controllers\SPListController.cs" />
