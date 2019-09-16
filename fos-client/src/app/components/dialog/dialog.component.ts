@@ -15,6 +15,7 @@ interface RestaurantMore {
   detail: RestaurantDetail;
   idService: number;
 }
+
 @Component({
   selector: "app-dialog",
   templateUrl: "./dialog.component.html",
@@ -44,7 +45,7 @@ export class DialogComponent implements OnInit {
       // autoFocus: false,
       maxHeight: "98vh",
       width: "80%",
-      data: this.data.restaurant
+      data: {restaurant:this.data.restaurant, idService:this.data.idService}
     });
 
     dialogRef.afterClosed().subscribe(result => {

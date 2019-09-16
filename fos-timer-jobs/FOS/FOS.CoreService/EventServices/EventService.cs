@@ -83,5 +83,11 @@ namespace FOS.CoreService.EventServices
                 return clientContext;
             }
         }
+
+        public async Task<int> GetEventToReminder()
+        {
+       
+            return 0;
+        }
     }
 }

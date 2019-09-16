@@ -296,14 +296,14 @@ export class EventDialogEditComponent implements OnInit {
       .then(result => {
         result.forEach(element => {
           var participant = participants.filter(
-            item => item.id === element.UserId
+            item => item.Id === element.UserId
           );
-
+            debugger;
           if (participant) {
             const userOrder: EventUser = {
-              Name: participant[0].displayName,
-              Email: participant[0].mail,
-              Id: participant[0].id,
+              Name: participant[0].DisplayName,
+              Email: participant[0].Mail,
+              Id: participant[0].Id,
               Img: "",
               IsGroup: 0,
               OrderStatus: "Not order"
@@ -321,17 +321,17 @@ export class EventDialogEditComponent implements OnInit {
         var flag: Boolean = false;
 
         self._eventUsers.forEach(element2 => {
-          if (element.id === element2.Id) {
+          if (element.Id === element2.Id) {
             flag = true;
           }
         });
 
         if (flag === false) {
-          console.log(element.displayName);
+          console.log(element.DisplayName);
           const userOrder: EventUser = {
-            Name: element.displayName,
-            Email: element.mail,
-            Id: element.id,
+            Name: element.DisplayName,
+            Email: element.Mail,
+            Id: element.Id,
             Img: "",
             IsGroup: 0,
             OrderStatus: "Order"
