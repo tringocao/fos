@@ -12,11 +12,7 @@ namespace FOS.CoreService
     {
         public static void Main(string[] args)
         {
-            var container = new UnityContainer();
-            UnityConfig.RegisterUnity.Register(container);
-            var program = container.Resolve<FosCoreService>();
-
-            program.ABC();
+            
         }
     }
 }

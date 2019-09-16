@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FOS.Common">
+      <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Common.dll</HintPath>
+    </Reference>
     <Reference Include="FOS.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Model.dll</HintPath>
@@ -90,6 +93,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -98,6 +102,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -112,6 +117,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\EventEmail.cs" />
+    <Compile Include="Constants\EventStatus.cs" />
     <Compile Include="UnityConfig\RegisterUnity.cs" />
     <Compile Include="Constants\EventConstant.cs" />
     <Compile Include="Program.cs" />
@@ -120,6 +127,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="App_Data\CloseEventEmailTemplate.json" />
+    <None Include="bin\Debug\App_Data\CloseEventEmailTemplate.json" />
     <None Include="bin\Debug\FOS.API.dll.config" />
     <None Include="bin\Debug\FOS.CoreService.exe.config" />
     <None Include="bin\Debug\FOS.Repositories.dll.config" />
