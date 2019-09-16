@@ -15,5 +15,6 @@ namespace FOS.CoreService.Constants
         public const string EventTitle = "EventTitle";
         public const string ID = "ID";
         public const string EventHost = "EventHost";
+        public const string SharepointTimeFormat = "yyyy-MM-ddTHH:mm:ss";
     }
 }

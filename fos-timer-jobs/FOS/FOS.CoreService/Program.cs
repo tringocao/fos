@@ -1,4 +1,5 @@
 ﻿using FOS.CoreService.EventServices;
+using FOS.CoreService.UnityConfig;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,11 @@ namespace FOS.CoreService
     {
         public static void Main(string[] args)
         {
-            
+            var container = new UnityContainer();
+            RegisterUnity.Register(container);
+            FosCoreService coreService = container.Resolve<FosCoreService>();
+
+            coreService.GetListEventShouldClose(coreService.GetClientContext());
         }
     }
 }

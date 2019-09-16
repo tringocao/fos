@@ -77,16 +77,10 @@ namespace FOS.CloseService
 
             using (var clientContext = coreService.GetClientContext())
             {
-                var events = coreService.GetListEventOpened(clientContext);
+                var events = coreService.GetListEventShouldClose(clientContext);
                 foreach (var element in events)
                 {
-                    var closeTimeString = element[EventConstant.EventTimeToClose].ToString();
-                    var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
-
-                    if (DateTime.Now >= closeTime)
-                    {
-                        CloseAnEvent(clientContext, element);
-                    }
+                    CloseAnEvent(clientContext, element);
                 }
             }
             //WriteToFile("Close event done at: " + DateTime.Now);

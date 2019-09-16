@@ -58,9 +58,9 @@ namespace FOS.Services.EventServices
                         CanCloseEvent = isHost && eventModel.Status == "Opened",
                         CanSendRemind = isHost && eventModel.Status == "Opened",
                         CanMakeOrder =
-                            (isParticipant || isHost || eventModel.EventType == "Open") 
+                            (isParticipant || eventModel.EventType == "Open") 
                             && eventModel.Status == "Opened",
-                        CanViewOrder = eventModel.Status == "Closed" && (isParticipant || isHost)
+                        CanViewOrder = eventModel.Status == "Closed" && isParticipant
                     };
 
                     listEvent.Add(eventModel);

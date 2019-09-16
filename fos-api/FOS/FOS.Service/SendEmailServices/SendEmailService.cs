@@ -93,9 +93,9 @@ namespace FOS.Services.SendEmailServices
         public async Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
         {
             var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
-            var templateBody = jsonTemplate.TryGetValue("Body", out object body);
+            jsonTemplate.TryGetValue("Body", out object body);
             ReadEmailTemplate(body.ToString());
-            var templateSubject = jsonTemplate.TryGetValue("Subject", out object subject);
+            jsonTemplate.TryGetValue("Subject", out object subject);
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {
                 var emailp = new EmailProperties();
