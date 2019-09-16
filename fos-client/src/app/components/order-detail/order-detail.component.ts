@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { DeliveryInfos } from "src/app/models/delivery-infos";
-import { RestaurantDetail } from "src/app/models/restaurant-detail";
-import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
-import { OrderService } from "src/app/services/order/order.service";
-import { User } from "src/app/models/user";
-import { Event } from "src/app/models/event";
-import { Order } from "src/app/models/order";
-import { UserService } from "src/app/services/user/user.service";
-import { Food } from "src/app/models/food";
-import { ListOrderedFoodsComponent } from "./list-ordered-foods/list-ordered-foods.component";
-import { EventFormService } from "src/app/services/event-form/event-form.service";
-import { FoodDetailJson } from "src/app/models/food-detail-json";
-import { MatSnackBar } from "@angular/material";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
+import { RestaurantDetail } from 'src/app/models/restaurant-detail';
+import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+import { OrderService } from 'src/app/services/order/order.service';
+import { User } from 'src/app/models/user';
+import { Event } from 'src/app/models/event';
+import { Order } from 'src/app/models/order';
+import { UserService } from 'src/app/services/user/user.service';
+import { Food } from 'src/app/models/food';
+import { ListOrderedFoodsComponent } from './list-ordered-foods/list-ordered-foods.component';
+import { EventFormService } from 'src/app/services/event-form/event-form.service';
+import { FoodDetailJson } from 'src/app/models/food-detail-json';
+import { MatSnackBar } from '@angular/material';
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
@@ -22,9 +22,9 @@ interface FoodCheck {
   checked: boolean;
 }
 @Component({
-  selector: "app-order-detail",
-  templateUrl: "./order-detail.component.html",
-  styleUrls: ["./order-detail.component.less"]
+  selector: 'app-order-detail',
+  templateUrl: './order-detail.component.html',
+  styleUrls: ['./order-detail.component.less']
 })
 export class OrderDetailComponent implements OnInit {
   idOrder: string;
@@ -50,45 +50,49 @@ export class OrderDetailComponent implements OnInit {
 
   ngOnInit() {
     this.data = { restaurant: null, detail: null };
-    this.idOrder = this.route.snapshot.paramMap.get("id");
+    this.idOrder = this.route.snapshot.paramMap.get('id');
     this.isWildParticipant = false;
     // check if wild guest order
-    if (this.idOrder.includes("ffa")) {
+    if (this.idOrder.includes('ffa')) {
       var eventId = this.idOrder.slice(3);
       this.isWildParticipant = true;
       this.eventFormService.GetEventById(eventId).then(event => {
         this.event = event;
-        console.log(this.event)
-        this.restaurantService.getRestaurants([Number(this.event.RestaurantId)])
-        .then(restaurant => {
-          this.data.restaurant = restaurant[0];
-          this.restaurantService
-            .getRestaurantDetail(Number(event.DeliveryId))
-            .then(restaurantd => {
-              this.data.detail = restaurantd;
-              this.userService.getCurrentUserId().then(user => {
-                this.user = user;
-              }).then(() => {
-                this.order = {
-                  Id: '1',
-                  OrderDate:new Date(),
-                  IdUser: this.user.Id,
-                  IdEvent: this.event.EventId,
-                  IdRestaurant: Number(this.event.RestaurantId),
-                  IdDelivery: Number(this.event.DeliveryId),
-                  FoodDetail: [],
-                  IsOrdered: false
-                }
-                this.checkedData = this.order.FoodDetail;
-                if (this.isToday(new Date(event.CloseTime))) {
-                  this.isOrder = false;
-                }
-                this.isDataAvailable = true;
-                this.loading = false;
-                this.totalBudget = Number(event.MaximumBudget);
-              })
-            })
-          })
+        console.log(this.event);
+        this.restaurantService
+          .getRestaurants([Number(this.event.RestaurantId)])
+          .then(restaurant => {
+            this.data.restaurant = restaurant[0];
+            this.restaurantService
+              .getRestaurantDetail(Number(event.DeliveryId))
+              .then(restaurantd => {
+                this.data.detail = restaurantd;
+                this.userService
+                  .getCurrentUserId()
+                  .then(user => {
+                    this.user = user;
+                  })
+                  .then(() => {
+                    this.order = {
+                      Id: '1',
+                      OrderDate: new Date(),
+                      IdUser: this.user.Id,
+                      IdEvent: this.event.EventId,
+                      IdRestaurant: Number(this.event.RestaurantId),
+                      IdDelivery: Number(this.event.DeliveryId),
+                      FoodDetail: [],
+                      IsOrdered: false
+                    };
+                    this.checkedData = this.order.FoodDetail;
+                    if (this.isClosed(new Date(event.CloseTime))) {
+                      this.isOrder = false;
+                    }
+                    this.isDataAvailable = true;
+                    this.loading = false;
+                    this.totalBudget = Number(event.MaximumBudget);
+                  });
+              });
+          });
       });
     }
   }
@@ -157,7 +161,7 @@ export class OrderDetailComponent implements OnInit {
     this.orderService
       .SetOrder(this.order, this.isWildParticipant)
       .then(result => {
-        this.toast("Save!", "Dismiss");
+        this.toast('Save!', 'Dismiss');
       });
   }
 }

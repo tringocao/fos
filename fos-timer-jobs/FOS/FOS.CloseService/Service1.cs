@@ -30,11 +30,7 @@ namespace FOS.CloseService
 
         protected override void OnStart(string[] args)
         {
-            var container = new UnityContainer();
-            RegisterUnity.Register(container);
-            coreService = container.Resolve<FosCoreService>();
-
-            CloseEventAutomatically();
+            CloseEvent();
 
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             timer.Interval = 60000; //number in milisecinds  
@@ -46,9 +42,39 @@ namespace FOS.CloseService
         }
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
+            CloseEvent();
         }
-        private void CloseEventAutomatically()
+        public void WriteToFile(string Message)
         {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\Logs";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\Logs\\ServiceLog_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
+            if (!System.IO.File.Exists(filepath))
+            {
+                // Create a file to write to.   
+                using (StreamWriter sw = System.IO.File.CreateText(filepath))
+                {
+                    sw.WriteLine(Message);
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = System.IO.File.AppendText(filepath))
+                {
+                    sw.WriteLine(Message);
+                }
+            }
+        }
+        private void CloseEvent()
+        {
+            //WriteToFile("Close event begin at: " + DateTime.Now);
+            var container = new UnityContainer();
+            RegisterUnity.Register(container);
+            coreService = container.Resolve<FosCoreService>();
+
             using (var clientContext = coreService.GetClientContext())
             {
                 var events = coreService.GetListEventOpened(clientContext);
@@ -59,12 +85,13 @@ namespace FOS.CloseService
 
                     if (DateTime.Now >= closeTime)
                     {
-                        ProcessAnEvent(clientContext, element);
+                        CloseAnEvent(clientContext, element);
                     }
                 }
             }
+            //WriteToFile("Close event done at: " + DateTime.Now);
         }
-        private void ProcessAnEvent(ClientContext clientContext, ListItem element)
+        private void CloseAnEvent(ClientContext clientContext, ListItem element)
         {
             var clientUrl = ConfigurationSettings.AppSettings["clientUrl"];
             var noReplyEmail = ConfigurationSettings.AppSettings["noReplyEmail"];
