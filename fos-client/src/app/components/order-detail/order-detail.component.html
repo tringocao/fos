@@ -1,12 +1,14 @@
 <app-loading [loading]="loading"></app-loading>
 <div *ngIf="isDataAvailable" class="aaa">
+  <div color="primary" style="width: 1rem;"></div>
+
   <app-food
     [data]="data"
     [isOrder]="isOrder"
     [checkedData]="checkedData"
     (valueChange)="GetFoodFromMenu($event)"
   ></app-food>
-  <div style="width: 10px;"></div>
+  <div color="primary" style="width: 10px;"></div>
   <app-list-ordered-foods
     #foodorderlist
     [user]="user"
@@ -16,7 +18,7 @@
     [totalBudget]="totalBudget"
   ></app-list-ordered-foods>
 </div>
-<div class="example-button-row">
+<div *ngIf="isDataAvailable" class="example-button-row">
   <button [disabled]="!isOrder" mat-raised-button color="warn" (click)="Save()">
     Save Order
   </button>

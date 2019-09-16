@@ -24,6 +24,9 @@ using AudienceRestriction = Microsoft.IdentityModel.Tokens.AudienceRestriction;
 using AudienceUriValidationFailedException = Microsoft.IdentityModel.Tokens.AudienceUriValidationFailedException;
 using SecurityTokenHandlerConfiguration = Microsoft.IdentityModel.Tokens.SecurityTokenHandlerConfiguration;
 using X509SigningCredentials = Microsoft.IdentityModel.SecurityTokenService.X509SigningCredentials;
+using System.IdentityModel;
+using System.Xml;
+using RequestFailedException = Microsoft.IdentityModel.SecurityTokenService.RequestFailedException;
 
 namespace FOS.Services
 {
@@ -1150,7 +1153,7 @@ namespace FOS.Services
         /// </summary>
         /// <param name="keys">An enumeration of Byte arrays that contain the symmetric keys.</param>
         public MultipleSymmetricKeySecurityToken(IEnumerable<byte[]> keys)
-            : this(UniqueId.CreateUniqueId(), keys)
+            : this(Microsoft.IdentityModel.UniqueId.CreateUniqueId(), keys)
         {
         }
 

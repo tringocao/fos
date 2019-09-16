@@ -13,38 +13,38 @@ namespace FOS.Services.RestaurantServices
     {
         //IExternalServiceFactory _craw;
         IProvinceService _provinceService;
-        int IdService;
+        int idService;
         public RestaurantService(IProvinceService provinceService)
         {
             //_craw = craw;
             _provinceService = provinceService;
         }
-        public string GetExternalServiceById(int IdService)
+        public string GetExternalServiceById(int idService)
         {
-            this.IdService = IdService;
-            return "RestaurantService in " + _provinceService.GetExternalServiceById(IdService) + "is ready";
+            this.idService = idService;
+            return "RestaurantService in " + _provinceService.GetExternalServiceById(idService) + "is ready";
         }
-        public async Task<List<Restaurant>> GetRestaurantsByProvinceAsync(int city_id)
+        public async Task<List<Restaurant>> GetRestaurantsByProvinceAsync(int cityId)
         {
-            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(city_id), "\"\"", null);
+            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(cityId), "\"\"", null);
         }
-        public async Task<List<Restaurant>> GetRestaurantsByKeywordAsync(int city_id, string keyword)
+        public async Task<List<Restaurant>> GetRestaurantsByKeywordAsync(int cityId, string keyword)
         {
-            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(city_id), keyword, null);
+            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(cityId), keyword, null);
         }
-        public async Task<List<Restaurant>> GetRestaurantsByCategoriesAsync(int city_id, List<RestaurantCategory> categories)
+        public async Task<List<Restaurant>> GetRestaurantsByCategoriesAsync(int cityId, List<RestaurantCategory> categories)
         {
 
-            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(city_id), "", categories);
+            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(cityId), "", categories);
         }
-        public async Task<List<Restaurant>> GetRestaurantsByCategoriesKeywordAsync(int city_id, List<RestaurantCategory> categories, string keyword)
+        public async Task<List<Restaurant>> GetRestaurantsByCategoriesKeywordAsync(int cityId, List<RestaurantCategory> categories, string keyword)
         {
 
-            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(city_id), keyword, categories);
+            return await _provinceService.GetRestaurantsAsync(await _provinceService.GetMetadataByIdAsync(cityId), keyword, categories);
         }
-        public async Task<Restaurant> GetRestaurantsByIdAsync(int city_id, int restaurant_id)
+        public async Task<Restaurant> GetRestaurantsByIdAsync(int cityId, int restaurant_id)
         {
-            var listRestaurants = await GetRestaurantsByProvinceAsync(city_id);
+            var listRestaurants = await GetRestaurantsByProvinceAsync(cityId);
             return listRestaurants.Where(p => p.RestaurantId == restaurant_id.ToString()).FirstOrDefault();
         }
 

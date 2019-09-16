@@ -7,6 +7,7 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { FoodCategory } from "src/app/models/food-category";
 import { CategoryGroup } from "src/app/models/category-group";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
+import { Restaurant } from "src/app/models/restaurant";
 
 @Injectable({
   providedIn: "root"
@@ -32,18 +33,15 @@ export class RestaurantService {
         .catch(alert => console.log(alert));
     });
   }
-  getFood(
-    delivery_id: number,
-    IdService: number = 1
-  ): Promise<Array<FoodCategory>> {
+  getFood(deliveryId: number, idService: number): Promise<Array<FoodCategory>> {
     return new Promise<Array<FoodCategory>>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Array<FoodCategory>>>(
           environment.apiUrl + "GetFoodCatalogues",
           {
             params: {
-              IdService: JSON.stringify(IdService),
-              delivery_id: JSON.stringify(delivery_id)
+              idService: JSON.stringify(idService),
+              deliveryId: JSON.stringify(deliveryId)
             }
           }
         )
@@ -59,8 +57,8 @@ export class RestaurantService {
   getRestaurantIds(
     topic: any,
     keyword: string,
-    IdService: number = 1,
-    city_id: number = 217
+    idService: number,
+    cityId: number
   ): Promise<Array<number>> {
     return new Promise<Array<number>>((resolve, reject) => {
       this.http
@@ -71,8 +69,8 @@ export class RestaurantService {
           },
           {
             params: {
-              IdService: JSON.stringify(IdService),
-              city_id: JSON.stringify(city_id),
+              idService: JSON.stringify(idService),
+              cityId: JSON.stringify(cityId),
               keyword: '"' + keyword + '"'
             }
           }
@@ -88,7 +86,7 @@ export class RestaurantService {
   }
   getRestaurantDetail(
     deliveryId: number,
-    IdService: number = 1
+    idService: number
   ): Promise<RestaurantDetail> {
     return new Promise<RestaurantDetail>((resolve, reject) => {
       this.http
@@ -96,8 +94,8 @@ export class RestaurantService {
           environment.apiUrl + "api/Delivery/GetDeliveryDetail",
           {
             params: {
-              IdService: JSON.stringify(IdService),
-              delivery_id: JSON.stringify(deliveryId)
+              idService: JSON.stringify(idService),
+              deliveryId: JSON.stringify(deliveryId)
             }
           }
         )
@@ -112,8 +110,8 @@ export class RestaurantService {
   }
   getRestaurantDetailById(
     restaurantId: number,
-    cityId: number = 217,
-    idService: number = 1
+    cityId: number,
+    idService: number
   ): Promise<DeliveryInfos> {
     return new Promise<DeliveryInfos>((resolve, reject) => {
       this.http
@@ -121,8 +119,8 @@ export class RestaurantService {
           environment.apiUrl + "api/Delivery/GetFirstId",
           {
             params: {
-              IdService: JSON.stringify(idService),
-              city_Id: JSON.stringify(cityId),
+              idService: JSON.stringify(idService),
+              cityId: JSON.stringify(cityId),
               restaurant_id: JSON.stringify(restaurantId)
             }
           }
@@ -138,20 +136,22 @@ export class RestaurantService {
   }
   getRestaurants(
     ids: Array<number>,
-    IdService: number = 1,
-    city_id: number = 217
+    idService: number,
+    cityId: number
   ): Promise<Array<DeliveryInfos>> {
+    let ress: Restaurant[] = [];
+    ids.forEach(id => {
+      ress.push({ Id: id, DeliveryId: "" });
+    });
     return new Promise<Array<DeliveryInfos>>((resolve, reject) => {
       this.http
         .put<ApiOperationResult<Array<DeliveryInfos>>>(
           environment.apiUrl + "api/Delivery/PutRestaurantIds",
-          {
-            restaurant_id: ids
-          },
+          ress,
           {
             params: {
-              IdService: JSON.stringify(IdService),
-              city_id: JSON.stringify(city_id)
+              idService: JSON.stringify(idService),
+              cityId: JSON.stringify(cityId)
             }
           }
         )
@@ -164,14 +164,14 @@ export class RestaurantService {
         .catch(alert => console.log(alert));
     });
   }
-  GetMetadataForCategory(IdService: number = 1): Promise<Array<CategoryGroup>> {
+  GetMetadataForCategory(idService: number = 1): Promise<Array<CategoryGroup>> {
     return new Promise<Array<CategoryGroup>>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Array<CategoryGroup>>>(
           environment.apiUrl + "api/Restaurant/GetMetadataForCategory",
           {
             params: {
-              IdService: JSON.stringify(IdService)
+              idService: JSON.stringify(idService)
             }
           }
         )
@@ -188,16 +188,16 @@ export class RestaurantService {
   SearchRestaurantName(
     name: string,
     limit: number,
-    IdService: number = 1,
-    city_id: number = 217
+    idService: number,
+    cityId: number
   ): Observable<ApiOperationResult<Array<number>>> {
     return this.http
       .get<ApiOperationResult<Array<number>>>(
         environment.apiUrl + "api/Restaurant/GetByKeywordLimit",
         {
           params: {
-            IdService: JSON.stringify(IdService),
-            city_id: JSON.stringify(city_id),
+            idService: JSON.stringify(idService),
+            cityId: JSON.stringify(cityId),
             keyword: '"' + name + '"',
             limit: JSON.stringify(limit)
           }

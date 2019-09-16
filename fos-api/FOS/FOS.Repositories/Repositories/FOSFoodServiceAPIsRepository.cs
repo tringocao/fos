@@ -22,7 +22,7 @@ namespace FOS.Repositories.Repositories
         public IEnumerable<Model.Domain.Apis> GetAllFOSCrawlLinks()
         {
             //throw new NotImplementedException();
-            var list = DbContext.ExternalServiceAPIs.Take(1).ToList();
+            var list = DbContext.ExternalServiceAPIs;
             return Mapper.Map<IEnumerable<ExternalServiceAPI>, IEnumerable<Model.Domain.Apis>>(list);
         }
 

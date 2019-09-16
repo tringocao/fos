@@ -49,6 +49,8 @@ namespace FOS.Model.Mapping
             eventModel.EventType = ElementAttributeToString(element["EventTypes"]);
             eventModel.EventDate = eventDate;
             eventModel.EventParticipantsJson = ElementAttributeToString(element["EventParticipantsJson"]);
+            eventModel.ServiceId = ElementAttributeToString(element["EventServiceId"]);
+
             eventModel.RemindTime = remindDate;
 
             return eventModel;

@@ -128,10 +128,9 @@ export class EventSummaryDialogComponent implements OnInit {
     this.dishViewDataAvailable = false;
  
     this.route.params.subscribe(params => {
-      var id = params['id'];
-      this.eventFormService
-      .GetEventById(id).then((result:Event) => {
-        console.log(result)
+      var id = params["id"];
+      this.eventFormService.GetEventById(id).then((result: Event) => {
+        console.log(result);
         this.eventDetail = result;
         this.eventDataAvailable = true;
         this.restaurantService.getRestaurants([Number(this.eventDetail.RestaurantId)]).then(result => {

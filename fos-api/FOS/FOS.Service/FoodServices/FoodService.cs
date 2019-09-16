@@ -11,31 +11,31 @@ namespace FOS.Services.FoodServices
     public class FoodService:IFoodService
     {
         IDeliveryService _deliveryService;
-        int IdService;
+        int idService;
         public FoodService(IDeliveryService deliveryService)
         {
             //_craw = craw;
             _deliveryService = deliveryService;
         }
-        public string GetExternalServiceById(int IdService)
+        public string GetExternalServiceById(int idService)
         {
-            this.IdService = IdService;
-            return "DeliveryService in " + _deliveryService.GetExternalServiceById(IdService) + "is ready";
+            this.idService = idService;
+            return "DeliveryService in " + _deliveryService.GetExternalServiceById(idService) + "is ready";
         }
         public async Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery)
         {
             return await _deliveryService.GetFoodCataloguesAsync(delivery);
         }
-        public async Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int delivery_id)
+        public async Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int deliveryId)
         {
             return await GetFoodCataloguesAsync(
-                new DeliveryInfos() { DeliveryId = delivery_id});
+                new DeliveryInfos() { DeliveryId = deliveryId});
         }
-        public async Task<List<Food>> GetFoodFromCatalogueAsync(int delivery_id, int dish_type_id)
+        public async Task<List<Food>> GetFoodFromCatalogueAsync(int deliveryId, int dishTypeId)
         {
-            var listFoodCatalogue = await GetFoodCataloguesFromDeliveryIdAsync(delivery_id);
+            var listFoodCatalogue = await GetFoodCataloguesFromDeliveryIdAsync(deliveryId);
             return listFoodCatalogue
-                .Where(fc => fc.DishTypeId == dish_type_id.ToString())
+                .Where(fc => fc.DishTypeId == dishTypeId.ToString())
                 .FirstOrDefault()
                 .Dishes;
         }

@@ -6,8 +6,8 @@ namespace FOS.Services.ProvinceServices
 {
     public interface IProvinceService
     {
-        Task<Province> GetMetadataByIdAsync(int city_id);
-        string GetExternalServiceById(int IdService);
+        Task<Province> GetMetadataByIdAsync(int cityId);
+        string GetExternalServiceById(int idService);
         Task<List<Restaurant>> GetRestaurantsAsync(Province province, string keyword, List<RestaurantCategory> categories);
         Task<List<DeliveryInfos>> GetRestaurantDeliveryInforAsync(Restaurant restaurant);
         Task<List<DeliveryInfos>> GetRestaurantsDeliveryInforAsync(List<Restaurant> restaurant);

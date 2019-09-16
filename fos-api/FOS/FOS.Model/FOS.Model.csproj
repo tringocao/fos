@@ -98,6 +98,8 @@
     <Compile Include="Domain\AuthClientRespond.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
     <Compile Include="Domain\Event.cs" />
+    <Compile Include="Domain\EventList.cs" />
+    <Compile Include="Domain\EventListItem.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\JSONRequest.cs" />
@@ -122,12 +124,12 @@
     <Compile Include="Domain\Token.cs" />
     <Compile Include="Domain\TokenResource.cs" />
     <Compile Include="Domain\User.cs" />
-    <Compile Include="Dto\APIs.cs" />
     <Compile Include="Dto\Category.cs" />
     <Compile Include="Dto\CategoryGroup.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\Event.cs" />
     <Compile Include="Dto\EventAction.cs" />
+    <Compile Include="Dto\ExternalService.cs" />
     <Compile Include="Dto\FavoriteRestaurant.cs" />
     <Compile Include="Dto\Food.cs" />
     <Compile Include="Dto\FoodCategory.cs" />
@@ -150,13 +152,13 @@
     <Compile Include="Mapping\FavoriteRestaurantDtoMapper.cs" />
     <Compile Include="Mapping\FoodCategoryDtoMapper.cs" />
     <Compile Include="Mapping\FoodDtoMapper.cs" />
+    <Compile Include="Mapping\GraphUserDtoMapper.cs" />
     <Compile Include="Mapping\JsonDtoMapper.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
     <Compile Include="Mapping\ProvinceDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantDetailDtoMapper.cs" />
     <Compile Include="Mapping\UserDtoMapper.cs" />
-    <Compile Include="Params\ListRestaurant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ApiUtil.cs" />
   </ItemGroup>
@@ -165,7 +167,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dto\..\..\..\..\fos-client\src\app\models\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +354,18 @@
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Event.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\Event.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\Event.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\external-service.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\ExternalService.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\favorite-restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\FavoriteRestaurant.cs</CustomToolNamespace>
@@ -440,6 +453,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\food.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Food.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\graph-user.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\GraphUser.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\list-restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

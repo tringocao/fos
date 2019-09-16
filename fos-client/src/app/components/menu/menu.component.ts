@@ -19,6 +19,7 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 export class MenuComponent {
   overlay: Overlay;
   @Input("restaurant") restaurant: DeliveryInfos;
+  @Input() idService: number;
   resDetail: RestaurantDetail;
 
   constructor(
@@ -34,7 +35,7 @@ export class MenuComponent {
 
   openDialog(): void {
     this.restaurantService
-      .getRestaurantDetail(Number(this.restaurant.DeliveryId))
+      .getRestaurantDetail(Number(this.restaurant.DeliveryId),this.idService)
       .then(result => {
         this.resDetail.Rating = Number(result.Rating);
         this.resDetail.TotalReview = Number(result.TotalReview);
@@ -43,7 +44,7 @@ export class MenuComponent {
           autoFocus: false,
           maxHeight: "98vh",
           width: "80%",
-          data: { restaurant: this.restaurant, detail: this.resDetail }
+          data: { restaurant: this.restaurant, detail: this.resDetail, idService: this.idService }
         });
 
         dialogRef.afterClosed().subscribe(result => {

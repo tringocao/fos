@@ -195,7 +195,8 @@ import { EventDialogConfirmComponent } from './components/event-dialog-confirm/e
     EventDialogViewComponent,
     EventSummaryDialogComponent,
     ReminderDialogComponent,
-    EventDialogEditComponent
+    EventDialogEditComponent,
+    EventDialogConfirmComponent
   ]
 })
 export class AppModule {}

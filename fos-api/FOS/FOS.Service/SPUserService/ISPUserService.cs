@@ -9,15 +9,14 @@ namespace FOS.Services.SPUserService
 {
     public interface ISPUserService
     {
-        Task<Model.Domain.User> GetUserByIdsDomain(string Id);
-        Task<List<Model.Dto.User>> GetUsers();
+        Task<List<User>> GetUsers();
         Task<Model.Dto.GraphUser> GetCurrentUserGraph();
-        Task<Model.Dto.User> GetCurrentUser();
-        Task<Model.Dto.User> GetUserById(string Id);
-        Task<List<Model.Dto.User>> GetGroups();
+        Task<User> GetCurrentUser();
+        Task<User> GetUserById(string Id);
+        Task<List<User>> GetGroups();
         Task<byte[]> GetAvatar(string Id, string avatarName);
-        Task<List<Model.Dto.User>> GetUsersByName(string searchName);
+        Task<List<User>> GetUsersByName(string searchName);
 
-        Task<List<Model.Dto.User>> GroupListMemers(string groupId);
+        Task<List<User>> GroupListMemers(string groupId);
     }
 }

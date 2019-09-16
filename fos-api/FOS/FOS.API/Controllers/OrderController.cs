@@ -26,13 +26,18 @@ namespace FOS.API.Controllers
         private readonly IOrderService _orderService;
         private readonly ISPListService _spListService;
         private readonly ISPUserService _spUserService;
-
-        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService spListService, ISPUserService spUserService)
+        IGraphUserDtoMapper _graphUserDtoMapper;
+        public OrderController(IOrderDtoMapper mapper,
+            IOrderService service,
+            ISPListService spListService,
+            ISPUserService spUserService,
+            IGraphUserDtoMapper graphUserDtoMapper)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
             _spListService = spListService;
             _spUserService = spUserService;
+            _graphUserDtoMapper = graphUserDtoMapper;
         }
         [HttpGet]
         [Route("GetById")]
@@ -41,7 +46,6 @@ namespace FOS.API.Controllers
             try
             {
                 Guid id = Guid.Parse(orderId);
-                Model.Domain.Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
                     _orderDtoMapper.ToDto(_orderService.GetOrder(id))
                );
@@ -71,15 +75,13 @@ namespace FOS.API.Controllers
         }
 
         [HttpGet]
-        [Route("SendOrderById")]
-        public ApiResponse<Model.Dto.Order> GetdById(string orderId)
+        [Route("GetByEventvsUserId")]
+        public ApiResponse<Model.Dto.Order> GetByEventvsUserId(string eventId, string userId)
         {
             try
             {
-                Guid id = Guid.Parse(orderId);
-                Model.Domain.Order order = _orderService.GetOrder(id);
                 return ApiUtil<Model.Dto.Order>.CreateSuccessfulResult(
-                    _orderDtoMapper.ToDto(_orderService.GetOrder(id))
+                    _orderDtoMapper.ToDto(_orderService.GetByEventvsUserId(eventId, userId))
                );
             }
             catch (Exception e)
@@ -117,10 +119,10 @@ namespace FOS.API.Controllers
                 _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
                 GraphUser _user = new GraphUser()
                 {
-                    id = order.IdUser,
-                    displayName = user.DisplayName,
-                    mail = user.Mail,
-                    userPrincipalName = user.UserPrincipalName,
+                    Id = order.IdUser,
+                    DisplayName = user.DisplayName,
+                    Mail = user.Mail,
+                    UserPrincipalName = user.UserPrincipalName,
                 };
                 await _spListService.UpdateEventParticipant(order.IdEvent, _user);
                 return ApiUtil.CreateSuccessfulResult();

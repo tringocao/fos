@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using FOS.Services.OrderServices;
 
 namespace FOS.Services.SPListService
 {
@@ -18,10 +19,13 @@ namespace FOS.Services.SPListService
     {
         IGraphApiProvider _graphApiProvider;
         ISharepointContextProvider _sharepointContextProvider;
-        public SPListService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider)
+        IOrderService _orderService;
+
+        public SPListService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IOrderService orderService)
         {
             _graphApiProvider = graphApiProvider;
             _sharepointContextProvider = sharepointContextProvider;
+            _orderService = orderService;
         }
 
         //public async Task<ApiResponse> GetList(string Id)
@@ -89,6 +93,8 @@ namespace FOS.Services.SPListService
         {
             try
             {
+                await DeleteOrderFromEvent(id);
+
                 var eventData = item;
                 using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
                 {
@@ -160,7 +166,18 @@ namespace FOS.Services.SPListService
             {
                 throw e;
             }
+        }
 
+        public async Task<Boolean> DeleteOrderFromEvent(string idEvent)
+        {
+            try
+            {
+                return  _orderService.DeleteOrderByIdEvent(idEvent);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
