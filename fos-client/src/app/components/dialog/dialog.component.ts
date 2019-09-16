@@ -13,6 +13,7 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
+  idService: number;
 }
 @Component({
   selector: "app-dialog",

@@ -18,6 +18,7 @@ import { FoodDetailJson } from "src/app/models/food-detail-json";
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
+  idService: number;
 }
 interface FoodCheck {
   food: Food;
@@ -103,7 +104,7 @@ export class FoodComponent implements OnInit {
     this.GetFood(Number(this.data.restaurant.DeliveryId));
   }
   GetFood(deliveryId: number) {
-    this.restaurantService.getFood(deliveryId).then(result => {
+    this.restaurantService.getFood(deliveryId,this.data.idService).then(result => {
       result.forEach(c => this.foodCategory.push(c));
       this.showAll(this.foodCategory);
     });

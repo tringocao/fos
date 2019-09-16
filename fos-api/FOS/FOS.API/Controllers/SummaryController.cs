@@ -54,7 +54,7 @@ namespace FOS.API.Controllers
         {
             try
             {
-                Model.Dto.User sender = await _spUserService.GetCurrentUser();
+                Model.Domain.User sender = await _spUserService.GetCurrentUser();
                 string reportId = await _summaryService.AddReport(report);
                 string html = _summaryService.BuildHtmlEmail(reportUrl, eventId, reportId);
                 _summaryService.SendReport(sender.UserPrincipalName, html, "Event Report");
