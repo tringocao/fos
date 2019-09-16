@@ -46,6 +46,7 @@ export class ListRestaurantComponent implements OnInit {
   favoriteOnly: boolean;
   topic: string;
   keyword: string;
+  @Input() idService: number;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   ngOnInit() {
@@ -167,9 +168,9 @@ export class ListRestaurantComponent implements OnInit {
       this.topic = $event.topic;
       this.keyword = $event.keyword;
       this.restaurantService
-        .getRestaurantIds($event.topic, $event.keyword)
+        .getRestaurantIds($event.topic, $event.keyword, this.idService, 217)
         .then(response => {
-          this.restaurantService.getRestaurants(response).then(result => {
+          this.restaurantService.getRestaurants(response, this.idService, 217).then(result => {
             var dataSourceTemp = [];
             dataSourceTemp = result.map(item => {
               if (this.favoriteRestaurants.includes(item.RestaurantId)) {

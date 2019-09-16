@@ -38,7 +38,7 @@ namespace FOS.API.Controllers
             try
             {
                 var users = await _sPUserService.GetUsers();
-                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(users);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(users.Select(u => _userDtoMapper.ToDto(u)).ToList());
             }
             catch (Exception e)
             {
@@ -69,7 +69,7 @@ namespace FOS.API.Controllers
             try
             {
                 var user = await _sPUserService.GetCurrentUser();
-                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(user);
+                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(_userDtoMapper.ToDto(user));
             }
             catch (Exception e)
             {
@@ -85,7 +85,7 @@ namespace FOS.API.Controllers
             try
             {
                 var user = await _sPUserService.GetUserById(Id);
-                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(user);
+                return ApiUtil<Model.Dto.User>.CreateSuccessfulResult(_userDtoMapper.ToDto(user));
             }
             catch (Exception e)
             {
@@ -101,7 +101,7 @@ namespace FOS.API.Controllers
             try
             {
                 var group = await _sPUserService.GetGroups();
-                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(group);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(group.Select(gu => _userDtoMapper.ToDto(gu)).ToList());
             }
             catch (Exception e)
             {
@@ -137,7 +137,7 @@ namespace FOS.API.Controllers
             try
             {
                 var user = await _sPUserService.GetUsersByName(searchName);
-                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(user);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(user.Select(u => _userDtoMapper.ToDto(u)).ToList());
             }
             catch (Exception e)
             {
@@ -152,7 +152,7 @@ namespace FOS.API.Controllers
             try
             {
                 var user = await _sPUserService.GroupListMemers(groupId);
-                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(user);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(user.Select(u => _userDtoMapper.ToDto(u)).ToList());
             }
             catch (Exception e)
             {

@@ -139,6 +139,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IRestaurantDtoMapper, Model.Mapping.RestaurantDtoMapper>();
             container.RegisterType<Model.Mapping.IEventDtoMapper, Model.Mapping.EventDtoMapper>();
             container.RegisterType<Model.Mapping.IUserDtoMapper, Model.Mapping.UserDtoMapper>();
+            container.RegisterType<Model.Mapping.IGraphUserDtoMapper, Model.Mapping.GraphUserDtoMapper>();
 
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(
                 new TransientLifetimeManager(),

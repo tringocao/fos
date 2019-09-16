@@ -111,19 +111,19 @@ namespace FOS.API.Controllers
         [HttpPut]
         [Route("PutRestaurantIds")]
         // PUT: api/Delivery/5
-        public async Task<ApiResponse<List<DeliveryInfos>>> Put(int idService, int cityId, [FromBody]ListRestaurant data)
+        public async Task<ApiResponse<List<DeliveryInfos>>> Put(int idService, int cityId, [FromBody]List<Restaurant> data)
         {
             try
             {
                 _deliveryService.GetExternalServiceById(idService);
                 List<Model.Domain.NowModel.Restaurant> newList = new List<Model.Domain.NowModel.Restaurant>();
 
-                if (data.RestaurantIds.Count() < 1) ApiUtil<List<DeliveryInfos>>.CreateFailResult("");
+                if (data.Count() < 1) ApiUtil<List<DeliveryInfos>>.CreateFailResult("");
      
-                foreach (var id in data.RestaurantIds)//get the fisrt catalogue.
+                foreach (var id in data)//get the fisrt catalogue.
                 {
                     Model.Domain.NowModel.Restaurant item = new Model.Domain.NowModel.Restaurant();
-                    item.RestaurantId = id.ToString();
+                    item.RestaurantId = id.Id.ToString();
                     newList.Add(item);
                 }
                 var list = await _deliveryService.GetRestaurantsDeliveryInforAsync(cityId, newList);

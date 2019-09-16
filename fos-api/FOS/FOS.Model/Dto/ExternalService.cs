@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-   public class RestaurantDetail
+    public class ExternalService
     {
-        public float Rating { get; set; }
-        public int TotalReview { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+
     }
 }

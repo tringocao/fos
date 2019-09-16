@@ -26,6 +26,7 @@ namespace FOS.API.Controllers
         public ProvinceController(IProvinceService provinceService, IProvinceDtoMapper provinceDtoMapper)
         {
             _provinceService = provinceService;
+
         }
         // GET: api/Province 
         [HttpGet]
@@ -45,7 +46,7 @@ namespace FOS.API.Controllers
                 return ApiUtil<List<Province>>.CreateFailResult(e.ToString());
             }
         }
-
+     
         // GET: api/Province/5
         [HttpGet]
         [Route("GetById")]

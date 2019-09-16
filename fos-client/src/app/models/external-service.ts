@@ -10,11 +10,9 @@
     
      
 
-    export class GraphUser    {
+    export class ExternalService    {
            
-        public Id: string = null;   
-        public Mail: string = null;   
-        public DisplayName: string = null;   
-        public UserPrincipalName: string = null;
+        public Id: number = 0;   
+        public Name: string = null;
     }
          
