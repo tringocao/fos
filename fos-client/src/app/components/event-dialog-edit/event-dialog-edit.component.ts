@@ -411,16 +411,16 @@ export class EventDialogEditComponent implements OnInit {
       if (user.IsGroup === 0) {
         var check = false;
         jsonParticipants.map(mem => {
-          if (mem.displayName === user.Name) {
+          if (mem.DisplayName === user.Name) {
             check = true;
           }
         });
         if (check === false) {
           var participant: GraphUser = {
-            id: user.Id,
-            displayName: user.Name,
-            mail: user.Email,
-            userPrincipalName: user.Name
+            Id: user.Id,
+            DisplayName: user.Name,
+            Mail: user.Email,
+            UserPrincipalName: user.Name
           };
           jsonParticipants.push(participant);
           numberParticipant++;
@@ -437,16 +437,16 @@ export class EventDialogEditComponent implements OnInit {
             value.Data.map(u => {
               var check = false;
               jsonParticipants.map(mem => {
-                if (mem.displayName === u.DisplayName) {
+                if (mem.DisplayName === u.DisplayName) {
                   check = true;
                 }
               });
               if (check === false) {
                 var participant: GraphUser = {
-                  id: u.Id,
-                  displayName: u.DisplayName,
-                  mail: u.Mail,
-                  userPrincipalName: u.DisplayName
+                  Id: u.Id,
+                  DisplayName: u.DisplayName,
+                  Mail: u.Mail,
+                  UserPrincipalName: u.DisplayName
                 };
                 jsonParticipants.push(participant);
                 numberParticipant++;

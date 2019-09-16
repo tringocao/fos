@@ -204,13 +204,13 @@ export class EventDialogComponent implements OnInit {
       .getCurrentUser()
       .toPromise()
       .then(value => {
-        self._createdUser = { id: value.Data.id };
+        self._createdUser = { id: value.Data.Id };
 
         var dataSourceTemp: userPicker = {
-          Name: value.Data.displayName,
-          Email: value.Data.mail,
+          Name: value.Data.DisplayName,
+          Email: value.Data.Mail,
           Img: "",
-          Id: value.Data.id,
+          Id: value.Data.Id,
           IsGroup: 0
         };
         console.log("curentuser", dataSourceTemp);
@@ -433,16 +433,16 @@ export class EventDialogComponent implements OnInit {
           var check = false;
           jsonParticipants.map(mem => {
                     
-            if (mem.displayName === user.Name) {
+            if (mem.DisplayName === user.Name) {
               check = true;
             }
           });
           if (check === false) {
             var participant: GraphUser = {
-              id: user.Id,
-              displayName: user.Name,
-              mail: user.Email,
-              userPrincipalName: user.Name
+              Id: user.Id,
+              DisplayName: user.Name,
+              Mail: user.Email,
+              UserPrincipalName: user.Name
             };
             jsonParticipants.push(participant);
             numberParticipant++;
@@ -460,16 +460,16 @@ export class EventDialogComponent implements OnInit {
                     var check = false;
                     jsonParticipants.map(mem => {
                       
-                      if (mem.displayName === u.DisplayName) {
+                      if (mem.DisplayName === u.DisplayName) {
                         check = true;
                       }
                     });
                     if (check === false) {
                       var participant: GraphUser = {
-                        id: u.Id,
-                        displayName: u.DisplayName,
-                        mail: u.Mail,
-                        userPrincipalName: u.DisplayName
+                        Id: u.Id,
+                        DisplayName: u.DisplayName,
+                        Mail: u.Mail,
+                        UserPrincipalName: u.DisplayName
                       };
                       jsonParticipants.push(participant);
                       numberParticipant++;
