@@ -80,7 +80,7 @@ export class OrderDetailComponent implements OnInit {
                   IsOrdered: false
                 }
                 this.checkedData = this.order.FoodDetail;
-                if (this.isToday(new Date(event.CloseTime))) {
+                if (this.isClosed(new Date(event.CloseTime))) {
                   this.isOrder = false;
                 }
                 this.isDataAvailable = true;

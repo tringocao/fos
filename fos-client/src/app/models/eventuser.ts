@@ -4,4 +4,5 @@ export class EventUser {
     Img: string;
     Id: string;
     IsGroup;
+    OrderStatus
 }
