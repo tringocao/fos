@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.CloseService", "FOS.CloseService\FOS.CloseService.csproj", "{FCD119DB-48EE-479D-984D-BA9ACCC85507}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.CoreService", "FOS.CoreService\FOS.CoreService.csproj", "{D3DC13DD-CD97-4E1E-AA7B-68D350382935}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCD119DB-48EE-479D-984D-BA9ACCC85507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD119DB-48EE-479D-984D-BA9ACCC85507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD119DB-48EE-479D-984D-BA9ACCC85507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD119DB-48EE-479D-984D-BA9ACCC85507}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF9E8F4D-7B41-4C25-9C63-94F776F6DF50}
+	EndGlobalSection
+EndGlobal
