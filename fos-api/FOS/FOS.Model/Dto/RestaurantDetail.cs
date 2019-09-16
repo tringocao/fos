@@ -8,7 +8,7 @@ namespace FOS.Model.Dto
 {
    public class RestaurantDetail
     {
-        public int Rating { get; set; }
+        public float Rating { get; set; }
         public int TotalReview { get; set; }
     }
 }

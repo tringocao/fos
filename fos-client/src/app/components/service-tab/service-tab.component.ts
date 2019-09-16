@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ExternalFoodService } from 'src/app/services/external-food/external-food.service';
+import { ExternalService } from 'src/app/models/external-service';
 
 @Component({
   selector: 'app-service-tab',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./service-tab.component.less']
 })
 export class ServiceTabComponent implements OnInit {
-
-  constructor() { }
+  data:ExternalService[];
+  constructor(private externalFoodService: ExternalFoodService) { }
 
   ngOnInit() {
+    this.externalFoodService.GetAllExternalService().then(result => this.data = result)
   }
 
 }

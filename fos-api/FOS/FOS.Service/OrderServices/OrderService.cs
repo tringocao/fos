@@ -70,5 +70,9 @@ namespace FOS.Services.OrderServices
         {
             return _orderMapper.MapToDomain(_repository.GetOrderByEventIdvsUserId(eventId, userId));
         }
+        public bool DeleteOrderByIdEvent(string idEvent)
+        {
+            return _repository.DeleteOrderByIdEvent(idEvent);
+        }
     }
 }

@@ -26,13 +26,18 @@ namespace FOS.API.Controllers
         private readonly IOrderService _orderService;
         private readonly ISPListService _spListService;
         private readonly ISPUserService _spUserService;
-
-        public OrderController(IOrderDtoMapper mapper, IOrderService service, ISPListService spListService, ISPUserService spUserService)
+        IGraphUserDtoMapper _graphUserDtoMapper;
+        public OrderController(IOrderDtoMapper mapper,
+            IOrderService service,
+            ISPListService spListService,
+            ISPUserService spUserService,
+            IGraphUserDtoMapper graphUserDtoMapper)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
             _spListService = spListService;
             _spUserService = spUserService;
+            _graphUserDtoMapper = graphUserDtoMapper;
         }
         [HttpGet]
         [Route("GetById")]
@@ -114,10 +119,10 @@ namespace FOS.API.Controllers
                 _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
                 GraphUser _user = new GraphUser()
                 {
-                    id = order.IdUser,
-                    displayName = user.DisplayName,
-                    mail = user.Mail,
-                    userPrincipalName = user.UserPrincipalName,
+                    Id = order.IdUser,
+                    DisplayName = user.DisplayName,
+                    Mail = user.Mail,
+                    UserPrincipalName = user.UserPrincipalName,
                 };
                 await _spListService.UpdateEventParticipant(order.IdEvent, _user);
                 return ApiUtil.CreateSuccessfulResult();
