@@ -167,7 +167,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dto\..\..\..\..\fos-client\src\app\models\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@ namespace FOS.Repositories.Repositories
         bool UpdateOrder(DataModel.Order order);
         IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
         DataModel.Order GetOrderByEventIdvsUserId(string eventid, string userId);
+        bool DeleteOrderByIdEvent(string idEvent);
     }
 
     public class OrderRepository : IOrderRepository
@@ -96,6 +97,26 @@ namespace FOS.Repositories.Repositories
 
             return result;
         }
+        public bool DeleteOrderByIdEvent(string idEvent)
+        {
+            try
+            {
+                var orders = (from order in _context.Orders
+                              where order.IdEvent == idEvent
+                              select order).ToList();
+                if (orders != null)
+                {
+                    _context.Orders.RemoveRange(orders);
+                    _context.SaveChanges();
+                }
+                _context.SaveChanges();
 
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
