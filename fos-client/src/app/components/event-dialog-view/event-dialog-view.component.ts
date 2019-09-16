@@ -16,6 +16,7 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { from } from 'rxjs';
 import { GraphUser } from 'src/app/models/graph-user';
 import { element } from 'protractor';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-event-dialog-view',
   templateUrl: './event-dialog-view.component.html',
@@ -39,6 +40,7 @@ export class EventDialogViewComponent implements OnInit {
   EventTime = '';
   EventStatus = '';
   EventType = '';
+  _environment = environment.apiUrl;
   ngOnInit() {
     //get user not order
     var self = this;
