@@ -67,9 +67,9 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909111039329_fos.cs" />
-    <Compile Include="Migrations\201909111039329_fos.Designer.cs">
-      <DependentUpon>201909111039329_fos.cs</DependentUpon>
+    <Compile Include="Migrations\201909161238478_fosnewabc.cs" />
+    <Compile Include="Migrations\201909161238478_fosnewabc.Designer.cs">
+      <DependentUpon>201909161238478_fosnewabc.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -107,8 +107,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909111039329_fos.resx">
-      <DependentUpon>201909111039329_fos.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909161238478_fosnewabc.resx">
+      <DependentUpon>201909161238478_fosnewabc.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

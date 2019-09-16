@@ -12,6 +12,8 @@ using System.Timers;
 using System.IO;
 using Unity;
 using FOS.CoreService.UnityConfig;
+using FOS.CoreService.Constants;
+using Microsoft.SharePoint.Client;
 
 namespace FOS.ReminderService
 {
@@ -48,17 +50,17 @@ namespace FOS.ReminderService
                 Directory.CreateDirectory(path);
             }
             string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\Logs\\ServiceLog_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
-            if (!File.Exists(filepath))
+            if (!System.IO.File.Exists(filepath))
             {
                 // Create a file to write to.   
-                using (StreamWriter sw = File.CreateText(filepath))
+                using (StreamWriter sw = System.IO.File.CreateText(filepath))
                 {
                     sw.WriteLine(Message);
                 }
             }
             else
             {
-                using (StreamWriter sw = File.AppendText(filepath))
+                using (StreamWriter sw = System.IO.File.AppendText(filepath))
                 {
                     sw.WriteLine(Message);
                 }
@@ -69,13 +71,57 @@ namespace FOS.ReminderService
             //WriteToFile("Service is recall at " + DateTime.Now);
 
             //get event on sharepoint
-            GetEventToReminder(coreService).Wait();
 
         }
 
-        public async Task<int> GetEventToReminder(FosCoreService program)
+        //public async Task<int> GetEventToReminder(FosCoreService program)
+        //{
+        //    return await program.GetEventToReminder();
+        //}
+
+        private void GetListEventOpened()
         {
-            return await program.GetEventToReminder();
+            using (var clientContext = coreService.GetClientContext())
+            {
+                var events = coreService.GetListEventOpened(clientContext);
+                foreach (var element in events)
+                {
+                    var closeTimeString = element[EventConstant.EventTimeToClose].ToString();
+                    var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
+
+
+                }
+            }
+        }
+        public ListItemCollection GetListEventOpened(ClientContext clientContext)
+        {
+            var web = clientContext.Web;
+            var list = web.Lists.GetByTitle(EventConstant.EventList);
+            CamlQuery getAllEventOpened = new CamlQuery();
+            getAllEventOpened.ViewXml =
+                @"<View>
+                        <Query>
+                            <Where>
+                                <And>
+                                    <Eq>" +
+                                        "<FieldRef Name=" + EventConstant.EventStatus + "/>" +
+                                        "<Value Type='Text'>" + EventStatus.Opened + "</Value>" +
+                                    @"</Eq> +
+                                    <Lt>" +
+                                        "<FieldRef Name=" + EventConstant.EventTimeToReminder + "/>" +
+                                        "<Value Type='DateTime'  IncludeTimeValue='TRUE'>" + "10/16/2019 4:04:00 AM" + "</Value>" +
+                                    @"</Lt> +
+                               </And>
+                            </Where>
+                        </Query>
+                        <RowLimit>1000</RowLimit>
+                    </View>";
+
+            var events = list.GetItems(getAllEventOpened);
+            clientContext.Load(events);
+            clientContext.ExecuteQuery();
+
+            return events;
         }
     }
 }

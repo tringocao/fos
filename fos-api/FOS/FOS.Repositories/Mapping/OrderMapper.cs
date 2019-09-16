@@ -28,7 +28,8 @@ namespace FOS.Repositories.Mapping
                 IdRestaurant = efObject.IdRestaurant,
                 IdUser = efObject.IdUser,
                 OrderDate = DateTime.Parse(efObject.OrderDate),
-                FoodDetail = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(efObject.FoodDetail)
+                FoodDetail = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(efObject.FoodDetail),
+                Email = efObject.Email
             };
         }
 
@@ -41,6 +42,7 @@ namespace FOS.Repositories.Mapping
             efObject.IdUser = domObject.IdUser;
             efObject.OrderDate = domObject.OrderDate.ToString();
             efObject.FoodDetail = domObject.FoodDetail != null ? JsonConvert.SerializeObject(domObject.FoodDetail) : "";
+            efObject.Email = domObject.Email;
         }
     }
 }

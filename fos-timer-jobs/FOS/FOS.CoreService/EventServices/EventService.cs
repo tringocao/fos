@@ -1,4 +1,7 @@
 ﻿using FOS.CoreService.Constants;
+using FOS.Services.OrderServices;
+using FOS.Services.Providers;
+using FOS.Services.SendEmailServices;
 using FOS.Services.SPUserService;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
@@ -14,6 +17,15 @@ namespace FOS.CoreService.EventServices
 {
     public class FosCoreService
     {
+        IOrderService _orderServices;
+        ISendEmailService _sendMailService;
+        ISPUserService _userService;
+       public FosCoreService(IOrderService orderServices, ISendEmailService sendMailServices, ISPUserService userService)
+        {
+            _orderServices = orderServices;
+            _sendMailService = sendMailServices;
+            _userService = userService;
+        }
         public string BuildLink(string link, string text)
         {
             return "<a href=\"" + link + "\">" + text + "</a>";
@@ -84,10 +96,16 @@ namespace FOS.CoreService.EventServices
             }
         }
 
-        public async Task<int> GetEventToReminder()
+        public IEnumerable<Model.Dto.UserNotOrder> GetEventToReminder(string idEvent)
         {
-       
-            return 0;
+            List<Model.Dto.UserNotOrderMailInfo> listUser = new List<Model.Dto.UserNotOrderMailInfo>();
+            var userNotOrder = _orderServices.GetUserNotOrdered(idEvent);            
+            return userNotOrder;
+        }
+        
+        public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> userModel)
+        {
+            _sendMailService.SendEmailToNotOrderedUserAsync(userModel, EventConstant.ReminderEventEmailTemplate);
         }
     }
 }
