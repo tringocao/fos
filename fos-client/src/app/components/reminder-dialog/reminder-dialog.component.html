@@ -15,7 +15,9 @@
           height="50"
           width="50"
           style="border-radius: 50%"
-          src="{{ apiUrl }}api/SPUser/GetAvatarByUserId?userId={{ element.Id }}"
+          src="{{ apiUrl }}api/SPUser/GetAvatar?Id={{
+            element.Id
+          }}&avatarName={{ element.DisplayName }}"
         />
       </td>
     </ng-container>

@@ -13,11 +13,9 @@ namespace FOS.CoreService
     {
         public static void Main(string[] args)
         {
-            var container = new UnityContainer();
-            RegisterUnity.Register(container);
-            FosCoreService coreService = container.Resolve<FosCoreService>();
-
-            coreService.GetListEventShouldClose(coreService.GetClientContext());
+            //var container = new UnityContainer();
+            //RegisterUnity.Register(container);
+            //FosCoreService coreService = container.Resolve<FosCoreService>();
         }
     }
 }

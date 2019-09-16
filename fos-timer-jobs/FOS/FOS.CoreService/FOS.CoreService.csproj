@@ -33,12 +33,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FOS.Common">
+    <Reference Include="FOS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Common.dll</HintPath>
     </Reference>
     <Reference Include="FOS.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="FOS.Repositories, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Repositories.dll</HintPath>
     </Reference>
     <Reference Include="FOS.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -185,6 +190,7 @@
   <ItemGroup>
     <Compile Include="Constants\EventEmail.cs" />
     <Compile Include="Constants\EventStatus.cs" />
+    <Compile Include="Models\CloseEventEmailTemplate.cs" />
     <Compile Include="SharePointContext.cs" />
     <Compile Include="TokenHelper.cs" />
     <Compile Include="UnityConfig\RegisterUnity.cs" />

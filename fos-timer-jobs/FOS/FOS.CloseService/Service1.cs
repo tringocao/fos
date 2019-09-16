@@ -16,6 +16,7 @@ using FOS.CoreService.EventServices;
 using FOS.CoreService.Constants;
 using Microsoft.SharePoint.Client;
 using System.Configuration;
+using FOS.CoreService.Models;
 
 namespace FOS.CloseService
 {
@@ -90,12 +91,14 @@ namespace FOS.CloseService
             var clientUrl = ConfigurationSettings.AppSettings["clientUrl"];
             var noReplyEmail = ConfigurationSettings.AppSettings["noReplyEmail"];
 
-            coreService.CloseEvent(clientContext, element);
+            coreService.ChangeStatusToClose(clientContext, element);
 
+            CloseEventEmailTemplate emailTemplate = new CloseEventEmailTemplate();
+            emailTemplate.EventTitle = element[EventConstant.EventTitle].ToString();
+            emailTemplate.EventSummaryLink = coreService.BuildLink(clientUrl + "/events/summary/" + element["ID"], "link");
             var emailTemplateDictionary = coreService.GetEmailTemplate(EventConstant.CloseEventEmailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Body, out string body);
-            body = body.Replace(EventEmail.EventName, element[EventConstant.EventTitle].ToString())
-                .Replace(EventEmail.EventSummaryLink, coreService.BuildLink(clientUrl + "/events/summary/" + element["ID"], "link"));
+            body = coreService.Parse(body, emailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Subject, out string subject);
             var host = element[EventConstant.EventHost] as FieldUserValue;
 

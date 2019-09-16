@@ -227,7 +227,7 @@ export class EventDialogComponent implements OnInit {
 
     this.ownerForm.get("EventType").setValue("Open");
     //debugger;
-    this.ownerForm.get("userInput").setValue(this.data.restaurant);
+    // this.ownerForm.get("userInput").setValue(this.data.restaurant);
     // this.ownerForm.get('EventType').setValue('Open');
     var userHost2: userPicker[];
 
@@ -265,7 +265,7 @@ export class EventDialogComponent implements OnInit {
         }
       });
 
-    this.ownerForm.get("userInput").setValue(this.data);
+    this.ownerForm.get("userInput").setValue(this.data.restaurant);
     this.ownerForm
       .get("userInput")
       .valueChanges.pipe(

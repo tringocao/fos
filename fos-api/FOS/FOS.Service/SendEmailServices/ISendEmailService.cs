@@ -11,5 +11,6 @@ namespace FOS.Services.SendEmailServices
     {
         Task SendEmailAsync(string idEvent, string html);
         Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson);
+        string Parse<T>(string text, T modelparse);
     }
 }
