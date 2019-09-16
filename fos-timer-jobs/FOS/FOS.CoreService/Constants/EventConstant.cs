@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace FOS.CoreService.Constants
 {
-    class EventConstant
+    public class EventConstant
     {
         public const string CloseEventEmailTemplate = @"App_Data\CloseEventEmailTemplate.json";
+        public const string EventList = "Event List";
+        public const string EventStatus = "EventStatus";
+        public const string EventTimeToClose = "EventTimeToClose";
+        public const string EventTitle = "EventTitle";
+        public const string ID = "ID";
+        public const string EventHost = "EventHost";
     }
 }

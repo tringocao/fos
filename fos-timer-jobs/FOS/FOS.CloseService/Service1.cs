@@ -10,9 +10,12 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.IO;
 using FOS.CoreService;
-using FOS.CoreService.EventServices;
 using Unity;
 using FOS.CoreService.UnityConfig;
+using FOS.CoreService.EventServices;
+using FOS.CoreService.Constants;
+using Microsoft.SharePoint.Client;
+using System.Configuration;
 
 namespace FOS.CloseService
 {
@@ -30,7 +33,9 @@ namespace FOS.CloseService
             var container = new UnityContainer();
             RegisterUnity.Register(container);
             coreService = container.Resolve<FosCoreService>();
-            WriteToFile("Service is started at " + DateTime.Now);
+
+            CloseEventAutomatically();
+
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             timer.Interval = 60000; //number in milisecinds  
             timer.Enabled = true;
@@ -38,40 +43,42 @@ namespace FOS.CloseService
 
         protected override void OnStop()
         {
-            WriteToFile("Service is recall at " + DateTime.Now);
         }
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
-            WriteToFile("Service is recall at " + DateTime.Now);
         }
-        public void WriteToFile(string Message)
+        private void CloseEventAutomatically()
         {
-            //string path = AppDomain.CurrentDomain.BaseDirectory + "\\Logs";
-            //if (!Directory.Exists(path))
-            //{
-            //    Directory.CreateDirectory(path);
-            //}
-            //string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\Logs\\ServiceLog_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
-            //if (!File.Exists(filepath))
-            //{
-            //    // Create a file to write to.   
-            //    using (StreamWriter sw = File.CreateText(filepath))
-            //    {
-            //        sw.WriteLine(Message);
-            //    }
-            //}
-            //else
-            //{
-            //    using (StreamWriter sw = File.AppendText(filepath))
-            //    {
-            //        sw.WriteLine(Message);
-            //    }
-            //}
-            GetData(coreService).Wait();
+            using (var clientContext = coreService.GetClientContext())
+            {
+                var events = coreService.GetListEventOpened(clientContext);
+                foreach (var element in events)
+                {
+                    var closeTimeString = element[EventConstant.EventTimeToClose].ToString();
+                    var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
+
+                    if (DateTime.Now >= closeTime)
+                    {
+                        ProcessAnEvent(clientContext, element);
+                    }
+                }
+            }
         }
-        public async Task<int> GetData(FosCoreService program)
+        private void ProcessAnEvent(ClientContext clientContext, ListItem element)
         {
-            return await program.EventServicesAsync();
+            var clientUrl = ConfigurationSettings.AppSettings["clientUrl"];
+            var noReplyEmail = ConfigurationSettings.AppSettings["noReplyEmail"];
+
+            coreService.CloseEvent(clientContext, element);
+
+            var emailTemplateDictionary = coreService.GetEmailTemplate(EventConstant.CloseEventEmailTemplate);
+            emailTemplateDictionary.TryGetValue(EventEmail.Body, out string body);
+            body = body.Replace(EventEmail.EventName, element[EventConstant.EventTitle].ToString())
+                .Replace(EventEmail.EventSummaryLink, coreService.BuildLink(clientUrl + "/events/summary/" + element["ID"], "link"));
+            emailTemplateDictionary.TryGetValue(EventEmail.Subject, out string subject);
+            var host = element[EventConstant.EventHost] as FieldUserValue;
+
+            coreService.SendEmail(clientContext, noReplyEmail, host.Email, body, subject);
         }
     }
 }
