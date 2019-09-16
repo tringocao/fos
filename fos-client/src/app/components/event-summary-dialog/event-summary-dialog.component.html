@@ -1,260 +1,262 @@
 <div class="container">
-<div id="report" class="event-summary">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Summary Event</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
-        <mat-grid-tile>
-          <mat-card class="card">
-            <!-- <mat-card-header>
-              <mat-card-title>Event</mat-card-title>
-            </mat-card-header> -->
-            <mat-card-content>
-    
-              <mat-grid-list cols="2" rowHeight="40px">
-                  <div class="grid-tile-row">
-                    <mat-grid-tile><div class="label-inside-grid">Event</div></mat-grid-tile>
-                    <mat-grid-tile></mat-grid-tile>
-                  </div>
-                <div class="grid-tile-row">
-                  <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                  <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.Name }}</div></mat-grid-tile>
-                </div>
-                <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.HostName }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ toStandardDate(eventDetail.CloseTime) }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
-              </mat-grid-list>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-card class="card">
-            <!-- <mat-card-header>
-              <mat-card-title>Restaurant</mat-card-title>
-              <mat-card-subtitle></mat-card-subtitle>
-            </mat-card-header> -->
-            <mat-card-content>
-              <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
-                <div class="grid-tile-row">
-                  <mat-grid-tile><div class="label-inside-grid">Restaurant</div></mat-grid-tile>
-                  <mat-grid-tile></mat-grid-tile>
-                </div>
-                <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.Restaurant }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
-                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Restaurant Url</div></mat-grid-tile>
-                <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid"><a target="_blank" href="https://www.now.vn/ho-chi-minh/{{restaurant.UrlRewriteName}}">Restaurant Url</a></div></mat-grid-tile>
-                <mat-grid-tile><div class="text-inside-grid">Rating</div></mat-grid-tile>
-                <mat-grid-tile *ngIf="restaurant.isLoaded">
-                  <div class="text-inside-grid"><ngx-stars
-                    [readonly]="true"
-                    [maxStars]="5"
-                    [initialStars]="restaurant.Rating"
-                  ></ngx-stars></div>
-                </mat-grid-tile>
-              </mat-grid-list>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-      </mat-grid-list>
-      <mat-tab-group dynamicHeight #tabGroup>
-        <mat-tab *ngIf="dishViewDataAvailable" label="Dishes Group View">
-          <table mat-table [dataSource]="dishGroupViewdataSource">
-            <ng-container matColumnDef="picture">
-              <th mat-header-cell *matHeaderCellDef> Picture</th>
-              <td mat-cell *matCellDef="let element">
-                <img src={{element.picture}} /> 
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef> Amount </th>
-              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-            </ng-container>
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef> Price </th>
-              <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-            </ng-container>
-            <ng-container matColumnDef="total">
-              <th mat-header-cell *matHeaderCellDef> Total </th>
-              <td mat-cell *matCellDef="let element"> {{element.total}} </td>
-            </ng-container>
-            <ng-container matColumnDef="totalComment">
-              <th mat-header-cell *matHeaderCellDef> Comment </th>
-              <td mat-cell *matCellDef="let element"> {{element.totalComment}} </td>
-            </ng-container>
-   
-            <tr mat-header-row *matHeaderRowDef="dishGroupViewDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: dishGroupViewDisplayedColumns;"></tr>
-          </table>
-          <img src="" />
-        </mat-tab>
-        <mat-tab #personGroupView label="Person Group View">
-          <table *ngIf="personViewDataAvailable" mat-table [dataSource]="personGroupViewdataSource">
-            <ng-container matColumnDef="user">
-              <th mat-header-cell *matHeaderCellDef>User</th>
-              <td mat-cell *matCellDef="let element"> {{element.user}} </td>
-            </ng-container>
-            <ng-container matColumnDef="food">
-              <th mat-header-cell *matHeaderCellDef>Food</th>
-              <td mat-cell *matCellDef="let element"> {{element.food}} </td>
-            </ng-container>
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef>Price</th>
-              <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-            </ng-container>
-            <ng-container matColumnDef="pay-extra">
-              <th mat-header-cell *matHeaderCellDef>Pay extra</th>
-              <td mat-cell *matCellDef="let element"> {{element.payExtra}} </td>
-            </ng-container>
-            <ng-container matColumnDef="comment">
-              <th mat-header-cell *matHeaderCellDef>Comment</th>
-              <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
-            </ng-container>
-   
-            <tr mat-header-row *matHeaderRowDef="personGroupViewDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: personGroupViewDisplayedColumns;"></tr>
-          </table>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button (click)="sendEmail()" mat-raised-button color="primary">Send to my email</button>
-      <button (click)="printToPdf()" mat-raised-button color="primary">Print</button>
-      <button mat-raised-button color="warn">Close</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
-
-<div id="print" class="print-area">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Summary Event</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+  <div id="report" class="event-summary">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Summary Event</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
         <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
-            <mat-grid-tile>
-              <mat-card class="card">
-                <!-- <mat-card-header>
-                  <mat-card-title>Event</mat-card-title>
-                </mat-card-header> -->
-                <mat-card-content>
-    
-                  <mat-grid-list cols="2" rowHeight="40px">
-                      <div class="grid-tile-row">
-                        <mat-grid-tile><div class="label-inside-grid">Event</div></mat-grid-tile>
-                        <mat-grid-tile></mat-grid-tile>
-                      </div>
+          <mat-grid-tile>
+            <mat-card class="card">
+              <!-- <mat-card-header>
+                <mat-card-title>Event</mat-card-title>
+              </mat-card-header> -->
+              <mat-card-content>
+      
+                <mat-grid-list cols="2" rowHeight="40px">
                     <div class="grid-tile-row">
-                      <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                      <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.Name }}</div></mat-grid-tile>
-                    </div>
-                    <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.HostName }}</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ toStandardDate(eventDetail.CloseTime) }}</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
-                  </mat-grid-list>
-                </mat-card-content>
-              </mat-card>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <mat-card class="card">
-                <!-- <mat-card-header>
-                  <mat-card-title>Restaurant</mat-card-title>
-                  <mat-card-subtitle></mat-card-subtitle>
-                </mat-card-header> -->
-                <mat-card-content>
-                  <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
-                    <div class="grid-tile-row">
-                      <mat-grid-tile><div class="label-inside-grid">Restaurant</div></mat-grid-tile>
+                      <mat-grid-tile><div class="label-inside-grid">Event</div></mat-grid-tile>
                       <mat-grid-tile></mat-grid-tile>
                     </div>
+                  <div class="grid-tile-row">
                     <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
-                    <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.Restaurant }}</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
-                    <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
-                    <mat-grid-tile><div class="text-inside-grid">Rating</div></mat-grid-tile>
-                    <mat-grid-tile *ngIf="restaurant.isLoaded">
-                      <div class="text-inside-grid"><ngx-stars
-                        [readonly]="true"
-                        [maxStars]="5"
-                        [initialStars]="restaurant.Rating"
-                      ></ngx-stars></div>
-                    </mat-grid-tile>
-                  </mat-grid-list>
-                </mat-card-content>
-              </mat-card>
-            </mat-grid-tile>
-          </mat-grid-list>
-          <table *ngIf="dishViewDataAvailable" mat-table [dataSource]="dishGroupViewdataSource">
-            <ng-container matColumnDef="picture">
-              <th mat-header-cell *matHeaderCellDef> Picture</th>
-              <td mat-cell *matCellDef="let element">
-                <img src={{element.picture}} /> 
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef> Amount </th>
-              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-            </ng-container>
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef> Price </th>
-              <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-            </ng-container>
-            <ng-container matColumnDef="total">
-              <th mat-header-cell *matHeaderCellDef> Total </th>
-              <td mat-cell *matCellDef="let element"> {{element.total}} </td>
-            </ng-container>
-            <ng-container matColumnDef="totalComment">
-              <th mat-header-cell *matHeaderCellDef> Comment </th>
-              <td mat-cell *matCellDef="let element"> {{element.totalComment}} </td>
-            </ng-container>
+                    <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.Name }}</div></mat-grid-tile>
+                  </div>
+                  <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.HostName }}</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ toStandardDate(eventDetail.CloseTime) }}</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
+                </mat-grid-list>
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-card class="card">
+              <!-- <mat-card-header>
+                <mat-card-title>Restaurant</mat-card-title>
+                <mat-card-subtitle></mat-card-subtitle>
+              </mat-card-header> -->
+              <mat-card-content>
+                <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
+                  <div class="grid-tile-row">
+                    <mat-grid-tile><div class="label-inside-grid">Restaurant</div></mat-grid-tile>
+                    <mat-grid-tile></mat-grid-tile>
+                  </div>
+                  <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
+                  <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.Restaurant }}</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
+                  <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">Restaurant Url</div></mat-grid-tile>
+                  <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid"><a target="_blank" href="https://www.now.vn/ho-chi-minh/{{restaurant.UrlRewriteName}}">Restaurant Url</a></div></mat-grid-tile>
+                  <mat-grid-tile><div class="text-inside-grid">Rating</div></mat-grid-tile>
+                  <mat-grid-tile *ngIf="restaurant.isLoaded">
+                    <div class="text-inside-grid"><ngx-stars
+                      [readonly]="true"
+                      [maxStars]="5"
+                      [initialStars]="restaurant.Rating"
+                    ></ngx-stars></div>
+                  </mat-grid-tile>
+                </mat-grid-list>
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-tab-group dynamicHeight #tabGroup>
+          <mat-tab *ngIf="dishViewDataAvailable" label="Dishes Group View">
+            <table mat-table [dataSource]="dishGroupViewdataSource">
+              <ng-container matColumnDef="picture">
+                <th mat-header-cell *matHeaderCellDef> Picture</th>
+                <td mat-cell *matCellDef="let element">
+                  <img src={{element.picture}} /> 
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+              </ng-container>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> Price </th>
+                <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+              </ng-container>
+              <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+              </ng-container>
+              <ng-container matColumnDef="totalComment">
+                <th mat-header-cell *matHeaderCellDef> Comment </th>
+                <td mat-cell *matCellDef="let element"><span *ngFor="let comment of element.comments"> {{comment.amount}}x {{comment.comment}}</span></td>
+              </ng-container>
+     
+              <tr mat-header-row *matHeaderRowDef="dishGroupViewDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: dishGroupViewDisplayedColumns;"></tr>
+            </table>
+            <img src="" />
+          </mat-tab>
+          <mat-tab #personGroupView label="Person Group View">
+            <table *ngIf="personViewDataAvailable" mat-table [dataSource]="personGroupViewdataSource">
+              <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef>User</th>
+                <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+              </ng-container>
+              <ng-container matColumnDef="food">
+                <th mat-header-cell *matHeaderCellDef>Food</th>
+                <td mat-cell *matCellDef="let element"> {{element.food}} </td>
+              </ng-container>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+              </ng-container>
+              <ng-container matColumnDef="pay-extra">
+                <th mat-header-cell *matHeaderCellDef>Pay extra</th>
+                <td mat-cell *matCellDef="let element"> {{element.payExtra}} </td>
+              </ng-container>
+              <ng-container matColumnDef="comment">
+                <th mat-header-cell *matHeaderCellDef>Comment</th>
+                <td mat-cell *matCellDef="let element"><span *ngFor="let comment of element.comments"> {{comment.amount}}x {{comment.comment}}</span></td>
+              </ng-container>
+     
+              <tr mat-header-row *matHeaderRowDef="personGroupViewDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: personGroupViewDisplayedColumns;"></tr>
+            </table>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button (click)="sendEmail()" mat-raised-button color="primary">Send to my email</button>
+        <button (click)="printToPdf()" mat-raised-button color="primary">Print</button>
+        <button mat-raised-button color="warn">Close</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
    
-            <tr mat-header-row *matHeaderRowDef="dishGroupViewDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: dishGroupViewDisplayedColumns;"></tr>
-          </table>
-          <img src="" />
-          <table *ngIf="personViewDataAvailable" mat-table [dataSource]="personGroupViewdataSource">
-            <ng-container matColumnDef="user">
-              <th mat-header-cell *matHeaderCellDef>User</th>
-              <td mat-cell *matCellDef="let element"> {{element.user}} </td>
-            </ng-container>
-            <ng-container matColumnDef="food">
-              <th mat-header-cell *matHeaderCellDef>Food</th>
-              <td mat-cell *matCellDef="let element"> {{element.food}} </td>
-            </ng-container>
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef>Price</th>
-              <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-            </ng-container>
-            <ng-container matColumnDef="pay-extra">
-              <th mat-header-cell *matHeaderCellDef>Pay extra</th>
-              <td mat-cell *matCellDef="let element"> {{element.payExtra}} </td>
-            </ng-container>
-            <ng-container matColumnDef="comment">
-              <th mat-header-cell *matHeaderCellDef>Comment</th>
-              <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
-            </ng-container>
-   
-            <tr mat-header-row *matHeaderRowDef="personGroupViewDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: personGroupViewDisplayedColumns;"></tr>
-          </table>
-    </mat-card-content>
-  </mat-card>
-</div>
-</div>
+  <div id="print" class="print-area">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Summary Event</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
+              <mat-grid-tile>
+                <mat-card class="card">
+                  <!-- <mat-card-header>
+                    <mat-card-title>Event</mat-card-title>
+                  </mat-card-header> -->
+                  <mat-card-content>
+      
+                    <mat-grid-list cols="2" rowHeight="40px">
+                        <div class="grid-tile-row">
+                          <mat-grid-tile><div class="label-inside-grid">Event</div></mat-grid-tile>
+                          <mat-grid-tile></mat-grid-tile>
+                        </div>
+                      <div class="grid-tile-row">
+                        <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
+                        <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.Name }}</div></mat-grid-tile>
+                      </div>
+                      <mat-grid-tile><div class="text-inside-grid">Host</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ eventDetail.HostName }}</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid">Time to close</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid" *ngIf="eventDataAvailable">{{ toStandardDate(eventDetail.CloseTime) }}</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid">Status</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid">Closed</div></mat-grid-tile>
+                    </mat-grid-list>
+                  </mat-card-content>
+                </mat-card>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-card class="card">
+                  <!-- <mat-card-header>
+                    <mat-card-title>Restaurant</mat-card-title>
+                    <mat-card-subtitle></mat-card-subtitle>
+                  </mat-card-header> -->
+                  <mat-card-content>
+                    <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
+                      <div class="grid-tile-row">
+                        <mat-grid-tile><div class="label-inside-grid">Restaurant</div></mat-grid-tile>
+                        <mat-grid-tile></mat-grid-tile>
+                      </div>
+                      <mat-grid-tile><div class="text-inside-grid">Name</div></mat-grid-tile>
+                      <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ eventDetail.Restaurant }}</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid">Address</div></mat-grid-tile>
+                      <mat-grid-tile><div *ngIf="restaurant.isLoaded" class="text-inside-grid">{{ restaurant.address }}</div></mat-grid-tile>
+                      <mat-grid-tile><div class="text-inside-grid">Rating</div></mat-grid-tile>
+                      <mat-grid-tile *ngIf="restaurant.isLoaded">
+                        <div class="text-inside-grid"><ngx-stars
+                          [readonly]="true"
+                          [maxStars]="5"
+                          [initialStars]="restaurant.Rating"
+                        ></ngx-stars></div>
+                      </mat-grid-tile>
+                    </mat-grid-list>
+                  </mat-card-content>
+                </mat-card>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <table *ngIf="dishViewDataAvailable" mat-table [dataSource]="dishGroupViewdataSource">
+              <ng-container matColumnDef="picture">
+                <th mat-header-cell *matHeaderCellDef> Picture</th>
+                <td mat-cell *matCellDef="let element">
+                  <img src={{element.picture}} /> 
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+              </ng-container>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> Price </th>
+                <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+              </ng-container>
+              <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef> Total </th>
+                <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+              </ng-container>
+              <ng-container matColumnDef="totalComment">
+                <th mat-header-cell *matHeaderCellDef> Comment </th>
+                <td mat-cell *matCellDef="let element"><span *ngFor="let comment of element.comments"> {{comment.amount}}x {{comment.comment}}</span></td>
+              </ng-container>
+     
+              <tr mat-header-row *matHeaderRowDef="dishGroupViewDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: dishGroupViewDisplayedColumns;"></tr>
+            </table>
+            <img src="" />
+            <table *ngIf="personViewDataAvailable" mat-table [dataSource]="personGroupViewdataSource">
+              <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef>User</th>
+                <td mat-cell *matCellDef="let element"> {{element.user}} </td>
+              </ng-container>
+              <ng-container matColumnDef="food">
+                <th mat-header-cell *matHeaderCellDef>Food</th>
+                <td mat-cell *matCellDef="let element"> {{element.food}} </td>
+              </ng-container>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+              </ng-container>
+              <ng-container matColumnDef="pay-extra">
+                <th mat-header-cell *matHeaderCellDef>Pay extra</th>
+                <td mat-cell *matCellDef="let element"> {{element.payExtra}} </td>
+              </ng-container>
+              <ng-container matColumnDef="comment">
+                <th mat-header-cell *matHeaderCellDef>Comment</th>
+                <td mat-cell *matCellDef="let element"><span *ngFor="let comment of element.comments"> {{comment.amount}}x {{comment.comment}}</span></td>
+              </ng-container>
+     
+              <tr mat-header-row *matHeaderRowDef="personGroupViewDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: personGroupViewDisplayedColumns;"></tr>
+            </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  </div>
+  
+  
