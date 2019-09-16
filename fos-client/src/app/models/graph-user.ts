@@ -12,9 +12,9 @@
 
     export class GraphUser    {
            
-        public id: string = null;   
-        public mail: string = null;   
-        public displayName: string = null;   
-        public userPrincipalName: string = null;
+        public Id: string = null;   
+        public Mail: string = null;   
+        public DisplayName: string = null;   
+        public UserPrincipalName: string = null;
     }
          

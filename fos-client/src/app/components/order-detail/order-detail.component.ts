@@ -16,6 +16,7 @@ import { MatSnackBar } from "@angular/material";
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
+  idService: number;
 }
 interface FoodCheck {
   food: Food;
@@ -38,6 +39,7 @@ export class OrderDetailComponent implements OnInit {
   resDetail: RestaurantDetail;
   isDataAvailable: boolean = false;
   totalBudget: Number;
+  idService: number;
   isWildParticipant: boolean;
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +51,7 @@ export class OrderDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.data = { restaurant: null, detail: null };
+    this.data = { restaurant: null, detail: null, idService: 1 };
     this.idOrder = this.route.snapshot.paramMap.get("id");
     this.isWildParticipant = false;
     // check if wild guest order
@@ -60,11 +62,18 @@ export class OrderDetailComponent implements OnInit {
         this.event = event;
         console.log(this.event);
         this.restaurantService
-          .getRestaurants([Number(this.event.RestaurantId)])
+          .getRestaurants(
+            [Number(this.event.RestaurantId)],
+            Number(this.event.ServiceId),
+            217
+          )
           .then(restaurant => {
             this.data.restaurant = restaurant[0];
             this.restaurantService
-              .getRestaurantDetail(Number(event.DeliveryId))
+              .getRestaurantDetail(
+                Number(event.DeliveryId),
+                Number(this.event.ServiceId)
+              )
               .then(restaurantd => {
                 this.data.detail = restaurantd;
                 this.userService
@@ -108,7 +117,7 @@ export class OrderDetailComponent implements OnInit {
 
   getRestaurant(IdRestaurant: Array<number>) {
     return this.restaurantService
-      .getRestaurants(IdRestaurant)
+      .getRestaurants(IdRestaurant, Number(this.event.ServiceId), 217)
       .then(restaurant => {
         this.data.restaurant = restaurant[0];
         this.getRestaurantDetail(this.order.IdDelivery);
@@ -116,7 +125,7 @@ export class OrderDetailComponent implements OnInit {
   }
   getRestaurantDetail(IdDelivery: number) {
     return this.restaurantService
-      .getRestaurantDetail(IdDelivery)
+      .getRestaurantDetail(IdDelivery, Number(this.event.ServiceId))
       .then(restaurantd => {
         this.data.detail = restaurantd;
         this.isDataAvailable = true;

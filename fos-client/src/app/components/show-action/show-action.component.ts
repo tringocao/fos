@@ -104,11 +104,11 @@ export class ShowActionComponent implements OnInit {
         .toPromise()
         .then(result => {
           const participant = participants.filter(
-            item => item.id === result.Data.id
+            item => item.Id === result.Data.Id
           );
           if (participant.length > 0) {
             this.orderService
-              .GetByEventvsUserId(this.event.EventId, result.Data.id)
+              .GetByEventvsUserId(this.event.EventId, result.Data.Id)
               .then(order => {
                 var url =
                   window.location.protocol +

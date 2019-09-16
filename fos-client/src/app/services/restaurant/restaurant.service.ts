@@ -7,7 +7,7 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { FoodCategory } from "src/app/models/food-category";
 import { CategoryGroup } from "src/app/models/category-group";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
-import { Restaurant } from 'src/app/models/restaurant';
+import { Restaurant } from "src/app/models/restaurant";
 
 @Injectable({
   providedIn: "root"
@@ -33,10 +33,7 @@ export class RestaurantService {
         .catch(alert => console.log(alert));
     });
   }
-  getFood(
-    deliveryId: number,
-    idService: number
-  ): Promise<Array<FoodCategory>> {
+  getFood(deliveryId: number, idService: number): Promise<Array<FoodCategory>> {
     return new Promise<Array<FoodCategory>>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<Array<FoodCategory>>>(
@@ -142,8 +139,10 @@ export class RestaurantService {
     idService: number,
     cityId: number
   ): Promise<Array<DeliveryInfos>> {
-    var ress: Array<Restaurant>;
-    ids.forEach(id => ress.push({Id:id, DeliveryId: ""}))
+    let ress: Restaurant[] = [];
+    ids.forEach(id => {
+      ress.push({ Id: id, DeliveryId: "" });
+    });
     return new Promise<Array<DeliveryInfos>>((resolve, reject) => {
       this.http
         .put<ApiOperationResult<Array<DeliveryInfos>>>(
