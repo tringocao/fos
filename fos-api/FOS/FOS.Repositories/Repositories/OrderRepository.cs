@@ -17,6 +17,7 @@ namespace FOS.Repositories.Repositories
         IEnumerable<DataModel.Order> GetAllOrderByEventId(string eventId);
         bool UpdateOrder(DataModel.Order order);
         IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
+        DataModel.Order GetOrderByEventIdvsUserId(string eventid, string userId);
         bool DeleteOrderByIdEvent(string idEvent);
     }
 
@@ -62,6 +63,10 @@ namespace FOS.Repositories.Repositories
         public DataModel.Order GetOrder(Guid id)
         {
             return _context.Orders.Find(id.ToString());
+        }
+        public DataModel.Order GetOrderByEventIdvsUserId(string eventid, string userId)
+        {
+            return _context.Orders.Where(order => order.IdEvent == eventid && order.IdUser == userId).FirstOrDefault();
         }
         public IEnumerable<DataModel.Order> GetAllOrder()
         {

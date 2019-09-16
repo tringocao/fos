@@ -30,11 +30,11 @@ namespace FOS.API.Controllers
         // GET: api/Province 
         [HttpGet]
         [Route("GetAllProvince")]
-        public async Task<ApiResponse<List<Province>>> GetAllProvince(int IdService)
+        public async Task<ApiResponse<List<Province>>> GetAllProvince(int idService)
         {
             try
             {
-                _provinceService.GetExternalServiceById(IdService);
+                _provinceService.GetExternalServiceById(idService);
                 var list = await _provinceService.GetMetadataForProvinceAsync();
                 return ApiUtil<List<Province>>.CreateSuccessfulResult(
                     list.Select(p => _provinceDtoMapper.ToDto(p)).ToList()
@@ -49,11 +49,11 @@ namespace FOS.API.Controllers
         // GET: api/Province/5
         [HttpGet]
         [Route("GetById")]
-        public async Task<ApiResponse<Province>> GetByIdAsync(int IdService, int id)
+        public async Task<ApiResponse<Province>> GetByIdAsync(int idService, int id)
         {
             try
             {
-                _provinceService.GetExternalServiceById(IdService);
+                _provinceService.GetExternalServiceById(idService);
                 return ApiUtil<Province>.CreateSuccessfulResult(
                     _provinceDtoMapper.ToDto(await _provinceService.GetMetadataByIdAsync(id))
                 );

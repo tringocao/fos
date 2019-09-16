@@ -30,12 +30,12 @@ namespace FOS.API.Controllers
         // GET: api/Food
         [HttpGet]
         [Route("GetFoodCatalogues")]
-        public async Task<ApiResponse<List<FoodCategory>>> GetFoodCataloguesAsync(int IdService, int delivery_id)
+        public async Task<ApiResponse<List<FoodCategory>>> GetFoodCataloguesAsync(int idService, int deliveryId)
         {
             try
             {
-                _foodService.GetExternalServiceById(IdService);
-                var list = await _foodService.GetFoodCataloguesFromDeliveryIdAsync(delivery_id);
+                _foodService.GetExternalServiceById(idService);
+                var list = await _foodService.GetFoodCataloguesFromDeliveryIdAsync(deliveryId);
                 return ApiUtil<List<FoodCategory>>.CreateSuccessfulResult(
                     list.Select(f => _foodCategoryDtoMapper.ToDto(f)).ToList()
                 );
@@ -49,12 +49,12 @@ namespace FOS.API.Controllers
         // GET: api/Food/5
         [HttpGet]
         [Route("GetFood")]
-        public async Task<ApiResponse<List<Food>>> GetFoodAsync(int IdService, int delivery_id, int dish_type_id)
+        public async Task<ApiResponse<List<Food>>> GetFoodAsync(int idService, int deliveryId, int dishTypeId)
         {
             try
             {
-                _foodService.GetExternalServiceById(IdService);
-                var list = await _foodService.GetFoodFromCatalogueAsync(delivery_id, dish_type_id);
+                _foodService.GetExternalServiceById(idService);
+                var list = await _foodService.GetFoodFromCatalogueAsync(deliveryId, dishTypeId);
 
                 return ApiUtil<List<Food>>.CreateSuccessfulResult(
                     list.Select(f => _foodDtoMapper.ToDto(f)).ToList()
