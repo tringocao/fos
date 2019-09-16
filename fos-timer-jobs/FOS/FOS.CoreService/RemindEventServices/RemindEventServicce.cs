@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace FOS.CoreService.RemindEventServices
 {
-    class RemindEventServicce
+    public class RemindEventServicce
     {
+        public RemindEventServicce()
+        {
+
+        }
     }
 }
