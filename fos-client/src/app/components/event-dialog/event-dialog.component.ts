@@ -75,6 +75,8 @@ export class EventDialogComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {}
 
+  apiUrl = environment.apiUrl;
+
   _eventSelected = "Open";
   _createdUser = { id: "" };
   _dateEventTime: string;
@@ -585,11 +587,7 @@ export class EventDialogComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isAfter(eventDate));
-      if (remindDate && eventDate && closeDate) {
-        // if (moment(remindDate).isAfter(eventDate) || moment(remindDate).isAfter(closeDate)) {
-        //   return { invalidRemindTime: true };
-        // }
+      if (eventDate) {
         return null;
       }
       return { datimeRequired: true };
@@ -603,9 +601,8 @@ export class EventDialogComponent implements OnInit {
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       console.log(remindDate + " " + moment(remindDate).isAfter(eventDate));
-      if (remindDate && eventDate && closeDate) {
+      if (eventDate && closeDate) {
         if (
-          moment(remindDate).isAfter(closeDate) ||
           moment(closeDate).isAfter(eventDate)
         ) {
           console.log("eeee");
@@ -644,7 +641,7 @@ export class EventDialogComponent implements OnInit {
     this.ownerForm.controls["dateTimeEvent"].updateValueAndValidity();
     // console.log(this.ownerForm.get('dateTimeRemind').value)
     console.log(moment(this._dateEventTime).isAfter(this._dateToReminder));
-  }
+  } 
 
   isValidEventClose(component: Component) {
     console.log(component);

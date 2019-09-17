@@ -34,6 +34,7 @@ import { User } from "src/app/models/user";
 import { GraphUser } from "src/app/models/graph-user";
 import { OrderService } from "src/app/services/order/order.service";
 import { EventDialogConfirmComponent } from "../event-dialog-confirm/event-dialog-confirm.component";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: "app-event-dialog-edit",
@@ -53,6 +54,8 @@ export class EventDialogEditComponent implements OnInit {
     public dialog: MatDialog
   ) {}
   //global
+  apiUrl = environment.apiUrl;
+  
   _eventSelected = "Open";
   _createdUser = { id: "" };
   _dateEventTime: string;

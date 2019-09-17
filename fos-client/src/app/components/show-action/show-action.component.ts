@@ -102,6 +102,7 @@ export class ShowActionComponent implements OnInit {
   makeOrder($event) {
     alert("make order event: " + this.event.EventId);
     this.eventFormService.GetEventById(this.event.EventId).then(data => {
+      debugger;
       const participants: GraphUser[] = JSON.parse(data.EventParticipantsJson);
       this.eventFormService
         .getCurrentUser()
