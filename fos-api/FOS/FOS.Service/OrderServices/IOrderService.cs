@@ -14,5 +14,6 @@ namespace FOS.Services.OrderServices
         IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
         Order GetByEventvsUserId(string eventId, string userId);
         bool DeleteOrderByIdEvent(string idEvent);
+        List<UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
     }
 }

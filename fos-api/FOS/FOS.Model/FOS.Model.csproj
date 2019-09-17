@@ -130,6 +130,7 @@
     <Compile Include="Domain\Token.cs" />
     <Compile Include="Domain\TokenResource.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\UserNotOrderEmail.cs" />
     <Compile Include="Dto\Category.cs" />
     <Compile Include="Dto\CategoryGroup.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Dto\RestaurantDetail.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Dto\UserNotOrder.cs" />
+    <Compile Include="Dto\UserNotOrderEmail.cs" />
     <Compile Include="Dto\UserNotOrderMailInfo.cs" />
     <Compile Include="Mapping\APIsDtoMapper.cs" />
     <Compile Include="Mapping\CategoryDtoMapper.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Mapping\RestaurantDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantDetailDtoMapper.cs" />
     <Compile Include="Mapping\UserDtoMapper.cs" />
+    <Compile Include="Mapping\UserNotOrderEmailDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ApiUtil.cs" />
   </ItemGroup>
@@ -668,6 +671,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Restaurant.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-not-order-email.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserNotOrderEmail.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-not-order-mail-info.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

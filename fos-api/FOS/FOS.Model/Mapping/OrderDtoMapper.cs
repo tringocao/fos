@@ -52,7 +52,7 @@ namespace FOS.Model.Mapping
                 IdDelivery = order.IdDelivery,
                 IdRestaurant = order.IdRestaurant,
                 IdUser = order.IdUser,
-                OrderDate = order.OrderDate,
+                OrderDate = order.OrderDate.ToLocalTime(),
                 FoodDetail = foodDetail,
                 IdEvent = order.IdEvent,
                 Email = order.Email

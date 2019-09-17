@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -96,16 +97,18 @@ namespace FOS.CoreService.EventServices
             }
         }
 
-        public IEnumerable<Model.Dto.UserNotOrder> GetEventToReminder(string idEvent)
+        public List<Model.Domain.UserNotOrderEmail> GetEventToReminder(string idEvent)
         {
-            List<Model.Dto.UserNotOrderMailInfo> listUser = new List<Model.Dto.UserNotOrderMailInfo>();
-            var userNotOrder = _orderServices.GetUserNotOrdered(idEvent);            
-            return userNotOrder;
+            var listUser = _orderServices.GetUserNotOrderEmail(idEvent);            
+            return listUser;
         }
         
-        public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> userModel)
+        public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> lstUser)
         {
-            _sendMailService.SendEmailToNotOrderedUserAsync(userModel, EventConstant.ReminderEventEmailTemplate);
+            string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
+            string emailTemplateJson = System.IO.File.ReadAllText(path);
+
+            _sendMailService.SendEmailToNotOrderedUserAsync(lstUser, emailTemplateJson);
         }
     }
 }

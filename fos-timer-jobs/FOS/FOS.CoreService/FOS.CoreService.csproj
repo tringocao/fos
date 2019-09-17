@@ -43,16 +43,13 @@
     <Reference Include="FOS.Common">
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Common.dll</HintPath>
     </Reference>
-    <Reference Include="FOS.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="FOS.Model">
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Model.dll</HintPath>
     </Reference>
-    <Reference Include="FOS.Repositories, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="FOS.Repositories">
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Repositories.dll</HintPath>
     </Reference>
-    <Reference Include="FOS.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="FOS.Services">
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Services.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Client.Policy, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -132,8 +129,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\EventEmail.cs" />
+    <Compile Include="Constants\EventIsReminder.cs" />
     <Compile Include="Constants\EventStatus.cs" />
     <Compile Include="fos.cs" />
+    <Compile Include="fosnew.cs" />
+    <Compile Include="Model1.cs" />
     <Compile Include="UnityConfig\RegisterUnity.cs" />
     <Compile Include="Constants\EventConstant.cs" />
     <Compile Include="Program.cs" />

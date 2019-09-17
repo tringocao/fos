@@ -165,6 +165,12 @@ namespace FOS.Event
                 deleteColumn.DeleteObject();
                 clientContext.ExecuteQuery();
             }
+            if (Helper.CheckHelper.isExist_Helper(clientContext, "Event IsReminder", "field") == 1)
+            {
+                Field deleteColumn = clientContext.Web.Fields.GetByInternalNameOrTitle("Event IsReminder");
+                deleteColumn.DeleteObject();
+                clientContext.ExecuteQuery();
+            }
             Console.WriteLine("Delete Event columns!");
             Console.WriteLine("Provision finished!");
         }

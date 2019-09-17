@@ -75,5 +75,10 @@ namespace FOS.Services.OrderServices
         {
             return _repository.DeleteOrderByIdEvent(idEvent);
         }
+
+        public List<UserNotOrderEmail> GetUserNotOrderEmail(string eventId)
+        {
+            return _repository.GetUserNotOrderEmail(eventId);
+        }
     }
 }
