@@ -77,18 +77,28 @@ namespace FOS.ReminderService
             WriteToFile("Service is recall at " + DateTime.Now);
 
             //get event on sharepoint
-            StartReminderService(coreService);
+            try
+            {
+                StartReminderService(coreService);
+            }
+            catch(Exception ex)
+            {
+                WriteToFile("Service failed: " + ex.StackTrace + " - "+ ex.Message);
+            }
+            
         }
         public static void sendMailToUserNotOrder(ClientContext clientContext, IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
         {
             try
             {
+                WriteFile.WriteToFile("sendmail is recall at " + DateTime.Now);
+
                 var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
                 var templateBody = jsonTemplate.TryGetValue("Body", out object body);
                 ReadEmailTemplate(body.ToString());
                 var templateSubject = jsonTemplate.TryGetValue("Subject", out object subject);
                 var emailp = new EmailProperties();
-                string hostname = "https://localhost:4200/";
+                string hostname = ConfigurationSettings.AppSettings["localhost"];
                 var noReplyEmail = ConfigurationSettings.AppSettings["noReplyEmail"];
                 foreach (var user in users)
                 {
@@ -101,7 +111,7 @@ namespace FOS.ReminderService
                         hostname + "make-order/" + user.OrderId);
                     emailp.Subject = subject.ToString();
 
-                    //Utility.SendEmail(clientContext, emailp);
+                    Utility.SendEmail(clientContext, emailp);
                     WriteFile.WriteToFile("User not order" + DateTime.Now);
                     clientContext.ExecuteQuery();
                 }
@@ -178,19 +188,26 @@ namespace FOS.ReminderService
             WriteFile.WriteToFile("Number of event find: " + events.Count.ToString());
 
             WriteFile.WriteToFile("--------------------------------------------");
+
             if (events.Count > 0)
             {
                 List<Model.Dto.UserNotOrderMailInfo> lstUserNotOrder = new List<Model.Dto.UserNotOrderMailInfo>();
 
                 foreach (var element in events)
                 {
+                    var eventId = element[EventConstant.ID].ToString();
+                    UpdateEventIsReminder(clientContext,eventId, "Yes");
+                    WriteFile.WriteToFile("Update to remindered");
+
                     var eventTite = element[EventConstant.EventTitle].ToString();
                     var closeTimeString = element[EventConstant.EventTimeToClose].ToString();
                     var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
                     var eventRestaurant = element[EventConstant.EventRestaurant].ToString();
                     Console.WriteLine(eventTite);
-                    var eventId = element[EventConstant.ID].ToString();
+                    WriteFile.WriteToFile("Find user not order: ");
+
                     var userNotOrder = coreService.GetEventToReminder(eventId);
+
                     WriteFile.WriteToFile("Event find: " + eventTite.ToString());
                     foreach (var user in userNotOrder)
                     {
@@ -200,15 +217,32 @@ namespace FOS.ReminderService
                         userNew.OrderId = user.OrderId;
                         userNew.UserMail = user.UserEmail;
                         lstUserNotOrder.Add(userNew);
-                        WriteFile.WriteToFile("User not order: " + userNew.UserMail + DateTime.Now);
                     }
 
                 }
                 //send mail
+                WriteFile.WriteToFile("sendmail is recall at " + DateTime.Now);
 
-                //string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
-                //string emailTemplateJson = System.IO.File.ReadAllText(path);
-                //sendMailToUserNotOrder(clientContext, lstUserNotOrder, emailTemplateJson);
+                string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
+                string emailTemplateJson = System.IO.File.ReadAllText(path);
+                sendMailToUserNotOrder(clientContext, lstUserNotOrder, emailTemplateJson);
+            }
+        }
+        public static void UpdateEventIsReminder(ClientContext context, string idEvent, string isReminder)
+        {
+            try
+            {
+                List members = context.Web.Lists.GetByTitle("Event List");
+
+                ListItem listItem = members.GetItemById(idEvent);
+
+                listItem["EventIsReminder"] = isReminder;
+                listItem.Update();
+                context.ExecuteQuery();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

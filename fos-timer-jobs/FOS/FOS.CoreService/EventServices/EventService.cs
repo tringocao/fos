@@ -2,6 +2,7 @@
 using FOS.Services.OrderServices;
 using FOS.Services.Providers;
 using FOS.Services.SendEmailServices;
+using FOS.Services.SPListService;
 using FOS.Services.SPUserService;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
@@ -21,11 +22,13 @@ namespace FOS.CoreService.EventServices
         IOrderService _orderServices;
         ISendEmailService _sendMailService;
         ISPUserService _userService;
-       public FosCoreService(IOrderService orderServices, ISendEmailService sendMailServices, ISPUserService userService)
+        ISPListService _spListService;
+       public FosCoreService(IOrderService orderServices, ISendEmailService sendMailServices, ISPUserService userService, ISPListService spListService)
         {
             _orderServices = orderServices;
             _sendMailService = sendMailServices;
             _userService = userService;
+            _spListService = spListService;
         }
         public string BuildLink(string link, string text)
         {
