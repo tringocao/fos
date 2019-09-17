@@ -4,6 +4,7 @@ import { SettingDialogComponent } from "./setting-dialog/setting-dialog.componen
 import { Overlay } from "@angular/cdk/overlay";
 import { UserService } from "src/app/services/user/user.service";
 import { User } from "src/app/models/user";
+import { OauthService } from 'src/app/services/oauth/oauth.service';
 
 @Component({
   selector: "app-header",
@@ -15,12 +16,14 @@ export class HeaderComponent implements OnInit {
   title = "angular-theme";
   appId = "theme1";
   user: User;
+  isUserLoaded: boolean = false;
   @Output() change = new EventEmitter();
 
   constructor(
     public dialog: MatDialog,
     private userService: UserService,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private oauthService: OauthService,
   ) {}
 
   openDialog(): void {
@@ -40,6 +43,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUserId().then(user => {
       this.user = user;
+      this.isUserLoaded = true;
     });
   }
 
@@ -50,5 +54,8 @@ export class HeaderComponent implements OnInit {
   switchTheme(appId: string) {
     this.appId = appId;
     this.change.emit({ theme: appId });
+  }
+  logOut() {
+    this.oauthService.logOut();
   }
 }
