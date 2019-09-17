@@ -47,7 +47,7 @@ namespace FOS.Services.RecurrenceEventServices
         {
             Repositories.DataModel.RecurrenceEvent temp = new Repositories.DataModel.RecurrenceEvent();
             _recurrenceEventMapper.MapToEfObject(temp, recurrenceEvent);
-            return _eventRepository.AddRecurrenceEvent(temp);
+            return _eventRepository.UpdateRecurrenceEvent(temp);
         }
     }
 }

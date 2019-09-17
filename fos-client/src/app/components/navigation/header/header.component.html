@@ -22,7 +22,8 @@
         <a mat-button [routerLink]="'/meals'"> Meals </a>
       </div>
       <span class="example-spacer"></span>
-      <div>
+      <div class="displayContents">
+        <span>{{ displayName }}</span>
         <button
           mat-icon-button
           [matMenuTriggerFor]="menu2"

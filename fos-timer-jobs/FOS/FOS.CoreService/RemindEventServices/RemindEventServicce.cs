@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FOS.Model.Domain;
+using FOS.Services.RecurrenceEventServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +10,14 @@ namespace FOS.CoreService.RemindEventServices
 {
     public class RemindEventServicce
     {
-        public RemindEventServicce()
+        IRecurrenceEventService _recurrenceEventService;
+        public RemindEventServicce(IRecurrenceEventService recurrenceEventService)
         {
-
+            _recurrenceEventService = recurrenceEventService;
+        }
+        public IEnumerable<RecurrenceEvent> GetAllRecurranceEvents()
+        {
+            return _recurrenceEventService.GetAllRecurrenceEvents();
         }
     }
 }

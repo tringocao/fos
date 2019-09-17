@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   title = "angular-theme";
   appId = "theme1";
   user: User;
+  displayName: string;
   @Output() change = new EventEmitter();
 
   constructor(
@@ -28,7 +29,7 @@ export class HeaderComponent implements OnInit {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       autoFocus: false,
       maxHeight: "98vh",
-      width: "80%",
+      maxWidth: "80%",
       data: this.user
     });
 
@@ -40,6 +41,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUserId().then(user => {
       this.user = user;
+      this.displayName = user.DisplayName;
     });
   }
 

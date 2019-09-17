@@ -40,6 +40,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Model.dll</HintPath>
     </Reference>
+    <Reference Include="FOS.Repositories, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Repositories.dll</HintPath>
+    </Reference>
     <Reference Include="FOS.Services, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Services.dll</HintPath>

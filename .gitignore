@@ -37,3 +37,6 @@
 /fos-timer-jobs/FOS/FOS.CloseService/obj/Debug
 /fos-timer-jobs/FOS/FOS.CoreService/obj/Debug
 /fos-timer-jobs/FOS/FOS.RecurrenceEvent/obj/Debug
+/fos-timer-jobs/FOS/FOS.CloseService/bin/Debug
+/fos-timer-jobs/FOS/FOS.CoreService/bin/Debug
+/fos-timer-jobs/FOS/FOS.RecurrenceEvent/bin/Debug

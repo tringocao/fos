@@ -45,6 +45,10 @@ namespace FOS.CoreService.UnityConfig
             container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>();
             container.RegisterType<Services.SendEmailServices.ISendEmailService, Services.SendEmailServices.SendEmailService>();
             container.RegisterType<Services.OrderServices.IOrderService, Services.OrderServices.OrderService>();
+            container.RegisterType<Services.RecurrenceEventServices.IRecurrenceEventService, Services.RecurrenceEventServices.RecurrenceEventService>();
+            container.RegisterType<Repositories.Mapping.IRecurrenceEventMapper, Repositories.Mapping.RecurrenceEventMapper>();
+
+            container.RegisterType<Repositories.Repositories.IRecurrenceEventRepository, Repositories.Repositories.RecurrenceEventRepository>();
             container.RegisterType<Services.IOAuthService, Services.OAuthService>();
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
             //container.RegisterType<ICustomAuthentication, CustomAuthentication>();

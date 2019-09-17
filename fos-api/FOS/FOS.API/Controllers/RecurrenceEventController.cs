@@ -53,13 +53,28 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.RecurrenceEvent>.CreateFailResult(e.ToString());
             }
         }
+        [HttpGet]
+        [Route("Add")]
+        public ApiResponse Add([FromBody]Model.Dto.RecurrenceEvent recurrenceEvent)
+        {
+            try
+            {
+
+                _recurrenceEventService.AddRecurrenceEvent(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
+                return ApiUtil.CreateSuccessfulResult();
+
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
         [HttpPost]
         [Route("UpdateRecurrenceEvent")]
         public ApiResponse UpdateRecurrenceEvent([FromBody]Model.Dto.RecurrenceEvent recurrenceEvent)
         {
             try
             {
-
                 _recurrenceEventService.UpdateRecurrenceEvent(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
                 return ApiUtil.CreateSuccessfulResult();
 
