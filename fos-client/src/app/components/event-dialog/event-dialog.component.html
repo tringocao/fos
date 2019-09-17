@@ -98,7 +98,6 @@
           formcontrolname="dateTimeRemind"
           (input)="onDateTimeChange($event.target.value)"
           >
-          <mat-error *ngIf="HasError('dateTimeRemind', 'datimeRequired')">Reminder time is required</mat-error>
           <mat-error *ngIf="HasError('dateTimeRemind', 'invalidRemindTime')">Reminder time is invalid</mat-error>
         </mat-form-field>
 

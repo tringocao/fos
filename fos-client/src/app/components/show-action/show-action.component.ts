@@ -86,7 +86,11 @@ export class ShowActionComponent implements OnInit {
     const dialogRef = this.dialog.open(ReminderDialogComponent, {
       maxHeight: "98vh",
       minWidth: "50%",
-      data: this.event
+      data: {
+        event: this.event,
+        header: 'Send Reminder',
+        isClosedEvent: false,
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -134,5 +138,22 @@ export class ShowActionComponent implements OnInit {
 
   viewOrder($event) {
     alert("view order event: " + this.event.EventId);
+  }
+
+  closeEvent($event) {
+    const dialogRef = this.dialog.open(ReminderDialogComponent, {
+      maxHeight: "98vh",
+      minWidth: "50%",
+      data: {
+        event: this.event,
+        header: 'Close Event',
+        isClosedEvent: true,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("The dialog was closed");
+    });
+    this.isShowListAction = false;
   }
 }

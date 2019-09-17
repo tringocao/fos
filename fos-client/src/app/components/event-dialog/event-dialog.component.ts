@@ -146,9 +146,9 @@ export class EventDialogComponent implements OnInit {
       UserPicker: this._office365User
     });
 
-    this._dateEventTime = this.ToDateString(new Date());
-    this._dateTimeToClose = this.ToDateString(new Date());
-    this._dateToReminder = this.ToDateString(new Date());
+    // this._dateEventTime = this.ToDateString(new Date());
+    // this._dateTimeToClose = this.ToDateString(new Date());
+    // this._dateToReminder = this.ToDateString(new Date());
     this._maximumBudget = 0;
     this._eventType = "Open";
 
@@ -157,21 +157,21 @@ export class EventDialogComponent implements OnInit {
       title: new FormControl("", [Validators.required]),
       address: new FormControl("", []),
       host: new FormControl(""),
-      dateTimeToClose: new FormControl(new Date(), [
+      dateTimeToClose: new FormControl('', [
         this.ValidateEventCloseTime(
           this._dateEventTime,
           this._dateToReminder,
           this._dateTimeToClose
         )
       ]),
-      dateTimeEvent: new FormControl(new Date(), [
+      dateTimeEvent: new FormControl('', [
         this.ValidateEventTime(
           this._dateEventTime,
           this._dateToReminder,
           this._dateTimeToClose
         )
       ]),
-      dateTimeRemind: new FormControl(new Date(), [
+      dateTimeRemind: new FormControl('', [
         this.ValidateEventRemindTime(
           this._dateEventTime,
           this._dateToReminder,
@@ -575,7 +575,7 @@ export class EventDialogComponent implements OnInit {
         }
         return null;
       }
-      return { datimeRequired: true };
+      return null;
     };
   }
 

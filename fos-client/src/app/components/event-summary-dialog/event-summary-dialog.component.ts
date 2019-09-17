@@ -133,12 +133,12 @@ export class EventSummaryDialogComponent implements OnInit {
         console.log(result);
         this.eventDetail = result;
         this.eventDataAvailable = true;
-        this.restaurantService.getRestaurants([Number(this.eventDetail.RestaurantId)]).then(result => {
+        this.restaurantService.getRestaurants([Number(this.eventDetail.RestaurantId)], Number(this.eventDetail.ServiceId), 217).then(result => {
           console.log(result[0])
           this.restaurant = result[0];
           this.restaurant.address = result[0].Address;
  
-          this.restaurantService.getRestaurantDetail(Number(this.restaurant.DeliveryId))
+          this.restaurantService.getRestaurantDetail(Number(this.restaurant.DeliveryId), Number(this.eventDetail.ServiceId))
           .then(result => {
             this.restaurant.Rating = Number(result.Rating);
             this.restaurant.TotalReview = Number(result.TotalReview);
