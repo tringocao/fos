@@ -19,5 +19,9 @@ namespace FOS.CoreService.RemindEventServices
         {
             return _recurrenceEventService.GetAllRecurrenceEvents();
         }
+        public bool UpdateRecurrenceEvent(Model.Domain.RecurrenceEvent recurrenceEvent)
+        {
+            return _recurrenceEventService.UpdateRecurrenceEvent(recurrenceEvent);
+        }
     }
 }

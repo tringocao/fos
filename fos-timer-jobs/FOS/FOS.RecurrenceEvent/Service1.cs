@@ -10,6 +10,7 @@ using FOS.CoreService.RemindEventServices;
 using FOS.Services.RecurrenceEventServices;
 using System.IO;
 using System.Threading.Tasks;
+using FOS.Model.Domain;
 
 namespace FOS.RecurrenceEvent
 {
@@ -40,7 +41,7 @@ namespace FOS.RecurrenceEvent
 
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             timer.Enabled = true;
-            timer.Interval = 20000; //number in milisecinds  
+            timer.Interval = 24*60*60*1000; //number in milisecinds  
 
         }
 
@@ -57,13 +58,51 @@ namespace FOS.RecurrenceEvent
             {
                 WriteToFile("Service is recall at " + DateTime.Now);
                 var list = remindEventServicce.GetAllRecurranceEvents();
-
+                DateTime today = DateTime.Today;
+                
                 foreach (var item in list)
                 {
-                    WriteToFile("Service is recall at " + item.Id);
+                    if ((today >= item.StartDate.Date) && (today <= item.EndDate.Date) && !item.IsReminding)
+                    {
+                        switch (item.TypeRepeat)
+                        {
+                            case RepeateType.Daily: {
+                                    item.IsReminding = true;//because WS repeat daily
+                                    break;
+                                }
+                            case RepeateType.EveryWorkDay: {
+                                    if(today.DayOfWeek == DayOfWeek.Monday 
+                                        || today.DayOfWeek == DayOfWeek.Tuesday
+                                        || today.DayOfWeek == DayOfWeek.Wednesday
+                                        || today.DayOfWeek == DayOfWeek.Thursday
+                                        || today.DayOfWeek == DayOfWeek.Friday
+                                        )
+                                    {
+                                        item.IsReminding = true;
+                                    }
 
-                    var runningTask = Task.Factory.StartNew(() => DisplayThread1(item.Id));
+                                    break; }
+                            case RepeateType.Monthly: {
+                                    if(today == item.StartTempDate.Date)
+                                    {
+                                        item.IsReminding = true;
+                                        item.StartTempDate = DateTime.Now.AddMonths(1);
 
+                                    }
+                                    break; }
+                            case RepeateType.Weekly: {
+                                    if (today == item.StartTempDate.Date)
+                                    {
+                                        recurrenceEvent.StartTempDate = DateTime.Now.AddDays(7);
+                                        item.IsReminding = true;
+                                    }
+                                    break; }
+
+                        }
+                        WriteToFile("Service is recall at " + item.Id);
+                        Task.Factory.StartNew(() => RunReminderAsync(e.SignalTime, item));
+                        remindEventServicce.UpdateRecurrenceEvent(item);
+                    }
                 }
             }
             catch (Exception esss)
@@ -73,22 +112,16 @@ namespace FOS.RecurrenceEvent
             }
 
         }
-        void DisplayThread1(int a)
+        async Task RunReminderAsync(DateTime runTime, Model.Domain.RecurrenceEvent recurrenceEvent)
         {
-            while (_stopThreads == false)
+            Model.Domain.User user = await remindEventServicce.GetUserByIdAsync(recurrenceEvent.UserId);// The await operator doesn't block the thread that evaluates the async method
+            while (recurrenceEvent.IsReminding)
             {
-                lock (this)
+                lock (this)// all task run in independence
                 {
-                    WriteToFile("Display Thread " + a);
-
-                    // Assign the shared memory to a message about thread #1  
-                    _threadOutput = "Hello Thread " + a;
-
-
-                    Thread.Sleep(1000);  // simulate a lot of processing   
-
-                    // tell the user what thread we are in thread #1, and display shared memory  
-                    WriteToFile("Thread " + a + " Output --> " + _threadOutput);
+                    Task.Delay(1000);  // simulate a lot of processing   
+                    //check again condition, unless user change condition -> continue, if changing condition -> 
+                    sendEmail();
                 }
             }
         }
