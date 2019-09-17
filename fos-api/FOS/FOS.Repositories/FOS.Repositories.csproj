@@ -60,6 +60,7 @@
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
     <Compile Include="DataModel\LoggingData.cs" />
     <Compile Include="DataModel\Order.cs" />
+    <Compile Include="DataModel\RecurrenceEvent.cs" />
     <Compile Include="DataModel\ReportFile.cs" />
     <Compile Include="FosContext.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
@@ -67,6 +68,11 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
+    <Compile Include="Mapping\RecurrenceEventMapper.cs" />
+    <Compile Include="Migrations\201909170327473_newe2.cs" />
+    <Compile Include="Migrations\201909170327473_newe2.Designer.cs">
+      <DependentUpon>201909170327473_newe2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +80,7 @@
     <Compile Include="Repositories\FOSFavoriteRestaurantRepository.cs" />
     <Compile Include="Repositories\FOSFoodServiceAPIsRepository.cs" />
     <Compile Include="Repositories\IFOSFoodServiceAPIsRepository.cs" />
+    <Compile Include="Repositories\RecurrenceEventRepository.cs" />
     <Compile Include="Repositories\ReportFileRepository.cs" />
   </ItemGroup>
   <ItemGroup>

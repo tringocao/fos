@@ -76,8 +76,8 @@ namespace FOS.Services.SendEmailServices
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
-                    emailp.Body = Parse(emailTemplate.Html.ToString(), user);
-                    emailp.Subject = Parse(emailTemplate.Subject.ToString(), null);
+                    emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
+                    emailp.Subject = Parse(emailTemplate.Subject.ToString(), emailTemplate);
                     
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
@@ -104,14 +104,11 @@ namespace FOS.Services.SendEmailServices
 
                 foreach (var user in users)
                 {
+                    emailTemplate.MakeOrder = hostname + "make-order/" + user.OrderId;
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
                     emailp.BCC = new List<string> { host.Mail };
-                    emailp.Body = String.Format(emailTemplate.Html.ToString(),
-                        user.EventTitle,
-                        user.EventRestaurant,
-                        user.UserMail.ToString(),
-                        hostname + "make-order/" + user.OrderId);
+                    emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                     emailp.Subject = subject.ToString();
 
                     Utility.SendEmail(clientContext, emailp);
@@ -128,27 +125,16 @@ namespace FOS.Services.SendEmailServices
             emailTemplate = JsonConvert.DeserializeObject<EmailTemplate>(html);
 
         }
-        private string Parse(string text, User user)
+        public string Parse<T>(string text, T modelparse)
         {
-            var regex = new Regex(@"\[%Event.\S+%\]");
+            var regex = new Regex(@"\[%"+ modelparse.GetType().Name + @".\S+%\]");
             var match = regex.Match(text);
             while (match.Success)
             {
                 var value = match.Value;
-                var memberName = ParseMemberName(value); //Some code you write to parse out the member name from the match value
-                System.Reflection.PropertyInfo propertyInfo;
-                object memberValue; 
-
-                if (memberName != "Mail")
-                {
-                    propertyInfo = emailTemplate.GetType().GetProperty(memberName);
-                    memberValue = propertyInfo.GetValue(emailTemplate, null);
-                }
-                else
-                {
-                    propertyInfo = user.GetType().GetProperty(memberName);
-                    memberValue = propertyInfo.GetValue(user, null);
-                }
+                var memberName = ParseMemberName(value); 
+                System.Reflection.PropertyInfo propertyInfo = modelparse.GetType().GetProperty(memberName);
+                object memberValue = propertyInfo.GetValue(modelparse, null);
                 text = text.Replace(value, memberValue != null ? memberValue.ToString() : string.Empty);
                 match = match.NextMatch();
             }

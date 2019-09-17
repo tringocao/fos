@@ -178,6 +178,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProvinceServices\IProvinceService.cs" />
     <Compile Include="ProvinceServices\ProvinceService.cs" />
+    <Compile Include="RecurrenceEventServices\IRecurrenceEventService.cs" />
+    <Compile Include="RecurrenceEventServices\RecurrenceEventService.cs" />
     <Compile Include="RestaurantServices\IRestaurantService.cs" />
     <Compile Include="RestaurantServices\RestaurantService.cs" />
     <Compile Include="SendEmailServices\ISendEmailService.cs" />
