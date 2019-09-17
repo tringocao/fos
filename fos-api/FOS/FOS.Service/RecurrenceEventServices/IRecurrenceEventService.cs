@@ -8,5 +8,7 @@ namespace FOS.Services.RecurrenceEventServices
         Model.Domain.RecurrenceEvent GetById(int id);
         bool UpdateRecurrenceEvent(Model.Domain.RecurrenceEvent recurrenceEvent);
         bool AddRecurrenceEvent(Model.Domain.RecurrenceEvent recurrenceEvent);
+        bool DeleteById(int id);
+        Model.Domain.RecurrenceEvent GetByUserId(string userId);
     }
 }

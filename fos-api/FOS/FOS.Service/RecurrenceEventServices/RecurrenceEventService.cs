@@ -35,7 +35,14 @@ namespace FOS.Services.RecurrenceEventServices
         {
             return _recurrenceEventMapper.MapToDomain(_eventRepository.GetById(id));
         }
-
+        public RecurrenceEvent GetByUserId(string userId)
+        {
+            return _recurrenceEventMapper.MapToDomain(_eventRepository.GetByUserId(userId));
+        }
+        public  bool DeleteById(int id)
+        {
+            return _eventRepository.DeleteRecurrenceEvent(id);
+        }
         public bool UpdateRecurrenceEvent(RecurrenceEvent recurrenceEvent)
         {
             Repositories.DataModel.RecurrenceEvent temp = new Repositories.DataModel.RecurrenceEvent();

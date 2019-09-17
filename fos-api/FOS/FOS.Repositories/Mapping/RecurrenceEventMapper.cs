@@ -23,7 +23,8 @@ namespace FOS.Repositories.Mapping
                 Title = efObject.Title,
                 TypeRepeat = (RepeateType)Enum.Parse(typeof(RepeateType), efObject.TypeRepeat),
                 EndDate = DateTime.Parse(efObject.EndDate),
-                StartDate = DateTime.Parse(efObject.StartDate)
+                StartDate = DateTime.Parse(efObject.StartDate),
+                UserId = efObject.UserId != null ? efObject.UserId : null
             };
         }
 
@@ -34,6 +35,7 @@ namespace FOS.Repositories.Mapping
             efObject.TypeRepeat = domObject.TypeRepeat.ToString();
             efObject.StartDate = domObject.StartDate.ToString();
             efObject.EndDate = domObject.EndDate.ToString();
+            efObject.UserId = domObject.UserId != null ? domObject.UserId : null;
         }
     }
 }

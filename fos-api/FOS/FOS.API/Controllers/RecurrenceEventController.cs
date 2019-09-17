@@ -38,11 +38,36 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.RecurrenceEvent>.CreateFailResult(e.ToString());
             }
         }
-
-        // GET: api/RecurrenceEvent/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("GetByUserId")]
+        public ApiResponse<Model.Dto.RecurrenceEvent> GetByUserId(string userId)
         {
-            return "value";
+            try
+            {
+                return ApiUtil<Model.Dto.RecurrenceEvent>.CreateSuccessfulResult(
+                    _recurrenceEventDtoMapper.ToDto(_recurrenceEventService.GetByUserId(userId))
+               );
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<Model.Dto.RecurrenceEvent>.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpPost]
+        [Route("UpdateRecurrenceEvent")]
+        public ApiResponse UpdateRecurrenceEvent([FromBody]Model.Dto.RecurrenceEvent recurrenceEvent)
+        {
+            try
+            {
+
+                _recurrenceEventService.UpdateRecurrenceEvent(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
+                return ApiUtil.CreateSuccessfulResult();
+
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
         }
 
         // POST: api/RecurrenceEvent
@@ -55,9 +80,21 @@ namespace FOS.API.Controllers
         {
         }
 
-        // DELETE: api/RecurrenceEvent/5
-        public void Delete(int id)
+        [HttpGet]
+        [Route("DeleteById")]
+        public ApiResponse Delete(int id)
         {
+            try
+            {
+
+                _recurrenceEventService.DeleteById(id);
+                return ApiUtil.CreateSuccessfulResult();
+
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
         }
     }
 }

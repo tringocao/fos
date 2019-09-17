@@ -22,7 +22,8 @@ namespace FOS.Model.Mapping
                 Title = recurrenceEvent.Title,
                 TypeRepeat = (Dto.RepeateType)Enum.Parse(typeof(Dto.RepeateType), recurrenceEvent.TypeRepeat.ToString()),
                 EndDate = recurrenceEvent.EndDate,
-                StartDate = recurrenceEvent.StartDate
+                StartDate = recurrenceEvent.StartDate,
+                UserId = recurrenceEvent.UserId != null ? recurrenceEvent.UserId:null  
             };
         }
 
@@ -34,7 +35,8 @@ namespace FOS.Model.Mapping
                 Title = recurrenceEvent.Title,
                 TypeRepeat = (Domain.RepeateType)Enum.Parse(typeof(Domain.RepeateType), recurrenceEvent.TypeRepeat.ToString()),
                 EndDate = recurrenceEvent.EndDate,
-                StartDate = recurrenceEvent.StartDate
+                StartDate = recurrenceEvent.StartDate,
+                UserId = recurrenceEvent.UserId != null ? recurrenceEvent.UserId : null
             };
         }
     }
