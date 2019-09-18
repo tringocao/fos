@@ -148,6 +148,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IGraphUserDtoMapper, Model.Mapping.GraphUserDtoMapper>();
             container.RegisterType<Model.Mapping.IRestaurantSummaryDtoMapper, Model.Mapping.RestaurantSummaryDtoMapper>();
             container.RegisterType<Model.Mapping.IRecurrenceEventDtoMapper, Model.Mapping.RecurrenceEventDtoMapper>();
+            container.RegisterType<Model.Mapping.IDishesSummaryDtoMapper, Model.Mapping.DishesSummaryDtoMapper>();
 
             container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(

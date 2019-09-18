@@ -164,6 +164,7 @@
     <Compile Include="Mapping\CategoryGroupDtoMapper.cs" />
     <Compile Include="Mapping\Config.cs" />
     <Compile Include="Mapping\DeliveryInfosDtoMapper.cs" />
+    <Compile Include="Mapping\DishesSummaryDtoMapper.cs" />
     <Compile Include="Mapping\EventDtoMapper.cs" />
     <Compile Include="Mapping\FavoriteRestaurantDtoMapper.cs" />
     <Compile Include="Mapping\FoodCategoryDtoMapper.cs" />

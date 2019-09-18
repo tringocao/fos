@@ -27,13 +27,15 @@ namespace FOS.API.Controllers
         ISendEmailService _sendEmailService;
         ISPUserService _spUserService;
         IRestaurantSummaryDtoMapper _restaurantSummaryDtoMapper;
+        IDishesSummaryDtoMapper _dishesSummaryDtoMapper;
 
-        public SummaryController(ISummaryService summaryService, ISendEmailService sendEmailService, ISPUserService spUserService, IRestaurantSummaryDtoMapper restaurantSummaryDtoMapper)
+        public SummaryController(ISummaryService summaryService, ISendEmailService sendEmailService, ISPUserService spUserService, IRestaurantSummaryDtoMapper restaurantSummaryDtoMapper, IDishesSummaryDtoMapper dishesSummaryDtoMapper)
         {
             _summaryService = summaryService;
             _sendEmailService = sendEmailService;
             _spUserService = spUserService;
             _restaurantSummaryDtoMapper = restaurantSummaryDtoMapper;
+            _dishesSummaryDtoMapper = dishesSummaryDtoMapper;
         }
 
         //[HttpGet]
@@ -118,8 +120,12 @@ namespace FOS.API.Controllers
             try
             {
                 var listSummary = _summaryService.GetRestaurantSummary();
-                var result = _restaurantSummaryDtoMapper.ListToDto(listSummary);
-                return ApiUtil<IEnumerable<Model.Dto.RestaurantSummary>>.CreateSuccessfulResult(result);
+                if(listSummary != null)
+                {
+                    var result = _restaurantSummaryDtoMapper.ListToDto(listSummary);
+                    return ApiUtil<IEnumerable<Model.Dto.RestaurantSummary>>.CreateSuccessfulResult(result);
+                }
+                return ApiUtil<IEnumerable<Model.Dto.RestaurantSummary>>.CreateSuccessfulResult(null);
             }
             catch (Exception e)
             {
@@ -133,7 +139,11 @@ namespace FOS.API.Controllers
             try
             {
                 var listSummary = _summaryService.GetDishesSummary(restaurantId, deliveryId, serviceId);
-                //var result = _restaurantSummaryDtoMapper.ListToDto(listSummary);
+                if(listSummary != null)
+                {
+                    var result = _dishesSummaryDtoMapper.ListToDto(listSummary);
+                    return ApiUtil<IEnumerable<Model.Dto.DishesSummary>>.CreateSuccessfulResult(result);
+                }
                 return ApiUtil<IEnumerable<Model.Dto.DishesSummary>>.CreateSuccessfulResult(null);
             }
             catch (Exception e)

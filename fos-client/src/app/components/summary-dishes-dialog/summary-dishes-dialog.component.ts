@@ -44,7 +44,7 @@ import { DishesSummary } from './../../models/dishes-summary';
 export class SummaryDishesDialogComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Rank', 'Dishes', 'Percent', 'RelativePercent'];
+  displayedColumns: string[] = ['Rank', 'Food', 'Percent', 'RelativePercent'];
   dataSource: MatTableDataSource<DishesSummary>;
   isLoading = true;
 
@@ -56,7 +56,6 @@ export class SummaryDishesDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<DishesSummary>([]);
     this.summaryService
       .getDishesSummary(
         this.data.RestaurantId.toString(),
@@ -64,7 +63,8 @@ export class SummaryDishesDialogComponent implements OnInit {
         this.data.ServiceId
       )
       .then(result => {
-        console.log('result: ', result);
+        this.dataSource = new MatTableDataSource<DishesSummary>(result);
+        this.dataSource.paginator = this.paginator;
         this.isLoading = false;
       });
   }
