@@ -3,6 +3,8 @@ using FOS.Services.OrderServices;
 using FOS.Services.Providers;
 using FOS.Services.SendEmailServices;
 using FOS.Services.SPListService;
+using FOS.CoreService.Models;
+using FOS.Services.SendEmailServices;
 using FOS.Services.SPUserService;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
@@ -13,6 +15,7 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Security;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FOS.CoreService.EventServices
@@ -42,11 +45,41 @@ namespace FOS.CoreService.EventServices
             getAllEventOpened.ViewXml =
                 @"<View>
                         <Query>
+                            <Where>" + 
+                                "<Eq>" +
+                                    "<FieldRef Name=" + EventConstant.EventStatus + "/>" +
+                                    "<Value Type='Text'>" + EventStatus.Opened + "</Value>" +
+                                "</Eq>" +
+                                @"</Where>
+                        </Query>
+                        <RowLimit>1000</RowLimit>
+                    </View>";
+
+            var events = list.GetItems(getAllEventOpened);
+            clientContext.Load(events);
+            clientContext.ExecuteQuery();
+
+            return events;
+        }
+        public ListItemCollection GetListEventShouldClose(ClientContext clientContext)
+        {
+            var web = clientContext.Web;
+            var list = web.Lists.GetByTitle(EventConstant.EventList);
+            CamlQuery getAllEventOpened = new CamlQuery();
+            getAllEventOpened.ViewXml =
+                @"<View>
+                        <Query>
                             <Where>
-                                <Eq>" +
-                                "<FieldRef Name=" + EventConstant.EventStatus + "/>" +
-                                "<Value Type='Text'>" + EventStatus.Opened + "</Value>" +
-                            @"</Eq>
+                                <And>" +
+                                "<Eq>" +
+                                    "<FieldRef Name=" + EventConstant.EventStatus + "/>" +
+                                    "<Value Type='Text'>" + EventStatus.Opened + "</Value>" +
+                                "</Eq>" +
+                                 "<Leq>" +
+                                    "<FieldRef Name=" + EventConstant.EventTimeToClose + "/>" +
+                                    "<Value Type='Text'>" + DateTime.Now.ToString(EventConstant.SharepointTimeFormat) + "</Value>" +
+                                "</Leq>" +
+                                @"</And>
                             </Where>
                         </Query>
                         <RowLimit>1000</RowLimit>
@@ -58,7 +91,7 @@ namespace FOS.CoreService.EventServices
 
             return events;
         }
-        public void CloseEvent(ClientContext clientContext, ListItem element)
+        public void ChangeStatusToClose(ClientContext clientContext, ListItem element)
         {
             element[EventConstant.EventStatus] = EventStatus.Closed;
             element.Update();
@@ -70,7 +103,6 @@ namespace FOS.CoreService.EventServices
             string emailTemplateJson = System.IO.File.ReadAllText(path);
 
             var emailTemplateDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(emailTemplateJson);
-
             return emailTemplateDictionary;
         }
         public void SendEmail(ClientContext clientContext, string fromMail, string toMail, string body, string subject)
@@ -99,14 +131,28 @@ namespace FOS.CoreService.EventServices
                 return clientContext;
             }
         }
-
-        public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string idEvent)
+        public string Parse<T>(string text, T modelparse)
         {
-            List<Model.Domain.UserNotOrderEmail> listUser = _orderServices.GetUserNotOrderEmail(idEvent);            
-            return listUser;
+            var regex = new Regex(@"\[%" + modelparse.GetType().Name + @".\S+%\]");
+            var match = regex.Match(text);
+            while (match.Success)
+            {
+                var value = match.Value;
+                var memberName = ParseMemberName(value);
+                System.Reflection.PropertyInfo propertyInfo = modelparse.GetType().GetProperty(memberName);
+                object memberValue = propertyInfo.GetValue(modelparse, null);
+                text = text.Replace(value, memberValue != null ? memberValue.ToString() : string.Empty);
+                match = match.NextMatch();
+            }
+            return text;
+        }
+        private string ParseMemberName(string value)
+        {
+            return value.Split('.')[1].Split('%')[0];
         }
         
         public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> lstUser)
+        public async Task<int> GetEventToReminder()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
             string emailTemplateJson = System.IO.File.ReadAllText(path);

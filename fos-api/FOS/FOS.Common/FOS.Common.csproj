@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="APIResource.cs" />
     <Compile Include="Constants\Constant.cs" />
+    <Compile Include="Constants\EventConstant.cs" />
     <Compile Include="OAuth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

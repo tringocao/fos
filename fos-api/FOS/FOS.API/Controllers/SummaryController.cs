@@ -1,6 +1,7 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
+using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Repositories.DataModel;
 using FOS.Services.SendEmailServices;
@@ -25,12 +26,14 @@ namespace FOS.API.Controllers
         ISummaryService _summaryService;
         ISendEmailService _sendEmailService;
         ISPUserService _spUserService;
+        IRestaurantSummaryDtoMapper _restaurantSummaryDtoMapper;
 
-        public SummaryController(ISummaryService summaryService, ISendEmailService sendEmailService, ISPUserService spUserService)
+        public SummaryController(ISummaryService summaryService, ISendEmailService sendEmailService, ISPUserService spUserService, IRestaurantSummaryDtoMapper restaurantSummaryDtoMapper)
         {
             _summaryService = summaryService;
             _sendEmailService = sendEmailService;
             _spUserService = spUserService;
+            _restaurantSummaryDtoMapper = restaurantSummaryDtoMapper;
         }
 
         //[HttpGet]
@@ -106,6 +109,36 @@ namespace FOS.API.Controllers
             catch (Exception e)
             {
                 return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpGet]
+        [Route("GetRestaurantSummary")]
+        public ApiResponse<IEnumerable<Model.Dto.RestaurantSummary>> GetRestaurantSummary()
+        {
+            try
+            {
+                var listSummary = _summaryService.GetRestaurantSummary();
+                var result = _restaurantSummaryDtoMapper.ListToDto(listSummary);
+                return ApiUtil<IEnumerable<Model.Dto.RestaurantSummary>>.CreateSuccessfulResult(result);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<Model.Dto.RestaurantSummary>>.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpGet]
+        [Route("GetDishesSummary")]
+        public ApiResponse<IEnumerable<Model.Dto.DishesSummary>> GetDishesSummary(string restaurantId, string deliveryId, string serviceId)
+        {
+            try
+            {
+                var listSummary = _summaryService.GetDishesSummary(restaurantId, deliveryId, serviceId);
+                //var result = _restaurantSummaryDtoMapper.ListToDto(listSummary);
+                return ApiUtil<IEnumerable<Model.Dto.DishesSummary>>.CreateSuccessfulResult(null);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<Model.Dto.DishesSummary>>.CreateFailResult(e.ToString());
             }
         }
     }

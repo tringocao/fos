@@ -1,4 +1,4 @@
 ﻿{
   "Subject": "Close event",
-  "Body": "This email announce that event {EventName} has been closed automatically. Follow this {EventSummaryLink} to view event summary"
+  "Body": "This email announce that event [%CloseEventEmailTemplate.EventTitle%] has been closed automatically. Follow this [%CloseEventEmailTemplate.EventSummaryLink%] to view event summary"
 }
