@@ -14,6 +14,7 @@ namespace FOS.Model.Dto
         public int Id { get; set; }
         public RepeateType TypeRepeat { get; set; }
         public string UserId { get; set; }
+        public string UserMail { get; set; }
 
     }
 }

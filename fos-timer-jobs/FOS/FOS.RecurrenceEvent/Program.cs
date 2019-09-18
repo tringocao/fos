@@ -15,8 +15,8 @@ namespace FOS.RecurrenceEvent
         static void Main()
         {
 //#if DEBUG
-            //Service1 service = new Service1();
-            //service.OnDebug();
+//            Service1 service = new Service1();
+//            service.OnDebug();
 //#else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]

@@ -73,6 +73,10 @@
     <Compile Include="Migrations\201909170327473_newe2.Designer.cs">
       <DependentUpon>201909170327473_newe2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909180905127_new22.cs" />
+    <Compile Include="Migrations\201909180905127_new22.Designer.cs">
+      <DependentUpon>201909180905127_new22.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -112,6 +116,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201909170327473_newe2.resx">
       <DependentUpon>201909170327473_newe2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909180905127_new22.resx">
+      <DependentUpon>201909180905127_new22.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

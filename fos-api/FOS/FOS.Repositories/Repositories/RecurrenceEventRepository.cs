@@ -74,8 +74,11 @@ namespace FOS.Repositories.Repositories
                 EndDate = DateTime.Now.ToString(),
                 StartDate = DateTime.Now.ToString(),
                 UserId = Userid,
-                Title ="Unknown",
+                Title = "Unknown",
                 TypeRepeat = "Daily",
+                IsReminding = false,
+                StartTempDate = DateTime.Now.ToString(),
+                UserMail = ""
             };
             else return recurrenceEventByUserId;
         }

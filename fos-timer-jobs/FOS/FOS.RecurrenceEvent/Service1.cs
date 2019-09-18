@@ -11,14 +11,17 @@ using FOS.Services.RecurrenceEventServices;
 using System.IO;
 using System.Threading.Tasks;
 using FOS.Model.Domain;
+using System.Configuration;
+using Microsoft.SharePoint.Client.Utilities;
+using FOS.CoreService.Constants;
 
 namespace FOS.RecurrenceEvent
 {
     public partial class Service1 : ServiceBase
     {
-        private bool _stopThreads = false;
         System.Timers.Timer timer = new System.Timers.Timer();
-        RemindEventServicce remindEventServicce;
+        RemindEventService remindEventServicce;
+        FosCoreService coreService;
         public Service1()
         {
             InitializeComponent();
@@ -35,12 +38,11 @@ namespace FOS.RecurrenceEvent
 
             var container = new UnityContainer();
             RegisterUnity.Register(container);
-            remindEventServicce = container.Resolve<RemindEventServicce>();
-
-
+            remindEventServicce = container.Resolve<RemindEventService>();
+            coreService = container.Resolve<FosCoreService>();
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             timer.Enabled = true;
-            timer.Interval = 24*60*60*1000; //number in milisecinds  
+            timer.Interval = 60 * 1000; //number in milisecinds  
 
         }
 
@@ -55,74 +57,146 @@ namespace FOS.RecurrenceEvent
         {
             try
             {
-                WriteToFile("Service is recall at " + DateTime.Now);
+                WriteToFile("Service is recall1 at " + DateTime.Now.ToLocalTime());
                 var list = remindEventServicce.GetAllRecurranceEvents();
-                DateTime today = DateTime.Today;
-                
+                WriteToFile("Service is recall4 at " + DateTime.Now.ToLocalTime());
+
+                DateTime today = DateTime.Today.ToLocalTime();
+                WriteToFile("Service is recall3 at " + DateTime.Now.ToLocalTime());
+
                 foreach (var item in list)
                 {
+                    WriteToFile("Service is recall5 at " + DateTime.Now.ToLocalTime());
+
                     if ((today >= item.StartDate.Date) && (today <= item.EndDate.Date) && !item.IsReminding)
                     {
-                        switch (item.TypeRepeat)
+                        if (item.StartDate.Hour == e.SignalTime.Hour)
                         {
-                            case RepeateType.Daily: {
-                                    item.IsReminding = true;//because WS repeat daily
-                                    break;
-                                }
-                            case RepeateType.EveryWorkDay: {
-                                    if(today.DayOfWeek == DayOfWeek.Monday 
-                                        || today.DayOfWeek == DayOfWeek.Tuesday
-                                        || today.DayOfWeek == DayOfWeek.Wednesday
-                                        || today.DayOfWeek == DayOfWeek.Thursday
-                                        || today.DayOfWeek == DayOfWeek.Friday
-                                        )
+                            switch (item.TypeRepeat)
+                            {
+                                case RepeateType.Daily:
                                     {
-                                        item.IsReminding = true;
+                                        if (today == item.StartTempDate.Date)
+                                        {
+                                            item.IsReminding = true;
+                                            item.StartTempDate = item.StartDate.AddDays(1);
+                                        }
+                                        break;
+                                    }
+                                case RepeateType.EveryWorkDay:
+                                    {
+                                        if (today == item.StartTempDate.Date)
+                                        {
+                                            item.StartTempDate = item.StartDate.AddDays(1);
+                                            if (today.DayOfWeek == DayOfWeek.Monday
+                                            || today.DayOfWeek == DayOfWeek.Tuesday
+                                            || today.DayOfWeek == DayOfWeek.Wednesday
+                                            || today.DayOfWeek == DayOfWeek.Thursday
+                                            || today.DayOfWeek == DayOfWeek.Friday
+                                            )
+                                            {
+                                                item.IsReminding = true;
+                                            }
+
+                                        }
+                                        break;
+                                    }
+                                case RepeateType.Monthly:
+                                    {
+                                        if (today == item.StartTempDate.Date)
+                                        {
+                                            item.IsReminding = true;
+                                            item.StartTempDate = item.StartDate.AddMonths(1);
+
+                                        }
+                                        break;
+                                    }
+                                case RepeateType.Weekly:
+                                    {
+                                        if (today == item.StartTempDate.Date)
+                                        {
+                                            item.StartTempDate = item.StartDate.AddDays(7);
+                                            item.IsReminding = true;
+                                        }
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        if (today == item.StartTempDate.Date)
+                                        {
+                                            item.IsReminding = true;
+                                        }
+                                        break;
                                     }
 
-                                    break; }
-                            case RepeateType.Monthly: {
-                                    if(today == item.StartTempDate.Date)
-                                    {
-                                        item.IsReminding = true;
-                                        item.StartTempDate = DateTime.Now.AddMonths(1);
+                            }
+                            WriteToFile("Service is recall2 at " + item.Id);
+                            Task.Factory.StartNew(() => RunReminderAsync(e.SignalTime, item));
 
-                                    }
-                                    break; }
-                            case RepeateType.Weekly: {
-                                    if (today == item.StartTempDate.Date)
-                                    {
-                                        recurrenceEvent.StartTempDate = DateTime.Now.AddDays(7);
-                                        item.IsReminding = true;
-                                    }
-                                    break; }
+                            WriteToFile("Service is updated1 at " + item.IsReminding + " " + item.Id);
+
+                            //remindEventServicce.UpdateRecurrenceEvent(item);
+
+                            WriteToFile("Service is updated2 at " + item.IsReminding + " " + item.Id);
 
                         }
-                        WriteToFile("Service is recall at " + item.Id);
-                        Task.Factory.StartNew(() => RunReminderAsync(e.SignalTime, item));
-                        remindEventServicce.UpdateRecurrenceEvent(item);
                     }
                 }
             }
-            catch (Exception esss)
+            catch (Exception ex)
             {
-                WriteToFile("Service is stopped at " + esss.ToString());
+                WriteToFile("Service is stopped at " + ex.ToString());
 
             }
 
         }
-        async Task RunReminderAsync(DateTime runTime, Model.Domain.RecurrenceEvent recurrenceEvent)
+        public void RunReminderAsync(DateTime runTime, Model.Domain.RecurrenceEvent recurrenceEvent)
         {
-            Model.Domain.User user = await remindEventServicce.GetUserByIdAsync(recurrenceEvent.UserId);// The await operator doesn't block the thread that evaluates the async method
             while (recurrenceEvent.IsReminding)
             {
-                lock (this)// all task run in independence
+                WriteToFile("Service is sent1 email at " + DateTime.Now.ToLocalTime());
+
+                DateTime today = DateTime.Today.ToLocalTime();
+                var item = remindEventServicce.GetRecurranceEventById(recurrenceEvent.Id);               
+                                                                                                            //check again condition, unless user change condition -> continue, if changing condition -> false -> kill task
+                if ((today >= item.StartDate.Date)
+                    && (today <= item.EndDate.Date)
+                    && (item.StartDate.Hour == runTime.Hour))
                 {
-                    Task.Delay(1000);  // simulate a lot of processing   
-                    //check again condition, unless user change condition -> continue, if changing condition -> 
-                    sendEmail();
+                    DateTime now = DateTime.Now.ToLocalTime();
+                    if (now.Minute >= item.StartDate.Minute)
+                    {
+                        WriteToFile("Service is sent2 email at " + item.Id);
+
+                        using (var clientContext = coreService.GetClientContext())
+                        {
+
+                            var noReplyEmail = ConfigurationSettings.AppSettings["noReplyEmail"];
+                            var emailTemplateDictionary = coreService.GetEmailTemplate(EventConstant.RemindEmailTemplate);
+                            emailTemplateDictionary.TryGetValue(EventEmail.Body, out string body);
+                            emailTemplateDictionary.TryGetValue(EventEmail.Subject, out string subject);
+                            coreService.SendEmail(clientContext, noReplyEmail, item.UserMail, remindEventServicce.Parse(body, item), subject);
+                            WriteToFile("Service is sent email at! " + item.Id);
+                            Task.Delay(1000).Wait();
+
+                            remindEventServicce.UpdateRecurrenceEvent(item);
+                            WriteToFile("Service is sent email at!after " + item.Id);
+
+                        }
+                        recurrenceEvent.IsReminding = false;
+                        break;
+                    }
+                    if (item.IsReminding == false)
+                    {
+                        item.IsReminding = true;
+                        remindEventServicce.UpdateRecurrenceEvent(item);
+                    }
+                    Task.Delay(60000).Wait();
+
                 }
+                else recurrenceEvent.IsReminding = false;
             }
+
         }
         public void WriteToFile(string Message)
         {

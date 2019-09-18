@@ -17,6 +17,7 @@
         public Title: string = null;   
         public Id: number = 0;   
         public TypeRepeat: RepeateType = null;   
-        public UserId: string = null;
+        public UserId: string = null;   
+        public UserMail: string = null;
     }
          
