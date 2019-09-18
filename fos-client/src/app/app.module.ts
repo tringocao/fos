@@ -84,6 +84,8 @@ import { EventDialogEditComponent } from "./components/event-dialog-edit/event-d
 import { EventDialogConfirmComponent } from "./components/event-dialog-confirm/event-dialog-confirm.component";
 import { SettingDialogComponent } from "./components/navigation/header/setting-dialog/setting-dialog.component";
 import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
+import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +117,9 @@ import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
     ReminderDialogComponent,
     EventDialogEditComponent,
     EventDialogConfirmComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    PrintLayoutComponent,
+    EventSummaryPrintComponent
   ],
   // declarations: [
   //     AppComponent,

@@ -12,7 +12,7 @@
       <div class="tp-container">
 
         <mat-form-field>
-          <input matInput type="text" placeholder="EventTitle" formControlName="title" id="title">
+          <input required matInput type="text" placeholder="Event Title" formControlName="title" id="title">
           <mat-hint align="end">Event title is required.</mat-hint>
           <mat-error *ngIf="HasError('title', 'required')">Event title is required.</mat-error>
         </mat-form-field>
@@ -87,7 +87,7 @@
 
         <mat-form-field class="full-width">
           <mat-label>Time To Close</mat-label>
-          <input required id="party" matInput [errorStateMatcher]="matcher"  type="datetime-local" [(ngModel)]="_dateTimeToClose"
+          <input [max]="_dateEventTime" required id="party" matInput [errorStateMatcher]="matcher"  type="datetime-local" [(ngModel)]="_dateTimeToClose"
             [ngModelOptions]="{standalone: true}"
             formcontrolname="dateTimeToClose" 
             (input)="onDateTimeChange($event.target.value)"
@@ -110,7 +110,7 @@
         <mat-grid-list cols="10" rowHeight="100px">
           <mat-grid-tile [colspan]="8">
             <mat-form-field class="full-width">
-              <mat-select required placeholder="Pick user/group" formControlName="participants"
+              <mat-select placeholder="Pick user/group" formControlName="participants"
                 (selectionChange)="ChangeClient($event)">
                 <mat-optgroup *ngFor="let group of _userPickerGroups" [label]="group.Name">
                   <mat-option style="width:4500px; height: 5em;" *ngFor="let user of group.UserPicker" [value]="user">

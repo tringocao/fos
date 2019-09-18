@@ -1,7 +1,15 @@
 @import '../../../styles/global/variables.less';
 
+
 .container {
   overflow: hidden;
+  width: auto;
+  @media @desktop {
+    margin: 1rem 10rem;
+  }
+  @media @mobile {
+    margin: 1rem 1rem;
+  }
 }
 .event-summary {
 

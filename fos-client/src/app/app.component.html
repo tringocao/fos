@@ -7,13 +7,14 @@
       <app-header (change)="changeTheme($event)"></app-header>
       <!--in here all the content must reside. We will add a navigation header as well-->
       <main>
-        <img
+        <!-- <img
           *ngIf="showIcon"
           src="https://www.preciofishbone.se/globalassets/ngo-online-v2/logos/precio_422px.png"
           alt="App logo"
           class="logo"
-        />
+        /> -->
         <router-outlet></router-outlet>
+        <router-outlet name="print"></router-outlet>
       </main>
     </mat-sidenav-content>
     <mat-sidenav #sidenavlist role="navigation" mode="side" position="end">

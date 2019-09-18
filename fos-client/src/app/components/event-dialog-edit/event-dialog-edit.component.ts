@@ -671,7 +671,7 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   onDateTimeChange(value: string): void {
-    if (this._dateToReminder && this._dateEventTime && moment(this._dateEventTime).isSameOrAfter(this._dateToReminder)) {
+    if (this._dateToReminder && this._dateEventTime && moment(this._dateToReminder).isSameOrAfter(this._dateEventTime)) {
       // this.isInvalidRemindTime = true
       // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
       alert("Time to remind must be before event time");
@@ -679,7 +679,7 @@ export class EventDialogEditComponent implements OnInit {
     if (this._dateToReminder && this._dateTimeToClose && moment(this._dateToReminder).isSameOrAfter(this._dateTimeToClose)) {
       // this.isInvalidRemindTime = true
       // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-      alert("Time to remind must be after event close time");
+      alert("Time to remind must be before event close time");
     }
     if (this._dateTimeToClose && this._dateEventTime && moment(this._dateTimeToClose).isSameOrAfter(this._dateEventTime)) {
       // this.isInvalidCloseTime = true
