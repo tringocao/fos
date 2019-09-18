@@ -15,7 +15,6 @@ namespace FOS.RecurrenceEvent
 {
     public partial class Service1 : ServiceBase
     {
-        private string _threadOutput = "";
         private bool _stopThreads = false;
         System.Timers.Timer timer = new System.Timers.Timer();
         RemindEventServicce remindEventServicce;
@@ -60,9 +59,9 @@ namespace FOS.RecurrenceEvent
 
                 foreach (var item in list)
                 {
-                    WriteToFile("Service is recall at " + item.Id);
+                    WriteToFile("Service is recall at " + e.SignalTime.Millisecond);
 
-                    var runningTask = Task.Factory.StartNew(() => DisplayThread1(item.Id));
+                    var runningTask = Task.Factory.StartNew(() => DisplayThread1(e.SignalTime.Millisecond));
 
                 }
             }
@@ -75,21 +74,24 @@ namespace FOS.RecurrenceEvent
         }
         void DisplayThread1(int a)
         {
+            int count = 0;
+            string _threadOutput = "";
+
             while (_stopThreads == false)
             {
-                lock (this)
-                {
-                    WriteToFile("Display Thread " + a);
 
-                    // Assign the shared memory to a message about thread #1  
-                    _threadOutput = "Hello Thread " + a;
+                count++;
+                WriteToFile("Display Thread " + a + " count = " + (count));
 
+                // Assign the shared memory to a message about thread #1  
+                _threadOutput = "Hello Thread " + a;
 
-                    Thread.Sleep(1000);  // simulate a lot of processing   
+                Task.Delay(1000).Wait();
+                //Thread.Sleep(1000);  // simulate a lot of processing   
 
-                    // tell the user what thread we are in thread #1, and display shared memory  
-                    WriteToFile("Thread " + a + " Output --> " + _threadOutput);
-                }
+                // tell the user what thread we are in thread #1, and display shared memory  
+                WriteToFile("Thread " + a + " Output --> " + _threadOutput + "count = " + (count));
+
             }
         }
         public void WriteToFile(string Message)
