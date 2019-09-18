@@ -13,7 +13,7 @@
 
         <mat-form-field>
           <input required matInput type="text" placeholder="Event Title" formControlName="title" id="title">
-          <mat-hint align="end">Event title is required.</mat-hint>
+          <!-- <mat-hint align="end">Event title is required.</mat-hint> -->
           <mat-error *ngIf="HasError('title', 'required')">Event title is required.</mat-error>
         </mat-form-field>
 
