@@ -45,6 +45,7 @@ namespace FOS.CloseService
         {
             timer.Enabled = false;
             CloseEvent();
+            timer.Enabled = true;
         }
         public void WriteToFile(string Message)
         {
