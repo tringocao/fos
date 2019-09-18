@@ -69,9 +69,9 @@
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
-    <Compile Include="Migrations\201909180419283_init.cs" />
-    <Compile Include="Migrations\201909180419283_init.Designer.cs">
-      <DependentUpon>201909180419283_init.cs</DependentUpon>
+    <Compile Include="Migrations\201909180438094_fos.cs" />
+    <Compile Include="Migrations\201909180438094_fos.Designer.cs">
+      <DependentUpon>201909180438094_fos.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -113,8 +113,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909180419283_init.resx">
-      <DependentUpon>201909180419283_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909180438094_fos.resx">
+      <DependentUpon>201909180438094_fos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

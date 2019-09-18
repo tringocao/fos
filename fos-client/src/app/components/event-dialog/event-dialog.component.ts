@@ -35,6 +35,8 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { GraphUser } from "src/app/models/graph-user";
 import { Event } from "src/app/models/event";
 import * as moment from "moment";
+import { Group } from 'src/app/models/group';
+import { element } from 'protractor';
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -91,7 +93,6 @@ export class EventDialogComponent implements OnInit {
   _maximumBudget: number;
   _userSelect = [];
   _userPickerGroups: userPickerGroup[] = [];
-
   isInvalidCloseTime: boolean;
   isInvalidRemindTime: boolean;
 
@@ -115,13 +116,16 @@ export class EventDialogComponent implements OnInit {
 
   _isLoading = false;
   _isHostLoading = false;
+  _isPickerLoading = false;
   _restaurant: DeliveryInfos[];
   _userHost: userPicker[];
+  _userPicker: userPicker[];
   _office365User: userPicker[] = [];
   _office365Group: userPicker[] = [];
   _loading: boolean;
   _eviroment = environment.apiUrl;
-  
+  _listPickedUser : userPicker[];
+
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -134,8 +138,18 @@ export class EventDialogComponent implements OnInit {
     }
   }
 
+  displayUserPicker(user: userPicker) {
+    if (user) {
+      return user.Name;
+    }
+  }
+
   ngOnInit() {
     var self = this;
+
+   
+    
+   
     //get user
     this.eventFormService
       .GetUsers()
@@ -194,29 +208,8 @@ export class EventDialogComponent implements OnInit {
       restaurant: new FormControl(""),
       userInput: new FormControl(""),
       userInputHost: new FormControl(""),
-      EventType: new FormControl("")
-    });
-
-    // get Group
-    this.eventFormService
-      .GetGroups()
-      .toPromise()
-      .then(value => {
-        value.Data.map(user => {
-          if (user.Id && user.Mail) {
-            this._office365Group.push({
-              Name: user.DisplayName,
-              Email: user.Mail,
-              Img: "",
-              Id: user.Id,
-              IsGroup: 1
-            });
-          }
-        });
-      });
-    this._userPickerGroups.push({
-      Name: "Office 365 Group",
-      UserPicker: this._office365Group
+      EventType: new FormControl(""),
+      userInputPicker: new FormControl(""),
     });
 
     //get currentUser
@@ -252,20 +245,17 @@ export class EventDialogComponent implements OnInit {
       });
 
     this.ownerForm.get("EventType").setValue("Open");
-    //debugger;
-    // this.ownerForm.get("userInput").setValue(this.data.restaurant);
-    // this.ownerForm.get('EventType').setValue('Open');
-    var userHost2: userPicker[];
-
     this.ownerForm
       .get("userInputHost")
       .valueChanges.pipe(
         debounceTime(300),
         tap(() => (this._isHostLoading = true)),
-        switchMap(value =>
+        switchMap(value => 
           this.eventFormService
             .GetUsersByName(value)
-            .pipe(finalize(() => (this._isHostLoading = false)))
+            .pipe(finalize(() => {
+              // this._isHostLoading = false;
+            }))
         )
       )
       .subscribe((data: ApiOperationResult<Array<User>>) => {
@@ -274,10 +264,10 @@ export class EventDialogComponent implements OnInit {
           console.log(data.Data);
 
           data.Data.map(user => {
-            if (user.UserPrincipalName) {
+            if (user.DisplayName) {
               dataSourceTemp.push({
                 Name: user.DisplayName,
-                Email: user.UserPrincipalName,
+                Email: user.DisplayName,
                 Img: "",
                 Id: user.Id,
                 IsGroup: 0
@@ -286,9 +276,8 @@ export class EventDialogComponent implements OnInit {
           });
 
           self._userHost = dataSourceTemp;
-          console.log("loading", self._userHost);
-          this._isHostLoading = false;
-        }
+          self._isHostLoading = false;
+        } 
       });
 
     this.ownerForm.get("userInput").setValue(this.data.restaurant);
@@ -311,6 +300,41 @@ export class EventDialogComponent implements OnInit {
             this._isLoading = false;
           })
       );
+
+      this.ownerForm
+      .get("userInputPicker")
+      .valueChanges.pipe(
+        debounceTime(300),
+        tap(() => (this._isHostLoading = true)),
+        switchMap(value => 
+          this.eventFormService
+            .GetUsersByName(value)
+            .pipe(finalize(() => {
+              // this._isHostLoading = false;
+            }))
+        )
+      )
+      .subscribe((data: ApiOperationResult<Array<User>>) => {
+        if (data && data.Data) {
+          var dataSourceTemp: userPicker[] = [];
+          console.log(data.Data);
+
+          data.Data.map(user => {
+            if (user.DisplayName) {
+              dataSourceTemp.push({
+                Name: user.DisplayName,
+                Email: user.DisplayName,
+                Img: "",
+                Id: user.Id,
+                IsGroup: 0
+              });
+            }
+          });
+
+          self._userHost = dataSourceTemp;
+          self._isHostLoading = false;
+        } 
+      });
   }
 
   // public OnCancel = () => {
@@ -376,31 +400,30 @@ export class EventDialogComponent implements OnInit {
   }
 
   AddUserToTable(): void {
+    var self = this;
     console.log("Nhan add card");
 
     console.log(this._userSelect);
 
-    for (var s in this._userSelect) {
-      var flag = false;
-      for (var e in this._eventUsers) {
-        if (this._userSelect[s].Name == this._eventUsers[e].Name) {
-          flag = true;
-        }
-      }
+    var choosingUser = self.ownerForm.get("userInputPicker").value;
+    console.log('choose User', choosingUser);
 
-      if (flag == false) {
-        console.log(this._userSelect[s]);
-
-        this._eventUsers.push({
-          Name: this._userSelect[s].Name,
-          Email: this._userSelect[s].Email,
-          Img: "",
-          Id: this._userSelect[s].Id,
-          IsGroup: this._userSelect[s].IsGroup,
-          OrderStatus: "Not Order"
-        });
-        this.table.renderRows();
+    var flag = false;
+    self._eventUsers.forEach(element => {
+      if (element.Name === choosingUser.Name) {
+        flag = true
       }
+    });
+    if (flag === false) {
+      this._eventUsers.push({
+        Name: choosingUser.Name,
+        Email: choosingUser.Email,
+        Img: "",
+        Id: choosingUser.Id,
+        IsGroup: choosingUser.IsGroup,
+        OrderStatus: "Not Order"
+      });
+      this.table.renderRows();
     }
   }
 
