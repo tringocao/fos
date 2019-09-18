@@ -81,3 +81,16 @@
 /fos-timer-jobs/FOS/FOS.CoreService/External
 /fos-timer-jobs/FOS/FOS.CoreService/obj/Debug
 /fos-timer-jobs/FOS/packages
+/fos-timer-jobs/FOS/packages/Microsoft.SharePointOnline.CSOM.16.1.19223.12000
+/fos-timer-jobs/FOS/packages/Microsoft.SharePointOnline.CSOM.16.1.3912.1204
+/fos-timer-jobs/FOS/packages/Newtonsoft.Json.12.0.2
+/fos-timer-jobs/FOS/packages/System.IO.4.3.0
+/fos-timer-jobs/FOS/packages/System.Net.Http.4.3.4
+/fos-timer-jobs/FOS/packages/System.Runtime.4.3.1
+/fos-timer-jobs/FOS/packages/System.Runtime.CompilerServices.Unsafe.4.5.2
+/fos-timer-jobs/FOS/packages/System.Security.Cryptography.Algorithms.4.3.1
+/fos-timer-jobs/FOS/packages
+/fos-timer-jobs/FOS/.vs/FOS/v16
+/fos-timer-jobs/FOS/FOS.CloseService/obj/Debug
+/fos-timer-jobs/FOS/FOS.CoreService/obj/Debug
+/fos-timer-jobs/FOS/FOS.RecurrenceEvent/obj/Debug

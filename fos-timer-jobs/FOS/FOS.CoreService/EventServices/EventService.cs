@@ -1,4 +1,8 @@
 ﻿using FOS.CoreService.Constants;
+using FOS.Services.OrderServices;
+using FOS.Services.Providers;
+using FOS.Services.SendEmailServices;
+using FOS.Services.SPListService;
 using FOS.CoreService.Models;
 using FOS.Services.SendEmailServices;
 using FOS.Services.SPUserService;
@@ -9,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -17,6 +22,17 @@ namespace FOS.CoreService.EventServices
 {
     public class FosCoreService
     {
+        IOrderService _orderServices;
+        ISendEmailService _sendMailService;
+        ISPUserService _userService;
+        ISPListService _spListService;
+       public FosCoreService(IOrderService orderServices, ISendEmailService sendMailServices, ISPUserService userService, ISPListService spListService)
+        {
+            _orderServices = orderServices;
+            _sendMailService = sendMailServices;
+            _userService = userService;
+            _spListService = spListService;
+        }
         public string BuildLink(string link, string text)
         {
             return "<a href=\"" + link + "\">" + text + "</a>";
@@ -134,10 +150,14 @@ namespace FOS.CoreService.EventServices
         {
             return value.Split('.')[1].Split('%')[0];
         }
+        
+        public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> lstUser)
         public async Task<int> GetEventToReminder()
         {
-       
-            return 0;
+            string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
+            string emailTemplateJson = System.IO.File.ReadAllText(path);
+
+            _sendMailService.SendEmailToNotOrderedUserAsync(lstUser, emailTemplateJson);
         }
     }
 }

@@ -94,7 +94,7 @@ namespace FOS
                 if (Helper.CheckHelper.isExist_Helper(clientContext, "Event Types", "field") == 0)
                 {
                     rootWeb.Fields.AddFieldAsXml("<Field DisplayName='Event Type' Name='EventTypes' Group='Event Column' Type='Choice' Format='Dropdown'>"
-                       +"<Default>Open</Default>"
+                       + "<Default>Open</Default>"
                        + "<CHOICES>"
                        + "    <CHOICE>Open</CHOICE>"
                        + "    <CHOICE>Close</CHOICE>"
@@ -130,6 +130,17 @@ namespace FOS
                     clientContext.ExecuteQuery();
                 }
 
+                if (Helper.CheckHelper.isExist_Helper(clientContext, "Event IsReminder", "field") == 0)
+                {
+                    rootWeb.Fields.AddFieldAsXml("<Field DisplayName='Event IsReminder' Name='EventIsReminder' Group='Event Column' Type='Choice' Format='Dropdown'>"
+                       + "<Default>No</Default>"
+                       + "<CHOICES>"
+                       + "    <CHOICE>Yes</CHOICE>"
+                       + "    <CHOICE>No</CHOICE>"
+                       + "</CHOICES>"
+                       + "</Field>", false, AddFieldOptions.AddFieldInternalNameHint);
+                    clientContext.ExecuteQuery();
+                }
                 Console.WriteLine("Create site column successfully!");
             }
             catch (Exception ex)

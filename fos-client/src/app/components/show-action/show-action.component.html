@@ -41,11 +41,9 @@
         (click)="viewOrder($event)"
         >View order</mat-list-item
       >
-      <mat-list-item role="listitem" *ngIf="event.Action.CanCloseEvent">
-        <a target="_blank" routerLink="/events/summary/{{ event.EventId }}"
-          >Close event</a
-        ></mat-list-item
-      >
+      <mat-list-item role="listitem" *ngIf="event.Action.CanCloseEvent"
+        (click)="closeEvent($event)"
+      >Close event</mat-list-item>
     </mat-list>
   </mat-card>
 </div>

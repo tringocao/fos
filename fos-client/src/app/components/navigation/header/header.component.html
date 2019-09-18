@@ -22,17 +22,42 @@
         <a mat-button [routerLink]="'/summary'"> Summary </a>
       </div>
       <span class="example-spacer"></span>
-
       <div>
-        <button mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>format_color_fill</mat-icon>Select Theme
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu2"
+          *ngIf="isUserLoaded"
+          aria-label="Example icon-button with a menu"
+        >
+          {{user.DisplayName}}
+          <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #menu="matMenu">
-          <button value="theme1" mat-menu-item (click)="switchTheme('theme1')">
-            Theme 1
+        <mat-menu #menu2="matMenu">
+          <button mat-menu-item (click)="openDialog()">
+            <mat-icon>dialpad</mat-icon>
+            <span>Setting</span>
           </button>
-          <button value="theme2" mat-menu-item (click)="switchTheme('theme2')">
-            Theme 2
+          <button mat-menu-item [matMenuTriggerFor]="menu1">
+            <mat-icon>format_color_fill</mat-icon>Select Theme
+          </button>
+          <mat-menu #menu1="matMenu">
+            <button
+              value="theme1"
+              mat-menu-item
+              (click)="switchTheme('theme1')"
+            >
+              Theme 1
+            </button>
+            <button
+              value="theme2"
+              mat-menu-item
+              (click)="switchTheme('theme2')"
+            >
+              Theme 2
+            </button>
+          </mat-menu>
+          <button mat-menu-item (click)="logOut()">
+            <mat-icon>exit_to_app</mat-icon>Log Out
           </button>
         </mat-menu>
       </div>

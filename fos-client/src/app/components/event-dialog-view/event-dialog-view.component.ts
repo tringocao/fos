@@ -16,6 +16,7 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { from } from 'rxjs';
 import { GraphUser } from 'src/app/models/graph-user';
 import { element } from 'protractor';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-event-dialog-view',
   templateUrl: './event-dialog-view.component.html',
@@ -29,6 +30,7 @@ export class EventDialogViewComponent implements OnInit {
     public dialogRef: MatDialogRef<EventDialogViewComponent>,
     private orderService: OrderService
   ) {}
+  apiUrl = environment.apiUrl;
   eventTitle = '';
   eventHost = '';
   eventRestaurant = '';
@@ -39,6 +41,7 @@ export class EventDialogViewComponent implements OnInit {
   EventTime = '';
   EventStatus = '';
   EventType = '';
+  _environment = environment.apiUrl;
   ngOnInit() {
     //get user not order
     var self = this;
@@ -102,9 +105,9 @@ export class EventDialogViewComponent implements OnInit {
     this.dateTimeToClose = this.data.CloseTime.toString()
       .replace('T', ' ')
       .replace('+07:00', '');
-    this.dateToReminder = this.data.RemindTime.toString()
+    this.dateToReminder = this.data.RemindTime ? this.data.RemindTime.toString()
       .replace('T', ' ')
-      .replace('+07:00', '');
+      .replace('+07:00', '') : '';
 
     this.EventTime = this.data.EventDate.toString()
       .replace('T', ' ')

@@ -201,5 +201,51 @@ namespace FOS.Services.SPListService
                 throw e;
             }
         }
+
+        public async Task UpdateEventIsReminder(string idEvent, string isReminder)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(idEvent);
+
+                    listItem["EventIsReminder"] = isReminder;
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task UpdateEventStatus(string id, string status)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(id);
+                    context.Load(listItem, li => li["EventStatus"]);
+                    context.ExecuteQuery();
+
+                    listItem["EventStatus"] = status;
+
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

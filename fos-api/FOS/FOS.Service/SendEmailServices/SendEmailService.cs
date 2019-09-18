@@ -85,7 +85,7 @@ namespace FOS.Services.SendEmailServices
                     _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id, 
                         emailTemplate.EventRestaurantId, 
                         emailTemplate.EventDeliveryId, 
-                        emailTemplate.EventId); ;
+                        emailTemplate.EventId, user.Mail);
                 }
 
             }

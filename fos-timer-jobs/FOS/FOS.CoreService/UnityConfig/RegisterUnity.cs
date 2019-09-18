@@ -29,8 +29,8 @@ namespace FOS.CoreService.UnityConfig
             //container.RegisterType<FosCoreService>();
             //container.RegisterType<Repositories.FosContext, Repositories.FosContext>(
             //   new PerResolveLifetimeManager());
-            //container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
-            //container.RegisterType<Repositories.Repositories.IOrderRepository, Repositories.Repositories.OrderRepository>();
+            container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
+            container.RegisterType<Repositories.Repositories.IOrderRepository, Repositories.Repositories.OrderRepository>();
             //container.RegisterType<Repositories.Infrastructor.IDbFactory, Repositories.Infrastructor.DbFactory>();
             //container.RegisterType<Repositories.Repositories.IFOSFoodServiceAPIsRepository, Repositories.Repositories.FOSFoodServiceAPIsRepository>();
             //container.RegisterType<Repositories.Repositories.IReportFileRepository, Repositories.Repositories.ReportFileRepository>();

@@ -4,7 +4,8 @@ import {
   MatPaginator,
   MatTableDataSource,
   MatTable,
-  MatSnackBar
+  MatSnackBar,
+  ErrorStateMatcher
 } from "@angular/material";
 import {
   MatDialog,
@@ -17,7 +18,9 @@ import {
   Validators,
   FormBuilder,
   AbstractControl,
-  ValidatorFn
+  ValidatorFn,
+  FormGroupDirective,
+  NgForm,
 } from "@angular/forms";
 import * as moment from "moment";
 import { Component, Inject, OnInit, ViewChild, Input } from "@angular/core";
@@ -34,6 +37,7 @@ import { User } from "src/app/models/user";
 import { GraphUser } from "src/app/models/graph-user";
 import { OrderService } from "src/app/services/order/order.service";
 import { EventDialogConfirmComponent } from "../event-dialog-confirm/event-dialog-confirm.component";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: "app-event-dialog-edit",
@@ -53,6 +57,9 @@ export class EventDialogEditComponent implements OnInit {
     public dialog: MatDialog
   ) {}
   //global
+  apiUrl = environment.apiUrl;
+  matcher = new MyErrorStateMatcher();
+  
   _eventSelected = "Open";
   _createdUser = { id: "" };
   _dateEventTime: string;
@@ -88,7 +95,8 @@ export class EventDialogEditComponent implements OnInit {
   _office365Group: userPicker[] = [];
   _loading: boolean;
   _eventListItem: Event = null;
-
+  _enviroment = environment.apiUrl;
+  
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -150,27 +158,9 @@ export class EventDialogEditComponent implements OnInit {
       title: new FormControl("", [Validators.required]),
       address: new FormControl("", []),
       host: new FormControl(""),
-      dateTimeToClose: new FormControl(new Date(), [
-        this.ValidateEventCloseTime(
-          this._dateEventTime,
-          this._dateToReminder,
-          this._dateTimeToClose
-        )
-      ]),
-      dateTimeEvent: new FormControl(new Date(), [
-        this.ValidateEventTime(
-          this._dateEventTime,
-          this._dateToReminder,
-          this._dateTimeToClose
-        )
-      ]),
-      dateTimeRemind: new FormControl(new Date(), [
-        this.ValidateEventRemindTime(
-          this._dateEventTime,
-          this._dateToReminder,
-          this._dateTimeToClose
-        )
-      ]),
+      dateTimeToClose: new FormControl(''),
+      dateTimeEvent: new FormControl(''),
+      dateTimeRemind: new FormControl(''),
       participants: new FormControl(""),
       restaurant: new FormControl(""),
       userInput: new FormControl(""),
@@ -195,9 +185,12 @@ export class EventDialogEditComponent implements OnInit {
     var closeTime = this.ToDateString(newCloseTime);
     this._dateTimeToClose = closeTime;
 
-    var newRemindTime = new Date(this.data.RemindTime);
-    var remindTime = this.ToDateString(newRemindTime);
-    this._dateToReminder = remindTime;
+    console.log(this.data.RemindTime)
+    if (this.data.RemindTime) {
+      var newRemindTime = new Date(this.data.RemindTime);
+      var remindTime = this.ToDateString(newRemindTime);
+      this._dateToReminder = remindTime;
+    }
 
     var newEventDate = new Date(this.data.EventDate);
     var eventTime = this.ToDateString(newEventDate);
@@ -298,7 +291,6 @@ export class EventDialogEditComponent implements OnInit {
           var participant = participants.filter(
             item => item.Id === element.UserId
           );
-            debugger;
           if (participant) {
             const userOrder: EventUser = {
               Name: participant[0].DisplayName,
@@ -373,7 +365,7 @@ export class EventDialogEditComponent implements OnInit {
     var dateTimeToClose = this._dateTimeToClose.replace("T", " ");
     console.log("get dateTimeToClose: ", dateTimeToClose);
 
-    var dateToReminder = this._dateToReminder.replace("T", " ");
+    var dateToReminder = this._dateToReminder ? this._dateToReminder.replace("T", " ") : '';
     console.log("get dateToReminder: ", dateToReminder);
 
     var restaurant = this.ownerForm.get("userInput").value.Name;
@@ -628,17 +620,17 @@ export class EventDialogEditComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isAfter(eventDate));
+      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
       if (remindDate && eventDate && closeDate) {
         if (
-          moment(remindDate).isAfter(eventDate) ||
-          moment(remindDate).isAfter(closeDate)
+          moment(remindDate).isSameOrAfter(eventDate) ||
+          moment(remindDate).isSameOrAfter(closeDate)
         ) {
           return { invalidRemindTime: true };
         }
         return null;
       }
-      return { datimeRequired: true };
+      return null;
     };
   }
 
@@ -648,11 +640,7 @@ export class EventDialogEditComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isAfter(eventDate));
-      if (remindDate && eventDate && closeDate) {
-        // if (moment(remindDate).isAfter(eventDate) || moment(remindDate).isAfter(closeDate)) {
-        //   return { invalidRemindTime: true };
-        // }
+      if (eventDate) {
         return null;
       }
       return { datimeRequired: true };
@@ -665,13 +653,15 @@ export class EventDialogEditComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isAfter(eventDate));
-      if (remindDate && eventDate && closeDate) {
+      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
+      if (eventDate && closeDate) {
         if (
-          moment(remindDate).isAfter(closeDate) ||
-          moment(closeDate).isAfter(eventDate)
+          moment(closeDate).isSameOrAfter(eventDate)
         ) {
           console.log("eeee");
+          // this.isInvalidCloseTime = true;
+          this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+          this.ownerForm.controls["dateTimeToClose"].hasError('invalidCloseTime')
           return { invalidCloseTime: true };
         }
         return null;
@@ -681,6 +671,21 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   onDateTimeChange(value: string): void {
+    if (this._dateToReminder && this._dateEventTime && moment(this._dateEventTime).isSameOrAfter(this._dateToReminder)) {
+      // this.isInvalidRemindTime = true
+      // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+      alert("Time to remind must be before event time");
+    }
+    if (this._dateToReminder && this._dateTimeToClose && moment(this._dateToReminder).isSameOrAfter(this._dateTimeToClose)) {
+      // this.isInvalidRemindTime = true
+      // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+      alert("Time to remind must be after event close time");
+    }
+    if (this._dateTimeToClose && this._dateEventTime && moment(this._dateTimeToClose).isSameOrAfter(this._dateEventTime)) {
+      // this.isInvalidCloseTime = true
+      this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+      alert("Time to close must be before event time");
+    }
     this.ownerForm.controls["dateTimeRemind"].setValidators([
       this.ValidateEventRemindTime(
         this._dateEventTime,
@@ -706,10 +711,16 @@ export class EventDialogEditComponent implements OnInit {
     ]);
     this.ownerForm.controls["dateTimeEvent"].updateValueAndValidity();
     // console.log(this.ownerForm.get('dateTimeRemind').value)
-    console.log(moment(this._dateEventTime).isAfter(this._dateToReminder));
+    console.log(moment(this._dateEventTime).isSameOrAfter(this._dateToReminder));
   }
 
   isValidEventClose(component: Component) {
     console.log(component);
+  }
+}
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return (control && control.invalid);
   }
 }

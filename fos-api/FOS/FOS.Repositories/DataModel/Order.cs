@@ -17,5 +17,6 @@ namespace FOS.Repositories.DataModel
         public int IdDelivery { get; set; }
         public bool IsOrdered { get; set; }
         public string FoodDetail { get; set; }
+        public string Email { get; set; }
     }
 }

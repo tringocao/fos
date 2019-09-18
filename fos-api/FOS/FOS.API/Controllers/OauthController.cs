@@ -64,5 +64,24 @@ namespace FOS.API.Controllers
 
             return response;
         }
+
+        [HttpGet]
+        public async Task<HttpResponseMessage> LogOut()
+        {
+            var response = new HttpResponseMessage();
+
+            response.Content = new ObjectContent<AuthClientRespond>(
+                new AuthClientRespond()
+                {
+                    redirect = true,
+                    redirectUrl = _oAuthService.LogOut()
+                }, new JsonMediaTypeFormatter(), "application/json"
+            );
+
+            foreach (string cookie in HttpContext.Current.Request.Cookies.AllKeys) { HttpContext.Current.Response.Cookies[cookie].Expires = DateTime.Now.AddDays(-1); }
+
+
+            return response;
+        }
     }
 }

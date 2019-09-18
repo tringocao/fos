@@ -35,7 +35,9 @@ import {
   MatListModule,
   MatInputModule,
   MatTooltipModule,
-  MatRadioModule
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
@@ -85,6 +87,7 @@ import { EventDialogConfirmComponent } from './components/event-dialog-confirm/e
 import { SummaryListComponent } from './components/summary-list/summary-list.component';
 import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
 import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
+import { SettingDialogComponent } from './components/navigation/header/setting-dialog/setting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +121,8 @@ import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog
     EventDialogConfirmComponent,
     SummaryListComponent,
     SummaryTabComponent,
-    SummaryDishesDialogComponent
+    SummaryDishesDialogComponent,
+    SettingDialogComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -170,7 +174,9 @@ import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog
     MatSnackBarModule,
     MatTooltipModule,
     MatSlideToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDatepickerModule, // <----- import(must)
+    MatNativeDateModule // <----- import for date formating(optional)
   ],
   providers: [
     OrderService,
@@ -193,7 +199,8 @@ import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog
     EventDialogViewComponent,
     ReminderDialogComponent,
     EventDialogEditComponent,
-    SummaryDishesDialogComponent
+    SummaryDishesDialogComponent,
+    SettingDialogComponent
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -204,7 +211,8 @@ import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog
     ReminderDialogComponent,
     EventDialogEditComponent,
     EventDialogConfirmComponent,
-    SummaryDishesDialogComponent
+    SummaryDishesDialogComponent,
+    SettingDialogComponent
   ]
 })
 export class AppModule {}
