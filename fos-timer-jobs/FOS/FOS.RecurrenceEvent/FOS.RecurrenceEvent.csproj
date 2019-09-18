@@ -40,7 +40,7 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="FOS.Model">
-      <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Model.dll</HintPath>
+      <HintPath>..\..\..\fos-api\FOS\FOS.Model\bin\Debug\FOS.Model.dll</HintPath>
     </Reference>
     <Reference Include="FOS.Services">
       <HintPath>..\..\..\fos-api\FOS\FOS.API\bin\FOS.Services.dll</HintPath>
@@ -104,6 +104,9 @@
       <Project>{D3DC13DD-CD97-4E1E-AA7B-68D350382935}</Project>
       <Name>FOS.CoreService</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

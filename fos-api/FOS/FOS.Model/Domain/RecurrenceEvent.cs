@@ -10,6 +10,10 @@ namespace FOS.Model.Domain
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime StartTempDate { get; set; } // StartTempDate = StartDate + next reminder(option if weekly or monthly)
+
+        public bool IsReminding { get; set; }//If thread is died before send email, the windown service will ignore until the thread is finished sucessfully
+
         public string Title { get; set; }
         public int Id { get; set; }
         public string UserId { get; set; }
