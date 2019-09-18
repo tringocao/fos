@@ -521,7 +521,7 @@ export class EventDialogComponent implements OnInit {
         Participants: numberParticipant.toString(),
         Category: category,
         RestaurantId: restaurantId,
-        ServiceId: "1",
+        ServiceId: self.data.idService.toString(),
         DeliveryId: deliveryId,
         CreatedBy: self._createdUser.id,
         HostId: hostId,

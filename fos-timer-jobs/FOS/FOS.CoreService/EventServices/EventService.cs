@@ -100,9 +100,9 @@ namespace FOS.CoreService.EventServices
             }
         }
 
-        public List<Model.Domain.UserNotOrderEmail> GetEventToReminder(string idEvent)
+        public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string idEvent)
         {
-            var listUser = _orderServices.GetUserNotOrderEmail(idEvent);            
+            List<Model.Domain.UserNotOrderEmail> listUser = _orderServices.GetUserNotOrderEmail(idEvent);            
             return listUser;
         }
         

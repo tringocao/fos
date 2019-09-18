@@ -40,7 +40,7 @@ namespace FOS.ReminderService
 
             WriteToFile("Service is started at " + DateTime.Now);
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
-            timer.Interval = 6000; //number in milisecinds  
+            timer.Interval = 60000; //number in milisecinds  
             timer.Enabled = true;
         }
 
@@ -91,7 +91,7 @@ namespace FOS.ReminderService
         {
             try
             {
-                WriteFile.WriteToFile("sendmail is recall at " + DateTime.Now);
+               
 
                 var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
                 var templateBody = jsonTemplate.TryGetValue("Body", out object body);
@@ -104,6 +104,7 @@ namespace FOS.ReminderService
                 {
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = noReplyEmail;
+                    emailp.BCC = new List<string> { noReplyEmail };
                     emailp.Body = String.Format(emailTemplate.Html.ToString(),
                         user.EventTitle,
                         user.EventRestaurant,
@@ -112,8 +113,8 @@ namespace FOS.ReminderService
                     emailp.Subject = subject.ToString();
 
                     Utility.SendEmail(clientContext, emailp);
-                    WriteFile.WriteToFile("User not order" + DateTime.Now);
                     clientContext.ExecuteQuery();
+                    WriteFile.WriteToFile("sendmail to user " + user.UserMail);
                 }
             }
             catch (Exception ex)
@@ -204,11 +205,13 @@ namespace FOS.ReminderService
                     var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
                     var eventRestaurant = element[EventConstant.EventRestaurant].ToString();
                     Console.WriteLine(eventTite);
-                    WriteFile.WriteToFile("Find user not order: ");
+                    WriteFile.WriteToFile("EventId: " + eventId);
 
-                    var userNotOrder = coreService.GetEventToReminder(eventId);
+                    List<Model.Domain.UserNotOrderEmail> userNotOrder = coreService.GetUserNotOrderEmail(eventId);
 
+                    WriteFile.WriteToFile("Find number userNotOrder: " + userNotOrder.Count.ToString());
                     WriteFile.WriteToFile("Event find: " + eventTite.ToString());
+
                     foreach (var user in userNotOrder)
                     {
                         Model.Dto.UserNotOrderMailInfo userNew = new Model.Dto.UserNotOrderMailInfo();
@@ -217,6 +220,7 @@ namespace FOS.ReminderService
                         userNew.OrderId = user.OrderId;
                         userNew.UserMail = user.UserEmail;
                         lstUserNotOrder.Add(userNew);
+                        WriteFile.WriteToFile("User not order: " + userNew.UserMail.ToString());
                     }
 
                 }

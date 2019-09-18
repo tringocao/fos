@@ -25,7 +25,8 @@ namespace FOS.CoreService
             RegisterUnity.Register(container);
             FosCoreService coreService = container.Resolve<FosCoreService>();
 
-            StartReminderService(coreService);
+            //StartReminderService(coreService);
+            FindUserNotOrderWithEmail(coreService, "35");
         }
         public static void sendMailToUserNotOrder(ClientContext clientContext, IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
         {
@@ -143,7 +144,7 @@ namespace FOS.CoreService
                     var eventRestaurant = element[EventConstant.EventRestaurant].ToString();
                     Console.WriteLine(eventTite);
 
-                    var userNotOrder = coreService.GetEventToReminder(eventId);
+                    var userNotOrder = coreService.GetUserNotOrderEmail(eventId);
                     //WriteFile.WriteToFile("Event find: " + eventTite.ToString());
                     foreach (var user in userNotOrder)
                     {
@@ -179,6 +180,11 @@ namespace FOS.CoreService
             {
                 throw e;
             }
+        }
+
+        public static void FindUserNotOrderWithEmail(FosCoreService coreService, string idEvent)
+        {
+            List<Model.Domain.UserNotOrderEmail> userNotOrder = coreService.GetUserNotOrderEmail(idEvent);
         }
     }
 }
