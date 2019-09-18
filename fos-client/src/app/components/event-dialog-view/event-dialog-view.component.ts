@@ -105,9 +105,9 @@ export class EventDialogViewComponent implements OnInit {
     this.dateTimeToClose = this.data.CloseTime.toString()
       .replace('T', ' ')
       .replace('+07:00', '');
-    this.dateToReminder = this.data.RemindTime.toString()
+    this.dateToReminder = this.data.RemindTime ? this.data.RemindTime.toString()
       .replace('T', ' ')
-      .replace('+07:00', '');
+      .replace('+07:00', '') : '';
 
     this.EventTime = this.data.EventDate.toString()
       .replace('T', ' ')
