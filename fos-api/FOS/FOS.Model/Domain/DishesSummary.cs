@@ -12,7 +12,7 @@ namespace FOS.Model.Domain
         public string Food { get; set; }
         public float Percent { get; set; }
         public float RelativePercent { get; set; }
-        public int ApprearTimes { get; set; }
-        public string FoodId { get; set; }
+        public int AppearTimes { get; set; }
+        public int FoodId { get; set; }
     }
 }

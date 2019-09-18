@@ -86,8 +86,7 @@ namespace FOS.Repositories.Repositories
         public IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             var orders = _context.Orders.Where(order => 
-            order.IdEvent == eventId && order.FoodDetail == null && order.FoodDetail.Length == 0).ToList();
-
+            order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
             var result = new List<Model.Dto.UserNotOrder>();
             foreach(var order in orders)
             {

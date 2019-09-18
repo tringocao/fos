@@ -138,13 +138,17 @@ namespace FOS.Services.SummaryService
                 };
                 allSummary.Add(summary);
             }
-            var uniqueSummary = RemoveDuplicateSummary(allSummary);
-            var sortedSummary = uniqueSummary.OrderByDescending(s => s.AppearTimes).ToList();
-            SetPercentAndRank(sortedSummary, allSummary.Count());
+            if(allSummary.Count > 0)
+            {
+                var uniqueSummary = RemoveDuplicateRestaurantSummary(allSummary);
+                var sortedSummary = uniqueSummary.OrderByDescending(s => s.AppearTimes).ToList();
+                SetPercentAndRankRestaurant(sortedSummary, allSummary.Count());
 
-            return sortedSummary;
+                return sortedSummary;
+            }
+            return null;
         }
-        private IEnumerable<Model.Domain.RestaurantSummary> RemoveDuplicateSummary(IEnumerable<Model.Domain.RestaurantSummary> allSummary)
+        private IEnumerable<Model.Domain.RestaurantSummary> RemoveDuplicateRestaurantSummary(IEnumerable<Model.Domain.RestaurantSummary> allSummary)
         {
             var uniqueSummary = allSummary.GroupBy(s => new { s.DeliveryId, s.RestaurantId, s.ServiceId }).ToList();
             var uniqueList = new List<Model.Domain.RestaurantSummary>();
@@ -157,7 +161,7 @@ namespace FOS.Services.SummaryService
             }
             return uniqueList;
         }
-        private IEnumerable<Model.Domain.RestaurantSummary> SetPercentAndRank(List<Model.Domain.RestaurantSummary> sortedSummary, int numberOfEvent)
+        private IEnumerable<Model.Domain.RestaurantSummary> SetPercentAndRankRestaurant(List<Model.Domain.RestaurantSummary> sortedSummary, int numberOfEvent)
         {
             var maximumAppearTimes = sortedSummary.Max(s => s.AppearTimes);
             for(int i = 0 ; i < sortedSummary.Count(); i++)
@@ -168,7 +172,6 @@ namespace FOS.Services.SummaryService
             }
             return sortedSummary;
         }
-
         public IEnumerable<Model.Domain.DishesSummary> GetDishesSummary(string restaurantId, string deliveryId, string serviceId)
         {
             var allOrder = _orderRepository.GetOrdersOfSpecificRestaurant(restaurantId, deliveryId);
@@ -176,11 +179,53 @@ namespace FOS.Services.SummaryService
 
             foreach(var element in allOrder)
             {
-                var summary = new Model.Domain.DishesSummary();
-                summary.ApprearTimes = 1;
-                var food = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(element.FoodDetail); 
+                var food = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(element.FoodDetail);
+                if(food != null && food.Count > 0)
+                {
+                    var foodIds = food.Keys;
+                    foreach (var id in foodIds)
+                    {
+                        var summary = new Model.Domain.DishesSummary();
+                        summary.AppearTimes = 1;
+                        summary.FoodId = id;
+                        summary.Food = food[id]["Name"];
+                        allSummary.Add(summary);
+                    }
+                }
+            }
+            if(allSummary.Count > 0)
+            {
+                var uniqueSummary = RemoveDuplicateDishesSummary(allSummary);
+                var sortedSummary = uniqueSummary.OrderByDescending(s => s.AppearTimes).ToList();
+                SetPercentAndRankDishes(sortedSummary, allSummary.Count());
+
+                return sortedSummary;
             }
             return null;
+        }
+        private IEnumerable<Model.Domain.DishesSummary> RemoveDuplicateDishesSummary(IEnumerable<Model.Domain.DishesSummary> allSummary)
+        {
+            var uniqueSummary = allSummary.GroupBy(s => s.FoodId).ToList();
+            var uniqueList = new List<Model.Domain.DishesSummary>();
+            foreach (var element in uniqueSummary)
+            {
+                var unique = new Model.Domain.DishesSummary();
+                unique = element.ToList()[0];
+                unique.AppearTimes = element.ToList().Count();
+                uniqueList.Add(unique);
+            }
+            return uniqueList;
+        }
+        private IEnumerable<Model.Domain.DishesSummary> SetPercentAndRankDishes(List<Model.Domain.DishesSummary> sortedSummary, int numberOfEvent)
+        {
+            var maximumAppearTimes = sortedSummary.Max(s => s.AppearTimes);
+            for (int i = 0; i < sortedSummary.Count(); i++)
+            {
+                sortedSummary[i].RelativePercent = ((float)sortedSummary[i].AppearTimes / (float)maximumAppearTimes) * (float)100;
+                sortedSummary[i].Percent = ((float)sortedSummary[i].AppearTimes / (float)numberOfEvent) * (float)100;
+                sortedSummary[i].Rank = i + 1;
+            }
+            return sortedSummary;
         }
     }
 }
