@@ -41,7 +41,10 @@
     [hidePageSize]="true"
   ></mat-paginator>
 
-  <p *ngIf="userNotOrder.length === 0">All user ordered</p>
+  <div *ngIf="userNotOrder.length === 0">
+    <p *ngIf="!data.isClosedEvent">All user ordered </p>
+    <span class="close-event-confirm" *ngIf="data.isClosedEvent">All the user already made order. Do you want to close event?</span>
+  </div>
 
   <div class="dialog-actions">
     <button

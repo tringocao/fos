@@ -10,7 +10,8 @@ import {
   MatPaginator,
   MatTableDataSource,
   MatTable,
-  MatSnackBar
+  MatSnackBar,
+  ErrorStateMatcher
 } from "@angular/material";
 import {
   FormControl,
@@ -18,7 +19,9 @@ import {
   Validators,
   FormBuilder,
   AbstractControl,
-  ValidatorFn
+  ValidatorFn,
+  FormGroupDirective,
+  NgForm
 } from "@angular/forms";
 import { EventUser } from "../../models/eventuser";
 import { EventFormService } from "../../services/event-form/event-form.service";
@@ -76,6 +79,8 @@ export class EventDialogComponent implements OnInit {
   ) {}
 
   apiUrl = environment.apiUrl;
+  matcher = new MyErrorStateMatcher();
+
 
   _eventSelected = "Open";
   _createdUser = { id: "" };
@@ -86,6 +91,9 @@ export class EventDialogComponent implements OnInit {
   _maximumBudget: number;
   _userSelect = [];
   _userPickerGroups: userPickerGroup[] = [];
+
+  isInvalidCloseTime: boolean;
+  isInvalidRemindTime: boolean;
 
   private ToDateString(date: Date): string {
     return (
@@ -405,7 +413,7 @@ export class EventDialogComponent implements OnInit {
     var dateTimeToClose = this._dateTimeToClose.replace("T", " ");
     console.log("get dateTimeToClose: ", dateTimeToClose);
 
-    var dateToReminder = this._dateToReminder.replace("T", " ");
+    var dateToReminder = this._dateToReminder ? this._dateToReminder.replace("T", " ") : '';
     console.log("get dateToReminder: ", dateToReminder);
 
     var restaurant = this.ownerForm.get("userInput").value.Name;
@@ -567,11 +575,11 @@ export class EventDialogComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isAfter(eventDate));
+      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
       if (remindDate && eventDate && closeDate) {
         if (
-          moment(remindDate).isAfter(eventDate) ||
-          moment(remindDate).isAfter(closeDate)
+          moment(remindDate).isSameOrAfter(eventDate) ||
+          moment(remindDate).isSameOrAfter(closeDate)
         ) {
           return { invalidRemindTime: true };
         }
@@ -600,12 +608,15 @@ export class EventDialogComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isAfter(eventDate));
+      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
       if (eventDate && closeDate) {
         if (
-          moment(closeDate).isAfter(eventDate)
+          moment(closeDate).isSameOrAfter(eventDate)
         ) {
           console.log("eeee");
+          this.isInvalidCloseTime = true;
+          this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+          this.ownerForm.controls["dateTimeToClose"].hasError('invalidCloseTime')
           return { invalidCloseTime: true };
         }
         return null;
@@ -615,6 +626,22 @@ export class EventDialogComponent implements OnInit {
   }
 
   onDateTimeChange(value: string): void {
+    if (this._dateToReminder && this._dateEventTime && moment(this._dateEventTime).isSameOrAfter(this._dateToReminder)) {
+      this.isInvalidRemindTime = true
+      // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+      alert("Time to remind must be before event time");
+    }
+    if (this._dateToReminder && this._dateTimeToClose && moment(this._dateToReminder).isSameOrAfter(this._dateTimeToClose)) {
+      this.isInvalidRemindTime = true
+      // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+      alert("Time to remind must be after event close time");
+    }
+    if (this._dateTimeToClose && this._dateEventTime && moment(this._dateTimeToClose).isSameOrAfter(this._dateEventTime)) {
+      this.isInvalidCloseTime = true
+      this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+      alert("Time to close must be before event time");
+    }
+    
     this.ownerForm.controls["dateTimeRemind"].setValidators([
       this.ValidateEventRemindTime(
         this._dateEventTime,
@@ -640,10 +667,17 @@ export class EventDialogComponent implements OnInit {
     ]);
     this.ownerForm.controls["dateTimeEvent"].updateValueAndValidity();
     // console.log(this.ownerForm.get('dateTimeRemind').value)
-    console.log(moment(this._dateEventTime).isAfter(this._dateToReminder));
+    console.log(moment(this._dateEventTime).isSameOrAfter(this._dateToReminder));
   } 
 
   isValidEventClose(component: Component) {
     console.log(component);
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return (control && control.invalid);
   }
 }

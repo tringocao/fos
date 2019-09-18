@@ -76,7 +76,7 @@
         <div class="event-data-time">
         <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
-          <input required id="party" matInput type="datetime-local" [(ngModel)]="_dateEventTime"
+          <input required id="party" matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="_dateEventTime"
             [ngModelOptions]="{standalone: true}"
             formcontrolname="dateTimeEvent" 
             (input)="onDateTimeChange($event.target.value)"
@@ -87,13 +87,13 @@
 
         <mat-form-field class="full-width">
           <mat-label>Time To Close</mat-label>
-          <input required [max]="_dateEventTime" required id="party" matInput type="datetime-local" [(ngModel)]="_dateTimeToClose"
+          <input required id="party" matInput [errorStateMatcher]="matcher"  type="datetime-local" [(ngModel)]="_dateTimeToClose"
             [ngModelOptions]="{standalone: true}"
             formcontrolname="dateTimeToClose" 
             (input)="onDateTimeChange($event.target.value)"
             >
             <mat-error *ngIf="HasError('dateTimeToClose', 'invalidCloseTime')">Close Event time is invalid.</mat-error>
-            <!-- <mat-error *ngIf="HasError('dateTimeToClose', 'datimeRequired')">Close time is required</mat-error> -->
+            <mat-error *ngIf="HasError('dateTimeToClose', 'datimeRequired')">Close time is required</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
@@ -152,7 +152,7 @@
 
           <ng-container matColumnDef="order status">
             <th mat-header-cell *matHeaderCellDef> Order Status</th>
-            <td mat-cell *matCellDef="let element"> not order </td>
+            <td mat-cell *matCellDef="let element"> Not order </td>
           </ng-container>
 
           <ng-container matColumnDef="action">
