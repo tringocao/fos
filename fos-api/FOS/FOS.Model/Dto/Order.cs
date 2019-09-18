@@ -16,5 +16,6 @@ namespace FOS.Model.Dto
         public int IdDelivery { get; set; }
         public List<FoodDetailJson> FoodDetail { get; set; }
         public bool IsOrdered { get; set; }
+        public string Email { get; set; }
     }
 }

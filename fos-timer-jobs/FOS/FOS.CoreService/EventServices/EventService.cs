@@ -1,4 +1,8 @@
 ﻿using FOS.CoreService.Constants;
+using FOS.Services.OrderServices;
+using FOS.Services.Providers;
+using FOS.Services.SendEmailServices;
+using FOS.Services.SPListService;
 using FOS.Services.SPUserService;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
@@ -7,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Threading.Tasks;
 
@@ -14,6 +19,17 @@ namespace FOS.CoreService.EventServices
 {
     public class FosCoreService
     {
+        IOrderService _orderServices;
+        ISendEmailService _sendMailService;
+        ISPUserService _userService;
+        ISPListService _spListService;
+       public FosCoreService(IOrderService orderServices, ISendEmailService sendMailServices, ISPUserService userService, ISPListService spListService)
+        {
+            _orderServices = orderServices;
+            _sendMailService = sendMailServices;
+            _userService = userService;
+            _spListService = spListService;
+        }
         public string BuildLink(string link, string text)
         {
             return "<a href=\"" + link + "\">" + text + "</a>";
@@ -84,10 +100,18 @@ namespace FOS.CoreService.EventServices
             }
         }
 
-        public async Task<int> GetEventToReminder()
+        public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string idEvent)
         {
-       
-            return 0;
+            List<Model.Domain.UserNotOrderEmail> listUser = _orderServices.GetUserNotOrderEmail(idEvent);            
+            return listUser;
+        }
+        
+        public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> lstUser)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
+            string emailTemplateJson = System.IO.File.ReadAllText(path);
+
+            _sendMailService.SendEmailToNotOrderedUserAsync(lstUser, emailTemplateJson);
         }
     }
 }

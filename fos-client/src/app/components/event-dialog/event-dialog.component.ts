@@ -110,6 +110,8 @@ export class EventDialogComponent implements OnInit {
   _office365User: userPicker[] = [];
   _office365Group: userPicker[] = [];
   _loading: boolean;
+  _eviroment = environment.apiUrl;
+  
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -208,6 +210,7 @@ export class EventDialogComponent implements OnInit {
     });
 
     //get currentUser
+    self._loading = true;
     this.eventFormService
       .getCurrentUser()
       .toPromise()
@@ -222,7 +225,20 @@ export class EventDialogComponent implements OnInit {
           IsGroup: 0
         };
         console.log("curentuser", dataSourceTemp);
+
+
         self.ownerForm.get("userInputHost").setValue(dataSourceTemp);
+
+        this._eventUsers.push({
+          Name: dataSourceTemp.Name,
+          Email: dataSourceTemp.Email,
+          Img: "",
+          Id: dataSourceTemp.Id,
+          IsGroup: dataSourceTemp.IsGroup,
+          OrderStatus: "Not Order"
+        });
+        self.table.renderRows();
+        self._loading = false;
       });
 
     this.ownerForm.get("EventType").setValue("Open");
@@ -505,7 +521,7 @@ export class EventDialogComponent implements OnInit {
         Participants: numberParticipant.toString(),
         Category: category,
         RestaurantId: restaurantId,
-        ServiceId: "1",
+        ServiceId: self.data.idService.toString(),
         DeliveryId: deliveryId,
         CreatedBy: self._createdUser.id,
         HostId: hostId,

@@ -34,7 +34,8 @@ namespace FOS.Model.Mapping
                 IdUser = order.IdUser,
                 OrderDate = order.OrderDate,
                 FoodDetail = temp,
-                IdEvent = order.IdEvent
+                IdEvent = order.IdEvent,
+                Email = order.Email
             };
         }
 
@@ -51,10 +52,10 @@ namespace FOS.Model.Mapping
                 IdDelivery = order.IdDelivery,
                 IdRestaurant = order.IdRestaurant,
                 IdUser = order.IdUser,
-                OrderDate = order.OrderDate,
+                OrderDate = order.OrderDate.ToLocalTime(),
                 FoodDetail = foodDetail,
-                IdEvent = order.IdEvent
-
+                IdEvent = order.IdEvent,
+                Email = order.Email
             };
         }
     }

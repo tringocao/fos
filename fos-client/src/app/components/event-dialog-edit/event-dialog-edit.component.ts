@@ -34,6 +34,7 @@ import { User } from "src/app/models/user";
 import { GraphUser } from "src/app/models/graph-user";
 import { OrderService } from "src/app/services/order/order.service";
 import { EventDialogConfirmComponent } from "../event-dialog-confirm/event-dialog-confirm.component";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: "app-event-dialog-edit",
@@ -88,7 +89,8 @@ export class EventDialogEditComponent implements OnInit {
   _office365Group: userPicker[] = [];
   _loading: boolean;
   _eventListItem: Event = null;
-
+  _enviroment = environment.apiUrl;
+  
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
