@@ -77,6 +77,7 @@ namespace FOS.Services.SPListService
                     listItem["EventDate"] = eventData.EventDate;
                     listItem["EventStatus"] = eventData.Status;
                     listItem["EventTypes"] = eventData.EventType;
+                    listItem["EventIsReminder"] = "No";
                     listItem.Update();
                     context.ExecuteQuery();
 
@@ -173,6 +174,28 @@ namespace FOS.Services.SPListService
             try
             {
                 return  _orderService.DeleteOrderByIdEvent(idEvent);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task UpdateEventIsReminder(string idEvent, string isReminder)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(idEvent);
+
+                    listItem["EventIsReminder"] = isReminder;
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
             }
             catch (Exception e)
             {

@@ -132,7 +132,6 @@ namespace FOS.API
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<Model.Mapping.IOrderDtoMapper, Model.Mapping.OrderDtoMapper>();
-
             container.RegisterType<ICustomAuthentication, CustomAuthentication>();
             container.RegisterType<Model.Mapping.IAPIsDtoMapper, Model.Mapping.APIsDtoMapper>();
             container.RegisterType<Model.Mapping.ICategoryDtoMapper, Model.Mapping.CategoryDtoMapper>();
@@ -149,6 +148,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IGraphUserDtoMapper, Model.Mapping.GraphUserDtoMapper>();
             container.RegisterType<Model.Mapping.IRecurrenceEventDtoMapper, Model.Mapping.RecurrenceEventDtoMapper>();
 
+            container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),

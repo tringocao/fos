@@ -41,6 +41,7 @@ export class EventDialogViewComponent implements OnInit {
   EventTime = '';
   EventStatus = '';
   EventType = '';
+  _environment = environment.apiUrl;
   ngOnInit() {
     //get user not order
     var self = this;

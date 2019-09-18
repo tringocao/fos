@@ -19,6 +19,7 @@ namespace FOS.Repositories.Repositories
         IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
         DataModel.Order GetOrderByEventIdvsUserId(string eventid, string userId);
         bool DeleteOrderByIdEvent(string idEvent);
+        List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
     }
 
     public class OrderRepository : IOrderRepository
@@ -117,6 +118,22 @@ namespace FOS.Repositories.Repositories
             {
                 throw e;
             }
+        }
+        public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId)
+        {
+            var orders = _context.Orders.Where(order =>
+            order.IdEvent == eventId && order.IsOrdered == false).ToList();
+
+            var result = new List<Model.Domain.UserNotOrderEmail>();
+            foreach (var order in orders)
+            {
+                var item = new Model.Domain.UserNotOrderEmail();
+                item.OrderId = order.Id;
+                item.UserEmail = order.Email;
+                result.Add(item);
+            }
+
+            return result;
         }
     }
 }

@@ -17,6 +17,6 @@ namespace FOS.Model.Domain
         public int IdDelivery { get; set; }
         public bool IsOrdered { get; set; }
         public Dictionary<int, Dictionary<string, string>> FoodDetail { get; set; }
-
+        public string Email { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace FOS.Event
         {
             ViewCollection viewColl = targetList.Views;
 
-            string[] viewFields = { "EventId", "EventTitle", "EventHost", "EventRestaurant", "EventMaximumBudget", "EventTimeToClose", "EventTimeToReminder", "EventParticipants", "EventCategory", "EventRestaurantId", "EventServiceId", "EventDeliveryId", "EventCreatedUserId", "EventHostId", "EventTypes", "EventDate", "EventStatus", "EventParticipantsJson" };
+            string[] viewFields = { "EventId", "EventTitle", "EventHost", "EventRestaurant", "EventMaximumBudget", "EventTimeToClose", "EventTimeToReminder", "EventParticipants", "EventCategory", "EventRestaurantId", "EventServiceId", "EventDeliveryId", "EventCreatedUserId", "EventHostId", "EventTypes", "EventDate", "EventStatus", "EventParticipantsJson", "EventIsReminder" };
 
             ViewCreationInformation creationInfo = new ViewCreationInformation();
             creationInfo.Title = "Event View";

@@ -28,7 +28,7 @@ namespace FOS.Services.OrderServices
             return true;
         }
 
-        public bool CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId)
+        public bool CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId, string Email)
         {
             Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
             Order newOrder = new Order()
@@ -38,7 +38,8 @@ namespace FOS.Services.OrderServices
                 IdRestaurant = Int32.Parse(RestaurantId),
                 IdUser = UserId,
                 IdEvent = EventId,
-                OrderDate = DateTime.Now
+                OrderDate = DateTime.Now,
+                Email = Email
             };
             _orderMapper.MapToEfObject(efOrder, newOrder);
             return _repository.AddOrder(efOrder);
@@ -73,6 +74,11 @@ namespace FOS.Services.OrderServices
         public bool DeleteOrderByIdEvent(string idEvent)
         {
             return _repository.DeleteOrderByIdEvent(idEvent);
+        }
+
+        public List<UserNotOrderEmail> GetUserNotOrderEmail(string eventId)
+        {
+            return _repository.GetUserNotOrderEmail(eventId);
         }
     }
 }

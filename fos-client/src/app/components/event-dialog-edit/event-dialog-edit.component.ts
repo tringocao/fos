@@ -95,7 +95,8 @@ export class EventDialogEditComponent implements OnInit {
   _office365Group: userPicker[] = [];
   _loading: boolean;
   _eventListItem: Event = null;
-
+  _enviroment = environment.apiUrl;
+  
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
