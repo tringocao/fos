@@ -37,7 +37,7 @@ namespace FOS.Services.SendEmailServices
         }
         private async Task GetDataByEventIdAsync(ClientContext clientContext, string idEvent)
         {
-            List list = clientContext.Web.Lists.GetByTitle("Event List");
+            List list = clientContext.Web.Lists.GetByTitle(EventFieldName.EventList);
             CamlQuery camlQuery = new CamlQuery();
             camlQuery.ViewXml = "<View><Query><Where><Eq><FieldRef Name='ID'/>" +
                 "<Value Type='Text'>" + idEvent + "</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>";
@@ -49,16 +49,16 @@ namespace FOS.Services.SendEmailServices
         }
         private async Task SetValueForEmailAsync(ListItem item)
         {
-            var users = item["EventParticipantsJson"].ToString();
+            var users = item[EventFieldName.EventParticipantsJson].ToString();
             emailTemplate.UsersEmail = JsonConvert.DeserializeObject<List<Model.Domain.User>>(users);
-            string userId = item["EventHostId"].ToString();
+            string userId = item[EventFieldName.EventHostId].ToString();
             var user = await _sPUserService.GetUserById(userId);
             emailTemplate.HostUserEmail = user;
-            emailTemplate.EventTitle = item["EventTitle"].ToString();
-            emailTemplate.EventId = item["ID"].ToString();
-            emailTemplate.EventRestaurant = item["EventRestaurant"].ToString();
-            emailTemplate.EventRestaurantId = item["EventRestaurantId"].ToString();
-            emailTemplate.EventDeliveryId = item["EventDeliveryId"].ToString();
+            emailTemplate.EventTitle = item[EventFieldName.EventTitle].ToString();
+            emailTemplate.EventId = item[EventFieldName.ID].ToString();
+            emailTemplate.EventRestaurant = item[EventFieldName.EventRestaurant].ToString();
+            emailTemplate.EventRestaurantId = item[EventFieldName.EventRestaurantId].ToString();
+            emailTemplate.EventDeliveryId = item[EventFieldName.EventDeliveryId].ToString();
         }
         public async Task SendEmailAsync(string idEvent, string html)
         {

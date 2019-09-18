@@ -1,0 +1,8 @@
+<mat-tab-group
+  (selectedTabChange)="selectedTabChange($event)"
+  class="summary-tab"
+>
+  <mat-tab label="Now.vn">
+    <app-summary-list [index]="index"></app-summary-list>
+  </mat-tab>
+</mat-tab-group>

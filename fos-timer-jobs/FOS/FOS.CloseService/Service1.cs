@@ -43,6 +43,7 @@ namespace FOS.CloseService
         }
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
+            timer.Enabled = false;
             CloseEvent();
         }
         public void WriteToFile(string Message)

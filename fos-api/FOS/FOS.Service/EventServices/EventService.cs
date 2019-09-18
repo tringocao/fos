@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using System.Dynamic;
 using FOS.Model.Dto;
 using FOS.Model.Mapping;
+using FOS.Common.Constants;
 
 namespace FOS.Services.EventServices
 {
@@ -31,7 +32,7 @@ namespace FOS.Services.EventServices
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
                 var web = clientContext.Web;
-                var list = web.Lists.GetByTitle("Event List");
+                var list = web.Lists.GetByTitle(EventFieldName.EventList);
                 clientContext.Load(list);
                 clientContext.ExecuteQuery();
 
@@ -54,13 +55,13 @@ namespace FOS.Services.EventServices
                     eventModel.Action = new EventAction
                     {
                         CanViewEvent = true,
-                        CanEditEvent = isHost && eventModel.Status == "Opened",
-                        CanCloseEvent = isHost && eventModel.Status == "Opened",
-                        CanSendRemind = isHost && eventModel.Status == "Opened",
+                        CanEditEvent = isHost && eventModel.Status == EventStatus.Opened,
+                        CanCloseEvent = isHost && eventModel.Status == EventStatus.Opened,
+                        CanSendRemind = isHost && eventModel.Status == EventStatus.Opened,
                         CanMakeOrder =
-                            (isParticipant || eventModel.EventType == "Open") 
-                            && eventModel.Status == "Opened",
-                        CanViewOrder = eventModel.Status == "Closed" && isParticipant
+                            (isParticipant || eventModel.EventType == EventType.Open) 
+                            && eventModel.Status == EventStatus.Opened,
+                        CanViewOrder = eventModel.Status == EventStatus.Closed && isParticipant
                     };
 
                     listEvent.Add(eventModel);
@@ -74,7 +75,7 @@ namespace FOS.Services.EventServices
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "sites/FOS/"))
             {
                 var web = clientContext.Web;
-                var list = web.Lists.GetByTitle("Event List");
+                var list = web.Lists.GetByTitle(EventFieldName.EventList);
                 clientContext.Load(list);
                 clientContext.ExecuteQuery();
 

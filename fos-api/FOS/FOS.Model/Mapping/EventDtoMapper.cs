@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
+using FOS.Common.Constants;
 
 namespace FOS.Model.Mapping
 {
@@ -17,45 +18,44 @@ namespace FOS.Model.Mapping
     {
         public Event ListItemToEventModel(ListItem element)
         {
-            var host = element["EventHost"] as FieldLookupValue;
+            var host = element[EventFieldName.EventHost] as FieldLookupValue;
             if (host == null)
             {
                 host = new FieldLookupValue();
             }
-            var closeDateString = ElementAttributeToString(element["EventTimeToClose"]);
+            var closeDateString = ElementAttributeToString(element[EventFieldName.EventTimeToClose]);
             Nullable<DateTime> closeDate = SetDate(closeDateString);
 
-            var remindDateString = ElementAttributeToString(element["EventTimeToReminder"]);
+            var remindDateString = ElementAttributeToString(element[EventFieldName.EventTimeToReminder]);
             Nullable<DateTime> remindDate = SetDate(remindDateString);
 
-            var eventDateString = ElementAttributeToString(element["EventDate"]);
+            var eventDateString = ElementAttributeToString(element[EventFieldName.EventDate]);
             Nullable<DateTime> eventDate = SetDate(eventDateString);
 
             var eventModel = new Event();
 
-            eventModel.Name = ElementAttributeToString(element["EventTitle"]);
-            eventModel.Restaurant = ElementAttributeToString(element["EventRestaurant"]);
-            eventModel.RestaurantId = ElementAttributeToString(element["EventRestaurantId"]);
-            eventModel.Category = ElementAttributeToString(element["EventCategory"]);
+            eventModel.Name = ElementAttributeToString(element[EventFieldName.EventTitle]);
+            eventModel.Restaurant = ElementAttributeToString(element[EventFieldName.EventRestaurant]);
+            eventModel.RestaurantId = ElementAttributeToString(element[EventFieldName.EventRestaurantId]);
+            eventModel.Category = ElementAttributeToString(element[EventFieldName.EventCategory]);
             eventModel.CloseTime = closeDate;
-            eventModel.Participants = ElementAttributeToString(element["EventParticipants"]);
-            eventModel.MaximumBudget = ElementAttributeToString(element["EventMaximumBudget"]);
-            eventModel.EventId = ElementAttributeToString(element["ID"]);
-            eventModel.DeliveryId = ElementAttributeToString(element["EventDeliveryId"]);
+            eventModel.Participants = ElementAttributeToString(element[EventFieldName.EventParticipants]);
+            eventModel.MaximumBudget = ElementAttributeToString(element[EventFieldName.EventMaximumBudget]);
+            eventModel.EventId = ElementAttributeToString(element[EventFieldName.ID]);
+            eventModel.DeliveryId = ElementAttributeToString(element[EventFieldName.EventDeliveryId]);
             eventModel.HostName = ElementAttributeToString(host.LookupValue);
-            eventModel.HostId = ElementAttributeToString(element["EventHostId"]);
-            eventModel.CreatedBy = ElementAttributeToString(element["EventCreatedUserId"]);
-            eventModel.Status = ElementAttributeToString(element["EventStatus"]);
-            eventModel.EventType = ElementAttributeToString(element["EventTypes"]);
+            eventModel.HostId = ElementAttributeToString(element[EventFieldName.EventHostId]);
+            eventModel.CreatedBy = ElementAttributeToString(element[EventFieldName.EventCreatedUserId]);
+            eventModel.Status = ElementAttributeToString(element[EventFieldName.EventStatus]);
+            eventModel.EventType = ElementAttributeToString(element[EventFieldName.EventTypes]);
             eventModel.EventDate = eventDate;
-            eventModel.EventParticipantsJson = ElementAttributeToString(element["EventParticipantsJson"]);
-            eventModel.ServiceId = ElementAttributeToString(element["EventServiceId"]);
+            eventModel.EventParticipantsJson = ElementAttributeToString(element[EventFieldName.EventParticipantsJson]);
+            eventModel.ServiceId = ElementAttributeToString(element[EventFieldName.EventServiceId]);
 
             eventModel.RemindTime = remindDate;
 
             return eventModel;
         }
-
         public Model.Domain.Event ToModel(Dto.Event eventDto)
         {
             return new Domain.Event()

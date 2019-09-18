@@ -1,11 +1,6 @@
 <div class="reminder-dialog">
   <div class="dialog-header">
     <h2>Send reminder</h2>
-    <button mat-icon-button (click)="closeDialog($event)" class="close">
-      <mat-icon>
-        close
-      </mat-icon>
-    </button>
   </div>
   <table mat-table [dataSource]="dataSource" *ngIf="userNotOrder.length > 0">
     <ng-container matColumnDef="avatar">

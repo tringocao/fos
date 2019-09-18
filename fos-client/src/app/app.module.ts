@@ -24,7 +24,7 @@ import { HeaderComponent } from './components/navigation/header/header.component
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 
 import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
-import { MealsPageComponent } from './pages/meals-page/meals-page.component';
+import { SummaryPageComponent } from './pages/summary-page/summary-page.component';
 
 import {
   MatTableModule,
@@ -82,6 +82,9 @@ import { ListOrderedFoodsComponent } from './components/order-detail/list-ordere
 import { ReminderDialogComponent } from './components/reminder-dialog/reminder-dialog.component';
 import { EventDialogEditComponent } from './components/event-dialog-edit/event-dialog-edit.component';
 import { EventDialogConfirmComponent } from './components/event-dialog-confirm/event-dialog-confirm.component';
+import { SummaryListComponent } from './components/summary-list/summary-list.component';
+import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
+import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +96,7 @@ import { EventDialogConfirmComponent } from './components/event-dialog-confirm/e
     HeaderComponent,
     SidenavListComponent,
     OrdersPageComponent,
-    MealsPageComponent,
+    SummaryPageComponent,
     SearchComponent,
     DialogComponent,
     MenuComponent,
@@ -112,7 +115,10 @@ import { EventDialogConfirmComponent } from './components/event-dialog-confirm/e
     ListOrderedFoodsComponent,
     ReminderDialogComponent,
     EventDialogEditComponent,
-    EventDialogConfirmComponent
+    EventDialogConfirmComponent,
+    SummaryListComponent,
+    SummaryTabComponent,
+    SummaryDishesDialogComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -186,7 +192,8 @@ import { EventDialogConfirmComponent } from './components/event-dialog-confirm/e
     EventDialogComponent,
     EventDialogViewComponent,
     ReminderDialogComponent,
-    EventDialogEditComponent
+    EventDialogEditComponent,
+    SummaryDishesDialogComponent
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -196,7 +203,8 @@ import { EventDialogConfirmComponent } from './components/event-dialog-confirm/e
     EventSummaryDialogComponent,
     ReminderDialogComponent,
     EventDialogEditComponent,
-    EventDialogConfirmComponent
+    EventDialogConfirmComponent,
+    SummaryDishesDialogComponent
   ]
 })
 export class AppModule {}

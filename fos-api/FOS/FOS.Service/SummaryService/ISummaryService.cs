@@ -1,4 +1,5 @@
-﻿using FOS.Repositories.DataModel;
+﻿using FOS.Model.Domain;
+using FOS.Repositories.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace FOS.Services.SummaryService
         Task<string> AddReport(ReportFile report);
         void SendReport(string userEmail, string html, string subject);
         string BuildHtmlEmail(string reportUrl, string eventId, string reportId);
+        IEnumerable<RestaurantSummary> GetRestaurantSummary();
+        IEnumerable<DishesSummary> GetDishesSummary(string restaurantId, string deliveryId, string serviceId);
     }
 }
