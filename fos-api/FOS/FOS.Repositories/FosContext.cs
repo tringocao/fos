@@ -25,6 +25,9 @@ namespace FOS.Repositories
         public DbSet<DataModel.Order> Orders { get; set; }
         public DbSet<ExternalServiceAPI> ExternalServiceAPIs { get; set; }
         public DbSet<FavoriteRestaurant> FavoriteRestaurants { get; set; }
+        public DbSet<RecurrenceEvent> RecurrenceEvents { get; set; }
+        public DbSet<LoggingData> LoggingDatas { get; set; }
+
         public DbSet<ReportFile> ReportFiles { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

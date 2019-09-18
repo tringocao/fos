@@ -1,6 +1,6 @@
 <div class="reminder-dialog">
   <div class="dialog-header">
-    <h2>Send reminder</h2>
+    <h2>{{data.header}}</h2>
     <button mat-icon-button (click)="closeDialog($event)" class="close">
       <mat-icon>
         close
@@ -41,10 +41,14 @@
     [hidePageSize]="true"
   ></mat-paginator>
 
-  <p *ngIf="userNotOrder.length === 0">All user ordered</p>
+  <div *ngIf="userNotOrder.length === 0">
+    <p *ngIf="!data.isClosedEvent">All user ordered </p>
+    <span class="close-event-confirm" *ngIf="data.isClosedEvent">All the user already made order. Do you want to close event?</span>
+  </div>
 
   <div class="dialog-actions">
     <button
+      *ngIf="!data.isClosedEvent"
       class="remind"
       mat-raised-button
       (click)="remind($event)"
@@ -52,6 +56,15 @@
       [disabled]="userNotOrder.length == 0 || isReminding"
     >
       Send
+    </button>
+    <button
+      *ngIf="data.isClosedEvent"
+      class="remind"
+      mat-raised-button
+      (click)="closeEvent($event)"
+      cdkFocusInitial
+    >      
+    <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}">Close event</a>
     </button>
     <button
       class="cancel"

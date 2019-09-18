@@ -60,6 +60,7 @@
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
     <Compile Include="DataModel\LoggingData.cs" />
     <Compile Include="DataModel\Order.cs" />
+    <Compile Include="DataModel\RecurrenceEvent.cs" />
     <Compile Include="DataModel\ReportFile.cs" />
     <Compile Include="FosContext.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
@@ -67,9 +68,10 @@
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
-    <Compile Include="Migrations\201909170140184_fosnew.cs" />
-    <Compile Include="Migrations\201909170140184_fosnew.Designer.cs">
-      <DependentUpon>201909170140184_fosnew.cs</DependentUpon>
+    <Compile Include="Mapping\RecurrenceEventMapper.cs" />
+    <Compile Include="Migrations\201909180419283_init.cs" />
+    <Compile Include="Migrations\201909180419283_init.Designer.cs">
+      <DependentUpon>201909180419283_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Repositories\FOSFavoriteRestaurantRepository.cs" />
     <Compile Include="Repositories\FOSFoodServiceAPIsRepository.cs" />
     <Compile Include="Repositories\IFOSFoodServiceAPIsRepository.cs" />
+    <Compile Include="Repositories\RecurrenceEventRepository.cs" />
     <Compile Include="Repositories\ReportFileRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -107,8 +113,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909170140184_fosnew.resx">
-      <DependentUpon>201909170140184_fosnew.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909180419283_init.resx">
+      <DependentUpon>201909180419283_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
