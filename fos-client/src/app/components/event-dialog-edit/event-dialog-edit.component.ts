@@ -67,7 +67,11 @@ export class EventDialogEditComponent implements OnInit {
   _dateToReminder: string;
   _userSelect = [];
   _userPickerGroups: userPickerGroup[] = [];
-
+  displayFn(user: DeliveryInfos) {
+    if (user) {
+      return user.Name;
+    }
+  }
   private ToDateString(date: Date): string {
     return (
       date.getFullYear().toString() +
@@ -141,6 +145,7 @@ export class EventDialogEditComponent implements OnInit {
     this._dateEventTime = eventTime;
 
     //restaurant
+    debugger;
     var restaurantTemp: DeliveryInfos = {
       CityId: "1",
       RestaurantId: self.data.RestaurantId,
@@ -159,6 +164,8 @@ export class EventDialogEditComponent implements OnInit {
     };
 
     self.ownerForm.get("userInput").setValue(restaurantTemp);
+
+
     self.ownerForm
       .get("userInput")
       .valueChanges.pipe(
