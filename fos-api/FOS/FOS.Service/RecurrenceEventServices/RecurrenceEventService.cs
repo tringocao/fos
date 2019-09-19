@@ -28,7 +28,7 @@ namespace FOS.Services.RecurrenceEventServices
 
         public IEnumerable<RecurrenceEvent> GetAllRecurrenceEvents()
         {
-            return _eventRepository.GetAllRecurrenceEvents().Select(r => _recurrenceEventMapper.MapToDomain(r));
+            return  _eventRepository.GetAllRecurrenceEvents().Select(r => _recurrenceEventMapper.MapToDomain(r));
         }
 
         public RecurrenceEvent GetById(int id)
