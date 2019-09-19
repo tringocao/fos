@@ -73,20 +73,26 @@ namespace FOS.CloseService
         }
         private void CloseEvent()
         {
-            //WriteToFile("Close event begin at: " + DateTime.Now);
             var container = new UnityContainer();
             RegisterUnity.Register(container);
             coreService = container.Resolve<FosCoreService>();
 
             using (var clientContext = coreService.GetClientContext())
             {
-                var events = coreService.GetListEventShouldClose(clientContext);
+                var events = coreService.GetListEventOpened(clientContext);
+
                 foreach (var element in events)
                 {
-                    CloseAnEvent(clientContext, element);
+                    var closeTimeString = element["EventTimeToClose"] != null
+                        ? element["EventTimeToClose"].ToString() : "";
+                    var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
+                    
+                    if (DateTime.Now >= closeTime)
+                    {
+                        CloseAnEvent(clientContext, element);
+                    }
                 }
             }
-            //WriteToFile("Close event done at: " + DateTime.Now);
         }
         private void CloseAnEvent(ClientContext clientContext, ListItem element)
         {
