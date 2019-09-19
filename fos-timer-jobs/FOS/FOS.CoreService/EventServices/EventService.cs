@@ -61,36 +61,6 @@ namespace FOS.CoreService.EventServices
 
             return events;
         }
-        public ListItemCollection GetListEventShouldClose(ClientContext clientContext)
-        {
-            var web = clientContext.Web;
-            var list = web.Lists.GetByTitle(EventConstant.EventList);
-            CamlQuery getAllEventOpened = new CamlQuery();
-            getAllEventOpened.ViewXml =
-                @"<View>
-                        <Query>
-                            <Where>
-                                <And>" +
-                                "<Eq>" +
-                                    "<FieldRef Name=" + EventConstant.EventStatus + "/>" +
-                                    "<Value Type='Text'>" + EventStatus.Opened + "</Value>" +
-                                "</Eq>" +
-                                 "<Leq>" +
-                                    "<FieldRef Name=" + EventConstant.EventTimeToClose + "/>" +
-                                    "<Value Type='Text'>" + DateTime.Now.ToString(EventConstant.SharepointTimeFormat) + "</Value>" +
-                                "</Leq>" +
-                                @"</And>
-                            </Where>
-                        </Query>
-                        <RowLimit>1000</RowLimit>
-                    </View>";
-
-            var events = list.GetItems(getAllEventOpened);
-            clientContext.Load(events);
-            clientContext.ExecuteQuery();
-
-            return events;
-        }
         public void ChangeStatusToClose(ClientContext clientContext, ListItem element)
         {
             element[EventConstant.EventStatus] = EventStatus.Closed;
@@ -150,7 +120,7 @@ namespace FOS.CoreService.EventServices
         {
             return value.Split('.')[1].Split('%')[0];
         }
-        
+
         public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> lstUser)
         public async Task<int> GetEventToReminder()
         {
