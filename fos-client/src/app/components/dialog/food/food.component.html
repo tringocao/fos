@@ -35,7 +35,10 @@
       <ng-container matColumnDef="picture">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Picture</th>
         <td mat-cell *matCellDef="let element">
-          <img [src]="element.Photos" style="width:68px;height:68px;" />
+            <div style="width: 68px; height: 68px;">
+              <app-photo [src]="element.Photos" ></app-photo>
+            </div>
+          <!-- <img [src]="element.Photos" style="width:68px;height:68px;" /> -->
         </td>
       </ng-container>
 

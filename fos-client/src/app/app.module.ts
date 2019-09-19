@@ -63,6 +63,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { SelectAutocompleteModule } from "mat-select-autocomplete";
 import { MenuComponent } from "./components/menu/menu.component";
 import { DialogComponent } from "./components/dialog/dialog.component";
+import { LightboxModule } from 'ngx-lightbox';
 
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { FoodCategoriesComponent } from "./components/dialog/food-categories/food-categories.component";
@@ -86,6 +87,7 @@ import { SettingDialogComponent } from "./components/navigation/header/setting-d
 import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
+import { PhotoComponent } from './components/photo/photo/photo.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +121,8 @@ import { EventSummaryPrintComponent } from './components/event-summary-dialog/ev
     EventDialogConfirmComponent,
     SettingDialogComponent,
     PrintLayoutComponent,
-    EventSummaryPrintComponent
+    EventSummaryPrintComponent,
+    PhotoComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -172,6 +175,7 @@ import { EventSummaryPrintComponent } from './components/event-summary-dialog/ev
     MatTooltipModule,
     MatSlideToggleModule,
     MatRadioModule,
+    LightboxModule ,
     MatDatepickerModule, // <----- import(must)
     MatNativeDateModule // <----- import for date formating(optional)
   ],

@@ -112,7 +112,7 @@ export class EventSummaryDialogComponent implements OnInit {
   }
  
   async sendEmail() {
-    const page = document.getElementById('print');
+    const page = document.getElementById('report');
     const options = {
       background: "white", height: 800, width: page.clientWidth, letterRendering: 1, scale: 2,};
     console.log(this.userGroupTab)

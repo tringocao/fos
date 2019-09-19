@@ -129,7 +129,9 @@
               <ng-container matColumnDef="picture">
                 <th mat-header-cell *matHeaderCellDef>Picture</th>
                 <td mat-cell *matCellDef="let element">
-                  <img src="{{ element.picture }}" />
+                  <div style="width: 68px; height: 68px;">
+                    <app-photo [src]="element.picture" ></app-photo>
+                  </div>
                 </td>
               </ng-container>
               <ng-container matColumnDef="name">
