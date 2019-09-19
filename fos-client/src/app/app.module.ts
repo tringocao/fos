@@ -36,8 +36,6 @@ import {
   MatInputModule,
   MatTooltipModule,
   MatRadioModule,
-  MatDatepickerModule,
-  MatNativeDateModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
@@ -90,6 +88,9 @@ import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
 import { PhotoComponent } from './components/photo/photo/photo.component';
+import { SummaryListComponent } from './components/summary-list/summary-list.component';
+import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
+import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,7 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
     SettingDialogComponent,
     PrintLayoutComponent,
     EventSummaryPrintComponent,
-    PhotoComponent
+    PhotoComponent,
     SummaryListComponent,
     SummaryTabComponent,
     SummaryDishesDialogComponent,
