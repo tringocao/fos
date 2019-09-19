@@ -16,6 +16,7 @@ namespace FOS.CoreService.Constants
         public const string EventTitle = "EventTitle";
         public const string ID = "ID";
         public const string EventHost = "EventHost";
+        public const string SharepointTimeFormat = "yyyy-MM-ddTHH:mm:ss";
         public const string EventTimeToReminder = "EventTimeToReminder";
         public const string EventRestaurant = "EventRestaurant";
         public const string EventIsReminder = "EventIsReminder";

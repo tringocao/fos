@@ -40,8 +40,8 @@
             // serviceInstaller1
             // 
             this.serviceInstaller1.Description = "This is close event service";
-            this.serviceInstaller1.DisplayName = "Service1";
-            this.serviceInstaller1.ServiceName = "Service1";
+            this.serviceInstaller1.DisplayName = "CloseEvent";
+            this.serviceInstaller1.ServiceName = "CloseEvent";
             // 
             // ProjectInstaller
             // 

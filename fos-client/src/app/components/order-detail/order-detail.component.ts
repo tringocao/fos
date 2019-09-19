@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { DeliveryInfos } from "src/app/models/delivery-infos";
-import { RestaurantDetail } from "src/app/models/restaurant-detail";
-import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
-import { OrderService } from "src/app/services/order/order.service";
-import { User } from "src/app/models/user";
-import { Event } from "src/app/models/event";
-import { Order } from "src/app/models/order";
-import { UserService } from "src/app/services/user/user.service";
-import { Food } from "src/app/models/food";
-import { ListOrderedFoodsComponent } from "./list-ordered-foods/list-ordered-foods.component";
-import { EventFormService } from "src/app/services/event-form/event-form.service";
-import { FoodDetailJson } from "src/app/models/food-detail-json";
-import { MatSnackBar } from "@angular/material";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
+import { RestaurantDetail } from 'src/app/models/restaurant-detail';
+import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+import { OrderService } from 'src/app/services/order/order.service';
+import { User } from 'src/app/models/user';
+import { Event } from 'src/app/models/event';
+import { Order } from 'src/app/models/order';
+import { UserService } from 'src/app/services/user/user.service';
+import { Food } from 'src/app/models/food';
+import { ListOrderedFoodsComponent } from './list-ordered-foods/list-ordered-foods.component';
+import { EventFormService } from 'src/app/services/event-form/event-form.service';
+import { FoodDetailJson } from 'src/app/models/food-detail-json';
+import { MatSnackBar } from '@angular/material';
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
@@ -23,9 +23,9 @@ interface FoodCheck {
   checked: boolean;
 }
 @Component({
-  selector: "app-order-detail",
-  templateUrl: "./order-detail.component.html",
-  styleUrls: ["./order-detail.component.less"]
+  selector: 'app-order-detail',
+  templateUrl: './order-detail.component.html',
+  styleUrls: ['./order-detail.component.less']
 })
 export class OrderDetailComponent implements OnInit {
   idOrder: string;
@@ -55,7 +55,7 @@ export class OrderDetailComponent implements OnInit {
     this.idOrder = this.route.snapshot.paramMap.get("id");
     this.isWildParticipant = false;
     // check if wild guest order
-    if (this.idOrder.includes("ffa")) {
+    if (this.idOrder.includes('ffa')) {
       var eventId = this.idOrder.slice(3);
       this.isWildParticipant = true;
       this.eventFormService.GetEventById(eventId).then(event => {
@@ -173,7 +173,7 @@ export class OrderDetailComponent implements OnInit {
     this.orderService
       .SetOrder(this.order, this.isWildParticipant)
       .then(result => {
-        this.toast("Save!", "Dismiss");
+        this.toast('Save!', 'Dismiss');
       });
   }
 }

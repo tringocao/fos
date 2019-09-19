@@ -1,30 +1,30 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { TestComponent } from "./components/test/test.component";
-import { OrderService } from "./services/order/order.service";
-import { HttpClientModule } from "@angular/common/http";
-import { ListRestaurantComponent } from "./components/list-restaurant/list-restaurant.component";
-import { ServiceTabComponent } from "./components/service-tab/service-tab.component";
-import { RestaurantsPageComponent } from "./pages/restaurants-page/restaurants-page.component";
-import { MatCheckboxModule } from "@angular/material/checkbox";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { TestComponent } from './components/test/test.component';
+import { OrderService } from './services/order/order.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ListRestaurantComponent } from './components/list-restaurant/list-restaurant.component';
+import { ServiceTabComponent } from './components/service-tab/service-tab.component';
+import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { TokenInterceptor } from "./auth/TokenInterceptor";
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/TokenInterceptor';
 
-import { CookieService } from "ngx-cookie-service";
-import { AuthService } from "./auth/auth.service";
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from './auth/auth.service';
 
-import { HeaderComponent } from "./components/navigation/header/header.component";
-import { SidenavListComponent } from "./components/navigation/sidenav-list/sidenav-list.component";
+import { HeaderComponent } from './components/navigation/header/header.component';
+import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 
-import { OrdersPageComponent } from "./pages/orders-page/orders-page.component";
-import { MealsPageComponent } from "./pages/meals-page/meals-page.component";
+import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
+import { SummaryPageComponent } from './pages/summary-page/summary-page.component';
 
 import {
   MatTableModule,
@@ -35,17 +35,19 @@ import {
   MatListModule,
   MatInputModule,
   MatTooltipModule,
-  MatRadioModule
-} from "@angular/material";
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule
+} from '@angular/material';
 import {
   DlDateTimeDateModule,
   DlDateTimePickerModule
-} from "angular-bootstrap-datetimepicker";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AngularDateTimePickerModule } from "angular2-datetimepicker";
-import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { SearchComponent } from "./components/search/search.component";
+} from 'angular-bootstrap-datetimepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SearchComponent } from './components/search/search.component';
 
 import {
   MatButtonModule,
@@ -56,7 +58,7 @@ import {
   MatIconModule,
   MatProgressSpinnerModule,
   MatSlideToggleModule
-} from "@angular/material";
+} from '@angular/material';
 
 import { MatSelectModule } from "@angular/material/select";
 import { MatGridListModule } from "@angular/material/grid-list";
@@ -99,7 +101,7 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
     HeaderComponent,
     SidenavListComponent,
     OrdersPageComponent,
-    MealsPageComponent,
+    SummaryPageComponent,
     SearchComponent,
     DialogComponent,
     MenuComponent,
@@ -123,6 +125,10 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
     PrintLayoutComponent,
     EventSummaryPrintComponent,
     PhotoComponent
+    SummaryListComponent,
+    SummaryTabComponent,
+    SummaryDishesDialogComponent,
+    SettingDialogComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -200,6 +206,7 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
     EventDialogViewComponent,
     ReminderDialogComponent,
     EventDialogEditComponent,
+    SummaryDishesDialogComponent,
     SettingDialogComponent
   ],
   bootstrap: [AppComponent],
@@ -211,6 +218,7 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
     ReminderDialogComponent,
     EventDialogEditComponent,
     EventDialogConfirmComponent,
+    SummaryDishesDialogComponent,
     SettingDialogComponent
   ]
 })

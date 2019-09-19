@@ -1,57 +1,59 @@
 <div class="reminder-dialog">
   <div class="dialog-header">
-    <h2>{{data.header}}</h2>
-    <button mat-icon-button (click)="closeDialog($event)" class="close">
-      <mat-icon>
-        close
-      </mat-icon>
-    </button>
+    <h2 mat-dialog-title>{{data.header}}</h2>
   </div>
-  <table mat-table [dataSource]="dataSource" *ngIf="userNotOrder.length > 0">
-    <ng-container matColumnDef="avatar">
-      <th mat-header-cell *matHeaderCellDef>Avatar</th>
-      <td mat-cell *matCellDef="let element">
-        <img
-          height="50"
-          width="50"
-          style="border-radius: 50%"
-          src="{{ apiUrl }}api/SPUser/GetAvatarByUserId?userId={{ element.id }}"
-        />
-      </td>
-    </ng-container>
+  <div mat-dialog-content>
+    <table mat-table [dataSource]="dataSource" *ngIf="userNotOrder.length > 0">
+      <ng-container matColumnDef="avatar">
+        <th mat-header-cell *matHeaderCellDef>Avatar</th>
+        <td mat-cell *matCellDef="let element">
+          <img
+            height="50"
+            width="50"
+            style="border-radius: 50%"
+            src="{{ apiUrl }}api/SPUser/GetAvatar?Id={{
+              element.Id
+            }}&avatarName={{ element.DisplayName }}"
+          />
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
-    </ng-container>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.DisplayName }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="Email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.mail }}</td>
-    </ng-container>
+      <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.Mail }}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 
-  <mat-paginator
-    *ngIf="userNotOrder.length > 0"
-    showFirstLastButtons
-    [pageSize]="5"
-    [hidePageSize]="true"
-  ></mat-paginator>
+    <mat-paginator
+      *ngIf="userNotOrder.length > 0"
+      showFirstLastButtons
+      [pageSize]="5"
+      [hidePageSize]="true"
+    ></mat-paginator>
 
-  <div *ngIf="userNotOrder.length === 0">
-    <p *ngIf="!data.isClosedEvent">All user ordered </p>
-    <span class="close-event-confirm" *ngIf="data.isClosedEvent">All the user already made order. Do you want to close event?</span>
+    <div *ngIf="userNotOrder.length === 0">
+      <p *ngIf="!data.isClosedEvent">All user ordered</p>
+      <span class="close-event-confirm" *ngIf="data.isClosedEvent"
+        >All the user already made order. Do you want to close event?</span
+      >
+    </div>
   </div>
 
-  <div class="dialog-actions">
+  <div class="dialog-actions" mat-dialog-actions>
     <button
       *ngIf="!data.isClosedEvent"
       class="remind"
       mat-raised-button
       (click)="remind($event)"
+      color="primary"
       cdkFocusInitial
       [disabled]="userNotOrder.length == 0 || isReminding"
     >
@@ -63,15 +65,13 @@
       mat-raised-button
       (click)="closeEvent($event)"
       cdkFocusInitial
-    >      
-    <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}">Close event</a>
-    </button>
-    <button
-      class="cancel"
-      mat-raised-button
       color="warn"
-      (click)="closeDialog($event)"
     >
+      <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}"
+        >Close event</a
+      >
+    </button>
+    <button class="cancel" mat-raised-button (click)="closeDialog($event)">
       Cancel
     </button>
   </div>
