@@ -3,7 +3,8 @@ import {
   OnInit,
   Inject,
   ViewChild,
-  ElementRef
+  ElementRef,
+  Input
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -26,6 +27,7 @@ import { EventFormService } from 'src/app/services/event-form/event-form.service
 import { OrderService } from 'src/app/services/order/order.service';
 import { Food } from 'src/app/models/food';
 import { UserService } from 'src/app/services/user/user.service';
+import { PrintService } from 'src/app/services/print/print.service';
  
  
 @Component({
@@ -35,6 +37,7 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class EventSummaryDialogComponent implements OnInit {
   @ViewChild('personGroupView', { static: false }) userGroupTab: ElementRef;
+  loading: boolean = true;
  
   constructor(
     private router: Router,
@@ -44,6 +47,7 @@ export class EventSummaryDialogComponent implements OnInit {
     private eventFormService:EventFormService,
     private orderService: OrderService,
     private userService: UserService,
+    private printService: PrintService,
   ) {
     console.log(router.routerState);
   }
@@ -54,6 +58,7 @@ export class EventSummaryDialogComponent implements OnInit {
   printMode:boolean;
   dishGroupViewdataSource: any = new MatTableDataSource([]);
   personGroupViewdataSource: any = new MatTableDataSource([]);
+  
  
   dishGroupViewDisplayedColumns: string[] = [
     'picture',
@@ -77,25 +82,33 @@ export class EventSummaryDialogComponent implements OnInit {
   foods: any[];
   orderByDish: any[] = [];
   orderByPerson: any[] = [];
+  eventId: number;
  
   toStandardDate(date: Date) {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
  
   printToPdf() {
+    this.printService
+      .printDocument('report', [this.eventId.toString()], {
+        restaurant:this.restaurant,
+        eventDetail:this.eventDetail,
+        foods:this.foods,
+        orderByPerson:this.orderByPerson
+      });
     // this.printMode = true;
-    const printContent = document.getElementById("print");
+    // const printContent = document.getElementById("print");
  
-    // printJs('print', 'html');
-    console.log(printContent)
-    const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    // WindowPrt.document.write('<link rel="stylesheet" type="text/css" href="event-summary-dialog.component.css">');
-    WindowPrt.document.write(printContent.innerHTML);
-    WindowPrt.document.close();
-    console.log(window.document)
-    WindowPrt.focus();
-    WindowPrt.print();
-    WindowPrt.close();
+    // // printJs('print', 'html');
+    // console.log(printContent)
+    // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    // // WindowPrt.document.write('<link rel="stylesheet" type="text/css" href="event-summary-dialog.component.css">');
+    // WindowPrt.document.write(printContent.innerHTML);
+    // WindowPrt.document.close();
+    // console.log(window.document)
+    // WindowPrt.focus();
+    // WindowPrt.print();
+    // WindowPrt.close();
   }
  
   async sendEmail() {
@@ -118,6 +131,7 @@ export class EventSummaryDialogComponent implements OnInit {
       console.log('html2canvas');
     });
   }
+  
  
   ngOnInit() {
     this.restaurant = { }
@@ -129,6 +143,7 @@ export class EventSummaryDialogComponent implements OnInit {
  
     this.route.params.subscribe(params => {
       var id = params["id"];
+      this.eventId = id;
       this.eventFormService.GetEventById(id).then((result: Event) => {
         console.log(result);
         this.eventDetail = result;
@@ -143,6 +158,7 @@ export class EventSummaryDialogComponent implements OnInit {
             this.restaurant.Rating = Number(result.Rating);
             this.restaurant.TotalReview = Number(result.TotalReview);
             this.restaurant.isLoaded = true;
+            this.loading = false;
           });
           console.log(this.restaurant)
           // this.restaurant.RestaurantUrl = "01234";
