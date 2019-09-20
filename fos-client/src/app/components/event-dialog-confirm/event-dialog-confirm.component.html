@@ -1,11 +1,20 @@
-<h1 mat-dialog-title>Warning</h1>
+<h2>Warning</h2>
 <div mat-dialog-content>
-  <p>If you update event information, system will resend email to all attendees.</p>
+  <h4>
+    {{ data }}
+  </h4>
   <!-- <mat-form-field>
     <input matInput [(ngModel)]="data.animal">
   </mat-form-field> -->
 </div>
-<div mat-dialog-actions>
- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
-  <button mat-button (click)="onNoClick()">No</button>
-</div>
+<mat-card-actions align="right">
+  <button
+    mat-raised-button
+    color="warn"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Yes
+  </button>
+  <button mat-button (click)="onNoClick()" mat-raised-button>No</button>
+</mat-card-actions>

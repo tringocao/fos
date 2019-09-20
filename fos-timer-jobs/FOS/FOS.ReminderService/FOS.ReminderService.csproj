@@ -136,7 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.CoreService\FOS.CoreService.csproj">
-      <Project>{D3DC13DD-CD97-4E1E-AA7B-68D350382935}</Project>
+      <Project>{d3dc13dd-cd97-4e1e-aa7b-68d350382935}</Project>
       <Name>FOS.CoreService</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,4 +1,4 @@
-import { Event } from "./../../models/event";
+import { Event } from './../../models/event';
 import {
   MatSort,
   MatPaginator,
@@ -6,12 +6,12 @@ import {
   MatTable,
   MatSnackBar,
   ErrorStateMatcher
-} from "@angular/material";
+} from '@angular/material';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
-} from "@angular/material/dialog";
+} from '@angular/material/dialog';
 import {
   FormControl,
   FormGroup,
@@ -20,30 +20,31 @@ import {
   AbstractControl,
   ValidatorFn,
   FormGroupDirective,
-  NgForm,
-} from "@angular/forms";
-import * as moment from "moment";
-import { Component, Inject, OnInit, ViewChild, Input } from "@angular/core";
-import { EventFormService } from "src/app/services/event-form/event-form.service";
-import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
+  NgForm
+} from '@angular/forms';
+import * as moment from 'moment';
+import { Component, Inject, OnInit, ViewChild, Input } from '@angular/core';
+import { EventFormService } from 'src/app/services/event-form/event-form.service';
+import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import {
   userPickerGroup,
   userPicker
-} from "../event-dialog/event-dialog.component";
-import { EventUser } from "src/app/models/eventuser";
-import { DeliveryInfos } from "src/app/models/delivery-infos";
-import { debounceTime, tap, switchMap, finalize } from "rxjs/operators";
-import { User } from "src/app/models/user";
-import { GraphUser } from "src/app/models/graph-user";
-import { OrderService } from "src/app/services/order/order.service";
-import { EventDialogConfirmComponent } from "../event-dialog-confirm/event-dialog-confirm.component";
+} from '../event-dialog/event-dialog.component';
+import { EventUser } from 'src/app/models/eventuser';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { User } from 'src/app/models/user';
+import { GraphUser } from 'src/app/models/graph-user';
+import { OrderService } from 'src/app/services/order/order.service';
+import { EventDialogConfirmComponent } from '../event-dialog-confirm/event-dialog-confirm.component';
 import { environment } from 'src/environments/environment';
 import { debug } from 'util';
+import { SummaryService } from 'src/app/services/summary/summary.service';
 
 @Component({
-  selector: "app-event-dialog-edit",
-  templateUrl: "./event-dialog-edit.component.html",
-  styleUrls: ["./event-dialog-edit.component.less"]
+  selector: 'app-event-dialog-edit',
+  templateUrl: './event-dialog-edit.component.html',
+  styleUrls: ['./event-dialog-edit.component.less']
 })
 export class EventDialogEditComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -55,33 +56,35 @@ export class EventDialogEditComponent implements OnInit {
     public dialogRef: MatDialogRef<EventDialogEditComponent>,
     private snackBar: MatSnackBar,
     private orderService: OrderService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private summaryService: SummaryService
   ) {
     this.ownerForm = new FormGroup({
-      title: new FormControl("", [Validators.required]),
-      host: new FormControl(""),
+      title: new FormControl('', [Validators.required]),
+      host: new FormControl(''),
       dateTimeToClose: new FormControl(''),
       dateTimeEvent: new FormControl(''),
       dateTimeRemind: new FormControl(''),
-      participants: new FormControl(""),
-      restaurant: new FormControl(""),
-      userInput: new FormControl(""),
-      userInputHost: new FormControl(""),
-      userInputPicker: new FormControl(""),
-      EventType: new FormControl(""),
-      MaximumBudget: new FormControl(""),
+      participants: new FormControl(''),
+      restaurant: new FormControl(''),
+      userInput: new FormControl(''),
+      userInputHost: new FormControl(''),
+      userInputPicker: new FormControl(''),
+      EventType: new FormControl(''),
+      MaximumBudget: new FormControl('')
     });
   }
   //global
   apiUrl = environment.apiUrl;
   matcher = new MyErrorStateMatcher();
-  eventSelectedBar = "Open";
-  createdUser = { id: "" };
+  eventSelectedBar = 'Open';
+  createdUser = { id: '' };
   dateEventTime: string;
   dateTimeToClose: string;
   dateToReminder: string;
   userSelect = [];
   userPickerGroups: userPickerGroup[] = [];
+  showCancelEventConfirmation = false;
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -90,11 +93,11 @@ export class EventDialogEditComponent implements OnInit {
   private ToDateString(date: Date): string {
     return (
       date.getFullYear().toString() +
-      "-" +
-      ("0" + (date.getMonth() + 1)).slice(-2) +
-      "-" +
-      ("0" + date.getDate()).slice(-2) +
-      "T" +
+      '-' +
+      ('0' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('0' + date.getDate()).slice(-2) +
+      'T' +
       date.toTimeString().slice(0, 5)
     );
   }
@@ -103,7 +106,7 @@ export class EventDialogEditComponent implements OnInit {
 
   hostPickerGroup = [];
 
-  displayedColumns = ["avatar", "name", "email", "order status", "action"];
+  displayedColumns = ['avatar', 'name', 'email', 'order status', 'action'];
 
   isLoading = false;
   isHostLoading = false;
@@ -115,28 +118,27 @@ export class EventDialogEditComponent implements OnInit {
 
   ngOnInit() {
     var self = this;
-    
 
-    self.ownerForm.get("EventType").setValue(self.data.EventType);
-    self.ownerForm.get("title").setValue(self.data.Name);
-    self.ownerForm.get("EventType").setValue(self.data.EventType);
-    self.ownerForm.get("MaximumBudget").setValue(self.data.MaximumBudget);
+    self.ownerForm.get('EventType').setValue(self.data.EventType);
+    self.ownerForm.get('title').setValue(self.data.Name);
+    self.ownerForm.get('EventType').setValue(self.data.EventType);
+    self.ownerForm.get('MaximumBudget').setValue(self.data.MaximumBudget);
 
     var dataHostTemp: userPicker = {
       Name: self.data.HostName,
-      Email: "",
-      Img: "",
+      Email: '',
+      Img: '',
       Id: self.data.HostId,
       IsGroup: 0
     };
 
-    self.ownerForm.get("userInputHost").setValue(dataHostTemp);
+    self.ownerForm.get('userInputHost').setValue(dataHostTemp);
 
     var newCloseTime = new Date(this.data.CloseTime);
     var closeTime = this.ToDateString(newCloseTime);
     this.dateTimeToClose = closeTime;
 
-    console.log(this.data.RemindTime)
+    console.log(this.data.RemindTime);
     if (this.data.RemindTime) {
       var newRemindTime = new Date(this.data.RemindTime);
       var remindTime = this.ToDateString(newRemindTime);
@@ -150,27 +152,26 @@ export class EventDialogEditComponent implements OnInit {
     //restaurant
     debugger;
     var restaurantTemp: DeliveryInfos = {
-      CityId: "1",
+      CityId: '1',
       RestaurantId: self.data.RestaurantId,
-      IsOpen: "",
-      IsFoodyDelivery: "",
-      Campaigns: "",
-      PromotionGroups: "",
-      Photo: "",
-      Operating: "",
-      Address: "",
+      IsOpen: '',
+      IsFoodyDelivery: '',
+      Campaigns: '',
+      PromotionGroups: '',
+      Photo: '',
+      Operating: '',
+      Address: '',
       DeliveryId: self.data.DeliveryId,
       Categories: self.data.Category,
       Name: self.data.Restaurant,
-      UrlRewriteName: "",
+      UrlRewriteName: '',
       IsFavorite: false
     };
 
-    self.ownerForm.get("userInput").setValue(restaurantTemp);
-
+    self.ownerForm.get('userInput').setValue(restaurantTemp);
 
     self.ownerForm
-      .get("userInput")
+      .get('userInput')
       .valueChanges.pipe(
         debounceTime(300),
         tap(() => (self.isLoading = true)),
@@ -202,9 +203,9 @@ export class EventDialogEditComponent implements OnInit {
               Name: participant[0].DisplayName,
               Email: participant[0].Mail,
               Id: participant[0].Id,
-              Img: "",
+              Img: '',
               IsGroup: 0,
-              OrderStatus: "Not order"
+              OrderStatus: 'Not order'
             };
             self.eventUsers.push(userOrder);
           }
@@ -230,9 +231,9 @@ export class EventDialogEditComponent implements OnInit {
             Name: element.DisplayName,
             Email: element.Mail,
             Id: element.Id,
-            Img: "",
+            Img: '',
             IsGroup: 0,
-            OrderStatus: "Order"
+            OrderStatus: 'Order'
           };
           self.eventUsers.push(userOrder);
           self.table.renderRows();
@@ -246,17 +247,16 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   UpdateToSharePointEventList(): void {
-    var self = this;    
+    var self = this;
     if (self.eventUsers.length == 0) {
-      self.toast("Please choose participants!", "Dismiss");
+      self.toast('Please choose participants!', 'Dismiss');
       return;
     }
     this.loading = true;
-    
-    
+
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
-    console.log("check value", numberParticipant);
+    console.log('check value', numberParticipant);
 
     let promises: Array<Promise<void>> = [];
     this.eventUsers.map(user => {
@@ -267,9 +267,10 @@ export class EventDialogEditComponent implements OnInit {
           if (value.Data && value) {
             value.Data.map(u => {
               var participantList = jsonParticipants.filter(
-                item => item.DisplayName === u.DisplayName);
-                
-              if(participantList.length === 0){
+                item => item.DisplayName === u.DisplayName
+              );
+
+              if (participantList.length === 0) {
                 var participant: GraphUser = {
                   Id: u.Id,
                   DisplayName: u.DisplayName,
@@ -280,12 +281,12 @@ export class EventDialogEditComponent implements OnInit {
                 numberParticipant++;
               }
             });
-          }
-           else {
-            var participantList =  jsonParticipants.filter(
-              item => item.DisplayName === user.Name);
-              
-            if(participantList.length === 0){
+          } else {
+            var participantList = jsonParticipants.filter(
+              item => item.DisplayName === user.Name
+            );
+
+            if (participantList.length === 0) {
               var participant: GraphUser = {
                 Id: user.Id,
                 DisplayName: user.Name,
@@ -299,34 +300,36 @@ export class EventDialogEditComponent implements OnInit {
         });
       promises.push(promise);
     });
-    
+
     var eventDate = this.dateEventTime;
-    var dateTimeToClose = this.dateTimeToClose.replace("T", " ");
-    var dateToReminder = this.dateToReminder ? this.dateToReminder.replace("T", " ") : '';
+    var dateTimeToClose = this.dateTimeToClose.replace('T', ' ');
+    var dateToReminder = this.dateToReminder
+      ? this.dateToReminder.replace('T', ' ')
+      : '';
 
     Promise.all(promises).then(function() {
       var myJSON = JSON.stringify(jsonParticipants);
       self.eventListItem = {
-        Name: self.ownerForm.get("title").value,
-        EventId: self.ownerForm.get("title").value,
-        Restaurant: self.ownerForm.get("userInput").value.Name,
-        MaximumBudget: self.ownerForm.get("MaximumBudget").value,
+        Name: self.ownerForm.get('title').value,
+        EventId: self.ownerForm.get('title').value,
+        Restaurant: self.ownerForm.get('userInput').value.Name,
+        MaximumBudget: self.ownerForm.get('MaximumBudget').value,
         CloseTime: new Date(dateTimeToClose),
         RemindTime: new Date(dateToReminder),
-        HostName: self.ownerForm.get("userInputHost").value.Name,
+        HostName: self.ownerForm.get('userInputHost').value.Name,
         Participants: numberParticipant.toString(),
-        Category: self.ownerForm.get("userInput").value.Categories,
-        RestaurantId: self.ownerForm.get("userInput").value.RestaurantId,
+        Category: self.ownerForm.get('userInput').value.Categories,
+        RestaurantId: self.ownerForm.get('userInput').value.RestaurantId,
         ServiceId: self.data.ServiceId,
-        DeliveryId: self.ownerForm.get("userInput").value.DeliveryId,
+        DeliveryId: self.ownerForm.get('userInput').value.DeliveryId,
         CreatedBy: self.data.CreatedBy,
-        HostId: self.ownerForm.get("userInputHost").value.Id,
+        HostId: self.ownerForm.get('userInputHost').value.Id,
         EventDate: new Date(eventDate),
         EventParticipantsJson: myJSON,
-        EventType: self.ownerForm.get("EventType").value,
+        EventType: self.ownerForm.get('EventType').value,
         Action: null,
         IsMyEvent: null,
-        Status: "Opened"
+        Status: 'Opened'
       };
       self.loading = false;
       self.openDialog();
@@ -346,8 +349,9 @@ export class EventDialogEditComponent implements OnInit {
   openDialog(): void {
     var self = this;
     const dialogRef = this.dialog.open(EventDialogConfirmComponent, {
-      width: "450px",
-      data: Event
+      width: '450px',
+      data:
+        'If you update event information, system will resend email to all attendees.'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -358,10 +362,9 @@ export class EventDialogEditComponent implements OnInit {
             .UpdateEventListItem(self.data.EventId, self.eventListItem)
             .toPromise()
             .then(result => {
-              console.log("Update", result);
+              console.log('Update', result);
               self.SendEmail(self.data.EventId);
-              self.toast("update new event!", "Dismiss");
-              self.dialogRef.close();
+              window.location.reload();
             });
         }
       }
@@ -370,7 +373,7 @@ export class EventDialogEditComponent implements OnInit {
 
   SendEmail(id: string) {
     this.restaurantService.setEmail(id);
-    console.log("Sent!");
+    console.log('Sent!');
   }
 
   toast(message: string, action: string) {
@@ -378,37 +381,37 @@ export class EventDialogEditComponent implements OnInit {
       duration: 2000
     });
   }
-  
+
   AddUserToTable(): void {
     var self = this;
-    console.log("Nhan add card");
+    console.log('Nhan add card');
 
     console.log(this.userSelect);
 
-    var choosingUser = self.ownerForm.get("userInputPicker").value;
+    var choosingUser = self.ownerForm.get('userInputPicker').value;
     console.log('choose User', choosingUser);
 
     var flag = false;
     self.eventUsers.forEach(element => {
       if (element.Name === choosingUser.Name) {
-        flag = true
+        flag = true;
       }
     });
     if (flag === false) {
       this.eventUsers.push({
         Name: choosingUser.Name,
         Email: choosingUser.Email,
-        Img: "",
+        Img: '',
         Id: choosingUser.Id,
         IsGroup: 0,
-        OrderStatus: "Not Order"
+        OrderStatus: 'Not Order'
       });
       this.table.renderRows();
     }
   }
 
   DeleteUserInTable(name: string): void {
-    console.log("xoa ", name);
+    console.log('xoa ', name);
     for (var j = 0; j < this.eventUsers.length; j++) {
       if (name == this.eventUsers[j].Name) {
         this.eventUsers.splice(j, 1);
@@ -421,7 +424,7 @@ export class EventDialogEditComponent implements OnInit {
 
   public CreateOwner = ownerFormValue => {
     if (this.ownerForm.valid) {
-      console.log("pass");
+      console.log('pass');
     }
   };
 
@@ -436,7 +439,9 @@ export class EventDialogEditComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
+      console.log(
+        remindDate + ' ' + moment(remindDate).isSameOrAfter(eventDate)
+      );
       if (remindDate && eventDate && closeDate) {
         if (
           moment(remindDate).isSameOrAfter(eventDate) ||
@@ -469,15 +474,19 @@ export class EventDialogEditComponent implements OnInit {
     closeDate: string
   ): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
+      console.log(
+        remindDate + ' ' + moment(remindDate).isSameOrAfter(eventDate)
+      );
       if (eventDate && closeDate) {
-        if (
-          moment(closeDate).isSameOrAfter(eventDate)
-        ) {
-          console.log("eeee");
+        if (moment(closeDate).isSameOrAfter(eventDate)) {
+          console.log('eeee');
           // this.isInvalidCloseTime = true;
-          this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-          this.ownerForm.controls["dateTimeToClose"].hasError('invalidCloseTime')
+          this.ownerForm.controls['dateTimeToClose'].setErrors({
+            invalidCloseTime: true
+          });
+          this.ownerForm.controls['dateTimeToClose'].hasError(
+            'invalidCloseTime'
+          );
           return { invalidCloseTime: true };
         }
         return null;
@@ -487,45 +496,59 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   onDateTimeChange(value: string): void {
-    if (this.dateToReminder && this.dateEventTime && moment(this.dateEventTime).isSameOrAfter(this.dateToReminder)) {
+    if (
+      this.dateToReminder &&
+      this.dateEventTime &&
+      moment(this.dateEventTime).isSameOrAfter(this.dateToReminder)
+    ) {
       // this.isInvalidRemindTime = true
       // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-      alert("Time to remind must be before event time");
+      alert('Time to remind must be before event time');
     }
-    if (this.dateToReminder && this.dateTimeToClose && moment(this.dateToReminder).isSameOrAfter(this.dateTimeToClose)) {
+    if (
+      this.dateToReminder &&
+      this.dateTimeToClose &&
+      moment(this.dateToReminder).isSameOrAfter(this.dateTimeToClose)
+    ) {
       // this.isInvalidRemindTime = true
       // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-      alert("Time to remind must be after event close time");
+      alert('Time to remind must be after event close time');
     }
-    if (this.dateTimeToClose && this.dateEventTime && moment(this.dateTimeToClose).isSameOrAfter(this.dateEventTime)) {
+    if (
+      this.dateTimeToClose &&
+      this.dateEventTime &&
+      moment(this.dateTimeToClose).isSameOrAfter(this.dateEventTime)
+    ) {
       // this.isInvalidCloseTime = true
-      this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-      alert("Time to close must be before event time");
+      this.ownerForm.controls['dateTimeToClose'].setErrors({
+        invalidCloseTime: true
+      });
+      alert('Time to close must be before event time');
     }
-    this.ownerForm.controls["dateTimeRemind"].setValidators([
+    this.ownerForm.controls['dateTimeRemind'].setValidators([
       this.ValidateEventRemindTime(
         this.dateEventTime,
         this.dateToReminder,
         this.dateTimeToClose
       )
     ]);
-    this.ownerForm.controls["dateTimeRemind"].updateValueAndValidity();
-    this.ownerForm.controls["dateTimeToClose"].setValidators([
+    this.ownerForm.controls['dateTimeRemind'].updateValueAndValidity();
+    this.ownerForm.controls['dateTimeToClose'].setValidators([
       this.ValidateEventCloseTime(
         this.dateEventTime,
         this.dateToReminder,
         this.dateTimeToClose
       )
     ]);
-    this.ownerForm.controls["dateTimeToClose"].updateValueAndValidity();
-    this.ownerForm.controls["dateTimeEvent"].setValidators([
+    this.ownerForm.controls['dateTimeToClose'].updateValueAndValidity();
+    this.ownerForm.controls['dateTimeEvent'].setValidators([
       this.ValidateEventTime(
         this.dateEventTime,
         this.dateToReminder,
         this.dateTimeToClose
       )
     ]);
-    this.ownerForm.controls["dateTimeEvent"].updateValueAndValidity();
+    this.ownerForm.controls['dateTimeEvent'].updateValueAndValidity();
     // console.log(this.ownerForm.get('dateTimeRemind').value)
     console.log(moment(this.dateEventTime).isSameOrAfter(this.dateToReminder));
   }
@@ -537,10 +560,30 @@ export class EventDialogEditComponent implements OnInit {
     var self = this;
     console.log('event', $event);
   }
+  cancelEvent() {
+    const dialogRef = this.dialog.open(EventDialogConfirmComponent, {
+      width: '450px',
+      data: 'Are you sure you want to cancel this event?'
+    });
+    dialogRef.afterClosed().subscribe(event => {
+      if (event) {
+        this.loading = true;
+        this.summaryService
+          .updateEventStatus(this.data.EventId, 'Error')
+          .then(result => {
+            this.loading = false;
+            window.location.reload();
+          });
+      }
+    });
+  }
 }
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
     const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
+    return control && control.invalid;
   }
 }
