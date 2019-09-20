@@ -88,6 +88,7 @@ import { SummaryListComponent } from './components/summary-list/summary-list.com
 import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
 import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
 import { SettingDialogComponent } from './components/navigation/header/setting-dialog/setting-dialog.component';
+import { EventDialogUserpickerComponent } from './components/event-dialog/event-dialog-userpicker/event-dialog-userpicker.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { SettingDialogComponent } from './components/navigation/header/setting-d
     SummaryListComponent,
     SummaryTabComponent,
     SummaryDishesDialogComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    EventDialogUserpickerComponent
   ],
   // declarations: [
   //     AppComponent,

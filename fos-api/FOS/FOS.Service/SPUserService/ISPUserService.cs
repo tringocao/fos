@@ -18,5 +18,6 @@ namespace FOS.Services.SPUserService
         Task<List<User>> GetUsersByName(string searchName);
 
         Task<List<User>> GroupListMemers(string groupId);
+        Task<List<Group>> SearchGroupByName(string groupName);
     }
 }

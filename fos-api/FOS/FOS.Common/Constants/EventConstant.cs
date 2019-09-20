@@ -28,6 +28,7 @@ namespace FOS.Common.Constants
         public const string EventParticipantsJson = "EventParticipantsJson";
         public const string EventServiceId = "EventServiceId";
         public const string EventId = "EventId";
+        public const string EventIsReminder = "EventIsReminder";
     }
     public class EventStatus
     {
@@ -39,5 +40,10 @@ namespace FOS.Common.Constants
     {
         public const string Open = "Open";
         public const string Close = "Close";
+    }
+    public class EventIsReminder
+    {
+        public const string Yes = "Yes";
+        public const string No = "No";
     }
 }

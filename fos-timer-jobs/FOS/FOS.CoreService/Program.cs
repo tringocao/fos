@@ -1,6 +1,7 @@
 ﻿using FOS.CoreService.Constants;
 using FOS.CoreService.EventServices;
 using FOS.CoreService.UnityConfig;
+using FOS.Model.Domain.NowModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

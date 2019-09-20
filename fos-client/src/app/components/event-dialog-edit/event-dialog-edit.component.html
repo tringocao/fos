@@ -1,6 +1,6 @@
 <!-- <p>event-dialog works!</p> -->
 <h2>{{data.restaurant}}</h2>
-<!-- <h2>{{data.delivery_id}}</h2>
+<!-- <h2>{{data.deliveryid}}</h2>
 <h2>{{data.id}}</h2> -->
 
 
@@ -22,7 +22,6 @@
           aria-labelledby="Event Type"
           class="radio-group"
           formControlName="EventType"
-          [(ngModel)]="_eventType"
           >
           <mat-radio-button class="radio-button" value="Open" matTooltip="Anyone can make order"
           matTooltipPosition="after"
@@ -36,31 +35,15 @@
           </mat-radio-button>
         </mat-radio-group>
 
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Host" [matAutocomplete]="auto" formControlName='userInputHost'>
-        </mat-form-field>
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
-          <mat-option *ngIf="_isHostLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
-          <ng-container *ngIf="!_isHostLoading">
-            <mat-option style="height: 5em" *ngFor="let user of _userHost" [value]="user">
-                <div class="format-avatar">
-                    <img id="avatar" class="MakeCircleAvatar" src="{{ apiUrl }}api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
-                    <div class="format-avatar-right">
-                        <span>{{ user.Name }}</span>
-                        <small>email: {{user.Email}}</small>
-                    </div>
-                </div>
-            </mat-option>
-          </ng-container>
-        </mat-autocomplete>
+        <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" formControlName="userInputHost" pickupTitle="Host"></app-event-dialog-userpicker>
 
         <mat-form-field class="full-width">
           <input matInput placeholder="Restaurant" [matAutocomplete]="autoTest" formControlName='userInput'>
         </mat-form-field>
         <mat-autocomplete  #autoTest="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngIf="_isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
-          <ng-container *ngIf="!_isLoading">
-            <mat-option *ngFor="let restaurant of _restaurant" [value]="restaurant">
+          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let restaurant of restaurant" [value]="restaurant">
                   <app-menu   [restaurant]="restaurant"></app-menu>
               <span>{{ restaurant.Name }}</span>
               <small> | ID: {{restaurant.RestaurantId}}</small>
@@ -70,13 +53,13 @@
 
         <mat-form-field class="full-width">
           <mat-label>Maximum Budget</mat-label>
-          <input matInput type="number" placeholder="Maximum Budget" [(ngModel)]="_maximumBudget" [ngModelOptions]="{standalone: true}" >
+          <input matInput type="number" placeholder="Maximum Budget" formControlName='MaximumBudget' >
         </mat-form-field>
 
         <div class="event-data-time">
         <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
-          <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="_dateEventTime"
+          <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="dateEventTime"
             [ngModelOptions]="{standalone: true}"
             formcontrolname="dateTimeEvent" 
             (input)="onDateTimeChange($event.target.value)"
@@ -87,7 +70,7 @@
 
         <mat-form-field class="full-width">
           <mat-label>Time To Close</mat-label>
-          <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="_dateTimeToClose"
+          <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="dateTimeToClose"
             [ngModelOptions]="{standalone: true}"
             formcontrolname="dateTimeToClose" 
             (input)="onDateTimeChange($event.target.value)"
@@ -98,7 +81,7 @@
 
         <mat-form-field class="full-width">
           <mat-label>Time To Reminder</mat-label>
-          <input id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" name="partydate" [(ngModel)]="_dateToReminder"
+          <input id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" name="partydate" [(ngModel)]="dateToReminder"
           [ngModelOptions]="{standalone: true}"
           formcontrolname="dateTimeRemind"
           (input)="onDateTimeChange($event.target.value)"
@@ -109,29 +92,14 @@
 
         <mat-grid-list cols="10" rowHeight="100px">
           <mat-grid-tile [colspan]="8">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="Pick user/group" formControlName="participants"
-                (selectionChange)="ChangeClient($event)">
-                <mat-optgroup *ngFor="let group of _userPickerGroups" [label]="group.Name">
-                  <mat-option style="width:4500px; height: 5em;" *ngFor="let user of group.UserPicker" [value]="user">
-                      <div class="format-avatar">
-                          <img id="avatar" class="MakeCircleAvatar" src="{{ apiUrl }}api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
-                          <div class="format-avatar-right">
-                              <span>{{ user.Name }}</span>
-                              <small> email: {{user.Email}}</small>
-                          </div>
-                      </div>
-                  </mat-option>
-                </mat-optgroup>
-              </mat-select>
-              </mat-form-field>
-              </mat-grid-tile>
-          <mat-grid-tile>
+            <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" formControlName="userInputPicker" pickupTitle="Choose participants"></app-event-dialog-userpicker>
+          </mat-grid-tile>
+            <mat-grid-tile>
             <button mat-raised-button color="primary" (click)="AddUserToTable()">Add</button>
           </mat-grid-tile>
         </mat-grid-list>
 
-        <table mat-table [dataSource]="_eventUsers">
+        <table mat-table [dataSource]="eventUsers">
 
           <ng-container matColumnDef="avatar">
             <th mat-header-cell *matHeaderCellDef> Avatar </th>
@@ -164,8 +132,8 @@
           </ng-container>
           
 
-          <tr mat-header-row *matHeaderRowDef="_displayedColumns; sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: _displayedColumns;">
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
           </tr>
 
         </table>
@@ -181,4 +149,4 @@
 
   </mat-card>
 </section>
-<app-loading [loading]="_loading"></app-loading>
+<app-loading [loading]="loading"></app-loading>

@@ -210,6 +210,9 @@
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
       <Project>{867c7a27-0781-4a5a-8f2f-8251de4eddd6}</Project>
       <Name>FOS.Common</Name>
