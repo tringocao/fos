@@ -386,6 +386,9 @@ export class EventDialogEditComponent implements OnInit {
     console.log(this.userSelect);
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
+    if(!choosingUser){
+      return;
+    }
     console.log('choose User', choosingUser);
 
     var flag = false;

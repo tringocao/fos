@@ -41,6 +41,7 @@ export class EventDialogViewComponent implements OnInit {
   maximumBudget = '';
   dateTimeToClose = '';
   dateToReminder = '';
+  eventTime = '';
   displayedColumns = ['avatar', 'Name', 'Email', 'Order Status'];
   EventTime = '';
   EventStatus = '';
