@@ -53,7 +53,7 @@ export class EventDialogEditComponent implements OnInit {
     private eventFormService: EventFormService,
     private restaurantService: RestaurantService,
     public dialogRef: MatDialogRef<EventDialogEditComponent>,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private orderService: OrderService,
     public dialog: MatDialog
   ) {
@@ -82,13 +82,13 @@ export class EventDialogEditComponent implements OnInit {
   apiUrl = environment.apiUrl;
   eventType:string = 'Open';
   matcher = new MyErrorStateMatcher();
-  _eventSelected = "Open";
-  _createdUser = { id: "" };
-  _dateEventTime: string;
-  _dateTimeToClose: string;
-  _dateToReminder: string;
-  _userSelect = [];
-  _userPickerGroups: userPickerGroup[] = [];
+  eventSelectedBar = "Open";
+  createdUser = { id: "" };
+  dateEventTime: string;
+  dateTimeToClose: string;
+  dateToReminder: string;
+  userSelect = [];
+  userPickerGroups: userPickerGroup[] = [];
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -106,19 +106,19 @@ export class EventDialogEditComponent implements OnInit {
     );
   }
 
-  _eventUsers: EventUser[] = [];
+  eventUsers: EventUser[] = [];
 
-  _hostPickerGroup = [];
+  hostPickerGroup = [];
 
-  _displayedColumns = ["avatar", "name", "email", "order status", "action"];
+  displayedColumns = ["avatar", "name", "email", "order status", "action"];
 
-  _isLoading = false;
-  _isHostLoading = false;
-  _restaurant: DeliveryInfos[];
-  _userHost: userPicker[];
-  _loading: boolean;
-  _eventListItem: Event = null;
-  _enviroment = environment.apiUrl;
+  isLoading = false;
+  isHostLoading = false;
+  restaurant: DeliveryInfos[];
+  userHost: userPicker[];
+  loading: boolean;
+  eventListItem: Event = null;
+  enviroment = environment.apiUrl;
 
   ngOnInit() {
     var self = this;
@@ -141,7 +141,7 @@ export class EventDialogEditComponent implements OnInit {
 
     var newCloseTime = new Date(this.data.CloseTime);
     var closeTime = this.ToDateString(newCloseTime);
-    this._dateTimeToClose = closeTime;
+    this.dateTimeToClose = closeTime;
 
     console.log(this.data.RemindTime)
     if (this.data.RemindTime) {
@@ -160,7 +160,7 @@ export class EventDialogEditComponent implements OnInit {
 
     
     var eventTime = this.ToDateString(newEventDate);
-    this._dateEventTime = eventTime;
+    this.dateEventTime = eventTime;
 
 
     //restaurant
@@ -188,19 +188,19 @@ export class EventDialogEditComponent implements OnInit {
       .get("userInput")
       .valueChanges.pipe(
         debounceTime(300),
-        tap(() => (self._isLoading = true)),
+        tap(() => (self.isLoading = true)),
         switchMap(value =>
           self.restaurantService
             .SearchRestaurantName(value, 4, Number(self.data.ServiceId), 217)
-            .pipe(finalize(() => (self._isLoading = true)))
+            .pipe(finalize(() => (self.isLoading = true)))
         )
       )
       .subscribe(data =>
         self.restaurantService
           .getRestaurants(data.Data, Number(self.data.ServiceId), 217)
           .then(result => {
-            self._restaurant = result;
-            self._isLoading = false;
+            self.restaurant = result;
+            self.isLoading = false;
           })
       );
 
@@ -221,7 +221,7 @@ export class EventDialogEditComponent implements OnInit {
               IsGroup: 0,
               OrderStatus: "Not order"
             };
-            self._eventUsers.push(userOrder);
+            self.eventUsers.push(userOrder);
           }
           this.table.renderRows();
         });
@@ -229,11 +229,11 @@ export class EventDialogEditComponent implements OnInit {
 
     promise.then(function() {
       var p = participants;
-      var e = self._eventUsers;
+      var e = self.eventUsers;
       participants.forEach(element => {
         var flag: Boolean = false;
 
-        self._eventUsers.forEach(element2 => {
+        self.eventUsers.forEach(element2 => {
           if (element.Id === element2.Id) {
             flag = true;
           }
@@ -249,7 +249,7 @@ export class EventDialogEditComponent implements OnInit {
             IsGroup: 0,
             OrderStatus: "Order"
           };
-          self._eventUsers.push(userOrder);
+          self.eventUsers.push(userOrder);
           self.table.renderRows();
         }
       });
@@ -262,11 +262,11 @@ export class EventDialogEditComponent implements OnInit {
 
   UpdateToSharePointEventList(): void {
     var self = this;    
-    if (self._eventUsers.length == 0) {
+    if (self.eventUsers.length == 0) {
       self.toast("Please choose participants!", "Dismiss");
       return;
     }
-    this._loading = true;
+    this.loading = true;
     
     
     var jsonParticipants: GraphUser[] = [];
@@ -274,7 +274,7 @@ export class EventDialogEditComponent implements OnInit {
     console.log("check value", numberParticipant);
 
     let promises: Array<Promise<void>> = [];
-    this._eventUsers.map(user => {
+    this.eventUsers.map(user => {
       let promise = self.eventFormService
         .GroupListMemers(user.Id)
         .toPromise()
@@ -315,13 +315,13 @@ export class EventDialogEditComponent implements OnInit {
       promises.push(promise);
     });
     
-    var eventDate = this._dateEventTime;
-    var dateTimeToClose = this._dateTimeToClose.replace("T", " ");
-    var dateToReminder = this._dateToReminder ? this._dateToReminder.replace("T", " ") : '';
+    var eventDate = this.dateEventTime;
+    var dateTimeToClose = this.dateTimeToClose.replace("T", " ");
+    var dateToReminder = this.dateToReminder ? this.dateToReminder.replace("T", " ") : '';
 
     Promise.all(promises).then(function() {
       var myJSON = JSON.stringify(jsonParticipants);
-      self._eventListItem = {
+      self.eventListItem = {
         Name: self.ownerForm.get("title").value,
         EventId: self.ownerForm.get("title").value,
         Restaurant: self.ownerForm.get("userInput").value.Name,
@@ -343,7 +343,7 @@ export class EventDialogEditComponent implements OnInit {
         IsMyEvent: null,
         Status: "Opened"
       };
-      self._loading = false;
+      self.loading = false;
       self.openDialog();
       debugger;
       // self.eventFormService
@@ -367,10 +367,10 @@ export class EventDialogEditComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (self._eventListItem) {
-          self._loading = true;
+        if (self.eventListItem) {
+          self.loading = true;
           self.eventFormService
-            .UpdateEventListItem(self.data.EventId, self._eventListItem)
+            .UpdateEventListItem(self.data.EventId, self.eventListItem)
             .toPromise()
             .then(result => {
               console.log("Update", result);
@@ -389,7 +389,7 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   toast(message: string, action: string) {
-    this._snackBar.open(message, action, {
+    this.snackBar.open(message, action, {
       duration: 2000
     });
   }
@@ -398,19 +398,22 @@ export class EventDialogEditComponent implements OnInit {
     var self = this;
     console.log("Nhan add card");
 
-    console.log(this._userSelect);
+    console.log(this.userSelect);
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
+    if(!choosingUser){
+      return;
+    }
     console.log('choose User', choosingUser);
 
     var flag = false;
-    self._eventUsers.forEach(element => {
+    self.eventUsers.forEach(element => {
       if (element.Name === choosingUser.Name) {
         flag = true
       }
     });
     if (flag === false) {
-      this._eventUsers.push({
+      this.eventUsers.push({
         Name: choosingUser.Name,
         Email: choosingUser.Email,
         Img: "",
@@ -424,9 +427,9 @@ export class EventDialogEditComponent implements OnInit {
 
   DeleteUserInTable(name: string): void {
     console.log("xoa ", name);
-    for (var j = 0; j < this._eventUsers.length; j++) {
-      if (name == this._eventUsers[j].Name) {
-        this._eventUsers.splice(j, 1);
+    for (var j = 0; j < this.eventUsers.length; j++) {
+      if (name == this.eventUsers[j].Name) {
+        this.eventUsers.splice(j, 1);
 
         j--;
         this.table.renderRows();

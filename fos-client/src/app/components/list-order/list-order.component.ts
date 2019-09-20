@@ -35,7 +35,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
   ];
   dataSource: MatTableDataSource<Event>;
   isLoading = true;
-  currency = 'VND';
+  currency = 'đ';
   userId: string;
   allOrder: Event[];
   myOrder: Event[];
@@ -239,7 +239,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   toStandardDate(date: number) {
-    return moment(date).format('DD/MM/YYYY HH:mm');
+    return moment(date).format('MM/DD/YYYY HH:mm');
   }
 
   remind(event: any, element: Event) {
@@ -252,10 +252,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   formatCurrency(value: string) {
-    return (
-      Number(value)
-        .toFixed(0)
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' '
-    );
+    return Number(value)
+      .toFixed(0)
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
   }
 }

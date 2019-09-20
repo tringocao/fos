@@ -79,7 +79,7 @@ export class EventDialogComponent implements OnInit {
     private eventFormService: EventFormService,
     private http: HttpClient,
     private restaurantService: RestaurantService,
-    private _snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -128,13 +128,13 @@ export class EventDialogComponent implements OnInit {
   apiUrl = environment.apiUrl;
   eventType:string = 'Open';
   matcher = new MyErrorStateMatcher();
-  _eventSelected = "Open";
-  _createdUser = { id: "" };
-  // _dateEventTime: string;
-  // _dateTimeToClose: string;
-  // _dateToReminder: string;
-  _userSelect = [];
-  _userPickerGroups: userPickerGroup[] = [];
+  eventSelected = "Open";
+  createdUser = { id: "" };
+  dateEventTime: string;
+  dateTimeToClose: string;
+  dateToReminder: string;
+  userSelect = [];
+  userPickerGroups: userPickerGroup[] = [];
   isInvalidCloseTime: boolean;
   isInvalidRemindTime: boolean;
 
@@ -150,23 +150,23 @@ export class EventDialogComponent implements OnInit {
     );
   }
 
-  _eventUsers: EventUser[] = [];
+  eventUsers: EventUser[] = [];
 
-  _hostPickerGroup = [];
+  hostPickerGroup = [];
 
-  _displayedColumns = ["avatar", "name", "email", "order status", "action"];
+  displayedColumns = ["avatar", "name", "email", "order status", "action"];
 
-  _isLoading = false;
-  _isHostLoading = false;
-  _isPickerLoading = false;
-  _restaurant: DeliveryInfos[];
-  _userHost: userPicker[];
-  _userPicker: userPicker[];
-  _office365User: userPicker[] = [];
-  _office365Group: userPicker[] = [];
-  _loading: boolean;
-  _eviroment = environment.apiUrl;
-  _listPickedUser: userPicker[];
+  isLoading = false;
+  isHostLoading = false;
+  isPickerLoading = false;
+  restaurant: DeliveryInfos[];
+  userHost: userPicker[];
+  userPicker: userPicker[];
+  office365User: userPicker[] = [];
+  office365Group: userPicker[] = [];
+  loading: boolean;
+  eviroment = environment.apiUrl;
+  listPickedUser: userPicker[];
 
   displayFn(user: DeliveryInfos) {
     if (user) {
@@ -192,18 +192,18 @@ export class EventDialogComponent implements OnInit {
 
   ngOnInit() {
     var self = this;
-    // this._dateEventTime = this.ToDateString(new Date());
-    // this._dateTimeToClose = this.ToDateString(new Date());
-    // this._dateToReminder = this.ToDateString(new Date());
+    // this.dateEventTime = this.ToDateString(new Date());
+    // this.dateTimeToClose = this.ToDateString(new Date());
+    // this.dateToReminder = this.ToDateString(new Date());
     self.ownerForm.get("MaximumBudget").setValue(0);
     self.ownerForm.get("EventType").setValue('Open');
     //get currentUser
-    self._loading = true;
+    self.loading = true;
     self.eventFormService
       .getCurrentUser()
       .toPromise()
       .then(value => {
-        self._createdUser = { id: value.Data.Id };
+        self.createdUser = { id: value.Data.Id };
         var dataSourceTemp: userPicker = {
           Name: value.Data.DisplayName,
           Email: value.Data.Mail,
@@ -215,7 +215,7 @@ export class EventDialogComponent implements OnInit {
         console.log("curentuser", dataSourceTemp);
         self.ownerForm.get("userInputHost").setValue(dataSourceTemp);
 
-        self._eventUsers.push({
+        self.eventUsers.push({
           Name: dataSourceTemp.Name,
           Email: dataSourceTemp.Email,
           Img: "",
@@ -224,7 +224,7 @@ export class EventDialogComponent implements OnInit {
           OrderStatus: "Not Order"
         });
         self.table.renderRows();
-        self._loading = false;
+        self.loading = false;
       });
 
       self.ownerForm.get("EventType").setValue("Open");
@@ -233,26 +233,26 @@ export class EventDialogComponent implements OnInit {
       .get("userInput")
       .valueChanges.pipe(
         debounceTime(300),
-        tap(() => (self._isLoading = true)),
+        tap(() => (self.isLoading = true)),
         switchMap(value =>
           self.restaurantService
             .SearchRestaurantName(value, 4, self.data.idService, 217)
-            .pipe(finalize(() => (self._isLoading = true)))
+            .pipe(finalize(() => (self.isLoading = true)))
         )
       )
       .subscribe(data =>
         self.restaurantService
           .getRestaurants(data.Data, self.data.idService, 217)
           .then(result => {
-            self._restaurant = result;
-            self._isLoading = false;
+            self.restaurant = result;
+            self.isLoading = false;
           })
       );
   }
 
   // public OnCancel = () => {
   //   console.log('click cancel');
-  //   if (this.ownerForm.valid && this._eventUsers.length > 0) {
+  //   if (this.ownerForm.valid && this.eventUsers.length > 0) {
   //     console.log('pass');
   //   }
   // };
@@ -268,9 +268,9 @@ export class EventDialogComponent implements OnInit {
 
   DeleteUserInTable(name: string): void {
     console.log("xoa ", name);
-    for (var j = 0; j < this._eventUsers.length; j++) {
-      if (name == this._eventUsers[j].Name) {
-        this._eventUsers.splice(j, 1);
+    for (var j = 0; j < this.eventUsers.length; j++) {
+      if (name == this.eventUsers[j].Name) {
+        this.eventUsers.splice(j, 1);
 
         j--;
         this.table.renderRows();
@@ -282,19 +282,22 @@ export class EventDialogComponent implements OnInit {
     var self = this;
     console.log("Nhan add card");
 
-    console.log(self._userSelect);
+    console.log(self.userSelect);
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
-    console.log('choose User', choosingUser);
 
+    if(!choosingUser){
+      return;
+    }
+    console.log('choose User', choosingUser);
     var flag = false;
-    self._eventUsers.forEach(element => {
+    self.eventUsers.forEach(element => {
       if (element.Name === choosingUser.Name) {
         flag = true
       }
     });
     if (flag === false) {
-      self._eventUsers.push({
+      self.eventUsers.push({
         Name: choosingUser.Name,
         Email: choosingUser.Email,
         Img: "",
@@ -308,18 +311,18 @@ export class EventDialogComponent implements OnInit {
 
   SaveToSharePointEventList(): void {
     var self = this;
-    if (self._eventUsers.length == 0) {
+    if (self.eventUsers.length == 0) {
       alert("Please choose participants!");
       return;
     }
    
-    self._loading = true;
+    self.loading = true;
     
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
 
     let promises: Array<Promise<void>> = [];
-    this._eventUsers.map(user => {
+    this.eventUsers.map(user => {
       let promise = this.eventFormService
         .GroupListMemers(user.Id)
         .toPromise()
@@ -387,7 +390,7 @@ export class EventDialogComponent implements OnInit {
         RestaurantId: self.ownerForm.get("userInput").value.RestaurantId,
         ServiceId: self.data.idService.toString(),
         DeliveryId: self.ownerForm.get("userInput").value.DeliveryId,
-        CreatedBy: self._createdUser.id,
+        CreatedBy: self.createdUser.id,
         HostId: self.ownerForm.get("userInputHost").value.Id,
         EventDate: new Date(eventDate),
         EventParticipantsJson: myJSON,
@@ -411,7 +414,7 @@ export class EventDialogComponent implements OnInit {
     });
   }
   toast(message: string, action: string) {
-    this._snackBar.open(message, action, {
+    this.snackBar.open(message, action, {
       duration: 2000
     });
   }

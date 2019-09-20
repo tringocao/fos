@@ -17,7 +17,9 @@ import { FavoriteRestaurant } from 'src/app/models/favorite-restaurant';
 import { DeliveryInfos } from 'src/app/models/delivery-infos';
 import { User } from 'src/app/models/user';
 import { Restaurant } from 'src/app/models/restaurant';
-// import { FavoriteRestaurant } from '../../models/favoriteRestaurant';
+import * as moment from 'moment';
+
+moment.locale('vi');
 
 @Component({
   selector: 'app-list-restaurant',
@@ -39,8 +41,8 @@ export class ListRestaurantComponent implements OnInit {
     'addEvent'
   ];
   dataSource: any = new MatTableDataSource<DeliveryInfos>([]);
-  favoriteOnlyDataSource:any = new MatTableDataSource<DeliveryInfos>([]);
-  baseDataSource:any = new MatTableDataSource<DeliveryInfos>([]);
+  favoriteOnlyDataSource: any = new MatTableDataSource<DeliveryInfos>([]);
+  baseDataSource: any = new MatTableDataSource<DeliveryInfos>([]);
   load: boolean;
   favoriteRestaurants: string[];
   favoriteOnly: boolean;
@@ -131,7 +133,7 @@ export class ListRestaurantComponent implements OnInit {
   // }
 
   removeFromFavorite(event, restaurantId: string) {
-    console.log("remove", this.dataSource.data);
+    console.log('remove', this.dataSource.data);
     this.dataSource.data.forEach(data => {
       if (data.RestaurantId == restaurantId) {
         data.IsFavorite = false;
@@ -150,17 +152,16 @@ export class ListRestaurantComponent implements OnInit {
 
   getRestaurant($event) {
     if ($event.isChecked) {
-      this.favoriteOnlyDataSource.data = this.dataSource.data && this.dataSource.data.filter(
-        restaurant => restaurant.IsFavorite
-      );
+      this.favoriteOnlyDataSource.data =
+        this.dataSource.data &&
+        this.dataSource.data.filter(restaurant => restaurant.IsFavorite);
       this.favoriteOnlyDataSource.sort = this.sort;
       this.favoriteOnlyDataSource.paginator = this.paginator;
       this.baseDataSource = this.dataSource;
       this.dataSource = this.favoriteOnlyDataSource;
       // console.log(this.dataSource)
-      this.toast("Filtered by favorite! ", "Dismiss");
-    } 
-    else {
+      this.toast('Filtered by favorite! ', 'Dismiss');
+    } else {
       this.dataSource = this.baseDataSource;
     }
     console.log($event.isChecked);
@@ -172,41 +173,53 @@ export class ListRestaurantComponent implements OnInit {
       this.restaurantService
         .getRestaurantIds($event.topic, $event.keyword, this.idService, 217)
         .then(response => {
-          this.restaurantService.getRestaurants(response, this.idService, 217).then(result => {
-            var dataSourceTemp = [];
-            dataSourceTemp = result.map(item => {
-              if (this.favoriteRestaurants.includes(item.RestaurantId)) {
-                item.IsFavorite = true;
-              }
-              return item;
-            });
-            // console.log(dataSourceTemp)
-            // this.dataSource.data = dataSourceTemp.filter(item => {
-            //   if ($event.isChecked) {
-            //     return item.IsFavorite;
-            //   }
-            //   return true;
-            // });
-            this.dataSource.data = dataSourceTemp;
-            console.log(this.dataSource.data);
-            console.log(dataSourceTemp);
-            // console.log(
-            //   dataSourceTemp.filter(
-            //     (restaurant: Restaurant) => restaurant.stared
-            //   )
-            // );
-            // this.dataSource.data = this.favoriteOnly
-            //   ? dataSourceTemp.filter(
-            //       (restaurant: Restaurant) => restaurant.stared
-            //     )
-            //   : dataSourceTemp;
+          this.restaurantService
+            .getRestaurants(response, this.idService, 217)
+            .then(result => {
+              var dataSourceTemp = [];
+              dataSourceTemp = result.map(item => {
+                if (this.favoriteRestaurants.includes(item.RestaurantId)) {
+                  item.IsFavorite = true;
+                }
+                return item;
+              });
+              // console.log(dataSourceTemp)
+              // this.dataSource.data = dataSourceTemp.filter(item => {
+              //   if ($event.isChecked) {
+              //     return item.IsFavorite;
+              //   }
+              //   return true;
+              // });
+              this.dataSource.data = dataSourceTemp;
+              console.log(this.dataSource.data);
+              console.log(dataSourceTemp);
+              // console.log(
+              //   dataSourceTemp.filter(
+              //     (restaurant: Restaurant) => restaurant.stared
+              //   )
+              // );
+              // this.dataSource.data = this.favoriteOnly
+              //   ? dataSourceTemp.filter(
+              //       (restaurant: Restaurant) => restaurant.stared
+              //     )
+              //   : dataSourceTemp;
 
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            this.load = false;
-          });
+              this.dataSource.sort = this.sort;
+              this.dataSource.paginator = this.paginator;
+              this.load = false;
+            });
           this.changeDetectorRefs.detectChanges();
         });
+    }
+  }
+  formatTime(operating: string) {
+    if (operating.length > 1) {
+      const time = operating.split('-');
+      const open = moment(time[0], 'HH:mm:ss').format('HH:mm');
+      const close = moment(time[1], 'HH:mm:ss').format('HH:mm');
+      return open + ' - ' + close;
+    } else {
+      return '-';
     }
   }
 }

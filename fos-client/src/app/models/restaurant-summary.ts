@@ -18,6 +18,7 @@
         public RelativePercent: number = 0;   
         public RestaurantId: string = null;   
         public DeliveryId: string = null;   
-        public ServiceId: string = null;
+        public ServiceId: string = null;   
+        public AppearTime: number = 0;
     }
          
