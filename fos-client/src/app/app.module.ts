@@ -41,11 +41,14 @@ import {
   DlDateTimeDateModule,
   DlDateTimePickerModule
 } from 'angular-bootstrap-datetimepicker';
+import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './components/search/search.component';
+
 
 import {
   MatButtonModule,
@@ -91,6 +94,7 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
 import { SummaryListComponent } from './components/summary-list/summary-list.component';
 import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
 import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
+import { DatetimepickerComponent } from './components/datetimepicker/datetimepicker/datetimepicker.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +133,8 @@ import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog
     SummaryListComponent,
     SummaryTabComponent,
     SummaryDishesDialogComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    DatetimepickerComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -182,7 +187,8 @@ import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog
     MatTooltipModule,
     MatSlideToggleModule,
     MatRadioModule,
-    LightboxModule ,
+    LightboxModule,
+    MaterialTimePickerModule,
     MatDatepickerModule, // <----- import(must)
     MatNativeDateModule // <----- import for date formating(optional)
   ],

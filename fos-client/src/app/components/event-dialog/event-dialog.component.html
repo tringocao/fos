@@ -73,8 +73,9 @@
           <input matInput type="number" placeholder="Maximum Budget" [(ngModel)]="_maximumBudget" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
 
-        <div class="event-data-time">
-        <mat-form-field class="full-width">
+        <div class="event-data-time full-width">
+          <app-datetimepicker  [formGroup]="ownerForm" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
+        <!-- <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
           <input required id="party" matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="_dateEventTime"
             [ngModelOptions]="{standalone: true}"
@@ -83,7 +84,7 @@
             >
             <mat-error *ngIf="HasError('dateTimeEvent', 'required')">Event title is required.</mat-error>
             <mat-error *ngIf="HasError('dateTimeEvent', 'datimeRequired')">Event time is required</mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field class="full-width">
           <mat-label>Time To Close</mat-label>
