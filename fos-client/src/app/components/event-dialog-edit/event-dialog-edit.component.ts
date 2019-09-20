@@ -56,7 +56,22 @@ export class EventDialogEditComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private orderService: OrderService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.ownerForm = new FormGroup({
+      title: new FormControl("", [Validators.required]),
+      host: new FormControl(""),
+      dateTimeToClose: new FormControl(''),
+      dateTimeEvent: new FormControl(''),
+      dateTimeRemind: new FormControl(''),
+      participants: new FormControl(""),
+      restaurant: new FormControl(""),
+      userInput: new FormControl(""),
+      userInputHost: new FormControl(""),
+      userInputPicker: new FormControl(""),
+      EventType: new FormControl(""),
+      MaximumBudget: new FormControl(""),
+    });
+  }
   //global
   apiUrl = environment.apiUrl;
   matcher = new MyErrorStateMatcher();
@@ -100,21 +115,9 @@ export class EventDialogEditComponent implements OnInit {
 
   ngOnInit() {
     var self = this;
-    self.ownerForm = new FormGroup({
-      title: new FormControl("", [Validators.required]),
-      host: new FormControl(""),
-      dateTimeToClose: new FormControl(''),
-      dateTimeEvent: new FormControl(''),
-      dateTimeRemind: new FormControl(''),
-      participants: new FormControl(""),
-      restaurant: new FormControl(""),
-      userInput: new FormControl(""),
-      userInputHost: new FormControl(""),
-      userInputPicker: new FormControl(""),
-      EventType: new FormControl(""),
-      MaximumBudget: new FormControl(""),
-    });
+    
 
+    self.ownerForm.get("EventType").setValue(self.data.EventType);
     self.ownerForm.get("title").setValue(self.data.Name);
     self.ownerForm.get("EventType").setValue(self.data.EventType);
     self.ownerForm.get("MaximumBudget").setValue(self.data.MaximumBudget);

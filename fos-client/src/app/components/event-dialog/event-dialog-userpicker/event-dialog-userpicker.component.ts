@@ -28,7 +28,7 @@ export interface userPicker {
 })
 
 export class EventDialogUserpickerComponent implements OnInit {
-  @Output() dathangEvent = new EventEmitter<Array<userPicker>>();
+  @Output() ListenChildComponentEvent = new EventEmitter<Array<userPicker>>();
   @Input() formGroup: FormGroup;
   @Input() _pickupTitle: String;
   @Input() _formControlName: string;
@@ -58,7 +58,7 @@ export class EventDialogUserpickerComponent implements OnInit {
             .pipe(finalize(() => {
               
               var finalCode = this.formGroup.get("userInputPicker").value;
-              this.dathangEvent.emit(finalCode);
+              this.ListenChildComponentEvent.emit(finalCode);
               this._isHostLoading = false;
             }))
         )

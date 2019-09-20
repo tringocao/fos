@@ -182,7 +182,7 @@ export class EventDialogComponent implements OnInit {
     // this._dateTimeToClose = this.ToDateString(new Date());
     // this._dateToReminder = this.ToDateString(new Date());
     self.ownerForm.get("MaximumBudget").setValue(0);
-
+    self.ownerForm.get("EventType").setValue('Open');
     //get currentUser
     self._loading = true;
     self.eventFormService
