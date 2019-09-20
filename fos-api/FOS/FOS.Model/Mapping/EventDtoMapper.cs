@@ -1,4 +1,4 @@
-﻿using FOS.Model.Dto;
+﻿using FOS.Model.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,9 @@ namespace FOS.Model.Mapping
     public interface IEventDtoMapper
     {
         Event ListItemToEventModel(ListItem element);
-        Model.Domain.Event ToModel(Dto.Event eventDto);
+        Event DtoToDomain(Model.Dto.Event eventDto);
+        Dto.Event DomainToDto(Domain.Event eventDomain);
+        IEnumerable<Dto.Event> ListDomainToDto(IEnumerable<Domain.Event> eventDomain);
     }
     public class EventDtoMapper : IEventDtoMapper
     {
@@ -56,9 +58,9 @@ namespace FOS.Model.Mapping
 
             return eventModel;
         }
-        public Model.Domain.Event ToModel(Dto.Event eventDto)
+        public Event DtoToDomain(Model.Dto.Event eventDto)
         {
-            return new Domain.Event()
+            return new Event()
             {
                 HostId = eventDto.HostId,
                 HostName = eventDto.HostName,
@@ -82,7 +84,51 @@ namespace FOS.Model.Mapping
                 Status = eventDto.Status
             };
         }
+        public Dto.Event DomainToDto(Domain.Event eventDomain)
+        {
+            Dto.EventAction domainEventAction = null;
 
+            if (eventDomain.Action != null)
+            {
+                domainEventAction = new Dto.EventAction()
+                {
+                    CanCloseEvent = eventDomain.Action.CanCloseEvent,
+                    CanEditEvent = eventDomain.Action.CanEditEvent,
+                    CanMakeOrder = eventDomain.Action.CanMakeOrder,
+                    CanSendRemind = eventDomain.Action.CanSendRemind,
+                    CanViewEvent = eventDomain.Action.CanViewEvent,
+                    CanViewOrder = eventDomain.Action.CanViewOrder
+                };
+            }
+            
+            return new Dto.Event()
+            {
+                HostId = eventDomain.HostId,
+                HostName = eventDomain.HostName,
+                Action = domainEventAction,
+                Category = eventDomain.Category,
+                CloseTime = eventDomain.CloseTime,
+                RemindTime = eventDomain.RemindTime,
+                CreatedBy = eventDomain.CreatedBy,
+                DeliveryId = eventDomain.DeliveryId,
+                Restaurant = eventDomain.Restaurant,
+                RestaurantId = eventDomain.RestaurantId,
+                IsMyEvent = eventDomain.IsMyEvent,
+                EventDate = eventDomain.EventDate,
+                EventId = eventDomain.EventId,
+                EventParticipantsJson = eventDomain.EventParticipantsJson,
+                EventType = eventDomain.EventType,
+                MaximumBudget = eventDomain.MaximumBudget,
+                Name = eventDomain.Name,
+                Participants = eventDomain.Participants,
+                ServiceId = eventDomain.ServiceId,
+                Status = eventDomain.Status
+            };
+        }
+        public IEnumerable<Dto.Event> ListDomainToDto (IEnumerable<Domain.Event> eventDomain)
+        {
+            return eventDomain.Select(c => DomainToDto(c)).ToList();
+        }
         private string ElementAttributeToString(Object element)
         {
             return element != null ? element.ToString() : "";

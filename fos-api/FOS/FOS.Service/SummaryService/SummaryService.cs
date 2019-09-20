@@ -19,6 +19,7 @@ using FOS.Services.EventServices;
 using System.Linq;
 using FOS.Model.Domain;
 using Newtonsoft.Json;
+using FOS.Common.Constants;
 
 namespace FOS.Services.SummaryService
 {
@@ -125,9 +126,11 @@ namespace FOS.Services.SummaryService
         public IEnumerable<Model.Domain.RestaurantSummary> GetRestaurantSummary()
         {
             var allEvent = _eventService.GetAllEvent("");
+            var allEventWithoutError = allEvent.Where(e => e.Status != EventStatus.Error).ToList();
             var allSummary = new List<Model.Domain.RestaurantSummary>();
 
-            foreach(var item in allEvent){
+            foreach(var item in allEventWithoutError)
+            {
                 var summary = new Model.Domain.RestaurantSummary
                 {
                     Restaurant = item.Restaurant,
@@ -175,9 +178,10 @@ namespace FOS.Services.SummaryService
         public IEnumerable<Model.Domain.DishesSummary> GetDishesSummary(string restaurantId, string deliveryId, string serviceId)
         {
             var allOrder = _orderRepository.GetOrdersOfSpecificRestaurant(restaurantId, deliveryId);
+            var allOrderWithoutError = GetAllOrderWithoutErrorEvent(allOrder);
             var allSummary = new List<Model.Domain.DishesSummary>();
 
-            foreach(var element in allOrder)
+            foreach(var element in allOrderWithoutError)
             {
                 var food = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, string>>>(element.FoodDetail);
                 if(food != null && food.Count > 0)
@@ -226,6 +230,17 @@ namespace FOS.Services.SummaryService
                 sortedSummary[i].Rank = i + 1;
             }
             return sortedSummary;
+        }
+        private IEnumerable<Repositories.DataModel.Order> GetAllOrderWithoutErrorEvent(IEnumerable<Repositories.DataModel.Order> orders)
+        {
+            if(orders.Count() > 0)
+            {
+                var allEvent = _eventService.GetAllEvent("");
+                var errorEvent = allEvent.Where(e => e.Status == EventStatus.Error).Select(e => e.EventId).ToList();
+
+                return orders.Where(o => !errorEvent.Contains(o.IdEvent)).ToList();
+            }
+            return new List<Repositories.DataModel.Order>();
         }
     }
 }

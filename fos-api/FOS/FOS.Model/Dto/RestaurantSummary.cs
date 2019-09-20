@@ -15,5 +15,6 @@ namespace FOS.Model.Dto
         public string RestaurantId { get; set; }
         public string DeliveryId { get; set; }
         public string ServiceId { get; set; }
+        public int AppearTime { get; set; }
     }
 }

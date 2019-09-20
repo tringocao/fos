@@ -105,6 +105,7 @@
     <Compile Include="Domain\DishesSummary.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
     <Compile Include="Domain\Event.cs" />
+    <Compile Include="Domain\EventAction.cs" />
     <Compile Include="Domain\EventList.cs" />
     <Compile Include="Domain\EventListItem.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Domain\Token.cs" />
     <Compile Include="Domain\TokenResource.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\UserNotOrder.cs" />
     <Compile Include="Domain\UserNotOrderEmail.cs" />
     <Compile Include="Dto\Category.cs" />
     <Compile Include="Dto\CategoryGroup.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Mapping\RestaurantDetailDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantSummaryDtoMapper.cs" />
     <Compile Include="Mapping\UserDtoMapper.cs" />
+    <Compile Include="Mapping\UserNotOrderDtoMapper.cs" />
     <Compile Include="Mapping\UserNotOrderEmailDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ApiUtil.cs" />
@@ -187,6 +190,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dto\..\..\..\..\fos-client\src\app\models\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +353,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\delivery-infos.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\DeliveryInfos.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\dishes-summary.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\DishesSummary.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\dishes-summary.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
@@ -781,6 +789,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant-detail.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\RestaurantDetail.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant-summary.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\RestaurantSummary.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant-summary.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

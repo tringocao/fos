@@ -44,7 +44,13 @@ import { DishesSummary } from './../../models/dishes-summary';
 export class SummaryDishesDialogComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Rank', 'Food', 'Percent', 'RelativePercent'];
+  displayedColumns: string[] = [
+    'Rank',
+    'Food',
+    'Percent',
+    'AppearTime',
+    'RelativePercent'
+  ];
   dataSource: MatTableDataSource<DishesSummary>;
   isLoading = true;
 
