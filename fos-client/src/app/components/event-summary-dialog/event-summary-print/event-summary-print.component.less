@@ -1,0 +1,56 @@
+@import '../../../../styles/global/variables.less';
+
+
+.container {
+  overflow: hidden;
+  width: auto;
+  @media @desktop {
+    margin: 1rem 10rem;
+  }
+  @media @mobile {
+    margin: 1rem 1rem;
+  }
+}
+.event-summary {
+
+  .grid-card {
+    height: 300px;
+    max-height: 300rem;
+  }
+
+  table {
+    width: 100%;
+  }
+  
+  .card {
+    width: 80%;
+    box-sizing: border-box;
+    box-shadow: none;
+    border-width: thin;
+    border-color: black;
+    border-style: solid;
+  }
+  .grid-tile-row
+  {
+    justify-content: flex-start !important ;
+    align-items: flex-start !important;
+  }
+  .text-inside-grid {
+    width: 100%; display: flex; align-items: flex-start;
+  }
+  .label-inside-grid {
+    .text-inside-grid;
+    font-size: 1.5rem
+  }
+  .mat-grid-tile {
+    overflow:hidden;
+    padding: 10px;
+  }
+  .mat-cell {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .mat-header-cell {
+    .mat-cell
+  }
+}

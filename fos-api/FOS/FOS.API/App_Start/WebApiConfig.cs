@@ -17,7 +17,7 @@ namespace FOS.API
         {
             // Web API configuration and services
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("multipart/form-data"));
-            // Web API routesD:\new fos\fos-api\FOS\FOS.API\App_Start\WebApiConfig.cs
+            // Web API route
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -26,7 +26,7 @@ namespace FOS.API
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.EnableCors(new EnableCorsAttribute("https://localhost:4200", "*", "*") { SupportsCredentials = true });
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*") { SupportsCredentials = true });
             // resolve customauth
             config.Filters.Add((IAuthenticationFilter)UnityConfig.Container.Resolve<ICustomAuthentication>());
             //config.MessageHandlers.Add(new CrossDomainHandler());
