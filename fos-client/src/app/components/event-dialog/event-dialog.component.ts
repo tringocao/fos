@@ -271,8 +271,11 @@ export class EventDialogComponent implements OnInit {
     console.log(self.userSelect);
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
-    console.log('choose User', choosingUser);
 
+    if(!choosingUser){
+      return;
+    }
+    console.log('choose User', choosingUser);
     var flag = false;
     self.eventUsers.forEach(element => {
       if (element.Name === choosingUser.Name) {
@@ -345,6 +348,7 @@ export class EventDialogComponent implements OnInit {
         });
       promises.push(promise);
     });    
+    debugger;
 
     var eventDate = this.dateEventTime;
     console.log("get eventDate: ", eventDate);

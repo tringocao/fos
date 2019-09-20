@@ -1,137 +1,31 @@
-<!-- <p>event-dialog works!</p> -->
-<!-- <h2>{{ data.restaurant }}</h2> -->
-<!-- <h2>{{data.delivery_id}}</h2>
-<h2>{{data.id}}</h2> -->
+<mat-list>
+    <mat-list-item><h2>View event</h2></mat-list-item>
+    <mat-list-item>Event Title</mat-list-item>
+    <mat-list-item><h4>{{eventTitle}}</h4></mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>Restaurant</mat-list-item>
+    <mat-list-item><h4>{{eventRestaurant}}</h4></mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>Host</mat-list-item>
+    <mat-list-item><h4>{{eventHost}}</h4></mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>Maximum Budget</mat-list-item>
+    <mat-list-item><h4>{{maximumBudget}}</h4></mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>Event Time</mat-list-item>
+    <mat-list-item><h4>{{EventTime}}</h4></mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>Time To Close</mat-list-item>
+    <mat-list-item><h4>{{dateTimeToClose}}</h4></mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>Time To Reminder</mat-list-item>
+    <mat-list-item><h4>{{dateToReminder}}</h4></mat-list-item>
+    <mat-divider></mat-divider>
 
+    <mat-list-item></mat-list-item>
+  </mat-list>
 <section fxLayout="row wrap" fxLayoutAlign="center center">
   <mat-card fxFlex="500px" fxFlex.xs="100%">
-    <mat-card-title>View event</mat-card-title>
-
-    <!-- <form
-      [formGroup]="ownerForm"
-      autocomplete="off"
-      novalidate
-      (ngSubmit)="createOwner(ownerForm.value)"
-    > -->
-    <div class="tp-container">
-      <mat-form-field>
-        <input
-          [disabled]="true"
-          matInput
-          type="text"
-          placeholder="EventTitle"
-          id="title"
-          [(ngModel)]="eventTitle"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          [disabled]="true"
-          type="text"
-          placeholder="Host"
-          id="title"
-          [(ngModel)]="eventHost"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          [disabled]="true"
-          type="text"
-          placeholder="Restaurant"
-          id="title"
-          [(ngModel)]="eventRestaurant"
-        />
-      </mat-form-field>
-
-      <!-- <mat-form-field class="full-width">
-          <mat-select placeholder="Restaurant" formControlName="restaurant" (selectionChange)="changeRestaurant($event)">
-            <mat-option *ngFor="let restaurant of restaurantPickerGroup" [value]="restaurant">
-              {{restaurant.name}}
-
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
-
-      <mat-form-field class="full-width">
-        <mat-label>Maximum Budget</mat-label>
-        <input
-          matInput
-          [disabled]="true"
-          type="number"
-          placeholder="Maximum Budget"
-          [(ngModel)]="maximumBudget"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <mat-label>Event Time</mat-label>
-        <input
-          required
-          [disabled]="true"
-          id="party"
-          matInput
-          [(ngModel)]="EventTime"
-          formcontrolname="EventTime"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <mat-label>Event Type</mat-label>
-        <input
-          required
-          [disabled]="true"
-          id="party"
-          matInput
-          [(ngModel)]="EventType"
-          formcontrolname="EventType"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <mat-label>Event Status</mat-label>
-        <input
-          required
-          [disabled]="true"
-          id="party"
-          matInput
-          [(ngModel)]="EventStatus"
-          formcontrolname="EventStatus"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <mat-label>Time To Close</mat-label>
-        <input
-          required
-          [disabled]="true"
-          id="party"
-          matInput
-          [(ngModel)]="dateTimeToClose"
-          formcontrolname="dateTimeToClose"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <mat-label>Time To Reminder</mat-label>
-        <input
-          id="party"
-          matInput
-          [disabled]="true"
-          name="partydate"
-          [(ngModel)]="dateToReminder"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </mat-form-field>
-    </div>
     <table mat-table [dataSource]="eventusers">
       <ng-container matColumnDef="avatar">
         <th mat-header-cell *matHeaderCellDef>Avatar</th>
