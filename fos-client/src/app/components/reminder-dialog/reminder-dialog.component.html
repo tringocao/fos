@@ -1,6 +1,6 @@
 <div class="reminder-dialog">
   <div class="dialog-header">
-    <h2 mat-dialog-title>{{data.header}}</h2>
+    <h2>{{ data.header }}</h2>
   </div>
   <div mat-dialog-content>
     <table mat-table [dataSource]="dataSource" *ngIf="userNotOrder.length > 0">
@@ -32,19 +32,28 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <mat-paginator
-      *ngIf="userNotOrder.length > 0"
-      showFirstLastButtons
-      [pageSize]="5"
-      [hidePageSize]="true"
-    ></mat-paginator>
-
-    <div *ngIf="userNotOrder.length === 0">
-      <p *ngIf="!data.isClosedEvent">All user ordered</p>
-      <span class="close-event-confirm" *ngIf="data.isClosedEvent"
-        >All the user already made order. Do you want to close event?</span
+    <div *ngIf="userNotOrder.length === 0; else elseBlock">
+      <h4 *ngIf="!data.isClosedEvent" class="all-user-ordered">
+        All the user already made order
+      </h4>
+      <h4
+        class="close-event-confirm"
+        *ngIf="data.isClosedEvent"
+        class="all-user-ordered"
       >
+        All the user already made order. Do you want to close event?
+      </h4>
     </div>
+    <ng-template #elseBlock>
+      <h4 *ngIf="!data.isClosedEvent">
+        The email reminder will send to all user in this list. Do you want to
+        send?
+      </h4>
+      <h4 *ngIf="data.isClosedEvent">
+        Some of participants in list is not make order yet. Are you sure to
+        close this event?
+      </h4>
+    </ng-template>
   </div>
 
   <div class="dialog-actions" mat-dialog-actions>
@@ -54,8 +63,7 @@
       mat-raised-button
       (click)="remind($event)"
       color="primary"
-      cdkFocusInitial
-      [disabled]="userNotOrder.length == 0 || isReminding"
+      [disabled]="userNotOrder.length == 0"
     >
       Send
     </button>
@@ -64,7 +72,6 @@
       class="remind"
       mat-raised-button
       (click)="closeEvent($event)"
-      cdkFocusInitial
       color="warn"
     >
       <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}"

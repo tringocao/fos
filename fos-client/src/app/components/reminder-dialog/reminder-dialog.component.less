@@ -1,23 +1,21 @@
 .reminder-dialog {
   position: relative;
   .dialog-header {
-    padding-left: 1rem;
-    padding-bottom: 1rem;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     h2 {
+      margin-top: 0;
+    }
+    h3 {
       margin: 0;
     }
-    .close {
-      margin-left: auto;
-    }
   }
-  p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  h4 {
+    margin-bottom: 0;
+  }
+  .all-user-ordered {
+    margin-top: 0;
   }
   .mat-list {
     .mat-list-item {
@@ -43,5 +41,5 @@
   a {
     color: inherit;
     text-decoration: inherit;
-   }
+  }
 }

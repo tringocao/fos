@@ -16,7 +16,7 @@ namespace FOS.Repositories.Repositories
         IEnumerable<Order> GetAllOrder();
         IEnumerable<DataModel.Order> GetAllOrderByEventId(string eventId);
         bool UpdateOrder(DataModel.Order order);
-        IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
+        IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId);
         DataModel.Order GetOrderByEventIdvsUserId(string eventid, string userId);
         bool DeleteOrderByIdEvent(string idEvent);
         IEnumerable<DataModel.Order> GetOrdersOfSpecificRestaurant(string restaurantId, string deliveryId);
@@ -83,14 +83,14 @@ namespace FOS.Repositories.Repositories
             return list;
         }
 
-        public IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId)
+        public IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             var orders = _context.Orders.Where(order => 
             order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
-            var result = new List<Model.Dto.UserNotOrder>();
+            var result = new List<Model.Domain.UserNotOrder>();
             foreach(var order in orders)
             {
-                var item = new Model.Dto.UserNotOrder();
+                var item = new Model.Domain.UserNotOrder();
                 item.OrderId = order.Id;
                 item.UserId = order.IdUser;
                 result.Add(item);

@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FOS.Model.Domain;
 
 namespace FOS.Services.EventServices
 {
     public interface IEventService
     {
-        IEnumerable<Event> GetAllEvent(string id);
-        Event GetEvent(int id);
+        IEnumerable<Model.Domain.Event> GetAllEvent(string userId);
+        Model.Domain.Event GetEvent(int id);
     }
 }

@@ -50,6 +50,7 @@ export class SummaryListComponent implements OnInit, OnChanges {
     'Rank',
     'Restaurant',
     'Percent',
+    'AppearTime',
     'RelativePercent'
   ];
   dataSource: MatTableDataSource<RestaurantSummary>;

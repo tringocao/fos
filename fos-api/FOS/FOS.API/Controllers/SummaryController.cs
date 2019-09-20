@@ -75,7 +75,7 @@ namespace FOS.API.Controllers
         [HttpGet]
         [Route("GetImage/{reportId}")]
         [OverrideAuthentication]
-        public async Task<HttpResponseMessage> GetImage(string reportId)
+        public HttpResponseMessage GetImage(string reportId)
         {
             var result = new HttpResponseMessage();
             try
@@ -89,7 +89,7 @@ namespace FOS.API.Controllers
 
                 return result;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result.StatusCode = HttpStatusCode.NotFound;
                 return result;

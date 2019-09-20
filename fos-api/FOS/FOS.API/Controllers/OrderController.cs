@@ -28,13 +28,15 @@ namespace FOS.API.Controllers
         private readonly ISPUserService _spUserService;
         IGraphUserDtoMapper _graphUserDtoMapper;
         private readonly IUserNotOrderEmailDtoMapper _userNotOrderEmailDtoMapper;
+        private readonly IUserNotOrderDtoMapper _userNotOrderDtoMapper;
 
         public OrderController(IOrderDtoMapper mapper,
             IOrderService service,
             ISPListService spListService,
             ISPUserService spUserService,
             IGraphUserDtoMapper graphUserDtoMapper,
-            IUserNotOrderEmailDtoMapper userNotOrderEmailDtoMapper)
+            IUserNotOrderEmailDtoMapper userNotOrderEmailDtoMapper,
+            IUserNotOrderDtoMapper userNotOrderDtoMapper)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
@@ -42,6 +44,7 @@ namespace FOS.API.Controllers
             _spUserService = spUserService;
             _graphUserDtoMapper = graphUserDtoMapper;
             _userNotOrderEmailDtoMapper = userNotOrderEmailDtoMapper;
+            _userNotOrderDtoMapper = userNotOrderDtoMapper;
         }
         [HttpGet]
         [Route("GetById")]
@@ -100,7 +103,8 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var result = _orderService.GetUserNotOrdered(eventId);
+                var user = _orderService.GetUserNotOrdered(eventId);
+                var result = _userNotOrderDtoMapper.ListToDomain(user);
                 return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateSuccessfulResult(result);
             }
             catch (Exception e)

@@ -23,7 +23,8 @@ namespace FOS.Model.Mapping
                 RestaurantId = restaurantSummary.RestaurantId,
                 Percent = restaurantSummary.Percent,
                 DeliveryId = restaurantSummary.DeliveryId,
-                ServiceId = restaurantSummary.ServiceId
+                ServiceId = restaurantSummary.ServiceId,
+                AppearTime = restaurantSummary.AppearTimes
             };
         }
         public IEnumerable<Model.Dto.RestaurantSummary> ListToDto(IEnumerable<Model.Domain.RestaurantSummary> restaurantSummary)
