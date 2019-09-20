@@ -5,6 +5,8 @@ import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 import { SummaryPageComponent } from './pages/summary-page/summary-page.component';
 import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
+import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,13 @@ const routes: Routes = [
   {
     path: 'events/summary/:id',
     component: EventSummaryDialogComponent
+  },
+  { path: 'print',
+    outlet: 'print',
+    component: PrintLayoutComponent,
+    children: [
+      { path: 'report/:id', component: EventSummaryPrintComponent }
+    ]
   }
 ];
 

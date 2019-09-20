@@ -48,6 +48,7 @@ export class ListRestaurantComponent implements OnInit {
   favoriteOnly: boolean;
   topic: string;
   keyword: string;
+  imageStyle: string;
   @Input() idService: number;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -57,6 +58,7 @@ export class ListRestaurantComponent implements OnInit {
     this.categorys = ['a', 'b', 'c', 'd'];
     this.sortNameOrder = 0;
     this.sortCategoryOrder = 0;
+    this.imageStyle = "width:68px;height:68px;";
 
     var restaurants: DeliveryInfos[] = [];
     this.dataSource = new MatTableDataSource<DeliveryInfos>(restaurants);

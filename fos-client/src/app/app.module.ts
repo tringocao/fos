@@ -36,18 +36,18 @@ import {
   MatInputModule,
   MatTooltipModule,
   MatRadioModule,
-  MatDatepickerModule,
-  MatNativeDateModule
 } from '@angular/material';
 import {
   DlDateTimeDateModule,
   DlDateTimePickerModule
 } from 'angular-bootstrap-datetimepicker';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './components/search/search.component';
+
 
 import {
   MatButtonModule,
@@ -60,35 +60,44 @@ import {
   MatSlideToggleModule
 } from '@angular/material';
 
-import { MatSelectModule } from '@angular/material/select';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { SelectAutocompleteModule } from 'mat-select-autocomplete';
-import { MenuComponent } from './components/menu/menu.component';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { MatSelectModule } from "@angular/material/select";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { SelectAutocompleteModule } from "mat-select-autocomplete";
+import { MenuComponent } from "./components/menu/menu.component";
+import { DialogComponent } from "./components/dialog/dialog.component";
+import { LightboxModule } from 'ngx-lightbox';
 
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FoodCategoriesComponent } from './components/dialog/food-categories/food-categories.component';
-import { LoadingComponent } from './components/loading/loading.component';
-import { OrderTabComponent } from './components/order-tab/order-tab.component';
-import { ListOrderComponent } from './components/list-order/list-order.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { OrderDetailComponent } from './components/order-detail/order-detail.component';
-import { MenuEventComponent } from './components/menu-event/menu-event.component';
-import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
-import { EventDialogViewComponent } from './components/event-dialog-view/event-dialog-view.component';
-import { NgxStarsModule } from 'ngx-stars';
-import { ShowActionComponent } from './components/show-action/show-action.component';
-import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
-import { FoodComponent } from './components/dialog/food/food.component';
-import { ListOrderedFoodsComponent } from './components/order-detail/list-ordered-foods/list-ordered-foods.component';
-import { ReminderDialogComponent } from './components/reminder-dialog/reminder-dialog.component';
-import { EventDialogEditComponent } from './components/event-dialog-edit/event-dialog-edit.component';
-import { EventDialogConfirmComponent } from './components/event-dialog-confirm/event-dialog-confirm.component';
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { FoodCategoriesComponent } from "./components/dialog/food-categories/food-categories.component";
+import { LoadingComponent } from "./components/loading/loading.component";
+import { OrderTabComponent } from "./components/order-tab/order-tab.component";
+import { ListOrderComponent } from "./components/list-order/list-order.component";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { OrderDetailComponent } from "./components/order-detail/order-detail.component";
+import { MenuEventComponent } from "./components/menu-event/menu-event.component";
+import { EventDialogComponent } from "./components/event-dialog/event-dialog.component";
+import { EventDialogViewComponent } from "./components/event-dialog-view/event-dialog-view.component";
+import { NgxStarsModule } from "ngx-stars";
+import { ShowActionComponent } from "./components/show-action/show-action.component";
+import { EventSummaryDialogComponent } from "./components/event-summary-dialog/event-summary-dialog.component";
+import { FoodComponent } from "./components/dialog/food/food.component";
+import { ListOrderedFoodsComponent } from "./components/order-detail/list-ordered-foods/list-ordered-foods.component";
+import { ReminderDialogComponent } from "./components/reminder-dialog/reminder-dialog.component";
+import { EventDialogEditComponent } from "./components/event-dialog-edit/event-dialog-edit.component";
+import { EventDialogConfirmComponent } from "./components/event-dialog-confirm/event-dialog-confirm.component";
+import { SettingDialogComponent } from "./components/navigation/header/setting-dialog/setting-dialog.component";
+import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
+import { PrintLayoutComponent } from './print-layout/print-layout.component';
+import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
+import { PhotoComponent } from './components/photo/photo/photo.component';
 import { SummaryListComponent } from './components/summary-list/summary-list.component';
 import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
 import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
-import { SettingDialogComponent } from './components/navigation/header/setting-dialog/setting-dialog.component';
 import { EventDialogUserpickerComponent } from './components/event-dialog/event-dialog-userpicker/event-dialog-userpicker.component';
+import { DatetimepickerComponent } from './components/datetimepicker/datetimepicker/datetimepicker.component';
+import { TimeDialogComponent } from './components/datetimepicker/time-dialog/time-dialog/time-dialog.component';
+import { WClockComponent } from './components/datetimepicker/time-dialog/w-clock/w-clock.component';
+import { WTimeComponent } from './components/datetimepicker/time-dialog/w-time/w-time.component';
 
 @NgModule({
   declarations: [
@@ -120,11 +129,19 @@ import { EventDialogUserpickerComponent } from './components/event-dialog/event-
     ReminderDialogComponent,
     EventDialogEditComponent,
     EventDialogConfirmComponent,
+    SettingDialogComponent,
+    PrintLayoutComponent,
+    EventSummaryPrintComponent,
+    PhotoComponent,
     SummaryListComponent,
     SummaryTabComponent,
     SummaryDishesDialogComponent,
     SettingDialogComponent,
-    EventDialogUserpickerComponent
+    EventDialogUserpickerComponent,
+    DatetimepickerComponent,
+    TimeDialogComponent,
+    WClockComponent,
+    WTimeComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -177,6 +194,7 @@ import { EventDialogUserpickerComponent } from './components/event-dialog/event-
     MatTooltipModule,
     MatSlideToggleModule,
     MatRadioModule,
+    LightboxModule,
     MatDatepickerModule, // <----- import(must)
     MatNativeDateModule // <----- import for date formating(optional)
   ],
@@ -214,7 +232,10 @@ import { EventDialogUserpickerComponent } from './components/event-dialog/event-
     EventDialogEditComponent,
     EventDialogConfirmComponent,
     SummaryDishesDialogComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    TimeDialogComponent,
+    WClockComponent,
+    WTimeComponent,
   ]
 })
 export class AppModule {}
