@@ -48,7 +48,7 @@ namespace FOS.Services.OrderServices
         {
             return _orderMapper.MapToDomain(_repository.GetOrder(id));
         }
-        public IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId)
+        public IEnumerable<UserNotOrder> GetUserNotOrdered(string eventId)
         {
             return _repository.GetUserNotOrdered(eventId);
         }

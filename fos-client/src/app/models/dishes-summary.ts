@@ -15,6 +15,7 @@
         public Rank: number = 0;   
         public Food: string = null;   
         public Percent: number = 0;   
-        public RelativePercent: number = 0;
+        public RelativePercent: number = 0;   
+        public AppearTime: number = 0;
     }
          

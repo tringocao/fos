@@ -17,6 +17,10 @@ import { from } from 'rxjs';
 import { GraphUser } from 'src/app/models/graph-user';
 import { element } from 'protractor';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
+
+moment.locale('vi');
+
 @Component({
   selector: 'app-event-dialog-view',
   templateUrl: './event-dialog-view.component.html',
@@ -102,16 +106,14 @@ export class EventDialogViewComponent implements OnInit {
     this.eventHost = this.data.HostName;
     this.eventRestaurant = this.data.Restaurant;
     this.maximumBudget = this.data.MaximumBudget.toString();
-    this.dateTimeToClose = this.data.CloseTime.toString()
-      .replace('T', ' ')
-      .replace('+07:00', '');
-    this.dateToReminder = this.data.RemindTime ? this.data.RemindTime.toString()
-      .replace('T', ' ')
-      .replace('+07:00', '') : '';
+    this.dateTimeToClose = moment(this.data.CloseTime).format(
+      'MM/DD/YYYY HH:mm'
+    );
+    this.dateToReminder = this.data.RemindTime
+      ? moment(this.data.RemindTime).format('MM/DD/YYYY HH:mm')
+      : ' ';
 
-    this.EventTime = this.data.EventDate.toString()
-      .replace('T', ' ')
-      .replace('+07:00', '');
+    this.EventTime = moment(this.data.EventDate).format('MM/DD/YYYY HH:mm');
     this.EventStatus = this.data.Status;
     this.EventType = this.data.EventType;
   }

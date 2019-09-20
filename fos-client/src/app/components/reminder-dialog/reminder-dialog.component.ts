@@ -26,7 +26,7 @@ export class ReminderDialogComponent implements OnInit {
   displayedColumns = ['avatar', 'Name', 'Email'];
   dataSource: MatTableDataSource<GraphUser>;
   apiUrl = environment.apiUrl;
-  isReminding = false;
+
   @Input() header;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -72,7 +72,7 @@ export class ReminderDialogComponent implements OnInit {
   }
 
   remind($event) {
-    this.isReminding = true;
+    this.closeDialog($event);
     const info: UserNotOrderMailInfo[] = [];
     this.graphUserNotOrder.forEach(item => {
       const element = new UserNotOrderMailInfo();
@@ -92,7 +92,6 @@ export class ReminderDialogComponent implements OnInit {
       if (response != null && response.ErrorMessage != null) {
         this.toast('Reminder fail', 'Dismiss');
       }
-      this.isReminding = false;
     });
   }
 

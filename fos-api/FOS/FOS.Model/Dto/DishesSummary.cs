@@ -12,5 +12,6 @@ namespace FOS.Model.Dto
         public string Food { get; set; }
         public float Percent { get; set; }
         public float RelativePercent { get; set; }
+        public int AppearTime { get; set; }
     }
 }
