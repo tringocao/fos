@@ -49,6 +49,7 @@ export class EventDialogUserpickerComponent implements OnInit {
  
   ngOnInit() {
     var self = this;
+    
     self.formGroup
       .get(self.formControlName)
       .valueChanges.pipe(
@@ -74,7 +75,7 @@ export class EventDialogUserpickerComponent implements OnInit {
             if (user.DisplayName) {
               dataSourceTemp.push({
                 Name: user.DisplayName,
-                Email: user.DisplayName,
+                Email: user.Mail,
                 Img: "",
                 Id: user.Id,
                 IsGroup: 0
