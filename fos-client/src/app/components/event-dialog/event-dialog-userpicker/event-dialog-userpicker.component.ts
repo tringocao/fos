@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, forwardRef } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,7 +7,8 @@ import {
   AbstractControl,
   ValidatorFn,
   FormGroupDirective,
-  NgForm
+  NgForm,
+  NG_VALUE_ACCESSOR
 } from "@angular/forms";
 import { debounceTime, tap, switchMap, finalize } from "rxjs/operators";
 import { EventFormService } from 'src/app/services/event-form/event-form.service';
@@ -30,8 +31,8 @@ export interface userPicker {
 export class EventDialogUserpickerComponent implements OnInit {
   @Output() ListenChildComponentEvent = new EventEmitter<Array<userPicker>>();
   @Input() formGroup: FormGroup;
-  @Input() _pickupTitle: String;
-  @Input() _formControlName: string;
+  @Input() pickupTitle: String;
+  @Input() formControlName: string;
 
   apiUrl = environment.apiUrl;
   displayUser(user: userPicker) {
@@ -39,27 +40,28 @@ export class EventDialogUserpickerComponent implements OnInit {
       return user.Name;
     }
   }
-  _isHostLoading = false;
-  _userHost: userPicker[];
+  isHostLoading = false;
+  userHost: userPicker[];
 
-  constructor(private eventFormService: EventFormService,) { }
+  constructor(private eventFormService: EventFormService) {
+    
+   }
  
   ngOnInit() {
     var self = this;
-
     self.formGroup
-      .get(self._formControlName)
+      .get(self.formControlName)
       .valueChanges.pipe(
         debounceTime(300),
-        tap(() => (this._isHostLoading = true)),
+        tap(() => (this.isHostLoading = true)),
         switchMap(value => 
-          this.eventFormService
+          self.eventFormService
             .SearchGroupByName(value)
             .pipe(finalize(() => {
               
-              var finalCode = this.formGroup.get("userInputPicker").value;
+              var finalCode = self.formGroup.get("userInputPicker").value;
               this.ListenChildComponentEvent.emit(finalCode);
-              this._isHostLoading = false;
+              this.isHostLoading = false;
             }))
         )
       )
@@ -80,8 +82,8 @@ export class EventDialogUserpickerComponent implements OnInit {
             }
           });
 
-          self._userHost = dataSourceTemp;
-          self._isHostLoading = false;
+          self.userHost = dataSourceTemp;
+          self.isHostLoading = false;
           
         } 
       });
