@@ -60,6 +60,7 @@
           <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Event'" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
           <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Close'" dateFormControlName="closeDate" timeFormControlName="closeTime"></app-datetimepicker>
           <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Remind'" dateFormControlName="remindDate" timeFormControlName="remindTime"></app-datetimepicker>
+          </div>
         <!-- <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
           <input required id="party" matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="_dateEventTime"
@@ -92,7 +93,7 @@
           <mat-error *ngIf="HasError('dateTimeRemind', 'invalidRemindTime')">Reminder time is invalid</mat-error>
         </mat-form-field>
       </div>        
-
+    -->
         <mat-grid-list cols="10" rowHeight="100px">
           <mat-grid-tile [colspan]="8">
             <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" formControlName="userInputPicker" pickupTitle="Choose Participants"></app-event-dialog-userpicker>
@@ -141,11 +142,8 @@
           </tr>
 
         </table>
-        
-
         <mat-card-actions align="right">
           <button mat-raised-button color="primary" [disabled]="!ownerForm.valid" (click)="SaveToSharePointEventList()">Create</button>
-          <!-- <button type="button" mat-raised-button color="warn" (click)="onCancel()">Create</button> -->
           <button type="button" mat-raised-button (click)="OnNoClick()">Cancel</button>
         </mat-card-actions>
       </div>
