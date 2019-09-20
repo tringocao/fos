@@ -79,6 +79,8 @@ namespace FOS.Services.SPListService
                     listItem[EventFieldName.EventDate] = eventData.EventDate;
                     listItem[EventFieldName.EventStatus] = eventData.Status;
                     listItem[EventFieldName.EventTypes] = eventData.EventType;
+                    listItem[EventFieldName.EventIsReminder] = EventIsReminder.No;
+
                     listItem.Update();
                     context.ExecuteQuery();
 

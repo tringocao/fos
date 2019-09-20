@@ -151,6 +151,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IDishesSummaryDtoMapper, Model.Mapping.DishesSummaryDtoMapper>();
 
             container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
+            container.RegisterType<Model.Mapping.IGroupDtoMapper, Model.Mapping.GroupDtoMapper>();
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),

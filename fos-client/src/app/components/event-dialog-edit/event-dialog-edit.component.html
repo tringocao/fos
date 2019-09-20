@@ -22,7 +22,6 @@
           aria-labelledby="Event Type"
           class="radio-group"
           formControlName="EventType"
-          [(ngModel)]="_eventType"
           >
           <mat-radio-button class="radio-button" value="Open" matTooltip="Anyone can make order"
           matTooltipPosition="after"
@@ -36,23 +35,7 @@
           </mat-radio-button>
         </mat-radio-group>
 
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Host" [matAutocomplete]="auto" formControlName='userInputHost'>
-        </mat-form-field>
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
-          <mat-option *ngIf="_isHostLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
-          <ng-container *ngIf="!_isHostLoading">
-            <mat-option style="height: 5em" *ngFor="let user of _userHost" [value]="user">
-                <div class="format-avatar">
-                    <img id="avatar" class="MakeCircleAvatar" src="{{ apiUrl }}api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
-                    <div class="format-avatar-right">
-                        <span>{{ user.Name }}</span>
-                        <small>email: {{user.Email}}</small>
-                    </div>
-                </div>
-            </mat-option>
-          </ng-container>
-        </mat-autocomplete>
+        <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" _formControlName="userInputHost" _pickupTitle="Host"></app-event-dialog-userpicker>
 
         <mat-form-field class="full-width">
           <input matInput placeholder="Restaurant" [matAutocomplete]="autoTest" formControlName='userInput'>
@@ -70,7 +53,7 @@
 
         <mat-form-field class="full-width">
           <mat-label>Maximum Budget</mat-label>
-          <input matInput type="number" placeholder="Maximum Budget" [(ngModel)]="_maximumBudget" [ngModelOptions]="{standalone: true}" >
+          <input matInput type="number" placeholder="Maximum Budget" formControlName='MaximumBudget' >
         </mat-form-field>
 
         <div class="event-data-time">
@@ -109,24 +92,9 @@
 
         <mat-grid-list cols="10" rowHeight="100px">
           <mat-grid-tile [colspan]="8">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="Pick user/group" formControlName="participants"
-                (selectionChange)="ChangeClient($event)">
-                <mat-optgroup *ngFor="let group of _userPickerGroups" [label]="group.Name">
-                  <mat-option style="width:4500px; height: 5em;" *ngFor="let user of group.UserPicker" [value]="user">
-                      <div class="format-avatar">
-                          <img id="avatar" class="MakeCircleAvatar" src="{{ apiUrl }}api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
-                          <div class="format-avatar-right">
-                              <span>{{ user.Name }}</span>
-                              <small> email: {{user.Email}}</small>
-                          </div>
-                      </div>
-                  </mat-option>
-                </mat-optgroup>
-              </mat-select>
-              </mat-form-field>
-              </mat-grid-tile>
-          <mat-grid-tile>
+            <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" _formControlName="userInputPicker" _pickupTitle="Choose participants"></app-event-dialog-userpicker>
+          </mat-grid-tile>
+            <mat-grid-tile>
             <button mat-raised-button color="primary" (click)="AddUserToTable()">Add</button>
           </mat-grid-tile>
         </mat-grid-list>

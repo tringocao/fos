@@ -7,6 +7,7 @@ import { switchMap, debounceTime, tap, finalize } from "rxjs/operators";
 import { User } from "src/app/models/user";
 import { GraphUser } from "src/app/models/graph-user";
 import { Event } from "src/app/models/event";
+import { Group } from 'src/app/models/group';
 
 @Injectable({
   providedIn: "root"
@@ -196,5 +197,24 @@ export class EventFormService {
         })
         .catch(alert => console.log(alert));
     });
+  }
+
+  SearchGroupByName(
+    groupName: string
+  ): Observable<ApiOperationResult<Array<Group>>> {
+    return this.http
+      .get<ApiOperationResult<Array<Group>>>(
+        environment.apiUrl + "api/SPUser/SearchGroupByName",
+        {
+          params: {
+            groupName: groupName
+          }
+        }
+      )
+      .pipe(
+        tap((response: ApiOperationResult<Array<Group>>) => {
+          return response;
+        })
+      );
   }
 }

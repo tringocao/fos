@@ -94,6 +94,8 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
 import { SummaryListComponent } from './components/summary-list/summary-list.component';
 import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
 import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
+import { SettingDialogComponent } from './components/navigation/header/setting-dialog/setting-dialog.component';
+import { EventDialogUserpickerComponent } from './components/event-dialog/event-dialog-userpicker/event-dialog-userpicker.component';
 import { DatetimepickerComponent } from './components/datetimepicker/datetimepicker/datetimepicker.component';
 
 @NgModule({
@@ -133,6 +135,8 @@ import { DatetimepickerComponent } from './components/datetimepicker/datetimepic
     SummaryListComponent,
     SummaryTabComponent,
     SummaryDishesDialogComponent,
+    SettingDialogComponent,
+    EventDialogUserpickerComponent
     SettingDialogComponent,
     DatetimepickerComponent
   ],
