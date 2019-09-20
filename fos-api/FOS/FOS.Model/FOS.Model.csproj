@@ -109,6 +109,7 @@
     <Compile Include="Domain\EventList.cs" />
     <Compile Include="Domain\EventListItem.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
+    <Compile Include="Domain\Group.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\JSONRequest.cs" />
     <Compile Include="Domain\LogMetadata.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Domain\RepeateType.cs" />
     <Compile Include="Domain\RequestMethod.cs" />
     <Compile Include="Domain\RestaurantSummary.cs" />
+    <Compile Include="Domain\ScoredEmailAddresses.cs" />
     <Compile Include="Domain\ServiceKind.cs" />
     <Compile Include="Domain\State.cs" />
     <Compile Include="Domain\Token.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Dto\FoodCategory.cs" />
     <Compile Include="Dto\FoodDetailJson.cs" />
     <Compile Include="Dto\GraphUser.cs" />
+    <Compile Include="Dto\Group.cs" />
     <Compile Include="Dto\Order.cs" />
     <Compile Include="Dto\Province.cs" />
     <Compile Include="Dto\RecurrenceEvent.cs" />
@@ -172,6 +175,7 @@
     <Compile Include="Mapping\FoodCategoryDtoMapper.cs" />
     <Compile Include="Mapping\FoodDtoMapper.cs" />
     <Compile Include="Mapping\GraphUserDtoMapper.cs" />
+    <Compile Include="Mapping\GroupDtoMapper.cs" />
     <Compile Include="Mapping\JsonDtoMapper.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
     <Compile Include="Mapping\ProvinceDtoMapper.cs" />
@@ -577,6 +581,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\graph-user.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\GraphUser.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\group.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\Group.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\list-restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

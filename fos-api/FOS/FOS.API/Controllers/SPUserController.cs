@@ -24,10 +24,12 @@ namespace FOS.API.Controllers
     {
         ISPUserService _sPUserService;
         IUserDtoMapper _userDtoMapper;
-        public SPUserController(ISPUserService sPUserService, IUserDtoMapper userDtoMapper)
+        IGroupDtoMapper _groupDtoMapper;
+        public SPUserController(ISPUserService sPUserService, IUserDtoMapper userDtoMapper, IGroupDtoMapper groupDtoMapper)
         {
             _sPUserService = sPUserService;
             _userDtoMapper = userDtoMapper;
+            _groupDtoMapper = groupDtoMapper;
         }
 
         // GET api/spuser/getusers
@@ -157,6 +159,21 @@ namespace FOS.API.Controllers
             catch (Exception e)
             {
                 return ApiUtil<List<Model.Dto.User>>.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpGet]
+        [Route("SearchGroupByName")]
+        public async Task<ApiResponse<List<Model.Dto.Group>>> SearchGroupByName(string groupName)
+        {
+            try
+            {
+                var group = await _sPUserService.SearchGroupByName(groupName);
+                return ApiUtil<List<Model.Dto.Group>>.CreateSuccessfulResult(group.Select(u => _groupDtoMapper.ToDto(u)).ToList());
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<List<Model.Dto.Group>>.CreateFailResult(e.ToString());
             }
         }
     }

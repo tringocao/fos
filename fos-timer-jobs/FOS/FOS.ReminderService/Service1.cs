@@ -30,13 +30,12 @@ namespace FOS.ReminderService
         public Service1()
         {
             InitializeComponent();
+            
         }
 
         protected override void OnStart(string[] args)
         {
-            var container = new UnityContainer();
-            RegisterUnity.Register(container);
-            coreService = container.Resolve<FosCoreService>();
+           
 
             WriteToFile("Service is started at " + DateTime.Now);
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
@@ -79,6 +78,9 @@ namespace FOS.ReminderService
             //get event on sharepoint
             try
             {
+                var container = new UnityContainer();
+                RegisterUnity.Register(container);
+                coreService = container.Resolve<FosCoreService>();
                 StartReminderService(coreService);
             }
             catch(Exception ex)

@@ -121,8 +121,13 @@ namespace FOS.CoreService.EventServices
             return value.Split('.')[1].Split('%')[0];
         }
 
+        public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string idEvent)
+        {
+            List<Model.Domain.UserNotOrderEmail> listUser = _orderServices.GetUserNotOrderEmail(idEvent);
+            return listUser;
+        }
+
         public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> lstUser)
-        public async Task<int> GetEventToReminder()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
             string emailTemplateJson = System.IO.File.ReadAllText(path);
