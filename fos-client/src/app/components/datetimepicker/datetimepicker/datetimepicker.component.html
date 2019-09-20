@@ -1,16 +1,31 @@
-<form [formGroup]="formGroup">
+<form [formGroup]="formGroup" class="container">
   <mat-form-field>
-    <input matInput [matDatepicker]="picker" [formControlName]="dateFormControlName" placeholder="Choose a date" />
+    <mat-label>{{ formLable }} Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [formControlName]="dateFormControlName"
+    />
+
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <input matInput [matDatepicker]="picker" [formControlName]="timeFormControlName" placeholder="Choose a time" />
   </mat-form-field>
-  <mat-card
+  <mat-form-field class="time-field">
+    <mat-label>{{ formLable }} Time</mat-label>
+    <input
+      class="time-input"
+      matInput
+      type="text"
+      [formControlName]="timeFormControlName"
+      (blur)="onTimeInputBlur()"
+    />
+    <i class="material-icons" (click)="openDialog()">access_time</i>
+  </mat-form-field>
+  <!-- <mat-card
     [@changeState]="triggered ? 'pickTime' : 'nopick'"
-    (click)="onTrigger()"
   >
     <mat-card-content>
       <w-time color="warn" [userTime]="exportTime"></w-time>
     </mat-card-content>
-  </mat-card>
+  </mat-card> -->
 </form>

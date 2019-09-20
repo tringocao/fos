@@ -60,9 +60,15 @@ export class EventDialogEditComponent implements OnInit {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
       host: new FormControl(""),
-      dateTimeToClose: new FormControl(''),
-      dateTimeEvent: new FormControl(''),
-      dateTimeRemind: new FormControl(''),
+      eventDate: new FormControl(""),
+      eventTime: new FormControl("00:00"),
+      closeDate: new FormControl(""),
+      closeTime: new FormControl(""),
+      remindDate: new FormControl(""),
+      remindTime: new FormControl(""),
+      // dateTimeToClose: new FormControl(''),
+      // dateTimeEvent: new FormControl(''),
+      // dateTimeRemind: new FormControl(''),
       participants: new FormControl(""),
       restaurant: new FormControl(""),
       userInput: new FormControl(""),
@@ -74,6 +80,7 @@ export class EventDialogEditComponent implements OnInit {
   }
   //global
   apiUrl = environment.apiUrl;
+  eventType:string = 'Open';
   matcher = new MyErrorStateMatcher();
   _eventSelected = "Open";
   _createdUser = { id: "" };
@@ -139,16 +146,24 @@ export class EventDialogEditComponent implements OnInit {
     console.log(this.data.RemindTime)
     if (this.data.RemindTime) {
       var newRemindTime = new Date(this.data.RemindTime);
-      var remindTime = this.ToDateString(newRemindTime);
-      this._dateToReminder = remindTime;
+      // var remindTime = this.ToDateString(newRemindTime);
+      // this._dateToReminder = remindTime;
+      this.ownerForm.controls["remindTime"].setValue(moment(newRemindTime).format('HH:mm'));
+      this.ownerForm.controls["remindDate"].setValue(newRemindTime);
     }
 
     var newEventDate = new Date(this.data.EventDate);
+    this.ownerForm.controls["eventTime"].setValue(moment(newEventDate).format('HH:mm'));
+    this.ownerForm.controls["eventDate"].setValue(newEventDate);
+    this.ownerForm.controls["closeTime"].setValue(moment(newCloseTime).format('HH:mm'));
+    this.ownerForm.controls["closeDate"].setValue(newEventDate);
+
+    
     var eventTime = this.ToDateString(newEventDate);
     this._dateEventTime = eventTime;
 
+
     //restaurant
-    debugger;
     var restaurantTemp: DeliveryInfos = {
       CityId: "1",
       RestaurantId: self.data.RestaurantId,
@@ -486,49 +501,49 @@ export class EventDialogEditComponent implements OnInit {
     };
   }
 
-  onDateTimeChange(value: string): void {
-    if (this._dateToReminder && this._dateEventTime && moment(this._dateToReminder).isSameOrAfter(this._dateEventTime)) {
-      // this.isInvalidRemindTime = true
-      // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-      alert("Time to remind must be before event time");
-    }
-    if (this._dateToReminder && this._dateTimeToClose && moment(this._dateToReminder).isSameOrAfter(this._dateTimeToClose)) {
-      // this.isInvalidRemindTime = true
-      // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-      alert("Time to remind must be before event close time");
-    }
-    if (this._dateTimeToClose && this._dateEventTime && moment(this._dateTimeToClose).isSameOrAfter(this._dateEventTime)) {
-      // this.isInvalidCloseTime = true
-      this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-      alert("Time to close must be before event time");
-    }
-    this.ownerForm.controls["dateTimeRemind"].setValidators([
-      this.ValidateEventRemindTime(
-        this._dateEventTime,
-        this._dateToReminder,
-        this._dateTimeToClose
-      )
-    ]);
-    this.ownerForm.controls["dateTimeRemind"].updateValueAndValidity();
-    this.ownerForm.controls["dateTimeToClose"].setValidators([
-      this.ValidateEventCloseTime(
-        this._dateEventTime,
-        this._dateToReminder,
-        this._dateTimeToClose
-      )
-    ]);
-    this.ownerForm.controls["dateTimeToClose"].updateValueAndValidity();
-    this.ownerForm.controls["dateTimeEvent"].setValidators([
-      this.ValidateEventTime(
-        this._dateEventTime,
-        this._dateToReminder,
-        this._dateTimeToClose
-      )
-    ]);
-    this.ownerForm.controls["dateTimeEvent"].updateValueAndValidity();
-    // console.log(this.ownerForm.get('dateTimeRemind').value)
-    console.log(moment(this._dateEventTime).isSameOrAfter(this._dateToReminder));
-  }
+  // onDateTimeChange(value: string): void {
+  //   if (this._dateToReminder && this._dateEventTime && moment(this._dateToReminder).isSameOrAfter(this._dateEventTime)) {
+  //     // this.isInvalidRemindTime = true
+  //     // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+  //     alert("Time to remind must be before event time");
+  //   }
+  //   if (this._dateToReminder && this._dateTimeToClose && moment(this._dateToReminder).isSameOrAfter(this._dateTimeToClose)) {
+  //     // this.isInvalidRemindTime = true
+  //     // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+  //     alert("Time to remind must be before event close time");
+  //   }
+  //   if (this._dateTimeToClose && this._dateEventTime && moment(this._dateTimeToClose).isSameOrAfter(this._dateEventTime)) {
+  //     // this.isInvalidCloseTime = true
+  //     this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
+  //     alert("Time to close must be before event time");
+  //   }
+  //   this.ownerForm.controls["dateTimeRemind"].setValidators([
+  //     this.ValidateEventRemindTime(
+  //       this._dateEventTime,
+  //       this._dateToReminder,
+  //       this._dateTimeToClose
+  //     )
+  //   ]);
+  //   this.ownerForm.controls["dateTimeRemind"].updateValueAndValidity();
+  //   this.ownerForm.controls["dateTimeToClose"].setValidators([
+  //     this.ValidateEventCloseTime(
+  //       this._dateEventTime,
+  //       this._dateToReminder,
+  //       this._dateTimeToClose
+  //     )
+  //   ]);
+  //   this.ownerForm.controls["dateTimeToClose"].updateValueAndValidity();
+  //   this.ownerForm.controls["dateTimeEvent"].setValidators([
+  //     this.ValidateEventTime(
+  //       this._dateEventTime,
+  //       this._dateToReminder,
+  //       this._dateTimeToClose
+  //     )
+  //   ]);
+  //   this.ownerForm.controls["dateTimeEvent"].updateValueAndValidity();
+  //   // console.log(this.ownerForm.get('dateTimeRemind').value)
+  //   console.log(moment(this._dateEventTime).isSameOrAfter(this._dateToReminder));
+  // }
 
   isValidEventClose(component: Component) {
     console.log(component);

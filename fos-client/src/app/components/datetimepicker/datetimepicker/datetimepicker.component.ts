@@ -7,6 +7,10 @@ import {
   animate
 } from '@angular/animations';
 import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { TimeDialogComponent } from '../time-dialog/time-dialog/time-dialog.component';
+import { ITime } from '../time-dialog/w-clock/w-clock.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-datetimepicker',
@@ -17,7 +21,7 @@ import { FormGroup } from '@angular/forms';
       state(
         'pickTime',
         style({
-          transform: 'scale(1)'
+          transform: 'scaleY(1)'
         })
       ),
       transition('* => pickTime', animate('100ms'))
@@ -26,17 +30,44 @@ import { FormGroup } from '@angular/forms';
 })
 export class DatetimepickerComponent implements OnInit {
   @Input() formGroup: FormGroup;
+  @Input() formLable: string;
   @Input() dateFormControlName: string;
   @Input() timeFormControlName: string;
-  constructor() { }
+  constructor(private dialog:MatDialog) { }
+
+  date: string;
+  time: string;
+  itime: ITime;
 
   triggered:boolean
   ngOnInit() {
     this.triggered = false;
   }
 
-  onTrigger() {
-    this.triggered = true;
+  openDialog(): void {
+    const dialogRef = this.dialog.open(TimeDialogComponent, {
+      width: '400px',
+      data: {
+        time: this.itime
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.time = result ? result : '00:00';
+      if (result) {
+        this.itime = result;
+        this.formGroup.get(this.timeFormControlName).setValue(result.hour + ':' + result.minute);
+      }
+    });
+  }
+
+  onTrigger(state:boolean) {
+    this.triggered = state;
+  }
+
+  onTimeInputBlur()  {
+    
   }
 
 }

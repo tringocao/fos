@@ -41,7 +41,6 @@ import {
   DlDateTimeDateModule,
   DlDateTimePickerModule
 } from 'angular-bootstrap-datetimepicker';
-import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
@@ -94,9 +93,11 @@ import { PhotoComponent } from './components/photo/photo/photo.component';
 import { SummaryListComponent } from './components/summary-list/summary-list.component';
 import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
 import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
-import { SettingDialogComponent } from './components/navigation/header/setting-dialog/setting-dialog.component';
 import { EventDialogUserpickerComponent } from './components/event-dialog/event-dialog-userpicker/event-dialog-userpicker.component';
 import { DatetimepickerComponent } from './components/datetimepicker/datetimepicker/datetimepicker.component';
+import { TimeDialogComponent } from './components/datetimepicker/time-dialog/time-dialog/time-dialog.component';
+import { WClockComponent } from './components/datetimepicker/time-dialog/w-clock/w-clock.component';
+import { WTimeComponent } from './components/datetimepicker/time-dialog/w-time/w-time.component';
 
 @NgModule({
   declarations: [
@@ -136,9 +137,11 @@ import { DatetimepickerComponent } from './components/datetimepicker/datetimepic
     SummaryTabComponent,
     SummaryDishesDialogComponent,
     SettingDialogComponent,
-    EventDialogUserpickerComponent
-    SettingDialogComponent,
-    DatetimepickerComponent
+    EventDialogUserpickerComponent,
+    DatetimepickerComponent,
+    TimeDialogComponent,
+    WClockComponent,
+    WTimeComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -192,7 +195,6 @@ import { DatetimepickerComponent } from './components/datetimepicker/datetimepic
     MatSlideToggleModule,
     MatRadioModule,
     LightboxModule,
-    MaterialTimePickerModule,
     MatDatepickerModule, // <----- import(must)
     MatNativeDateModule // <----- import for date formating(optional)
   ],
@@ -230,7 +232,10 @@ import { DatetimepickerComponent } from './components/datetimepicker/datetimepic
     EventDialogEditComponent,
     EventDialogConfirmComponent,
     SummaryDishesDialogComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    TimeDialogComponent,
+    WClockComponent,
+    WTimeComponent,
   ]
 })
 export class AppModule {}
