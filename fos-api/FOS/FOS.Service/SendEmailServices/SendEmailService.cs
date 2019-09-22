@@ -87,7 +87,6 @@ namespace FOS.Services.SendEmailServices
                         emailTemplate.EventDeliveryId, 
                         emailTemplate.EventId, user.Mail);
                 }
-
             }
         }
         public async Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
@@ -143,6 +142,35 @@ namespace FOS.Services.SendEmailServices
         private string ParseMemberName(string value)
         {
             return value.Split('.')[1].Split('%')[0];
+        }
+        public async Task SendUpdateEventMail(List<User> listUpdateUser, string idEvent, string html)
+        {
+            ReadEmailTemplate(html);
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                await GetDataByEventIdAsync(clientContext, idEvent);
+                var emailp = new EmailProperties();
+                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+
+                foreach (var user in listUpdateUser)
+                {
+                    Guid idOrder = Guid.NewGuid();
+                    emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;
+                    emailp.To = new List<string>() { user.Mail };
+                    emailp.From = emailTemplate.HostUserEmail.Mail;
+                    emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
+                    emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
+                    emailp.Subject = Parse(emailTemplate.Subject.ToString(), emailTemplate);
+
+                    Utility.SendEmail(clientContext, emailp);
+                    clientContext.ExecuteQuery();
+
+                    _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id,
+                        emailTemplate.EventRestaurantId,
+                        emailTemplate.EventDeliveryId,
+                        emailTemplate.EventId, user.Mail);
+                }
+            }
         }
     }
 }
