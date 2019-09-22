@@ -44,6 +44,11 @@ export class DatetimepickerComponent implements OnInit {
     this.triggered = false;
   }
 
+  public HasError = (controlName: string, errorName: string) => {
+    // debugger;
+    return this.formGroup.controls[controlName].hasError(errorName);
+  };
+
   openDialog(): void {
     const dialogRef = this.dialog.open(TimeDialogComponent, {
       width: '400px',
