@@ -3,18 +3,23 @@
 <!-- <h2>{{data.deliveryid}}</h2>
 <h2>{{data.id}}</h2> -->
 
-
 <section fxLayout="row wrap" fxLayoutAlign="center center">
   <mat-card fxFlex="500px" fxFlex.xs="100%">
     <mat-card-title>Update event</mat-card-title>
 
-    <form [formGroup]="ownerForm" autocomplete="off" novalidate (ngSubmit)="CreateOwner(ownerForm.value)">
+    <form
+      [formGroup]="ownerForm"
+      autocomplete="off"
+      novalidate
+      (ngSubmit)="CreateOwner(ownerForm.value)"
+    >
       <div class="tp-container">
-
         <mat-form-field>
           <input matInput type="text" placeholder="Event Title" formControlName="title" id="title">
           <mat-hint align="end">Event title is required.</mat-hint>
-          <mat-error *ngIf="HasError('title', 'required')">Event title is required.</mat-error>
+          <mat-error *ngIf="HasError('title', 'required')"
+            >Event title is required.</mat-error
+          >
         </mat-form-field>
 
           <mat-label>Event Type</mat-label>
@@ -35,25 +40,46 @@
           </mat-radio-group>
           <div>{{eventType == 'Open' ? 'Open for everyone' : 'Only for invited person'}}<br/></div>
 
-        <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" formControlName="userInputHost" pickupTitle="Host"></app-event-dialog-userpicker>
+        <app-event-dialog-userpicker
+          class="full-width"
+          (ListenChildComponentEvent)="notifyMessage($event)"
+          [formGroup]="ownerForm"
+          formControlName="userInputHost"
+          pickupTitle="Host"
+        ></app-event-dialog-userpicker>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="Restaurant" [matAutocomplete]="autoTest" formControlName='userInput'>
+          <input
+            matInput
+            placeholder="Restaurant"
+            [matAutocomplete]="autoTest"
+            formControlName="userInput"
+          />
         </mat-form-field>
-        <mat-autocomplete  #autoTest="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+        <mat-autocomplete #autoTest="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngIf="isLoading" class="is-loading"
+            ><mat-spinner diameter="50"></mat-spinner
+          ></mat-option>
           <ng-container *ngIf="!isLoading">
-            <mat-option *ngFor="let restaurant of restaurant" [value]="restaurant">
-                  <app-menu   [restaurant]="restaurant"></app-menu>
+            <mat-option
+              *ngFor="let restaurant of restaurant"
+              [value]="restaurant"
+            >
+              <app-menu [restaurant]="restaurant"></app-menu>
               <span>{{ restaurant.Name }}</span>
-              <small> | ID: {{restaurant.RestaurantId}}</small>
+              <small> | ID: {{ restaurant.RestaurantId }}</small>
             </mat-option>
           </ng-container>
         </mat-autocomplete>
 
         <mat-form-field class="full-width">
           <mat-label>Maximum Budget</mat-label>
-          <input matInput type="number" placeholder="Maximum Budget" formControlName='MaximumBudget' >
+          <input
+            matInput
+            type="number"
+            placeholder="Maximum Budget"
+            formControlName="MaximumBudget"
+          />
         </mat-form-field>
 
         <div class="event-data-time full-width">
@@ -67,16 +93,27 @@
             formcontrolname="dateTimeEvent" 
             (input)="onDateTimeChange($event.target.value)"
             >
-            <mat-error *ngIf="HasError('dateTimeEvent', 'required')">Event title is required.</mat-error>
-            <mat-error *ngIf="HasError('dateTimeEvent', 'datimeRequired')">Event time is required</mat-error>
-        </mat-form-field>
+          </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <mat-label>Time To Close</mat-label>
-          <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="dateTimeToClose"
-            [ngModelOptions]="{standalone: true}"
-            formcontrolname="dateTimeToClose" 
-            (input)="onDateTimeChange($event.target.value)"
+          <mat-form-field class="full-width">
+            <mat-label>Time To Close</mat-label>
+            <input
+              required
+              id="party"
+              matInput
+              matInput
+              [errorStateMatcher]="matcher"
+              type="datetime-local"
+              [(ngModel)]="dateTimeToClose"
+              [ngModelOptions]="{ standalone: true }"
+              formcontrolname="dateTimeToClose"
+              (input)="onDateTimeChange($event.target.value)"
+            />
+            <mat-error *ngIf="HasError('dateTimeToClose', 'invalidCloseTime')"
+              >Close Event time is invalid.</mat-error
+            >
+            <mat-error *ngIf="HasError('dateTimeToClose', 'datimeRequired')"
+              >Close time is required</mat-error
             >
             <mat-error *ngIf="HasError('dateTimeToClose', 'invalidCloseTime')">Close Event time is invalid.</mat-error>
             <mat-error *ngIf="HasError('dateTimeToClose', 'datimeRequired')">Close time is required</mat-error>
@@ -97,8 +134,14 @@
           <mat-grid-tile [colspan]="8">
             <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" formControlName="userInputPicker" pickupTitle="Choose Participants"></app-event-dialog-userpicker>
           </mat-grid-tile>
-            <mat-grid-tile>
-            <button mat-raised-button color="primary" (click)="AddUserToTable()">Add</button>
+          <mat-grid-tile>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="AddUserToTable()"
+            >
+              Add
+            </button>
           </mat-grid-tile>
         </mat-grid-list>
 
@@ -114,43 +157,61 @@
           </ng-container>
 
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> User/Group </th>
-            <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+            <th mat-header-cell *matHeaderCellDef>User/Group</th>
+            <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
           </ng-container>
 
           <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.Email }}</td>
           </ng-container>
 
           <ng-container matColumnDef="order status">
-            <th mat-header-cell *matHeaderCellDef> Order Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.OrderStatus }}</td>
+            <th mat-header-cell *matHeaderCellDef>Order Status</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.OrderStatus }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Delete </th>
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
             <td mat-cell *matCellDef="let element">
               <button mat-icon-button (click)="DeleteUserInTable(element.Name)"> <i
                   class="material-icons">delete</i></button>
             </td>
           </ng-container>
-          
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-          </tr>
-
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-        
 
         <mat-card-actions align="right">
-          <button mat-raised-button color="primary" [disabled]="!ownerForm.valid" (click)="UpdateToSharePointEventList()">Update</button>
-          <button type="button" mat-raised-button (click)="OnNoClick()">Cancel</button>
+          <button
+            type="button"
+            mat-raised-button
+            color="warn"
+            (click)="cancelEvent()"
+          >
+            Cancel Event
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!ownerForm.valid"
+            (click)="UpdateToSharePointEventList()"
+          >
+            Update
+          </button>
+          <!-- <button type="button" mat-raised-button color="warn" (click)="onCancel()">Create</button> -->
+          <button type="button" mat-raised-button (click)="OnNoClick()">
+            Close
+          </button>
         </mat-card-actions>
       </div>
     </form>
-
   </mat-card>
 </section>
 <app-loading [loading]="loading"></app-loading>
