@@ -1,5 +1,5 @@
 <app-loading [loading]="loading"></app-loading>
-<div *ngIf="!printService.isPrinting" class="container">
+<div id="container" *ngIf="!printService.isPrinting" class="container">
   <div id="report" class="event-summary">
     <mat-card>
       <mat-card-header>
@@ -144,11 +144,11 @@
               </ng-container>
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Price</th>
-                <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+                <td mat-cell *matCellDef="let element">{{ element.price }}đ</td>
               </ng-container>
               <ng-container matColumnDef="total">
                 <th mat-header-cell *matHeaderCellDef>Total</th>
-                <td mat-cell *matCellDef="let element">{{ element.total }}</td>
+                <td mat-cell *matCellDef="let element">{{ element.total }}đ</td>
               </ng-container>
               <ng-container matColumnDef="totalComment">
                 <th mat-header-cell *matHeaderCellDef>Comment</th>
@@ -187,12 +187,12 @@
               </ng-container>
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Price</th>
-                <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+                <td mat-cell *matCellDef="let element">{{ element.price }}đ</td>
               </ng-container>
               <ng-container matColumnDef="pay-extra">
                 <th mat-header-cell *matHeaderCellDef>Pay extra</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ element.payExtra }}
+                  {{ element.payExtra }}đ
                 </td>
               </ng-container>
               <ng-container matColumnDef="comment">
@@ -217,7 +217,7 @@
         </mat-tab-group>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button (click)="sendEmail()" mat-raised-button color="primary">
+        <button *ngIf="emailDataAvailable" (click)="sendEmail()" mat-raised-button color="primary">
           Send to my email
         </button>
         <button (click)="printToPdf()" mat-raised-button color="primary">
@@ -227,4 +227,7 @@
       </mat-card-actions>
     </mat-card>
   </div>
+  <div id="email-region" class="email-region">
+  <app-event-summary-print *ngIf="emailDataAvailable" [eventData]="eventData"></app-event-summary-print>
+</div>
 </div>

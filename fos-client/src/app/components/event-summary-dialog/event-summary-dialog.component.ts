@@ -52,6 +52,8 @@ export class EventSummaryDialogComponent implements OnInit {
     console.log(router.routerState);
   }
  
+  eventData:any;
+  emailDataAvailable:boolean;
   eventDataAvailable:boolean;
   dishViewDataAvailable:boolean;
   personViewDataAvailable:boolean;
@@ -112,23 +114,15 @@ export class EventSummaryDialogComponent implements OnInit {
   }
  
   async sendEmail() {
-    const page = document.getElementById('report');
+    document.getElementById("container").parentNode["style"].overflow = 'visible';
+    const page = document.getElementById('email-region');
     const options = {
       background: "white", height: 800, width: page.clientWidth, letterRendering: 1, scale: 2,};
     console.log(this.userGroupTab)
-    // pageSource.toDataURL("image/PNG")
-    // let doc = new jsPDF();
-    // var html = '<html> <a href="'+ window.location.href + '">Click here to go to event report' + '</a></html>';
-    html2canvas(page, options).then(pageSource => {
+    html2canvas(page).then(pageSource => {
       //Converting canvas to Image
       var pageData = pageSource.toDataURL('image/PNG');
-      // let userGroupData = userTabSource.toDataURL("image/PNG")
-      // Add image Canvas to PDF%
-      // doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
- 
-      this.summaryService.addReport(this.eventDetail.EventId, window.location.href, pageData)
-      // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
-      console.log('html2canvas');
+      this.summaryService.addReport(this.eventDetail.EventId, window.location.href, pageData);
     });
   }
   
@@ -140,6 +134,8 @@ export class EventSummaryDialogComponent implements OnInit {
     this.printMode = false;
     this.personViewDataAvailable = false;
     this.dishViewDataAvailable = false;
+    this.emailDataAvailable = false;
+    this.eventData = {}
  
     this.route.params.subscribe(params => {
       var id = params["id"];
@@ -257,7 +253,17 @@ export class EventSummaryDialogComponent implements OnInit {
             // orderItem.comment = comment;
  
             this.orderByPerson.push(orderItem)
-            this.personViewDataAvailable = this.orderByPerson.length == orders.length;
+            if (this.orderByPerson.length == orders.length) {
+              this.personViewDataAvailable = true;
+              this.eventData = {
+                restaurant:this.restaurant,
+                eventDetail:this.eventDetail,
+                foods:this.foods,
+                orderByPerson:this.orderByPerson
+              }
+              this.emailDataAvailable = true;
+            }
+
           })
         })
         this.dishGroupViewdataSource = this.foods;
