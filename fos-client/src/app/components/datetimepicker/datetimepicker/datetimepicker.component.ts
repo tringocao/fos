@@ -1,16 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   trigger,
   state,
   style,
   transition,
-  animate
+  animate,
 } from '@angular/animations';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { TimeDialogComponent } from '../time-dialog/time-dialog/time-dialog.component';
 import { ITime } from '../time-dialog/w-clock/w-clock.component';
 import moment from 'moment';
+import { Utils } from '../time-dialog/utils';
 
 @Component({
   selector: 'app-datetimepicker',
@@ -33,6 +34,7 @@ export class DatetimepickerComponent implements OnInit {
   @Input() formLable: string;
   @Input() dateFormControlName: string;
   @Input() timeFormControlName: string;
+  @Output() onDateTimeChange: EventEmitter<any> = new EventEmitter();
   constructor(private dialog:MatDialog) { }
 
   date: string;
@@ -44,6 +46,11 @@ export class DatetimepickerComponent implements OnInit {
     this.triggered = false;
   }
 
+  public HasError = (controlName: string, errorName: string) => {
+    // debugger;
+    return this.formGroup.controls[controlName].hasError(errorName);
+  };
+
   openDialog(): void {
     const dialogRef = this.dialog.open(TimeDialogComponent, {
       width: '400px',
@@ -53,17 +60,29 @@ export class DatetimepickerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      this.onDateTimeChange.emit();
       this.time = result ? result : '00:00';
       if (result) {
         this.itime = result;
-        this.formGroup.get(this.timeFormControlName).setValue(result.hour + ':' + result.minute);
+        this.formGroup.get(this.timeFormControlName).setValue(this.formatHour(24, result.hour) + ':' + this.formatMinute(result.minute));
       }
     });
   }
 
+  public formatHour(format, hour): string {
+    return Utils.formatHour(format, hour);
+  }
+
+  public formatMinute(minute): string {
+    return Utils.formatMinute(minute);
+  }
+
   onTrigger(state:boolean) {
     this.triggered = state;
+  }
+
+  onInputChange($event) {
+    this.onDateTimeChange.emit();
   }
 
   onTimeInputBlur()  {
