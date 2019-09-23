@@ -26,7 +26,6 @@
           <mat-radio-group
             aria-labelledby="Event Type"
             class="radio-group"
-            [(ngModel)]="eventType"
             formControlName="EventType"
             >
             <mat-radio-button class="radio-button" value="Open" 
@@ -38,7 +37,7 @@
               Invited Only
             </mat-radio-button>
           </mat-radio-group>
-          <div>{{eventType == 'Open' ? 'Open for everyone' : 'Only for invited person'}}<br/></div>
+          <!-- <div>{{eventType == 'Open' ? 'Open for everyone' : 'Only for invited person'}}<br/></div> -->
 
         <app-event-dialog-userpicker
           class="full-width"

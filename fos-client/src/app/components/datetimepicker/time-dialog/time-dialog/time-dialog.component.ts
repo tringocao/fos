@@ -15,7 +15,6 @@ export class TimeDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<TimeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(this.data);
     this.userTime = this.data.time;
   }
   private exportTime = { hour: 7, minute: 15, format: 24 };
@@ -31,7 +30,6 @@ export class TimeDialogComponent implements OnInit {
   }
 
   submit($event) {
-    console.log($event);
     var time = $event;
     if (time.hour.length !== 2) {
       time.hour = this.formatHour(24, $event.hour);
