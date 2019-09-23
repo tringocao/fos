@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FOS.CoreService.Constants
 {
-    public class EventConstant
+    public class EventConstantWS
     {
         public const string CloseEventEmailTemplate = @"App_Data\CloseEventEmailTemplate.json";
         public const string RemindEmailTemplate = @"App_Data\RemindEmailTemplate.json";

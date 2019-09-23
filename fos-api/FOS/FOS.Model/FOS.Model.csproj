@@ -102,6 +102,7 @@
     <Compile Include="Domain\ApiResponse.cs" />
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
     <Compile Include="Domain\DishesSummary.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
     <Compile Include="Domain\Event.cs" />
@@ -194,7 +195,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dto\..\..\..\..\fos-client\src\app\models\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>

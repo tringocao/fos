@@ -1,6 +1,7 @@
 ﻿using FOS.Model.Domain;
 using FOS.Repositories.Mapping;
 using FOS.Repositories.Repositories;
+using FOS.Services.FosCoreService;
 using FOS.Services.SendEmailServices;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
@@ -23,12 +24,19 @@ namespace FOS.Services.RecurrenceEventServices
         IRecurrenceEventMapper _recurrenceEventMapper;
         ISendEmailService _sendEmailService;
         Func<IRecurrenceEventRepository> _func;
-        public RecurrenceEventService(IRecurrenceEventRepository eventRepository, IRecurrenceEventMapper recurrenceEventMapper, ISendEmailService sendEmailService, Func<IRecurrenceEventRepository> func )
+        IFosCoreService _fosCoreService;
+        public RecurrenceEventService(IRecurrenceEventRepository eventRepository, 
+            IRecurrenceEventMapper recurrenceEventMapper, 
+            ISendEmailService sendEmailService, 
+            Func<IRecurrenceEventRepository> func,
+            IFosCoreService fosCoreService
+            )
         {
             _eventRepository = eventRepository;
             _recurrenceEventMapper = recurrenceEventMapper;
             _sendEmailService = sendEmailService;
             _func = func;
+            _fosCoreService = fosCoreService;
         }
 
         public bool AddRecurrenceEvent(RecurrenceEvent recurrenceEvent)
@@ -187,12 +195,12 @@ namespace FOS.Services.RecurrenceEventServices
                             {
                                 break;
                             }
-                            using (var clientContext = GetClientContext())
+                            using (var clientContext = _fosCoreService.GetClientContext())
                             {
-                                var emailTemplateDictionary = GetEmailTemplate(@"App_Data\RemindEmailTemplate.json");
+                                var emailTemplateDictionary = _fosCoreService.GetEmailTemplate(@"App_Data\RemindEmailTemplate.json");
                                 emailTemplateDictionary.TryGetValue("Body", out string body);
                                 emailTemplateDictionary.TryGetValue("Subject", out string subject);
-                                SendEmail(clientContext, "admin@devpreciovn.onmicrosoft.com", item.UserMail, _sendEmailService.Parse(body, item), subject);
+                                _fosCoreService.SendEmail(clientContext, "admin@devpreciovn.onmicrosoft.com", item.UserMail, _sendEmailService.Parse(body, item), subject);
                                 WriteToFile("Service is sent email at! " + item.Id);
                             }
                             break;
@@ -207,41 +215,6 @@ namespace FOS.Services.RecurrenceEventServices
             {
                 WriteToFile("Service is stopped at " + e.ToString() + "Id: " + item.Id);
             }
-        }
-        public ClientContext GetClientContext()
-        {
-            var siteUrl = "https://devpreciovn.sharepoint.com/sites/FOS/";
-            var loginName = ConfigurationSettings.AppSettings["loginName"];
-            var passWord = ConfigurationSettings.AppSettings["passWord"];
-            var securePassword = new SecureString();
-            passWord.ToCharArray().ToList().ForEach(c => securePassword.AppendChar(c));
-
-            using (var clientContext = new ClientContext(siteUrl))
-            {
-                clientContext.Credentials = new SharePointOnlineCredentials(loginName, securePassword);
-                return clientContext;
-            }
-        }
-        public Dictionary<string, string> GetEmailTemplate(string templateLink)
-        {
-            string path = AppDomain.CurrentDomain.BaseDirectory + templateLink;
-            string emailTemplateJson = System.IO.File.ReadAllText(path);
-
-            var emailTemplateDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(emailTemplateJson);
-
-            return emailTemplateDictionary;
-        }
-        public void SendEmail(ClientContext clientContext, string fromMail, string toMail, string body, string subject)
-        {
-            var emailp = new EmailProperties();
-
-            emailp.To = new List<string>() { toMail };
-            emailp.From = fromMail;
-            emailp.Body = body;
-            emailp.Subject = subject;
-
-            Utility.SendEmail(clientContext, emailp);
-            clientContext.ExecuteQuery();
         }
         public void WriteToFile(string Message)
         {

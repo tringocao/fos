@@ -7,8 +7,6 @@ using Unity;
 using System.Configuration;
 using System.Security;
 using Microsoft.SharePoint.Client;
-using FOS.CoreService.Constants;
-using Newtonsoft.Json;
 using FOS.Services;
 using FOS.Services.SPUserService;
 using Microsoft.SharePoint.Client.Utilities;
@@ -18,9 +16,8 @@ using Unity.Lifetime;
 using FOS.API;
 using FOS.Services.SummaryService;
 using FOS.Services.SPListService;
-using FOS.CoreService.EventServices;
 
-namespace FOS.CoreService.UnityConfig
+namespace FOS.CloseService.UnityConfig
 {
     public class RegisterUnity
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.CoreService.Models
+namespace FOS.Model.Domain.ServiceModel
 {
     public class CloseEventEmailTemplate
     {

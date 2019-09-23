@@ -164,6 +164,8 @@
     <Compile Include="FoodServices\FoodService.cs" />
     <Compile Include="FavoriteService\FavoriteService.cs" />
     <Compile Include="FoodServices\IFoodService.cs" />
+    <Compile Include="FosCoreService\FosCoreService.cs" />
+    <Compile Include="FosCoreService\IFosCoreService.cs" />
     <Compile Include="FOSFoodServiceAPIsService.cs" />
     <Compile Include="ConfigurationProvider.cs" />
     <Compile Include="OrderServices\IOrderService.cs" />

@@ -1,19 +1,17 @@
-﻿using FOS.CoreService.EventServices;
-using FOS.CoreService.UnityConfig;
+﻿
 using System.ServiceProcess;
 
 using Unity;
 using System.Timers;
 using System.Threading;
 using System;
-using FOS.CoreService.RemindEventServices;
 using FOS.Services.RecurrenceEventServices;
 using System.IO;
 using System.Threading.Tasks;
 using FOS.Model.Domain;
 using System.Configuration;
 using Microsoft.SharePoint.Client.Utilities;
-using FOS.CoreService.Constants;
+using FOS.RecurrenceEvent.UnityConfig;
 
 namespace FOS.RecurrenceEvent
 {
@@ -37,10 +35,10 @@ namespace FOS.RecurrenceEvent
 
             container = new UnityContainer();
             RegisterUnity.Register(container);
-            //OnElapsedTime(null, null);
+            OnElapsedTime(null, null);
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             timer.Enabled = true;
-            timer.Interval = 60 * 1000; //number in milisecinds  
+            timer.Interval = 60 * 60 * 1000; //number in milisecinds  
 
         }
 
@@ -51,15 +49,16 @@ namespace FOS.RecurrenceEvent
 
 
         }
-       
+
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
             try
             {
-                var reminder = container.Resolve<RemindEventService>();
+                var reminder = container.Resolve<RecurrenceEventService>();
                 reminder.checkRemindedTask();
 
-            }catch(Exception xe)
+            }
+            catch (Exception xe)
             {
                 WriteToFile("Service is stopped at " + xe.ToString());
             }

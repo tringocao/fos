@@ -1,4 +1,0 @@
-{
-  "Subject": "Reminder for host user",
-  "Body": "Due to your busy schedule, this is a reminder email in the case that your upcoming event may have slipped your mind. The event is for [%RecurrenceEvent.Title%].<br>Please let me know if there is anything else I can do for you.<br>Sincerely<br>FOS"
-}

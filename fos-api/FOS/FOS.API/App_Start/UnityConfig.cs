@@ -27,7 +27,7 @@ namespace FOS.API
               .AddNewExtension<Interception>();
 
               RegisterTypes(container);
-  
+
               return container;
           });
 
@@ -176,7 +176,10 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
-
+            container.RegisterType<FOS.Services.FosCoreService.IFosCoreService, FOS.Services.FosCoreService.FosCoreService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
             container.AddExtension(new Diagnostic());
         }
     }
