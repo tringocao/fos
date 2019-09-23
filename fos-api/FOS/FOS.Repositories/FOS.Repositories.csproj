@@ -69,13 +69,9 @@
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
-    <Compile Include="Migrations\201909180637063_init2.cs" />
-    <Compile Include="Migrations\201909180637063_init2.Designer.cs">
-      <DependentUpon>201909180637063_init2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909180639422_init3.cs" />
-    <Compile Include="Migrations\201909180639422_init3.Designer.cs">
-      <DependentUpon>201909180639422_init3.cs</DependentUpon>
+    <Compile Include="Migrations\201909201129477_fikachu.cs" />
+    <Compile Include="Migrations\201909201129477_fikachu.Designer.cs">
+      <DependentUpon>201909201129477_fikachu.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
@@ -120,11 +116,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909180637063_init2.resx">
-      <DependentUpon>201909180637063_init2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909180639422_init3.resx">
-      <DependentUpon>201909180639422_init3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909201129477_fikachu.resx">
+      <DependentUpon>201909201129477_fikachu.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

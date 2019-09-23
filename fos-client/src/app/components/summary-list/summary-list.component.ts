@@ -68,8 +68,10 @@ export class SummaryListComponent implements OnInit, OnChanges {
     this.dataSource.paginator = this.paginator;
     this.summaryService.GetRestaurantSummary().then(result => {
       this.listRestaurant = result;
-      const tempData = result.filter(r => r.ServiceId === '1');
-      this.setDataSource(tempData);
+      if (result !== null && result.length > 0) {
+        const tempData = result.filter(r => r.ServiceId === '1');
+        this.setDataSource(tempData);
+      }
       this.isLoading = false;
     });
   }

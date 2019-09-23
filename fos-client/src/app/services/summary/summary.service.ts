@@ -101,15 +101,27 @@ export class SummaryService {
     });
   }
 
-  updateEventStatus(eventId:string, status:string) : Promise<ApiOperationResult<void>> {
-    return new Promise<ApiOperationResult<void>>((resolve,reject)=> {
-      this.http.post<ApiOperationResult<void>>(environment.apiUrl + 'api/splist/UpdateEventStatus?Id=' + eventId + 
-      '&eventStatus=' + status, {}
-      )
-      .toPromise().then(result => {
-      if(result.Success){resolve(null)}
-      else reject(new Error(JSON.stringify(result.ErrorMessage)));        
-    }).catch(alert => console.log(alert))
-  });
+  updateEventStatus(
+    eventId: string,
+    status: string
+  ): Promise<ApiOperationResult<void>> {
+    return new Promise<ApiOperationResult<void>>((resolve, reject) => {
+      this.http
+        .post<ApiOperationResult<void>>(
+          environment.apiUrl +
+            'api/splist/UpdateEventStatus?Id=' +
+            eventId +
+            '&eventStatus=' +
+            status,
+          {}
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(null);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
   }
 }
