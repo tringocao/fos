@@ -175,10 +175,10 @@ export class EventSummaryDialogComponent implements OnInit {
               name: food.Value.Name,
               price: Number(food.Value.Price),
               picture: food.Value.Photo,
-              comments: [{
+              comments: food.Value.Comment !== "" ? [{
                 comment: food.Value.Comment,
                 amount: 1
-              }],
+              }] : [],
               totalComment: '',
               amount: Number(food.Value.Amount),
               total: 0
@@ -194,18 +194,21 @@ export class EventSummaryDialogComponent implements OnInit {
               this.foods[selectedFood].amount += _food.amount;
               this.foods[selectedFood].total += _food.total;
               console.log(this.foods[selectedFood].comments)
-              console.log(food)
-              if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
-                var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
-                console.log(duplicatedFood)
-                this.foods[selectedFood].comments[duplicatedFood].amount++;
+              console.log(food);
+              if (food.Value.Comment !== "") {
+                if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
+                  var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
+                  console.log(duplicatedFood)
+                  this.foods[selectedFood].comments[duplicatedFood].amount++;
+                }
+                else {
+                  this.foods[selectedFood].comments.push({
+                    comment: food.Value.Comment,
+                    amount: 1
+                  })
+                }
               }
-              else {
-                this.foods[selectedFood].comments.push({
-                  comment: food.Value.Comment,
-                  amount: 1
-                })
-              }
+
               this.foods[selectedFood].totalComment +=  _food.totalComment;
             }
           })
@@ -230,16 +233,19 @@ export class EventSummaryDialogComponent implements OnInit {
             order.FoodDetail.forEach(food => {
               foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
               // comment += ' ' + food.Value.Comment;
-              if (comments.some(_comment => _comment.comment == food.Value.Comment)) {
-                var duplicatedComment = comments.findIndex(c => c.comment == food.Value.Comment);
-                comments[duplicatedComment].amount++;
+              if (food.Value.Comment !== "") {
+                if (comments.some(_comment => _comment.comment == food.Value.Comment)) {
+                  var duplicatedComment = comments.findIndex(c => c.comment == food.Value.Comment);
+                  comments[duplicatedComment].amount++;
+                }
+                else {
+                  comments.push({
+                    comment: food.Value.Comment,
+                    amount: 1,
+                  })
+                }
               }
-              else {
-                comments.push({
-                  comment: food.Value.Comment,
-                  amount: 1,
-                })
-              }
+
               total += Number(food.Value.Total);
             })
             orderItem.food = foods;
