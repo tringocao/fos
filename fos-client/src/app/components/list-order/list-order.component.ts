@@ -243,7 +243,6 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   remind(event: any, element: Event) {
-    console.log('type of: ', event);
     event.stopPropagation();
   }
 

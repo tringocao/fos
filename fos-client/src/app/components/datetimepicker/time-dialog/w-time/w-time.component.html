@@ -1,8 +1,5 @@
 <div fxLayout="row" fxLayout.lt-md="column" class="w-time vertical-time">
   <mat-toolbar
-    fxLayout="column"
-    fxLayout.lt-md="row"
-    fxLayoutAlign="center center"
     [color]="color"
     class="w-timepicker-time-container"
   >
@@ -38,8 +35,6 @@
   </mat-toolbar>
 
   <div
-    fxLayout="column"
-    fxLayoutAlign="space-between center"
     class="w-time-content"
   >
     <w-clock
@@ -51,9 +46,9 @@
       (viewChange)="setCurrentView($event)"
     ></w-clock>
 
-    <div fxFlexAlign="end">
-            <button mat-flat-button color="primary" (click)="submit()">Ok</button>
-            <button mat-flat-button>Cancel</button>
+    <div class="action-buttons">
+            <button mat-raised-button color="primary" (click)="submit()">Ok</button>
+            <button mat-raised-button>Cancel</button>
       <!-- <button mat-button [color]="color" (click)="submit()">
         {{ submitLabel }}
       </button>
