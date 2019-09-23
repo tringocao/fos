@@ -10,6 +10,11 @@ namespace FOS.Model.Domain
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime StartTempDate { get; set; } // StartTempDate = StartTempDate + next reminder(option if weekly or monthly)
+        public string UserMail { get; set; }
+
+        public int Version { get; set; }
+
         public string Title { get; set; }
         public int Id { get; set; }
         public string UserId { get; set; }

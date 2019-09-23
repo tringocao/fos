@@ -14,12 +14,17 @@ namespace FOS.RecurrenceEvent
         /// </summary>
         static void Main()
         {
+//#if DEBUG
+//            Service1 service = new Service1();
+//            service.OnDebug();
+//#else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
                 new Service1()
             };
             ServiceBase.Run(ServicesToRun);
+//#endif
         }
     }
 }

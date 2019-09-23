@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.CoreService.Constants
+namespace FOS.Common.Constants
 {
     public class EventEmail
     {

@@ -109,10 +109,11 @@ export class ListOrderComponent implements OnInit, OnChanges {
   getAllEvent() {
     this.orderService.getAllEvent(this.userId).then(response => {
       this.allOrder = response;
-      this.myOrder = this.allOrder.filter(item => {
-        return item.IsMyEvent === true;
-      });
-
+      if (response !== null && response.length > 0) {
+        this.myOrder = this.allOrder.filter(item => {
+          return item.IsMyEvent === true;
+        });
+      }
       this.getCateroriesFromOrders(this.myOrder, true);
       this.getCateroriesFromOrders(this.allOrder, false);
 

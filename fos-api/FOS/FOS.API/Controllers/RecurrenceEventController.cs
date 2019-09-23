@@ -54,13 +54,42 @@ namespace FOS.API.Controllers
             }
         }
         [HttpPost]
+        [Route("AddNew")]
+        public ApiResponse AddNew([FromBody]Model.Dto.RecurrenceEvent recurrenceEvent)
+        {
+            try
+            {
+                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime();
+                _recurrenceEventService.AddRecurrenceEvent(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
+                if (recurrenceEvent.StartTempDate >= DateTime.Now
+                    && recurrenceEvent.StartTempDate < DateTime.Now.AddHours(1))
+                {
+                    _recurrenceEventService.RunThisTask(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
+                }
+                return ApiUtil.CreateSuccessfulResult();
+
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpPost]
         [Route("UpdateRecurrenceEvent")]
         public ApiResponse UpdateRecurrenceEvent([FromBody]Model.Dto.RecurrenceEvent recurrenceEvent)
         {
             try
             {
-
+                Model.Domain.RecurrenceEvent before = _recurrenceEventService.GetById(recurrenceEvent.Id);
+                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime();
+                recurrenceEvent.Version += 1;
                 _recurrenceEventService.UpdateRecurrenceEvent(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
+
+                if (recurrenceEvent.StartTempDate >= DateTime.Now
+                    && recurrenceEvent.StartTempDate < DateTime.Now.AddHours(1))
+                {
+                    _recurrenceEventService.RunThisTask(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
+                }
                 return ApiUtil.CreateSuccessfulResult();
 
             }
@@ -86,6 +115,7 @@ namespace FOS.API.Controllers
         {
             try
             {
+                if (id == 0) return ApiUtil.CreateSuccessfulResult();
 
                 _recurrenceEventService.DeleteById(id);
                 return ApiUtil.CreateSuccessfulResult();

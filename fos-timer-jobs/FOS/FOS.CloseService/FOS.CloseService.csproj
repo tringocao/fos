@@ -33,6 +33,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FOS.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\fos-api\FOS\FOS.Service\bin\Debug\FOS.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="FOS.Model">
+      <HintPath>..\..\..\fos-api\FOS\FOS.Service\bin\Debug\FOS.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="FOS.Repositories">
+      <HintPath>..\..\..\fos-api\FOS\FOS.Service\bin\Debug\FOS.Repositories.dll</HintPath>
+    </Reference>
+    <Reference Include="FOS.Services">
+      <HintPath>..\..\..\fos-api\FOS\FOS.Service\bin\Debug\FOS.Services.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -165,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharePointContext.cs" />
     <Compile Include="TokenHelper.cs" />
+    <Compile Include="UnityConfig\RegisterUnity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -195,12 +209,6 @@
   <ItemGroup>
     <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\TempPE\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FOS.CoreService\FOS.CoreService.csproj">
-      <Project>{d3dc13dd-cd97-4e1e-aa7b-68d350382935}</Project>
-      <Name>FOS.CoreService</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
