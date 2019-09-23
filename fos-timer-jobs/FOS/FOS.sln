@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.CloseService", "FOS.CloseService\FOS.CloseService.csproj", "{FCD119DB-48EE-479D-984D-BA9ACCC85507}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.CoreService", "FOS.CoreService\FOS.CoreService.csproj", "{D3DC13DD-CD97-4E1E-AA7B-68D350382935}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.ReminderService", "FOS.ReminderService\FOS.ReminderService.csproj", "{A25A204D-59B7-4BEE-89A7-E6B5D9FE6A85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS.RecurrenceEvent", "FOS.RecurrenceEvent\FOS.RecurrenceEvent.csproj", "{6E8CC186-BE85-4E34-AA47-CEECBC66A80C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{FCD119DB-48EE-479D-984D-BA9ACCC85507}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCD119DB-48EE-479D-984D-BA9ACCC85507}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCD119DB-48EE-479D-984D-BA9ACCC85507}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3DC13DD-CD97-4E1E-AA7B-68D350382935}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A25A204D-59B7-4BEE-89A7-E6B5D9FE6A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A25A204D-59B7-4BEE-89A7-E6B5D9FE6A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A25A204D-59B7-4BEE-89A7-E6B5D9FE6A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A25A204D-59B7-4BEE-89A7-E6B5D9FE6A85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E8CC186-BE85-4E34-AA47-CEECBC66A80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E8CC186-BE85-4E34-AA47-CEECBC66A80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E8CC186-BE85-4E34-AA47-CEECBC66A80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E8CC186-BE85-4E34-AA47-CEECBC66A80C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

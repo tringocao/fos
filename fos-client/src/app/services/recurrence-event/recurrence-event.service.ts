@@ -49,6 +49,22 @@ export class RecurrenceEventService {
         .catch(alert => console.log(alert));
     });
   }
+  addRecurrenceEvent(recurrenceEvent: RecurrenceEvent): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http
+        .post<ApiOperationResult<void>>(
+          environment.apiUrl + "api/RecurrenceEvent/AddNew",
+          recurrenceEvent
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
   getById(id: number): Promise<RecurrenceEvent> {
     return new Promise<RecurrenceEvent>((resolve, reject) => {
       this.http
@@ -77,6 +93,26 @@ export class RecurrenceEventService {
           {
             params: {
               userId: userId
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
+  removeRecurrenceEvent(id: number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<void>>(
+          environment.apiUrl + "api/RecurrenceEvent/DeleteById",
+          {
+            params: {
+              id: JSON.stringify(id)
             }
           }
         )

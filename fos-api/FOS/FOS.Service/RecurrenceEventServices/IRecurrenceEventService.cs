@@ -10,5 +10,7 @@ namespace FOS.Services.RecurrenceEventServices
         bool AddRecurrenceEvent(Model.Domain.RecurrenceEvent recurrenceEvent);
         bool DeleteById(int id);
         Model.Domain.RecurrenceEvent GetByUserId(string userId);
+        void checkRemindedTask();
+        void RunThisTask(Model.Domain.RecurrenceEvent item);
     }
 }

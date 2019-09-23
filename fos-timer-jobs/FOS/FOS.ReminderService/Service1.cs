@@ -1,5 +1,4 @@
-﻿using FOS.CoreService.EventServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,14 +10,16 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.IO;
 using Unity;
-using FOS.CoreService.UnityConfig;
-using FOS.CoreService.Constants;
 using Microsoft.SharePoint.Client;
 using FOS.Model.Domain.NowModel;
 using Newtonsoft.Json;
 using FOS.Model.Dto;
 using Microsoft.SharePoint.Client.Utilities;
 using System.Configuration;
+using FOS.Services.FosCoreService;
+using FOS.ReminderService.UnityConfig;
+using FOS.CoreService.Constants;
+using FOS.Common.Constants;
 
 namespace FOS.ReminderService
 {
@@ -150,7 +151,7 @@ namespace FOS.ReminderService
             //var dateToCheck = aDate.ToString("yyyy-MM-ddTHH:mm:ss");
             var clientContext = coreService.GetClientContext();
             var web = clientContext.Web;
-            var list = web.Lists.GetByTitle(EventConstant.EventList);
+            var list = web.Lists.GetByTitle(EventConstantWS.EventList);
             CamlQuery getAllEventOpened = new CamlQuery();
             getAllEventOpened.ViewXml =
                 @"<View>
@@ -159,22 +160,22 @@ namespace FOS.ReminderService
                                     <And>
                                         <And> +
                                         <Gt>" +
-                                            "<FieldRef Name='" + EventConstant.EventTimeToReminder + "'/>" +
+                                            "<FieldRef Name='" + EventConstantWS.EventTimeToReminder + "'/>" +
                                             "<Value Type='DateTime'  IncludeTimeValue='TRUE'>" + timeMin + "</Value>" +
                                         @"</Gt> +
                                         <Lt>" +
-                                            "<FieldRef Name='" + EventConstant.EventTimeToReminder + "'/>" +
+                                            "<FieldRef Name='" + EventConstantWS.EventTimeToReminder + "'/>" +
                                             "<Value Type='DateTime'  IncludeTimeValue='TRUE'>" + timeMax + "</Value>" +
                                         @"</Lt> +
                                     
                                         </And> +
                                         <And>
                                             <Eq>" +
-                                                "<FieldRef Name='" + EventConstant.EventStatus + "'/>" +
+                                                "<FieldRef Name='" + EventConstantWS.EventStatus + "'/>" +
                                                 "<Value Type='Text'>" + EventStatus.Opened + "</Value>" +
                                             @"</Eq> +
                                             <Eq>" +
-                                                "<FieldRef Name='" + EventConstant.EventIsReminder + "'/>" +
+                                                "<FieldRef Name='" + EventConstantWS.EventIsReminder + "'/>" +
                                                 "<Value Type='Text'>" + EventIsReminder.No + "</Value>" +
                                             @"</Eq> +
                                         </And>
@@ -198,14 +199,14 @@ namespace FOS.ReminderService
 
                 foreach (var element in events)
                 {
-                    var eventId = element[EventConstant.ID].ToString();
+                    var eventId = element[EventConstantWS.ID].ToString();
                     UpdateEventIsReminder(clientContext,eventId, "Yes");
                     WriteFile.WriteToFile("Update to remindered");
 
-                    var eventTite = element[EventConstant.EventTitle].ToString();
-                    var closeTimeString = element[EventConstant.EventTimeToClose].ToString();
+                    var eventTite = element[EventConstantWS.EventTitle].ToString();
+                    var closeTimeString = element[EventConstantWS.EventTimeToClose].ToString();
                     var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
-                    var eventRestaurant = element[EventConstant.EventRestaurant].ToString();
+                    var eventRestaurant = element[EventConstantWS.EventRestaurant].ToString();
                     Console.WriteLine(eventTite);
                     WriteFile.WriteToFile("EventId: " + eventId);
 
@@ -229,7 +230,7 @@ namespace FOS.ReminderService
                 //send mail
                 WriteFile.WriteToFile("sendmail is recall at " + DateTime.Now);
 
-                string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
+                string path = AppDomain.CurrentDomain.BaseDirectory + EventConstantWS.ReminderEventEmailTemplate;
                 string emailTemplateJson = System.IO.File.ReadAllText(path);
                 sendMailToUserNotOrder(clientContext, lstUserNotOrder, emailTemplateJson);
             }
