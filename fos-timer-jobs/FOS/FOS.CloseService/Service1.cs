@@ -9,14 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.IO;
-using FOS.CoreService;
 using Unity;
-using FOS.CoreService.UnityConfig;
-using FOS.CoreService.EventServices;
-using FOS.CoreService.Constants;
 using Microsoft.SharePoint.Client;
 using System.Configuration;
-using FOS.CoreService.Models;
+using FOS.Services.FosCoreService;
+using FOS.Model.Domain.ServiceModel;
+using FOS.CoreService.Constants;
+using FOS.Common.Constants;
+using FOS.CloseService.UnityConfig;
 
 namespace FOS.CloseService
 {
@@ -102,13 +102,13 @@ namespace FOS.CloseService
             coreService.ChangeStatusToClose(clientContext, element);
 
             CloseEventEmailTemplate emailTemplate = new CloseEventEmailTemplate();
-            emailTemplate.EventTitle = element[EventConstant.EventTitle].ToString();
+            emailTemplate.EventTitle = element[EventConstantWS.EventTitle].ToString();
             emailTemplate.EventSummaryLink = coreService.BuildLink(clientUrl + "/events/summary/" + element["ID"], "link");
-            var emailTemplateDictionary = coreService.GetEmailTemplate(EventConstant.CloseEventEmailTemplate);
+            var emailTemplateDictionary = coreService.GetEmailTemplate(EventConstantWS.CloseEventEmailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Body, out string body);
             body = coreService.Parse(body, emailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Subject, out string subject);
-            var host = element[EventConstant.EventHost] as FieldUserValue;
+            var host = element[EventConstantWS.EventHost] as FieldUserValue;
 
             coreService.SendEmail(clientContext, noReplyEmail, host.Email, body, subject);
         }

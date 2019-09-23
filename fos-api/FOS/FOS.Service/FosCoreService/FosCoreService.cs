@@ -1,9 +1,7 @@
-﻿using FOS.CoreService.Constants;
-using FOS.Services.OrderServices;
+﻿using FOS.Services.OrderServices;
 using FOS.Services.Providers;
 using FOS.Services.SendEmailServices;
 using FOS.Services.SPListService;
-using FOS.CoreService.Models;
 using FOS.Services.SendEmailServices;
 using FOS.Services.SPUserService;
 using Microsoft.SharePoint.Client;
@@ -17,10 +15,12 @@ using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FOS.CoreService.Constants;
+using FOS.Common.Constants;
 
-namespace FOS.CoreService.EventServices
+namespace FOS.Services.FosCoreService
 {
-    public class FosCoreService
+    public class FosCoreService: IFosCoreService
     {
         IOrderService _orderServices;
         ISendEmailService _sendMailService;
@@ -40,14 +40,14 @@ namespace FOS.CoreService.EventServices
         public ListItemCollection GetListEventOpened(ClientContext clientContext)
         {
             var web = clientContext.Web;
-            var list = web.Lists.GetByTitle(EventConstant.EventList);
+            var list = web.Lists.GetByTitle(EventConstantWS.EventList);
             CamlQuery getAllEventOpened = new CamlQuery();
             getAllEventOpened.ViewXml =
                 @"<View>
                         <Query>
                             <Where>" + 
                                 "<Eq>" +
-                                    "<FieldRef Name=" + EventConstant.EventStatus + "/>" +
+                                    "<FieldRef Name=" + EventConstantWS.EventStatus + "/>" +
                                     "<Value Type='Text'>" + EventStatus.Opened + "</Value>" +
                                 "</Eq>" +
                                 @"</Where>
@@ -63,7 +63,7 @@ namespace FOS.CoreService.EventServices
         }
         public void ChangeStatusToClose(ClientContext clientContext, ListItem element)
         {
-            element[EventConstant.EventStatus] = EventStatus.Closed;
+            element[EventConstantWS.EventStatus] = EventStatus.Closed;
             element.Update();
             clientContext.ExecuteQuery();
         }
@@ -103,24 +103,8 @@ namespace FOS.CoreService.EventServices
         }
         public string Parse<T>(string text, T modelparse)
         {
-            var regex = new Regex(@"\[%" + modelparse.GetType().Name + @".\S+%\]");
-            var match = regex.Match(text);
-            while (match.Success)
-            {
-                var value = match.Value;
-                var memberName = ParseMemberName(value);
-                System.Reflection.PropertyInfo propertyInfo = modelparse.GetType().GetProperty(memberName);
-                object memberValue = propertyInfo.GetValue(modelparse, null);
-                text = text.Replace(value, memberValue != null ? memberValue.ToString() : string.Empty);
-                match = match.NextMatch();
-            }
-            return text;
+            return _sendMailService.Parse(text, modelparse);
         }
-        private string ParseMemberName(string value)
-        {
-            return value.Split('.')[1].Split('%')[0];
-        }
-
         public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string idEvent)
         {
             List<Model.Domain.UserNotOrderEmail> listUser = _orderServices.GetUserNotOrderEmail(idEvent);
@@ -129,7 +113,7 @@ namespace FOS.CoreService.EventServices
 
         public void SendMailRemider(IEnumerable<Model.Dto.UserNotOrderMailInfo> lstUser)
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + EventConstant.ReminderEventEmailTemplate;
+            string path = AppDomain.CurrentDomain.BaseDirectory + EventConstantWS.ReminderEventEmailTemplate;
             string emailTemplateJson = System.IO.File.ReadAllText(path);
 
             _sendMailService.SendEmailToNotOrderedUserAsync(lstUser, emailTemplateJson);

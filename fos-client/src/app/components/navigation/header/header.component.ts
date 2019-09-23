@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   title = 'angular-theme';
   appId = 'theme1';
   user: User;
+  displayName: string;
   isUserLoaded: boolean = false;
   @Output() change = new EventEmitter();
   url: string;
@@ -51,8 +52,8 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(SettingDialogComponent, {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       autoFocus: false,
-      maxHeight: '98vh',
-      width: '80%',
+      maxHeight: "98vh",
+      maxWidth: "80%",
       data: this.user
     });
 
@@ -64,6 +65,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUserId().then(user => {
       this.user = user;
+      this.displayName = user.DisplayName;
       this.isUserLoaded = true;
     });
   }
