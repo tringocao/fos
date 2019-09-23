@@ -5,21 +5,28 @@
       matInput
       [matDatepicker]="picker"
       [formControlName]="dateFormControlName"
+      (input)="onInputChange($event.target.value)"
     />
-
+    <mat-error *ngIf="HasError(dateFormControlName, 'required')">{{ formLable }} date is required.</mat-error>
+    <mat-error *ngIf="HasError(dateFormControlName, dateFormControlName + 'Invalid')">{{ formLable }} date is invalid.</mat-error>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <mat-form-field class="time-field">
+  <mat-form-field>
     <mat-label>{{ formLable }} Time</mat-label>
-    <input
-      class="time-input"
-      matInput
-      type="text"
-      [formControlName]="timeFormControlName"
-      (blur)="onTimeInputBlur()"
-    />
-    <i class="material-icons" (click)="openDialog()">access_time</i>
+    <div class="time-field">
+      <input
+        class="time-input"
+        matInput
+        type="text"
+        [formControlName]="timeFormControlName"
+        (input)="onInputChange($event.target.value)"
+        (blur)="onTimeInputBlur()"
+      />
+      <i class="material-icons" (click)="openDialog()">access_time</i>
+    </div>
+    <mat-error *ngIf="HasError(timeFormControlName, 'required')">{{ formLable }} time is required.</mat-error>
+    <mat-error *ngIf="HasError(timeFormControlName, timeFormControlName + 'Invalid')">{{ formLable }} time is invalid.</mat-error>
   </mat-form-field>
   <!-- <mat-card
     [@changeState]="triggered ? 'pickTime' : 'nopick'"

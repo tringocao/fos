@@ -85,36 +85,13 @@ export class EventDialogComponent implements OnInit {
       title: new FormControl("", [Validators.required]),
       address: new FormControl("", []),
       host: new FormControl(""),
-      eventDate: new FormControl(""),
-      eventTime: new FormControl(""),
-      closeDate: new FormControl(""),
-      closeTime: new FormControl(""),
+      eventDate: new FormControl("", [Validators.required]),
+      eventTime: new FormControl("", [Validators.required]),
+      closeDate: new FormControl("", [Validators.required]),
+      closeTime: new FormControl("", [Validators.required]),
       remindDate: new FormControl(""),
       remindTime: new FormControl(""),
 
-
-
-      // dateTimeToClose: new FormControl('', [
-      //   this.ValidateEventCloseTime(
-      //     this._dateEventTime,
-      //     this._dateToReminder,
-      //     this._dateTimeToClose
-      //   )
-      // ]),
-      // dateTimeEvent: new FormControl('', [
-      //   this.ValidateEventTime(
-      //     this._dateEventTime,
-      //     this._dateToReminder,
-      //     this._dateTimeToClose
-      //   )
-      // ]),
-      // dateTimeRemind: new FormControl('', [
-      //   this.ValidateEventRemindTime(
-      //     this._dateEventTime,
-      //     this._dateToReminder,
-      //     this._dateTimeToClose
-      //   )
-      // ]),
       participants: new FormControl(""),
       restaurant: new FormControl(""),
       userInput: new FormControl(""),
@@ -192,11 +169,10 @@ export class EventDialogComponent implements OnInit {
 
   ngOnInit() {
     var self = this;
-    // this.dateEventTime = this.ToDateString(new Date());
-    // this.dateTimeToClose = this.ToDateString(new Date());
-    // this.dateToReminder = this.ToDateString(new Date());
     self.ownerForm.get("MaximumBudget").setValue(0);
     self.ownerForm.get("EventType").setValue('Open');
+
+    this.checkDatetimeValidation();
     //get currentUser
     self.loading = true;
     self.eventFormService
@@ -377,6 +353,7 @@ export class EventDialogComponent implements OnInit {
       var myJSON = JSON.stringify(jsonParticipants);
       console.log("final", myJSON);
 
+      debugger;
       var eventListitem: Event = {
         Name: self.ownerForm.get("title").value,
         EventId: self.ownerForm.get("title").value,
@@ -428,106 +405,152 @@ export class EventDialogComponent implements OnInit {
     return this.ownerForm.controls[controlName].hasError(errorName);
   };
 
-  ValidateEventRemindTime(
-    eventDate: string,
-    remindDate: string,
-    closeDate: string
-  ): ValidatorFn {
+
+  ValidateCloseTime(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
-      if (remindDate && eventDate && closeDate) {
-        if (
-          moment(remindDate).isSameOrAfter(eventDate) ||
-          moment(remindDate).isSameOrAfter(closeDate)
-        ) {
-          return { invalidRemindTime: true };
+      var eventDate = moment(this.ownerForm.controls["eventDate"].value);
+      var closeDate = moment(this.ownerForm.controls["closeDate"].value);
+      var eventTime = moment(this.ownerForm.controls["eventTime"].value, 'hh:mm');
+      var closeTime = moment(this.ownerForm.controls["closeTime"].value, 'hh:mm');
+      if (closeDate.isSame(eventDate)) {
+        if (closeTime.isSameOrAfter(eventTime)) {
+          this.toast("Close time must be before event time in same date", "Ok");
+          return { closeTimeInvalid: true };
         }
-        return null;
       }
       return null;
     };
   }
 
-  ValidateEventTime(
-    eventDate: string,
-    remindDate: string,
-    closeDate: string
-  ): ValidatorFn {
+  ValidateCloseDate(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      if (eventDate) {
-        return null;
+      var eventDate = moment(this.ownerForm.controls["eventDate"].value);
+      var closeDate = moment(this.ownerForm.controls["closeDate"].value);
+      if (closeDate.isAfter(eventDate)) {
+        this.toast("Close date must be before event date", "Ok");
+        return { closeDateInvalid: true }; 
       }
-      return { datimeRequired: true };
+      return null;
     };
   }
 
-  ValidateEventCloseTime(
-    eventDate: string,
-    remindDate: string,
-    closeDate: string
-  ): ValidatorFn {
+  ValidateRemindTime(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
-      console.log(remindDate + " " + moment(remindDate).isSameOrAfter(eventDate));
-      if (eventDate && closeDate) {
-        if (
-          moment(closeDate).isSameOrAfter(eventDate)
-        ) {
-          console.log("eeee");
-          this.isInvalidCloseTime = true;
-          this.ownerForm.controls["dateTimeToClose"].setErrors({ invalidCloseTime: true })
-          this.ownerForm.controls["dateTimeToClose"].hasError('invalidCloseTime')
-          return { invalidCloseTime: true };
+      var eventDate = moment(this.ownerForm.controls["eventDate"].value);
+      var closeDate = moment(this.ownerForm.controls["closeDate"].value);
+      var remindDate = moment(this.ownerForm.controls["remindDate"].value);
+      var eventTime = moment(this.ownerForm.controls["eventTime"].value, 'hh:mm');
+      var closeTime = moment(this.ownerForm.controls["closeTime"].value, 'hh:mm');
+      var remindTime = moment(this.ownerForm.controls["remindTime"].value, 'hh:mm');
+      if (remindDate.isSame(eventDate)) {
+        if (remindTime.isSameOrAfter(eventTime)) {
+          this.toast("Remind time must be before event time in same date", "Ok");
+          return { remindTimeInvalid: true };
         }
-        return null;
       }
-      return { datimeRequired: true };
+      if (remindDate.isSame(closeDate)) {
+        if (remindTime.isSameOrAfter(closeTime)) {
+          this.toast("Remind time must be before close time in same date", "Ok");
+          return { remindTimeInvalid: true };
+        }
+      }
+      return null;
     };
   }
 
-  // onDateTimeChange(value: string): void {
-  //   if (this._dateToReminder && this._dateEventTime && moment(this._dateToReminder).isSameOrAfter(this._dateEventTime)) {
-  //     this.isInvalidRemindTime = true
-  //     // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-  //     alert("Time to remind must be before event time");
-  //   }
-  //   if (this._dateToReminder && this._dateTimeToClose && moment(this._dateToReminder).isSameOrAfter(this._dateTimeToClose)) {
-  //     this.isInvalidRemindTime = true
-  //     // this.ownerForm.controls["dateTimeToClose"].setErrors({invalidCloseTime: true})
-  //     alert("Time to remind must be before event close time");
-  //   }
-  //   if (this._dateTimeToClose && this._dateEventTime && moment(this._dateTimeToClose).isSameOrAfter(this._dateEventTime)) {
-  //     this.isInvalidCloseTime = true
-  //     this.ownerForm.controls["dateTimeToClose"].setErrors({ invalidCloseTime: true })
-  //     alert("Time to close must be before event time");
-  //   }
+  ValidateRemindDate(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      var eventDate = moment(this.ownerForm.controls["eventDate"].value);
+      var closeDate = moment(this.ownerForm.controls["closeDate"].value);
+      var remindDate = moment(this.ownerForm.controls["remindDate"].value);
+      if (remindDate.isAfter(eventDate)) {
+        this.toast("Remind date must be before event date", "Ok");
+        return { remindDateInvalid: true };
+      }
+      if (remindDate.isAfter(closeDate)) {
+        this.toast("Remind date must be before close date", "Ok");
+        return { remindDateInvalid: true };
+      }
+      return null;
+    };
+  }
 
-  //   this.ownerForm.controls["dateTimeRemind"].setValidators([
-  //     this.ValidateEventRemindTime(
-  //       this._dateEventTime,
-  //       this._dateToReminder,
-  //       this._dateTimeToClose
-  //     )
-  //   ]);
-  //   this.ownerForm.controls["dateTimeRemind"].updateValueAndValidity();
-  //   this.ownerForm.controls["dateTimeToClose"].setValidators([
-  //     this.ValidateEventCloseTime(
-  //       this._dateEventTime,
-  //       this._dateToReminder,
-  //       this._dateTimeToClose
-  //     )
-  //   ]);
-  //   this.ownerForm.controls["dateTimeToClose"].updateValueAndValidity();
-  //   this.ownerForm.controls["dateTimeEvent"].setValidators([
-  //     this.ValidateEventTime(
-  //       this._dateEventTime,
-  //       this._dateToReminder,
-  //       this._dateTimeToClose
-  //     )
-  //   ]);
-  //   this.ownerForm.controls["dateTimeEvent"].updateValueAndValidity();
-  //   // console.log(this.ownerForm.get('dateTimeRemind').value)
-  //   console.log(moment(this._dateEventTime).isSameOrAfter(this._dateToReminder));
-  // }
+  ValidateEventTime(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      var eventDate = moment(this.ownerForm.controls["eventDate"].value);
+      var closeDate = moment(this.ownerForm.controls["closeDate"].value);
+      var remindDate = moment(this.ownerForm.controls["remindDate"].value);
+      var eventTime = moment(this.ownerForm.controls["eventTime"].value, 'hh:mm');
+      var closeTime = moment(this.ownerForm.controls["closeTime"].value, 'hh:mm');
+      var remindTime = moment(this.ownerForm.controls["remindTime"].value, 'hh:mm');
+      if (eventDate.isSame(remindDate)) {
+        if (remindTime.isSameOrAfter(eventTime)) {
+          this.toast("Remind time must be before event time in same date", "Ok");
+          return { eventTimeInvalid: true };
+        }
+      }
+      if (closeDate.isSame(eventDate)) {
+        if (closeTime.isSameOrAfter(eventTime)) {
+          this.toast("Remind time must be before close time in same date", "Ok");
+          return { eventTimeInvalid: true };
+        }
+      }
+      return null;
+    };
+  }
+
+  ValidateEventDate(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      var eventDate = moment(this.ownerForm.controls["eventDate"].value);
+      var closeDate = moment(this.ownerForm.controls["closeDate"].value);
+      var remindDate = moment(this.ownerForm.controls["remindDate"].value);
+      if (remindDate.isAfter(eventDate)) {
+        this.toast("Remind date must be before event date", "Ok");
+        return { eventDateInvalid: true };
+      }
+      if (closeDate.isAfter(eventDate)) {
+        this.toast("Remind date must be before close date", "Ok");
+        return { eventDateInvalid: true };
+      }
+      return null;
+    };
+  }
+
+  onDateTimeInputChange($event) {
+    console.log($event)
+    this.checkDatetimeValidation();
+  }
+
+  checkDatetimeValidation() {
+    this.ownerForm.controls["closeDate"].setValidators([
+      Validators.required,
+      this.ValidateCloseDate()
+    ]);
+    this.ownerForm.controls["closeTime"].setValidators([
+      Validators.required,
+      this.ValidateCloseTime()
+    ]);
+    this.ownerForm.controls["remindDate"].setValidators([
+      this.ValidateRemindDate()
+    ]);
+    this.ownerForm.controls["remindTime"].setValidators([
+      this.ValidateRemindTime()
+    ]);
+    this.ownerForm.controls["eventDate"].setValidators([
+      Validators.required,
+      this.ValidateEventDate()
+    ]);
+    this.ownerForm.controls["eventTime"].setValidators([
+      Validators.required,
+      this.ValidateEventTime()
+    ]);
+    this.ownerForm.controls["closeDate"].updateValueAndValidity();
+    this.ownerForm.controls["closeTime"].updateValueAndValidity();
+    this.ownerForm.controls["eventDate"].updateValueAndValidity();
+    this.ownerForm.controls["eventTime"].updateValueAndValidity();
+    this.ownerForm.controls["remindDate"].updateValueAndValidity();
+    this.ownerForm.controls["remindTime"].updateValueAndValidity();
+  }
 
   isValidEventClose(component: Component) {
     console.log(component);
@@ -543,5 +566,4 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     const isSubmitted = form && form.submitted;
     return (control && control.invalid);
   }
-
 }
