@@ -1,0 +1,23 @@
+<form [formGroup]="formGroup">
+    <mat-form-field class="full-width">
+        <input matInput [placeholder]="pickupTitle" [matAutocomplete]="auto" [formControlName]="formControlName"
+            ngDefaultControl>
+    </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
+        <mat-option *ngIf="isHostLoading" class="is-loading">
+            <mat-spinner diameter="50"></mat-spinner>
+        </mat-option>
+        <ng-container *ngIf="!isHostLoading">
+            <mat-option style="height: 5em" *ngFor="let user of userHost" [value]="user">
+                <div class="format-avatar">
+                    <img id="avatar" class="make-circle-avatar"
+                        src="{{ apiUrl }}api/SPUser/GetAvatar?Id={{user.Id}}&avatarName={{user.Name}}" />
+                    <div class="format-avatar-right">
+                        <span>{{ user.Name }}</span>
+                        <small>email: {{user.Email}}</small>
+                    </div>
+                </div>
+            </mat-option>
+        </ng-container>
+    </mat-autocomplete>
+</form>

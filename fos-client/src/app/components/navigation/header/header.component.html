@@ -1,25 +1,31 @@
-<link
-  href="https://fonts.googleapis.com/icon?family=Material+Icons"
-  rel="stylesheet"
-/>
 <div class="header">
   <mat-toolbar color="warn">
     <mat-toolbar-row>
-      <!-- <button
-        mat-icon-button
-        (click)="sidenav.toggle()"
-        fxShow="true"
-        fxHide.gt-sm
-      >
-        <mat-icon>menu</mat-icon>
-      </button> -->
       <span class="ml5">
         <img class="logo" src="../../../../assets/pficon.png" alt="Logo" />
       </span>
       <div>
-        <a mat-button [routerLink]="'/home'"> Home </a>
-        <a mat-button [routerLink]="'/events'"> Events </a>
-        <a mat-button [routerLink]="'/meals'"> Meals </a>
+        <a
+          mat-button
+          [routerLink]="'/home'"
+          [ngClass]="url === '/home' || url === '/' ? 'route-active' : 'route'"
+        >
+          Home
+        </a>
+        <a
+          mat-button
+          [routerLink]="'/events'"
+          [ngClass]="url === '/events' ? 'route-active' : 'route'"
+        >
+          Events
+        </a>
+        <a
+          mat-button
+          [routerLink]="'/summary'"
+          [ngClass]="url === '/summary' ? 'route-active' : 'route'"
+        >
+          Summary
+        </a>
       </div>
       <span class="example-spacer"></span>
       <div class="displayContents">
@@ -27,8 +33,10 @@
         <button
           mat-icon-button
           [matMenuTriggerFor]="menu2"
+          *ngIf="isUserLoaded"
           aria-label="Example icon-button with a menu"
         >
+          {{ user.DisplayName }}
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu2="matMenu">
@@ -55,6 +63,9 @@
               Theme 2
             </button>
           </mat-menu>
+          <button mat-menu-item (click)="logOut()">
+            <mat-icon>exit_to_app</mat-icon>Log Out
+          </button>
         </mat-menu>
       </div>
     </mat-toolbar-row>

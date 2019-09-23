@@ -1,0 +1,70 @@
+<div class="summary-dishes-dialog">
+  <div class="dialog-header">
+    <h2>{{ data.Restaurant }}</h2>
+  </div>
+  <div class="mat-elevation-z8">
+    <app-loading [loading]="isLoading"></app-loading>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="Rank">
+        <th mat-header-cell *matHeaderCellDef>Rank</th>
+        <td mat-cell *matCellDef="let element" class="rank">
+          <p>{{ element.Rank }}</p>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Food">
+        <th mat-header-cell *matHeaderCellDef>Food</th>
+        <td mat-cell *matCellDef="let element">{{ element.Food }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Percent">
+        <th mat-header-cell *matHeaderCellDef class="align-right">
+          % of Orders
+        </th>
+        <td mat-cell *matCellDef="let element" class="align-right">
+          {{ element.Percent.toFixed(1) }} %
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="AppearTime">
+        <th mat-header-cell *matHeaderCellDef class="align-right-padding">
+          Total
+        </th>
+        <td mat-cell *matCellDef="let element" class="align-right-padding">
+          {{ element.AppearTime }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="RelativePercent">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <div
+            [@changeState]="element ? 'hasData' : 'init'"
+            class="relative-percent-wrapper"
+          >
+            <div
+              class="relative-percent"
+              [ngStyle]="{
+                'width.%': element.RelativePercent
+              }"
+            ></div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      showFirstLastButtons
+      [pageSize]="5"
+      [hidePageSize]="true"
+    ></mat-paginator>
+  </div>
+  <div class="dialog-actions">
+    <button mat-raised-button (click)="closeDialog($event)">
+      Close
+    </button>
+  </div>
+</div>

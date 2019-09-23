@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material';
 export class EventDialogConfirmComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EventDialogConfirmComponent>,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: string
   ) {}
 
   ngOnInit() {

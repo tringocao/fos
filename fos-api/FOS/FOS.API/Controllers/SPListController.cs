@@ -67,7 +67,7 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var itemModel = _eventDtoMapper.ToModel(item);
+                var itemModel = _eventDtoMapper.DtoToDomain(item);
                 var result = _spListService.AddEventListItem(id, itemModel);
                 return ApiUtil<string>.CreateSuccessfulResult(result);
             }
@@ -80,7 +80,8 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var result = _eventService.GetAllEvent(userId);
+                var allEvent = _eventService.GetAllEvent(userId);
+                var result = _eventDtoMapper.ListDomainToDto(allEvent);
                 return ApiUtil<IEnumerable<Model.Dto.Event>>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
@@ -94,7 +95,8 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var result = _eventService.GetEvent(id);
+                var element = _eventService.GetEvent(id);
+                var result = _eventDtoMapper.DomainToDto(element);
                 return ApiUtil<Model.Dto.Event>.CreateSuccessfulResult(result);
             }
             catch (Exception e)
@@ -109,8 +111,23 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var domainItem = _eventDtoMapper.ToModel(item);
+                var domainItem = _eventDtoMapper.DtoToDomain(item);
                 await _spListService.UpdateListItem(id, domainItem);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("UpdateEventStatus")]
+        public async Task<ApiResponse> UpdateEventStatus(string id, string eventStatus)
+        {
+            try
+            {
+                await _spListService.UpdateEventStatus(id, eventStatus);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

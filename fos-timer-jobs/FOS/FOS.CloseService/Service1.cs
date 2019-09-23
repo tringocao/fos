@@ -16,6 +16,7 @@ using FOS.CoreService.EventServices;
 using FOS.CoreService.Constants;
 using Microsoft.SharePoint.Client;
 using System.Configuration;
+using FOS.CoreService.Models;
 
 namespace FOS.CloseService
 {
@@ -30,11 +31,7 @@ namespace FOS.CloseService
 
         protected override void OnStart(string[] args)
         {
-            var container = new UnityContainer();
-            RegisterUnity.Register(container);
-            coreService = container.Resolve<FosCoreService>();
-
-            CloseEventAutomatically();
+            CloseEvent();
 
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             timer.Interval = 60000; //number in milisecinds  
@@ -46,35 +43,70 @@ namespace FOS.CloseService
         }
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
+            timer.Enabled = false;
+            CloseEvent();
+            timer.Enabled = true;
         }
-        private void CloseEventAutomatically()
+        public void WriteToFile(string Message)
         {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\Logs";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\Logs\\ServiceLog_" + DateTime.Now.Date.ToShortDateString().Replace('/', '_') + ".txt";
+            if (!System.IO.File.Exists(filepath))
+            {
+                // Create a file to write to.   
+                using (StreamWriter sw = System.IO.File.CreateText(filepath))
+                {
+                    sw.WriteLine(Message);
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = System.IO.File.AppendText(filepath))
+                {
+                    sw.WriteLine(Message);
+                }
+            }
+        }
+        private void CloseEvent()
+        {
+            var container = new UnityContainer();
+            RegisterUnity.Register(container);
+            coreService = container.Resolve<FosCoreService>();
+
             using (var clientContext = coreService.GetClientContext())
             {
                 var events = coreService.GetListEventOpened(clientContext);
+
                 foreach (var element in events)
                 {
-                    var closeTimeString = element[EventConstant.EventTimeToClose].ToString();
+                    var closeTimeString = element["EventTimeToClose"] != null
+                        ? element["EventTimeToClose"].ToString() : "";
                     var closeTime = DateTime.Parse(closeTimeString).ToLocalTime();
-
+                    
                     if (DateTime.Now >= closeTime)
                     {
-                        ProcessAnEvent(clientContext, element);
+                        CloseAnEvent(clientContext, element);
                     }
                 }
             }
         }
-        private void ProcessAnEvent(ClientContext clientContext, ListItem element)
+        private void CloseAnEvent(ClientContext clientContext, ListItem element)
         {
             var clientUrl = ConfigurationSettings.AppSettings["clientUrl"];
             var noReplyEmail = ConfigurationSettings.AppSettings["noReplyEmail"];
 
-            coreService.CloseEvent(clientContext, element);
+            coreService.ChangeStatusToClose(clientContext, element);
 
+            CloseEventEmailTemplate emailTemplate = new CloseEventEmailTemplate();
+            emailTemplate.EventTitle = element[EventConstant.EventTitle].ToString();
+            emailTemplate.EventSummaryLink = coreService.BuildLink(clientUrl + "/events/summary/" + element["ID"], "link");
             var emailTemplateDictionary = coreService.GetEmailTemplate(EventConstant.CloseEventEmailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Body, out string body);
-            body = body.Replace(EventEmail.EventName, element[EventConstant.EventTitle].ToString())
-                .Replace(EventEmail.EventSummaryLink, coreService.BuildLink(clientUrl + "/events/summary/" + element["ID"], "link"));
+            body = coreService.Parse(body, emailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Subject, out string subject);
             var host = element[EventConstant.EventHost] as FieldUserValue;
 

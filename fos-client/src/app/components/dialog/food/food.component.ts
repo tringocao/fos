@@ -5,15 +5,15 @@ import {
   Input,
   Output,
   EventEmitter
-} from "@angular/core";
-import { MatSort, MatPaginator, MatTableDataSource } from "@angular/material";
-import { FoodCategory } from "src/app/models/food-category";
-import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
-import { DeliveryInfos } from "src/app/models/delivery-infos";
-import { RestaurantDetail } from "src/app/models/restaurant-detail";
-import { Food } from "src/app/models/food";
-import { SelectionModel } from "@angular/cdk/collections";
-import { FoodDetailJson } from "src/app/models/food-detail-json";
+} from '@angular/core';
+import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { FoodCategory } from 'src/app/models/food-category';
+import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
+import { RestaurantDetail } from 'src/app/models/restaurant-detail';
+import { Food } from 'src/app/models/food';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FoodDetailJson } from 'src/app/models/food-detail-json';
 
 interface RestaurantMore {
   restaurant: DeliveryInfos;
@@ -25,9 +25,9 @@ interface FoodCheck {
   checked: boolean;
 }
 @Component({
-  selector: "app-food",
-  templateUrl: "./food.component.html",
-  styleUrls: ["./food.component.less"]
+  selector: 'app-food',
+  templateUrl: './food.component.html',
+  styleUrls: ['./food.component.less']
 })
 export class FoodComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -35,21 +35,21 @@ export class FoodComponent implements OnInit {
   load = true;
   count = 0;
   foodCategory: FoodCategory[] = [];
-  @Input("data") data: RestaurantMore;
-  @Input("isOrder") isOrder: boolean;
+  @Input('data') data: RestaurantMore;
+  @Input('isOrder') isOrder: boolean;
   @Output() valueChange = new EventEmitter<FoodCheck>();
-  @Input("checkedData") checkedData: FoodDetailJson[];
+  @Input('checkedData') checkedData: FoodDetailJson[];
 
   docsOnThisPage: any[] = [];
   from: number;
   pageSize: number;
   constructor(private restaurantService: RestaurantService) {}
   displayedColumns2: string[] = [
-    "select",
-    "picture",
-    "name",
-    "description",
-    "price"
+    'select',
+    'picture',
+    'name',
+    'description',
+    'price'
   ];
   dataSource2: MatTableDataSource<Food>;
   selection = new SelectionModel<Food>(true, []);
@@ -71,9 +71,9 @@ export class FoodComponent implements OnInit {
     });
   }
   numberWithCommas2(x: Number) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
+    var parts = x.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
   }
   checked(row: Food) {
     this.selection.select(row);
@@ -92,22 +92,24 @@ export class FoodComponent implements OnInit {
   ngOnInit() {
     if (this.isOrder) {
       this.displayedColumns2 = [
-        "select",
-        "picture",
-        "name",
-        "description",
-        "price"
+        'select',
+        'Photos',
+        'Name',
+        'Description',
+        'Price'
       ];
     } else {
-      this.displayedColumns2 = ["picture", "name", "description", "price"];
+      this.displayedColumns2 = ['Photos', 'Name', 'Description', 'Price'];
     }
     this.GetFood(Number(this.data.restaurant.DeliveryId));
   }
   GetFood(deliveryId: number) {
-    this.restaurantService.getFood(deliveryId,this.data.idService).then(result => {
-      result.forEach(c => this.foodCategory.push(c));
-      this.showAll(this.foodCategory);
-    });
+    this.restaurantService
+      .getFood(deliveryId, this.data.idService)
+      .then(result => {
+        result.forEach(c => this.foodCategory.push(c));
+        this.showAll(this.foodCategory);
+      });
   }
   updateTable(dataSourceTemp: Food[]) {
     console.log(dataSourceTemp);

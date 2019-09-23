@@ -16,6 +16,11 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { from } from 'rxjs';
 import { GraphUser } from 'src/app/models/graph-user';
 import { element } from 'protractor';
+import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
+
+moment.locale('vi');
+
 @Component({
   selector: 'app-event-dialog-view',
   templateUrl: './event-dialog-view.component.html',
@@ -29,33 +34,38 @@ export class EventDialogViewComponent implements OnInit {
     public dialogRef: MatDialogRef<EventDialogViewComponent>,
     private orderService: OrderService
   ) {}
+  apiUrl = environment.apiUrl;
   eventTitle = '';
   eventHost = '';
   eventRestaurant = '';
   maximumBudget = '';
   dateTimeToClose = '';
   dateToReminder = '';
+  eventTime = '';
   displayedColumns = ['avatar', 'Name', 'Email', 'Order Status'];
   EventTime = '';
   EventStatus = '';
   EventType = '';
+  _environment = environment.apiUrl;
   ngOnInit() {
     //get user not order
     var self = this;
     console.log('EventId', this.data.EventId);
     var participants = JSON.parse(this.data.EventParticipantsJson);
+
     let promise = this.orderService
       .GetUserNotOrdered(this.data.EventId)
       .then(result => {
         result.forEach(element => {
           var participant = participants.filter(
-            item => item.id == element.UserId
+            item => item.Id == element.UserId
           );
+
           if (participant != null) {
             const userOrder: EventUser = {
-              Name: participant[0].displayName,
-              Email: participant[0].mail,
-              Id: participant[0].id,
+              Name: participant[0].DisplayName,
+              Email: participant[0].Mail,
+              Id: participant[0].Id,
               Img: '',
               IsGroup: 0,
               OrderStatus: 'Not order'
@@ -73,17 +83,17 @@ export class EventDialogViewComponent implements OnInit {
         var flag: Boolean = false;
 
         self.eventusers.forEach(element2 => {
-          if (element.id === element2.Id) {
+          if (element.Id === element2.Id) {
             flag = true;
           }
         });
 
         if (flag === false) {
-          console.log(element.displayName);
+          console.log(element.DisplayName);
           const userOrder: EventUser = {
-            Name: element.displayName,
-            Email: element.mail,
-            Id: element.id,
+            Name: element.DisplayName,
+            Email: element.Mail,
+            Id: element.Id,
             Img: '',
             IsGroup: 0,
             OrderStatus: 'Order'
@@ -97,16 +107,14 @@ export class EventDialogViewComponent implements OnInit {
     this.eventHost = this.data.HostName;
     this.eventRestaurant = this.data.Restaurant;
     this.maximumBudget = this.data.MaximumBudget.toString();
-    this.dateTimeToClose = this.data.CloseTime.toString()
-      .replace('T', ' ')
-      .replace('+07:00', '');
-    this.dateToReminder = this.data.RemindTime.toString()
-      .replace('T', ' ')
-      .replace('+07:00', '');
+    this.dateTimeToClose = moment(this.data.CloseTime).format(
+      'MM/DD/YYYY HH:mm'
+    );
+    this.dateToReminder = this.data.RemindTime
+      ? moment(this.data.RemindTime).format('MM/DD/YYYY HH:mm')
+      : ' ';
 
-    this.EventTime = this.data.EventDate.toString()
-      .replace('T', ' ')
-      .replace('+07:00', '');
+    this.EventTime = moment(this.data.EventDate).format('MM/DD/YYYY HH:mm');
     this.EventStatus = this.data.Status;
     this.EventType = this.data.EventType;
   }

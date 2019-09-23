@@ -56,6 +56,7 @@ namespace FOS
             Field EventDate = rootWeb.Fields.GetByInternalNameOrTitle("EventDate");
             Field EventStatus = rootWeb.Fields.GetByInternalNameOrTitle("EventStatus");
             Field EventParticipantsJson = rootWeb.Fields.GetByInternalNameOrTitle("EventParticipantsJson");
+            Field EventIsReminder = rootWeb.Fields.GetByInternalNameOrTitle("EventIsReminder");
             ContentType sessionContentType = rootWeb.ContentTypes.GetById(contentTypeId);
 
             sessionContentType.FieldLinks.Add(new FieldLinkCreationInformation
@@ -130,6 +131,10 @@ namespace FOS
             sessionContentType.FieldLinks.Add(new FieldLinkCreationInformation
             {
                 Field = EventParticipantsJson
+            });
+            sessionContentType.FieldLinks.Add(new FieldLinkCreationInformation
+            {
+                Field = EventIsReminder
             });
             sessionContentType.Update(true);
             clientContext.ExecuteQuery();

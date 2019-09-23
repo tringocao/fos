@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using FOS.Services.OrderServices;
+using FOS.Common.Constants;
+using FOS.Model.Mapping;
 
 namespace FOS.Services.SPListService
 {
@@ -56,27 +58,29 @@ namespace FOS.Services.SPListService
                     FieldUserValue userValue = new FieldUserValue();
                     userValue.LookupId = newUser.Id;
 
-                    List members = context.Web.Lists.GetByTitle("Event List");
+                    List members = context.Web.Lists.GetByTitle(EventFieldName.EventList);
                     Microsoft.SharePoint.Client.ListItem listItem = members.AddItem(new ListItemCreationInformation());
-                    listItem["EventHost"] = userValue;
-                    listItem["EventTitle"] = eventData.Name;
-                    listItem["EventId"] = 1;
-                    listItem["EventRestaurant"] = eventData.Restaurant;
-                    listItem["EventMaximumBudget"] = eventData.MaximumBudget;
-                    listItem["EventTimeToClose"] = eventData.CloseTime;
-                    listItem["EventTimeToReminder"] = eventData.RemindTime;
-                    listItem["EventParticipants"] = eventData.Participants;
-                    listItem["EventCategory"] = eventData.Category;
+                    listItem[EventFieldName.EventHost] = userValue;
+                    listItem[EventFieldName.EventTitle] = eventData.Name;
+                    listItem[EventFieldName.EventId] = 1;
+                    listItem[EventFieldName.EventRestaurant] = eventData.Restaurant;
+                    listItem[EventFieldName.EventMaximumBudget] = eventData.MaximumBudget;
+                    listItem[EventFieldName.EventTimeToClose] = eventData.CloseTime;
+                    listItem[EventFieldName.EventTimeToReminder] = eventData.RemindTime;
+                    listItem[EventFieldName.EventParticipants] = eventData.Participants;
+                    listItem[EventFieldName.EventCategory] = eventData.Category;
 
-                    listItem["EventRestaurantId"] = eventData.RestaurantId;
-                    listItem["EventServiceId"] = eventData.ServiceId;
-                    listItem["EventDeliveryId"] = eventData.DeliveryId;
-                    listItem["EventCreatedUserId"] = eventData.CreatedBy;
-                    listItem["EventHostId"] = eventData.HostId;
-                    listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
-                    listItem["EventDate"] = eventData.EventDate;
-                    listItem["EventStatus"] = eventData.Status;
-                    listItem["EventTypes"] = eventData.EventType;
+                    listItem[EventFieldName.EventRestaurantId] = eventData.RestaurantId;
+                    listItem[EventFieldName.EventServiceId] = eventData.ServiceId;
+                    listItem[EventFieldName.EventDeliveryId] = eventData.DeliveryId;
+                    listItem[EventFieldName.EventCreatedUserId] = eventData.CreatedBy;
+                    listItem[EventFieldName.EventHostId] = eventData.HostId;
+                    listItem[EventFieldName.EventParticipantsJson] = eventData.EventParticipantsJson;
+                    listItem[EventFieldName.EventDate] = eventData.EventDate;
+                    listItem[EventFieldName.EventStatus] = eventData.Status;
+                    listItem[EventFieldName.EventTypes] = eventData.EventType;
+                    listItem[EventFieldName.EventIsReminder] = EventIsReminder.No;
+
                     listItem.Update();
                     context.ExecuteQuery();
 
@@ -108,29 +112,49 @@ namespace FOS.Services.SPListService
                     FieldUserValue userValue = new FieldUserValue();
                     userValue.LookupId = newUser.Id;
 
-                    List members = context.Web.Lists.GetByTitle("Event List");
+                    List members = context.Web.Lists.GetByTitle(EventFieldName.EventList);
 
                     ListItem listItem = members.GetItemById(id);
 
-                    listItem["EventHost"] = userValue;
-                    listItem["EventTitle"] = eventData.Name;
-                    listItem["EventId"] = 1;
-                    listItem["EventRestaurant"] = eventData.Restaurant;
-                    listItem["EventMaximumBudget"] = eventData.MaximumBudget;
-                    listItem["EventTimeToClose"] = eventData.CloseTime;
-                    listItem["EventTimeToReminder"] = eventData.RemindTime;
-                    listItem["EventParticipants"] = eventData.Participants;
-                    listItem["EventCategory"] = eventData.Category;
+                    //listItem["EventHost"] = userValue;
+                    //listItem["EventTitle"] = eventData.Name;
+                    //listItem["EventId"] = 1;
+                    //listItem["EventRestaurant"] = eventData.Restaurant;
+                    //listItem["EventMaximumBudget"] = eventData.MaximumBudget;
+                    //listItem["EventTimeToClose"] = eventData.CloseTime;
+                    //listItem["EventTimeToReminder"] = eventData.RemindTime;
+                    //listItem["EventParticipants"] = eventData.Participants;
+                    //listItem["EventCategory"] = eventData.Category;
 
-                    listItem["EventRestaurantId"] = eventData.RestaurantId;
-                    listItem["EventServiceId"] = eventData.ServiceId;
-                    listItem["EventDeliveryId"] = eventData.DeliveryId;
-                    listItem["EventCreatedUserId"] = eventData.CreatedBy;
-                    listItem["EventHostId"] = eventData.HostId;
-                    listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
-                    listItem["EventDate"] = eventData.EventDate;
-                    listItem["EventStatus"] = eventData.Status;
-                    listItem["EventTypes"] = eventData.EventType;
+                    //listItem["EventRestaurantId"] = eventData.RestaurantId;
+                    //listItem["EventServiceId"] = eventData.ServiceId;
+                    //listItem["EventDeliveryId"] = eventData.DeliveryId;
+                    //listItem["EventCreatedUserId"] = eventData.CreatedBy;
+                    //listItem["EventHostId"] = eventData.HostId;
+                    //listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
+                    //listItem["EventDate"] = eventData.EventDate;
+                    //listItem["EventStatus"] = eventData.Status;
+                    //listItem["EventTypes"] = eventData.EventType;
+
+                    listItem[EventFieldName.EventHost] = userValue;
+                    listItem[EventFieldName.EventTitle] = eventData.Name;
+                    listItem[EventFieldName.EventId] = 1;
+                    listItem[EventFieldName.EventRestaurant] = eventData.Restaurant;
+                    listItem[EventFieldName.EventMaximumBudget] = eventData.MaximumBudget;
+                    listItem[EventFieldName.EventTimeToClose] = eventData.CloseTime;
+                    listItem[EventFieldName.EventTimeToReminder] = eventData.RemindTime;
+                    listItem[EventFieldName.EventParticipants] = eventData.Participants;
+                    listItem[EventFieldName.EventCategory] = eventData.Category;
+
+                    listItem[EventFieldName.EventRestaurantId] = eventData.RestaurantId;
+                    listItem[EventFieldName.EventServiceId] = eventData.ServiceId;
+                    listItem[EventFieldName.EventDeliveryId] = eventData.DeliveryId;
+                    listItem[EventFieldName.EventCreatedUserId] = eventData.CreatedBy;
+                    listItem[EventFieldName.EventHostId] = eventData.HostId;
+                    listItem[EventFieldName.EventParticipantsJson] = eventData.EventParticipantsJson;
+                    listItem[EventFieldName.EventDate] = eventData.EventDate;
+                    listItem[EventFieldName.EventStatus] = eventData.Status;
+                    listItem[EventFieldName.EventTypes] = eventData.EventType;
                     listItem.Update();
                     context.ExecuteQuery();
                 }
@@ -148,16 +172,16 @@ namespace FOS.Services.SPListService
             {
                 using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
                 {
-                    List members = context.Web.Lists.GetByTitle("Event List");
+                    List members = context.Web.Lists.GetByTitle(EventFieldName.EventList);
 
                     ListItem listItem = members.GetItemById(id);
-                    context.Load(listItem, li => li["EventParticipantsJson"]);
+                    context.Load(listItem, li => li[EventFieldName.EventParticipantsJson]);
                     context.ExecuteQuery();
 
-                    var EventParticipantsJson = JsonConvert.DeserializeObject<List<Model.Dto.GraphUser>>(listItem.FieldValues["EventParticipantsJson"].ToString());
+                    var EventParticipantsJson = JsonConvert.DeserializeObject<List<Model.Dto.GraphUser>>(listItem.FieldValues[EventFieldName.EventParticipantsJson].ToString());
                     EventParticipantsJson.Add(participant);
 
-                    listItem["EventParticipantsJson"] = JsonConvert.SerializeObject(EventParticipantsJson).ToString();
+                    listItem[EventFieldName.EventParticipantsJson] = JsonConvert.SerializeObject(EventParticipantsJson).ToString();
                     listItem.Update();
                     context.ExecuteQuery();
                 }
@@ -173,6 +197,52 @@ namespace FOS.Services.SPListService
             try
             {
                 return  _orderService.DeleteOrderByIdEvent(idEvent);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task UpdateEventIsReminder(string idEvent, string isReminder)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(idEvent);
+
+                    listItem["EventIsReminder"] = isReminder;
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task UpdateEventStatus(string id, string status)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(id);
+                    context.Load(listItem, li => li["EventStatus"]);
+                    context.ExecuteQuery();
+
+                    listItem["EventStatus"] = status;
+
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
             }
             catch (Exception e)
             {

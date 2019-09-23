@@ -177,5 +177,38 @@ namespace FOS.Services.SPUserService
                 throw new Exception(await result.Content.ReadAsStringAsync());
             }
         }
+        public async Task<List<Group>> SearchGroupByName(string groupName)
+        {
+            //String queryString = String.Format("groups?$filter=startswith(mail,'{0}')", groupName);
+            String queryString = String.Format("me/people/?$search={0}", groupName);
+            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, queryString, null);
+
+            if (result.IsSuccessStatusCode)
+            {
+                var resultGroup = await result.Content.ReadAsStringAsync();
+
+                dynamic response = JsonConvert.DeserializeObject(resultGroup);
+
+                List<Model.Domain.Group> jsonUsers = response.value.ToObject<List<Model.Domain.Group>>();
+
+                List<Model.Domain.Group> ListSearchUser = new List<Group>();
+
+                foreach (var item in jsonUsers)
+                {
+                    var modelGroup = new Model.Domain.Group()
+                    {
+                        DisplayName = item.DisplayName,
+                        Id = item.Id,
+                        Mail = item.ScoredEmailAddresses[0].Address
+                    };
+                    ListSearchUser.Add(modelGroup);
+                }
+                return ListSearchUser;
+            }
+            else
+            {
+                throw new Exception(await result.Content.ReadAsStringAsync());
+            }
+        }
     }
 }

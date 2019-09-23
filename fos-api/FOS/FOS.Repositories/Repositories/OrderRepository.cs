@@ -16,9 +16,11 @@ namespace FOS.Repositories.Repositories
         IEnumerable<Order> GetAllOrder();
         IEnumerable<DataModel.Order> GetAllOrderByEventId(string eventId);
         bool UpdateOrder(DataModel.Order order);
-        IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId);
+        IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId);
         DataModel.Order GetOrderByEventIdvsUserId(string eventid, string userId);
         bool DeleteOrderByIdEvent(string idEvent);
+        IEnumerable<DataModel.Order> GetOrdersOfSpecificRestaurant(string restaurantId, string deliveryId);
+        List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
     }
 
     public class OrderRepository : IOrderRepository
@@ -81,15 +83,14 @@ namespace FOS.Repositories.Repositories
             return list;
         }
 
-        public IEnumerable<Model.Dto.UserNotOrder> GetUserNotOrdered(string eventId)
+        public IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             var orders = _context.Orders.Where(order => 
-            order.IdEvent == eventId && order.IsOrdered == false).ToList();
-
-            var result = new List<Model.Dto.UserNotOrder>();
+            order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
+            var result = new List<Model.Domain.UserNotOrder>();
             foreach(var order in orders)
             {
-                var item = new Model.Dto.UserNotOrder();
+                var item = new Model.Domain.UserNotOrder();
                 item.OrderId = order.Id;
                 item.UserId = order.IdUser;
                 result.Add(item);
@@ -117,6 +118,30 @@ namespace FOS.Repositories.Repositories
             {
                 throw e;
             }
+        }
+        public IEnumerable<DataModel.Order> GetOrdersOfSpecificRestaurant(string restaurantId, string deliveryId)
+        {
+            var deliveryIdInt = Int32.Parse(deliveryId);
+            var restaurantIdInt = Int32.Parse(restaurantId);
+            var result = _context.Orders.Where(o => o.IdDelivery == deliveryIdInt
+                    && o.IdRestaurant == restaurantIdInt).ToList();
+            return result;
+        }
+        public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId)
+        {
+            var orders = _context.Orders.Where(order =>
+            order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
+
+            var result = new List<Model.Domain.UserNotOrderEmail>();
+            foreach (var order in orders)
+            {
+                var item = new Model.Domain.UserNotOrderEmail();
+                item.OrderId = order.Id;
+                item.UserEmail = order.Email;
+                result.Add(item);
+            }
+
+            return result;
         }
     }
 }

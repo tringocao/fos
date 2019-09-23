@@ -22,6 +22,7 @@ namespace FOS.Services
         Task SaveTokensAsync(string code);
         Task<string> RefreshTokenAsync();
         Task<bool> CheckAuthenticationAsync();
+        string LogOut();
     }
 
     public class OAuthService : IOAuthService
@@ -179,6 +180,17 @@ namespace FOS.Services
                 return false;
             }
             return false;
+        }
+
+        public string LogOut()
+        {
+            var tenant = WebConfigurationManager.AppSettings[OAuth.TENANT];
+            var redirectUri = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+            var scope = WebConfigurationManager.AppSettings[OAuth.SCOPE];
+
+            var path = "https://login.microsoftonline.com/" + tenant + "/oauth2/logout?" +
+                        "post_logout_redirect_uri=" + redirectUri;
+            return path;
         }
     }
 }

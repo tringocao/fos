@@ -19,6 +19,7 @@
         public IdRestaurant: number = 0;   
         public IdDelivery: number = 0;   
         public FoodDetail: FoodDetailJson[] = [];   
-        public IsOrdered: boolean = false;
+        public IsOrdered: boolean = false;   
+        public Email: string = null;
     }
          
