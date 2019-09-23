@@ -2,6 +2,7 @@
 using FOS.Common.Constants;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
+using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.SendEmailServices;
 using Glimpse.AspNet.Tab;
@@ -22,9 +23,11 @@ namespace FOS.API.Controllers
     public class SendEmailController : ApiController
     {
         ISendEmailService _sendEmailService;
-        public SendEmailController(ISendEmailService sendEmailService)
+        private readonly INewGraphUserDtoMapper _newGraphUserDtoMapper;
+        public SendEmailController(ISendEmailService sendEmailService, INewGraphUserDtoMapper mapper)
         {
             _sendEmailService = sendEmailService;
+            _newGraphUserDtoMapper = mapper;
         }
         [HttpGet]
         [Route("SendEmail")]
@@ -51,6 +54,30 @@ namespace FOS.API.Controllers
                 string path = System.Web.HttpContext.Current.Server.MapPath(Constant.RemindEventEmailTemplate);
                 string emailTemplateJson = System.IO.File.ReadAllText(path);
                 await _sendEmailService.SendEmailToNotOrderedUserAsync(users, emailTemplateJson);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpPost]
+        [Route("SendMailUpdateEvent")]
+        public async Task<ApiResponse> SendMailUpdateEvent([FromBody]UpdateEvent updateEvent)
+        {
+            try
+            { 
+                string path = System.Web.HttpContext.Current.Server.MapPath(Constant.email_template);
+                string html = System.IO.File.ReadAllText(path);
+
+                var removeListUserDomain = updateEvent.RemoveListUser.Select(
+                   removeList => _newGraphUserDtoMapper.ToDomain(removeList)
+               ).ToList();
+
+                var newListUserDomain = updateEvent.NewListUser.Select(
+                    newList => _newGraphUserDtoMapper.ToDomain(newList)).ToList();
+
+                await _sendEmailService.SendMailUpdateEvent(removeListUserDomain, newListUserDomain, updateEvent.IdEvent, html);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

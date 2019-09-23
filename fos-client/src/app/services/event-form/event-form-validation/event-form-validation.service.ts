@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { EventUser } from 'src/app/models/eventuser';
 import { DeliveryInfos } from 'src/app/models/delivery-infos';
 import { Event } from './../../../models/event';
+import { GraphUser } from 'src/app/models/graph-user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +12,46 @@ export class EventFormValidationService {
 
   CheckEventChangeRestaurant(
     currentDataEvent: Event,
-    currentRestaurant: DeliveryInfos,
-    newtUsers: EventUser
+    changeRestaurant: DeliveryInfos,
   ): Boolean {
-    if (currentDataEvent.RestaurantId !== currentRestaurant.RestaurantId) {
-      return false;
+    var checkRestaurant: Boolean = false;
+    if (currentDataEvent.RestaurantId !== changeRestaurant.RestaurantId
+      && currentDataEvent.DeliveryId !== changeRestaurant.DeliveryId) {
+      checkRestaurant = true;
     }
+    return checkRestaurant;
   }
-  CheckEventChangeParticipants(
+
+  GetNewParticipants(
     currentDataEvent: Event,
-    changeUsers: EventUser[]
-  ) {
-    // currentDataEvent.EventParticipantsJson.forEach(element => {
-    // });
-    // var findUser = changeUsers.find(u => u.Id === currentDataEvent.)
+    changeUsers: GraphUser[]
+  ): Array<GraphUser> {
+    var participants = JSON.parse(currentDataEvent.EventParticipantsJson);
+    var newUser: GraphUser[] = [];
+
+    changeUsers.forEach(element => {
+      var user: GraphUser[] = participants.filter(
+        item => item.Mail === element.Mail
+      );
+      if(user.length == 0){
+        newUser.push(element);
+      }
+    });
+    return newUser;
+  }
+
+  GetRemoveParticipants(
+    currentDataEvent: Event,
+    changeUsers: GraphUser[]
+  ): Array<GraphUser> {
+    var participants: GraphUser[] = JSON.parse(currentDataEvent.EventParticipantsJson);
+    var removeList: GraphUser[] = [];
+    participants.forEach(element => {
+      var removeUser: GraphUser[] = changeUsers.filter(u => u.Mail === element.Mail);
+      if(removeUser.length == 0){
+        removeList.push(element);
+      }
+    });
+    return removeList;
   }
 }

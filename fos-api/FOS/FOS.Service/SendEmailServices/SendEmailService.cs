@@ -143,16 +143,22 @@ namespace FOS.Services.SendEmailServices
         {
             return value.Split('.')[1].Split('%')[0];
         }
-        public async Task SendUpdateEventMail(List<User> listUpdateUser, string idEvent, string html)
+
+        public async Task SendMailUpdateEvent(List<Model.Domain.GraphUser> removeListUser, List<Model.Domain.GraphUser> newListUser, string idEvent, string html)
         {
+            foreach(var deleteUser in removeListUser)
+            {
+                 _orderService.DeleteOrderByUserId(deleteUser.Id, idEvent);
+            }
+
             ReadEmailTemplate(html);
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-            {
+            {   
                 await GetDataByEventIdAsync(clientContext, idEvent);
                 var emailp = new EmailProperties();
                 string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
 
-                foreach (var user in listUpdateUser)
+                foreach (var user in newListUser)
                 {
                     Guid idOrder = Guid.NewGuid();
                     emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;

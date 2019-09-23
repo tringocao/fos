@@ -109,6 +109,7 @@
     <Compile Include="Domain\EventList.cs" />
     <Compile Include="Domain\EventListItem.cs" />
     <Compile Include="Domain\FavoriteRestaurant.cs" />
+    <Compile Include="Domain\GraphUser.cs" />
     <Compile Include="Domain\Group.cs" />
     <Compile Include="Domain\Host.cs" />
     <Compile Include="Domain\JSONRequest.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Dto\Restaurant.cs" />
     <Compile Include="Dto\RestaurantDetail.cs" />
     <Compile Include="Dto\RestaurantSummary.cs" />
+    <Compile Include="Dto\UpdateEvent.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Dto\UserNotOrder.cs" />
     <Compile Include="Dto\UserNotOrderEmail.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="Mapping\GraphUserDtoMapper.cs" />
     <Compile Include="Mapping\GroupDtoMapper.cs" />
     <Compile Include="Mapping\JsonDtoMapper.cs" />
+    <Compile Include="Mapping\NewGraphUserDtoMapper.cs" />
     <Compile Include="Mapping\OrderDtoMapper.cs" />
     <Compile Include="Mapping\ProvinceDtoMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventDtoMapper.cs" />
@@ -861,6 +864,18 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Restaurant.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\update-event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UpdateEvent.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\update-event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UpdateEvent.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\update-event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UpdateEvent.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-not-order-email.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

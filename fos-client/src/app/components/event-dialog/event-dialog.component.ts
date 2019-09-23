@@ -275,7 +275,7 @@ export class EventDialogComponent implements OnInit {
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
 
-    if(!choosingUser){
+    if(!choosingUser.Email){
       return;
     }
     console.log('choose User', choosingUser);
@@ -301,7 +301,7 @@ export class EventDialogComponent implements OnInit {
   SaveToSharePointEventList(): void {
     var self = this;
     if (self.eventUsers.length == 0) {
-      alert("Please choose participants!");
+      self.toast('Please choose participants!', 'Dismiss');
       return;
     }
    

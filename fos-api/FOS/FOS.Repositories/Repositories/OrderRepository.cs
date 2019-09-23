@@ -21,6 +21,7 @@ namespace FOS.Repositories.Repositories
         bool DeleteOrderByIdEvent(string idEvent);
         IEnumerable<DataModel.Order> GetOrdersOfSpecificRestaurant(string restaurantId, string deliveryId);
         List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
+        bool DeleteOrderByUserId(string idUser, string idEvent);
     }
 
     public class OrderRepository : IOrderRepository
@@ -142,6 +143,21 @@ namespace FOS.Repositories.Repositories
             }
 
             return result;
+        }
+        public bool DeleteOrderByUserId(string idUser, string idEvent)
+        {
+            try
+            {
+                Order user = _context.Orders.First(o => o.IdUser == idUser
+                && o.IdEvent == idEvent);
+                _context.Orders.Remove(user);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

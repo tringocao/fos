@@ -40,6 +40,9 @@ import { EventDialogConfirmComponent } from '../event-dialog-confirm/event-dialo
 import { environment } from 'src/environments/environment';
 import { debug } from 'util';
 import { SummaryService } from 'src/app/services/summary/summary.service';
+import { EventFormValidationService } from 'src/app/services/event-form/event-form-validation/event-form-validation.service';
+import { EventFormMailService } from 'src/app/services/event-form/event-form-mail/event-form-mail.service';
+import { UpdateEvent } from 'src/app/models/update-event';
 
 @Component({
   selector: 'app-event-dialog-edit',
@@ -57,7 +60,9 @@ export class EventDialogEditComponent implements OnInit {
     private snackBar: MatSnackBar,
     private orderService: OrderService,
     public dialog: MatDialog,
-    private summaryService: SummaryService
+    private summaryService: SummaryService,
+    private eventValidationService: EventFormValidationService,
+    private eventMail: EventFormMailService
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -120,6 +125,11 @@ export class EventDialogEditComponent implements OnInit {
   loading: boolean;
   eventListItem: Event = null;
   enviroment = environment.apiUrl;
+
+  checkRestaurant: Boolean = false;
+
+  removeListUser: GraphUser[] = [];
+  newListUser: GraphUser[] = [];
 
   ngOnInit() {
     var self = this;
@@ -285,6 +295,10 @@ export class EventDialogEditComponent implements OnInit {
       self.toast('Please choose participants!', 'Dismiss');
       return;
     }
+
+    //check edit change
+    self.checkRestaurant = self.eventValidationService.CheckEventChangeRestaurant(self.data, self.ownerForm.get('userInput').value);
+    
     this.loading = true;
 
     var jsonParticipants: GraphUser[] = [];
@@ -341,7 +355,12 @@ export class EventDialogEditComponent implements OnInit {
       : '';
 
     Promise.all(promises).then(function() {
-      var myJSON = JSON.stringify(jsonParticipants);
+      
+      //check list added user and removed user
+      self.newListUser = self.eventValidationService.GetNewParticipants(self.data, jsonParticipants);
+      self.removeListUser = self.eventValidationService.GetRemoveParticipants(self.data,jsonParticipants);
+      var myJSON: string = JSON.stringify(jsonParticipants);
+      
       self.eventListItem = {
         Name: self.ownerForm.get('title').value,
         EventId: self.ownerForm.get('title').value,
@@ -366,16 +385,6 @@ export class EventDialogEditComponent implements OnInit {
       };
       self.loading = false;
       self.openDialog();
-      debugger;
-      // self.eventFormService
-      //   .UpdateEventListItem(self.data.EventId, eventListitem)
-      //   .toPromise()
-      //   .then(result => {
-      //     console.log('Update', result);
-      //     self.SendEmail(self.data.EventId);
-      //     self.toast('update new event!', 'Dismiss');
-      //     self.dialogRef.close();
-      //   });
     });
   }
 
@@ -386,12 +395,29 @@ export class EventDialogEditComponent implements OnInit {
       data:
         'If you update event information, system will resend email to all attendees.'
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (self.eventListItem) {
           self.loading = true;
-          self.eventFormService
+          if(this.checkRestaurant === false){
+            self.eventFormService
+            .UpdateEventListItem(self.data.EventId, self.eventListItem)
+            .toPromise()
+            .then(result => {
+              var updateEvent: UpdateEvent = {
+                IdEvent: self.data.EventId,
+                NewListUser: self.newListUser,
+                RemoveListUser: self.removeListUser
+              }
+              self.eventMail.SendMailUpdateEvent(updateEvent).then(value=>{
+                window.location.reload();
+              })
+            });
+            
+          }
+          else{
+            self.eventFormService
             .UpdateEventListItem(self.data.EventId, self.eventListItem)
             .toPromise()
             .then(result => {
@@ -399,6 +425,7 @@ export class EventDialogEditComponent implements OnInit {
               self.SendEmail(self.data.EventId);
               window.location.reload();
             });
+          }
         }
       }
     });
@@ -422,7 +449,7 @@ export class EventDialogEditComponent implements OnInit {
     console.log(this.userSelect);
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
-    if(!choosingUser){
+    if(!choosingUser.Email){
       return;
     }
     console.log('choose User', choosingUser);
@@ -434,15 +461,17 @@ export class EventDialogEditComponent implements OnInit {
       }
     });
     if (flag === false) {
-      this.eventUsers.push({
-        Name: choosingUser.Name,
-        Email: choosingUser.Email,
-        Img: '',
-        Id: choosingUser.Id,
-        IsGroup: 0,
-        OrderStatus: 'Not Order'
-      });
-      this.table.renderRows();
+      if(choosingUser.Email){
+        self.eventUsers.push({
+          Name: choosingUser.Name,
+          Email: choosingUser.Email,
+          Img: '',
+          Id: choosingUser.Id,
+          IsGroup: 0,
+          OrderStatus: 'Not Order'
+        });
+        self.table.renderRows();
+      }
     }
   }
 
