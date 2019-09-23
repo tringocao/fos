@@ -551,6 +551,8 @@
     <Content Include="App_Data\RemindEventEmailTemplate.json" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="bin\App_Data\RemindEmailTemplate.json" />
+    <Content Include="App_Data\RemindEmailTemplate.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -591,7 +593,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="obj\" />
   </ItemGroup>

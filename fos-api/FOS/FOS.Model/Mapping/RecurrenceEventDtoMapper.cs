@@ -24,7 +24,9 @@ namespace FOS.Model.Mapping
                 EndDate = recurrenceEvent.EndDate,
                 StartDate = recurrenceEvent.StartDate,
                 UserId = recurrenceEvent.UserId != null ? recurrenceEvent.UserId : null,
-                UserMail = recurrenceEvent.UserMail
+                UserMail = recurrenceEvent.UserMail,
+                StartTempDate = recurrenceEvent.StartTempDate,
+                Version = recurrenceEvent.Version
             };
         }
 
@@ -38,8 +40,8 @@ namespace FOS.Model.Mapping
                 EndDate = recurrenceEvent.EndDate.ToLocalTime(),
                 StartDate = recurrenceEvent.StartDate.ToLocalTime(),
                 UserId = recurrenceEvent.UserId != null ? recurrenceEvent.UserId : null,
-                StartTempDate = recurrenceEvent.StartDate,
-                IsReminding = false,
+                StartTempDate = recurrenceEvent.StartTempDate,
+                Version = recurrenceEvent.Version,
                 UserMail = recurrenceEvent.UserMail
 
             };

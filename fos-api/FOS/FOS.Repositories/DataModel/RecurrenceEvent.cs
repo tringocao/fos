@@ -12,7 +12,9 @@ namespace FOS.Repositories.DataModel
         public string UserMail { get; set; }
         public string StartDate { get; set; }
         public string StartTempDate { get; set; } // StartTempDate = StartDate + next reminder(option if weekly or monthly)
-        public bool IsReminding { get; set; }//If thread is died before send email, the windown service will ignore until the thread is finished sucessfully
+        public int Version { get; set; }
+        public bool CheckForWorkDaily { get; set; }
+
         public string EndDate { get; set; }
         public string Title { get; set; }
         public int Id { get; set; }

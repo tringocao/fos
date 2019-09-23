@@ -152,7 +152,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\Logs\ServiceLog_9_18_2019.txt" />
+    <Folder Include="bin\Debug\Logs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

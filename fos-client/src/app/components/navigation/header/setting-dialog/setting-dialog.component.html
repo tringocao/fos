@@ -63,7 +63,7 @@
       <mat-form-field>
         <mat-label>Repeat</mat-label>
         <mat-select formControlName="selectRepeatType">
-          <mat-option *ngFor="let symbol of keys(symbols)" [value]="symbol">
+          <mat-option *ngFor="let symbol of nameRepeatType" [value]="symbol">
             {{ symbol }}
           </mat-option>
         </mat-select>
@@ -72,7 +72,7 @@
         <button mat-flat-button color="primary" (click)="getAllValue()">
           Save
         </button>
-        <button mat-flat-button (click)="OnNoClick()">
+        <button mat-flat-button (click)="removeRecurrenceEvent()">
           Cancel
         </button>
       </mat-card-actions>

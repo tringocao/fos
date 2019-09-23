@@ -26,7 +26,7 @@ namespace FOS.Repositories.Mapping
                 StartDate = DateTime.Parse(efObject.StartDate),
                 UserId = efObject.UserId != null ? efObject.UserId : null,
                 StartTempDate = efObject.StartTempDate != null ? DateTime.Parse(efObject.StartTempDate): DateTime.Parse(efObject.StartDate),
-                IsReminding = efObject.IsReminding,
+                Version = efObject.Version,
                 UserMail = efObject.UserMail
             };
         }
@@ -39,7 +39,7 @@ namespace FOS.Repositories.Mapping
             efObject.StartDate = domObject.StartDate.ToString();
             efObject.EndDate = domObject.EndDate.ToString();
             efObject.UserId = domObject.UserId != null ? domObject.UserId : null;
-            efObject.IsReminding = domObject.IsReminding;
+            efObject.Version = domObject.Version;
             efObject.StartTempDate = domObject.StartTempDate.ToString();
             efObject.UserMail = domObject.UserMail;
 

@@ -14,6 +14,8 @@
            
         public StartDate: Date = new Date(0);   
         public EndDate: Date = new Date(0);   
+        public StartTempDate: Date = new Date(0);   
+        public Version: number = 0;   
         public Title: string = null;   
         public Id: number = 0;   
         public TypeRepeat: RepeateType = null;   

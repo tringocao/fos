@@ -20,6 +20,7 @@ export class SettingDialogComponent implements OnInit {
   endDate: Date;
   startTime: string;
   endTime: string;
+  nameRepeatType: string[] = [];
   constructor(
     public dialogRef: MatDialogRef<SettingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User,
@@ -69,7 +70,15 @@ export class SettingDialogComponent implements OnInit {
             this.startDate.getMinutes()
         );
       this.recForm.get("titleInput").setValue(e.Title);
-      this.recForm.get("selectRepeatType").setValue(e.TypeRepeat);
+      this.recForm
+        .get("selectRepeatType")
+        .setValue(RepeateType[e.TypeRepeat].toString());
+      for (var enumMember in RepeateType) {
+        var isValueProperty = parseInt(enumMember, 10) >= 0;
+        if (isValueProperty) {
+          this.nameRepeatType.push(RepeateType[enumMember].toString());
+        }
+      }
     });
   }
   saveAll() {
@@ -99,9 +108,21 @@ export class SettingDialogComponent implements OnInit {
     this.recurrenceEvent.EndDate = this.endDate;
 
     this.recurrenceEvent.Title = this.recForm.get("titleInput").value;
-    this.recurrenceEvent.TypeRepeat = this.recForm.get(
-      "selectRepeatType"
-    ).value;
+    this.recurrenceEvent.TypeRepeat = this.stringToEnum<
+      typeof RepeateType,
+      RepeateType
+    >(RepeateType, this.recForm.get("selectRepeatType").value);
     this.saveAll();
+  }
+  stringToEnum<ET, T>(enumObj: ET, str: keyof ET): T {
+    return enumObj[<string>str];
+  }
+  removeRecurrenceEvent() {
+    if (this.recurrenceEvent.Id != 0) {
+      this.recurrenceEventService.removeRecurrenceEvent(
+        this.recurrenceEvent.Id
+      );
+    }
+    this.dialogRef.close();
   }
 }

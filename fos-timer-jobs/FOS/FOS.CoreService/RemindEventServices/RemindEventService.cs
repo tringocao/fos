@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FOS.CoreService.RemindEventServices
 {
-    public class RemindEventService
+    public class RemindEventService: IRemindEventServiceWS
     {
         IRecurrenceEventService _recurrenceEventService;
         ISPUserService _iSPUserService;
@@ -40,6 +40,10 @@ namespace FOS.CoreService.RemindEventServices
         public string Parse<T>(string text, T modelparse)
         {
             return _sendEmailService.Parse(text, modelparse);
+        }
+        public void checkRemindedTask()
+        {
+            _recurrenceEventService.checkRemindedTask();
         }
     }
 }

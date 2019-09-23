@@ -18,6 +18,7 @@ namespace FOS.Repositories.Repositories
             try
             {
                 DataModel.RecurrenceEvent deleteRec =  _context.RecurrenceEvents.Find(id);
+                if (deleteRec == null) return true;
                 _context.RecurrenceEvents.Remove(deleteRec);
                 _context.SaveChanges();
 
@@ -76,7 +77,7 @@ namespace FOS.Repositories.Repositories
                 UserId = Userid,
                 Title = "Unknown",
                 TypeRepeat = "Daily",
-                IsReminding = false,
+                Version = 1,
                 StartTempDate = DateTime.Now.ToString(),
                 UserMail = ""
             };
