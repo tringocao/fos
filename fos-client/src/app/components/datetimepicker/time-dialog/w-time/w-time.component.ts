@@ -71,14 +71,12 @@ export class WTimeComponent implements OnInit {
   }
 
   public submit() {
-    console.log(this.userTime)
     // this.userTime.hour = this.formatHour(24, this.userTime.hour);
     // this.userTime.minute = this.formatHour(24, this.userTime.minute);
     this.onSubmit.emit(this.userTime);
   }
 
   public emituserTimeChange(event) {
-    console.log(this.userTime)
     this.userTimeChange.emit(this.userTime);
   }
 }

@@ -21,7 +21,6 @@
           <mat-radio-group
             aria-labelledby="Event Type"
             class="radio-group"
-            [(ngModel)]="eventType"
             formControlName="EventType"
             >
             <mat-radio-button class="radio-button" value="Open" 
@@ -57,9 +56,9 @@
         </mat-form-field>
 
         <div class="event-data-time full-width">
-          <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Event'" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
-          <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Close'" dateFormControlName="closeDate" timeFormControlName="closeTime"></app-datetimepicker>
-          <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Remind'" dateFormControlName="remindDate" timeFormControlName="remindTime"></app-datetimepicker>
+          <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Event'" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
+          <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Close'" dateFormControlName="closeDate" timeFormControlName="closeTime"></app-datetimepicker>
+          <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Remind'" dateFormControlName="remindDate" timeFormControlName="remindTime"></app-datetimepicker>
           </div>
         <!-- <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
