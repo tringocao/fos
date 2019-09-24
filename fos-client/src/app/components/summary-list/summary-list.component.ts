@@ -1,19 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  OnChanges,
-  Inject
-} from '@angular/core';
-import {
-  MatTableDataSource,
-  MatSort,
-  MatPaginator,
-  MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogRef
-} from '@angular/material';
+import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { RestaurantSummary } from 'src/app/models/restaurant-summary';
 import { SummaryService } from 'src/app/services/summary/summary.service';
 import {
@@ -43,7 +29,6 @@ import { SummaryDishesDialogComponent } from '../summary-dishes-dialog/summary-d
 })
 export class SummaryListComponent implements OnInit, OnChanges {
   @Input() index: number;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   displayedColumns: string[] = [
@@ -64,19 +49,19 @@ export class SummaryListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<RestaurantSummary>([]);
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.summaryService.GetRestaurantSummary().then(result => {
       this.listRestaurant = result;
-      const tempData = result.filter(r => r.ServiceId === '1');
-      this.setDataSource(tempData);
+      if (result !== null && result.length > 0) {
+        const tempData = result.filter(r => r.ServiceId === '1');
+        this.setDataSource(tempData);
+      }
       this.isLoading = false;
     });
   }
 
   setDataSource(data: RestaurantSummary[]) {
     this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 

@@ -1,19 +1,18 @@
-import { Component, OnInit, ViewChild, Input, OnChanges } from "@angular/core";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatPaginator } from "@angular/material/paginator";
-import { OrderService } from "./../../services/order/order.service";
-import { FormControl } from "@angular/forms";
-import { UserService } from "./../../services/user/user.service";
-import * as moment from "moment";
-import "moment/locale/vi";
-import { MatDialog } from "@angular/material/dialog";
-import { Event } from "./../../models/event";
-import { EventDialogViewComponent } from "./../event-dialog-view/event-dialog-view.component";
-import { Router } from "@angular/router";
-import { User } from "src/app/models/user";
-import { MatSelectChange } from "@angular/material/select";
-import { Overlay } from "@angular/cdk/overlay";
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { OrderService } from './../../services/order/order.service';
+import { FormControl } from '@angular/forms';
+import { UserService } from './../../services/user/user.service';
+import * as moment from 'moment';
+import 'moment/locale/vi';
+import { MatDialog } from '@angular/material/dialog';
+import { Event } from './../../models/event';
+import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
+import { MatSelectChange } from '@angular/material/select';
+import { Overlay } from '@angular/cdk/overlay';
 
 moment.locale("vi");
 
@@ -109,10 +108,11 @@ export class ListOrderComponent implements OnInit, OnChanges {
   getAllEvent() {
     this.orderService.getAllEvent(this.userId).then(response => {
       this.allOrder = response;
-      this.myOrder = this.allOrder.filter(item => {
-        return item.IsMyEvent === true;
-      });
-
+      if (response !== null && response.length > 0) {
+        this.myOrder = this.allOrder.filter(item => {
+          return item.IsMyEvent === true;
+        });
+      }
       this.getCateroriesFromOrders(this.myOrder, true);
       this.getCateroriesFromOrders(this.allOrder, false);
 
