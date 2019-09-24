@@ -19,6 +19,7 @@ export class Utils {
       if (minute.length < 2) {
         return "0" + String(minute);
       }
+      return String(minute);
     } else {
       return String(minute);
     }

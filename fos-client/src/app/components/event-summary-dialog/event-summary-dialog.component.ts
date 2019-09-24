@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
  
@@ -48,10 +48,13 @@ export class EventSummaryDialogComponent implements OnInit {
     private orderService: OrderService,
     private userService: UserService,
     private printService: PrintService,
+    private snackBar: MatSnackBar,
   ) {
     console.log(router.routerState);
   }
  
+  eventData:any;
+  emailDataAvailable:boolean;
   eventDataAvailable:boolean;
   dishViewDataAvailable:boolean;
   personViewDataAvailable:boolean;
@@ -79,13 +82,19 @@ export class EventSummaryDialogComponent implements OnInit {
   restaurant: any;
  
   eventDetail: Event;
-  foods: any[];
+  foods: any[] = [];
   orderByDish: any[] = [];
   orderByPerson: any[] = [];
   eventId: number;
  
   toStandardDate(date: Date) {
     return moment(date).format('DD/MM/YYYY HH:mm');
+  }
+
+  toast(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
   }
  
   printToPdf() {
@@ -112,23 +121,17 @@ export class EventSummaryDialogComponent implements OnInit {
   }
  
   async sendEmail() {
-    const page = document.getElementById('report');
+    document.getElementById("container").parentNode["style"].overflow = 'visible';
+    const page = document.getElementById('email-region');
     const options = {
       background: "white", height: 800, width: page.clientWidth, letterRendering: 1, scale: 2,};
     console.log(this.userGroupTab)
-    // pageSource.toDataURL("image/PNG")
-    // let doc = new jsPDF();
-    // var html = '<html> <a href="'+ window.location.href + '">Click here to go to event report' + '</a></html>';
-    html2canvas(page, options).then(pageSource => {
+    html2canvas(page).then(pageSource => {
       //Converting canvas to Image
       var pageData = pageSource.toDataURL('image/PNG');
-      // let userGroupData = userTabSource.toDataURL("image/PNG")
-      // Add image Canvas to PDF%
-      // doc.addImage(pageData, 'PNG', 0, 0, window.innerWidth*0.25, window.innerHeight*0.25);
- 
-      this.summaryService.addReport(this.eventDetail.EventId, window.location.href, pageData)
-      // doc.addImage(userGroupData, 'PNG', 20, 20, 200, 200);
-      console.log('html2canvas');
+      this.summaryService.addReport(this.eventDetail.EventId, window.location.href, pageData).then(result => {
+        this.toast("Report sent to email!", "Dismiss")
+      });
     });
   }
   
@@ -140,6 +143,8 @@ export class EventSummaryDialogComponent implements OnInit {
     this.printMode = false;
     this.personViewDataAvailable = false;
     this.dishViewDataAvailable = false;
+    this.emailDataAvailable = false;
+    this.eventData = {}
  
     this.route.params.subscribe(params => {
       var id = params["id"];
@@ -175,10 +180,10 @@ export class EventSummaryDialogComponent implements OnInit {
               name: food.Value.Name,
               price: Number(food.Value.Price),
               picture: food.Value.Photo,
-              comments: [{
+              comments: food.Value.Comment !== "" ? [{
                 comment: food.Value.Comment,
                 amount: 1
-              }],
+              }] : [],
               totalComment: '',
               amount: Number(food.Value.Amount),
               total: 0
@@ -194,18 +199,21 @@ export class EventSummaryDialogComponent implements OnInit {
               this.foods[selectedFood].amount += _food.amount;
               this.foods[selectedFood].total += _food.total;
               console.log(this.foods[selectedFood].comments)
-              console.log(food)
-              if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
-                var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
-                console.log(duplicatedFood)
-                this.foods[selectedFood].comments[duplicatedFood].amount++;
+              console.log(food);
+              if (food.Value.Comment !== "") {
+                if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
+                  var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
+                  console.log(duplicatedFood)
+                  this.foods[selectedFood].comments[duplicatedFood].amount++;
+                }
+                else {
+                  this.foods[selectedFood].comments.push({
+                    comment: food.Value.Comment,
+                    amount: 1
+                  })
+                }
               }
-              else {
-                this.foods[selectedFood].comments.push({
-                  comment: food.Value.Comment,
-                  amount: 1
-                })
-              }
+
               this.foods[selectedFood].totalComment +=  _food.totalComment;
             }
           })
@@ -230,16 +238,19 @@ export class EventSummaryDialogComponent implements OnInit {
             order.FoodDetail.forEach(food => {
               foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
               // comment += ' ' + food.Value.Comment;
-              if (comments.some(_comment => _comment.comment == food.Value.Comment)) {
-                var duplicatedComment = comments.findIndex(c => c.comment == food.Value.Comment);
-                comments[duplicatedComment].amount++;
+              if (food.Value.Comment !== "") {
+                if (comments.some(_comment => _comment.comment == food.Value.Comment)) {
+                  var duplicatedComment = comments.findIndex(c => c.comment == food.Value.Comment);
+                  comments[duplicatedComment].amount++;
+                }
+                else {
+                  comments.push({
+                    comment: food.Value.Comment,
+                    amount: 1,
+                  })
+                }
               }
-              else {
-                comments.push({
-                  comment: food.Value.Comment,
-                  amount: 1,
-                })
-              }
+
               total += Number(food.Value.Total);
             })
             orderItem.food = foods;
@@ -251,7 +262,17 @@ export class EventSummaryDialogComponent implements OnInit {
             // orderItem.comment = comment;
  
             this.orderByPerson.push(orderItem)
-            this.personViewDataAvailable = this.orderByPerson.length == orders.length;
+            if (this.orderByPerson.length == orders.length) {
+              this.personViewDataAvailable = true;
+              this.eventData = {
+                restaurant:this.restaurant,
+                eventDetail:this.eventDetail,
+                foods:this.foods,
+                orderByPerson:this.orderByPerson
+              }
+              this.emailDataAvailable = true;
+            }
+
           })
         })
         this.dishGroupViewdataSource = this.foods;
