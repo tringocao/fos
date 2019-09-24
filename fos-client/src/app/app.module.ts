@@ -221,7 +221,8 @@ import { DialogCheckActionComponent } from "./components/order-detail/list-order
     ReminderDialogComponent,
     EventDialogEditComponent,
     SummaryDishesDialogComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    DialogCheckActionComponent
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -236,7 +237,8 @@ import { DialogCheckActionComponent } from "./components/order-detail/list-order
     SettingDialogComponent,
     TimeDialogComponent,
     WClockComponent,
-    WTimeComponent
+    WTimeComponent,
+    DialogCheckActionComponent
   ]
 })
 export class AppModule {}

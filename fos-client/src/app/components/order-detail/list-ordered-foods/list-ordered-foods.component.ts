@@ -145,14 +145,13 @@ export class ListOrderedFoodsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogCheckActionComponent, {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       autoFocus: false,
-      maxHeight: "98vh",
-      width: "80%",
+      maxWidth: "80%",
       data: row
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.Id != undefined) {
+      if (result.IdFood != undefined) {
         var deleteItem = this.dataSource2.data.findIndex(
-          x => x.IdFood == result.Id
+          x => x.IdFood == result.IdFood
         );
         this.dataSource2.data.splice(deleteItem, 1);
         this.dataSource2.filter = "";
