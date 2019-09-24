@@ -13,6 +13,7 @@ import { ListOrderedFoodsComponent } from "./list-ordered-foods/list-ordered-foo
 import { EventFormService } from "src/app/services/event-form/event-form.service";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
 import { MatSnackBar } from "@angular/material";
+import { FoodComponent } from "../dialog/food/food.component";
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
@@ -165,6 +166,8 @@ export class OrderDetailComponent implements OnInit {
   }
   @ViewChild(ListOrderedFoodsComponent, { static: false })
   foodorderlist: ListOrderedFoodsComponent;
+  @ViewChild(FoodComponent, { static: false })
+  foodlist: FoodComponent;
   getFoodFromMenu(food: FoodCheck): void {
     if (food.checked) {
       this.foodorderlist.AddFoodDetail(
@@ -179,12 +182,15 @@ export class OrderDetailComponent implements OnInit {
       duration: 2000
     });
   }
-  Save() {
+  save() {
     this.order.FoodDetail = this.foodorderlist.getAllFoodDetail();
     this.orderService
       .SetOrder(this.order, this.isWildParticipant)
       .then(result => {
         this.toast("Save!", "Dismiss");
       });
+  }
+  deleteFoodFromMenu($event: FoodDetailJson) {
+    this.foodlist.unChecked(this.foodlist.MapFoodDetail2Food($event));
   }
 }

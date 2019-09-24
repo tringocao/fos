@@ -15,6 +15,7 @@
 
 <div *ngIf="isDataAvailable" class="aaa">
   <app-food
+    #foodlist
     [data]="data"
     [isOrder]="isOrder"
     [checkedData]="checkedData"
@@ -28,10 +29,11 @@
     [isOrder]="isOrder"
     [event]="event"
     [totalBudget]="totalBudget"
+    (valueChange)="deleteFoodFromMenu($event)"
   ></app-list-ordered-foods>
 </div>
 <div *ngIf="isDataAvailable" class="example-button-row">
-  <button [disabled]="!isOrder" mat-raised-button color="warn" (click)="Save()">
+  <button [disabled]="!isOrder" mat-raised-button color="warn" (click)="save()">
     Save Order
   </button>
   <button [disabled]="!isOrder" mat-raised-button (click)="onNoClick()">

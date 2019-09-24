@@ -100,6 +100,15 @@
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
+      <ng-container matColumnDef="trash">
+        <th mat-header-cell *matHeaderCellDef>Delete</th>
+        <td mat-cell *matCellDef="let element" style="    direction: rtl;">
+          <button mat-icon-button color="warn" (click)="openDialog()">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
       <!-- Disclaimer column -->
       <ng-container matColumnDef="nameBudget">
         <td mat-footer-cell *matFooterCellDef>
@@ -109,7 +118,7 @@
       <ng-container matColumnDef="1">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
-      <ng-container matColumnDef="2">
+      <ng-container matColumnDef="3">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
@@ -121,12 +130,15 @@
       <ng-container matColumnDef="5">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
+      <ng-container matColumnDef="7">
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
       <ng-container matColumnDef="namePayExtra">
         <td mat-footer-cell *matFooterCellDef>
           Pay Extra
         </td>
       </ng-container>
-      <ng-container matColumnDef="3">
+      <ng-container matColumnDef="2">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
       <ng-container matColumnDef="4">
@@ -145,6 +157,9 @@
       <ng-container matColumnDef="6">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
+      <ng-container matColumnDef="8">
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
       <tr
         mat-header-row
         *matHeaderRowDef="displayedColumns2; sticky: true"
@@ -158,7 +173,7 @@
       <tr
         mat-footer-row
         *matFooterRowDef="
-          ['nameBudget', '1', '2', 'totalBudget', '5'];
+          ['nameBudget', '1', '3', 'totalBudget', '5', '7'];
           sticky: true
         "
         class="example-second-footer-row"
@@ -166,7 +181,7 @@
       <tr
         mat-footer-row
         *matFooterRowDef="
-          ['namePayExtra', '3', '4', 'totalPayExtra', '6'];
+          ['namePayExtra', '2', '4', 'totalPayExtra', '6', '8'];
           sticky: true
         "
         class="example-second-footer-row"
