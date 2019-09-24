@@ -1,7 +1,19 @@
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { User } from "src/app/models/user";
 import { Order } from "src/app/models/order";
-import { MatSort, MatPaginator, MatTableDataSource } from "@angular/material";
+import {
+  MatSort,
+  MatPaginator,
+  MatTableDataSource,
+  MatDialog
+} from "@angular/material";
 import { Food } from "src/app/models/food";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
 import {
@@ -9,6 +21,9 @@ import {
   float
 } from "html2canvas/dist/types/css/property-descriptors/float";
 import { Event } from "src/app/models/event";
+import moment from "moment";
+import { DialogCheckActionComponent } from "./dialog-check-action/dialog-check-action.component";
+import { Overlay } from "@angular/cdk/overlay";
 
 @Component({
   selector: "app-list-ordered-foods",
@@ -16,14 +31,24 @@ import { Event } from "src/app/models/event";
   styleUrls: ["./list-ordered-foods.component.less"]
 })
 export class ListOrderedFoodsComponent implements OnInit {
-  @Input() user: User;
+  @Input() hostUser: User;
+  @Input() orderUser: User;
+
   @Input() event: Event;
   @Input() order: Order;
   @Input("isOrder") isOrder: boolean;
+  @Output() valueChange = new EventEmitter<FoodDetailJson>();
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   foodOrdered: Food;
-  displayedColumns2: string[] = ["name", "price", "amount", "total", "comment"];
+  displayedColumns2: string[] = [
+    "name",
+    "price",
+    "amount",
+    "total",
+    "comment",
+    "trash"
+  ];
   dataSource2: MatTableDataSource<FoodDetailJson>;
   public FoodOfAmount: any = {};
   day: number;
@@ -31,12 +56,12 @@ export class ListOrderedFoodsComponent implements OnInit {
   year: number;
   hour: number;
   minutes: number;
-  constructor() {}
+  constructor(public dialog: MatDialog, private overlay: Overlay) {}
   load = true;
   @Input() totalBudget: Number;
   ngOnInit() {
     this.dataSource2 = new MatTableDataSource<FoodDetailJson>();
-    console.log(this.user.DisplayName);
+    //console.log(this.user.DisplayName);
     this.updateTable();
   }
   Caculator() {
@@ -61,7 +86,9 @@ export class ListOrderedFoodsComponent implements OnInit {
   }
   DeleteFoodDetail(food: Food) {
     var deleteItem = this.dataSource2.data.findIndex(x => x.IdFood == food.Id);
-    this.dataSource2.data.splice(deleteItem, 1);
+    if (deleteItem >= 0) {
+      this.dataSource2.data.splice(deleteItem, 1);
+    }
     this.dataSource2.filter = "";
   }
   numberWithCommas(x: Number) {
@@ -101,16 +128,35 @@ export class ListOrderedFoodsComponent implements OnInit {
   //   })
   // }
   setDate(date: Date) {
-    this.day = date.getUTCDate();
-    this.month = date.getUTCMonth() + 1;
-    this.year = date.getUTCFullYear();
-    this.hour = date.getUTCHours();
-    this.minutes = date.getUTCMinutes();
+    var check = moment(date);
+    this.day = check.date();
+    this.month = check.month();
+    this.year = check.year();
+    this.hour = check.hour();
+    this.minutes = check.minute();
   }
   updateTable() {
     this.setDate(new Date(this.event.CloseTime));
     this.dataSource2.data = this.order.FoodDetail;
     this.dataSource2.sort = this.sort;
     this.load = false;
+  }
+  openDialog(row: FoodDetailJson): void {
+    const dialogRef = this.dialog.open(DialogCheckActionComponent, {
+      scrollStrategy: this.overlay.scrollStrategies.noop(),
+      autoFocus: false,
+      maxWidth: "80%",
+      data: row
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.IdFood != undefined) {
+        var deleteItem = this.dataSource2.data.findIndex(
+          x => x.IdFood == result.IdFood
+        );
+        this.dataSource2.data.splice(deleteItem, 1);
+        this.dataSource2.filter = "";
+        this.valueChange.emit(row);
+      }
+    });
   }
 }

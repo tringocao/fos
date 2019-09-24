@@ -1,40 +1,39 @@
 .example-form {
-    min-width: 150px;
-    max-width: 600px;
-    width: 100%;
-    padding-left: 40%;
-    display: flex;
+  min-width: 150px;
+  max-width: 600px;
+  width: 100%;
+  padding-left: 40%;
+  display: flex;
+}
+.search-result {
+  padding: 10px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+}
+.search-result div div {
+  padding: 10px;
+  background: whitesmoke;
+}
 
-    }
-  .search-result {
-    padding: 10px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    z-index: 9;
-  }
-  .search-result div div{
-    padding: 10px;
-    background: whitesmoke;
-
-  }
-  .example-full-width {
-    width: 30%;
-    padding-left: 70%;
-  }
-  .example-button-row button,
+.example-button-row button,
 .example-button-row a {
   margin-right: 8px;
 }
-mat-option{
-  flex-direction: row-reverse
+mat-option {
+  flex-direction: row-reverse;
 }
 
-.example-button-row{
+.example-button-row {
   padding-bottom: 10px;
 }
-#search-component{
+#search-component {
+  flex-direction: row;
   display: flex;
-
+  justify-content: space-between;
+}
+.mat-table-sticky {
+  border-top: 1px solid #e0e0e0;
 }

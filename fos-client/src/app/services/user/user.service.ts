@@ -9,7 +9,7 @@ import { User } from "src/app/models/user";
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getCurrentUserId(): Promise<User> {
+  getCurrentUser(): Promise<User> {
     return new Promise<User>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<User>>(

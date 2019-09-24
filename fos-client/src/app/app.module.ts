@@ -1,30 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { TestComponent } from './components/test/test.component';
-import { OrderService } from './services/order/order.service';
-import { HttpClientModule } from '@angular/common/http';
-import { ListRestaurantComponent } from './components/list-restaurant/list-restaurant.component';
-import { ServiceTabComponent } from './components/service-tab/service-tab.component';
-import { RestaurantsPageComponent } from './pages/restaurants-page/restaurants-page.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { TestComponent } from "./components/test/test.component";
+import { OrderService } from "./services/order/order.service";
+import { HttpClientModule } from "@angular/common/http";
+import { ListRestaurantComponent } from "./components/list-restaurant/list-restaurant.component";
+import { ServiceTabComponent } from "./components/service-tab/service-tab.component";
+import { RestaurantsPageComponent } from "./pages/restaurants-page/restaurants-page.component";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './auth/TokenInterceptor';
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { TokenInterceptor } from "./auth/TokenInterceptor";
 
-import { CookieService } from 'ngx-cookie-service';
-import { AuthService } from './auth/auth.service';
+import { CookieService } from "ngx-cookie-service";
+import { AuthService } from "./auth/auth.service";
 
-import { HeaderComponent } from './components/navigation/header/header.component';
-import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+import { HeaderComponent } from "./components/navigation/header/header.component";
+import { SidenavListComponent } from "./components/navigation/sidenav-list/sidenav-list.component";
 
-import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
-import { SummaryPageComponent } from './pages/summary-page/summary-page.component';
+import { OrdersPageComponent } from "./pages/orders-page/orders-page.component";
+import { SummaryPageComponent } from "./pages/summary-page/summary-page.component";
 
 import {
   MatTableModule,
@@ -35,19 +35,18 @@ import {
   MatListModule,
   MatInputModule,
   MatTooltipModule,
-  MatRadioModule,
-} from '@angular/material';
+  MatRadioModule
+} from "@angular/material";
 import {
   DlDateTimeDateModule,
   DlDateTimePickerModule
-} from 'angular-bootstrap-datetimepicker';
+} from "angular-bootstrap-datetimepicker";
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SearchComponent } from './components/search/search.component';
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AngularDateTimePickerModule } from "angular2-datetimepicker";
+import { AngularMultiSelectModule } from "angular2-multiselect-dropdown";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { SearchComponent } from "./components/search/search.component";
 
 import {
   MatButtonModule,
@@ -58,14 +57,14 @@ import {
   MatIconModule,
   MatProgressSpinnerModule,
   MatSlideToggleModule
-} from '@angular/material';
+} from "@angular/material";
 
 import { MatSelectModule } from "@angular/material/select";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { SelectAutocompleteModule } from "mat-select-autocomplete";
 import { MenuComponent } from "./components/menu/menu.component";
 import { DialogComponent } from "./components/dialog/dialog.component";
-import { LightboxModule } from 'ngx-lightbox';
+import { LightboxModule } from "ngx-lightbox";
 
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { FoodCategoriesComponent } from "./components/dialog/food-categories/food-categories.component";
@@ -87,17 +86,18 @@ import { EventDialogEditComponent } from "./components/event-dialog-edit/event-d
 import { EventDialogConfirmComponent } from "./components/event-dialog-confirm/event-dialog-confirm.component";
 import { SettingDialogComponent } from "./components/navigation/header/setting-dialog/setting-dialog.component";
 import { MatDatepickerModule, MatNativeDateModule } from "@angular/material";
-import { PrintLayoutComponent } from './print-layout/print-layout.component';
-import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
-import { PhotoComponent } from './components/photo/photo/photo.component';
-import { SummaryListComponent } from './components/summary-list/summary-list.component';
-import { SummaryTabComponent } from './components/summary-tab/summary-tab.component';
-import { SummaryDishesDialogComponent } from './components/summary-dishes-dialog/summary-dishes-dialog.component';
-import { EventDialogUserpickerComponent } from './components/event-dialog/event-dialog-userpicker/event-dialog-userpicker.component';
-import { DatetimepickerComponent } from './components/datetimepicker/datetimepicker/datetimepicker.component';
-import { TimeDialogComponent } from './components/datetimepicker/time-dialog/time-dialog/time-dialog.component';
-import { WClockComponent } from './components/datetimepicker/time-dialog/w-clock/w-clock.component';
-import { WTimeComponent } from './components/datetimepicker/time-dialog/w-time/w-time.component';
+import { PrintLayoutComponent } from "./print-layout/print-layout.component";
+import { EventSummaryPrintComponent } from "./components/event-summary-dialog/event-summary-print/event-summary-print.component";
+import { PhotoComponent } from "./components/photo/photo/photo.component";
+import { SummaryListComponent } from "./components/summary-list/summary-list.component";
+import { SummaryTabComponent } from "./components/summary-tab/summary-tab.component";
+import { SummaryDishesDialogComponent } from "./components/summary-dishes-dialog/summary-dishes-dialog.component";
+import { EventDialogUserpickerComponent } from "./components/event-dialog/event-dialog-userpicker/event-dialog-userpicker.component";
+import { DatetimepickerComponent } from "./components/datetimepicker/datetimepicker/datetimepicker.component";
+import { TimeDialogComponent } from "./components/datetimepicker/time-dialog/time-dialog/time-dialog.component";
+import { WClockComponent } from "./components/datetimepicker/time-dialog/w-clock/w-clock.component";
+import { WTimeComponent } from "./components/datetimepicker/time-dialog/w-time/w-time.component";
+import { DialogCheckActionComponent } from "./components/order-detail/list-ordered-foods/dialog-check-action/dialog-check-action.component";
 
 @NgModule({
   declarations: [
@@ -141,7 +141,8 @@ import { WTimeComponent } from './components/datetimepicker/time-dialog/w-time/w
     DatetimepickerComponent,
     TimeDialogComponent,
     WClockComponent,
-    WTimeComponent
+    WTimeComponent,
+    DialogCheckActionComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -220,7 +221,8 @@ import { WTimeComponent } from './components/datetimepicker/time-dialog/w-time/w
     ReminderDialogComponent,
     EventDialogEditComponent,
     SummaryDishesDialogComponent,
-    SettingDialogComponent
+    SettingDialogComponent,
+    DialogCheckActionComponent
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -236,6 +238,7 @@ import { WTimeComponent } from './components/datetimepicker/time-dialog/w-time/w
     TimeDialogComponent,
     WClockComponent,
     WTimeComponent,
+    DialogCheckActionComponent
   ]
 })
 export class AppModule {}
