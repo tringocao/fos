@@ -21,11 +21,13 @@ export class PrintService {
       });
   }
 
-  onDataReady() {
+  onDataReady(print:boolean) {
     setTimeout(() => {
-      window.print();
-      this.isPrinting = false;
-      this.router.navigate([{ outlets: { print: null }}]);
+      if (print) {
+        window.print();
+        this.isPrinting = false;
+        this.router.navigate([{ outlets: { print: null }}]);
+      }
     });
   }
 }

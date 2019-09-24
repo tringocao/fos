@@ -40,4 +40,8 @@ export class TimeDialogComponent implements OnInit {
 
     this.dialogRef.close(time);
   }
+
+  cancel($event) {
+    this.dialogRef.close();
+  }
 }

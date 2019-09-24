@@ -3,7 +3,8 @@ import {
   OnInit,
   Inject,
   ViewChild,
-  ElementRef
+  ElementRef,
+  Input
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
@@ -24,12 +25,14 @@ import { PrintService } from 'src/app/services/print/print.service';
 export class EventSummaryPrintComponent implements OnInit {
 
   @ViewChild('personGroupView', { static: false }) userGroupTab: ElementRef;
+
+  @Input() eventData;
  
   constructor(
     private router: Router,
     private printService: PrintService
   ) {
-    this.data = this.router.getCurrentNavigation().extras.state.data;
+    this.data = this.router.getCurrentNavigation() ? this.router.getCurrentNavigation().extras.state.data : null;
   }
   data:any;
   eventDataAvailable:boolean;
@@ -66,12 +69,18 @@ export class EventSummaryPrintComponent implements OnInit {
   }
  
   ngOnInit() {
+
+    if (this.data == null && this.eventData) {
+      this.data = this.eventData;
+      this.printService.onDataReady(false);
+    }
+    else {
+      this.printService.onDataReady(true);
+    }
     this.eventDetail = this.data.eventDetail;
     this.restaurant = this.data.restaurant;
     this.dishGroupViewdataSource = this.data.foods;
     this.personGroupViewdataSource = this.data.orderByPerson;
-
-    this.printService.onDataReady();
 
     this.eventDataAvailable = true;
     this.restaurant.isLoaded = true;

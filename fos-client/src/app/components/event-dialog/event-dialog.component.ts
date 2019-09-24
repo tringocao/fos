@@ -36,8 +36,8 @@ import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { GraphUser } from "src/app/models/graph-user";
 import { Event } from "src/app/models/event";
 import * as moment from "moment";
-import { Group } from 'src/app/models/group';
-import { element } from 'protractor';
+import { Group } from "src/app/models/group";
+import { element } from "protractor";
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -98,12 +98,12 @@ export class EventDialogComponent implements OnInit {
       userInputHost: new FormControl(""),
       EventType: new FormControl(""),
       userInputPicker: new FormControl(""),
-      MaximumBudget: new FormControl(""),
+      MaximumBudget: new FormControl("")
     });
   }
 
   apiUrl = environment.apiUrl;
-  eventType:string = 'Open';
+  eventType: string = "Open";
   matcher = new MyErrorStateMatcher();
   eventSelected = "Open";
   createdUser = { id: "" };
@@ -164,13 +164,13 @@ export class EventDialogComponent implements OnInit {
   }
 
   toStandardDate(date: any) {
-    return moment(date).format('YYYY-MM-DD');
+    return moment(date).format("YYYY-MM-DD");
   }
 
   ngOnInit() {
     var self = this;
     self.ownerForm.get("MaximumBudget").setValue(0);
-    self.ownerForm.get("EventType").setValue('Open');
+    self.ownerForm.get("EventType").setValue("Open");
 
     this.checkDatetimeValidation();
     //get currentUser
@@ -203,9 +203,9 @@ export class EventDialogComponent implements OnInit {
         self.loading = false;
       });
 
-      self.ownerForm.get("EventType").setValue("Open");
-      self.ownerForm.get("userInput").setValue(self.data.restaurant);
-      self.ownerForm
+    self.ownerForm.get("EventType").setValue("Open");
+    self.ownerForm.get("userInput").setValue(self.data.restaurant);
+    self.ownerForm
       .get("userInput")
       .valueChanges.pipe(
         debounceTime(300),
@@ -265,11 +265,11 @@ export class EventDialogComponent implements OnInit {
     if(!choosingUser.Email){
       return;
     }
-    console.log('choose User', choosingUser);
+    console.log("choose User", choosingUser);
     var flag = false;
     self.eventUsers.forEach(element => {
       if (element.Name === choosingUser.Name) {
-        flag = true
+        flag = true;
       }
     });
     if (flag === false) {
@@ -291,9 +291,9 @@ export class EventDialogComponent implements OnInit {
       self.toast('Please choose participants!', 'Dismiss');
       return;
     }
-   
+
     self.loading = true;
-    
+
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
 
@@ -306,9 +306,10 @@ export class EventDialogComponent implements OnInit {
           if (value.Data && value) {
             value.Data.map(u => {
               var participantList = jsonParticipants.filter(
-                item => item.DisplayName === u.DisplayName);
-                
-              if(participantList.length === 0){
+                item => item.DisplayName === u.DisplayName
+              );
+
+              if (participantList.length === 0) {
                 var participant: GraphUser = {
                   Id: u.Id,
                   DisplayName: u.DisplayName,
@@ -319,12 +320,12 @@ export class EventDialogComponent implements OnInit {
                 numberParticipant++;
               }
             });
-          }
-           else {
-            var participantList =  jsonParticipants.filter(
-              item => item.DisplayName === user.Name);
-              
-            if(participantList.length === 0){
+          } else {
+            var participantList = jsonParticipants.filter(
+              item => item.DisplayName === user.Name
+            );
+
+            if (participantList.length === 0) {
               var participant: GraphUser = {
                 Id: user.Id,
                 DisplayName: user.Name,
@@ -337,18 +338,28 @@ export class EventDialogComponent implements OnInit {
           }
         });
       promises.push(promise);
-    });    
+    });
 
-    var eventDate = this.toStandardDate(this.ownerForm.get("eventDate").value) + 'T' + this.ownerForm.get("eventTime").value;
+    var eventDate =
+      this.toStandardDate(this.ownerForm.get("eventDate").value) +
+      "T" +
+      this.ownerForm.get("eventTime").value;
     console.log("get eventDate: ", eventDate);
 
-    var dateTimeToClose = this.toStandardDate(this.ownerForm.get("closeDate").value) + 'T' + this.ownerForm.get("closeTime").value;
+    var dateTimeToClose =
+      this.toStandardDate(this.ownerForm.get("closeDate").value) +
+      "T" +
+      this.ownerForm.get("closeTime").value;
     console.log("get dateTimeToClose: ", dateTimeToClose);
 
-    var dateToReminder = this.ownerForm.get("remindDate").value ? this.toStandardDate(this.ownerForm.get("remindDate").value) + 'T' + this.ownerForm.get("remindTime").value : '';
+    var dateToReminder = this.ownerForm.get("remindDate").value
+      ? this.toStandardDate(this.ownerForm.get("remindDate").value) +
+        "T" +
+        this.ownerForm.get("remindTime").value
+      : "";
     console.log("get dateToReminder: ", dateToReminder);
-    
-    Promise.all(promises).then(function () {
+
+    Promise.all(promises).then(function() {
       console.log("final", jsonParticipants);
       var myJSON = JSON.stringify(jsonParticipants);
       console.log("final", myJSON);
@@ -357,7 +368,7 @@ export class EventDialogComponent implements OnInit {
         Name: self.ownerForm.get("title").value,
         EventId: self.ownerForm.get("title").value,
         Restaurant: self.ownerForm.get("userInput").value.Name,
-        MaximumBudget:self.ownerForm.get("MaximumBudget").value,
+        MaximumBudget: self.ownerForm.get("MaximumBudget").value,
         CloseTime: new Date(dateTimeToClose),
         RemindTime: new Date(dateToReminder),
         HostName: self.ownerForm.get("userInputHost").value.Name,
@@ -404,15 +415,30 @@ export class EventDialogComponent implements OnInit {
     return this.ownerForm.controls[controlName].hasError(errorName);
   };
 
-
   ValidateCloseTime(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       var eventDate = moment(this.ownerForm.controls["eventDate"].value);
       var closeDate = moment(this.ownerForm.controls["closeDate"].value);
-      var eventTime = moment(this.ownerForm.controls["eventTime"].value, 'hh:mm');
-      var closeTime = moment(this.ownerForm.controls["closeTime"].value, 'hh:mm');
+      var eventTime = moment(
+        this.ownerForm.controls["eventTime"].value,
+        "hh:mm"
+      );
+      var closeTime = moment(
+        this.ownerForm.controls["closeTime"].value,
+        "hh:mm"
+      );
+      var remindTime = moment(
+        this.ownerForm.controls["remindTime"].value,
+        "hh:mm"
+      );
       if (closeDate.isSame(eventDate)) {
         if (closeTime.isSameOrAfter(eventTime)) {
+          this.toast("Close time must be before event time in same date", "Ok");
+          return { closeTimeInvalid: true };
+        }
+      }
+      if (closeDate.isSame(remindTime)) {
+        if (remindTime.isSameOrAfter(closeTime)) {
           this.toast("Close time must be before event time in same date", "Ok");
           return { closeTimeInvalid: true };
         }
@@ -425,9 +451,14 @@ export class EventDialogComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       var eventDate = moment(this.ownerForm.controls["eventDate"].value);
       var closeDate = moment(this.ownerForm.controls["closeDate"].value);
+      var remindDate = moment(this.ownerForm.controls["remindDate"].value);
       if (closeDate.isAfter(eventDate)) {
         this.toast("Close date must be before event date", "Ok");
-        return { closeDateInvalid: true }; 
+        return { closeDateInvalid: true };
+      }
+      if (remindDate.isAfter(closeDate)) {
+        this.toast("Close date must be before event date", "Ok");
+        return { closeDateInvalid: true };
       }
       return null;
     };
@@ -438,19 +469,36 @@ export class EventDialogComponent implements OnInit {
       var eventDate = moment(this.ownerForm.controls["eventDate"].value);
       var closeDate = moment(this.ownerForm.controls["closeDate"].value);
       var remindDate = moment(this.ownerForm.controls["remindDate"].value);
-      var eventTime = moment(this.ownerForm.controls["eventTime"].value, 'hh:mm');
-      var closeTime = moment(this.ownerForm.controls["closeTime"].value, 'hh:mm');
-      var remindTime = moment(this.ownerForm.controls["remindTime"].value, 'hh:mm');
-      if (remindDate.isSame(eventDate)) {
-        if (remindTime.isSameOrAfter(eventTime)) {
-          this.toast("Remind time must be before event time in same date", "Ok");
-          return { remindTimeInvalid: true };
+      var eventTime = moment(
+        this.ownerForm.controls["eventTime"].value,
+        "hh:mm"
+      );
+      var closeTime = moment(
+        this.ownerForm.controls["closeTime"].value,
+        "hh:mm"
+      );
+      var remindTime = moment(
+        this.ownerForm.controls["remindTime"].value,
+        "hh:mm"
+      );
+      if (remindTime && remindDate) {
+        if (remindDate.isSame(eventDate)) {
+          if (remindTime.isSameOrAfter(eventTime)) {
+            this.toast(
+              "Remind time must be before event time in same date",
+              "Ok"
+            );
+            return { remindTimeInvalid: true };
+          }
         }
-      }
-      if (remindDate.isSame(closeDate)) {
-        if (remindTime.isSameOrAfter(closeTime)) {
-          this.toast("Remind time must be before close time in same date", "Ok");
-          return { remindTimeInvalid: true };
+        if (remindDate.isSame(closeDate)) {
+          if (remindTime.isSameOrAfter(closeTime)) {
+            this.toast(
+              "Remind time must be before close time in same date",
+              "Ok"
+            );
+            return { remindTimeInvalid: true };
+          }
         }
       }
       return null;
@@ -462,14 +510,18 @@ export class EventDialogComponent implements OnInit {
       var eventDate = moment(this.ownerForm.controls["eventDate"].value);
       var closeDate = moment(this.ownerForm.controls["closeDate"].value);
       var remindDate = moment(this.ownerForm.controls["remindDate"].value);
-      if (remindDate.isAfter(eventDate)) {
-        this.toast("Remind date must be before event date", "Ok");
-        return { remindDateInvalid: true };
+
+      if (remindDate) {
+        if (remindDate.isAfter(eventDate)) {
+          this.toast("Remind date must be before event date", "Ok");
+          return { remindDateInvalid: true };
+        }
+        if (remindDate.isAfter(closeDate)) {
+          this.toast("Remind date must be before close date", "Ok");
+          return { remindDateInvalid: true };
+        }
       }
-      if (remindDate.isAfter(closeDate)) {
-        this.toast("Remind date must be before close date", "Ok");
-        return { remindDateInvalid: true };
-      }
+
       return null;
     };
   }
@@ -479,18 +531,33 @@ export class EventDialogComponent implements OnInit {
       var eventDate = moment(this.ownerForm.controls["eventDate"].value);
       var closeDate = moment(this.ownerForm.controls["closeDate"].value);
       var remindDate = moment(this.ownerForm.controls["remindDate"].value);
-      var eventTime = moment(this.ownerForm.controls["eventTime"].value, 'hh:mm');
-      var closeTime = moment(this.ownerForm.controls["closeTime"].value, 'hh:mm');
-      var remindTime = moment(this.ownerForm.controls["remindTime"].value, 'hh:mm');
+      var eventTime = moment(
+        this.ownerForm.controls["eventTime"].value,
+        "hh:mm"
+      );
+      var closeTime = moment(
+        this.ownerForm.controls["closeTime"].value,
+        "hh:mm"
+      );
+      var remindTime = moment(
+        this.ownerForm.controls["remindTime"].value,
+        "hh:mm"
+      );
       if (eventDate.isSame(remindDate)) {
         if (remindTime.isSameOrAfter(eventTime)) {
-          this.toast("Remind time must be before event time in same date", "Ok");
+          this.toast(
+            "Remind time must be before event time in same date",
+            "Ok"
+          );
           return { eventTimeInvalid: true };
         }
       }
       if (closeDate.isSame(eventDate)) {
         if (closeTime.isSameOrAfter(eventTime)) {
-          this.toast("Remind time must be before close time in same date", "Ok");
+          this.toast(
+            "Remind time must be before close time in same date",
+            "Ok"
+          );
           return { eventTimeInvalid: true };
         }
       }
@@ -516,11 +583,27 @@ export class EventDialogComponent implements OnInit {
   }
 
   onDateTimeInputChange($event) {
-    console.log($event)
+    console.log($event);
     this.checkDatetimeValidation();
   }
 
+  getCurrentEventType() {
+    return this.ownerForm.controls["EventType"] ? this.ownerForm.controls["EventType"].value : "Open";
+  }
+
   checkDatetimeValidation() {
+    this.ownerForm.controls["closeDate"].setErrors([]);
+    this.ownerForm.controls["closeTime"].setErrors([]);
+    this.ownerForm.controls["eventDate"].setErrors([]);
+    this.ownerForm.controls["eventTime"].setErrors([]);
+    this.ownerForm.controls["remindDate"].setErrors([]);
+    this.ownerForm.controls["remindTime"].setErrors([]);
+    this.ownerForm.controls["closeDate"].updateValueAndValidity();
+    this.ownerForm.controls["closeTime"].updateValueAndValidity();
+    this.ownerForm.controls["eventDate"].updateValueAndValidity();
+    this.ownerForm.controls["eventTime"].updateValueAndValidity();
+    this.ownerForm.controls["remindDate"].updateValueAndValidity();
+    this.ownerForm.controls["remindTime"].updateValueAndValidity();
     this.ownerForm.controls["closeDate"].setValidators([
       Validators.required,
       this.ValidateCloseDate()
@@ -530,9 +613,15 @@ export class EventDialogComponent implements OnInit {
       this.ValidateCloseTime()
     ]);
     this.ownerForm.controls["remindDate"].setValidators([
+      this.ownerForm.controls["remindTime"].value
+        ? Validators.required
+        : Validators.nullValidator,
       this.ValidateRemindDate()
     ]);
     this.ownerForm.controls["remindTime"].setValidators([
+      this.ownerForm.controls["remindDate"].value
+        ? Validators.required
+        : Validators.nullValidator,
       this.ValidateRemindTime()
     ]);
     this.ownerForm.controls["eventDate"].setValidators([
@@ -556,13 +645,16 @@ export class EventDialogComponent implements OnInit {
   }
   notifyMessage($event) {
     var self = this;
-    console.log('event', $event);
+    console.log("event", $event);
   }
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
     const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
+    return control && control.invalid;
   }
 }
