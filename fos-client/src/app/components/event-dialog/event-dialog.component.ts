@@ -643,9 +643,22 @@ export class EventDialogComponent implements OnInit {
   isValidEventClose(component: Component) {
     console.log(component);
   }
-  notifyMessage($event) {
+  notifyMessage(eventHost: userPicker) {
     var self = this;
-    console.log("event", $event);
+    console.log("change picker", event);
+    var newHost: userPicker[]  = this.eventUsers.filter(u => u.Email === eventHost.Email);
+    if(newHost.length == 0 ){
+      var Host: EventUser = {
+        Email: eventHost.Email,
+        Id: eventHost.Id,
+        Img: '',
+        IsGroup: 0,
+        Name: eventHost.Name,
+        OrderStatus: 'Not ordered'
+      }
+      this.eventUsers.push(Host);
+      self.table.renderRows();
+    }
   }
 }
 
