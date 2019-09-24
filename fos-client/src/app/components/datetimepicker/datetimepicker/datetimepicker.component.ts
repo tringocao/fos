@@ -31,6 +31,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
   ]
 })
 export class DatetimepickerComponent implements OnInit {
+  @Input() userTime:any;
   @Input() formGroup: FormGroup;
   @Input() formLable: string;
   @Input() dateFormControlName: string;
@@ -55,6 +56,16 @@ export class DatetimepickerComponent implements OnInit {
   };
 
   openDialog(): void {
+    console.log(this.itime)
+    console.log(this.userTime) 
+    if (this.userTime) {
+      this.itime = {
+        hour: moment(this.userTime).format('HH'),
+        minute: moment(this.userTime).format('mm'),
+        meriden: "AM",
+        format: 24,
+      }
+    }
     const dialogRef = this.dialog.open(TimeDialogComponent, {
       width: '400px',
       data: {
