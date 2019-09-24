@@ -5,7 +5,7 @@
 
 
 <section fxLayout="row wrap" fxLayoutAlign="center center">
-  <mat-card fxFlex="500px" fxFlex.xs="100%">
+  <!-- <mat-card fxFlex="500px" fxFlex.xs="100%"> -->
     <mat-card-title>Create a new event</mat-card-title>
 
     <form [formGroup]="ownerForm" autocomplete="off" novalidate (ngSubmit)="CreateOwner(ownerForm.value)">
@@ -147,7 +147,7 @@
       </div>
     </form>
     
-  </mat-card>
+  <!-- </mat-card> -->
 </section>
 
 <app-loading [loading]="loading"></app-loading>
