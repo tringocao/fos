@@ -71,12 +71,39 @@
   }
   .align-right {
     text-align: right;
-    padding-right: 2rem;
+    padding-right: 2.15rem;
   }
   .mat-column-MaximumBudget ::ng-deep .mat-sort-header-container {
     justify-content: flex-end;
   }
   th.mat-column-MaximumBudget {
     padding-right: 1rem;
+  }
+  .dot {
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.2rem;
+  }
+  .status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .opened {
+    .dot {
+      background-color: @green;
+    }
+  }
+  .closedStatus {
+    .dot {
+      background-color: @orange;
+    }
+  }
+  .canceled {
+    .dot {
+      background-color: @red;
+    }
   }
 }

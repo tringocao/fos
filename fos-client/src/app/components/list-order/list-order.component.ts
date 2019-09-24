@@ -9,7 +9,6 @@ import * as moment from 'moment';
 import 'moment/locale/vi';
 import { MatDialog } from '@angular/material/dialog';
 import { Event } from './../../models/event';
-import { EventDialogViewComponent } from './../event-dialog-view/event-dialog-view.component';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { MatSelectChange } from '@angular/material/select';
