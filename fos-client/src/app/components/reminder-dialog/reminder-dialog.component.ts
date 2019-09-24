@@ -14,6 +14,7 @@ import { UserNotOrderMailInfo } from './../../models/user-not-order-mail-info';
 import { UserNotOrder } from 'src/app/models/user-not-order';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SummaryService } from 'src/app/services/summary/summary.service';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-reminder-dialog',
@@ -36,8 +37,13 @@ export class ReminderDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
     private orderService: OrderService,
     private snackBar: MatSnackBar,
-    private summaryService: SummaryService
-  ) {}
+    private summaryService: SummaryService,
+    private overlayContainer: OverlayContainer
+  ) {
+    this.overlayContainer
+      .getContainerElement()
+      .classList.add('app-theme1-theme');
+  }
 
   ngOnInit() {
     console.log(this.data.isClosedEvent);
