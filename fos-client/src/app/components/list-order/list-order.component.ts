@@ -14,27 +14,27 @@ import { User } from 'src/app/models/user';
 import { MatSelectChange } from '@angular/material/select';
 import { Overlay } from '@angular/cdk/overlay';
 
-moment.locale('vi');
+moment.locale("vi");
 
 @Component({
-  selector: 'app-list-order',
-  templateUrl: './list-order.component.html',
-  styleUrls: ['./list-order.component.less']
+  selector: "app-list-order",
+  templateUrl: "./list-order.component.html",
+  styleUrls: ["./list-order.component.less"]
 })
 export class ListOrderComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [
-    'Name',
-    'Restaurant',
-    'Category',
-    'Participants',
-    'CloseTime',
-    'MaximumBudget',
-    'Status',
-    'HostName'
+    "Name",
+    "Restaurant",
+    "Category",
+    "Participants",
+    "CloseTime",
+    "MaximumBudget",
+    "Status",
+    "HostName"
   ];
   dataSource: MatTableDataSource<Event>;
   isLoading = true;
-  currency = 'đ';
+  currency = "đ";
   userId: string;
   allOrder: Event[];
   myOrder: Event[];
@@ -43,7 +43,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
 
   categories = new FormControl();
   categoryList = [];
-  searchQuery = '';
+  searchQuery = "";
   categorySelected = null;
 
   eventListItem: Event;
@@ -66,7 +66,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     this.dataSource = new MatTableDataSource<Event>([]);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.userService.getCurrentUserId().then((response: User) => {
+    this.userService.getCurrentUser().then((response: User) => {
       this.userId = response.Id;
       this.getAllEvent();
     });
@@ -75,27 +75,27 @@ export class ListOrderComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.categoryList = [];
     if (!this.isMyOrder) {
-      if (!this.displayedColumns.includes('HostName')) {
+      if (!this.displayedColumns.includes("HostName")) {
         this.displayedColumns.pop();
-        this.displayedColumns.push('HostName');
-        this.displayedColumns.push('Status');
+        this.displayedColumns.push("HostName");
+        this.displayedColumns.push("Status");
       }
       this.setDataSource(this.allOrder);
       this.allOrderCategories.forEach(item => {
         this.categoryList.push(item);
       });
     } else {
-      if (this.displayedColumns.includes('HostName')) {
+      if (this.displayedColumns.includes("HostName")) {
         this.displayedColumns.pop();
         this.displayedColumns.pop();
-        this.displayedColumns.push('Status');
+        this.displayedColumns.push("Status");
       }
       this.setDataSource(this.myOrder);
       this.myOrderCategories.forEach(item => {
         this.categoryList.push(item);
       });
     }
-    this.searchQuery = '';
+    this.searchQuery = "";
     this.categorySelected = null;
   }
 
@@ -130,9 +130,9 @@ export class ListOrderComponent implements OnInit, OnChanges {
     const eventError: Event[] = [];
     const eventClose: Event[] = [];
     events.forEach(item => {
-      if (item.Status === 'Opened') {
+      if (item.Status === "Opened") {
         eventOpen.push(item);
-      } else if (item.Status === 'Closed') {
+      } else if (item.Status === "Closed") {
         eventClose.push(item);
       } else {
         eventError.push(item);
@@ -189,7 +189,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     await this.sleep(500);
     this.filterBoth();
     this.dataSource.filter = event.value;
-    if (this.categorySelected === null && this.searchQuery !== '') {
+    if (this.categorySelected === null && this.searchQuery !== "") {
       this.dataSource.filter = this.searchQuery;
     }
   }
@@ -199,7 +199,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   filterBoth() {
-    if (this.searchQuery !== '' && this.categorySelected !== null) {
+    if (this.searchQuery !== "" && this.categorySelected !== null) {
       this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return (
           dataFilter.Category === this.categorySelected &&
@@ -211,7 +211,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
             ) > -1)
         );
       };
-    } else if (this.searchQuery !== '' && this.categorySelected === null) {
+    } else if (this.searchQuery !== "" && this.categorySelected === null) {
       this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return (
           dataFilter.Restaurant.toLowerCase().indexOf(
@@ -222,7 +222,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
           ) > -1
         );
       };
-    } else if (this.categorySelected !== null && this.searchQuery === '') {
+    } else if (this.categorySelected !== null && this.searchQuery === "") {
       this.dataSource.filterPredicate = (dataFilter: Event, filter: string) => {
         return dataFilter.Category === this.categorySelected;
       };
@@ -233,13 +233,13 @@ export class ListOrderComponent implements OnInit, OnChanges {
     await this.sleep(500);
     this.filterBoth();
     this.dataSource.filter = event;
-    if (this.searchQuery === '' && this.categorySelected !== null) {
+    if (this.searchQuery === "" && this.categorySelected !== null) {
       this.dataSource.filter = this.categorySelected;
     }
   }
 
   toStandardDate(date: number) {
-    return moment(date).format('MM/DD/YYYY HH:mm');
+    return moment(date).format("MM/DD/YYYY HH:mm");
   }
 
   remind(event: any, element: Event) {
@@ -247,12 +247,12 @@ export class ListOrderComponent implements OnInit, OnChanges {
   }
 
   getNumberOfParticipant(participants: string) {
-    return participants.split(';#').length;
+    return participants.split(";#").length;
   }
 
   formatCurrency(value: string) {
     return Number(value)
       .toFixed(0)
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
   }
 }
