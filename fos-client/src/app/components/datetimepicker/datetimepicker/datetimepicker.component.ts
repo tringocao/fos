@@ -60,11 +60,11 @@ export class DatetimepickerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.onDateTimeChange.emit();
       this.time = result ? result : '00:00';
       if (result) {
         this.itime = result;
         this.formGroup.get(this.timeFormControlName).setValue(this.formatHour(24, result.hour) + ':' + this.formatMinute(result.minute));
+        this.onDateTimeChange.emit();
       }
     });
   }

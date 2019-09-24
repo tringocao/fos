@@ -125,7 +125,7 @@ namespace FOS.API.Controllers
                 var user = await _spUserService.GetCurrentUser();
 
                 _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
-                GraphUser _user = new GraphUser()
+                Model.Dto.GraphUser _user = new Model.Dto.GraphUser()
                 {
                     Id = order.IdUser,
                     DisplayName = user.DisplayName,

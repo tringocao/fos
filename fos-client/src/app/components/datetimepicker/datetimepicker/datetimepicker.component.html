@@ -5,6 +5,7 @@
       matInput
       [matDatepicker]="picker"
       [formControlName]="dateFormControlName"
+      (dateInput)="onInputChange($event.target.value)"
       (input)="onInputChange($event.target.value)"
     />
     <mat-error *ngIf="HasError(dateFormControlName, 'required')">{{ formLable }} date is required.</mat-error>

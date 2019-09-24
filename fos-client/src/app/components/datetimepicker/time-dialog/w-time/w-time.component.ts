@@ -66,7 +66,7 @@ export class WTimeComponent implements OnInit {
     this.userTime.meriden = m;
   }
 
-  public revert() {
+  public cancel() {
     this.onRevert.emit();
   }
 

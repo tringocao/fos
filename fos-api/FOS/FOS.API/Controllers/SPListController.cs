@@ -135,5 +135,20 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
+        [HttpPost]
+        [Route("UpdateListItemWhenRestaurantChanges")]
+        public async Task<ApiResponse> UpdateListItemWhenRestaurantChanges(string id, [FromBody]Model.Dto.Event item)
+        {
+            try
+            {
+                var domainItem = _eventDtoMapper.DtoToDomain(item);
+                await _spListService.UpdateListItemWhenRestaurantChanges(id, domainItem);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
     }
 }
