@@ -92,12 +92,23 @@ namespace FOS.Services.SPListService
                 throw ex;
             }
         }
-
-        public async Task UpdateListItem(string id, Model.Domain.Event item)
+        public async Task UpdateListItemWhenRestaurantChanges(string id, Model.Domain.Event item)
         {
             try
             {
                 await DeleteOrderFromEvent(id);
+                UpdateListItem(id, item);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task UpdateListItem(string id, Model.Domain.Event item)
+        {
+            try
+            {
+                //await DeleteOrderFromEvent(id);
 
                 var eventData = item;
                 using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
@@ -115,27 +126,6 @@ namespace FOS.Services.SPListService
                     List members = context.Web.Lists.GetByTitle(EventFieldName.EventList);
 
                     ListItem listItem = members.GetItemById(id);
-
-                    //listItem["EventHost"] = userValue;
-                    //listItem["EventTitle"] = eventData.Name;
-                    //listItem["EventId"] = 1;
-                    //listItem["EventRestaurant"] = eventData.Restaurant;
-                    //listItem["EventMaximumBudget"] = eventData.MaximumBudget;
-                    //listItem["EventTimeToClose"] = eventData.CloseTime;
-                    //listItem["EventTimeToReminder"] = eventData.RemindTime;
-                    //listItem["EventParticipants"] = eventData.Participants;
-                    //listItem["EventCategory"] = eventData.Category;
-
-                    //listItem["EventRestaurantId"] = eventData.RestaurantId;
-                    //listItem["EventServiceId"] = eventData.ServiceId;
-                    //listItem["EventDeliveryId"] = eventData.DeliveryId;
-                    //listItem["EventCreatedUserId"] = eventData.CreatedBy;
-                    //listItem["EventHostId"] = eventData.HostId;
-                    //listItem["EventParticipantsJson"] = eventData.EventParticipantsJson;
-                    //listItem["EventDate"] = eventData.EventDate;
-                    //listItem["EventStatus"] = eventData.Status;
-                    //listItem["EventTypes"] = eventData.EventType;
-
                     listItem[EventFieldName.EventHost] = userValue;
                     listItem[EventFieldName.EventTitle] = eventData.Name;
                     listItem[EventFieldName.EventId] = 1;

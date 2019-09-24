@@ -29,7 +29,7 @@ export interface userPicker {
 })
 
 export class EventDialogUserpickerComponent implements OnInit {
-  @Output() ListenChildComponentEvent = new EventEmitter<Array<userPicker>>();
+  @Output() ListenChildComponentEvent = new EventEmitter<userPicker>();
   @Input() formGroup: FormGroup;
   @Input() pickupTitle: String;
   @Input() formControlName: string;
@@ -60,8 +60,12 @@ export class EventDialogUserpickerComponent implements OnInit {
             .SearchGroupByName(value)
             .pipe(finalize(() => {
               
-              var finalCode = self.formGroup.get("userInputPicker").value;
-              this.ListenChildComponentEvent.emit(finalCode);
+              var user: userPicker = self.formGroup.get(self.formControlName).value;
+              if(user && user.Email){
+               
+                this.ListenChildComponentEvent.emit(user);
+              }
+              
               this.isHostLoading = false;
             }))
         )

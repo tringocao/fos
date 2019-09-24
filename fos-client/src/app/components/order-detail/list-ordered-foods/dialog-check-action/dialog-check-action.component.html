@@ -1,0 +1,11 @@
+<div mat-dialog-content>
+  <p>Do you want to remove {{ data.Value["Name"] }}?</p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" (click)="onNoClick()">
+    No Thanks
+  </button>
+  <button mat-raised-button [mat-dialog-close]="data" cdkFocusInitial>
+    Ok
+  </button>
+</div>

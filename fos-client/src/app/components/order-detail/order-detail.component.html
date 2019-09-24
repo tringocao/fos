@@ -1,25 +1,39 @@
 <app-loading [loading]="loading"></app-loading>
-<div *ngIf="isDataAvailable" class="aaa">
-  <div color="primary" style="width: 1rem;"></div>
+<h1 style="text-align:center">
+  <span
+    style="
+  color: #e57d13;
+"
+    >Better Food,</span
+  >
+  Better Mood
+</h1>
 
+<h3 style="text-align:center">
+  Please join us for food and fun as we celebrate at {{ nameEvent }}
+</h3>
+
+<div *ngIf="isDataAvailable" class="aaa">
   <app-food
+    #foodlist
     [data]="data"
     [isOrder]="isOrder"
     [checkedData]="checkedData"
-    (valueChange)="GetFoodFromMenu($event)"
+    (valueChange)="getFoodFromMenu($event)"
   ></app-food>
-  <div color="primary" style="width: 10px;"></div>
   <app-list-ordered-foods
     #foodorderlist
-    [user]="user"
+    [hostUser]="hostUser"
+    [orderUser]="orderUser"
     [order]="order"
     [isOrder]="isOrder"
     [event]="event"
     [totalBudget]="totalBudget"
+    (valueChange)="deleteFoodFromMenu($event)"
   ></app-list-ordered-foods>
 </div>
 <div *ngIf="isDataAvailable" class="example-button-row">
-  <button [disabled]="!isOrder" mat-raised-button color="warn" (click)="Save()">
+  <button [disabled]="!isOrder" mat-raised-button color="warn" (click)="save()">
     Save Order
   </button>
   <button [disabled]="!isOrder" mat-raised-button (click)="onNoClick()">

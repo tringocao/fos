@@ -47,6 +47,7 @@ export class EventDialogViewComponent implements OnInit {
   EventStatus = '';
   EventType = '';
   _environment = environment.apiUrl;
+  currency = 'đ';
   ngOnInit() {
     //get user not order
     var self = this;
@@ -120,5 +121,10 @@ export class EventDialogViewComponent implements OnInit {
   }
   OnNoClick(): void {
     this.dialogRef.close();
+  }
+  formatCurrency(value: string) {
+    return Number(value)
+      .toFixed(0)
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
   }
 }

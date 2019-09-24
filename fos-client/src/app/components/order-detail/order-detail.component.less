@@ -1,4 +1,4 @@
-@import '../../../styles/global/variables.less';
+@import "../../../styles/global/variables.less";
 
 .aaa {
   display: flex;
@@ -9,6 +9,9 @@
   @media @mobile {
     margin: 1rem 1rem;
   }
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
 }
 .example-button-row {
   padding: 10px;
@@ -18,10 +21,10 @@
   margin: 2%;
 }
 app-list-ordered-foods {
-  display: grid;
+  width: 44%;
 }
 app-food {
-  width: -webkit-fill-available !important;
+  width: 55%;
 }
 // .aaa ::ng-deep .restaurants {
 //   background-color: red;

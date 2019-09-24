@@ -262,7 +262,7 @@ export class EventDialogComponent implements OnInit {
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
 
-    if (!choosingUser) {
+    if(!choosingUser.Email){
       return;
     }
     console.log("choose User", choosingUser);
@@ -288,7 +288,7 @@ export class EventDialogComponent implements OnInit {
   SaveToSharePointEventList(): void {
     var self = this;
     if (self.eventUsers.length == 0) {
-      alert("Please choose participants!");
+      self.toast('Please choose participants!', 'Dismiss');
       return;
     }
 
@@ -364,7 +364,6 @@ export class EventDialogComponent implements OnInit {
       var myJSON = JSON.stringify(jsonParticipants);
       console.log("final", myJSON);
 
-      debugger;
       var eventListitem: Event = {
         Name: self.ownerForm.get("title").value,
         EventId: self.ownerForm.get("title").value,
@@ -644,9 +643,22 @@ export class EventDialogComponent implements OnInit {
   isValidEventClose(component: Component) {
     console.log(component);
   }
-  notifyMessage($event) {
+  notifyMessage(eventHost: userPicker) {
     var self = this;
-    console.log("event", $event);
+    console.log("change picker", event);
+    var newHost: userPicker[]  = this.eventUsers.filter(u => u.Email === eventHost.Email);
+    if(newHost.length == 0 ){
+      var Host: EventUser = {
+        Email: eventHost.Email,
+        Id: eventHost.Id,
+        Img: '',
+        IsGroup: 0,
+        Name: eventHost.Name,
+        OrderStatus: 'Not ordered'
+      }
+      this.eventUsers.push(Host);
+      self.table.renderRows();
+    }
   }
 }
 

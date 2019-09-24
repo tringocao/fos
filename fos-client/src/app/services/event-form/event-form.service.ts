@@ -67,6 +67,19 @@ export class EventFormService {
       );
   }
 
+  UpdateListItemWhenRestaurantChanges(
+    Id: String,
+    eventlist: Event
+  ): Observable<ApiOperationResult<void>> {
+    return this.http
+      .post(environment.apiUrl + "api/SPList/UpdateListItemWhenRestaurantChanges?Id=" + Id, eventlist)
+      .pipe(
+        tap((response: ApiOperationResult<void>) => {
+          return response;
+        })
+      );
+  }
+
   SearchUserByName(
     searchText: string
   ): Observable<ApiOperationResult<Array<User>>> {
