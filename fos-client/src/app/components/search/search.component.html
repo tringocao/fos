@@ -18,7 +18,7 @@
 
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngIf="isLoading" class="is-loading"
-        ><mat-spinner diameter="50"></mat-spinner
+        ><mat-spinner diameter="30"></mat-spinner
       ></mat-option>
       <ng-container *ngIf="!isLoading">
         <mat-option *ngFor="let restaurant of restaurant$" [value]="restaurant">
