@@ -16,5 +16,6 @@ namespace FOS.Services.SPListService
         Task UpdateEventParticipant(string id, Model.Dto.GraphUser participant);
         Task UpdateEventStatus(string id, string status);
         Task UpdateEventIsReminder(string idEvent, string isReminder);
+        Task UpdateListItemWhenRestaurantChanges(string id, Model.Domain.Event item);
     }
 }

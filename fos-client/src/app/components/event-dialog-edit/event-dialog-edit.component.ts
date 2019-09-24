@@ -186,7 +186,7 @@ export class EventDialogEditComponent implements OnInit {
     this.ownerForm.controls["eventTime"].setValue(moment(newEventDate).format('HH:mm'));
     this.ownerForm.controls["eventDate"].setValue(newEventDate);
     this.ownerForm.controls["closeTime"].setValue(moment(newCloseTime).format('HH:mm'));
-    this.ownerForm.controls["closeDate"].setValue(newEventDate);
+    this.ownerForm.controls["closeDate"].setValue(newCloseTime);
 
     
     var eventTime = this.ToDateString(newEventDate);
@@ -289,6 +289,10 @@ export class EventDialogEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  toStandardDate(date: any) {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
   UpdateToSharePointEventList(): void {
     var self = this;
     if (self.eventUsers.length == 0) {
@@ -348,11 +352,15 @@ export class EventDialogEditComponent implements OnInit {
       promises.push(promise);
     });
 
-    var eventDate = this.dateEventTime;
-    var dateTimeToClose = this.dateTimeToClose.replace('T', ' ');
-    var dateToReminder = this.dateToReminder
-      ? this.dateToReminder.replace('T', ' ')
-      : '';
+    debugger;
+    var eventDate = this.toStandardDate(this.ownerForm.get("eventDate").value) + 'T' + this.ownerForm.get("eventTime").value;
+    console.log("get eventDate: ", eventDate);
+
+    var dateTimeToClose = this.toStandardDate(this.ownerForm.get("closeDate").value) + 'T' + this.ownerForm.get("closeTime").value;
+    console.log("get dateTimeToClose: ", dateTimeToClose);
+
+    var dateToReminder = this.ownerForm.get("remindDate").value ? this.toStandardDate(this.ownerForm.get("remindDate").value) + 'T' + this.ownerForm.get("remindTime").value : '';
+    console.log("get dateToReminder: ", dateToReminder);
 
     Promise.all(promises).then(function() {
       
@@ -418,7 +426,7 @@ export class EventDialogEditComponent implements OnInit {
           }
           else{
             self.eventFormService
-            .UpdateEventListItem(self.data.EventId, self.eventListItem)
+            .UpdateListItemWhenRestaurantChanges(self.data.EventId, self.eventListItem)
             .toPromise()
             .then(result => {
               console.log('Update', result);

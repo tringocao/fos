@@ -92,7 +92,18 @@ namespace FOS.Services.SPListService
                 throw ex;
             }
         }
-
+        public async Task UpdateListItemWhenRestaurantChanges(string id, Model.Domain.Event item)
+        {
+            try
+            {
+                await DeleteOrderFromEvent(id);
+                UpdateListItem(id, item);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public async Task UpdateListItem(string id, Model.Domain.Event item)
         {
             try

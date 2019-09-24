@@ -29,11 +29,22 @@ namespace FOS.Model.Mapping
                UserPrincipalName = dtoGraphUser.UserPrincipalName
             };
         }
+        public Domain.User ToDomainUser(Dto.GraphUser dtoGraphUser)
+        {
+            return new Domain.User()
+            {
+                DisplayName = dtoGraphUser.DisplayName,
+                Id = dtoGraphUser.Id,
+                Mail = dtoGraphUser.Mail,
+                UserPrincipalName = dtoGraphUser.UserPrincipalName
+            };
+        }
     }
 
     public interface INewGraphUserDtoMapper
     {
         Dto.GraphUser ToDto(Model.Domain.GraphUser graphUser);
         Domain.GraphUser ToDomain(Dto.GraphUser dtoGraphUser);
+        Domain.User ToDomainUser(Dto.GraphUser dtoGraphUser);
     }
 }

@@ -144,7 +144,7 @@ namespace FOS.Services.SendEmailServices
             return value.Split('.')[1].Split('%')[0];
         }
 
-        public async Task SendMailUpdateEvent(List<Model.Domain.GraphUser> removeListUser, List<Model.Domain.GraphUser> newListUser, string idEvent, string html)
+        public async Task SendMailUpdateEvent(List<Model.Domain.GraphUser> removeListUser, List<Model.Domain.User> newListUser, string idEvent, string html)
         {
             foreach(var deleteUser in removeListUser)
             {

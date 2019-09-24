@@ -27,7 +27,7 @@ namespace FOS.API
               .AddNewExtension<Interception>();
 
               RegisterTypes(container);
-  
+
               return container;
           });
 
@@ -57,7 +57,6 @@ namespace FOS.API
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
-
             // TODO: Register your type's mappings here.
             container.RegisterType<Repositories.FosContext, Repositories.FosContext>(
                 new PerResolveLifetimeManager());
@@ -178,7 +177,10 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
-
+            container.RegisterType<FOS.Services.FosCoreService.IFosCoreService, FOS.Services.FosCoreService.FosCoreService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
             container.AddExtension(new Diagnostic());
         }
     }

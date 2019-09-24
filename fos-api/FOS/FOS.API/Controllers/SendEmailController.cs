@@ -75,7 +75,7 @@ namespace FOS.API.Controllers
                ).ToList();
 
                 var newListUserDomain = updateEvent.NewListUser.Select(
-                    newList => _newGraphUserDtoMapper.ToDomain(newList)).ToList();
+                    newList => _newGraphUserDtoMapper.ToDomainUser(newList)).ToList();
 
                 await _sendEmailService.SendMailUpdateEvent(removeListUserDomain, newListUserDomain, updateEvent.IdEvent, html);
                 return ApiUtil.CreateSuccessfulResult();
