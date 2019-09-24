@@ -32,12 +32,13 @@
       <mat-radio-group
         aria-labelledby="Event Type"
         class="radio-group"
+        [color]="warn"
         formControlName="EventType"
       >
-        <mat-radio-button class="radio-button" value="Open">
+        <mat-radio-button [color]="warn" class="radio-button" value="Open">
           Free For All
         </mat-radio-button>
-        <mat-radio-button class="radio-button" value="Close">
+        <mat-radio-button [color]="warn" class="radio-button" value="Close">
           Invited Only
         </mat-radio-button>
       </mat-radio-group>
