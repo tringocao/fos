@@ -40,12 +40,11 @@
           <input matInput placeholder="Restaurant" [matAutocomplete]="autoTest" formControlName='userInput'>
         </mat-form-field>
         <mat-autocomplete  #autoTest="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="30"></mat-spinner></mat-option>
           <ng-container *ngIf="!isLoading">
             <mat-option *ngFor="let restaurant of restaurant" [value]="restaurant">
                   <app-menu   [restaurant]="restaurant"></app-menu>
               <span>{{ restaurant.Name }}</span>
-              <small> | ID: {{restaurant.RestaurantId}}</small>
             </mat-option>
           </ng-container>
         </mat-autocomplete>
