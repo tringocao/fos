@@ -67,17 +67,15 @@
     >
       Send
     </button>
-    <button
-      *ngIf="data.isClosedEvent"
-      class="remind"
-      mat-raised-button
-      (click)="closeEvent($event)"
-      color="warn"
-    >
-      <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}"
-        >Close event</a
-      >
-    </button>
+      <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}">
+        <button
+          *ngIf="data.isClosedEvent"
+          class="remind"
+          mat-raised-button
+          (click)="closeEvent($event)"
+          color="warn"
+        >Close Event</button>
+      </a>
     <button class="cancel" mat-raised-button (click)="closeDialog($event)">
       Cancel
     </button>

@@ -217,7 +217,7 @@
         </mat-tab-group>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button *ngIf="emailDataAvailable" (click)="sendEmail()" mat-raised-button color="primary">
+        <button (click)="sendEmail()" mat-raised-button color="primary">
           Send to my email
         </button>
         <button (click)="printToPdf()" mat-raised-button color="primary">

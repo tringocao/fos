@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
  
@@ -48,6 +48,7 @@ export class EventSummaryDialogComponent implements OnInit {
     private orderService: OrderService,
     private userService: UserService,
     private printService: PrintService,
+    private snackBar: MatSnackBar,
   ) {
     console.log(router.routerState);
   }
@@ -81,13 +82,19 @@ export class EventSummaryDialogComponent implements OnInit {
   restaurant: any;
  
   eventDetail: Event;
-  foods: any[];
+  foods: any[] = [];
   orderByDish: any[] = [];
   orderByPerson: any[] = [];
   eventId: number;
  
   toStandardDate(date: Date) {
     return moment(date).format('DD/MM/YYYY HH:mm');
+  }
+
+  toast(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
   }
  
   printToPdf() {
@@ -122,7 +129,9 @@ export class EventSummaryDialogComponent implements OnInit {
     html2canvas(page).then(pageSource => {
       //Converting canvas to Image
       var pageData = pageSource.toDataURL('image/PNG');
-      this.summaryService.addReport(this.eventDetail.EventId, window.location.href, pageData);
+      this.summaryService.addReport(this.eventDetail.EventId, window.location.href, pageData).then(result => {
+        this.toast("Report sent to email!", "Dismiss")
+      });
     });
   }
   
