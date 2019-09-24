@@ -145,6 +145,9 @@ export class EventSummaryDialogComponent implements OnInit {
     this.dishViewDataAvailable = false;
     this.emailDataAvailable = false;
     this.eventData = {}
+
+    this.dishGroupViewdataSource = this.foods;
+    this.personGroupViewdataSource = this.orderByPerson;
  
     this.route.params.subscribe(params => {
       var id = params["id"];
@@ -174,112 +177,113 @@ export class EventSummaryDialogComponent implements OnInit {
         this.foods = [];
         var foodList:string[] = [];
         orders.forEach(order => {
+          this.getPersonGroupView(order, orders)
           order.FoodDetail.forEach(food => {
-            var _food = {
-              foodId: food.IdFood,
-              name: food.Value.Name,
-              price: Number(food.Value.Price),
-              picture: food.Value.Photo,
-              comments: food.Value.Comment !== "" ? [{
-                comment: food.Value.Comment,
-                amount: 1
-              }] : [],
-              totalComment: '',
-              amount: Number(food.Value.Amount),
-              total: 0
-            }
-            _food.total = _food.amount * _food.price
-            if (!foodList.includes(food.IdFood)) {
-              foodList.push(food.IdFood);
-              this.foods.push(_food)
-            }
-            else {
-              var selectedFood = this.foods.findIndex(f => f.foodId == food.IdFood);
-              // console.log(selectedFood)
-              this.foods[selectedFood].amount += _food.amount;
-              this.foods[selectedFood].total += _food.total;
-              console.log(this.foods[selectedFood].comments)
-              console.log(food);
-              if (food.Value.Comment !== "") {
-                if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
-                  var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
-                  console.log(duplicatedFood)
-                  this.foods[selectedFood].comments[duplicatedFood].amount++;
-                }
-                else {
-                  this.foods[selectedFood].comments.push({
-                    comment: food.Value.Comment,
-                    amount: 1
-                  })
-                }
-              }
-
-              this.foods[selectedFood].totalComment +=  _food.totalComment;
-            }
+            this.getDishGroupView(food, foodList)
           })
         })
-        console.log(this.foods)
-        this.dishViewDataAvailable = true;
- 
-        orders.forEach(order => {
-          var orderItem = {
-            user: '',
-            food: '',
-            price: 0,
-            payExtra: 0,
-            comments: [],
-          };
-          this.userService.getUserById(order.IdUser).then(user => {
-            orderItem.user = user.DisplayName;
-          }).then(() => {
-            var foods = "";
-            var comments = [];
-            var total = 0;
-            order.FoodDetail.forEach(food => {
-              foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
-              // comment += ' ' + food.Value.Comment;
-              if (food.Value.Comment !== "") {
-                if (comments.some(_comment => _comment.comment == food.Value.Comment)) {
-                  var duplicatedComment = comments.findIndex(c => c.comment == food.Value.Comment);
-                  comments[duplicatedComment].amount++;
-                }
-                else {
-                  comments.push({
-                    comment: food.Value.Comment,
-                    amount: 1,
-                  })
-                }
-              }
-
-              total += Number(food.Value.Total);
-            })
-            orderItem.food = foods;
-            orderItem.comments = comments;
-            orderItem.price = total;
-            if (this.eventDetail && this.eventDetail.MaximumBudget) {
-              orderItem.payExtra = (Number(this.eventDetail.MaximumBudget) < total) ? (total - Number(this.eventDetail.MaximumBudget)) : 0;
-            }
-            // orderItem.comment = comment;
- 
-            this.orderByPerson.push(orderItem)
-            if (this.orderByPerson.length == orders.length) {
-              this.personViewDataAvailable = true;
-              this.eventData = {
-                restaurant:this.restaurant,
-                eventDetail:this.eventDetail,
-                foods:this.foods,
-                orderByPerson:this.orderByPerson
-              }
-              this.emailDataAvailable = true;
-            }
-
-          })
-        })
-        this.dishGroupViewdataSource = this.foods;
-        this.personGroupViewdataSource = this.orderByPerson;
       })
     })
  
     // this.dishGroupViewdataSource = this.orderByDish;
+  }
+
+  getPersonGroupView(order, orders) {
+    var orderItem = {
+      user: '',
+      food: '',
+      price: 0,
+      payExtra: 0,
+      comments: [],
+    };
+    this.userService.getUserById(order.IdUser).then(user => {
+      orderItem.user = user.DisplayName;
+    }).then(() => {
+      var foods = "";
+      var comments = [];
+      var total = 0;
+      order.FoodDetail.forEach(food => {
+        foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
+        // comment += ' ' + food.Value.Comment;
+        if (food.Value.Comment !== "") {
+          if (comments.some(_comment => _comment.comment == food.Value.Comment)) {
+            var duplicatedComment = comments.findIndex(c => c.comment == food.Value.Comment);
+            comments[duplicatedComment].amount++;
+          }
+          else {
+            comments.push({
+              comment: food.Value.Comment,
+              amount: 1,
+            })
+          }
+        }
+
+        total += Number(food.Value.Total);
+      })
+      orderItem.food = foods;
+      orderItem.comments = comments;
+      orderItem.price = total;
+      if (this.eventDetail && this.eventDetail.MaximumBudget) {
+        orderItem.payExtra = (Number(this.eventDetail.MaximumBudget) < total) ? (total - Number(this.eventDetail.MaximumBudget)) : 0;
+      }
+      // orderItem.comment = comment;
+
+      this.orderByPerson.push(orderItem)
+      if (this.orderByPerson.length == orders.length) {
+        this.personViewDataAvailable = true;
+        this.eventData = {
+          restaurant:this.restaurant,
+          eventDetail:this.eventDetail,
+          foods:this.foods,
+          orderByPerson:this.orderByPerson
+        }
+        this.emailDataAvailable = true;
+      }
+
+    })
+  }
+
+  getDishGroupView(food, foodList) {
+    var _food = {
+      foodId: food.IdFood,
+      name: food.Value.Name,
+      price: Number(food.Value.Price),
+      picture: food.Value.Photo,
+      comments: food.Value.Comment !== "" ? [{
+        comment: food.Value.Comment,
+        amount: 1
+      }] : [],
+      totalComment: '',
+      amount: Number(food.Value.Amount),
+      total: 0
+    }
+    _food.total = _food.amount * _food.price
+    if (!foodList.includes(food.IdFood)) {
+      foodList.push(food.IdFood);
+      this.foods.push(_food)
+    }
+    else {
+      var selectedFood = this.foods.findIndex(f => f.foodId == food.IdFood);
+      // console.log(selectedFood)
+      this.foods[selectedFood].amount += _food.amount;
+      this.foods[selectedFood].total += _food.total;
+      console.log(this.foods[selectedFood].comments)
+      console.log(food);
+      if (food.Value.Comment !== "") {
+        if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
+          var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
+          console.log(duplicatedFood)
+          this.foods[selectedFood].comments[duplicatedFood].amount++;
+        }
+        else {
+          this.foods[selectedFood].comments.push({
+            comment: food.Value.Comment,
+            amount: 1
+          })
+        }
+      }
+
+      this.foods[selectedFood].totalComment +=  _food.totalComment;
+    }
   }
 }

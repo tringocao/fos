@@ -44,7 +44,6 @@ export class SearchComponent implements OnInit, OnChanges {
   mode = "indeterminate";
   toppingList: CategoryGroup[];
   @Input() idService: number;
-
   @Input("loading") loading: boolean;
   @ViewChild(MatSelectModule, { static: true }) x: MatSelectModule;
   @Output() change = new EventEmitter();
@@ -118,6 +117,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
   filterByFavorite($event) {
     console.log($event);
+    this.isChecked = $event.checked
     this.change.emit({ isChecked: $event.checked });
     //this.change.emit({ isChecked: event.checked });
   }
@@ -140,9 +140,11 @@ export class SearchComponent implements OnInit, OnChanges {
         ? this.usersForm.get("userInput").value.Name
         : this.usersForm.get("userInput").value;
     }
+    this.isChecked = false;
+    this.change.emit({ topic: JSON.parse(cod), keyword: keyword, isChecked: this.isChecked });
 
-    this.change.emit({ topic: JSON.parse(cod), keyword: keyword });
   }
+
   getCondition(term: Category[]): string {
     let getCod = "";
     term.forEach(e => {
