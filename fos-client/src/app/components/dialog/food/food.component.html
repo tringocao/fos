@@ -1,5 +1,7 @@
 <div class="top">
-  <h3>{{ data.restaurant.Name }}</h3>
+  <h3 *ngIf="isOrder">{{ data.restaurant.Name }}</h3>
+  <h1 *ngIf="!isOrder">{{ data.restaurant.Name }}</h1>
+
   <h3>Total reviews on Foody: {{ data.detail.TotalReview }}</h3>
   <ngx-stars
     [readonly]="true"
