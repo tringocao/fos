@@ -12,7 +12,6 @@ import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
  
-import * as jsPDF from 'jspdf';
 // import * as printJs from 'printjs';
 import html2canvas from 'html2canvas';
 import * as moment from 'moment';
@@ -28,6 +27,8 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { Food } from 'src/app/models/food';
 import { UserService } from 'src/app/services/user/user.service';
 import { PrintService } from 'src/app/services/print/print.service';
+
+import {OverlayContainer} from '@angular/cdk/overlay';
  
  
 @Component({
@@ -49,7 +50,9 @@ export class EventSummaryDialogComponent implements OnInit {
     private userService: UserService,
     private printService: PrintService,
     private snackBar: MatSnackBar,
+    private overlayContainer: OverlayContainer
   ) {
+    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
     console.log(router.routerState);
   }
  
@@ -119,8 +122,12 @@ export class EventSummaryDialogComponent implements OnInit {
     // WindowPrt.print();
     // WindowPrt.close();
   }
+
+  isEmailDataAvailable() {
+    return this.restaurant && this.restaurant.isLoaded && this.personViewDataAvailable && this.dishViewDataAvailable
+  }
  
-  async sendEmail() {
+  sendEmail() {
     document.getElementById("container").parentNode["style"].overflow = 'visible';
     const page = document.getElementById('email-region');
     const options = {
@@ -155,6 +162,7 @@ export class EventSummaryDialogComponent implements OnInit {
       this.eventFormService.GetEventById(id).then((result: Event) => {
         console.log(result);
         this.eventDetail = result;
+        this.eventData.eventDetail = this.eventDetail;
         this.eventDataAvailable = true;
         this.restaurantService.getRestaurants([Number(this.eventDetail.RestaurantId)], Number(this.eventDetail.ServiceId), 217).then(result => {
           console.log(result[0])
@@ -167,6 +175,7 @@ export class EventSummaryDialogComponent implements OnInit {
             this.restaurant.TotalReview = Number(result.TotalReview);
             this.restaurant.isLoaded = true;
             this.loading = false;
+            this.eventData.restaurant = this.restaurant;
           });
           console.log(this.restaurant)
           // this.restaurant.RestaurantUrl = "01234";
@@ -174,14 +183,24 @@ export class EventSummaryDialogComponent implements OnInit {
       });
       this.orderService.GetOrdersByEventId(id).then(orders => {
         console.log(orders);
-        this.foods = [];
         var foodList:string[] = [];
+        var orderProceed = 0;
         orders.forEach(order => {
-          this.getPersonGroupView(order, orders)
+          this.getPersonGroupView(order, orders);
+
           order.FoodDetail.forEach(food => {
-            this.getDishGroupView(food, foodList)
+            this.getDishGroupView(food, foodList, order.FoodDetail, orderProceed);
           })
+          orderProceed++;
+          if (orderProceed == orders.length) {
+            console.log(orderProceed)
+            this.dishGroupViewdataSource = new MatTableDataSource(this.foods);
+            this.dishViewDataAvailable = true;
+            this.eventData.foods = this.foods;
+          }
+          
         })
+
       })
     })
  
@@ -231,19 +250,22 @@ export class EventSummaryDialogComponent implements OnInit {
       this.orderByPerson.push(orderItem)
       if (this.orderByPerson.length == orders.length) {
         this.personViewDataAvailable = true;
-        this.eventData = {
-          restaurant:this.restaurant,
-          eventDetail:this.eventDetail,
-          foods:this.foods,
-          orderByPerson:this.orderByPerson
-        }
-        this.emailDataAvailable = true;
+        // this.dishViewDataAvailable = true;
+        this.eventData.orderByPerson = this.orderByPerson;
+        this.personViewDataAvailable = true;
+        // this.eventData = {
+        //   restaurant:this.restaurant,
+        //   eventDetail:this.eventDetail,
+        //   foods:this.foods,
+        //   orderByPerson:this.orderByPerson
+        // }
+        // console.log(this.eventData)
+        // this.emailDataAvailable = true;
       }
-
     })
   }
 
-  getDishGroupView(food, foodList) {
+  getDishGroupView(food, foodList, foodDetail, foodProceed) {
     var _food = {
       foodId: food.IdFood,
       name: food.Value.Name,
@@ -267,12 +289,9 @@ export class EventSummaryDialogComponent implements OnInit {
       // console.log(selectedFood)
       this.foods[selectedFood].amount += _food.amount;
       this.foods[selectedFood].total += _food.total;
-      console.log(this.foods[selectedFood].comments)
-      console.log(food);
       if (food.Value.Comment !== "") {
         if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
           var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
-          console.log(duplicatedFood)
           this.foods[selectedFood].comments[duplicatedFood].amount++;
         }
         else {
@@ -285,5 +304,6 @@ export class EventSummaryDialogComponent implements OnInit {
 
       this.foods[selectedFood].totalComment +=  _food.totalComment;
     }
+
   }
 }
