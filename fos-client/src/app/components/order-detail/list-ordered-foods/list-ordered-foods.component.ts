@@ -9,6 +9,7 @@ import {
   float
 } from "html2canvas/dist/types/css/property-descriptors/float";
 import { Event } from "src/app/models/event";
+import moment from "moment";
 
 @Component({
   selector: "app-list-ordered-foods",
@@ -16,7 +17,9 @@ import { Event } from "src/app/models/event";
   styleUrls: ["./list-ordered-foods.component.less"]
 })
 export class ListOrderedFoodsComponent implements OnInit {
-  @Input() user: User;
+  @Input() hostUser: User;
+  @Input() orderUser: User;
+
   @Input() event: Event;
   @Input() order: Order;
   @Input("isOrder") isOrder: boolean;
@@ -36,7 +39,7 @@ export class ListOrderedFoodsComponent implements OnInit {
   @Input() totalBudget: Number;
   ngOnInit() {
     this.dataSource2 = new MatTableDataSource<FoodDetailJson>();
-    console.log(this.user.DisplayName);
+    //console.log(this.user.DisplayName);
     this.updateTable();
   }
   Caculator() {
@@ -101,11 +104,12 @@ export class ListOrderedFoodsComponent implements OnInit {
   //   })
   // }
   setDate(date: Date) {
-    this.day = date.getUTCDate();
-    this.month = date.getUTCMonth() + 1;
-    this.year = date.getUTCFullYear();
-    this.hour = date.getUTCHours();
-    this.minutes = date.getUTCMinutes();
+    var check = moment(date);
+    this.day = check.date();
+    this.month = check.month();
+    this.year = check.year();
+    this.hour = check.hour();
+    this.minutes = check.minute();
   }
   updateTable() {
     this.setDate(new Date(this.event.CloseTime));

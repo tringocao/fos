@@ -21,9 +21,12 @@
       ></mat-option>
       <ng-container *ngIf="!isLoading">
         <mat-option *ngFor="let restaurant of restaurant$" [value]="restaurant">
-          <app-menu [restaurant]="restaurant"></app-menu>
+          <app-menu
+            matTooltip="Show menu"
+            [idService]="idService"
+            [restaurant]="restaurant"
+          ></app-menu>
           <span>{{ restaurant.Name }}</span>
-          <small> | ID: {{ restaurant.RestaurantId }}</small>
         </mat-option>
       </ng-container>
     </mat-autocomplete>
