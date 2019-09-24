@@ -17,7 +17,7 @@ $my-theme: (
 // hue.
 .app-theme1-theme {
   $my-app-primary: mat-palette($my-theme, 50);
-  $my-app-accent: mat-palette($mat-grey, 500);
+  $my-app-accent: mat-palette($mat-red, 500);
   $my-app-warn: mat-palette($mat-grey, 900);
   // Create the theme object (a Sass map containing all of the palettes).
   $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);

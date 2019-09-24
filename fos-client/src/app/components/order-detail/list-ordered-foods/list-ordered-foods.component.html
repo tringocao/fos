@@ -66,6 +66,8 @@
               (blur)="onBlurMethodAmount($event.target.value, element)"
               [value]="element.Value['Amount']"
               align="right"
+              min="0"
+              oninput="this.value = Math.abs(this.value)"
             />
           </mat-form-field>
         </td>

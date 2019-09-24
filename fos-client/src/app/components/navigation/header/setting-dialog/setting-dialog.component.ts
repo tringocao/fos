@@ -5,6 +5,7 @@ import { User } from "src/app/models/user";
 import { RecurrenceEventService } from "src/app/services/recurrence-event/recurrence-event.service";
 import { RepeateType } from "src/app/models/repeate-type";
 import { RecurrenceEvent } from "src/app/models/recurrence-event";
+import { OverlayContainer } from "@angular/cdk/overlay";
 
 @Component({
   selector: "app-setting-dialog",
@@ -25,8 +26,11 @@ export class SettingDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<SettingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User,
     private recurrenceEventService: RecurrenceEventService,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    overlayContainer: OverlayContainer
+  ) {
+    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
