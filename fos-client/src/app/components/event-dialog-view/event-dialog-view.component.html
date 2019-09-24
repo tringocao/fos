@@ -29,7 +29,7 @@
     <mat-list-item></mat-list-item>
   </mat-list>
 <section fxLayout="row wrap" fxLayoutAlign="center center">
-  <mat-card fxFlex="500px" fxFlex.xs="100%">
+  <!-- <mat-card fxFlex="500px" fxFlex.xs="100%"> -->
     <table mat-table [dataSource]="eventusers">
       <ng-container matColumnDef="avatar">
         <th mat-header-cell *matHeaderCellDef>Avatar</th>
@@ -60,7 +60,7 @@
     </table>
     
     <!-- </form> -->
-  </mat-card>
+  <!-- </mat-card> -->
   <mat-card-actions align="right">
     <!-- <button type="button" mat-raised-button color="warn" (click)="onCancel()">Create</button> -->
     <button type="button" mat-raised-button (click)="OnNoClick()">Cancel</button>
