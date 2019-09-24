@@ -45,6 +45,7 @@ namespace FOS.RecurrenceEvent.UnityConfig
             container.RegisterType<Services.RecurrenceEventServices.IRecurrenceEventService, Services.RecurrenceEventServices.RecurrenceEventService>();
             container.RegisterType<Services.Providers.ISharepointContextProvider, Services.Providers.SharepointContextProvider>();
             container.RegisterType<Services.SPUserService.ISPUserService, Services.SPUserService.SPUserService>();
+            container.RegisterType<FOS.Services.FosCoreService.IFosCoreService, FOS.Services.FosCoreService.FosCoreService>();
             container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
 
             container.RegisterType<Repositories.Mapping.IRecurrenceEventMapper, Repositories.Mapping.RecurrenceEventMapper>();

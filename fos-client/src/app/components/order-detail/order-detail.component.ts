@@ -97,7 +97,7 @@ export class OrderDetailComponent implements OnInit {
                       Email: ""
                     };
                     this.checkedData = this.order.FoodDetail;
-                    if (this.isClosed(new Date(event.CloseTime))) {
+                    if (event.Status == "Closed") {
                       this.isOrder = false;
                     }
                     this.isDataAvailable = true;
@@ -155,7 +155,7 @@ export class OrderDetailComponent implements OnInit {
       this.event = event;
       this.nameEvent = event.Name;
 
-      if (this.isClosed(new Date(event.CloseTime))) {
+      if (event.Status == "Closed") {
         this.isOrder = false;
       }
       this.getUserById(this.event.HostId);

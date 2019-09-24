@@ -108,9 +108,8 @@ export class ListOrderedFoodsComponent implements OnInit {
     var getItem = this.dataSource2.data.findIndex(x => x.IdFood == food.IdFood);
     var f = this.dataSource2.data[getItem];
     f.Value["Amount"] = amount.toString();
-    f.Value["Total"] = (
-      Number(f.Value["Amount"]) * Number(f.Value["Price"])
-    ).toString();
+    var total = Number(f.Value["Amount"]) * Number(f.Value["Price"]);
+    f.Value["Total"] = (total >= 0 ? total : 0).toString();
     this.dataSource2.data[getItem] = f;
     this.dataSource2.filter = "";
   }
