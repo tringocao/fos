@@ -81,9 +81,9 @@
         </mat-form-field>
 
         <div class="event-data-time full-width">
-            <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Event'" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
-            <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Close'" dateFormControlName="closeDate" timeFormControlName="closeTime"></app-datetimepicker>
-            <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Remind'" dateFormControlName="remindDate" timeFormControlName="remindTime"></app-datetimepicker>
+            <app-datetimepicker [userTime]="eventTime" (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Event'" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
+            <app-datetimepicker [userTime]="closeTime" (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Close'" dateFormControlName="closeDate" timeFormControlName="closeTime"></app-datetimepicker>
+            <app-datetimepicker [userTime]="remindTime" (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Remind'" dateFormControlName="remindDate" timeFormControlName="remindTime"></app-datetimepicker>
         <!-- <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
           <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="dateEventTime"

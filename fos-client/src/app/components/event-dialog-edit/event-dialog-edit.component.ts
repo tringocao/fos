@@ -97,6 +97,9 @@ export class EventDialogEditComponent implements OnInit {
   userSelect = [];
   userPickerGroups: userPickerGroup[] = [];
   showCancelEventConfirmation = false;
+  eventTime:string;
+  closeTime:string;
+  remindTime:string;
   displayFn(user: DeliveryInfos) {
     if (user) {
       return user.Name;
@@ -168,6 +171,7 @@ export class EventDialogEditComponent implements OnInit {
       // this._dateToReminder = remindTime;
       this.ownerForm.controls["remindTime"].setValue(moment(newRemindTime).format('HH:mm'));
       this.ownerForm.controls["remindDate"].setValue(newRemindTime);
+      this.remindTime = moment(newRemindTime).toString();
     }
 
     var newEventDate = new Date(this.data.EventDate);
@@ -175,6 +179,9 @@ export class EventDialogEditComponent implements OnInit {
     this.ownerForm.controls["eventDate"].setValue(newEventDate);
     this.ownerForm.controls["closeTime"].setValue(moment(newCloseTime).format('HH:mm'));
     this.ownerForm.controls["closeDate"].setValue(newCloseTime);
+
+    this.eventTime = moment(newEventDate).toString();
+    this.closeTime = moment(newCloseTime).toString();
 
     this.checkDatetimeValidation();
 
