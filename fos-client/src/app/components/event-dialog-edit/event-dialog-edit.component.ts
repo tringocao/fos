@@ -352,7 +352,6 @@ export class EventDialogEditComponent implements OnInit {
       promises.push(promise);
     });
 
-    debugger;
     var eventDate = this.toStandardDate(this.ownerForm.get("eventDate").value) + 'T' + this.ownerForm.get("eventTime").value;
     console.log("get eventDate: ", eventDate);
 
@@ -419,6 +418,7 @@ export class EventDialogEditComponent implements OnInit {
                 RemoveListUser: self.removeListUser
               }
               self.eventMail.SendMailUpdateEvent(updateEvent).then(value=>{
+                self.toast('Update event successfuly!', 'Dismiss');
                 window.location.reload();
               })
             });
@@ -431,6 +431,7 @@ export class EventDialogEditComponent implements OnInit {
             .then(result => {
               console.log('Update', result);
               self.SendEmail(self.data.EventId);
+              self.toast('Update event successfuly!', 'Dismiss');
               window.location.reload();
             });
           }

@@ -353,7 +353,6 @@ export class EventDialogComponent implements OnInit {
       var myJSON = JSON.stringify(jsonParticipants);
       console.log("final", myJSON);
 
-      debugger;
       var eventListitem: Event = {
         Name: self.ownerForm.get("title").value,
         EventId: self.ownerForm.get("title").value,
