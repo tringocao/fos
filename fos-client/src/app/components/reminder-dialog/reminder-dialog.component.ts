@@ -101,6 +101,7 @@ export class ReminderDialogComponent implements OnInit {
       .then(response => {
         if (response === null) {
           this.toast('Event Closed', 'Dismiss');
+          window.location.reload();
           this.closeDialog($event);
         }
         if (response != null && response.ErrorMessage != null) {

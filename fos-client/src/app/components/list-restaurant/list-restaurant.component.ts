@@ -88,7 +88,7 @@ export class ListRestaurantComponent implements OnInit {
   }
 
   constructor(
-    private changeDetectorRefs: ChangeDetectorRef,
+    // private changeDetectorRefs: ChangeDetectorRef,
     private _snackBar: MatSnackBar,
     private restaurantService: RestaurantService,
     private userService: UserService,
@@ -208,7 +208,7 @@ export class ListRestaurantComponent implements OnInit {
               this.dataSource.paginator = this.paginator;
               this.load = false;
             });
-          this.changeDetectorRefs.detectChanges();
+          // this.changeDetectorRefs.detectChanges();
         });
     }
   }

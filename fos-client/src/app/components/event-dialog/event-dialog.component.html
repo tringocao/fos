@@ -32,7 +32,7 @@
               Invited Only
             </mat-radio-button>
           </mat-radio-group>
-          <div>{{eventType == 'Open' ? 'Open for everyone' : 'Only for invited person'}}<br/></div>
+          <div class="event-type-hint">{{getCurrentEventType() == 'Open' ? 'Open for everyone' : 'Only for invited person'}}<br/></div>
 
           <app-event-dialog-userpicker class="full-width" (ListenChildComponentEvent)="notifyMessage($event)" [formGroup]="ownerForm" formControlName="userInputHost" pickupTitle="Host"></app-event-dialog-userpicker>
 
@@ -124,7 +124,7 @@
 
           <ng-container matColumnDef="order status">
             <th mat-header-cell *matHeaderCellDef> Order Status</th>
-            <td mat-cell *matCellDef="let element"> Not order </td>
+            <td mat-cell *matCellDef="let element"> Not ordered </td>
           </ng-container>
 
           <ng-container matColumnDef="action">

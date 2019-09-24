@@ -37,7 +37,7 @@
               Invited Only
             </mat-radio-button>
           </mat-radio-group>
-          <!-- <div>{{eventType == 'Open' ? 'Open for everyone' : 'Only for invited person'}}<br/></div> -->
+          <div class="event-type-hint">{{getCurrentEventType() == 'Open' ? 'Open for everyone' : 'Only for invited person'}}<br/></div>
 
         <app-event-dialog-userpicker
           class="full-width"
@@ -82,9 +82,9 @@
         </mat-form-field>
 
         <div class="event-data-time full-width">
-            <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Event'" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
-            <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Close'" dateFormControlName="closeDate" timeFormControlName="closeTime"></app-datetimepicker>
-            <app-datetimepicker [formGroup]="ownerForm" [formLable]="'Remind'" dateFormControlName="remindDate" timeFormControlName="remindTime"></app-datetimepicker>
+            <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Event'" dateFormControlName="eventDate" timeFormControlName="eventTime"></app-datetimepicker>
+            <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Close'" dateFormControlName="closeDate" timeFormControlName="closeTime"></app-datetimepicker>
+            <app-datetimepicker (onDateTimeChange)="onDateTimeInputChange($event)" [formGroup]="ownerForm" [formLable]="'Remind'" dateFormControlName="remindDate" timeFormControlName="remindTime"></app-datetimepicker>
         <!-- <mat-form-field class="full-width">
           <mat-label>Event Date</mat-label>
           <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="dateEventTime"
@@ -168,7 +168,7 @@
           <ng-container matColumnDef="order status">
             <th mat-header-cell *matHeaderCellDef>Order Status</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.OrderStatus }}
+              {{ element.OrderStatus }}ed
             </td>
           </ng-container>
 
