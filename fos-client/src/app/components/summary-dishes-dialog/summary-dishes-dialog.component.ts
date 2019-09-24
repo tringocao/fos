@@ -1,14 +1,6 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild,
-  OnChanges,
-  Inject
-} from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
 import {
   MatTableDataSource,
-  MatSort,
   MatPaginator,
   MatDialog,
   MAT_DIALOG_DATA,
@@ -24,6 +16,7 @@ import {
   animate
 } from '@angular/animations';
 import { DishesSummary } from './../../models/dishes-summary';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-summary-dishes-dialog',
@@ -58,8 +51,13 @@ export class SummaryDishesDialogComponent implements OnInit {
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: RestaurantSummary,
     public dialogRef: MatDialogRef<DishesSummary>,
-    public summaryService: SummaryService
-  ) {}
+    public summaryService: SummaryService,
+    private overlayContainer: OverlayContainer
+  ) {
+    this.overlayContainer
+      .getContainerElement()
+      .classList.add('app-theme1-theme');
+  }
 
   ngOnInit() {
     this.summaryService

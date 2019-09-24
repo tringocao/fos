@@ -43,7 +43,7 @@ import { SummaryService } from 'src/app/services/summary/summary.service';
 import { EventFormValidationService } from 'src/app/services/event-form/event-form-validation/event-form-validation.service';
 import { EventFormMailService } from 'src/app/services/event-form/event-form-mail/event-form-mail.service';
 import { UpdateEvent } from 'src/app/models/update-event';
-
+import {OverlayContainer} from '@angular/cdk/overlay';
 @Component({
   selector: 'app-event-dialog-edit',
   templateUrl: './event-dialog-edit.component.html',
@@ -62,7 +62,8 @@ export class EventDialogEditComponent implements OnInit {
     public dialog: MatDialog,
     private summaryService: SummaryService,
     private eventValidationService: EventFormValidationService,
-    private eventMail: EventFormMailService
+    private eventMail: EventFormMailService,
+    overlayContainer: OverlayContainer
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -82,6 +83,7 @@ export class EventDialogEditComponent implements OnInit {
       EventType: new FormControl(""),
       MaximumBudget: new FormControl(""),
     });
+    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
   }
   //global
   apiUrl = environment.apiUrl;

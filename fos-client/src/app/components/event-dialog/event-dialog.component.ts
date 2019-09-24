@@ -38,6 +38,7 @@ import { Event } from "src/app/models/event";
 import * as moment from "moment";
 import { Group } from "src/app/models/group";
 import { element } from "protractor";
+import {OverlayContainer} from '@angular/cdk/overlay';
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -79,7 +80,8 @@ export class EventDialogComponent implements OnInit {
     private eventFormService: EventFormService,
     private http: HttpClient,
     private restaurantService: RestaurantService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    overlayContainer: OverlayContainer
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -100,6 +102,7 @@ export class EventDialogComponent implements OnInit {
       userInputPicker: new FormControl(""),
       MaximumBudget: new FormControl("")
     });
+    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
   }
 
   apiUrl = environment.apiUrl;
