@@ -18,12 +18,14 @@
       <app-datetimepicker
         [formGroup]="recForm"
         [formLable]="'Start'"
+        [userTime]="startDate"
         dateFormControlName="startInput"
         timeFormControlName="startTimeInput"
       ></app-datetimepicker>
       <app-datetimepicker
         [formGroup]="recForm"
         [formLable]="'End'"
+        [userTime]="endDate"
         dateFormControlName="endInput"
         timeFormControlName="endTimeInput"
       ></app-datetimepicker>
