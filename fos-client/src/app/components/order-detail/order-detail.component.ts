@@ -188,6 +188,9 @@ export class OrderDetailComponent implements OnInit {
       .SetOrder(this.order, this.isWildParticipant)
       .then(result => {
         this.toast("Save!", "Dismiss");
+        if (this.idOrder.includes("ffa")) {
+          window.close();
+        }
       });
   }
   deleteFoodFromMenu($event: FoodDetailJson) {
