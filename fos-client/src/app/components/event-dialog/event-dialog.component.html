@@ -127,11 +127,7 @@
             ></app-event-dialog-userpicker>
           </mat-grid-tile>
           <mat-grid-tile>
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="AddUserToTable()"
-            >
+            <button mat-flat-button color="primary" (click)="AddUserToTable()">
               Add
             </button>
           </mat-grid-tile>
@@ -185,14 +181,14 @@
 
         <mat-card-actions align="right">
           <button
-            mat-raised-button
+            mat-flat-button
             color="primary"
             [disabled]="!ownerForm.valid"
             (click)="SaveToSharePointEventList()"
           >
             Create
           </button>
-          <button type="button" mat-raised-button (click)="OnNoClick()">
+          <button type="button" mat-stroked-button (click)="OnNoClick()">
             Cancel
           </button>
         </mat-card-actions>
