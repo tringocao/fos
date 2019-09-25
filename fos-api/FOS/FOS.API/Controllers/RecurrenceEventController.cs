@@ -59,7 +59,29 @@ namespace FOS.API.Controllers
         {
             try
             {
-                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime();
+                 if (recurrenceEvent.StartDate.ToLocalTime() < DateTime.Now)
+                {
+                    switch (recurrenceEvent.TypeRepeat)
+                    {
+                        case Model.Dto.RepeateType.Daily:
+                        case Model.Dto.RepeateType.EveryWorkDay:
+                            {
+                                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime().AddDays(1);
+                                break;
+                            }
+                        case Model.Dto.RepeateType.Weekly:
+                            {
+                                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime().AddDays(7);
+                                break;
+                            }
+                        case Model.Dto.RepeateType.Monthly:
+                            {
+                                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime().AddMonths(1);
+                                break;
+                            }
+                    }
+                }
+                else recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime();
                 _recurrenceEventService.AddRecurrenceEvent(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
                 if (recurrenceEvent.StartTempDate >= DateTime.Now
                     && recurrenceEvent.StartTempDate < DateTime.Now.AddHours(1))
@@ -68,6 +90,7 @@ namespace FOS.API.Controllers
 
                     _recurrenceEventService.RunThisTask(before);
                 }
+                
                 return ApiUtil.CreateSuccessfulResult();
 
             }
@@ -83,7 +106,29 @@ namespace FOS.API.Controllers
             try
             {
                 Model.Domain.RecurrenceEvent before = _recurrenceEventService.GetById(recurrenceEvent.Id);
-                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime();
+                if (recurrenceEvent.StartDate.ToLocalTime() < DateTime.Now)
+                {
+                    switch (recurrenceEvent.TypeRepeat)
+                    {
+                        case Model.Dto.RepeateType.Daily:
+                        case Model.Dto.RepeateType.EveryWorkDay:
+                            {
+                                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime().AddDays(1);
+                                break;
+                            }
+                        case Model.Dto.RepeateType.Weekly:
+                            {
+                                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime().AddDays(7);
+                                break;
+                            }
+                        case Model.Dto.RepeateType.Monthly:
+                            {
+                                recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime().AddMonths(1);
+                                break;
+                            }
+                    }
+                }
+                else recurrenceEvent.StartTempDate = recurrenceEvent.StartDate.ToLocalTime();
                 recurrenceEvent.Version += 1;
                 _recurrenceEventService.UpdateRecurrenceEvent(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
 
