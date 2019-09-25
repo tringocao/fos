@@ -32,12 +32,13 @@
       <mat-radio-group
         aria-labelledby="Event Type"
         class="radio-group"
+        [color]="warn"
         formControlName="EventType"
       >
-        <mat-radio-button class="radio-button" value="Open">
+        <mat-radio-button [color]="warn" class="radio-button" value="Open">
           Free For All
         </mat-radio-button>
-        <mat-radio-button class="radio-button" value="Close">
+        <mat-radio-button [color]="warn" class="radio-button" value="Close">
           Invited Only
         </mat-radio-button>
       </mat-radio-group>
@@ -92,6 +93,7 @@
 
       <div class="event-data-time full-width">
         <app-datetimepicker
+          class="datetimepicker"
           [userTime]="eventTime"
           (onDateTimeChange)="onDateTimeInputChange($event)"
           [formGroup]="ownerForm"
@@ -100,6 +102,7 @@
           timeFormControlName="eventTime"
         ></app-datetimepicker>
         <app-datetimepicker
+          class="datetimepicker"
           [userTime]="closeTime"
           (onDateTimeChange)="onDateTimeInputChange($event)"
           [formGroup]="ownerForm"
@@ -108,6 +111,7 @@
           timeFormControlName="closeTime"
         ></app-datetimepicker>
         <app-datetimepicker
+          class="datetimepicker"
           [userTime]="remindTime"
           (onDateTimeChange)="onDateTimeInputChange($event)"
           [formGroup]="ownerForm"
@@ -115,48 +119,6 @@
           dateFormControlName="remindDate"
           timeFormControlName="remindTime"
         ></app-datetimepicker>
-        <!-- <mat-form-field class="full-width">
-          <mat-label>Event Date</mat-label>
-          <input required id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" [(ngModel)]="dateEventTime"
-            [ngModelOptions]="{standalone: true}"
-            formcontrolname="dateTimeEvent" 
-            (input)="onDateTimeChange($event.target.value)"
-            >
-          </mat-form-field>
-
-          <mat-form-field class="full-width">
-            <mat-label>Time To Close</mat-label>
-            <input
-              required
-              id="party"
-              matInput
-              matInput
-              [errorStateMatcher]="matcher"
-              type="datetime-local"
-              [(ngModel)]="dateTimeToClose"
-              [ngModelOptions]="{ standalone: true }"
-              formcontrolname="dateTimeToClose"
-              (input)="onDateTimeChange($event.target.value)"
-            />
-            <mat-error *ngIf="HasError('dateTimeToClose', 'invalidCloseTime')"
-              >Close Event time is invalid.</mat-error
-            >
-            <mat-error *ngIf="HasError('dateTimeToClose', 'datimeRequired')"
-              >Close time is required</mat-error
-            >
-            <mat-error *ngIf="HasError('dateTimeToClose', 'invalidCloseTime')">Close Event time is invalid.</mat-error>
-            <mat-error *ngIf="HasError('dateTimeToClose', 'datimeRequired')">Close time is required</mat-error>
-        </mat-form-field> -->
-
-        <!-- <mat-form-field class="full-width">
-          <mat-label>Time To Reminder</mat-label>
-          <input id="party" matInput matInput [errorStateMatcher]="matcher" type="datetime-local" name="partydate" [(ngModel)]="dateToReminder"
-          [ngModelOptions]="{standalone: true}"
-          formcontrolname="dateTimeRemind"
-          (input)="onDateTimeChange($event.target.value)"
-          >
-          <mat-error *ngIf="HasError('dateTimeRemind', 'invalidRemindTime')">Reminder time is invalid</mat-error>
-        </mat-form-field> -->
       </div>
 
       <mat-grid-list cols="10" rowHeight="100px">
