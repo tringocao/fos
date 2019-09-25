@@ -12,6 +12,7 @@ import { TimeDialogComponent } from '../time-dialog/time-dialog/time-dialog.comp
 import { ITime } from '../time-dialog/w-clock/w-clock.component';
 import moment from 'moment';
 import { Utils } from '../time-dialog/utils';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-datetimepicker',
@@ -30,12 +31,15 @@ import { Utils } from '../time-dialog/utils';
   ]
 })
 export class DatetimepickerComponent implements OnInit {
+  @Input() userTime:any;
   @Input() formGroup: FormGroup;
   @Input() formLable: string;
   @Input() dateFormControlName: string;
   @Input() timeFormControlName: string;
   @Output() onDateTimeChange: EventEmitter<any> = new EventEmitter();
-  constructor(private dialog:MatDialog) { }
+  constructor(private dialog:MatDialog, private overlayContainer: OverlayContainer) { 
+    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
+  }
 
   date: string;
   time: string;
@@ -52,6 +56,16 @@ export class DatetimepickerComponent implements OnInit {
   };
 
   openDialog(): void {
+    console.log(this.itime)
+    console.log(this.userTime) 
+    if (this.userTime) {
+      this.itime = {
+        hour: moment(this.userTime).format('HH'),
+        minute: moment(this.userTime).format('mm'),
+        meriden: "AM",
+        format: 24,
+      }
+    }
     const dialogRef = this.dialog.open(TimeDialogComponent, {
       width: '400px',
       data: {

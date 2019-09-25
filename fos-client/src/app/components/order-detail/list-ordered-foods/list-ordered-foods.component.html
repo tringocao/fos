@@ -66,6 +66,8 @@
               (blur)="onBlurMethodAmount($event.target.value, element)"
               [value]="element.Value['Amount']"
               align="right"
+              min="0"
+              oninput="this.value = Math.abs(this.value)"
             />
           </mat-form-field>
         </td>
@@ -101,14 +103,19 @@
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
       <ng-container matColumnDef="trash">
-        <th mat-header-cell *matHeaderCellDef>Delete</th>
+        <th mat-header-cell *matHeaderCellDef>Remove</th>
         <td
           mat-cell
           *matCellDef="let element; let row"
           style="    direction: rtl;"
         >
-          <button mat-icon-button color="warn" (click)="openDialog(row)">
-            <mat-icon>delete_forever</mat-icon>
+          <button
+            [disabled]="!isOrder"
+            mat-icon-button
+            color="warn"
+            (click)="openDialog(row)"
+          >
+            <mat-icon>delete</mat-icon>
           </button>
         </td>
         <td mat-footer-cell *matFooterCellDef></td>

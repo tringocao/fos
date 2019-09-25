@@ -9,6 +9,7 @@ import { RestaurantService } from "src/app/services/restaurant/restaurant.servic
 import { EventDialogComponent } from "../event-dialog/event-dialog.component";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { DeliveryInfos } from "src/app/models/delivery-infos";
+import { OverlayContainer } from "@angular/cdk/overlay";
 
 interface RestaurantMore {
   restaurant: DeliveryInfos;
@@ -33,8 +34,11 @@ export class DialogComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: RestaurantMore
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: RestaurantMore,
+    overlayContainer: OverlayContainer
+  ) {
+    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
+  }
 
   async ngOnInit(): Promise<void> {
     console.log("-------------------------------------");

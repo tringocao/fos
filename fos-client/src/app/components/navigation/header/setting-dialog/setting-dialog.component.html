@@ -15,51 +15,20 @@
         />
         <mat-hint align="end">Event title is required.</mat-hint>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Start</mat-label>
-        <input
-          matInput
-          formControlName="startInput"
-          [matDatepicker]="picker1"
-          placeholder="Angular forms"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="picker1"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker1> </mat-datepicker>
-      </mat-form-field>
-      <mat-form-field class="example-form-field">
-        <input
-          matInput
-          type="time"
-          formControlName="startTimeInput"
-          placeholder="Time"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>End</mat-label>
-        <input
-          matInput
-          formControlName="endInput"
-          [matDatepicker]="picker2"
-          placeholder="Angular forms"
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="picker2"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field class="example-form-field">
-        <input
-          matInput
-          formControlName="endTimeInput"
-          type="time"
-          placeholder="Time"
-        />
-      </mat-form-field>
-
+      <app-datetimepicker
+        [formGroup]="recForm"
+        [formLable]="'Start'"
+        [userTime]="startDate"
+        dateFormControlName="startInput"
+        timeFormControlName="startTimeInput"
+      ></app-datetimepicker>
+      <app-datetimepicker
+        [formGroup]="recForm"
+        [formLable]="'End'"
+        [userTime]="endDate"
+        dateFormControlName="endInput"
+        timeFormControlName="endTimeInput"
+      ></app-datetimepicker>
       <mat-form-field>
         <mat-label>Repeat</mat-label>
         <mat-select formControlName="selectRepeatType">
@@ -72,7 +41,10 @@
         <button mat-flat-button color="primary" (click)="getAllValue()">
           Save
         </button>
-        <button mat-flat-button (click)="removeRecurrenceEvent()">
+        <button mat-flat-button color="warn" (click)="removeRecurrenceEvent()">
+          Remove this reminder
+        </button>
+        <button mat-flat-button (click)="onNoClick()">
           Cancel
         </button>
       </mat-card-actions>

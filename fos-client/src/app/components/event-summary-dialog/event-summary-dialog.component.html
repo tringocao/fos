@@ -1,5 +1,12 @@
 <app-loading [loading]="loading"></app-loading>
 <div id="container" *ngIf="!printService.isPrinting" class="container">
+  <div id="email-region" class="email-region">
+    <app-event-summary-print
+      *ngIf="isEmailDataAvailable()"
+      [eventData]="eventData"
+    >
+  </app-event-summary-print>
+  </div>
   <div id="report" class="event-summary">
     <mat-card>
       <mat-card-header>
@@ -78,7 +85,7 @@
                     ><div class="text-inside-grid">Name</div></mat-grid-tile
                   >
                   <mat-grid-tile
-                    ><div *ngIf="restaurant.isLoaded" class="text-inside-grid">
+                    ><div *ngIf="eventDataAvailable" class="text-inside-grid">
                       {{ eventDetail.Restaurant }}
                     </div></mat-grid-tile
                   >
@@ -124,13 +131,13 @@
           </mat-grid-tile>
         </mat-grid-list>
         <mat-tab-group dynamicHeight #tabGroup>
-          <mat-tab *ngIf="dishViewDataAvailable" label="Dishes Group View">
+          <mat-tab label="Dishes Group View">
             <table mat-table [dataSource]="dishGroupViewdataSource">
               <ng-container matColumnDef="picture">
                 <th mat-header-cell *matHeaderCellDef>Picture</th>
                 <td mat-cell *matCellDef="let element">
                   <div style="width: 68px; height: 68px;">
-                    <app-photo [src]="element.picture" ></app-photo>
+                    <app-photo [src]="element.picture"></app-photo>
                   </div>
                 </td>
               </ng-container>
@@ -171,7 +178,7 @@
 
             <img src="" />
           </mat-tab>
-          <mat-tab #personGroupView label="Person Group View">
+          <mat-tab label="Person Group View">
             <table
               *ngIf="personViewDataAvailable"
               mat-table
@@ -217,17 +224,14 @@
         </mat-tab-group>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button (click)="sendEmail()" mat-raised-button color="primary">
+        <button (click)="sendEmail()" mat-raised-button color="warn">
           Send to my email
         </button>
-        <button (click)="printToPdf()" mat-raised-button color="primary">
+        <button (click)="printToPdf()" mat-raised-button color="warn">
           Print
         </button>
-        <button mat-raised-button color="warn">Close</button>
+        <!-- <button mat-raised-button color="warn">Close</button> -->
       </mat-card-actions>
     </mat-card>
   </div>
-  <div id="email-region" class="email-region">
-  <app-event-summary-print *ngIf="emailDataAvailable" [eventData]="eventData"></app-event-summary-print>
-</div>
 </div>

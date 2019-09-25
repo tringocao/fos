@@ -64,7 +64,9 @@ namespace FOS.API.Controllers
                 if (recurrenceEvent.StartTempDate >= DateTime.Now
                     && recurrenceEvent.StartTempDate < DateTime.Now.AddHours(1))
                 {
-                    _recurrenceEventService.RunThisTask(_recurrenceEventDtoMapper.ToModel(recurrenceEvent));
+                    Model.Domain.RecurrenceEvent before = _recurrenceEventService.GetByUserId(recurrenceEvent.UserId);
+
+                    _recurrenceEventService.RunThisTask(before);
                 }
                 return ApiUtil.CreateSuccessfulResult();
 
