@@ -38,13 +38,23 @@
         </mat-select>
       </mat-form-field>
       <mat-card-actions align="right">
-        <button mat-flat-button color="primary" (click)="getAllValue()">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="getAllValue()"
+          class="mid"
+        >
           Save
         </button>
-        <button mat-flat-button color="warn" (click)="removeRecurrenceEvent()">
+        <button
+          mat-flat-button
+          color="warn"
+          (click)="removeRecurrenceEvent()"
+          class="mid"
+        >
           Remove this reminder
         </button>
-        <button mat-flat-button (click)="onNoClick()">
+        <button mat-stroked-button (click)="onNoClick()" class="mid">
           Cancel
         </button>
       </mat-card-actions>

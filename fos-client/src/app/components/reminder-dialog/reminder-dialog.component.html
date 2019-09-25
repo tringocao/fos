@@ -60,23 +60,25 @@
     <button
       *ngIf="!data.isClosedEvent"
       class="remind"
-      mat-raised-button
+      mat-flat-button
       (click)="remind($event)"
       color="primary"
       [disabled]="userNotOrder.length == 0"
     >
       Send
     </button>
-      <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}">
-        <button
-          *ngIf="data.isClosedEvent"
-          class="remind"
-          mat-raised-button
-          (click)="closeEvent($event)"
-          color="warn"
-        >Close Event</button>
-      </a>
-    <button class="cancel" mat-raised-button (click)="closeDialog($event)">
+    <a target="_blank" routerLink="/events/summary/{{ data.event.EventId }}">
+      <button
+        *ngIf="data.isClosedEvent"
+        class="remind"
+        mat-flat-button
+        (click)="closeEvent($event)"
+        color="warn"
+      >
+        Close Event
+      </button>
+    </a>
+    <button class="cancel" mat-stroked-button (click)="closeDialog($event)">
       Cancel
     </button>
   </div>
