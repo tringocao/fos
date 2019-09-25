@@ -2,7 +2,7 @@
   <h3 *ngIf="isOrder">{{ data.restaurant.Name }}</h3>
   <h1 *ngIf="!isOrder">{{ data.restaurant.Name }}</h1>
 
-  <h3>Total reviews on Foody: {{ data.detail.TotalReview }}</h3>
+  <h4>Total reviews on Foody: {{ data.detail.TotalReview }}</h4>
   <ngx-stars
     [readonly]="true"
     [maxStars]="5"
@@ -14,7 +14,7 @@
     (change)="setFood($event)"
   ></app-food-categories>
 </div>
-<div class="restaurants ">
+<div class="restaurants">
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource2" matSort>
       <!-- Checkbox Column -->
@@ -59,7 +59,7 @@
       <ng-container matColumnDef="Price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
         <td mat-cell *matCellDef="let element" class="align-right">
-          {{ numberWithCommas2(element.Price).toString() + "đ" }}
+          {{ numberWithCommas2(element.Price).toString() + 'đ' }}
         </td>
       </ng-container>
 
