@@ -33,10 +33,15 @@
   ></app-list-ordered-foods>
 </div>
 <div *ngIf="isDataAvailable" class="example-button-row">
-  <button [disabled]="!isOrder" mat-raised-button color="warn" (click)="save()">
+  <button
+    [disabled]="!isOrder"
+    mat-flat-button
+    color="primary"
+    (click)="save()"
+  >
     Save Order
   </button>
-  <button [disabled]="!isOrder" mat-raised-button (click)="onNoClick()">
+  <button [disabled]="!isOrder" mat-stroked-button (click)="onNoClick()">
     Cancel
   </button>
 </div>
