@@ -14,6 +14,7 @@ import { debounceTime, tap, switchMap, finalize } from "rxjs/operators";
 import { EventFormService } from 'src/app/services/event-form/event-form.service';
 import { Group } from 'src/app/models/group';
 import { environment } from 'src/environments/environment';
+import { User } from 'src/app/models/user';
 export interface userPicker {
   Name: string;
   Email: string;
@@ -57,7 +58,7 @@ export class EventDialogUserpickerComponent implements OnInit {
         tap(() => (this.isHostLoading = true)),
         switchMap(value => 
           self.eventFormService
-            .SearchGroupByName(value)
+            .SearchGroupOrUserByName(value)
             .pipe(finalize(() => {
               
               var user: userPicker = self.formGroup.get(self.formControlName).value;
@@ -70,7 +71,7 @@ export class EventDialogUserpickerComponent implements OnInit {
             }))
         )
       )
-      .subscribe((data: ApiOperationResult<Array<Group>>) => {
+      .subscribe((data: ApiOperationResult<Array<User>>) => {
         if (data && data.Data) {
           var dataSourceTemp: userPicker[] = [];
           console.log(data.Data);

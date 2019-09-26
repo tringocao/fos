@@ -24,11 +24,27 @@ namespace FOS.Model.Mapping
                 PreferredLanguage = user.PreferredLanguage
             };
         }
+        public Domain.User ToDomain(Dto.User user)
+        {
+            return new Domain.User()
+            {
+                UserPrincipalName = user.UserPrincipalName,
+                DisplayName = user.DisplayName,
+                GivenName = user.GivenName,
+                Id = user.Id,
+                Surname = user.Surname,
+                JobTitle = user.JobTitle,
+                Mail = user.Mail,
+                MobilePhone = user.MobilePhone,
+                OfficeLocation = user.OfficeLocation,
+                PreferredLanguage = user.PreferredLanguage
+            };
+        }
     }
 
     public interface IUserDtoMapper
     {
         Dto.User ToDto(Model.Domain.User user);
-
+        Domain.User ToDomain(Dto.User dtoUser);
     }
 }
