@@ -89,7 +89,7 @@ namespace FOS.Services.SendEmailServices
                 }
             }
         }
-        public async Task SendEmailToReOrderEventAsync(IEnumerable<User> users, string emailTemplateJson)
+        public async Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
         {
             var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
             jsonTemplate.TryGetValue("Body", out object body);
@@ -115,7 +115,7 @@ namespace FOS.Services.SendEmailServices
                 }
             }
         }
-        public async Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
+        public async Task SendEmailToReOrderEventAsync(List<Model.Domain.UserReorder> users, string emailTemplateJson)
         {
             var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
             jsonTemplate.TryGetValue("Body", out object body);

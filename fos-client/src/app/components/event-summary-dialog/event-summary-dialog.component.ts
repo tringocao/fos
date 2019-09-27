@@ -35,13 +35,11 @@ import { UserNotOrderMailInfo } from "src/app/models/user-not-order-mail-info";
 import { Order } from "src/app/models/order";
 import { User } from "src/app/models/user";
 
-import {OverlayContainer} from '@angular/cdk/overlay';
-import { FoodReport } from 'src/app/models/food-report';
-import { Comment } from 'src/app/models/comment';
-import { UserOrder } from 'src/app/models/user-order';
-import { User } from 'src/app/models/user';
- 
- 
+import { FoodReport } from "src/app/models/food-report";
+import { Comment } from "src/app/models/comment";
+import { UserOrder } from "src/app/models/user-order";
+import { UserReorder } from "src/app/models/user-reorder";
+
 @Component({
   selector: "app-event-summary-dialog",
   templateUrl: "./event-summary-dialog.component.html",
@@ -66,7 +64,7 @@ export class EventSummaryDialogComponent implements OnInit {
     overlayContainer.getContainerElement().classList.add("app-theme1-theme");
     console.log(router.routerState);
   }
-  selection = new SelectionModel<any>(true, []);
+  selection = new SelectionModel<FoodReport>(true, []);
 
   eventData: any;
   emailDataAvailable: boolean;
@@ -78,6 +76,7 @@ export class EventSummaryDialogComponent implements OnInit {
   personGroupViewdataSource: any = new MatTableDataSource([]);
   reOrder: boolean = false;
   usersReorder: User[];
+  //food: User[];
 
   dishGroupViewDisplayedColumns: string[] = [
     "picture",
@@ -99,6 +98,8 @@ export class EventSummaryDialogComponent implements OnInit {
   orders: Order[];
   eventDetail: Event;
   foods: FoodReport[] = [];
+  foods4Reorder: string[] = [];
+
   orderByDish: any[] = [];
   orderByPerson: any[] = [];
   eventId: number;
@@ -233,44 +234,53 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getPersonGroupView(order, orders) {
-    var orderItem:UserOrder = {
+    var orderItem: UserOrder = {
       User: null,
-      Food: '',
+      Food: "",
       Price: 0,
       PayExtra: 0,
-      Comments: [],
+      Comments: []
     };
-    this.userService.getUserById(order.IdUser).then((user: User) => {
-      orderItem.User = user;
-    }).then(() => {
-      var foods = "";
-      var comments:Comment[] = [];
-      var total = 0;
-      order.FoodDetail.forEach(food => {
-        foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
-        // comment += ' ' + food.Value.Comment;
-        if (food.Value.Comment !== "") {
-          if (comments.some(_comment => _comment.Value == food.Value.Comment)) {
-            var duplicatedComment = comments.findIndex(c => c.Value == food.Value.Comment);
-            comments[duplicatedComment].Amount++;
-          }
-          else {
-            comments.push({
-              Value: food.Value.Comment,
-              Amount: 1,
-            })
-          }
-        }
-
-        total += Number(food.Value.Total);
+    this.userService
+      .getUserById(order.IdUser)
+      .then((user: User) => {
+        orderItem.User = user;
       })
-      orderItem.Food = foods;
-      orderItem.Comments = comments;
-      orderItem.Price = total;
-      if (this.eventDetail && this.eventDetail.MaximumBudget) {
-        orderItem.PayExtra = (Number(this.eventDetail.MaximumBudget) < total) ? (total - Number(this.eventDetail.MaximumBudget)) : 0;
-      }
-      // orderItem.comment = comment;
+      .then(() => {
+        var foods = "";
+        var comments: Comment[] = [];
+        var total = 0;
+        order.FoodDetail.forEach(food => {
+          foods += food.Value.Amount + "x " + food.Value.Name + ", ";
+          // comment += ' ' + food.Value.Comment;
+          if (food.Value.Comment !== "") {
+            if (
+              comments.some(_comment => _comment.Value == food.Value.Comment)
+            ) {
+              var duplicatedComment = comments.findIndex(
+                c => c.Value == food.Value.Comment
+              );
+              comments[duplicatedComment].Amount++;
+            } else {
+              comments.push({
+                Value: food.Value.Comment,
+                Amount: 1
+              });
+            }
+          }
+
+          total += Number(food.Value.Total);
+        });
+        orderItem.Food = foods;
+        orderItem.Comments = comments;
+        orderItem.Price = total;
+        if (this.eventDetail && this.eventDetail.MaximumBudget) {
+          orderItem.PayExtra =
+            Number(this.eventDetail.MaximumBudget) < total
+              ? total - Number(this.eventDetail.MaximumBudget)
+              : 0;
+        }
+        // orderItem.comment = comment;
 
         this.orderByPerson.push(orderItem);
         if (this.orderByPerson.length == orders.length) {
@@ -291,44 +301,54 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getDishGroupView(food, foodList, foodDetail, foodProceed) {
-    var _food:FoodReport = {
+    var _food: FoodReport = {
       FoodId: food.IdFood,
       Name: food.Value.Name,
       Price: Number(food.Value.Price),
       Picture: food.Value.Photo,
-      Comments: food.Value.Comment !== "" ? [{
-        Value: food.Value.Comment,
-        Amount: 1
-      }] : [],
-      TotalComment: '',
+      Comments:
+        food.Value.Comment !== ""
+          ? [
+              {
+                Value: food.Value.Comment,
+                Amount: 1
+              }
+            ]
+          : [],
+      TotalComment: "",
       Amount: Number(food.Value.Amount),
       Total: 0,
       NumberOfUser: 0,
       UserIds: []
-    }
-    _food.Total = _food.Amount * _food.Price
+    };
+    _food.Total = _food.Amount * _food.Price;
     if (!foodList.includes(food.IdFood)) {
       foodList.push(food.IdFood);
-      this.foods.push(_food)
-    }
-    else {
+      this.foods.push(_food);
+    } else {
       var selectedFood = this.foods.findIndex(f => f.FoodId == food.IdFood);
-      // console.log(selectedFood)
       this.foods[selectedFood].Amount += _food.Amount;
       this.foods[selectedFood].Total += _food.Total;
       if (food.Value.Comment !== "") {
-        if (this.foods[selectedFood].Comments.some((_comment:Comment) => _comment.Value == food.Value.Comment)) {
-          var duplicatedFood = this.foods[selectedFood].Comments.findIndex((c:Comment) => c.Value == food.Value.Comment);
+        if (
+          this.foods[selectedFood].Comments.some(
+            (_comment: Comment) => _comment.Value == food.Value.Comment
+          )
+        ) {
+          var duplicatedFood = this.foods[selectedFood].Comments.findIndex(
+            (c: Comment) => c.Value == food.Value.Comment
+          );
           this.foods[selectedFood].Comments[duplicatedFood].Amount++;
-        }
-        else {
+        } else {
           this.foods[selectedFood].Comments.push({
             Value: food.Value.Comment,
             Amount: 1
-          })
+          });
         }
       }
-
+      this.foods[selectedFood].TotalComment += _food.TotalComment;
+    }
+  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected()
@@ -337,9 +357,12 @@ export class EventSummaryDialogComponent implements OnInit {
           this.selection.select(row)
         );
   }
-      this.foods[selectedFood].TotalComment +=  _food.TotalComment;
-    }
 
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dishGroupViewdataSource.data.length;
+    return numSelected === numRows;
+  }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {
@@ -361,11 +384,16 @@ export class EventSummaryDialogComponent implements OnInit {
       "totalComment"
     ];
   }
+  users: User[] = [];
   resendOrder() {
-    this.selection.selected.forEach(value =>
-      this.usersReorder.push(value.user)
-    );
+    this.selection.selected.forEach(value => {
+      value.UserIds.forEach(id => {
+        this.usersReorder.push(this.users.filter(u => u.Id == id)[0]);
+      });
+      this.foods4Reorder.push(value.Name);
+    });
     this.openEvent();
+    this.sendEmailReorder();
   }
   onNoClick() {
     this.reOrder = false;
@@ -377,6 +405,26 @@ export class EventSummaryDialogComponent implements OnInit {
       "total",
       "totalComment"
     ];
+  }
+  sendEmailReorder() {
+    const info: UserReorder[] = [];
+    this.usersReorder.forEach(user => {
+      const element = new UserReorder();
+      element.EventRestaurant = this.eventDetail.Restaurant;
+      element.EventTitle = this.eventDetail.Name;
+      element.UserMail = user.Mail;
+      element.OrderId = this.orders.filter(o => o.IdUser === user.Id)[0].Id;
+      element.FoodName = this.foods4Reorder;
+      info.push(element);
+    });
+    this.orderService.SendEmailToReOrderedUser(info).then(response => {
+      if (response === null) {
+        this.toast("Reorder success", "Dismiss");
+      }
+      if (response != null && response.ErrorMessage != null) {
+        this.toast("Reorder fail", "Dismiss");
+      }
+    });
   }
   openEvent() {
     this.summaryService
