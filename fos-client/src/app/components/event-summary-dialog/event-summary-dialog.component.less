@@ -1,4 +1,4 @@
-@import "../../../styles/global/variables.less";
+@import '../../../styles/global/variables.less';
 
 .container {
   overflow: hidden;
@@ -66,4 +66,45 @@
 }
 .mat-flat-button {
   margin-left: 5px;
+}
+.td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+  padding-left: 5px;
+}
+.mat-footer-cell {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.dot {
+  height: 1.2rem;
+  width: 1.2rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.2rem;
+}
+.status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.opened {
+  .dot {
+    background-color: @green;
+  }
+}
+.closedStatus {
+  .dot {
+    background-color: @orange;
+  }
+}
+.canceled {
+  .dot {
+    background-color: @red;
+  }
+}
+.show-users-button {
+  margin-bottom: 5px;
 }

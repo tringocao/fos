@@ -74,7 +74,8 @@ namespace FOS.Services.EventServices
                 CanMakeOrder =
                             (isParticipant || eventModel.EventType == EventType.Open)
                             && eventModel.Status == EventStatus.Opened,
-                CanViewOrder = eventModel.Status == EventStatus.Closed && isParticipant
+                CanViewOrder = eventModel.Status == EventStatus.Closed && isParticipant,
+                CanViewEventSummary = isHost || isParticipant
             };
         }
         public Event GetEvent(int id)

@@ -59,7 +59,9 @@ export class EventSummaryDialogComponent implements OnInit {
     private userService: UserService,
     private printService: PrintService,
     private snackBar: MatSnackBar,
-    private overlayContainer: OverlayContainer
+    private overlayContainer: OverlayContainer,
+    private dialog: MatDialog,
+    public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>
   ) {
     overlayContainer.getContainerElement().classList.add("app-theme1-theme");
     console.log(router.routerState);
@@ -79,12 +81,14 @@ export class EventSummaryDialogComponent implements OnInit {
   //food: User[];
 
   dishGroupViewDisplayedColumns: string[] = [
-    "picture",
-    "name",
-    "amount",
-    "price",
-    "total",
-    "totalComment"
+    'picture',
+    'name',
+    'amount',
+    'price',
+    'total',
+    'totalComment',
+    'numberOfUser',
+    'showUsers'
   ];
   personGroupViewDisplayedColumns: string[] = [
     "user",
@@ -95,7 +99,7 @@ export class EventSummaryDialogComponent implements OnInit {
   ];
 
   restaurant: any;
-  orders: Order[];
+ 
   eventDetail: Event;
   foods: FoodReport[] = [];
   foods4Reorder: string[] = [];
@@ -103,6 +107,9 @@ export class EventSummaryDialogComponent implements OnInit {
   orderByDish: any[] = [];
   orderByPerson: any[] = [];
   eventId: number;
+  totalCost: number;
+  orders: Order[];
+  users: User[];
 
   toStandardDate(date: Date) {
     return moment(date).format("DD/MM/YYYY HH:mm");
@@ -115,12 +122,25 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   printToPdf() {
-    this.printService.printDocument("report", [this.eventId.toString()], {
+    this.printService.printDocument('report', [this.eventId.toString()], {
       restaurant: this.restaurant,
       eventDetail: this.eventDetail,
       foods: this.foods,
       orderByPerson: this.orderByPerson
     });
+    // this.printMode = true;
+    // const printContent = document.getElementById("print");
+
+    // // printJs('print', 'html');
+    // console.log(printContent)
+    // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+    // // WindowPrt.document.write('<link rel="stylesheet" type="text/css" href="event-summary-dialog.component.css">');
+    // WindowPrt.document.write(printContent.innerHTML);
+    // WindowPrt.document.close();
+    // console.log(window.document)
+    // WindowPrt.focus();
+    // WindowPrt.print();
+    // WindowPrt.close();
   }
 
   isEmailDataAvailable() {
@@ -133,9 +153,9 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   sendEmail() {
-    document.getElementById("container").parentNode["style"].overflow =
-      "visible";
-    const page = document.getElementById("email-region");
+    document.getElementById('container').parentNode['style'].overflow =
+      'visible';
+    const page = document.getElementById('email-region');
     const options = {
       background: "white",
       height: 800,
@@ -167,12 +187,14 @@ export class EventSummaryDialogComponent implements OnInit {
 
     this.dishGroupViewdataSource = this.foods;
     this.personGroupViewdataSource = this.orderByPerson;
+    this.totalCost = 0;
+    this.users = [];
+    this.eventDetail = new Event();
 
     this.route.params.subscribe(params => {
-      var id = params["id"];
+      var id = params['id'];
       this.eventId = id;
       this.eventFormService.GetEventById(id).then((result: Event) => {
-        console.log(result);
         this.eventDetail = result;
         this.eventData.eventDetail = this.eventDetail;
         this.eventDataAvailable = true;
@@ -204,6 +226,7 @@ export class EventSummaryDialogComponent implements OnInit {
           });
       });
       this.orderService.GetOrdersByEventId(id).then(orders => {
+        this.orders = orders;
         console.log(orders);
         var foodList: string[] = [];
         var orderProceed = 0;
@@ -227,10 +250,23 @@ export class EventSummaryDialogComponent implements OnInit {
             this.eventData.foods = this.foods;
           }
         });
+        this.getUserOrderFoodAndGetTotalCost(orders);
       });
     });
 
     // this.dishGroupViewdataSource = this.orderByDish;
+  }
+
+  getUserOrderFoodAndGetTotalCost(orders: Order[]) {
+    this.foods.forEach(item => {
+      orders.forEach(order => {
+        if (order.FoodDetail.some(detail => detail.IdFood === item.FoodId)) {
+          item.NumberOfUser += 1;
+          item.UserIds.push(order.IdUser);
+        }
+      });
+      this.totalCost = item.Total + this.totalCost;
+    });
   }
 
   getPersonGroupView(order, orders) {
@@ -244,16 +280,17 @@ export class EventSummaryDialogComponent implements OnInit {
     this.userService
       .getUserById(order.IdUser)
       .then((user: User) => {
+        this.users.push(user);
         orderItem.User = user;
       })
       .then(() => {
-        var foods = "";
+        var foods = '';
         var comments: Comment[] = [];
         var total = 0;
         order.FoodDetail.forEach(food => {
-          foods += food.Value.Amount + "x " + food.Value.Name + ", ";
+          foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
           // comment += ' ' + food.Value.Comment;
-          if (food.Value.Comment !== "") {
+          if (food.Value.Comment !== '') {
             if (
               comments.some(_comment => _comment.Value == food.Value.Comment)
             ) {
@@ -438,5 +475,27 @@ export class EventSummaryDialogComponent implements OnInit {
           this.toast("Open event failed", "Dismiss");
         }
       });
+      this.foods[selectedFood].TotalComment += _food.TotalComment;
+    }
+  }
+  showUsers(userIds: string[], foodName: string) {
+    const listUserOrderFood = this.users.filter(user =>
+      userIds.includes(user.Id)
+    );
+    console.log('data: ', userIds, listUserOrderFood, foodName);
+    const dialogRef = this.dialog.open(UsersOrderedFoodDialogComponent, {
+      data: {
+        users: listUserOrderFood,
+        food: foodName
+      },
+      maxHeight: '98vh',
+      minWidth: '50%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+  closeDialog($event) {
+    this.dialogRef.close();
   }
 }
