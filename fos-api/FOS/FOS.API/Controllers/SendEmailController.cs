@@ -85,6 +85,20 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
+        [HttpPost]
+        [Route("SendMailReOrder")]
+        public async Task<ApiResponse> SendMailReOrder(string eventId, [FromBody]Model.Dto.User users)
+        {
+            try
+            {
+
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
         // GET: api/SendEmail
         public IEnumerable<string> Get()
         {

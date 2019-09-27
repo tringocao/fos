@@ -89,6 +89,32 @@ namespace FOS.Services.SendEmailServices
                 }
             }
         }
+        public async Task SendEmailToReOrderEventAsync(IEnumerable<User> users, string emailTemplateJson)
+        {
+            var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
+            jsonTemplate.TryGetValue("Body", out object body);
+            ReadEmailTemplate(body.ToString());
+            jsonTemplate.TryGetValue("Subject", out object subject);
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                var emailp = new EmailProperties();
+                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                var host = await _sPUserService.GetCurrentUser();
+
+                foreach (var user in users)
+                {
+                    emailTemplate.MakeOrder = hostname + "make-order/" + user.OrderId;
+                    emailp.To = new List<string>() { user.UserMail };
+                    emailp.From = host.Mail;
+                    emailp.BCC = new List<string> { host.Mail };
+                    emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
+                    emailp.Subject = subject.ToString();
+
+                    Utility.SendEmail(clientContext, emailp);
+                    clientContext.ExecuteQuery();
+                }
+            }
+        }
         public async Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
         {
             var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
