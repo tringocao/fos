@@ -212,15 +212,15 @@ export class EventFormService {
     });
   }
 
-  SearchGroupByName(
-    groupName: string
+  SearchGroupOrUserByName(
+    searchName: string
   ): Observable<ApiOperationResult<Array<Group>>> {
     return this.http
       .get<ApiOperationResult<Array<Group>>>(
-        environment.apiUrl + "api/SPUser/SearchGroupByName",
+        environment.apiUrl + "api/SPUser/SearchGroupOrUserByName",
         {
           params: {
-            groupName: groupName
+            searchName: searchName
           }
         }
       )
