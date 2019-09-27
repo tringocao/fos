@@ -111,6 +111,7 @@ export class ListRestaurantComponent implements OnInit {
       }
     });
     this.favoriteService.addFavoriteRestaurant(restaurantId).then(response => {
+      this.favoriteRestaurants.push(restaurantId)
       // console.log(this.dataSource.data);
       if (response != null && response.ErrorMessage != null) {
         this.toast('Error happnened ', 'Dismiss');
@@ -152,17 +153,20 @@ export class ListRestaurantComponent implements OnInit {
 
   getRestaurant($event) {
     if ($event.isChecked) {
-      this.favoriteOnlyDataSource.data =
-        this.dataSource.data &&
-        this.dataSource.data.filter(restaurant => restaurant.IsFavorite);
-      this.favoriteOnlyDataSource.sort = this.sort;
-      this.favoriteOnlyDataSource.paginator = this.paginator;
-      this.baseDataSource = this.dataSource;
-      this.dataSource = this.favoriteOnlyDataSource;
-      // console.log(this.dataSource)
-      this.toast('Filtered by favorite! ', 'Dismiss');
+      this.baseDataSource.data = this.dataSource.data;
+      this.restaurantService.getRestaurants(this.favoriteRestaurants.map(Number), this.idService, 217).then(result => {
+        console.log(result)
+        result.forEach(item => item.IsFavorite = true);
+        // this.favoriteOnlyDataSource.data = result;
+        this.dataSource.data = result;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.toast('Filtered by favorite! ', 'Dismiss');
+      })
     } else {
-      this.dataSource = this.baseDataSource;
+      this.dataSource.data = this.baseDataSource.data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
     console.log($event.isChecked);
     if ($event.topic != undefined && $event.keyword != undefined) {
@@ -183,27 +187,7 @@ export class ListRestaurantComponent implements OnInit {
                 }
                 return item;
               });
-              // console.log(dataSourceTemp)
-              // this.dataSource.data = dataSourceTemp.filter(item => {
-              //   if ($event.isChecked) {
-              //     return item.IsFavorite;
-              //   }
-              //   return true;
-              // });
               this.dataSource.data = dataSourceTemp;
-              console.log(this.dataSource.data);
-              console.log(dataSourceTemp);
-              // console.log(
-              //   dataSourceTemp.filter(
-              //     (restaurant: Restaurant) => restaurant.stared
-              //   )
-              // );
-              // this.dataSource.data = this.favoriteOnly
-              //   ? dataSourceTemp.filter(
-              //       (restaurant: Restaurant) => restaurant.stared
-              //     )
-              //   : dataSourceTemp;
-
               this.dataSource.sort = this.sort;
               this.dataSource.paginator = this.paginator;
               this.load = false;

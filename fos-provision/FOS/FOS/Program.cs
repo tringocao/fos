@@ -13,8 +13,7 @@ namespace FOS
         {
             try
             {
-                var siteUrl = "https://devpreciovn.sharepoint.com/sites/FOS/";
-
+                var siteUrl = ConfigurationSettings.AppSettings["siteUrl"];
                 var loginName = ConfigurationSettings.AppSettings["loginName"];
                 var passWord = ConfigurationSettings.AppSettings["passWord"];
 

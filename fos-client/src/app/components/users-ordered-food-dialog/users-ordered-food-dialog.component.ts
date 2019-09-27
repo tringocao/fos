@@ -27,6 +27,7 @@ export class UsersOrderedFoodDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('data: ', this.data);
     this.dataSource = new MatTableDataSource(this.data.users);
   }
 

@@ -177,38 +177,51 @@ namespace FOS.Services.SPUserService
                 throw new Exception(await result.Content.ReadAsStringAsync());
             }
         }
-        public async Task<List<Group>> SearchGroupByName(string groupName)
+        public async Task<List<User>> SearchGroupOrUserByName(string searchName)
         {
-            //String queryString = String.Format("groups?$filter=startswith(mail,'{0}')", groupName);
-            String queryString = String.Format("me/people/?$search={0}", groupName);
-            var result = await _graphApiProvider.SendAsync(HttpMethod.Get, queryString, null);
+            List<Model.Domain.User> listSearchUser = new List<User>();
+            String queryString = String.Format("users?$filter=startswith(displayName,'{0}')", searchName);
+            var resultSearchUser = await _graphApiProvider.SendAsync(HttpMethod.Get, queryString, null);
 
-            if (result.IsSuccessStatusCode)
+            if (resultSearchUser.IsSuccessStatusCode)
             {
-                var resultGroup = await result.Content.ReadAsStringAsync();
+                var resultUser = await resultSearchUser.Content.ReadAsStringAsync();
+                dynamic responseUser = JsonConvert.DeserializeObject(resultUser);
 
-                dynamic response = JsonConvert.DeserializeObject(resultGroup);
-
-                List<Model.Domain.Group> jsonUsers = response.value.ToObject<List<Model.Domain.Group>>();
-
-                List<Model.Domain.Group> ListSearchUser = new List<Group>();
-
-                foreach (var item in jsonUsers)
+                var newList = responseUser.value.ToObject<List<Model.Domain.User>>();
+                if (newList.Count > 0)
                 {
-                    var modelGroup = new Model.Domain.Group()
-                    {
-                        DisplayName = item.DisplayName,
-                        Id = item.Id,
-                        Mail = item.ScoredEmailAddresses[0].Address
-                    };
-                    ListSearchUser.Add(modelGroup);
+                    listSearchUser.AddRange(newList);
+
                 }
-                return ListSearchUser;
             }
             else
             {
-                throw new Exception(await result.Content.ReadAsStringAsync());
+                throw new Exception(await resultSearchUser.Content.ReadAsStringAsync());
             }
+
+            List<Model.Domain.User> listSearchGroup = new List<User>();
+            String queryStringGroup = String.Format("groups?$filter=startswith(displayName,'{0}')", searchName);
+            var resultSearchGroup = await _graphApiProvider.SendAsync(HttpMethod.Get, queryStringGroup, null);
+
+            if (resultSearchGroup.IsSuccessStatusCode)
+            {
+                var resultGroup = await resultSearchGroup.Content.ReadAsStringAsync();
+                dynamic responseUser = JsonConvert.DeserializeObject(resultGroup);
+
+                List<Model.Domain.User> newList = responseUser.value.ToObject<List<Model.Domain.User>>();
+                if(newList.Count > 0)
+                {
+                    listSearchUser.AddRange(newList);
+
+                }
+            }
+            else
+            {
+                throw new Exception(await resultSearchUser.Content.ReadAsStringAsync());
+            }
+
+            return listSearchUser;
         }
     }
 }
