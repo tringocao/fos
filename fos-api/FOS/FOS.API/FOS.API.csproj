@@ -391,8 +391,11 @@
     </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\App_Data\email_template.txt" />
+    <Content Include="bin\App_Data\RemindEmailTemplate.json" />
     <Content Include="bin\AutoMapper.dll" />
     <Content Include="bin\AutoMapper.xml" />
+    <Content Include="bin\CommonServiceLocator.dll" />
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
     <Content Include="bin\FOS.API.dll" />
@@ -492,10 +495,23 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="bin\SendGrid.dll" />
+    <Content Include="bin\SendGrid.pdb" />
+    <Content Include="bin\SendGrid.xml" />
     <Content Include="bin\Swashbuckle.Core.dll" />
     <Content Include="bin\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\System.IO.dll" />
+    <Content Include="bin\System.IO.FileSystem.dll" />
+    <Content Include="bin\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="bin\System.Json.dll" />
+    <Content Include="bin\System.Net.Http.dll" />
     <Content Include="bin\System.Net.Http.Formatting.dll" />
     <Content Include="bin\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\System.Runtime.dll" />
+    <Content Include="bin\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="bin\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="bin\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="bin\System.Security.Cryptography.X509Certificates.dll" />
     <Content Include="bin\System.Threading.Tasks.Extensions.dll" />
     <Content Include="bin\System.Web.Cors.dll" />
     <Content Include="bin\System.Web.Helpers.dll" />
@@ -553,7 +569,6 @@
     <Content Include="App_Data\RemindEventEmailTemplate.json" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="bin\App_Data\RemindEmailTemplate.json" />
     <Content Include="App_Data\RemindEmailTemplate.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

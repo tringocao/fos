@@ -163,17 +163,17 @@ namespace FOS.API.Controllers
         }
 
         [HttpGet]
-        [Route("SearchGroupByName")]
-        public async Task<ApiResponse<List<Model.Dto.Group>>> SearchGroupByName(string groupName)
+        [Route("SearchGroupOrUserByName")]
+        public async Task<ApiResponse<List<Model.Dto.User>>> SearchGroupOrUserByName(string searchName)
         {
             try
             {
-                var group = await _sPUserService.SearchGroupByName(groupName);
-                return ApiUtil<List<Model.Dto.Group>>.CreateSuccessfulResult(group.Select(u => _groupDtoMapper.ToDto(u)).ToList());
+                var group = await _sPUserService.SearchGroupOrUserByName(searchName);
+                return ApiUtil<List<Model.Dto.User>>.CreateSuccessfulResult(group.Select(u => _userDtoMapper.ToDto(u)).ToList());
             }
             catch (Exception e)
             {
-                return ApiUtil<List<Model.Dto.Group>>.CreateFailResult(e.ToString());
+                return ApiUtil<List<Model.Dto.User>>.CreateFailResult(e.ToString());
             }
         }
     }
