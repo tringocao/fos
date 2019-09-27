@@ -6,7 +6,11 @@ import {
   ElementRef,
   Input
 } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog
+} from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { MatTableDataSource, MatSnackBar } from "@angular/material";
 import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
@@ -39,6 +43,8 @@ import { FoodReport } from "src/app/models/food-report";
 import { Comment } from "src/app/models/comment";
 import { UserOrder } from "src/app/models/user-order";
 import { UserReorder } from "src/app/models/user-reorder";
+import { UsersOrderedFoodDialogComponent } from "../users-ordered-food-dialog/users-ordered-food-dialog.component";
+import { debug } from "util";
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -77,18 +83,18 @@ export class EventSummaryDialogComponent implements OnInit {
   dishGroupViewdataSource: any = new MatTableDataSource([]);
   personGroupViewdataSource: any = new MatTableDataSource([]);
   reOrder: boolean = false;
-  usersReorder: User[];
+  usersReorder: User[] = [];
   //food: User[];
 
   dishGroupViewDisplayedColumns: string[] = [
-    'picture',
-    'name',
-    'amount',
-    'price',
-    'total',
-    'totalComment',
-    'numberOfUser',
-    'showUsers'
+    "picture",
+    "name",
+    "amount",
+    "price",
+    "total",
+    "totalComment",
+    "numberOfUser",
+    "showUsers"
   ];
   personGroupViewDisplayedColumns: string[] = [
     "user",
@@ -99,7 +105,7 @@ export class EventSummaryDialogComponent implements OnInit {
   ];
 
   restaurant: any;
- 
+
   eventDetail: Event;
   foods: FoodReport[] = [];
   foods4Reorder: string[] = [];
@@ -110,7 +116,7 @@ export class EventSummaryDialogComponent implements OnInit {
   totalCost: number;
   orders: Order[];
   users: User[];
-
+  isHostUser: boolean = false;
   toStandardDate(date: Date) {
     return moment(date).format("DD/MM/YYYY HH:mm");
   }
@@ -122,7 +128,7 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   printToPdf() {
-    this.printService.printDocument('report', [this.eventId.toString()], {
+    this.printService.printDocument("report", [this.eventId.toString()], {
       restaurant: this.restaurant,
       eventDetail: this.eventDetail,
       foods: this.foods,
@@ -153,9 +159,9 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   sendEmail() {
-    document.getElementById('container').parentNode['style'].overflow =
-      'visible';
-    const page = document.getElementById('email-region');
+    document.getElementById("container").parentNode["style"].overflow =
+      "visible";
+    const page = document.getElementById("email-region");
     const options = {
       background: "white",
       height: 800,
@@ -192,7 +198,7 @@ export class EventSummaryDialogComponent implements OnInit {
     this.eventDetail = new Event();
 
     this.route.params.subscribe(params => {
-      var id = params['id'];
+      var id = params["id"];
       this.eventId = id;
       this.eventFormService.GetEventById(id).then((result: Event) => {
         this.eventDetail = result;
@@ -218,12 +224,12 @@ export class EventSummaryDialogComponent implements OnInit {
                 this.restaurant.Rating = Number(result.Rating);
                 this.restaurant.TotalReview = Number(result.TotalReview);
                 this.restaurant.isLoaded = true;
-                this.loading = false;
                 this.eventData.restaurant = this.restaurant;
               });
             console.log(this.restaurant);
             // this.restaurant.RestaurantUrl = "01234";
           });
+        this.isHost(result);
       });
       this.orderService.GetOrdersByEventId(id).then(orders => {
         this.orders = orders;
@@ -284,13 +290,13 @@ export class EventSummaryDialogComponent implements OnInit {
         orderItem.User = user;
       })
       .then(() => {
-        var foods = '';
+        var foods = "";
         var comments: Comment[] = [];
         var total = 0;
         order.FoodDetail.forEach(food => {
-          foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
+          foods += food.Value.Amount + "x " + food.Value.Name + ", ";
           // comment += ' ' + food.Value.Comment;
-          if (food.Value.Comment !== '') {
+          if (food.Value.Comment !== "") {
             if (
               comments.some(_comment => _comment.Value == food.Value.Comment)
             ) {
@@ -410,7 +416,6 @@ export class EventSummaryDialogComponent implements OnInit {
     } row ${row.position + 1}`;
   }
   reportDisheout() {
-    this.reOrder = true;
     this.dishGroupViewDisplayedColumns = [
       "select",
       "picture",
@@ -418,10 +423,12 @@ export class EventSummaryDialogComponent implements OnInit {
       "amount",
       "price",
       "total",
-      "totalComment"
+      "totalComment",
+      "numberOfUser",
+      "showUsers"
     ];
+    this.reOrder = true;
   }
-  users: User[] = [];
   resendOrder() {
     this.selection.selected.forEach(value => {
       value.UserIds.forEach(id => {
@@ -429,18 +436,23 @@ export class EventSummaryDialogComponent implements OnInit {
       });
       this.foods4Reorder.push(value.Name);
     });
+    debugger;
+    this.usersReorder = Array.from(new Set(this.usersReorder));
     this.openEvent();
     this.sendEmailReorder();
   }
   onNoClick() {
     this.reOrder = false;
+
     this.dishGroupViewDisplayedColumns = [
       "picture",
       "name",
       "amount",
-      "price",
+      "prices",
       "total",
-      "totalComment"
+      "totalComment",
+      "numberOfUser",
+      "showUsers"
     ];
   }
   sendEmailReorder() {
@@ -452,6 +464,7 @@ export class EventSummaryDialogComponent implements OnInit {
       element.UserMail = user.Mail;
       element.OrderId = this.orders.filter(o => o.IdUser === user.Id)[0].Id;
       element.FoodName = this.foods4Reorder;
+      element.UserName = user.DisplayName;
       info.push(element);
     });
     this.orderService.SendEmailToReOrderedUser(info).then(response => {
@@ -469,27 +482,28 @@ export class EventSummaryDialogComponent implements OnInit {
       .then(response => {
         if (response === null) {
           this.toast("Event is opened again", "Dismiss");
-          window.location.reload();
+          this.summaryService
+            .SetTime2CloseToEventDate(this.eventId.toString())
+            .then(r => window.location.reload());
         }
         if (response != null && response.ErrorMessage != null) {
           this.toast("Open event failed", "Dismiss");
         }
       });
-      this.foods[selectedFood].TotalComment += _food.TotalComment;
-    }
   }
+
   showUsers(userIds: string[], foodName: string) {
     const listUserOrderFood = this.users.filter(user =>
       userIds.includes(user.Id)
     );
-    console.log('data: ', userIds, listUserOrderFood, foodName);
+    console.log("data: ", userIds, listUserOrderFood, foodName);
     const dialogRef = this.dialog.open(UsersOrderedFoodDialogComponent, {
       data: {
         users: listUserOrderFood,
         food: foodName
       },
-      maxHeight: '98vh',
-      minWidth: '50%'
+      maxHeight: "98vh",
+      minWidth: "50%"
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
@@ -497,5 +511,11 @@ export class EventSummaryDialogComponent implements OnInit {
   }
   closeDialog($event) {
     this.dialogRef.close();
+  }
+  isHost(event: Event) {
+    this.userService.getCurrentUser().then(user => {
+      this.isHostUser = user.Id == event.HostId;
+      this.loading = false;
+    });
   }
 }

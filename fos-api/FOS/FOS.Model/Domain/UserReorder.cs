@@ -15,6 +15,7 @@ namespace FOS.Model.Domain
         public string EventTitle { get; set; }
         public string EventRestaurant { get; set; }
         public List<string> FoodName { get; set; }
+        public string FoodNameHtml { get; set; }
 
     }
 }
