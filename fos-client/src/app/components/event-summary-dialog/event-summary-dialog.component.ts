@@ -29,6 +29,10 @@ import { UserService } from 'src/app/services/user/user.service';
 import { PrintService } from 'src/app/services/print/print.service';
 
 import {OverlayContainer} from '@angular/cdk/overlay';
+import { FoodReport } from 'src/app/models/food-report';
+import { Comment } from 'src/app/models/comment';
+import { UserOrder } from 'src/app/models/user-order';
+import { User } from 'src/app/models/user';
  
  
 @Component({
@@ -85,7 +89,7 @@ export class EventSummaryDialogComponent implements OnInit {
   restaurant: any;
  
   eventDetail: Event;
-  foods: any[] = [];
+  foods: FoodReport[] = [];
   orderByDish: any[] = [];
   orderByPerson: any[] = [];
   eventId: number;
@@ -208,42 +212,42 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getPersonGroupView(order, orders) {
-    var orderItem = {
-      user: '',
-      food: '',
-      price: 0,
-      payExtra: 0,
-      comments: [],
+    var orderItem:UserOrder = {
+      User: null,
+      Food: '',
+      Price: 0,
+      PayExtra: 0,
+      Comments: [],
     };
-    this.userService.getUserById(order.IdUser).then(user => {
-      orderItem.user = user.DisplayName;
+    this.userService.getUserById(order.IdUser).then((user: User) => {
+      orderItem.User = user;
     }).then(() => {
       var foods = "";
-      var comments = [];
+      var comments:Comment[] = [];
       var total = 0;
       order.FoodDetail.forEach(food => {
         foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
         // comment += ' ' + food.Value.Comment;
         if (food.Value.Comment !== "") {
-          if (comments.some(_comment => _comment.comment == food.Value.Comment)) {
-            var duplicatedComment = comments.findIndex(c => c.comment == food.Value.Comment);
-            comments[duplicatedComment].amount++;
+          if (comments.some(_comment => _comment.Value == food.Value.Comment)) {
+            var duplicatedComment = comments.findIndex(c => c.Value == food.Value.Comment);
+            comments[duplicatedComment].Amount++;
           }
           else {
             comments.push({
-              comment: food.Value.Comment,
-              amount: 1,
+              Value: food.Value.Comment,
+              Amount: 1,
             })
           }
         }
 
         total += Number(food.Value.Total);
       })
-      orderItem.food = foods;
-      orderItem.comments = comments;
-      orderItem.price = total;
+      orderItem.Food = foods;
+      orderItem.Comments = comments;
+      orderItem.Price = total;
       if (this.eventDetail && this.eventDetail.MaximumBudget) {
-        orderItem.payExtra = (Number(this.eventDetail.MaximumBudget) < total) ? (total - Number(this.eventDetail.MaximumBudget)) : 0;
+        orderItem.PayExtra = (Number(this.eventDetail.MaximumBudget) < total) ? (total - Number(this.eventDetail.MaximumBudget)) : 0;
       }
       // orderItem.comment = comment;
 
@@ -266,43 +270,45 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getDishGroupView(food, foodList, foodDetail, foodProceed) {
-    var _food = {
-      foodId: food.IdFood,
-      name: food.Value.Name,
-      price: Number(food.Value.Price),
-      picture: food.Value.Photo,
-      comments: food.Value.Comment !== "" ? [{
-        comment: food.Value.Comment,
-        amount: 1
+    var _food:FoodReport = {
+      FoodId: food.IdFood,
+      Name: food.Value.Name,
+      Price: Number(food.Value.Price),
+      Picture: food.Value.Photo,
+      Comments: food.Value.Comment !== "" ? [{
+        Value: food.Value.Comment,
+        Amount: 1
       }] : [],
-      totalComment: '',
-      amount: Number(food.Value.Amount),
-      total: 0
+      TotalComment: '',
+      Amount: Number(food.Value.Amount),
+      Total: 0,
+      NumberOfUser: 0,
+      UserIds: []
     }
-    _food.total = _food.amount * _food.price
+    _food.Total = _food.Amount * _food.Price
     if (!foodList.includes(food.IdFood)) {
       foodList.push(food.IdFood);
       this.foods.push(_food)
     }
     else {
-      var selectedFood = this.foods.findIndex(f => f.foodId == food.IdFood);
+      var selectedFood = this.foods.findIndex(f => f.FoodId == food.IdFood);
       // console.log(selectedFood)
-      this.foods[selectedFood].amount += _food.amount;
-      this.foods[selectedFood].total += _food.total;
+      this.foods[selectedFood].Amount += _food.Amount;
+      this.foods[selectedFood].Total += _food.Total;
       if (food.Value.Comment !== "") {
-        if (this.foods[selectedFood].comments.some(_comment => _comment.comment == food.Value.Comment)) {
-          var duplicatedFood = this.foods[selectedFood].comments.findIndex(c => c.comment == food.Value.Comment);
-          this.foods[selectedFood].comments[duplicatedFood].amount++;
+        if (this.foods[selectedFood].Comments.some((_comment:Comment) => _comment.Value == food.Value.Comment)) {
+          var duplicatedFood = this.foods[selectedFood].Comments.findIndex((c:Comment) => c.Value == food.Value.Comment);
+          this.foods[selectedFood].Comments[duplicatedFood].Amount++;
         }
         else {
-          this.foods[selectedFood].comments.push({
-            comment: food.Value.Comment,
-            amount: 1
+          this.foods[selectedFood].Comments.push({
+            Value: food.Value.Comment,
+            Amount: 1
           })
         }
       }
 
-      this.foods[selectedFood].totalComment +=  _food.totalComment;
+      this.foods[selectedFood].TotalComment +=  _food.TotalComment;
     }
 
   }
