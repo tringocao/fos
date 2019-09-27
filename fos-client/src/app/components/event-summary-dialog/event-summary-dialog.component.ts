@@ -90,8 +90,7 @@ export class EventSummaryDialogComponent implements OnInit {
  
   eventDetail: Event;
   foods: FoodReport[] = [];
-  orderByDish: any[] = [];
-  orderByPerson: any[] = [];
+  orderByPerson: UserOrder[] = [];
   eventId: number;
  
   toStandardDate(date: Date) {
@@ -112,19 +111,6 @@ export class EventSummaryDialogComponent implements OnInit {
         foods:this.foods,
         orderByPerson:this.orderByPerson
       });
-    // this.printMode = true;
-    // const printContent = document.getElementById("print");
- 
-    // // printJs('print', 'html');
-    // console.log(printContent)
-    // const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    // // WindowPrt.document.write('<link rel="stylesheet" type="text/css" href="event-summary-dialog.component.css">');
-    // WindowPrt.document.write(printContent.innerHTML);
-    // WindowPrt.document.close();
-    // console.log(window.document)
-    // WindowPrt.focus();
-    // WindowPrt.print();
-    // WindowPrt.close();
   }
 
   isEmailDataAvailable() {
@@ -212,13 +198,7 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getPersonGroupView(order, orders) {
-    var orderItem:UserOrder = {
-      User: null,
-      Food: '',
-      Price: 0,
-      PayExtra: 0,
-      Comments: [],
-    };
+    var orderItem:UserOrder;
     this.userService.getUserById(order.IdUser).then((user: User) => {
       orderItem.User = user;
     }).then(() => {
@@ -257,14 +237,6 @@ export class EventSummaryDialogComponent implements OnInit {
         // this.dishViewDataAvailable = true;
         this.eventData.orderByPerson = this.orderByPerson;
         this.personViewDataAvailable = true;
-        // this.eventData = {
-        //   restaurant:this.restaurant,
-        //   eventDetail:this.eventDetail,
-        //   foods:this.foods,
-        //   orderByPerson:this.orderByPerson
-        // }
-        // console.log(this.eventData)
-        // this.emailDataAvailable = true;
       }
     })
   }

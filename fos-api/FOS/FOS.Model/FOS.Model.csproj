@@ -102,6 +102,7 @@
     <Compile Include="Domain\ApiResponse.cs" />
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\FeedBack.cs" />
     <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
     <Compile Include="Domain\DishesSummary.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
@@ -150,6 +151,8 @@
     <Compile Include="Dto\EventAction.cs" />
     <Compile Include="Dto\ExternalService.cs" />
     <Compile Include="Dto\FavoriteRestaurant.cs" />
+    <Compile Include="Dto\FeedBack.cs" />
+    <Compile Include="Dto\FeedbackDetail.cs" />
     <Compile Include="Dto\Food.cs" />
     <Compile Include="Dto\FoodCategory.cs" />
     <Compile Include="Dto\FoodDetailJson.cs" />
@@ -166,10 +169,12 @@
     <Compile Include="Dto\RestaurantSummary.cs" />
     <Compile Include="Dto\UpdateEvent.cs" />
     <Compile Include="Dto\User.cs" />
+    <Compile Include="Dto\UserFeedback.cs" />
     <Compile Include="Dto\UserNotOrder.cs" />
     <Compile Include="Dto\UserNotOrderEmail.cs" />
     <Compile Include="Dto\UserNotOrderMailInfo.cs" />
     <Compile Include="Dto\UserOrder.cs" />
+    <Compile Include="Dto\UserRating.cs" />
     <Compile Include="Mapping\APIsDtoMapper.cs" />
     <Compile Include="Mapping\CategoryDtoMapper.cs" />
     <Compile Include="Mapping\CategoryGroupDtoMapper.cs" />
@@ -178,6 +183,7 @@
     <Compile Include="Mapping\DishesSummaryDtoMapper.cs" />
     <Compile Include="Mapping\EventDtoMapper.cs" />
     <Compile Include="Mapping\FavoriteRestaurantDtoMapper.cs" />
+    <Compile Include="Mapping\FeedbackDtoMapper.cs" />
     <Compile Include="Mapping\FoodCategoryDtoMapper.cs" />
     <Compile Include="Mapping\FoodDtoMapper.cs" />
     <Compile Include="Mapping\GraphUserDtoMapper.cs" />
@@ -500,6 +506,34 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\favorite-restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\FavoriteRestaurant.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\feed-back.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\FeedBack.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\feed-back.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\FeedBack.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\feed-back.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\FeedBack.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\feedback-detail.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\FeedbackDetail.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\feedback-detail.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\FeedbackDetail.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\feedback-detail.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\FeedbackDetail.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\feedback-detail.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\FeedbackDetail.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\food-category.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
@@ -921,6 +955,10 @@
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\UpdateEvent.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-feedback.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserFeedback.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-not-order-email.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\UserNotOrderEmail.cs</CustomToolNamespace>
@@ -968,6 +1006,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-order.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\UserOrder.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-rating.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserRating.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

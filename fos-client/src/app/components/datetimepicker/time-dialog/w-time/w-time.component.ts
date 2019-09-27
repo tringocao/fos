@@ -7,6 +7,7 @@ import {
   OnInit,
   Output
   } from '@angular/core';
+import moment from 'moment';
 
 @Component({
   selector: 'w-time',
@@ -33,9 +34,10 @@ export class WTimeComponent implements OnInit {
 
   ngOnInit() {
     if (!this.userTime) {
+      var now = Date.now();
       this.userTime = {
-        hour: 12,
-        minute: 30,
+        hour: moment(now).format('HH'),
+        minute: moment(now).format('mm'),
         meriden: 'PM',
         format: 24
       };

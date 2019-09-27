@@ -98,6 +98,7 @@ import { TimeDialogComponent } from "./components/datetimepicker/time-dialog/tim
 import { WClockComponent } from "./components/datetimepicker/time-dialog/w-clock/w-clock.component";
 import { WTimeComponent } from "./components/datetimepicker/time-dialog/w-time/w-time.component";
 import { DialogCheckActionComponent } from "./components/order-detail/list-ordered-foods/dialog-check-action/dialog-check-action.component";
+import { FeedbackComponent } from './components/feedback/feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -142,7 +143,8 @@ import { DialogCheckActionComponent } from "./components/order-detail/list-order
     TimeDialogComponent,
     WClockComponent,
     WTimeComponent,
-    DialogCheckActionComponent
+    DialogCheckActionComponent,
+    FeedbackComponent
   ],
   // declarations: [
   //     AppComponent,

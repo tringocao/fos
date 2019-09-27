@@ -20,7 +20,7 @@
                 <mat-card-title>Event</mat-card-title>
               </mat-card-header> -->
               <mat-card-content>
-                <mat-grid-list cols="2" rowHeight="40px">
+                <mat-grid-list cols="2" rowHeight="50px">
                   <div class="grid-tile-row">
                     <mat-grid-tile
                       ><div class="label-inside-grid">Event</div></mat-grid-tile
@@ -72,7 +72,7 @@
                 <mat-card-subtitle></mat-card-subtitle>
               </mat-card-header> -->
               <mat-card-content>
-                <mat-grid-list cols="2" rowHeight="40px" guttterSize="10px">
+                <mat-grid-list cols="2" rowHeight="50px" guttterSize="10px">
                   <div class="grid-tile-row">
                     <mat-grid-tile
                       ><div class="label-inside-grid">
@@ -224,6 +224,9 @@
         </mat-tab-group>
       </mat-card-content>
       <mat-card-actions align="end">
+        <button (click)="sendEm" mat-flat-button color="warn">
+          Send email feedbacks
+        </button>
         <button (click)="sendEmail()" mat-flat-button color="warn">
           Send to my email
         </button>
