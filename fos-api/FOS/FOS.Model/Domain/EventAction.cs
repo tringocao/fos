@@ -14,5 +14,6 @@ namespace FOS.Model.Domain
         public bool CanMakeOrder { get; set; }
         public bool CanSendRemind { get; set; }
         public bool CanViewOrder { get; set; }
+        public bool CanViewEventSummary { get; set; }
     }
 }

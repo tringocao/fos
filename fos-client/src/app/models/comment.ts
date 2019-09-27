@@ -10,14 +10,9 @@
     
      
 
-    export class EventAction    {
+    export class Comment    {
            
-        public CanViewEvent: boolean = false;   
-        public CanEditEvent: boolean = false;   
-        public CanCloseEvent: boolean = false;   
-        public CanMakeOrder: boolean = false;   
-        public CanSendRemind: boolean = false;   
-        public CanViewOrder: boolean = false;   
-        public CanViewEventSummary: boolean = false;
+        public Value: string = null;   
+        public Amount: number = 0;
     }
          

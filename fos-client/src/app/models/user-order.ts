@@ -8,16 +8,15 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-     
+     import { User } from './user';
+import { Comment } from './comment';
 
-    export class EventAction    {
+    export class UserOrder    {
            
-        public CanViewEvent: boolean = false;   
-        public CanEditEvent: boolean = false;   
-        public CanCloseEvent: boolean = false;   
-        public CanMakeOrder: boolean = false;   
-        public CanSendRemind: boolean = false;   
-        public CanViewOrder: boolean = false;   
-        public CanViewEventSummary: boolean = false;
+        public User: User = null;   
+        public Food: string = null;   
+        public Price: number = 0;   
+        public PayExtra: number = 0;   
+        public Comments: Comment[] = [];
     }
          
