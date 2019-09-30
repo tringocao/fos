@@ -18,7 +18,9 @@ export class NotParticipantComponent implements OnInit {
 
   ngOnInit() {
     const guid = this.route.snapshot.paramMap.get('id');
-    this.orderService.UpdateOrderStatusByOrderId(guid, 2);
+    this.orderService.UpdateOrderStatusByOrderId(guid, 2).then(value=>{
+      this.orderService.UpdateFoodDetailByOrderId(guid,'{}');
+    })
   }
 
 }

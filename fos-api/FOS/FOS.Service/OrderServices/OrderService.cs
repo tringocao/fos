@@ -89,5 +89,9 @@ namespace FOS.Services.OrderServices
         {
             return  _repository.UpdateOrderStatusByOrderId(OrderId, OrderStatus);
         }
+        public async Task<bool> UpdateFoodDetailByOrderId(string OrderId, string FoodDetail)
+        {
+            return _repository.UpdateFoodDetailByOrderId(OrderId, FoodDetail);
+        }
     }
 }

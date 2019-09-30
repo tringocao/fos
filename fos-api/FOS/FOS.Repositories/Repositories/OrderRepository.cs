@@ -23,6 +23,7 @@ namespace FOS.Repositories.Repositories
         List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
         bool DeleteOrderByUserId(string idUser, string idEvent);
         bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
+        bool UpdateFoodDetailByOrderId(string OrderId, string FoodDetail);
     }
 
     public class OrderRepository : IOrderRepository
@@ -170,6 +171,26 @@ namespace FOS.Repositories.Repositories
                     if (result != null)
                     {
                         result.OrderStatus = OrderStatus;
+                        db.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public bool UpdateFoodDetailByOrderId(string OrderId, string FoodDetail)
+        {
+            try
+            {
+                using (var db = _context)
+                {
+                    var result = db.Orders.SingleOrDefault(o => o.Id == OrderId);
+                    if (result != null)
+                    {
+                        result.FoodDetail = FoodDetail;
                         db.SaveChanges();
                     }
                 }

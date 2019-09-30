@@ -18,5 +18,6 @@ namespace FOS.Services.OrderServices
         List<UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
         bool DeleteOrderByUserId(string idUser, string idEvent);
         Task<bool> UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
+        Task<bool> UpdateFoodDetailByOrderId(string OrderId, string FoodDetail);
     }
 }
