@@ -73,6 +73,7 @@ namespace FOS.Services.SendEmailServices
                 {
                     Guid idOrder = Guid.NewGuid();
                     emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;
+                    emailTemplate.NotParticipant = hostname + "not-participant/" + idOrder;
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
@@ -82,10 +83,10 @@ namespace FOS.Services.SendEmailServices
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
 
-                    _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id,
-                        emailTemplate.EventRestaurantId,
-                        emailTemplate.EventDeliveryId,
-                        emailTemplate.EventId, user.Mail);
+                    _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id, 
+                        emailTemplate.EventRestaurantId, 
+                        emailTemplate.EventDeliveryId, 
+                        emailTemplate.EventId, user.Mail, EventEmail.NewOder);
                 }
             }
         }
@@ -104,6 +105,7 @@ namespace FOS.Services.SendEmailServices
                 foreach (var user in users)
                 {
                     emailTemplate.MakeOrder = hostname + "make-order/" + user.OrderId;
+                    emailTemplate.NotParticipant = hostname + "not-participant/" + user.OrderId;
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
                     emailp.BCC = new List<string> { host.Mail };
@@ -213,8 +215,28 @@ namespace FOS.Services.SendEmailServices
                     _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id,
                         emailTemplate.EventRestaurantId,
                         emailTemplate.EventDeliveryId,
-                        emailTemplate.EventId, user.Mail);
+                        emailTemplate.EventId, user.Mail, EventEmail.NewOder);
                 }
+            }
+        }
+        public async Task<IEnumerable<UserNotOrderMailInfo>> FilterUserIsParticipant(IEnumerable<UserNotOrderMailInfo> users)
+        {
+            try
+            {
+                List<UserNotOrderMailInfo> newList = new List<UserNotOrderMailInfo>();
+                foreach (UserNotOrderMailInfo u in users.ToArray())
+                {
+                    var order = _orderService.GetOrder( new Guid(u.OrderId));
+                    if(order.OrderStatus != 2)
+                    {
+                        newList.Add(u);
+                    }
+                }
+                return newList;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

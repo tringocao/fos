@@ -44,6 +44,7 @@ import { EventFormValidationService } from 'src/app/services/event-form/event-fo
 import { EventFormMailService } from 'src/app/services/event-form/event-form-mail/event-form-mail.service';
 import { UpdateEvent } from 'src/app/models/update-event';
 import {OverlayContainer} from '@angular/cdk/overlay';
+import { Order } from 'src/app/models/order';
 @Component({
   selector: 'app-event-dialog-edit',
   templateUrl: './event-dialog-edit.component.html',
@@ -230,56 +231,47 @@ export class EventDialogEditComponent implements OnInit {
           })
       );
 
-    var participants = JSON.parse(self.data.EventParticipantsJson);
-    let promise = self.orderService
-      .GetUserNotOrdered(self.data.EventId)
-      .then(result => {
-        result.forEach(element => {
-          var participant = participants.filter(
-            item => item.Id === element.UserId
-          );
-          if (participant) {
-            const userOrder: EventUser = {
-              Name: participant[0].DisplayName,
-              Email: participant[0].Mail,
-              Id: participant[0].Id,
-              Img: '',
-              IsGroup: 0,
-              OrderStatus: 'Not order'
-            };
-            self.eventUsers.push(userOrder);
-          }
-          this.table.renderRows();
-        });
-      });
+    // var participants = JSON.parse(self.data.EventParticipantsJson);
+    const participants: Array<GraphUser> = JSON.parse(this.data.EventParticipantsJson);
 
-    promise.then(function() {
-      var p = participants;
-      var e = self.eventUsers;
-      participants.forEach(element => {
-        var flag: Boolean = false;
+    this.orderService.GetOrdersByEventId(this.data.EventId).then((order: Array<Order>) =>{
+      order.forEach(o=>{
 
-        self.eventUsers.forEach(element2 => {
-          if (element.Id === element2.Id) {
-            flag = true;
-          }
-        });
-
-        if (flag === false) {
-          console.log(element.DisplayName);
-          const userOrder: EventUser = {
-            Name: element.DisplayName,
-            Email: element.Mail,
-            Id: element.Id,
-            Img: '',
+        const userNotOrder: GraphUser[] = participants.filter(p =>p.Mail == o.Email);
+        if(o.OrderStatus == 0){
+          const UserNot: EventUser ={
+            Email: userNotOrder[0].Mail,
+            Name: userNotOrder[0].DisplayName,
+            OrderStatus: 'Not Ordered',
+            Img:'',
             IsGroup: 0,
-            OrderStatus: 'Order'
-          };
-          self.eventUsers.push(userOrder);
-          self.table.renderRows();
+            Id: userNotOrder[0].Id
+          }
+          this.eventUsers.push(UserNot);
+        }else if(o.OrderStatus == 1){
+          const UserNot: EventUser ={
+            Email: userNotOrder[0].Mail,
+            Name: userNotOrder[0].DisplayName,
+            OrderStatus: 'Ordered',
+            Img:'',
+            IsGroup: 0,
+            Id: userNotOrder[0].Id
+          }
+          this.eventUsers.push(UserNot);
+        }else if(o.OrderStatus == 2){
+          const UserNot: EventUser ={
+            Email: userNotOrder[0].Mail,
+            Name: userNotOrder[0].DisplayName,
+            OrderStatus: 'Not Participant',
+            Img:'',
+            IsGroup: 0,
+            Id: userNotOrder[0].Id
+          }
+          this.eventUsers.push(UserNot);
         }
-      });
-    });
+      })
+      this.table.renderRows();
+    })
   }
 
   OnNoClick(): void {

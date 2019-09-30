@@ -53,9 +53,11 @@ namespace FOS.API.Controllers
         {
             try
             {
+                IEnumerable<UserNotOrderMailInfo> listUser = await _sendEmailService.FilterUserIsParticipant(users);
+
                 string path = System.Web.HttpContext.Current.Server.MapPath(Constant.RemindEventEmailTemplate);
                 string emailTemplateJson = System.IO.File.ReadAllText(path);
-                await _sendEmailService.SendEmailToNotOrderedUserAsync(users, emailTemplateJson);
+                await _sendEmailService.SendEmailToNotOrderedUserAsync(listUser, emailTemplateJson);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
