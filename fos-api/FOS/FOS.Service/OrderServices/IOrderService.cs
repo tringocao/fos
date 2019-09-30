@@ -15,6 +15,7 @@ namespace FOS.Services.OrderServices
         Order GetByEventvsUserId(string eventId, string userId);
         bool DeleteOrderByIdEvent(string idEvent);
         List<UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
+        List<UserNotOrderEmail> GetUserAlreadyOrderEmail(string eventId);
         bool DeleteOrderByUserId(string idUser, string idEvent);
     }
 }

@@ -21,6 +21,7 @@ namespace FOS.Repositories.Repositories
         bool DeleteOrderByIdEvent(string idEvent);
         IEnumerable<DataModel.Order> GetOrdersOfSpecificRestaurant(string restaurantId, string deliveryId);
         List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
+        List<Model.Domain.UserNotOrderEmail> GetUserAlreadyOrderEmail(string eventId);
         bool DeleteOrderByUserId(string idUser, string idEvent);
     }
 
@@ -144,6 +145,24 @@ namespace FOS.Repositories.Repositories
 
             return result;
         }
+
+        public List<Model.Domain.UserNotOrderEmail> GetUserAlreadyOrderEmail(string eventId)
+        {
+            var orders = _context.Orders.Where(order =>
+            order.IdEvent == eventId && order.FoodDetail.Length != 0).ToList();
+
+            var result = new List<Model.Domain.UserNotOrderEmail>();
+            foreach (var order in orders)
+            {
+                var item = new Model.Domain.UserNotOrderEmail();
+                item.OrderId = order.Id;
+                item.UserEmail = order.Email;
+                result.Add(item);
+            }
+
+            return result;
+        }
+
         public bool DeleteOrderByUserId(string idUser, string idEvent)
         {
             try

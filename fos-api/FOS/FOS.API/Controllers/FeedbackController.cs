@@ -37,11 +37,27 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.FeedBack>.CreateFailResult(e.ToString());
             }
         }
-        public ApiResponse RateRestaurant(string restaurantId, float rating)
+        [HttpPost]
+        [Route("rate")]
+        public ApiResponse RateRestaurant([FromBody]Model.Dto.FeedBack feedBack)
         {
             try
             {
-                _feedbackService.RateRestaurant(restaurantId, rating);
+                _feedbackService.RateRestaurant(_feedbackDtoMapper.ToDomain(feedBack));
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpGet]
+        [Route("sendEmail/{eventId}")]
+        public ApiResponse SendFeedbackEmail(string eventId)
+        {
+            try
+            {
+                _feedbackService.SendFeedbackEmail(eventId);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

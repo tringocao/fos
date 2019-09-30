@@ -10,8 +10,9 @@ namespace FOS.Repositories.DataModel
 {
     public class FeedBack
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("DeliveryId")]
+        //[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Column("DeliveryId")]
+        public int Id { get; set; }
         public string DeliveryId { get; set; }
         public string Ratings { get; set; }
         public string FoodFeedbacks { get; set; }

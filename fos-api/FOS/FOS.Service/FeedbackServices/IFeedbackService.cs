@@ -9,6 +9,7 @@ namespace FOS.Services.FeedbackServices
     public interface IFeedbackService
     {
         Model.Domain.FeedBack GetFeedbackByDeliveryId(string DeliveryId);
-        void RateRestaurant(string restaurantId, float rating);
+        void RateRestaurant(Model.Domain.FeedBack feedBack);
+        void SendFeedbackEmail(string eventId);
     }
 }

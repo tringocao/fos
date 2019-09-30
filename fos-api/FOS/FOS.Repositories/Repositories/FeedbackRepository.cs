@@ -23,12 +23,31 @@ namespace FOS.Repositories.Repositories
 
         public FeedBack GetById(string Id)
         {
-            return _context.FeedBacks.Where(feedback => feedback.DeliveryId == Id).FirstOrDefault();
+            try
+            {
+                var _feedback = _context.FeedBacks.Where(feedback => feedback.DeliveryId == Id).FirstOrDefault();
+                return _feedback;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public void Update(FeedBack feedBack)
         {
-            throw new NotImplementedException();
+           var _feedback = _context.FeedBacks.FirstOrDefault(fb => fb.DeliveryId == feedBack.DeliveryId);
+           if (_feedback == null)
+           {
+                _context.FeedBacks.Add(feedBack);
+                _context.SaveChanges();
+           }
+           else
+            {
+                _context.FeedBacks.Where(fb => fb.DeliveryId == feedBack.DeliveryId).FirstOrDefault().Ratings = feedBack.Ratings;
+                _context.FeedBacks.Where(fb => fb.DeliveryId == feedBack.DeliveryId).FirstOrDefault().FoodFeedbacks = feedBack.FoodFeedbacks;
+                _context.SaveChanges();
+            }
         }
     }
 }

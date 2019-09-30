@@ -80,6 +80,12 @@ namespace FOS.Services.OrderServices
         {
             return _repository.GetUserNotOrderEmail(eventId);
         }
+
+        public List<UserNotOrderEmail> GetUserAlreadyOrderEmail(string eventId)
+        {
+            return _repository.GetUserAlreadyOrderEmail(eventId);
+        }
+
         public bool DeleteOrderByUserId(string idUser, string idEvent)
         {
             return _repository.DeleteOrderByUserId(idUser,idEvent);

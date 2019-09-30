@@ -99,6 +99,7 @@ import { WClockComponent } from "./components/datetimepicker/time-dialog/w-clock
 import { WTimeComponent } from "./components/datetimepicker/time-dialog/w-time/w-time.component";
 import { DialogCheckActionComponent } from "./components/order-detail/list-ordered-foods/dialog-check-action/dialog-check-action.component";
 import { FeedbackComponent } from './components/feedback/feedback/feedback.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -144,7 +145,8 @@ import { FeedbackComponent } from './components/feedback/feedback/feedback.compo
     WClockComponent,
     WTimeComponent,
     DialogCheckActionComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    StarRatingComponent
   ],
   // declarations: [
   //     AppComponent,
