@@ -93,7 +93,7 @@ export class OrderDetailComponent implements OnInit {
                       IdRestaurant: Number(this.event.RestaurantId),
                       IdDelivery: Number(this.event.DeliveryId),
                       FoodDetail: [],
-                      IsOrdered: false,
+                      OrderStatus: 0,
                       Email: ""
                     };
                     this.checkedData = this.order.FoodDetail;
@@ -184,6 +184,11 @@ export class OrderDetailComponent implements OnInit {
   }
   save() {
     this.order.FoodDetail = this.foodorderlist.getAllFoodDetail();
+    if(this.order.FoodDetail.length > 0){
+      this.order.OrderStatus = 1;
+    }else{
+      this.order.OrderStatus = 0;
+    }
     this.orderService
       .SetOrder(this.order, this.isWildParticipant)
       .then(result => {

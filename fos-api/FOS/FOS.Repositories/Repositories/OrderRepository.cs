@@ -22,6 +22,7 @@ namespace FOS.Repositories.Repositories
         IEnumerable<DataModel.Order> GetOrdersOfSpecificRestaurant(string restaurantId, string deliveryId);
         List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
         bool DeleteOrderByUserId(string idUser, string idEvent);
+        bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
     }
 
     public class OrderRepository : IOrderRepository
@@ -152,6 +153,26 @@ namespace FOS.Repositories.Repositories
                 && o.IdEvent == idEvent);
                 _context.Orders.Remove(user);
                 _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus)
+        {
+            try
+            {
+                using (var db = _context)
+                {
+                    var result = db.Orders.SingleOrDefault(o => o.Id == OrderId);
+                    if (result != null)
+                    {
+                        result.OrderStatus = OrderStatus;
+                        db.SaveChanges();
+                    }
+                }
                 return true;
             }
             catch (Exception e)

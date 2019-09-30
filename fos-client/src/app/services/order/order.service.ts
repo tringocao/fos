@@ -153,4 +153,25 @@ export class OrderService {
         .catch(alert => console.log(alert));
     });
   }
+  UpdateOrderStatusByOrderId(OrderId: string, OrderStatus: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<boolean>>(
+          environment.apiUrl + 'api/Order/UpdateOrderStatusByOrderId',
+          {
+            params: {
+              OrderId: OrderId,
+              OrderStatus: OrderStatus.toString()
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          }
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
 }

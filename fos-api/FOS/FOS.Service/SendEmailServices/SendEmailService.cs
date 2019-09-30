@@ -73,6 +73,7 @@ namespace FOS.Services.SendEmailServices
                 {
                     Guid idOrder = Guid.NewGuid();
                     emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;
+                    emailTemplate.NotParticipant = hostname + "not-participant/" + idOrder;
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
@@ -85,7 +86,7 @@ namespace FOS.Services.SendEmailServices
                     _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id, 
                         emailTemplate.EventRestaurantId, 
                         emailTemplate.EventDeliveryId, 
-                        emailTemplate.EventId, user.Mail);
+                        emailTemplate.EventId, user.Mail, EventEmail.NewOder);
                 }
             }
         }
@@ -174,7 +175,7 @@ namespace FOS.Services.SendEmailServices
                     _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id,
                         emailTemplate.EventRestaurantId,
                         emailTemplate.EventDeliveryId,
-                        emailTemplate.EventId, user.Mail);
+                        emailTemplate.EventId, user.Mail, EventEmail.NewOder);
                 }
             }
         }
