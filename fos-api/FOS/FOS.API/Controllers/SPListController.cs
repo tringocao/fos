@@ -136,6 +136,20 @@ namespace FOS.API.Controllers
             }
         }
         [HttpPost]
+        [Route("SetTime2CloseToEventDate")]
+        public async Task<ApiResponse> SetTime2CloseToEventDate(string id)
+        {
+            try
+            {
+                await _spListService.SetTime2CloseToEventDate(id);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpPost]
         [Route("UpdateListItemWhenRestaurantChanges")]
         public async Task<ApiResponse> UpdateListItemWhenRestaurantChanges(string id, [FromBody]Model.Dto.Event item)
         {

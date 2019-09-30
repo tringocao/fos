@@ -41,9 +41,18 @@
         (click)="viewOrder($event)"
         >View order</mat-list-item
       >
-      <mat-list-item role="listitem" *ngIf="event.Action.CanCloseEvent"
+      <mat-list-item
+        role="listitem"
+        *ngIf="event.Action.CanCloseEvent"
         (click)="closeEvent($event)"
-      >Close event</mat-list-item>
+        >Close event</mat-list-item
+      >
+      <mat-list-item
+        role="listitem"
+        *ngIf="event.Action.CanViewEventSummary"
+        [routerLink]="eventSummaryLink"
+        >View event summary</mat-list-item
+      >
     </mat-list>
   </mat-card>
 </div>

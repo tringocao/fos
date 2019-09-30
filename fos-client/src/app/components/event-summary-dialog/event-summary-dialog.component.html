@@ -5,7 +5,7 @@
       *ngIf="isEmailDataAvailable()"
       [eventData]="eventData"
     >
-  </app-event-summary-print>
+    </app-event-summary-print>
   </div>
   <div id="report" class="event-summary">
     <mat-card>
@@ -59,7 +59,29 @@
                     ><div class="text-inside-grid">Status</div></mat-grid-tile
                   >
                   <mat-grid-tile
-                    ><div class="text-inside-grid">Closed</div></mat-grid-tile
+                    ><div class="text-inside-grid">
+                      <div
+                        *ngIf="eventDetail.Status === 'Opened'"
+                        class="opened status"
+                      >
+                        <span class="dot"></span>
+                        <p>Open</p>
+                      </div>
+                      <div
+                        *ngIf="eventDetail.Status === 'Closed'"
+                        class="closedStatus status"
+                      >
+                        <span class="dot"></span>
+                        <p>Closed</p>
+                      </div>
+                      <div
+                        *ngIf="eventDetail.Status === 'Error'"
+                        class="canceled status"
+                      >
+                        <span class="dot"></span>
+                        <p>Canceled</p>
+                      </div>
+                    </div></mat-grid-tile
                   >
                 </mat-grid-list>
               </mat-card-content>
@@ -133,29 +155,60 @@
         <mat-tab-group dynamicHeight #tabGroup>
           <mat-tab label="Dishes Group View">
             <table mat-table [dataSource]="dishGroupViewdataSource">
+              <ng-container matColumnDef="select" *ngIf="reOrder">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox
+                    (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()"
+                  >
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox
+                    (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)"
+                  >
+                  </mat-checkbox>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
               <ng-container matColumnDef="picture">
                 <th mat-header-cell *matHeaderCellDef>Picture</th>
                 <td mat-cell *matCellDef="let element">
                   <div style="width: 68px; height: 68px;">
-                    <app-photo [src]="element.Picture"></app-photo>
+                    <app-photo
+                      *ngIf="element.Picture"
+                      [src]="element.Picture"
+                    ></app-photo>
                   </div>
                 </td>
+                <td mat-footer-cell *matFooterCellDef>Total</td>
               </ng-container>
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Name</th>
                 <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="amount">
                 <th mat-header-cell *matHeaderCellDef>Amount</th>
                 <td mat-cell *matCellDef="let element">{{ element.Amount }}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Price</th>
-                <td mat-cell *matCellDef="let element">{{ element.Price }}đ</td>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.Price ? element.Price + "đ" : "" }}
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="total">
                 <th mat-header-cell *matHeaderCellDef>Total</th>
                 <td mat-cell *matCellDef="let element">{{ element.Total }}đ</td>
+                <td mat-footer-cell *matFooterCellDef>{{ totalCost }}đ</td>
               </ng-container>
               <ng-container matColumnDef="totalComment">
                 <th mat-header-cell *matHeaderCellDef>Comment</th>
@@ -164,6 +217,30 @@
                     {{ comment.Amount }}x {{ comment.Value }},
                   </span>
                 </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="numberOfUser">
+                <th mat-header-cell *matHeaderCellDef>Number of users</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.NumberOfUser }}
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+              </ng-container>
+              <ng-container matColumnDef="showUsers">
+                <th mat-header-cell *matHeaderCellDef>Show users</th>
+                <td mat-cell *matCellDef="let element">
+                  <button
+                    class="show-users-button"
+                    (click)="showUsers(element.UserIds, element.Name)"
+                    mat-icon-button
+                    matTooltip="Show users ordered this food"
+                  >
+                    <mat-icon aria-hidden="false" aria-label="People icon"
+                      >people</mat-icon
+                    >
+                  </button>
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
 
               <tr
@@ -173,6 +250,11 @@
               <tr
                 mat-row
                 *matRowDef="let row; columns: dishGroupViewDisplayedColumns"
+                (click)="reOrder ? selection.toggle(row) : false"
+              ></tr>
+              <tr
+                mat-footer-row
+                *matFooterRowDef="dishGroupViewDisplayedColumns"
               ></tr>
             </table>
 
@@ -186,7 +268,9 @@
             >
               <ng-container matColumnDef="user">
                 <th mat-header-cell *matHeaderCellDef>User</th>
-                <td mat-cell *matCellDef="let element">{{ element.User.DisplayName }}</td>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.User.DisplayName }}
+                </td>
               </ng-container>
               <ng-container matColumnDef="food">
                 <th mat-header-cell *matHeaderCellDef>Food</th>
@@ -218,22 +302,45 @@
               <tr
                 mat-row
                 *matRowDef="let row; columns: personGroupViewDisplayedColumns"
+                (click)="isHostUser ? makeOrderByHost(row) : false"
               ></tr>
             </table>
           </mat-tab>
         </mat-tab-group>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button (click)="sendEm" mat-flat-button color="warn">
-          Send email feedbacks
-        </button>
-        <button (click)="sendEmail()" mat-flat-button color="warn">
-          Send to my email
-        </button>
-        <button (click)="printToPdf()" mat-flat-button color="warn">
-          Print
-        </button>
-        <!-- <button mat-flat-button color="warn">Close</button> -->
+          <button (click)="reportDisheout()"
+                  mat-flat-button
+                  color="warn"
+                  *ngIf="!reOrder && isHostUser">
+              Report dishe out of order
+          </button>
+          <button (click)="sendEm" mat-flat-button color="warn">
+              Send email feedbacks
+          </button>
+          <button (click)="sendEmail()"
+                  mat-flat-button
+                  color="primary"
+                  *ngIf="!reOrder">
+
+              Send to my email
+          </button>
+          <button (click)="printToPdf()"
+                  mat-flat-button
+                  color="primary"
+                  *ngIf="!reOrder">
+              Print
+          </button>
+          <button (click)="openDialog()"
+                  mat-flat-button
+                  color="primary"
+                  *ngIf="reOrder">
+              Resend Order
+          </button>
+          <button (click)="onNoClick()" mat-stroked-button *ngIf="reOrder">
+              Cancel
+          </button>
+          <!-- <button mat-flat-button color="warn">Close</button> -->
       </mat-card-actions>
     </mat-card>
   </div>

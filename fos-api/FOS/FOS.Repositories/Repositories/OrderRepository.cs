@@ -23,6 +23,7 @@ namespace FOS.Repositories.Repositories
         List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId);
         List<Model.Domain.UserNotOrderEmail> GetUserAlreadyOrderEmail(string eventId);
         bool DeleteOrderByUserId(string idUser, string idEvent);
+        bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
     }
 
     public class OrderRepository : IOrderRepository
@@ -88,7 +89,7 @@ namespace FOS.Repositories.Repositories
         public IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             var orders = _context.Orders.Where(order => 
-            order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
+            order.IdEvent == eventId && order.FoodDetail.Length == 0 && order.OrderStatus == 0).ToList();
             var result = new List<Model.Domain.UserNotOrder>();
             foreach(var order in orders)
             {
@@ -132,7 +133,7 @@ namespace FOS.Repositories.Repositories
         public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId)
         {
             var orders = _context.Orders.Where(order =>
-            order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
+            order.IdEvent == eventId && order.FoodDetail.Length == 0 && order.OrderStatus == 0).ToList();
 
             var result = new List<Model.Domain.UserNotOrderEmail>();
             foreach (var order in orders)
@@ -171,6 +172,26 @@ namespace FOS.Repositories.Repositories
                 && o.IdEvent == idEvent);
                 _context.Orders.Remove(user);
                 _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus)
+        {
+            try
+            {
+                using (var db = _context)
+                {
+                    var result = db.Orders.SingleOrDefault(o => o.Id == OrderId);
+                    if (result != null)
+                    {
+                        result.OrderStatus = OrderStatus;
+                        db.SaveChanges();
+                    }
+                }
                 return true;
             }
             catch (Exception e)

@@ -8,18 +8,15 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-     import { FoodDetailJson } from './food-detail-json';
+     
 
-    export class Order    {
+    export class UserReorder    {
            
-        public Id: string = null;   
-        public OrderDate: Date = new Date(0);   
-        public IdUser: string = null;   
-        public IdEvent: string = null;   
-        public IdRestaurant: number = 0;   
-        public IdDelivery: number = 0;   
-        public FoodDetail: FoodDetailJson[] = [];   
-        public OrderStatus: number = 0;   
-        public Email: string = null;
+        public UserMail: string = null;   
+        public UserName: string = null;   
+        public OrderId: string = null;   
+        public EventTitle: string = null;   
+        public EventRestaurant: string = null;   
+        public FoodName: string[] = [];
     }
          

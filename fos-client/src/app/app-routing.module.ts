@@ -8,6 +8,7 @@ import { EventSummaryDialogComponent } from './components/event-summary-dialog/e
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
 import { FeedbackComponent } from './components/feedback/feedback/feedback.component';
+import { NotParticipantComponent } from './components/not-participant/not-participant.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
     children: [
       { path: 'report/:id', component: EventSummaryPrintComponent }
     ]
+  },
+  {
+    path: 'not-participant/:id',
+    component: NotParticipantComponent
   }
 ];
 
