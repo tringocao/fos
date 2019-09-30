@@ -61,7 +61,10 @@
                   <mat-grid-tile
                     ><div class="text-inside-grid">
                       <div
-                        *ngIf="eventDetail.Status === 'Opened'"
+                        *ngIf="
+                          eventDetail.Status === 'Opened' ||
+                          eventDetail.Status === 'Reopened'
+                        "
                         class="opened status"
                       >
                         <span class="dot"></span>
@@ -242,7 +245,6 @@
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
-
               <tr
                 mat-header-row
                 *matHeaderRowDef="dishGroupViewDisplayedColumns"
@@ -250,7 +252,6 @@
               <tr
                 mat-row
                 *matRowDef="let row; columns: dishGroupViewDisplayedColumns"
-                (click)="reOrder ? selection.toggle(row) : false"
               ></tr>
               <tr
                 mat-footer-row
@@ -294,7 +295,17 @@
                   </span>
                 </td>
               </ng-container>
-
+              <ng-container matColumnDef="editMakeOrder" *ngIf="isHostUser">
+                <th mat-header-cell *matHeaderCellDef>Edit Order</th>
+                <td mat-cell *matCellDef="let element">
+                  <app-edit-make-order
+                  matTooltip="Edit Order By Host"
+                  [isHostUser]="isHostUser"
+                  [eventDetail]="eventDetail"
+                  [user]="element.User"
+                ></app-edit-make-order>
+                </td>
+              </ng-container>
               <tr
                 mat-header-row
                 *matHeaderRowDef="personGroupViewDisplayedColumns"
@@ -302,7 +313,6 @@
               <tr
                 mat-row
                 *matRowDef="let row; columns: personGroupViewDisplayedColumns"
-                (click)="isHostUser ? makeOrderByHost(row) : false"
               ></tr>
             </table>
           </mat-tab>
@@ -315,7 +325,28 @@
           color="warn"
           *ngIf="!reOrder && isHostUser"
         >
-          Report dishe out of order
+          Report dishes out of order
+        </button>
+        <button
+          (click)="reOpenEvent()"
+          mat-flat-button
+          color="warn"
+          *ngIf="!reOrder && isHostUser && eventDetail.Status === 'Closed'"
+        >
+          Reopen
+        </button>
+        <button
+          (click)="closeEvent()"
+          mat-flat-button
+          color="warn"
+          *ngIf="
+            !reOrder &&
+            isHostUser &&
+            (eventDetail.Status === 'Opened' ||
+              eventDetail.Status === 'Reopened')
+          "
+        >
+          Close event
         </button>
         <button
           (click)="sendEmail()"
@@ -334,7 +365,9 @@
           Print
         </button>
         <button
-          (click)="openDialog()"
+          (click)="
+            eventDetail.Status === 'Closed' ? openDialog() : resendOrder()
+          "
           mat-flat-button
           color="primary"
           *ngIf="reOrder"

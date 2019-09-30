@@ -68,12 +68,12 @@ namespace FOS.Services.EventServices
             eventModel.Action = new EventAction
             {
                 CanViewEvent = true,
-                CanEditEvent = isHost && eventModel.Status == EventStatus.Opened,
-                CanCloseEvent = isHost && eventModel.Status == EventStatus.Opened,
-                CanSendRemind = isHost && eventModel.Status == EventStatus.Opened,
+                CanEditEvent = isHost && (eventModel.Status == EventStatus.Opened || eventModel.Status == EventStatus.Reopened),
+                CanCloseEvent = isHost && (eventModel.Status == EventStatus.Opened || eventModel.Status == EventStatus.Reopened),
+                CanSendRemind = isHost && (eventModel.Status == EventStatus.Opened || eventModel.Status == EventStatus.Reopened),
                 CanMakeOrder =
                             (isParticipant || eventModel.EventType == EventType.Open)
-                            && eventModel.Status == EventStatus.Opened,
+                            && (eventModel.Status == EventStatus.Opened || eventModel.Status == EventStatus.Reopened),
                 CanViewOrder = eventModel.Status == EventStatus.Closed && isParticipant,
                 CanViewEventSummary = isHost || isParticipant
             };

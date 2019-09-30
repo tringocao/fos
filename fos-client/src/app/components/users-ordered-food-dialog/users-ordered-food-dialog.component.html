@@ -27,13 +27,19 @@
         <th mat-header-cell *matHeaderCellDef>Email</th>
         <td mat-cell *matCellDef="let element">{{ element.Mail }}</td>
       </ng-container>
-
+      <ng-container matColumnDef="editMakeOrder" *ngIf="data.isHostUser">
+        <th mat-header-cell *matHeaderCellDef>Edit Order</th>
+        <td mat-cell *matCellDef="let element">
+          <app-edit-make-order
+            matTooltip="Edit Order By Host"
+            [isHostUser]="data.isHostUser"
+            [eventDetail]="data.eventDetail"
+            [user]="element"
+          ></app-edit-make-order>
+        </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="data.isHostUser ? makeOrderByHost(row) : false"
-      ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
     <div class="dialog-actions">

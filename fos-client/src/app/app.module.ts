@@ -101,6 +101,7 @@ import { WTimeComponent } from "./components/datetimepicker/time-dialog/w-time/w
 import { DialogCheckActionComponent } from "./components/order-detail/list-ordered-foods/dialog-check-action/dialog-check-action.component";
 import { UsersOrderedFoodDialogComponent } from "./components/users-ordered-food-dialog/users-ordered-food-dialog.component";
 import { OpenEventDialogComponent } from "./components/event-summary-dialog/open-event-dialog/open-event-dialog.component";
+import { EditMakeOrderComponent } from './components/event-summary-dialog/edit-make-order/edit-make-order.component';
 
 @NgModule({
   declarations: [
@@ -147,7 +148,8 @@ import { OpenEventDialogComponent } from "./components/event-summary-dialog/open
     WTimeComponent,
     DialogCheckActionComponent,
     UsersOrderedFoodDialogComponent,
-    OpenEventDialogComponent
+    OpenEventDialogComponent,
+    EditMakeOrderComponent
   ],
   // declarations: [
   //     AppComponent,

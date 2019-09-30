@@ -46,6 +46,8 @@ import { UserReorder } from "src/app/models/user-reorder";
 import { UsersOrderedFoodDialogComponent } from "../users-ordered-food-dialog/users-ordered-food-dialog.component";
 import { debug } from "util";
 import { OpenEventDialogComponent } from "./open-event-dialog/open-event-dialog.component";
+import { EventDialogEditComponent } from "../event-dialog-edit/event-dialog-edit.component";
+import { ReminderDialogComponent } from "../reminder-dialog/reminder-dialog.component";
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -432,17 +434,20 @@ export class EventSummaryDialogComponent implements OnInit {
     this.reOrder = true;
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(OpenEventDialogComponent, {
-      scrollStrategy: this.overlay.scrollStrategies.noop(),
-      autoFocus: false,
-      maxWidth: "80%",
-      data: this.eventDetail.Name
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        this.resendOrder();
-      }
-    });
+    this.resendOrder();
+    if (this.eventDetail.Status == "Closed") {
+      const dialogRef = this.dialog.open(OpenEventDialogComponent, {
+        scrollStrategy: this.overlay.scrollStrategies.noop(),
+        autoFocus: false,
+        maxWidth: "80%",
+        data: this.eventDetail.Name
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != undefined) {
+          this.reOpen();
+        }
+      });
+    }
   }
   resendOrder() {
     this.selection.selected.forEach(value => {
@@ -451,9 +456,7 @@ export class EventSummaryDialogComponent implements OnInit {
       });
       this.foods4Reorder.push(value.Name);
     });
-    debugger;
     this.usersReorder = Array.from(new Set(this.usersReorder));
-    this.openEvent();
     this.sendEmailReorder();
   }
   onNoClick() {
@@ -491,22 +494,21 @@ export class EventSummaryDialogComponent implements OnInit {
       }
     });
   }
-  openEvent() {
-    this.summaryService
-      .updateEventStatus(this.eventId.toString(), "Opened")
-      .then(response => {
-        if (response === null) {
-          this.toast("Event is opened again", "Dismiss");
-          this.summaryService
-            .SetTime2CloseToEventDate(this.eventId.toString())
-            .then(r => window.location.reload());
-        }
-        if (response != null && response.ErrorMessage != null) {
-          this.toast("Open event failed", "Dismiss");
-        }
-      });
-  }
+  closeEvent() {
+    const dialogRef = this.dialog.open(ReminderDialogComponent, {
+      maxHeight: "98vh",
+      minWidth: "50%",
+      data: {
+        event: this.eventDetail,
+        header: "Close Event",
+        isClosedEvent: true
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("The dialog was closed");
+    });
+  }
   showUsers(userIds: string[], foodName: string) {
     const listUserOrderFood = this.users.filter(user =>
       userIds.includes(user.Id)
@@ -526,29 +528,50 @@ export class EventSummaryDialogComponent implements OnInit {
       console.log(result);
     });
   }
-  closeDialog($event) {
+  closeDialog() {
     this.dialogRef.close();
   }
   isHost(event: Event) {
     this.userService.getCurrentUser().then(user => {
       this.isHostUser = user.Id == event.HostId;
+      if(this.isHostUser){
+        this.personGroupViewDisplayedColumns = [
+          "user",
+          "food",
+          "price",
+          "pay-extra",
+          "comment",
+          "editMakeOrder"
+        ];
+      }
       this.loading = false;
     });
   }
-  makeOrderByHost(row: any) {
-    if (this.isHostUser) {
-      debugger;
-      this.orderService
-        .GetByEventvsUserId(this.eventDetail.EventId, row.User.Id)
-        .then(order => {
-          var url =
-            window.location.protocol +
-            "////" +
-            window.location.host +
-            "/make-order/" +
-            order.Id;
-          window.open(url);
-        });
-    }
+  
+  reOpen() {
+    this.summaryService
+      .updateEventStatus(this.eventId.toString(), "Reopened")
+      .then(response => {
+        if (response === null) {
+          this.toast("Event is reopened again", "Dismiss");
+          window.location.reload();
+        }
+        if (response != null && response.ErrorMessage != null) {
+          this.toast("Reopen event failed", "Dismiss");
+        }
+      });
+  }
+  reOpenEvent() {
+    const dialogRef = this.dialog.open(OpenEventDialogComponent, {
+      scrollStrategy: this.overlay.scrollStrategies.noop(),
+      autoFocus: false,
+      maxWidth: "80%",
+      data: this.eventDetail.Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.reOpen();
+      }
+    });
   }
 }
