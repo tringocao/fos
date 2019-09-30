@@ -268,7 +268,7 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getPersonGroupView(order, orders) {
-    var orderItem:UserOrder;
+    var orderItem:UserOrder = new UserOrder();
     this.userService.getUserById(order.IdUser).then((user: User) => {
       orderItem.User = user;
     }).then(() => {

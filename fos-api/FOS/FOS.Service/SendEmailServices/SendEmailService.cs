@@ -241,7 +241,7 @@ namespace FOS.Services.SendEmailServices
             }
         }
 
-        public async Task SendEmailToAlreadyOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson)
+        public async Task SendEmailToAlreadyOrderedUserAsync(List<UserFeedbackMailInfo> users, string emailTemplateJson)
         {
             var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
             jsonTemplate.TryGetValue("Body", out object body);
@@ -257,32 +257,6 @@ namespace FOS.Services.SendEmailServices
                 {
                     emailTemplate.FeedBack = hostname + "/feedback/" + user.OrderId;
                     emailp.To = new List<string>() { user.UserMail };
-                    emailp.From = host.Mail;
-                    emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                    emailp.Subject = subject.ToString();
-
-                    Utility.SendEmail(clientContext, emailp);
-                    clientContext.ExecuteQuery();
-                }
-            }
-        }
-
-        public async Task SendEmailToAlreadyOrderedUserAsync(List<UserNotOrderMailInfo> users, string emailTemplateJson)
-        {
-            var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
-            jsonTemplate.TryGetValue("Body", out object body);
-            ReadEmailTemplate(body.ToString());
-            jsonTemplate.TryGetValue("Subject", out object subject);
-            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-            {
-                var emailp = new EmailProperties();
-                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
-                var host = await _sPUserService.GetCurrentUser();
-
-                foreach (var user in users)
-                {
-                    emailTemplate.FeedBack = hostname + "/feedback/" + user.OrderId;
-                    emailp.To = new List<string>() { user.UserEmail };
                     emailp.From = host.Mail;
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                     emailp.Subject = subject.ToString();

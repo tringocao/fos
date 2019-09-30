@@ -171,6 +171,7 @@
     <Compile Include="Dto\UpdateEvent.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Dto\UserFeedback.cs" />
+    <Compile Include="Dto\UserFeedbackMailInfo.cs" />
     <Compile Include="Dto\UserNotOrder.cs" />
     <Compile Include="Dto\UserNotOrderEmail.cs" />
     <Compile Include="Dto\UserNotOrderMailInfo.cs" />

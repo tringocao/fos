@@ -3,6 +3,7 @@ using FOS.Common.Constants;
 using FOS.Model.Domain;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
+using FOS.Services.EventServices;
 using FOS.Services.FeedbackServices;
 using FOS.Services.OrderServices;
 using FOS.Services.SendEmailServices;
@@ -24,13 +25,15 @@ namespace FOS.API.Controllers
         private IFeedbackDtoMapper _feedbackDtoMapper;
         private ISendEmailService _sendEmailService;
         private IOrderService _orderService;
+        private IEventService _eventService;
 
-        public FeedbackController(IFeedbackService feedbackService, IFeedbackDtoMapper feedbackDtoMapper, ISendEmailService sendEmailService, IOrderService orderService)
+        public FeedbackController(IFeedbackService feedbackService, IFeedbackDtoMapper feedbackDtoMapper, ISendEmailService sendEmailService, IOrderService orderService, IEventService eventService)
         {
             _feedbackService = feedbackService;
             _feedbackDtoMapper = feedbackDtoMapper;
             _sendEmailService = sendEmailService;
             _orderService = orderService;
+            _eventService = eventService;
         }
         [HttpGet]
         [Route("GetById/{id}")]
@@ -73,7 +76,18 @@ namespace FOS.API.Controllers
                 var listUser = await _orderService.GetUserAlreadyOrderEmail(eventId);
                 string path = System.Web.HttpContext.Current.Server.MapPath(Constant.FeedbackEmailTemplate);
                 string emailTemplateJson = System.IO.File.ReadAllText(path);
-                await _sendEmailService.SendEmailToAlreadyOrderedUserAsync(listUser, emailTemplateJson);
+
+                var userFeedbackEmailInfos = listUser.Select(user => {
+                    var feedBackMailInfo = new Model.Dto.UserFeedbackMailInfo();
+                    feedBackMailInfo.UserMail = user.UserEmail;
+                    feedBackMailInfo.OrderId = user.OrderId;
+                    Event eventData = _eventService.GetEvent(Int32.Parse(eventId));
+                    feedBackMailInfo.EventTitle = eventData.Name;
+                    feedBackMailInfo.EventRestaurant = eventData.Restaurant;
+
+                    return feedBackMailInfo;
+                }).ToList();
+                await _sendEmailService.SendEmailToAlreadyOrderedUserAsync(userFeedbackEmailInfos, emailTemplateJson);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

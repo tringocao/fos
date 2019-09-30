@@ -71,9 +71,9 @@
     <Compile Include="Mapping\FeedbackMapper.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
-    <Compile Include="Migrations\201909301052299_init.cs" />
-    <Compile Include="Migrations\201909301052299_init.Designer.cs">
-      <DependentUpon>201909301052299_init.cs</DependentUpon>
+    <Compile Include="Migrations\201909301542033_init2.cs" />
+    <Compile Include="Migrations\201909301542033_init2.Designer.cs">
+      <DependentUpon>201909301542033_init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\FeedbackRepository.cs" />
@@ -119,8 +119,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201909301052299_init.resx">
-      <DependentUpon>201909301052299_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909301542033_init2.resx">
+      <DependentUpon>201909301542033_init2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
