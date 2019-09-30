@@ -32,7 +32,7 @@ import { Food } from "src/app/models/food";
 import { UserService } from "src/app/services/user/user.service";
 import { PrintService } from "src/app/services/print/print.service";
 
-import { OverlayContainer } from "@angular/cdk/overlay";
+import { OverlayContainer, Overlay } from "@angular/cdk/overlay";
 import { SelectionModel } from "@angular/cdk/collections";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
 import { UserNotOrderMailInfo } from "src/app/models/user-not-order-mail-info";
@@ -45,6 +45,7 @@ import { UserOrder } from "src/app/models/user-order";
 import { UserReorder } from "src/app/models/user-reorder";
 import { UsersOrderedFoodDialogComponent } from "../users-ordered-food-dialog/users-ordered-food-dialog.component";
 import { debug } from "util";
+import { OpenEventDialogComponent } from "./open-event-dialog/open-event-dialog.component";
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -67,7 +68,8 @@ export class EventSummaryDialogComponent implements OnInit {
     private snackBar: MatSnackBar,
     private overlayContainer: OverlayContainer,
     private dialog: MatDialog,
-    public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>
+    public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>,
+    private overlay: Overlay
   ) {
     overlayContainer.getContainerElement().classList.add("app-theme1-theme");
     console.log(router.routerState);
@@ -429,6 +431,19 @@ export class EventSummaryDialogComponent implements OnInit {
     ];
     this.reOrder = true;
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(OpenEventDialogComponent, {
+      scrollStrategy: this.overlay.scrollStrategies.noop(),
+      autoFocus: false,
+      maxWidth: "80%",
+      data: this.eventDetail.Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.resendOrder();
+      }
+    });
+  }
   resendOrder() {
     this.selection.selected.forEach(value => {
       value.UserIds.forEach(id => {
@@ -500,7 +515,9 @@ export class EventSummaryDialogComponent implements OnInit {
     const dialogRef = this.dialog.open(UsersOrderedFoodDialogComponent, {
       data: {
         users: listUserOrderFood,
-        food: foodName
+        food: foodName,
+        eventDetail: this.eventDetail,
+        isHostUser: this.isHostUser
       },
       maxHeight: "98vh",
       minWidth: "50%"
@@ -517,5 +534,21 @@ export class EventSummaryDialogComponent implements OnInit {
       this.isHostUser = user.Id == event.HostId;
       this.loading = false;
     });
+  }
+  makeOrderByHost(row: any) {
+    if (this.isHostUser) {
+      debugger;
+      this.orderService
+        .GetByEventvsUserId(this.eventDetail.EventId, row.User.Id)
+        .then(order => {
+          var url =
+            window.location.protocol +
+            "////" +
+            window.location.host +
+            "/make-order/" +
+            order.Id;
+          window.open(url);
+        });
+    }
   }
 }

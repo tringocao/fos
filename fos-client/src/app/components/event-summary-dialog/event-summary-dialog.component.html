@@ -302,7 +302,7 @@
               <tr
                 mat-row
                 *matRowDef="let row; columns: personGroupViewDisplayedColumns"
-                (click)="isHostUser ? makeOrderByHost() : false"
+                (click)="isHostUser ? makeOrderByHost(row) : false"
               ></tr>
             </table>
           </mat-tab>
@@ -334,7 +334,7 @@
           Print
         </button>
         <button
-          (click)="resendOrder()"
+          (click)="openDialog()"
           mat-flat-button
           color="primary"
           *ngIf="reOrder"

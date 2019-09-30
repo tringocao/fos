@@ -97,14 +97,18 @@ export class OrderDetailComponent implements OnInit {
                       Email: ""
                     };
                     this.checkedData = this.order.FoodDetail;
-                    if (event.Status == "Closed") {
-                      this.isOrder = false;
-                    }
+
                     this.isDataAvailable = true;
-                    this.loading = false;
                     this.totalBudget = Number(event.MaximumBudget);
                     this.userService.getUserById(event.HostId).then(user => {
                       this.hostUser = user;
+                      if (
+                        this.event.Status == "Closed" &&
+                        this.hostUser.Id != this.orderUser.Id
+                      ) {
+                        this.isOrder = false;
+                      }
+                      this.loading = false;
                     });
                     this.nameEvent = event.Name;
                   });
@@ -140,13 +144,19 @@ export class OrderDetailComponent implements OnInit {
       .then(restaurantd => {
         this.data.detail = restaurantd;
         this.isDataAvailable = true;
-        this.loading = false;
         this.totalBudget = Number(this.event.MaximumBudget);
+        this.userService.getCurrentUser().then(user => {
+          if (this.event.Status == "Closed" && this.hostUser.Id != user.Id) {
+            this.isOrder = false;
+          }
+          this.loading = false;
+        });
       });
   }
   getUserById(IdUser: string) {
     return this.userService.getUserById(IdUser).then(user => {
       this.hostUser = user;
+
       this.getRestaurant([this.order.IdRestaurant]);
     });
   }
@@ -154,10 +164,6 @@ export class OrderDetailComponent implements OnInit {
     return this.eventFormService.GetEventById(IdEvent).then(event => {
       this.event = event;
       this.nameEvent = event.Name;
-
-      if (event.Status == "Closed") {
-        this.isOrder = false;
-      }
       this.getUserById(this.event.HostId);
     });
   }
