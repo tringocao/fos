@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
@@ -14,6 +14,8 @@ import { EventFormService } from "src/app/services/event-form/event-form.service
 import { FoodDetailJson } from "src/app/models/food-detail-json";
 import { MatSnackBar } from "@angular/material";
 import { FoodComponent } from "../dialog/food/food.component";
+import { environment } from 'src/environments/environment';
+import { promise } from 'protractor';
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
@@ -50,12 +52,20 @@ export class OrderDetailComponent implements OnInit {
     private restaurantService: RestaurantService,
     private userService: UserService,
     private eventFormService: EventFormService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.data = { restaurant: null, detail: null, idService: 1 };
     this.idOrder = this.route.snapshot.paramMap.get("id");
+    const promise = await this.orderService.GetOrder(this.idOrder).then(value=>{
+      if(value.OrderStatus == 2){
+        this.router.navigateByUrl('not-participant/'+this.idOrder);
+      }
+    })
+
+    debugger;
     this.isWildParticipant = false;
     // check if wild guest order
     if (this.idOrder.includes("ffa")) {

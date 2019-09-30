@@ -13,5 +13,6 @@ namespace FOS.Services.SendEmailServices
         Task SendEmailAsync(string idEvent, string html);
         Task SendEmailToNotOrderedUserAsync(IEnumerable<UserNotOrderMailInfo> users, string emailTemplateJson);
         Task SendMailUpdateEvent(List<Model.Domain.GraphUser> removeListUser, List<Model.Domain.User> newListUser, string idEvent, string html);
+        Task<IEnumerable<UserNotOrderMailInfo>> FilterUserIsParticipant(IEnumerable<UserNotOrderMailInfo> users);
     }
 }

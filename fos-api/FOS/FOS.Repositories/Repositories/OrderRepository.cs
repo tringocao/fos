@@ -88,7 +88,7 @@ namespace FOS.Repositories.Repositories
         public IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             var orders = _context.Orders.Where(order => 
-            order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
+            order.IdEvent == eventId && order.FoodDetail.Length == 0 && order.OrderStatus == 0).ToList();
             var result = new List<Model.Domain.UserNotOrder>();
             foreach(var order in orders)
             {
@@ -132,7 +132,7 @@ namespace FOS.Repositories.Repositories
         public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId)
         {
             var orders = _context.Orders.Where(order =>
-            order.IdEvent == eventId && order.FoodDetail.Length == 0).ToList();
+            order.IdEvent == eventId && order.FoodDetail.Length == 0 && order.OrderStatus == 0).ToList();
 
             var result = new List<Model.Domain.UserNotOrderEmail>();
             foreach (var order in orders)
