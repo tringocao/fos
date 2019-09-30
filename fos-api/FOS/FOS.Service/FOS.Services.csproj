@@ -150,6 +150,8 @@
   <ItemGroup>
     <Compile Include="DeliveryServices\DeliveryService.cs" />
     <Compile Include="DeliveryServices\IDeliveryService.cs" />
+    <Compile Include="DiscountEventServices\DiscountEventService.cs" />
+    <Compile Include="DiscountEventServices\IDiscountEventService.cs" />
     <Compile Include="EventServices\EventService.cs" />
     <Compile Include="EventServices\IEventService.cs" />
     <Compile Include="ExternalServices\ExternalServiceFactory.cs" />
