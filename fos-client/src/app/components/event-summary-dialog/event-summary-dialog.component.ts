@@ -448,7 +448,7 @@ export class EventSummaryDialogComponent implements OnInit {
       "picture",
       "name",
       "amount",
-      "prices",
+      "price",
       "total",
       "totalComment",
       "numberOfUser",

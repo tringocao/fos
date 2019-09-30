@@ -250,6 +250,7 @@
               <tr
                 mat-row
                 *matRowDef="let row; columns: dishGroupViewDisplayedColumns"
+                (click)="reOrder ? selection.toggle(row) : false"
               ></tr>
               <tr
                 mat-footer-row
@@ -301,6 +302,7 @@
               <tr
                 mat-row
                 *matRowDef="let row; columns: personGroupViewDisplayedColumns"
+                (click)="isHostUser ? makeOrderByHost() : false"
               ></tr>
             </table>
           </mat-tab>
