@@ -79,7 +79,7 @@ namespace FOS.Services.SendEmailServices
                     emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                     emailp.Subject = Parse(emailTemplate.Subject.ToString(), emailTemplate);
-                    
+
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
 
@@ -117,6 +117,45 @@ namespace FOS.Services.SendEmailServices
                 }
             }
         }
+        public async Task SendEmailToReOrderEventAsync(List<Model.Domain.UserReorder> users, string emailTemplateJson)
+        {
+            var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
+            jsonTemplate.TryGetValue("Body", out object body);
+            ReadEmailTemplate(body.ToString());
+            jsonTemplate.TryGetValue("Subject", out object subject);
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                try
+                {
+                    var emailp = new EmailProperties();
+                    string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                    var host = await _sPUserService.GetCurrentUser();
+
+                    foreach (var user in users)
+                    {
+                        user.FoodNameHtml = "";
+                        foreach (var food in user.FoodName)
+                        {
+                            user.FoodNameHtml += "<li style=\"margin:10px\">" + food + "</li>";
+
+                        }
+                        emailTemplate.MakeOrder = hostname + "make-order/" + user.OrderId;
+                        emailp.To = new List<string>() { user.UserMail };
+                        emailp.From = host.Mail;
+                        emailp.BCC = new List<string> { host.Mail };
+                        emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
+                        emailp.Subject = subject.ToString();
+
+                        Utility.SendEmail(clientContext, emailp);
+                        clientContext.ExecuteQuery();
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
         private Dictionary<string, object> ReadEmailJsonTemplate(string json)
         {
             return JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
@@ -128,12 +167,12 @@ namespace FOS.Services.SendEmailServices
         }
         public string Parse<T>(string text, T modelparse)
         {
-            var regex = new Regex(@"\[%"+ modelparse.GetType().Name + @".\S+%\]");
+            var regex = new Regex(@"\[%" + modelparse.GetType().Name + @".\S+%\]");
             var match = regex.Match(text);
             while (match.Success)
             {
                 var value = match.Value;
-                var memberName = ParseMemberName(value); 
+                var memberName = ParseMemberName(value);
                 System.Reflection.PropertyInfo propertyInfo = modelparse.GetType().GetProperty(memberName);
                 object memberValue = propertyInfo.GetValue(modelparse, null);
                 text = text.Replace(value, memberValue != null ? memberValue.ToString() : string.Empty);
@@ -148,14 +187,14 @@ namespace FOS.Services.SendEmailServices
 
         public async Task SendMailUpdateEvent(List<Model.Domain.GraphUser> removeListUser, List<Model.Domain.User> newListUser, string idEvent, string html)
         {
-            foreach(var deleteUser in removeListUser)
+            foreach (var deleteUser in removeListUser)
             {
-                 _orderService.DeleteOrderByUserId(deleteUser.Id, idEvent);
+                _orderService.DeleteOrderByUserId(deleteUser.Id, idEvent);
             }
 
             ReadEmailTemplate(html);
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-            {   
+            {
                 await GetDataByEventIdAsync(clientContext, idEvent);
                 var emailp = new EmailProperties();
                 string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];

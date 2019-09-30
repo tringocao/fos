@@ -1,6 +1,6 @@
 <div class="users-dialog">
   <div class="dialog-header">
-    <h2>Users order {{ data.food }}</h2>
+    <h2>Users ordered {{ data.food }}</h2>
   </div>
   <div mat-dialog-content>
     <table mat-table [dataSource]="dataSource">
@@ -29,7 +29,11 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="data.isHostUser ? makeOrderByHost(row) : false"
+      ></tr>
     </table>
 
     <div class="dialog-actions">

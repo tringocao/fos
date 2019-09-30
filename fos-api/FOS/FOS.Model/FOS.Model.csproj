@@ -141,6 +141,7 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserNotOrder.cs" />
     <Compile Include="Domain\UserNotOrderEmail.cs" />
+    <Compile Include="Domain\UserReorder.cs" />
     <Compile Include="Dto\Category.cs" />
     <Compile Include="Dto\CategoryGroup.cs" />
     <Compile Include="Dto\Comment.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Dto\UserNotOrderEmail.cs" />
     <Compile Include="Dto\UserNotOrderMailInfo.cs" />
     <Compile Include="Dto\UserOrder.cs" />
+    <Compile Include="Dto\UserReorder.cs" />
     <Compile Include="Mapping\APIsDtoMapper.cs" />
     <Compile Include="Mapping\CategoryDtoMapper.cs" />
     <Compile Include="Mapping\CategoryGroupDtoMapper.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Mapping\UserDtoMapper.cs" />
     <Compile Include="Mapping\UserNotOrderDtoMapper.cs" />
     <Compile Include="Mapping\UserNotOrderEmailDtoMapper.cs" />
+    <Compile Include="Mapping\UserReorderDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ApiUtil.cs" />
   </ItemGroup>
@@ -976,6 +979,18 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-order.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\UserOrder.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-reorder.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserReorder.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-reorder.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserReorder.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-reorder.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserReorder.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

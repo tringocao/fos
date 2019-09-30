@@ -24,10 +24,12 @@ namespace FOS.API.Controllers
     {
         ISendEmailService _sendEmailService;
         private readonly INewGraphUserDtoMapper _newGraphUserDtoMapper;
-        public SendEmailController(ISendEmailService sendEmailService, INewGraphUserDtoMapper mapper)
+        IUserReorderDtoMapper _userReorderDtoMapper;
+        public SendEmailController(ISendEmailService sendEmailService, INewGraphUserDtoMapper mapper, IUserReorderDtoMapper userReorderDtoMapper)
         {
             _sendEmailService = sendEmailService;
             _newGraphUserDtoMapper = mapper;
+            _userReorderDtoMapper = userReorderDtoMapper;
         }
         [HttpGet]
         [Route("SendEmail")]
@@ -63,6 +65,23 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
+        [HttpPut]
+        [Route("SendEmailToReOrderedUser")]
+        public async Task<ApiResponse> SendEmailToReOrderedUser([FromBody]IEnumerable<Model.Dto.UserReorder> users)
+        {
+            try
+            {
+                string path = System.Web.HttpContext.Current.Server.MapPath(Constant.ReorderEmailTemplate);
+                string emailTemplateJson = System.IO.File.ReadAllText(path);
+                var listUser = users.Select(user => _userReorderDtoMapper.ToModel(user)).ToList();
+                await _sendEmailService.SendEmailToReOrderEventAsync(listUser, emailTemplateJson);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
         [HttpPost]
         [Route("SendMailUpdateEvent")]
         public async Task<ApiResponse> SendMailUpdateEvent([FromBody]UpdateEvent updateEvent)
@@ -80,6 +99,20 @@ namespace FOS.API.Controllers
                     newList => _newGraphUserDtoMapper.ToDomainUser(newList)).ToList();
 
                 await _sendEmailService.SendMailUpdateEvent(removeListUserDomain, newListUserDomain, updateEvent.IdEvent, html);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpPost]
+        [Route("SendMailReOrder")]
+        public async Task<ApiResponse> SendMailReOrder(string eventId, [FromBody]Model.Dto.User users)
+        {
+            try
+            {
+
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
