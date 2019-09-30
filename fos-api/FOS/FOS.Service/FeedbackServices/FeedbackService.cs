@@ -67,11 +67,5 @@ namespace FOS.Services.FeedbackServices
                 _feedbackRepository.Update(_feedbackMapper.MapToDataModel(feedBack));
             }
         }
-
-        public void SendFeedbackEmail(string eventId)
-        {
-            var orderedUsers = _orderRepository.GetUserAlreadyOrderEmail(eventId);
-
-        }
     }
 }

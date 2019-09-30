@@ -82,7 +82,7 @@ namespace FOS.Services.OrderServices
             return _repository.GetUserNotOrderEmail(eventId);
         }
 
-        public List<UserNotOrderEmail> GetUserAlreadyOrderEmail(string eventId)
+        public async Task<List<Model.Domain.UserNotOrderEmail>> GetUserAlreadyOrderEmail(string eventId)
         {
             return _repository.GetUserAlreadyOrderEmail(eventId);
         }

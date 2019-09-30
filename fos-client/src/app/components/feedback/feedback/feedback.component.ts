@@ -4,17 +4,17 @@ import { ActivatedRoute } from "@angular/router";
 import { Restaurant } from "src/app/models/restaurant";
 import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
 import { DeliveryInfos } from "src/app/models/delivery-infos";
-import { OrderService } from 'src/app/services/order/order.service';
-import { Order } from 'src/app/models/order';
-import { FoodDetailJson } from 'src/app/models/food-detail-json';
-import { EventFormService } from 'src/app/services/event-form/event-form.service';
+import { OrderService } from "src/app/services/order/order.service";
+import { Order } from "src/app/models/order";
+import { FoodDetailJson } from "src/app/models/food-detail-json";
+import { EventFormService } from "src/app/services/event-form/event-form.service";
 import { Event } from "src/app/models/event";
-import { MatTableDataSource } from '@angular/material';
-import { StarRatingColor } from '../../star-rating/star-rating.component';
-import { FeedBack } from 'src/app/models/feed-back';
-import { UserRating } from 'src/app/models/user-rating';
-import { FeedbackDetail } from 'src/app/models/feedback-detail';
-import { UserFeedback } from 'src/app/models/user-feedback';
+import { MatTableDataSource } from "@angular/material";
+import { StarRatingColor } from "../../star-rating/star-rating.component";
+import { FeedBack } from "src/app/models/feed-back";
+import { UserRating } from "src/app/models/user-rating";
+import { FeedbackDetail } from "src/app/models/feedback-detail";
+import { UserFeedback } from "src/app/models/user-feedback";
 
 @Component({
   selector: "app-feedback",
@@ -27,7 +27,7 @@ export class FeedbackComponent implements OnInit {
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private orderService: OrderService,
-    private eventFormService: EventFormService,
+    private eventFormService: EventFormService
   ) {}
   restaurant: DeliveryInfos;
   orderId: string;
@@ -46,10 +46,10 @@ export class FeedbackComponent implements OnInit {
   starColorW: StarRatingColor = StarRatingColor.warn;
 
   dishViewDisplayedColumns: string[] = [
-    'picture',
-    'name',
-    'price',
-    'totalComment'
+    "picture",
+    "name",
+    "price",
+    "totalComment"
   ];
 
   ngOnInit() {
@@ -59,13 +59,13 @@ export class FeedbackComponent implements OnInit {
     });
   }
 
-  OnRatingChanged(rating){
+  OnRatingChanged(rating) {
     console.log(rating);
     this.rating = rating;
   }
 
   OnCommentChange(event, foodId) {
-    console.log(foodId)
+    console.log(foodId);
   }
 
   GetOrderInfo(orderId: string) {
@@ -76,7 +76,7 @@ export class FeedbackComponent implements OnInit {
         return foodDetail;
       });
       this.dishViewdataSource = this.orderDetail;
-      console.log(this.orderDetail)
+      console.log(this.orderDetail);
       this.GetEventById(this.order.IdEvent);
     });
   }
@@ -86,35 +86,41 @@ export class FeedbackComponent implements OnInit {
       this.event = event;
       this.loading = false;
       this.feedback.DeliveryId = this.event.DeliveryId;
-      this.feedbackService.getFeedbackById(this.event.DeliveryId).then(result => {
-        console.log(result)
-        this.feedback.Ratings[0] = result.Ratings.find(rating => rating.UserId === this.order.IdUser);
-        console.log(this.orderDetail)
-        // this.orderDetail = result.FoodFeedbacks.map(fb => {
-        //   console.log(fb);
-
-        //   return fb;
-        // });
-        result.FoodFeedbacks.forEach(foodFeedback => {
-          const foodIndex = this.orderDetail.findIndex(food => food.IdFood === foodFeedback.FoodId);
-          if (foodIndex !== -1) {
-            const feedBackIndex = foodFeedback.UserFeedBacks.findIndex(fb => fb.UserId === this.order.IdUser);
-            if (feedBackIndex !== -1) {
-              this.orderDetail[foodIndex].Comment = foodFeedback.UserFeedBacks[feedBackIndex].Comment;
-              console.log(this.orderDetail[foodIndex])
-            }
+      this.feedbackService
+        .getFeedbackById(this.event.DeliveryId)
+        .then(result => {
+          if (result !== null) {
+            this.feedback.Ratings[0] = result.Ratings.find(
+              rating => rating.UserId === this.order.IdUser
+            );
+            result.FoodFeedbacks.forEach(foodFeedback => {
+              const foodIndex = this.orderDetail.findIndex(
+                food => food.IdFood === foodFeedback.FoodId
+              );
+              if (foodIndex !== -1) {
+                const feedBackIndex = foodFeedback.UserFeedBacks.findIndex(
+                  fb => fb.UserId === this.order.IdUser
+                );
+                if (feedBackIndex !== -1) {
+                  this.orderDetail[foodIndex].Comment =
+                    foodFeedback.UserFeedBacks[feedBackIndex].Comment;
+                  console.log(this.orderDetail[foodIndex]);
+                }
+              }
+            });
+            this.dishViewdataSource = new MatTableDataSource(this.orderDetail);
+            this.rating = this.feedback.Ratings[0].Rating;
           }
+
+          this.eventDataAvailable = true;
         });
-        console.log(this.orderDetail)
-        this.dishViewdataSource = new MatTableDataSource(this.orderDetail)
-        this.rating = this.feedback.Ratings[0].Rating;
-        this.eventDataAvailable = true;
-      });
     });
   }
 
   Submit() {
-    const ratingIndex = this.feedback.Ratings.findIndex(rating => rating.UserId === this.order.IdUser);
+    const ratingIndex = this.feedback.Ratings.findIndex(
+      rating => rating.UserId === this.order.IdUser
+    );
     if (ratingIndex === -1) {
       const userRating = new UserRating();
       userRating.UserId = this.order.IdUser;

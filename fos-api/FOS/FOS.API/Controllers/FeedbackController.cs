@@ -1,13 +1,17 @@
 ﻿using FOS.API.App_Start;
+using FOS.Common.Constants;
 using FOS.Model.Domain;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.FeedbackServices;
+using FOS.Services.OrderServices;
+using FOS.Services.SendEmailServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -18,10 +22,15 @@ namespace FOS.API.Controllers
     {
         private IFeedbackService _feedbackService;
         private IFeedbackDtoMapper _feedbackDtoMapper;
-        public FeedbackController(IFeedbackService feedbackService, IFeedbackDtoMapper feedbackDtoMapper)
+        private ISendEmailService _sendEmailService;
+        private IOrderService _orderService;
+
+        public FeedbackController(IFeedbackService feedbackService, IFeedbackDtoMapper feedbackDtoMapper, ISendEmailService sendEmailService, IOrderService orderService)
         {
             _feedbackService = feedbackService;
             _feedbackDtoMapper = feedbackDtoMapper;
+            _sendEmailService = sendEmailService;
+            _orderService = orderService;
         }
         [HttpGet]
         [Route("GetById/{id}")]
@@ -29,8 +38,12 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var feedbacks = _feedbackDtoMapper.ToDto(_feedbackService.GetFeedbackByDeliveryId(id));
-                return ApiUtil<Model.Dto.FeedBack>.CreateSuccessfulResult(feedbacks);
+                var feedback = _feedbackService.GetFeedbackByDeliveryId(id);
+                if (feedback != null)
+                {
+                    return ApiUtil<Model.Dto.FeedBack>.CreateSuccessfulResult(_feedbackDtoMapper.ToDto(feedback));
+                }
+                return ApiUtil<Model.Dto.FeedBack>.CreateSuccessfulResult(null);
             }
             catch (Exception e)
             {
@@ -53,11 +66,14 @@ namespace FOS.API.Controllers
         }
         [HttpGet]
         [Route("sendEmail/{eventId}")]
-        public ApiResponse SendFeedbackEmail(string eventId)
+        public async Task<ApiResponse> SendFeedbackEmail(string eventId)
         {
             try
             {
-                _feedbackService.SendFeedbackEmail(eventId);
+                var listUser = await _orderService.GetUserAlreadyOrderEmail(eventId);
+                string path = System.Web.HttpContext.Current.Server.MapPath(Constant.FeedbackEmailTemplate);
+                string emailTemplateJson = System.IO.File.ReadAllText(path);
+                await _sendEmailService.SendEmailToAlreadyOrderedUserAsync(listUser, emailTemplateJson);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

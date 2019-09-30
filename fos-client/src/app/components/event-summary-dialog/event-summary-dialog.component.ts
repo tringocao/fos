@@ -46,6 +46,7 @@ import { UserReorder } from "src/app/models/user-reorder";
 import { UsersOrderedFoodDialogComponent } from "../users-ordered-food-dialog/users-ordered-food-dialog.component";
 import { debug } from "util";
 import { OpenEventDialogComponent } from "./open-event-dialog/open-event-dialog.component";
+import { FeedbackService } from 'src/app/services/feedback/feedback.service';
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -69,7 +70,8 @@ export class EventSummaryDialogComponent implements OnInit {
     private overlayContainer: OverlayContainer,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private feedbackService: FeedbackService,
   ) {
     overlayContainer.getContainerElement().classList.add("app-theme1-theme");
     console.log(router.routerState);
@@ -433,6 +435,10 @@ export class EventSummaryDialogComponent implements OnInit {
       "numberOfUser",
       "showUsers"
     ];
+  }
+
+  sendEmailFeedback() {
+    this.feedbackService.sendFeedbackEmail(this.eventDetail.EventId);
   }
   sendEmailReorder() {
     const info: UserReorder[] = [];

@@ -382,6 +382,12 @@
     <Compile Include="LogCreation.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoggingInterceptor.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharePointContext.cs" />
     <Compile Include="TokenHelper.cs" />
@@ -548,6 +554,11 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="obj\Debug\FOS.API.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\FOS.API.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\FOS.API.dll" />
+    <Content Include="obj\Release\FOS.API.pdb" />
+    <Content Include="obj\Release\_WPPLastBuildInfo.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -572,6 +583,14 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="App_Data\RemindEmailTemplate.json" />
     <Content Include="App_Data\ReorderEmailTemplate.json" />
+    <Content Include="obj\Debug\build.force" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\FOS.API.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\Tsc.out" />
+    <Content Include="obj\Release\FOS.API.csproj.CopyComplete" />
+    <Content Include="obj\Release\FOS.API.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Release\FOS.API.csprojAssemblyReference.cache" />
+    <Content Include="App_Data\FeedbackEmailTemplate.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -613,7 +632,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="obj\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

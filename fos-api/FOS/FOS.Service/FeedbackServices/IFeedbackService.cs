@@ -10,6 +10,5 @@ namespace FOS.Services.FeedbackServices
     {
         Model.Domain.FeedBack GetFeedbackByDeliveryId(string DeliveryId);
         void RateRestaurant(Model.Domain.FeedBack feedBack);
-        void SendFeedbackEmail(string eventId);
     }
 }
