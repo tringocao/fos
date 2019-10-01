@@ -90,9 +90,13 @@ export class FeedbackComponent implements OnInit {
         .getFeedbackById(this.event.DeliveryId)
         .then(result => {
           if (result !== null) {
-            this.feedback.Ratings[0] = result.Ratings.find(
+            const ratingIndex = result.Ratings.findIndex(
               rating => rating.UserId === this.order.IdUser
             );
+            if (ratingIndex !== -1) {
+              this.feedback.Ratings[0] = result.Ratings[ratingIndex];
+              this.rating = this.feedback.Ratings[0].Rating;
+            }
             result.FoodFeedbacks.forEach(foodFeedback => {
               const foodIndex = this.orderDetail.findIndex(
                 food => food.IdFood === foodFeedback.FoodId
@@ -109,7 +113,6 @@ export class FeedbackComponent implements OnInit {
               }
             });
             this.dishViewdataSource = new MatTableDataSource(this.orderDetail);
-            this.rating = this.feedback.Ratings[0].Rating;
           }
 
           this.eventDataAvailable = true;
