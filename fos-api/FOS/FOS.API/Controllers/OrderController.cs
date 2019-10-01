@@ -188,6 +188,20 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
+        [HttpGet]
+        [Route("UpdateFoodDetailByOrderId")]
+        public async Task<ApiResponse> UpdateFoodDetailByOrderId(string OrderId, string FoodDetail)
+        {
+            try
+            {
+                await _orderService.UpdateFoodDetailByOrderId(OrderId, FoodDetail);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
         //// GET: api/Order/5
         //public Model.Dto.Order Get(int id)
         //{
