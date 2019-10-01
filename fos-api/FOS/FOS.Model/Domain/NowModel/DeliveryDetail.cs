@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ChoETL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace FOS.Model.Domain.NowModel
 {
     public class DeliveryDetail
     {
-        [JsonProperty("rating")]
-
+        [ChoJSONRecordField]
         public dynamic Rating { get; set; }
-
+        [ChoJSONRecordField(JSONPath = "$.delivery.promotions")]
+        public List<Promotion> PromotionOnAll { get; set; }
+        [ChoJSONRecordField(JSONPath = "$.price_slash_discount")]
+        public Promotion PromotionOnItem { get; set; }
     }
 }

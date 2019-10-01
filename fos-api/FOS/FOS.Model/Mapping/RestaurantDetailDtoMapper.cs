@@ -20,7 +20,8 @@ namespace FOS.Model.Mapping
             return new Dto.RestaurantDetail()
             {
                 Rating = deliveryDetail.Rating.avg,
-                TotalReview = deliveryDetail.Rating.total_review
+                TotalReview = deliveryDetail.Rating.total_review,
+                
             };
         }
     }

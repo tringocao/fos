@@ -28,7 +28,7 @@ namespace FOS.Repositories
         public DbSet<FavoriteRestaurant> FavoriteRestaurants { get; set; }
         public DbSet<RecurrenceEvent> RecurrenceEvents { get; set; }
         public DbSet<LoggingData> LoggingDatas { get; set; }
-        public DbSet<EventPromotion> DiscountEvents { get; set; }
+        public DbSet<EventPromotion> EventPromotions { get; set; }
 
         public DbSet<ReportFile> ReportFiles { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

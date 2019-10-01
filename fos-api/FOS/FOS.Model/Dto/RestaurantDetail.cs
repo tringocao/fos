@@ -10,5 +10,7 @@ namespace FOS.Model.Dto
     {
         public float Rating { get; set; }
         public int TotalReview { get; set; }
+        public List<Promotion> PromotionLists { get; set; }
+
     }
 }

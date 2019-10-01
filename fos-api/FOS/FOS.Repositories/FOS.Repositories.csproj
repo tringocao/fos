@@ -56,8 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModel\DiscountEvent.cs" />
-    <Compile Include="DataModel\Promotions.cs" />
+    <Compile Include="DataModel\EventPromotion.cs" />
     <Compile Include="DataModel\ExternalServiceAPI.cs" />
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
     <Compile Include="DataModel\FeedBack.cs" />
@@ -70,7 +69,7 @@
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
-    <Compile Include="Mapping\DiscountEventMapper.cs" />
+    <Compile Include="Mapping\EventPromotionMapper.cs" />
     <Compile Include="Mapping\FeedbackMapper.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
@@ -79,7 +78,7 @@
       <DependentUpon>201910010249206_init4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Repositories\DiscountEventRepository.cs" />
+    <Compile Include="Repositories\EventPromotionRepository.cs" />
     <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

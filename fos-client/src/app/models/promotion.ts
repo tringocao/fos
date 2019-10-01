@@ -8,12 +8,15 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-     import { Promotion } from './promotion';
+     import { PromotionType } from './promotion-type';
 
-    export class RestaurantDetail    {
+    export class Promotion    {
            
-        public Rating: number = 0;   
-        public TotalReview: number = 0;   
-        public PromotionLists: Promotion[] = [];
+        public PromotionType: PromotionType = null;   
+        public Value: number = 0;   
+        public IsPercent: boolean = false;   
+        public Expired: Date = null;   
+        public MaxDiscountAmount: number = null;   
+        public MinOrderAmount: number = null;
     }
          

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Dto
+namespace FOS.Model.Domain
 {
-    public class DiscountEvent
+    public class EventPromotion
     {
         public int Id { get; set; }
 
         public int EventId { get; set; }
-        public Dictionary<string, float> Discounts { get; set; }
+        public Dictionary<string, float> Promotions { get; set; }
     }
 }

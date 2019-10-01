@@ -6,20 +6,20 @@ using FOS.Repositories.Repositories;
 using System.Threading.Tasks;
 using FOS.Model.Domain;
 
-namespace FOS.Services.DiscountEventServices
+namespace FOS.Services.EventPromotionServices
 {
-    public class DiscountEventService: IDiscountEventService
+    public class EventPromotionService: IEventPromotionService
     {
-        IDiscountEventRepository _discountEventRepository;
-        IDiscountEventMapper _discountEventMapper;
-        public DiscountEventService(IDiscountEventRepository discountEventRepository, IDiscountEventMapper discountEventMapper)
+        IEventPromotionRepository _discountEventRepository;
+        IEventPromotionMapper _discountEventMapper;
+        public EventPromotionService(IEventPromotionRepository discountEventRepository, IEventPromotionMapper discountEventMapper)
         {
             _discountEventMapper = discountEventMapper;
             _discountEventRepository = discountEventRepository;
         }
 
 
-        public bool AddDiscountEvent(DiscountEvent discountEvent)
+        public bool AddDiscountEvent(EventPromotion discountEvent)
         {
             Repositories.DataModel.EventPromotion temp = new Repositories.DataModel.EventPromotion();
             _discountEventMapper.MapToEfObject(temp, discountEvent);
@@ -31,22 +31,22 @@ namespace FOS.Services.DiscountEventServices
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DiscountEvent> GetAllDiscountEvents()
+        public IEnumerable<EventPromotion> GetAllDiscountEvents()
         {
             return _discountEventRepository.GetAllDiscountEvents().Select(r => _discountEventMapper.MapToDomain(r));
         }
 
-        public DiscountEvent GetByEventId(int eventId)
+        public EventPromotion GetByEventId(int eventId)
         {
             return _discountEventMapper.MapToDomain(_discountEventRepository.GetByEventId(eventId));
         }
 
-        public DiscountEvent GetById(int id)
+        public EventPromotion GetById(int id)
         {
             return _discountEventMapper.MapToDomain(_discountEventRepository.GetById(id));
         }
 
-        public bool UpdateDiscountEvent(DiscountEvent discountEvent)
+        public bool UpdateDiscountEvent(EventPromotion discountEvent)
         {
             Repositories.DataModel.EventPromotion temp = new Repositories.DataModel.EventPromotion();
             _discountEventMapper.MapToEfObject(temp, discountEvent);

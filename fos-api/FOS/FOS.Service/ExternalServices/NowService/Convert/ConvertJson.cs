@@ -1,4 +1,5 @@
-﻿using FOS.Model.Domain.NowModel;
+﻿using ChoETL;
+using FOS.Model.Domain.NowModel;
 using FOS.Model.Mapping;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,11 +16,11 @@ namespace FOS.Services.ExternalServices.NowService.Convert
         public static DeliveryDetail ConvertString2DeliveryInfos(string result)
         {
             dynamic data = JObject.Parse(result);
-            JsonDtoMapper<DeliveryDetail> map = new JsonDtoMapper<DeliveryDetail>();
+            //ChoJSONReader<DeliveryDetail> map = new ChoJSONReader<DeliveryDetail>();
             DeliveryDetail deliveryInfos = new DeliveryDetail();
             if (data.result == "success")
             {
-                deliveryInfos = JsonConvert.DeserializeObject<DeliveryDetail>(data.reply.delivery_detail.ToString());
+                deliveryInfos = ChoJSONReader<DeliveryDetail>.LoadText(data.reply.delivery_detail.ToString());
             }
             return deliveryInfos;
         }

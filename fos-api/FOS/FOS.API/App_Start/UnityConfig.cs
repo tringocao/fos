@@ -64,7 +64,14 @@ namespace FOS.API
                 new PerResolveLifetimeManager());
             container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
             container.RegisterType<Repositories.Mapping.IRecurrenceEventMapper, Repositories.Mapping.RecurrenceEventMapper>();
-
+            container.RegisterType< Repositories.Mapping.IEventPromotionMapper, Repositories.Mapping.EventPromotionMapper > (
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
+            container.RegisterType<IFeedbackMapper, FeedbackMapper>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<Repositories.Repositories.IRecurrenceEventRepository, Repositories.Repositories.RecurrenceEventRepository>();
             container.RegisterType<Repositories.Repositories.IOrderRepository, Repositories.Repositories.OrderRepository>();
             container.RegisterType<Repositories.Infrastructor.IDbFactory, Repositories.Infrastructor.DbFactory>();
@@ -77,7 +84,10 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
-
+            container.RegisterType<Repositories.Repositories.IEventPromotionRepository, Repositories.Repositories.EventPromotionRepository>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<Repositories.Repositories.IFOSFavoriteRestaurantRepository, Repositories.Repositories.FOSFavoriteRestaurantRepository>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
@@ -113,8 +123,10 @@ namespace FOS.API
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<Services.EventServices.IEventService, Services.EventServices.EventService>();
-
-
+            container.RegisterType<Services.EventPromotionServices.IEventPromotionService, Services.EventPromotionServices.EventPromotionService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
@@ -157,6 +169,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IUserNotOrderDtoMapper, Model.Mapping.UserNotOrderDtoMapper>();
             container.RegisterType<Model.Mapping.INewGraphUserDtoMapper, Model.Mapping.NewGraphUserDtoMapper>();
             container.RegisterType<Model.Mapping.IUserReorderDtoMapper, Model.Mapping.UserReorderDtoMapper>();
+            container.RegisterType<Model.Mapping.IEventPromotionDtoMapper, Model.Mapping.EventPromotionDtoMapper>();
 
             container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
             container.RegisterType<Model.Mapping.IGroupDtoMapper, Model.Mapping.GroupDtoMapper>();
@@ -189,10 +202,7 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
-            container.RegisterType<IFeedbackMapper, FeedbackMapper>(
-                new TransientLifetimeManager(),
-                new Interceptor<InterfaceInterceptor>(),
-                new InterceptionBehavior<LoggingInterceptor>());
+
             container.RegisterType<FOS.Services.FosCoreService.IFosCoreService, FOS.Services.FosCoreService.FosCoreService>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
