@@ -21,6 +21,7 @@ using User = FOS.Model.Domain.User;
 using FOS.Common.Constants;
 using System.Web.Script.Serialization;
 using FOS.Model.Domain;
+using FOS.Services.FosCoreService;
 
 namespace FOS.Services.SendEmailServices
 {
@@ -84,7 +85,7 @@ namespace FOS.Services.SendEmailServices
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
 
-                    _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id, 
+                   await _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id, 
                         emailTemplate.EventRestaurantId, 
                         emailTemplate.EventDeliveryId, 
                         emailTemplate.EventId, user.Mail, EventEmail.NewOder);
@@ -220,6 +221,7 @@ namespace FOS.Services.SendEmailServices
                 }
             }
         }
+
         public async Task<IEnumerable<UserNotOrderMailInfo>> FilterUserIsParticipant(IEnumerable<UserNotOrderMailInfo> users)
         {
             try
@@ -264,6 +266,61 @@ namespace FOS.Services.SendEmailServices
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
                 }
+            }
+        }
+        public async Task SendCancelEventMail(List<Model.Domain.EventUsers> listUser, Dictionary<string,string> emailTemplateDictionary)
+        {
+            
+
+            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                var emailp = new EmailProperties();
+                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                var host = await _sPUserService.GetCurrentUser();
+                List<Model.Domain.EventUsers> filterList = await FilterUser(listUser);
+                foreach (var user in filterList)
+                {
+                    emailTemplateDictionary.TryGetValue("Body", out string body);
+                    emailTemplateDictionary.TryGetValue("Subject", out string subject);
+
+                    emailp.To = new List<string>() { user.UserMail};
+                    emailp.From = host.Mail;
+                    emailp.Body = Parse(body, user);
+                    emailp.Subject = subject.ToString();
+
+                    Utility.SendEmail(clientContext, emailp);
+                    clientContext.ExecuteQuery();
+                }
+            }
+        }
+
+        public Dictionary<string, string> GetEmailTemplate(string templateLink)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + templateLink;
+            string emailTemplateJson = System.IO.File.ReadAllText(path);
+
+            var emailTemplateDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(emailTemplateJson);
+            return emailTemplateDictionary;
+        }
+
+        public async Task<List<Model.Domain.EventUsers>> FilterUser(List<Model.Domain.EventUsers> users)
+        {
+            try
+            {
+                List<Model.Domain.EventUsers> newList = new List<Model.Domain.EventUsers>();
+                foreach (Model.Domain.EventUsers u in users)
+                {
+                    Model.Domain.Order order =  _orderService.GetOrderByEventIdAndMail(u.EventId, u.UserMail).Result;
+                    if (order.OrderStatus != EventEmail.NotOder)
+                    {
+                        newList.Add(u);
+                    }
+                }
+                return newList;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

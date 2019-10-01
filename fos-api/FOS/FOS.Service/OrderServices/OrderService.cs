@@ -28,7 +28,7 @@ namespace FOS.Services.OrderServices
             return true;
         }
 
-        public bool CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId, string Email, int OrderStatus)
+        public async Task<bool> CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId, string Email, int OrderStatus)
         {
             Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
             Order newOrder = new Order()
@@ -98,6 +98,10 @@ namespace FOS.Services.OrderServices
         public async Task<bool> UpdateFoodDetailByOrderId(string OrderId, string FoodDetail)
         {
             return _repository.UpdateFoodDetailByOrderId(OrderId, FoodDetail);
+        }
+        public async Task<Order> GetOrderByEventIdAndMail(string EventId, string Mail)
+        {
+            return _repository.GetOrderByEventIdAndMail(EventId, Mail);
         }
     }
 }

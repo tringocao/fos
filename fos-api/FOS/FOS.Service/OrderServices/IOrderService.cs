@@ -8,7 +8,7 @@ namespace FOS.Services.OrderServices
     public interface IOrderService
     {
         bool CreateWildOrder(Order order);
-        bool CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId, string Email, int OrderStatus);
+        Task<bool> CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId, string Email, int OrderStatus);
         Order GetOrder(Guid id);
         List<Order> GetOrders(string eventId);
         bool UpdateOrder(Order order);
@@ -20,5 +20,6 @@ namespace FOS.Services.OrderServices
         bool DeleteOrderByUserId(string idUser, string idEvent);
         Task<bool> UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
         Task<bool> UpdateFoodDetailByOrderId(string OrderId, string FoodDetail);
+        Task<Order> GetOrderByEventIdAndMail(string EventId, string Mail);
     }
 }
