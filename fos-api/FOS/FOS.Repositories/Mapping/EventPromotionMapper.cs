@@ -21,10 +21,9 @@ namespace FOS.Repositories.Mapping
             {
                 Id = efObject.Id,
                 EventId = efObject.EventId,
-                Promotions = JsonConvert.DeserializeObject<Dictionary<string, float>>(efObject.Promotions),
+                Promotions = JsonConvert.DeserializeObject<List<Model.Domain.NowModel.Promotion>>(efObject.Promotions),
             };
         }
-
         public void MapToEfObject(DataModel.EventPromotion efObject, Model.Domain.EventPromotion domObject)
         {
             efObject.Id = domObject.Id;

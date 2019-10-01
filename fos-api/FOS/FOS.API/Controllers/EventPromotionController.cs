@@ -1,13 +1,16 @@
 ﻿using FOS.API.App_Start;
 using FOS.Model.Domain;
+using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
+using FOS.Services.DeliveryServices;
 using FOS.Services.EventPromotionServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FOS.API.Controllers
@@ -16,14 +19,42 @@ namespace FOS.API.Controllers
     [RoutePrefix("api/EventPromotion")]
     public class EventPromotionController : ApiController
     {
-        IEventPromotionService _discountEventService;
-        IEventPromotionDtoMapper _discountEventDtoMapper;
-        public EventPromotionController(IEventPromotionService discountEventService, IEventPromotionDtoMapper discountEventDtoMapper)
+        IEventPromotionService _eventPromotionService;
+        IEventPromotionDtoMapper _eventPromotionDtoMapper;
+        IDeliveryService _deliveryService;
+        IDeliveryInfosDtoMapper _deliveryInfosDtoMapper;
+        IRestaurantDetailDtoMapper _restaurantDetailDtoMapper;
+        IPromotionDtoMapper _promotionDtoMapper;
+        public EventPromotionController(IEventPromotionService discountEventService, 
+            IEventPromotionDtoMapper discountEventDtoMapper, 
+            IDeliveryService deliveryService, 
+            IDeliveryInfosDtoMapper deliveryInfosDtoMapper, 
+            IRestaurantDetailDtoMapper restaurantDetailDtoMapper,
+            IPromotionDtoMapper promotionDtoMapper)
         {
-            _discountEventService = discountEventService;
-            _discountEventDtoMapper = discountEventDtoMapper;
+            _eventPromotionService = discountEventService;
+            _eventPromotionDtoMapper = discountEventDtoMapper;
+            _deliveryService = deliveryService;
+            _deliveryInfosDtoMapper = deliveryInfosDtoMapper;
+            _restaurantDetailDtoMapper = restaurantDetailDtoMapper;
+            _promotionDtoMapper = promotionDtoMapper;
         }
+        [HttpGet]
+        [Route("GetPromotionsByExternalService")]
+        public async Task<ApiResponse<IEnumerable<Promotion>>> GetPromotionsByExternalServiceAsync(int idService, int deliveryId)
+        {
+            try
+            {
+                _deliveryService.GetExternalServiceById(idService);
+                var restaurantDetail = _restaurantDetailDtoMapper.ToDto(await _deliveryService.GetDetailAsync(deliveryId));
 
+                return ApiUtil<IEnumerable<Promotion>>.CreateSuccessfulResult(restaurantDetail.PromotionLists);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<Promotion>>.CreateFailResult(e.ToString());
+            }
+        }
         [HttpGet]
         [Route("GetById")]
         public ApiResponse<Model.Dto.EventPromotion> GetById(int id)
@@ -31,7 +62,7 @@ namespace FOS.API.Controllers
             try
             {
                 return ApiUtil<Model.Dto.EventPromotion>.CreateSuccessfulResult(
-                    _discountEventDtoMapper.ToDto(_discountEventService.GetById(id))
+                    _eventPromotionDtoMapper.ToDto(_eventPromotionService.GetById(id))
                );
             }
             catch (Exception e)
@@ -39,6 +70,7 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.EventPromotion>.CreateFailResult(e.ToString());
             }
         }
+
         [HttpGet]
         [Route("GetByEventId")]
         public ApiResponse<Model.Dto.EventPromotion> GetByEventId(int eventId)
@@ -46,7 +78,7 @@ namespace FOS.API.Controllers
             try
             {
                 return ApiUtil<Model.Dto.EventPromotion>.CreateSuccessfulResult(
-                    _discountEventDtoMapper.ToDto(_discountEventService.GetByEventId(eventId))
+                    _eventPromotionDtoMapper.ToDto(_eventPromotionService.GetByEventId(eventId))
                );
             }
             catch (Exception e)
@@ -54,13 +86,33 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.EventPromotion>.CreateFailResult(e.ToString());
             }
         }
-        [HttpPost]
-        [Route("AddNew")]
-        public ApiResponse AddNew([FromBody]Model.Dto.EventPromotion discountEvent)
+        [HttpPut]
+        [Route("UpdateEventPromotionByEventId")]
+        public ApiResponse UpdateEventPromotionByEventId(int eventId,[FromBody]List<Model.Dto.Promotion> newPromotions)
         {
             try
             {
-                _discountEventService.AddDiscountEvent(_discountEventDtoMapper.ToModel(discountEvent));
+                _eventPromotionService.UpdateEventPromotionByEventId(eventId, newPromotions.Select(p => _promotionDtoMapper.ToModel(p)).ToList());
+
+
+                return ApiUtil.CreateSuccessfulResult();
+
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpPost]
+        [Route("AddEventPromotion")]
+        public ApiResponse AddEventPromotion(int eventId, [FromBody]List<Model.Dto.Promotion> newPromotions)
+        {
+            try
+            {
+                Model.Dto.EventPromotion eventPromotion = new Model.Dto.EventPromotion();
+                eventPromotion.EventId = eventId;
+                eventPromotion.Promotions = newPromotions;
+                _eventPromotionService.AddEventPromotion(_eventPromotionDtoMapper.ToModel(eventPromotion));
                
 
                 return ApiUtil.CreateSuccessfulResult();
@@ -72,12 +124,12 @@ namespace FOS.API.Controllers
             }
         }
         [HttpPost]
-        [Route("UpdateDiscountEvent")]
-        public ApiResponse UpdateDiscountEvent([FromBody]Model.Dto.EventPromotion discountEvent)
+        [Route("UpdateEventPromotion")]
+        public ApiResponse UpdateEventPromotion([FromBody]Model.Dto.EventPromotion eventPromotion)
         {
             try
             {
-                _discountEventService.UpdateDiscountEvent(_discountEventDtoMapper.ToModel(discountEvent));
+                _eventPromotionService.UpdateEventPromotion(_eventPromotionDtoMapper.ToModel(eventPromotion));
 
            
                 return ApiUtil.CreateSuccessfulResult();

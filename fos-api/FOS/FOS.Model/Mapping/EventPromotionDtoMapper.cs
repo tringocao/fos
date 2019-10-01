@@ -14,13 +14,18 @@ namespace FOS.Model.Mapping
 
     public class EventPromotionDtoMapper : IEventPromotionDtoMapper
     {
+        IPromotionDtoMapper _promotionDtoMapper;
+        public EventPromotionDtoMapper(IPromotionDtoMapper promotionDtoMapper)
+        {
+            _promotionDtoMapper = promotionDtoMapper;
+        }
         public Dto.EventPromotion ToDto(Model.Domain.EventPromotion discountEvent)
         {
             return new Dto.EventPromotion()
             {
-              Id = discountEvent.Id,
-              EventId = discountEvent.EventId,
-              Promotions = discountEvent.Promotions
+                Id = discountEvent.Id,
+                EventId = discountEvent.EventId,
+                Promotions = discountEvent.Promotions.Select(p => _promotionDtoMapper.ToDto(p)).ToList()
             };
         }
 
@@ -30,7 +35,7 @@ namespace FOS.Model.Mapping
             {
                 Id = discountEvent.Id,
                 EventId = discountEvent.EventId,
-                Promotions = discountEvent.Promotions
+                Promotions = discountEvent.Promotions.Select(p => _promotionDtoMapper.ToModel(p)).ToList()
             };
         }
     }

@@ -11,6 +11,6 @@ namespace FOS.Model.Dto
         public int Id { get; set; }
 
         public int EventId { get; set; }
-        public List<Promotion> Promotions { get; set; }
+        public List<Model.Dto.Promotion> Promotions { get; set; }
     }
 }

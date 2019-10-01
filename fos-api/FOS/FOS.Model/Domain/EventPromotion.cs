@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FOS.Model.Domain.NowModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,6 @@ namespace FOS.Model.Domain
         public int Id { get; set; }
 
         public int EventId { get; set; }
-        public Dictionary<string, float> Promotions { get; set; }
+        public List<Model.Domain.NowModel.Promotion> Promotions { get; set; }
     }
 }

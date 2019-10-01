@@ -170,6 +170,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.INewGraphUserDtoMapper, Model.Mapping.NewGraphUserDtoMapper>();
             container.RegisterType<Model.Mapping.IUserReorderDtoMapper, Model.Mapping.UserReorderDtoMapper>();
             container.RegisterType<Model.Mapping.IEventPromotionDtoMapper, Model.Mapping.EventPromotionDtoMapper>();
+            container.RegisterType<Model.Mapping.IPromotionDtoMapper, Model.Mapping.PromotionDtoMapper>();
 
             container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
             container.RegisterType<Model.Mapping.IGroupDtoMapper, Model.Mapping.GroupDtoMapper>();

@@ -10,20 +10,20 @@ namespace FOS.Services.EventPromotionServices
 {
     public class EventPromotionService: IEventPromotionService
     {
-        IEventPromotionRepository _discountEventRepository;
-        IEventPromotionMapper _discountEventMapper;
+        IEventPromotionRepository _eventPromotionRepository;
+        IEventPromotionMapper _eventPromotionMapper;
         public EventPromotionService(IEventPromotionRepository discountEventRepository, IEventPromotionMapper discountEventMapper)
         {
-            _discountEventMapper = discountEventMapper;
-            _discountEventRepository = discountEventRepository;
+            _eventPromotionMapper = discountEventMapper;
+            _eventPromotionRepository = discountEventRepository;
         }
 
 
-        public bool AddDiscountEvent(EventPromotion discountEvent)
+        public bool AddEventPromotion(EventPromotion eventPromotion)
         {
             Repositories.DataModel.EventPromotion temp = new Repositories.DataModel.EventPromotion();
-            _discountEventMapper.MapToEfObject(temp, discountEvent);
-            return _discountEventRepository.AddDiscountEvent(temp);
+            _eventPromotionMapper.MapToEfObject(temp, eventPromotion);
+            return _eventPromotionRepository.AddEventPromotion(temp);
         }
 
         public bool DeleteById(int id)
@@ -31,26 +31,34 @@ namespace FOS.Services.EventPromotionServices
             throw new NotImplementedException();
         }
 
-        public IEnumerable<EventPromotion> GetAllDiscountEvents()
+        public IEnumerable<EventPromotion> GetAllEventPromotions()
         {
-            return _discountEventRepository.GetAllDiscountEvents().Select(r => _discountEventMapper.MapToDomain(r));
+            return _eventPromotionRepository.GetAllEventPromotions().Select(r => _eventPromotionMapper.MapToDomain(r));
         }
 
         public EventPromotion GetByEventId(int eventId)
         {
-            return _discountEventMapper.MapToDomain(_discountEventRepository.GetByEventId(eventId));
+            return _eventPromotionMapper.MapToDomain(_eventPromotionRepository.GetByEventId(eventId));
         }
 
         public EventPromotion GetById(int id)
         {
-            return _discountEventMapper.MapToDomain(_discountEventRepository.GetById(id));
+            return _eventPromotionMapper.MapToDomain(_eventPromotionRepository.GetById(id));
         }
 
-        public bool UpdateDiscountEvent(EventPromotion discountEvent)
+        public bool UpdateEventPromotion(EventPromotion eventPromotion)
         {
             Repositories.DataModel.EventPromotion temp = new Repositories.DataModel.EventPromotion();
-            _discountEventMapper.MapToEfObject(temp, discountEvent);
-            return _discountEventRepository.UpdateDiscountEvent(temp);
+            _eventPromotionMapper.MapToEfObject(temp, eventPromotion);
+            return _eventPromotionRepository.UpdateEventPromotion(temp);
+        }
+        public bool UpdateEventPromotionByEventId(int eventId, List<Model.Domain.NowModel.Promotion> newPromos)
+        {
+            Repositories.DataModel.EventPromotion temp = new Repositories.DataModel.EventPromotion();
+            var eventPromotion = GetByEventId(eventId);
+            eventPromotion.Promotions.AddRange(newPromos);
+            _eventPromotionMapper.MapToEfObject(temp, eventPromotion);
+            return _eventPromotionRepository.UpdateEventPromotion(temp);
         }
     }
 }

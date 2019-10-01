@@ -42,10 +42,36 @@ namespace FOS.Model.Mapping
                 PromotionType = PromotionType
             };
         }
-
         public Domain.NowModel.Promotion ToModel(Dto.Promotion promotion)
         {
-            throw new NotImplementedException();
+            string discountOnType = null;
+            switch (promotion.PromotionType)
+            {
+                case PromotionType.ShipFee:
+                    {
+                        discountOnType = "3";
+                        break;
+                    }
+                case PromotionType.DiscountPerItem:
+                    {
+                        discountOnType = null;
+                        break;
+                    }
+                case PromotionType.DiscountAll:
+                    {
+                        discountOnType = "2";
+                        break;
+                    }
+            }
+            return new Domain.NowModel.Promotion()
+            {
+                Expired = promotion.Expired.ToString(),
+                MaxDiscountAmount = promotion.MaxDiscountAmount.ToString(),
+                MinOrderAmount = promotion.MinOrderAmount.ToString(),
+                DiscountValueType = promotion.IsPercent ? "1" : "3",
+                DiscountAmount = promotion.Value.ToString(),
+                DiscountOnType = discountOnType
+            };
         }
     }
 

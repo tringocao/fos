@@ -41,7 +41,7 @@ namespace FOS.Repositories.Repositories
                 throw e;
             }
         }
-        public bool AddDiscountEvent(DataModel.EventPromotion discountEvent)
+        public bool AddEventPromotion(DataModel.EventPromotion discountEvent)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace FOS.Repositories.Repositories
                 throw e;
             }
         }
-        public bool UpdateDiscountEvent(DataModel.EventPromotion discountEvent)
+        public bool UpdateEventPromotion(DataModel.EventPromotion discountEvent)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace FOS.Repositories.Repositories
         {
             return _context.EventPromotions.Find(id);
         }
-        public IEnumerable<DataModel.EventPromotion> GetAllDiscountEvents()
+        public IEnumerable<DataModel.EventPromotion> GetAllEventPromotions()
         {
             return _context.EventPromotions;
         }
@@ -85,11 +85,11 @@ namespace FOS.Repositories.Repositories
     public interface IEventPromotionRepository
     {
         bool DeleteDiscountEventByEventId(int idEvent);
-        bool AddDiscountEvent(DataModel.EventPromotion discountEvent);
-        bool UpdateDiscountEvent(DataModel.EventPromotion discountEvent);
+        bool AddEventPromotion(DataModel.EventPromotion discountEvent);
+        bool UpdateEventPromotion(DataModel.EventPromotion discountEvent);
         DataModel.EventPromotion GetById(int id);
         DataModel.EventPromotion GetByEventId(int idEvent);
 
-        IEnumerable<DataModel.EventPromotion> GetAllDiscountEvents();
+        IEnumerable<DataModel.EventPromotion> GetAllEventPromotions();
     }
 }
