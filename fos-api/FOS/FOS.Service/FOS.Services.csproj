@@ -163,6 +163,8 @@
     <Compile Include="ExternalServices\NowService\NowService.cs" />
     <Compile Include="ExternalServices\NowService\RequestMethodFactory.cs" />
     <Compile Include="FavoriteService\IFavoriteService.cs" />
+    <Compile Include="FeedbackServices\FeedbackService.cs" />
+    <Compile Include="FeedbackServices\IFeedbackService.cs" />
     <Compile Include="FoodServices\FoodService.cs" />
     <Compile Include="FavoriteService\FavoriteService.cs" />
     <Compile Include="FoodServices\IFoodService.cs" />

@@ -18,6 +18,8 @@ import { GraphUser } from 'src/app/models/graph-user';
 import { element } from 'protractor';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
+import { UserNotOrder } from 'src/app/models/user-not-order';
+import { Order } from 'src/app/models/order';
 
 moment.locale('vi');
 
@@ -50,60 +52,69 @@ export class EventDialogViewComponent implements OnInit {
   currency = 'đ';
   ngOnInit() {
     //get user not order
-    var self = this;
     console.log('EventId', this.data.EventId);
-    var participants = JSON.parse(this.data.EventParticipantsJson);
+    
+    const participants: Array<GraphUser> = JSON.parse(this.data.EventParticipantsJson);
 
-    let promise = this.orderService
-      .GetUserNotOrdered(this.data.EventId)
-      .then(result => {
-        result.forEach(element => {
-          var participant = participants.filter(
-            item => item.Id == element.UserId
-          );
+    this.orderService.GetOrdersByEventId(this.data.EventId).then((order: Array<Order>) =>{
+      order.forEach(o=>{
 
-          if (participant != null) {
-            const userOrder: EventUser = {
-              Name: participant[0].DisplayName,
-              Email: participant[0].Mail,
-              Id: participant[0].Id,
-              Img: '',
-              IsGroup: 0,
-              OrderStatus: 'Not order'
-            };
-            this.eventusers.push(userOrder);
-          }
-          this.table.renderRows();
-        });
-      });
-
-    promise.then(function() {
-      var p = participants;
-      var e = self.eventusers;
-      participants.forEach(element => {
-        var flag: Boolean = false;
-
-        self.eventusers.forEach(element2 => {
-          if (element.Id === element2.Id) {
-            flag = true;
-          }
-        });
-
-        if (flag === false) {
-          console.log(element.DisplayName);
-          const userOrder: EventUser = {
-            Name: element.DisplayName,
-            Email: element.Mail,
-            Id: element.Id,
-            Img: '',
+        const userNotOrder: GraphUser[] = participants.filter(p =>p.Mail == o.Email);
+        if(o.OrderStatus == 0){
+          const UserNot: EventUser ={
+            Email: userNotOrder[0].Mail,
+            Name: userNotOrder[0].DisplayName,
+            OrderStatus: 'Not Ordered',
+            Img:'',
             IsGroup: 0,
-            OrderStatus: 'Order'
-          };
-          self.eventusers.push(userOrder);
-          self.table.renderRows();
+            Id: userNotOrder[0].Id
+          }
+          this.eventusers.push(UserNot);
+        }else if(o.OrderStatus == 1){
+          const UserNot: EventUser ={
+            Email: userNotOrder[0].Mail,
+            Name: userNotOrder[0].DisplayName,
+            OrderStatus: 'Ordered',
+            Img:'',
+            IsGroup: 0,
+            Id: userNotOrder[0].Id
+          }
+          this.eventusers.push(UserNot);
+        }else if(o.OrderStatus == 2){
+          const UserNot: EventUser ={
+            Email: userNotOrder[0].Mail,
+            Name: userNotOrder[0].DisplayName,
+            OrderStatus: 'Not Participant',
+            Img:'',
+            IsGroup: 0,
+            Id: userNotOrder[0].Id
+          }
+          this.eventusers.push(UserNot);
         }
-      });
-    });
+      })
+      this.table.renderRows();
+    })
+
+
+    // this.orderService.GetUserNotOrdered(this.data.EventId).then((user: Array<UserNotOrder>) =>{
+    //   user.forEach( u =>{
+    //     const userNotOrder: GraphUser[] = participants.filter(p =>p.Id == u.UserId);
+    //     const UserNot: EventUser ={
+    //       Email: userNotOrder[0].Mail,
+    //       Name: userNotOrder[0].DisplayName,
+    //       OrderStatus: 'Not Order',
+    //       Img:'',
+    //       IsGroup: 0,
+    //       Id: userNotOrder[0].Id
+    //     }
+    //     this.eventusers.push(UserNot);
+
+
+    //     this.table.renderRows();
+    //   })
+    // })
+
+
     this.eventTitle = this.data.Name;
     this.eventHost = this.data.HostName;
     this.eventRestaurant = this.data.Restaurant;

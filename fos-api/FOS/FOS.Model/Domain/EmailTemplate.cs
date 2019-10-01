@@ -22,5 +22,7 @@ namespace FOS.Model.Domain.NowModel
         public string EventRestaurantId { get; set; }
         public string EventDeliveryId { get; set; }
         public string MakeOrder { get; set; }
+        public string FeedBack { get; set; }
+        public string NotParticipant { get; set; }
     }
 }

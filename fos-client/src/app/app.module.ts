@@ -102,6 +102,9 @@ import { DialogCheckActionComponent } from "./components/order-detail/list-order
 import { UsersOrderedFoodDialogComponent } from "./components/users-ordered-food-dialog/users-ordered-food-dialog.component";
 import { OpenEventDialogComponent } from "./components/event-summary-dialog/open-event-dialog/open-event-dialog.component";
 import { EditMakeOrderComponent } from './components/event-summary-dialog/edit-make-order/edit-make-order.component';
+import { NotParticipantComponent } from './components/not-participant/not-participant.component';
+import { FeedbackComponent } from './components/feedback/feedback/feedback.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +153,10 @@ import { EditMakeOrderComponent } from './components/event-summary-dialog/edit-m
     UsersOrderedFoodDialogComponent,
     OpenEventDialogComponent,
     EditMakeOrderComponent
+    OpenEventDialogComponent,
+    NotParticipantComponent,
+    FeedbackComponent,
+    StarRatingComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -251,7 +258,8 @@ import { EditMakeOrderComponent } from './components/event-summary-dialog/edit-m
     WTimeComponent,
     DialogCheckActionComponent,
     UsersOrderedFoodDialogComponent,
-    OpenEventDialogComponent
+    OpenEventDialogComponent,
+    UsersOrderedFoodDialogComponent
   ]
 })
 export class AppModule {}
