@@ -364,6 +364,9 @@
         >
           Print
         </button>
+        <button (click)="sendEmailFeedback()" mat-flat-button color="warn" *ngIf="isHostUser">
+          Send email feedbacks
+      </button>
         <button
           (click)="
             eventDetail.Status === 'Closed' ? openDialog() : resendOrder()
@@ -377,38 +380,6 @@
         <button (click)="onNoClick()" mat-stroked-button *ngIf="reOrder">
           Cancel
         </button>
-        <!-- <button mat-flat-button color="warn">Close</button> -->
-          <button (click)="reportDisheout()"
-                  mat-flat-button
-                  color="warn"
-                  *ngIf="!reOrder && isHostUser">
-              Report dishe out of order
-          </button>
-          <button (click)="sendEmailFeedback()" mat-flat-button color="warn" *ngIf="isHostUser">
-              Send email feedbacks
-          </button>
-          <button (click)="sendEmail()"
-                  mat-flat-button
-                  color="primary"
-                  *ngIf="!reOrder">
-
-              Send to my email
-          </button>
-          <button (click)="printToPdf()"
-                  mat-flat-button
-                  color="primary"
-                  *ngIf="!reOrder">
-              Print
-          </button>
-          <button (click)="openDialog()"
-                  mat-flat-button
-                  color="primary"
-                  *ngIf="reOrder">
-              Resend Order
-          </button>
-          <button (click)="onNoClick()" mat-stroked-button *ngIf="reOrder">
-              Cancel
-          </button>
           <!-- <button mat-flat-button color="warn">Close</button> -->
       </mat-card-actions>
     </mat-card>
