@@ -49,6 +49,8 @@ import { OpenEventDialogComponent } from "./open-event-dialog/open-event-dialog.
 import { EventDialogEditComponent } from "../event-dialog-edit/event-dialog-edit.component";
 import { ReminderDialogComponent } from "../reminder-dialog/reminder-dialog.component";
 import { FeedbackService } from 'src/app/services/feedback/feedback.service';
+import { Promotion } from 'src/app/models/promotion';
+import { PromotionType } from 'src/app/models/promotion-type';
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -120,6 +122,8 @@ export class EventSummaryDialogComponent implements OnInit {
   orderByPerson: UserOrder[] = [];
   eventId: number;
   totalCost: number;
+  baseTotalCost: number;
+  adjustedTotalCost: number;
   orders: Order[];
   users: User[];
   isHostUser: boolean = false;
@@ -188,6 +192,7 @@ export class EventSummaryDialogComponent implements OnInit {
     this.dishGroupViewdataSource = this.foods;
     this.personGroupViewdataSource = this.orderByPerson;
     this.totalCost = 0;
+    this.adjustedTotalCost = 0;
     this.users = [];
     this.eventDetail = new Event();
 
@@ -267,6 +272,7 @@ export class EventSummaryDialogComponent implements OnInit {
       });
       this.totalCost = item.Total + this.totalCost;
     });
+    this.baseTotalCost = this.totalCost;
   }
 
   getPersonGroupView(order, orders) {
@@ -544,5 +550,20 @@ export class EventSummaryDialogComponent implements OnInit {
         this.reOpen();
       }
     });
+  }
+  adjustPrice(promotions: Promotion[]) {
+    this.adjustedTotalCost = this.baseTotalCost;
+    promotions.forEach((promotion: Promotion) => {
+      if (!promotion.IsPercent && promotion.PromotionType !== PromotionType.ShipFee) {
+        this.adjustedTotalCost = this.adjustedTotalCost - promotion.Value;
+      } else if (promotion.IsPercent) {
+        if (promotion.Value > 0) {
+          this.adjustedTotalCost = this.adjustedTotalCost - this.adjustedTotalCost * 100 / promotion.Value;
+        }
+      } else {
+        this.adjustedTotalCost = this.adjustedTotalCost + promotion.Value;
+      }
+    });
+    this.totalCost = this.adjustedTotalCost;
   }
 }

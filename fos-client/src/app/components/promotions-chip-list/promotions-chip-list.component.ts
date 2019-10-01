@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Promotion } from 'src/app/models/promotion';
 import { PromotionType } from 'src/app/models/promotion-type';
 
@@ -9,6 +9,8 @@ import { PromotionType } from 'src/app/models/promotion-type';
 })
 export class PromotionsChipListComponent implements OnInit {
   constructor() { }
+  @Output() promotionChanged: EventEmitter<Promotion[]> = new EventEmitter();
+
   visible = true;
   selectable = true;
   removable = true;
@@ -17,7 +19,7 @@ export class PromotionsChipListComponent implements OnInit {
   promotions: Promotion[] = [];
   promotionOptions: Promotion[] = [];
   promotionType: PromotionType = PromotionType.DiscountAll;
-  promotionValue: string = "10";
+  promotionValue: string = '10';
 
   ngOnInit() {
     for (let index = 0; index < 3; index++) {
@@ -38,11 +40,13 @@ export class PromotionsChipListComponent implements OnInit {
     promotion.PromotionType = this.promotionType;
     promotion.Value = Number(this.promotionValue);
     this.promotions.push(promotion);
-    console.log(this.promotions)
+    this.promotionChanged.emit(this.promotions);
+    // console.log(this.promotions);
   }
 
   removePromotion(promotion: Promotion) {
     this.promotions = this.promotions.filter(pr => pr !== promotion);
+    this.promotionChanged.emit(this.promotions);
   }
 
 }
