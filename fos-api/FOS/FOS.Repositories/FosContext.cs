@@ -23,6 +23,7 @@ namespace FOS.Repositories
         }
 
         public DbSet<DataModel.Order> Orders { get; set; }
+        public DbSet<DataModel.FeedBack> FeedBacks { get; set; }
         public DbSet<ExternalServiceAPI> ExternalServiceAPIs { get; set; }
         public DbSet<FavoriteRestaurant> FavoriteRestaurants { get; set; }
         public DbSet<RecurrenceEvent> RecurrenceEvents { get; set; }
