@@ -85,7 +85,7 @@
       <ng-container matColumnDef="Status">
         <th mat-header-cell *matHeaderCellDef>Status</th>
         <td mat-cell *matCellDef="let element">
-          <div *ngIf="element.Status === 'Opened'" class="opened status">
+          <div *ngIf="element.Status === 'Opened'|| element.Status === 'Reopened'" class="opened status">
             <span class="dot"></span>
             <p>Open</p>
           </div>

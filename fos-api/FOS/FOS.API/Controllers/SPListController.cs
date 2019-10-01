@@ -135,13 +135,13 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
-        [HttpPost]
-        [Route("SetTime2CloseToEventDate")]
-        public async Task<ApiResponse> SetTime2CloseToEventDate(string id)
+        [HttpPut]
+        [Route("SetTime2Close")]
+        public async Task<ApiResponse> SetTime2Close(string id,[FromBody]DateTime dateTime)
         {
             try
             {
-                await _spListService.SetTime2CloseToEventDate(id);
+                await _spListService.SetTime2Close(id, dateTime);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

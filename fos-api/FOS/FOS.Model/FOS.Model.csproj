@@ -102,6 +102,7 @@
     <Compile Include="Domain\ApiResponse.cs" />
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\DiscountEvent.cs" />
     <Compile Include="Domain\FeedBack.cs" />
     <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
     <Compile Include="Domain\DishesSummary.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Dto\CategoryGroup.cs" />
     <Compile Include="Dto\Comment.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
+    <Compile Include="Dto\DiscountEvent.cs" />
     <Compile Include="Dto\DishesSummary.cs" />
     <Compile Include="Dto\Event.cs" />
     <Compile Include="Dto\EventAction.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Mapping\CategoryGroupDtoMapper.cs" />
     <Compile Include="Mapping\Config.cs" />
     <Compile Include="Mapping\DeliveryInfosDtoMapper.cs" />
+    <Compile Include="Mapping\DiscountEventDtoMapper.cs" />
     <Compile Include="Mapping\DishesSummaryDtoMapper.cs" />
     <Compile Include="Mapping\EventDtoMapper.cs" />
     <Compile Include="Mapping\FavoriteRestaurantDtoMapper.cs" />
@@ -387,6 +390,14 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\delivery-infos.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\DeliveryInfos.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\discount-event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\DiscountEvent.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\discount-event.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\DiscountEvent.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\dishes-summary.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

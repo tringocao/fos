@@ -101,9 +101,10 @@ import { WTimeComponent } from "./components/datetimepicker/time-dialog/w-time/w
 import { DialogCheckActionComponent } from "./components/order-detail/list-ordered-foods/dialog-check-action/dialog-check-action.component";
 import { UsersOrderedFoodDialogComponent } from "./components/users-ordered-food-dialog/users-ordered-food-dialog.component";
 import { OpenEventDialogComponent } from "./components/event-summary-dialog/open-event-dialog/open-event-dialog.component";
-import { NotParticipantComponent } from './components/not-participant/not-participant.component';
-import { FeedbackComponent } from './components/feedback/feedback/feedback.component';
-import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { EditMakeOrderComponent } from "./components/event-summary-dialog/edit-make-order/edit-make-order.component";
+import { NotParticipantComponent } from "./components/not-participant/not-participant.component";
+import { FeedbackComponent } from "./components/feedback/feedback/feedback.component";
+import { StarRatingComponent } from "./components/star-rating/star-rating.component";
 import { PromotionsChipComponent } from './components/promotions-chip/promotions-chip.component';
 
 @NgModule({
@@ -152,6 +153,7 @@ import { PromotionsChipComponent } from './components/promotions-chip/promotions
     DialogCheckActionComponent,
     UsersOrderedFoodDialogComponent,
     OpenEventDialogComponent,
+    EditMakeOrderComponent,
     NotParticipantComponent,
     FeedbackComponent,
     StarRatingComponent,

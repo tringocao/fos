@@ -17,6 +17,6 @@ namespace FOS.Services.SPListService
         Task UpdateEventStatus(string id, string status);
         Task UpdateEventIsReminder(string idEvent, string isReminder);
         Task UpdateListItemWhenRestaurantChanges(string id, Model.Domain.Event item);
-        Task SetTime2CloseToEventDate(string id);
+        Task SetTime2Close(string id, DateTime dateTime);
     }
 }
