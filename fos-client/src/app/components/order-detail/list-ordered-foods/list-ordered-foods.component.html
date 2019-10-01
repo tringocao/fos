@@ -4,7 +4,7 @@
     <h4>Host: {{ hostUser.DisplayName }}</h4>
     <div class="row status-column">
       <h4>Event status:</h4>
-      <div *ngIf="event.Status === 'Opened'" class="opened status">
+      <div *ngIf="event.Status === 'Opened'|| event.Status === 'Reopened'" class="opened status">
         <span class="dot"></span>
         <h4>Open</h4>
       </div>

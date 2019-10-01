@@ -239,7 +239,7 @@ namespace FOS.Services.SPListService
                 throw e;
             }
         }
-        public async Task SetTime2CloseToEventDate(string id)
+        public async Task SetTime2Close(string id, DateTime dateTime)
         {
             try
             {
@@ -248,10 +248,9 @@ namespace FOS.Services.SPListService
                     List members = context.Web.Lists.GetByTitle("Event List");
 
                     ListItem listItem = members.GetItemById(id);
-                    context.Load(listItem, li => li["EventTimeToClose"], li => li["EventDate"]);
+                    context.Load(listItem, li => li["EventTimeToClose"]);
                     context.ExecuteQuery();
-                    DateTime eventdate = (DateTime)listItem["EventDate"];
-                    listItem["EventTimeToClose"] = eventdate.ToLocalTime();
+                    listItem["EventTimeToClose"] = dateTime.ToLocalTime();
 
                     listItem.Update();
                     context.ExecuteQuery();
