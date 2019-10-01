@@ -104,6 +104,7 @@ import { OpenEventDialogComponent } from "./components/event-summary-dialog/open
 import { NotParticipantComponent } from './components/not-participant/not-participant.component';
 import { FeedbackComponent } from './components/feedback/feedback/feedback.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { PromotionsChipComponent } from './components/promotions-chip/promotions-chip.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
     OpenEventDialogComponent,
     NotParticipantComponent,
     FeedbackComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    PromotionsChipComponent
   ],
   // declarations: [
   //     AppComponent,
