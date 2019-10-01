@@ -10,12 +10,12 @@ namespace FOS.Repositories.Mapping
 {
     public interface IDiscountEventMapper
     {
-        Model.Domain.DiscountEvent MapToDomain(DataModel.DiscountEvent efObject);
-        void MapToEfObject(DataModel.DiscountEvent efObject, Model.Domain.DiscountEvent domObject);
+        Model.Domain.DiscountEvent MapToDomain(DataModel.EventPromotion efObject);
+        void MapToEfObject(DataModel.EventPromotion efObject, Model.Domain.DiscountEvent domObject);
     }
     public class DiscountEventMapper : IDiscountEventMapper
     {
-        public Model.Domain.DiscountEvent MapToDomain(DataModel.DiscountEvent efObject)
+        public Model.Domain.DiscountEvent MapToDomain(DataModel.EventPromotion efObject)
         {
             return new Model.Domain.DiscountEvent()
             {
@@ -25,7 +25,7 @@ namespace FOS.Repositories.Mapping
             };
         }
 
-        public void MapToEfObject(DataModel.DiscountEvent efObject, Model.Domain.DiscountEvent domObject)
+        public void MapToEfObject(DataModel.EventPromotion efObject, Model.Domain.DiscountEvent domObject)
         {
             efObject.Id = domObject.Id;
             efObject.EventId = domObject.EventId;

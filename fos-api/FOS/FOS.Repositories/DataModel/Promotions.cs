@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace FOS.Repositories.DataModel
 {
-    public class EventPromotion
+    class Discounts
     {
-        public int Id { get; set; }
-        public int EventId { get; set; }
-        public string Discounts { get; set; }
     }
 }

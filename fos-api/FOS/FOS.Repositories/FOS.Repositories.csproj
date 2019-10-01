@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\DiscountEvent.cs" />
+    <Compile Include="DataModel\Promotions.cs" />
     <Compile Include="DataModel\ExternalServiceAPI.cs" />
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
     <Compile Include="DataModel\FeedBack.cs" />

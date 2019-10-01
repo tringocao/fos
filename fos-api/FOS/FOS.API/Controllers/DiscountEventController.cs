@@ -13,7 +13,7 @@ using System.Web.Http;
 namespace FOS.API.Controllers
 {
     [LogActionWebApiFilter]
-    [RoutePrefix("api/DiscountEvent")]
+    [RoutePrefix("api/EventPromotion")]
     public class DiscountEventController : ApiController
     {
         IDiscountEventService _discountEventService;

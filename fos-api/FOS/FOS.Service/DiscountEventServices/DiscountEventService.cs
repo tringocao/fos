@@ -21,7 +21,7 @@ namespace FOS.Services.DiscountEventServices
 
         public bool AddDiscountEvent(DiscountEvent discountEvent)
         {
-            Repositories.DataModel.DiscountEvent temp = new Repositories.DataModel.DiscountEvent();
+            Repositories.DataModel.EventPromotion temp = new Repositories.DataModel.EventPromotion();
             _discountEventMapper.MapToEfObject(temp, discountEvent);
             return _discountEventRepository.AddDiscountEvent(temp);
         }
@@ -48,7 +48,7 @@ namespace FOS.Services.DiscountEventServices
 
         public bool UpdateDiscountEvent(DiscountEvent discountEvent)
         {
-            Repositories.DataModel.DiscountEvent temp = new Repositories.DataModel.DiscountEvent();
+            Repositories.DataModel.EventPromotion temp = new Repositories.DataModel.EventPromotion();
             _discountEventMapper.MapToEfObject(temp, discountEvent);
             return _discountEventRepository.UpdateDiscountEvent(temp);
         }
