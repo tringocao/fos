@@ -28,7 +28,7 @@ export class NotParticipantComponent implements OnInit {
       this.eventService.GetEventById(eventId).then(e => {
         const eventStatus = e.Status;
         if (eventStatus === "Closed") {
-          this.router.navigateByUrl("home");
+          this.router.navigateByUrl("events");
         } else {
           this.orderService.UpdateOrderStatusByOrderId(guid, 2).then(value => {
             this.orderService.UpdateFoodDetailByOrderId(guid, "{}");
