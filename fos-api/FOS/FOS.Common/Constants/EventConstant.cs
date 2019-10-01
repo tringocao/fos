@@ -32,6 +32,7 @@ namespace FOS.Common.Constants
     }
     public class EventStatus
     {
+        public const string Reopened = "Reopened";
         public const string Opened = "Opened";
         public const string Closed = "Closed";
         public const string Error = "Error";
