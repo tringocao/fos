@@ -1,0 +1,38 @@
+<div class="container">
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <app-promotions-chip
+      *ngFor="let promotion of promotions"
+      [visible]="visible"
+      [selectable]="selectable"
+      [removable]="removable"
+      [addOnBlur]="addOnBlur"
+      [promotion]="promotion"
+      (removePressed)="removePromotion($event)"
+    ></app-promotions-chip>
+  </mat-chip-list>
+  <div class="action-menu">
+    <mat-form-field>
+      <mat-label>Promotion Type</mat-label>
+      <mat-select [(value)]="promotionType">
+        <mat-option
+          *ngFor="let promotion of promotionOptions"
+          [value]="promotion.PromotionType"
+          >{{ getPromotionName(promotion.PromotionType) }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Value</mat-label>
+      <input
+        [(ngModel)]="promotionValue"
+        matInput
+        placeholder="Promotion value"
+        value="10"
+      />
+      <span matSuffix>{{promotionValue.IsPercent ? '%' : 'đ'}}</span>
+    </mat-form-field>
+    <button (click)="addToPromotions()" mat-flat-button color="primary">
+      Add
+    </button>
+  </div>
+</div>

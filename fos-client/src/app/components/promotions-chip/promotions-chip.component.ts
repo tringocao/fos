@@ -1,5 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MatChipInputEvent } from '@angular/material';
+import { PromotionType } from 'src/app/models/promotion-type';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Promotion } from 'src/app/models/promotion';
 
 @Component({
   selector: "app-promotions-chip",
@@ -7,36 +10,38 @@ import { MatChipInputEvent } from '@angular/material';
   styleUrls: ["./promotions-chip.component.less"]
 })
 export class PromotionsChipComponent implements OnInit {
-  constructor() {}
+  constructor(private overlayContainer: OverlayContainer) {
+    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
+  }
 
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
-  // readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  // fruits: [] = [{ name: "Lemon" }, { name: "Lime" }, { name: "Apple" }];
+  @Input() visible = true;
+  @Input() selectable = true;
+  @Input() removable = true;
+  @Input() addOnBlur = true;
+
+  @Input() promotion;
+  @Output() removePressed: EventEmitter<Promotion> = new EventEmitter();
+
+  color = "primary";
 
   ngOnInit() {}
-  // add(event: MatChipInputEvent): void {
-  //   const input = event.input;
-  //   const value = event.value;
 
-  //   // Add our fruit
-  //   if ((value || "").trim()) {
-  //     this.fruits.push({ name: value.trim() });
-  //   }
+  getPromotionName(promotionType: number): string {
+    return PromotionType[promotionType];
+  }
 
-  //   // Reset the input value
-  //   if (input) {
-  //     input.value = "";
-  //   }
-  // }
+  getPromotionStyle(promotionType: number) {
+    switch (promotionType) {
+      case 2: return 'pay-more';
+      default: return 'pay-less';
+    }
+  }
 
-  // remove(fruit: Fruit): void {
-  //   const index = this.fruits.indexOf(fruit);
+  removePromotion() {
+    this.removePressed.emit(this.promotion);
+  }
 
-  //   if (index >= 0) {
-  //     this.fruits.splice(index, 1);
-  //   }
-  // }
+  getPromotionIcon() {
+
+  }
 }

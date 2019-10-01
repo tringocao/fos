@@ -8,15 +8,10 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-     import { PromotionType } from './promotion-type';
-
-    export class Promotion    {
-           
-        public PromotionType: PromotionType = null;   
-        public Value: number = 0;   
-        public IsPercent: boolean = false;   
-        public Expired: Date = null;   
-        public MaxDiscountAmount: number = null;   
-        public MinOrderAmount: number = null;
+        
+    export enum PromotionType {
+       DiscountPerItem = 0,
+       DiscountAll = 1,
+       ShipFee = 2,
     }
-         
+     

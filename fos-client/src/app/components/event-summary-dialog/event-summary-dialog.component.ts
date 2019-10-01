@@ -273,6 +273,7 @@ export class EventSummaryDialogComponent implements OnInit {
     var orderItem:UserOrder = new UserOrder();
     this.userService.getUserById(order.IdUser).then((user: User) => {
       orderItem.User = user;
+      this.users.push(user);
     }).then(() => {
       var foods = "";
       var comments:Comment[] = [];

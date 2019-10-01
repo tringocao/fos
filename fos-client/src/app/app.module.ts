@@ -35,7 +35,7 @@ import {
   MatListModule,
   MatInputModule,
   MatTooltipModule,
-  MatRadioModule
+  MatRadioModule,
 } from "@angular/material";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import {
@@ -57,7 +57,8 @@ import {
   MatMenuModule,
   MatIconModule,
   MatProgressSpinnerModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatChipsModule
 } from "@angular/material";
 
 import { MatSelectModule } from "@angular/material/select";
@@ -106,6 +107,7 @@ import { NotParticipantComponent } from "./components/not-participant/not-partic
 import { FeedbackComponent } from "./components/feedback/feedback/feedback.component";
 import { StarRatingComponent } from "./components/star-rating/star-rating.component";
 import { PromotionsChipComponent } from './components/promotions-chip/promotions-chip.component';
+import { PromotionsChipListComponent } from './components/promotions-chip-list/promotions-chip-list.component';
 
 @NgModule({
   declarations: [
@@ -157,7 +159,8 @@ import { PromotionsChipComponent } from './components/promotions-chip/promotions
     NotParticipantComponent,
     FeedbackComponent,
     StarRatingComponent,
-    PromotionsChipComponent
+    PromotionsChipComponent,
+    PromotionsChipListComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -210,6 +213,7 @@ import { PromotionsChipComponent } from './components/promotions-chip/promotions
     MatTooltipModule,
     MatSlideToggleModule,
     MatRadioModule,
+    MatChipsModule,
     LightboxModule,
     MatDatepickerModule, // <----- import(must)
     MatNativeDateModule // <----- import for date formating(optional)
@@ -241,7 +245,8 @@ import { PromotionsChipComponent } from './components/promotions-chip/promotions
     SettingDialogComponent,
     DialogCheckActionComponent,
     UsersOrderedFoodDialogComponent,
-    OpenEventDialogComponent
+    OpenEventDialogComponent,
+    MatChipsModule
   ],
   bootstrap: [AppComponent],
   entryComponents: [

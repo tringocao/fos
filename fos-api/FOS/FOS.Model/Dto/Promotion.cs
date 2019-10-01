@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FOS.Common.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace FOS.Model.Dto
 {
     public class Promotion
     {
-        //public string 
+        public PromotionType PromotionType { set; get; }
+        public int Value { set; get; }
+        public bool IsPercent { set; get; }
+        public DateTime? Expired { set; get; }
+        public int? MaxDiscountAmount { set; get; }
+        public int? MinOrderAmount { set; get; }
     }
 }
