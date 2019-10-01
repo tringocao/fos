@@ -76,7 +76,7 @@ namespace FOS.Services.SendEmailServices
                     emailTemplate.NotParticipant = hostname + "not-participant/" + idOrder;
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
-                    emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
+                    //emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                     emailp.Subject = Parse(emailTemplate.Subject.ToString(), emailTemplate);
 
@@ -108,7 +108,7 @@ namespace FOS.Services.SendEmailServices
                     emailTemplate.NotParticipant = hostname + "not-participant/" + user.OrderId;
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
-                    emailp.BCC = new List<string> { host.Mail };
+                    //emailp.BCC = new List<string> { host.Mail };
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                     emailp.Subject = subject.ToString();
 
@@ -142,7 +142,7 @@ namespace FOS.Services.SendEmailServices
                         emailTemplate.MakeOrder = hostname + "make-order/" + user.OrderId;
                         emailp.To = new List<string>() { user.UserMail };
                         emailp.From = host.Mail;
-                        emailp.BCC = new List<string> { host.Mail };
+                        //emailp.BCC = new List<string> { host.Mail };
                         emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                         emailp.Subject = subject.ToString();
 
@@ -205,7 +205,7 @@ namespace FOS.Services.SendEmailServices
                     emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;
                     emailp.To = new List<string>() { user.Mail };
                     emailp.From = emailTemplate.HostUserEmail.Mail;
-                    emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
+                    //emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                     emailp.Subject = Parse(emailTemplate.Subject.ToString(), emailTemplate);
 
