@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Promotion } from 'src/app/models/promotion';
 import { PromotionType } from 'src/app/models/promotion-type';
 import { EventPromotionService } from 'src/app/services/event-promotion/event-promotion.service';
+import { EventPromotion } from 'src/app/models/event-promotion';
 
 @Component({
   selector: 'app-promotions-chip-list',
@@ -12,6 +13,7 @@ export class PromotionsChipListComponent implements OnInit {
   constructor(private eventPromotionService: EventPromotionService) { }
 
   @Input() deliveryId: number;
+  @Input() eventId: string;
   @Output() promotionChanged: EventEmitter<Promotion[]> = new EventEmitter();
 
   visible = true;
@@ -19,6 +21,7 @@ export class PromotionsChipListComponent implements OnInit {
   removable = true;
   addOnBlur = true;
 
+  eventPromotion: EventPromotion;
   promotions: Promotion[] = [];
   promotionOptions: Promotion[] = [];
   promotionType: PromotionType = PromotionType.DiscountAll;
@@ -34,9 +37,9 @@ export class PromotionsChipListComponent implements OnInit {
         this.promotionOptions.push(promotion);
       }
     });
-    console.log(this.deliveryId)
-    this.eventPromotionService.getPromotionsByExternalService(Number(this.deliveryId), 1).then(promotions => {
-      this.promotions = promotions;
+    this.eventPromotionService.GetByEventId(Number(this.eventId)).then(eventPromotion => {
+      this.eventPromotion = eventPromotion;
+      this.promotions = this.eventPromotion.Promotions;
       this.promotionChanged.emit(this.promotions);
     });
   }
@@ -46,8 +49,6 @@ export class PromotionsChipListComponent implements OnInit {
   }
 
   isPromotionPercent(): boolean {
-    console.log(this.promotionType);
-    console.log(this.promotionOptions)
     return this.promotionOptions[this.promotionType - 1 ].IsPercent;
   }
 

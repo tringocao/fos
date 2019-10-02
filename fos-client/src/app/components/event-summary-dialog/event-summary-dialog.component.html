@@ -325,6 +325,7 @@
         <app-promotions-chip-list
           *ngIf="eventDataAvailable"
           [deliveryId]="eventDetail.DeliveryId"
+          [eventId]="eventDetail.EventId"
           (promotionChanged)="adjustPrice($event)"
         ></app-promotions-chip-list>
       </mat-card-content>
