@@ -14,7 +14,8 @@ import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Food } from "src/app/models/food";
 import { SelectionModel } from "@angular/cdk/collections";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
-import { TablePaging } from 'src/app/models/table-paging';
+import { TablePaging } from "src/app/models/table-paging";
+import { Promotion } from "src/app/models/promotion";
 
 interface RestaurantMore {
   restaurant: DeliveryInfos;
@@ -37,6 +38,8 @@ export class FoodComponent implements OnInit {
   count = 0;
   foodCategory: FoodCategory[] = [];
   @Input("data") data: RestaurantMore;
+  @Input() discountPerItem: Promotion;
+
   @Input("isOrder") isOrder: boolean;
   @Output() valueChange = new EventEmitter<FoodCheck>();
   @Input("checkedData") checkedData: FoodDetailJson[];
@@ -94,7 +97,7 @@ export class FoodComponent implements OnInit {
   }
   ngOnInit() {
     if (this.isOrder) {
-      debugger;
+      //debugger;
       this.displayedColumns2 = [
         "select",
         "Photos",
@@ -160,5 +163,16 @@ export class FoodComponent implements OnInit {
       IsChecked: null,
       IsDiscountedFood: food.Value["IsDiscountedFood"] === "true"
     };
+  }
+  setNewPrice(food: Food) {
+    if (this.discountPerItem == null) return food.Price;
+    if (this.discountPerItem.DiscountedFoodIds == null) {
+      if (this.discountPerItem.IsPercent) {
+        return food.Price - (food.Price * this.discountPerItem.Value) / 100;
+      } else return this.discountPerItem.Value;
+    } else {
+      var percent = this.discountPerItem.DiscountedFoodIds[food.Id];
+      return food.Price - (food.Price * percent) / 100;
+    }
   }
 }

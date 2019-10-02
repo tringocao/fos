@@ -21,11 +21,13 @@ namespace FOS.API.Controllers
         IFoodService _foodService;
         IFoodDtoMapper _foodDtoMapper;
         IFoodCategoryDtoMapper _foodCategoryDtoMapper;
-        public FoodController(IFoodService foodService, IFoodDtoMapper foodDtoMapper, IFoodCategoryDtoMapper foodCategoryDtoMapper)
+        IPromotionDtoMapper _promotionDtoMapper;
+        public FoodController(IFoodService foodService, IFoodDtoMapper foodDtoMapper, IFoodCategoryDtoMapper foodCategoryDtoMapper,IPromotionDtoMapper promotionDtoMapper)
         {
             _foodService = foodService;
             _foodDtoMapper = foodDtoMapper;
             _foodCategoryDtoMapper = foodCategoryDtoMapper;
+            _promotionDtoMapper = promotionDtoMapper;
         }
         // GET: api/Food
         [HttpGet]
@@ -45,19 +47,19 @@ namespace FOS.API.Controllers
                 return ApiUtil<List<FoodCategory>>.CreateFailResult(e.ToString());
             }
         }
-        [HttpGet]
+        [HttpPut]
         [Route("GetDiscountedFoodIds")]
-        public async Task<ApiResponse<IEnumerable<int>>> GetDiscountedFoodIds(int idService, int deliveryId)
+        public async Task<ApiResponse<Model.Dto.Promotion>> GetDiscountedFoodIds(int idService, int deliveryId,[FromBody] Model.Dto.Promotion promotion)
         {
             try
             {
                 _foodService.GetExternalServiceById(idService);
-                var list = await _foodService.GetDiscountedFoodIds(deliveryId);
-                return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(list);
+                var newPromotion = await _foodService.GetDiscountedFoodIds(deliveryId, _promotionDtoMapper.ToModel(promotion));
+                return ApiUtil<Promotion>.CreateSuccessfulResult(_promotionDtoMapper.ToDto(newPromotion));
             }
             catch (Exception e)
             {
-                return ApiUtil<IEnumerable<int>>.CreateFailResult(e.ToString());
+                return ApiUtil<Promotion>.CreateFailResult(e.ToString());
             }
         }
         // GET: api/Food/5

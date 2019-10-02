@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FOS.Services.FoodServices
 {
-    public class FoodService:IFoodService
+    public class FoodService : IFoodService
     {
         IDeliveryService _deliveryService;
         int idService;
@@ -29,25 +29,25 @@ namespace FOS.Services.FoodServices
         public async Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int deliveryId)
         {
             return await GetFoodCataloguesAsync(
-                new DeliveryInfos() { DeliveryId = deliveryId});
+                new DeliveryInfos() { DeliveryId = deliveryId });
         }
-        public async Task<List<int>> GetDiscountedFoodIds(int deliveryId)
+        public async Task<Promotion> GetDiscountedFoodIds(int deliveryId, Model.Domain.NowModel.Promotion promotion)
         {
-            List<int> DiscountedFoodIds = new List<int>();
-            var menu =  await GetFoodCataloguesAsync(
+            promotion.DiscountedFoodIds = new Dictionary<int, int>();
+            var menu = await GetFoodCataloguesAsync(
                 new DeliveryInfos() { DeliveryId = deliveryId });
             foreach (var dishType in menu)
             {
-                foreach(var dish in dishType.Dishes)
+                foreach (var dish in dishType.Dishes)
                 {
-                    if(dish.DiscountPrice != null)
+                    if (dish.DiscountPrice != null)
                     {
-                        DiscountedFoodIds.Add(dish.Id);
+                        float percent = dish.DiscountPrice.Value * 100 / dish.Price.Value;
+                        promotion.DiscountedFoodIds.Add(dish.Id,(int)percent);
                     }
                 }
-                
             }
-            return DiscountedFoodIds;
+            return promotion;
         }
         public async Task<List<Food>> GetFoodFromCatalogueAsync(int deliveryId, int dishTypeId)
         {

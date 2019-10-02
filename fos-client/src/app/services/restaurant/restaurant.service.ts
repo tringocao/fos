@@ -8,6 +8,7 @@ import { FoodCategory } from "src/app/models/food-category";
 import { CategoryGroup } from "src/app/models/category-group";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Restaurant } from "src/app/models/restaurant";
+import { Promotion } from "src/app/models/promotion";
 
 @Injectable({
   providedIn: "root"
@@ -186,12 +187,14 @@ export class RestaurantService {
   }
   getDiscountFoodIds(
     deliveryId: number,
-    idService: number
-  ): Promise<Array<number>> {
-    return new Promise<Array<number>>((resolve, reject) => {
+    idService: number,
+    promotion: Promotion
+  ): Promise<Promotion> {
+    return new Promise<Promotion>((resolve, reject) => {
       this.http
-        .get<ApiOperationResult<Array<number>>>(
+        .put<ApiOperationResult<Promotion>>(
           environment.apiUrl + "GetDiscountedFoodIds",
+          promotion,
           {
             params: {
               idService: JSON.stringify(idService),

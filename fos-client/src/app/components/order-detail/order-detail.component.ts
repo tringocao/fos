@@ -14,8 +14,12 @@ import { EventFormService } from "src/app/services/event-form/event-form.service
 import { FoodDetailJson } from "src/app/models/food-detail-json";
 import { MatSnackBar } from "@angular/material";
 import { FoodComponent } from "../dialog/food/food.component";
-import { environment } from 'src/environments/environment';
-import { promise } from 'protractor';
+import { environment } from "src/environments/environment";
+import { promise } from "protractor";
+import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
+import { EventPromotion } from "src/app/models/event-promotion";
+import { Promotion } from "src/app/models/promotion";
+import { PromotionType } from "src/app/models/promotion-type";
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
@@ -46,6 +50,10 @@ export class OrderDetailComponent implements OnInit {
   idService: number;
   isWildParticipant: boolean;
   nameEvent: string;
+  eventPromotion: EventPromotion;
+  promotions: Promotion[] = [];
+  discountPerItem: Promotion;
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
@@ -53,19 +61,22 @@ export class OrderDetailComponent implements OnInit {
     private userService: UserService,
     private eventFormService: EventFormService,
     private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private eventPromotionService: EventPromotionService
   ) {}
 
   async ngOnInit() {
     this.data = { restaurant: null, detail: null, idService: 1 };
     this.idOrder = this.route.snapshot.paramMap.get("id");
-    const promise = await this.orderService.GetOrder(this.idOrder).then(value=>{
-      if(value.OrderStatus == 2){
-        this.router.navigateByUrl('not-participant/'+this.idOrder);
-      }
-    })
+    const promise = await this.orderService
+      .GetOrder(this.idOrder)
+      .then(value => {
+        if (value.OrderStatus == 2) {
+          this.router.navigateByUrl("not-participant/" + this.idOrder);
+        }
+      });
 
-    debugger;
+    //debugger;
     this.isWildParticipant = false;
     // check if wild guest order
     if (this.idOrder.includes("ffa")) {
@@ -119,6 +130,7 @@ export class OrderDetailComponent implements OnInit {
                         this.isOrder = false;
                       }
                       this.loading = false;
+                      this.getDbPromotions(this.event.EventId);
                     });
                     this.nameEvent = event.Name;
                   });
@@ -160,6 +172,7 @@ export class OrderDetailComponent implements OnInit {
             this.isOrder = false;
           }
           this.loading = false;
+          this.getDbPromotions(this.event.EventId);
         });
       });
   }
@@ -200,9 +213,9 @@ export class OrderDetailComponent implements OnInit {
   }
   save() {
     this.order.FoodDetail = this.foodorderlist.getAllFoodDetail();
-    if(this.order.FoodDetail.length > 0){
+    if (this.order.FoodDetail.length > 0) {
       this.order.OrderStatus = 1;
-    }else{
+    } else {
       this.order.OrderStatus = 0;
     }
     this.orderService
@@ -216,5 +229,15 @@ export class OrderDetailComponent implements OnInit {
   }
   deleteFoodFromMenu($event: FoodDetailJson) {
     this.foodlist.unChecked(this.foodlist.MapFoodDetail2Food($event));
+  }
+  getDbPromotions(eventId: string) {
+    this.eventPromotionService.GetByEventId(Number(eventId)).then(promotion => {
+      this.eventPromotion = promotion;
+      console.log(this.eventPromotion);
+      this.promotions = this.eventPromotion.Promotions;
+      this.discountPerItem = this.promotions
+        .filter(p => p.PromotionType == PromotionType.DiscountPerItem)
+        .pop();
+    });
   }
 }

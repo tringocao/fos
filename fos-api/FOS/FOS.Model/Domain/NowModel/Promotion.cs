@@ -22,6 +22,7 @@ namespace FOS.Model.Domain.NowModel
         public string MaxDiscountAmount { set; get; }
         [JsonProperty("min_order_amount")]
         public string MinOrderAmount { set; get; }
+        public Dictionary<int, int> DiscountedFoodIds { set; get; }
 
 
     }

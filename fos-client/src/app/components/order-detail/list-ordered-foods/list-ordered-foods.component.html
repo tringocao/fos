@@ -27,6 +27,10 @@
     {{ month }}/{{ day }}/{{ year }} {{ hour }}:{{ minutes }}
   </h4>
   <h4>Event date: {{ toStandardDate(event.CloseTime) }}</h4>
+</div>
+
+<div class="restaurants ">
+  <app-loading [loading]="load"></app-loading>
   <div class="example-button-row">
     <button
       [disabled]="!isOrder"
@@ -37,10 +41,17 @@
       Save Order
     </button>
   </div>
-</div>
-
-<div class="restaurants ">
-  <app-loading [loading]="load"></app-loading>
+  <mat-chip-list #chipList aria-label="Fruit selection">
+    <app-promotions-chip
+      *ngFor="let promotion of promotions"
+      [visible]="visible"
+      [selectable]="selectable"
+      [removable]="removable"
+      [addOnBlur]="addOnBlur"
+      [promotion]="promotion"
+      (removePressed)="removePromotion($event)"
+    ></app-promotions-chip>
+  </mat-chip-list>
 
   <div class="example-container mat-elevation-z8">
     <table mat-table [dataSource]="dataSource2">
@@ -57,7 +68,7 @@
           Price
         </th>
         <td mat-cell *matCellDef="let element" align="right">
-          {{ numberWithCommas(element.Value["Price"]) + "đ" }}
+          {{ numberWithCommas(setNewPriceDJ(element)) + "đ" }}
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
@@ -216,17 +227,5 @@
       ></tr>
       <!-- <tr mat-footer-row *matFooterRowDef="['disclaimer3','disclaimer4']; sticky: true" class="example-second-footer-row"></tr> -->
     </table>
-
-    <mat-chip-list #chipList aria-label="Fruit selection">
-      <app-promotions-chip
-        *ngFor="let promotion of promotions"
-        [visible]="visible"
-        [selectable]="selectable"
-        [removable]="removable"
-        [addOnBlur]="addOnBlur"
-        [promotion]="promotion"
-        (removePressed)="removePromotion($event)"
-      ></app-promotions-chip>
-    </mat-chip-list>
   </div>
 </div>
