@@ -124,7 +124,10 @@
     <Compile Include="Domain\ApiResponse.cs" />
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\CustomGroup.cs" />
+    <Compile Include="Domain\DiscountEvent.cs" />
     <Compile Include="Domain\EventPromotion.cs" />
+    <Compile Include="Domain\EventUsers.cs" />
     <Compile Include="Domain\FeedBack.cs" />
     <Compile Include="Domain\NowModel\Promotion.cs" />
     <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
@@ -170,11 +173,13 @@
     <Compile Include="Dto\Category.cs" />
     <Compile Include="Dto\CategoryGroup.cs" />
     <Compile Include="Dto\Comment.cs" />
+    <Compile Include="Dto\CustomGroup.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DishesSummary.cs" />
     <Compile Include="Dto\Event.cs" />
     <Compile Include="Dto\EventAction.cs" />
     <Compile Include="Dto\EventPromotion.cs" />
+    <Compile Include="Dto\EventUsers.cs" />
     <Compile Include="Dto\ExternalService.cs" />
     <Compile Include="Dto\FavoriteRestaurant.cs" />
     <Compile Include="Dto\FeedBack.cs" />
@@ -195,6 +200,7 @@
     <Compile Include="Dto\Restaurant.cs" />
     <Compile Include="Dto\RestaurantDetail.cs" />
     <Compile Include="Dto\RestaurantSummary.cs" />
+    <Compile Include="Dto\TablePaging.cs" />
     <Compile Include="Dto\UpdateEvent.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Dto\UserFeedback.cs" />
@@ -209,10 +215,12 @@
     <Compile Include="Mapping\CategoryDtoMapper.cs" />
     <Compile Include="Mapping\CategoryGroupDtoMapper.cs" />
     <Compile Include="Mapping\Config.cs" />
+    <Compile Include="Mapping\CustomGroupDtoMapper.cs" />
     <Compile Include="Mapping\DeliveryInfosDtoMapper.cs" />
     <Compile Include="Mapping\DishesSummaryDtoMapper.cs" />
     <Compile Include="Mapping\EventDtoMapper.cs" />
     <Compile Include="Mapping\EventPromotionDtoMapper.cs" />
+    <Compile Include="Mapping\EventUserDtoMapper.cs" />
     <Compile Include="Mapping\FavoriteRestaurantDtoMapper.cs" />
     <Compile Include="Mapping\FeedbackDtoMapper.cs" />
     <Compile Include="Mapping\FoodCategoryDtoMapper.cs" />
@@ -377,6 +385,10 @@
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Comment.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\custom-group.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\CustomGroup.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\delivery-infos.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\DeliveryInfos.cs</CustomToolNamespace>
@@ -460,6 +472,18 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event-promotion.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\EventPromotion.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event-user.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\EventUser.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event-user.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\EventUser.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event-users.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\EventUser.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
@@ -1072,6 +1096,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Restaurant.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\table-paging.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\TablePaging.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\update-event.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

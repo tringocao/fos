@@ -191,4 +191,25 @@ export class OrderService {
         .catch(alert => console.log(alert));
     });
   }
+  UpdateFoodDetailByOrderId(OrderId: string, FoodDetail: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<boolean>>(
+          environment.apiUrl + 'api/Order/UpdateFoodDetailByOrderId',
+          {
+            params: {
+              OrderId: OrderId,
+              FoodDetail: FoodDetail
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          }
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
 }

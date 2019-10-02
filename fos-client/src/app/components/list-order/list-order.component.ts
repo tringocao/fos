@@ -29,8 +29,8 @@ export class ListOrderComponent implements OnInit, OnChanges {
     'Participants',
     'CloseTime',
     'MaximumBudget',
+    'HostName',
     'Status',
-    'HostName'
   ];
   dataSource: MatTableDataSource<Event>;
   isLoading = true;
@@ -75,21 +75,11 @@ export class ListOrderComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.categoryList = [];
     if (!this.isMyOrder) {
-      if (!this.displayedColumns.includes('HostName')) {
-        this.displayedColumns.pop();
-        this.displayedColumns.push('HostName');
-        this.displayedColumns.push('Status');
-      }
       this.setDataSource(this.allOrder);
       this.allOrderCategories.forEach(item => {
         this.categoryList.push(item);
       });
     } else {
-      if (this.displayedColumns.includes('HostName')) {
-        this.displayedColumns.pop();
-        this.displayedColumns.pop();
-        this.displayedColumns.push('Status');
-      }
       this.setDataSource(this.myOrder);
       this.myOrderCategories.forEach(item => {
         this.categoryList.push(item);

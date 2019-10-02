@@ -7,6 +7,7 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
 import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
+import { CustomGroupPageComponent } from './pages/custom-group-page/custom-group-page.component';
 import { FeedbackComponent } from './components/feedback/feedback/feedback.component';
 import { NotParticipantComponent } from './components/not-participant/not-participant.component';
 
@@ -40,16 +41,20 @@ const routes: Routes = [
     path: 'feedback/:id',
     component: FeedbackComponent
   },
-  { path: 'print',
+  {
+    path: 'print',
     outlet: 'print',
     component: PrintLayoutComponent,
-    children: [
-      { path: 'report/:id', component: EventSummaryPrintComponent }
-    ]
+    children: [{ path: 'report/:id', component: EventSummaryPrintComponent }]
   },
   {
     path: 'not-participant/:id',
-    component: NotParticipantComponent
+    component: NotParticipantComponent,
+    children: [{ path: 'report/:id', component: EventSummaryPrintComponent }]
+  },
+  {
+    path: 'custom-group',
+    component: CustomGroupPageComponent
   }
 ];
 

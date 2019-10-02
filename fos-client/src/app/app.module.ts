@@ -36,8 +36,9 @@ import {
   MatInputModule,
   MatTooltipModule,
   MatRadioModule,
-} from "@angular/material";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+  MatExpansionModule
+} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   DlDateTimeDateModule,
   DlDateTimePickerModule
@@ -106,6 +107,8 @@ import { EditMakeOrderComponent } from "./components/event-summary-dialog/edit-m
 import { NotParticipantComponent } from "./components/not-participant/not-participant.component";
 import { FeedbackComponent } from "./components/feedback/feedback/feedback.component";
 import { StarRatingComponent } from "./components/star-rating/star-rating.component";
+import { CustomGroupPageComponent } from './pages/custom-group-page/custom-group-page.component';
+import { CreateUpdateCustomGroupComponent } from './components/create-update-custom-group/create-update-custom-group.component';
 import { PromotionsChipComponent } from './components/promotions-chip/promotions-chip.component';
 import { PromotionsChipListComponent } from './components/promotions-chip-list/promotions-chip-list.component';
 import { AdjustPriceComponent } from './components/adjust-price/adjust-price.component';
@@ -163,6 +166,9 @@ import { AdjustPriceComponent } from './components/adjust-price/adjust-price.com
     PromotionsChipComponent,
     PromotionsChipListComponent,
     AdjustPriceComponent
+        StarRatingComponent,
+        CustomGroupPageComponent,
+        CreateUpdateCustomGroupComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -217,6 +223,7 @@ import { AdjustPriceComponent } from './components/adjust-price/adjust-price.com
     MatRadioModule,
     MatChipsModule,
     LightboxModule,
+    MatExpansionModule,
     MatDatepickerModule, // <----- import(must)
     MatNativeDateModule // <----- import for date formating(optional)
   ],

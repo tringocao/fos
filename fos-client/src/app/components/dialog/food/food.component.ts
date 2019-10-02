@@ -14,6 +14,7 @@ import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Food } from "src/app/models/food";
 import { SelectionModel } from "@angular/cdk/collections";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
+import { TablePaging } from 'src/app/models/table-paging';
 
 interface RestaurantMore {
   restaurant: DeliveryInfos;
@@ -43,7 +44,9 @@ export class FoodComponent implements OnInit {
   docsOnThisPage: any[] = [];
   from: number;
   pageSize: number;
-  constructor(private restaurantService: RestaurantService) {}
+  constructor(private restaurantService: RestaurantService) {
+    this.pageSize = TablePaging.PagingNumber;
+  }
   displayedColumns2: string[] = [
     "select",
     "picture",

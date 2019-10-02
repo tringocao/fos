@@ -13,6 +13,7 @@ namespace FOS.Common.Constants
         public const string RemindEventEmailTemplate = @"~/App_Data/RemindEventEmailTemplate.json";
         public const string FeedbackEmailTemplate = @"~/App_Data/FeedbackEmailTemplate.json";
         public const string ReorderEmailTemplate = @"~/App_Data/ReorderEmailTemplate.json";
-
+        public const string CancelEmailTemplate = @"~/App_Data/CancelEventEmailTemplate.json";
+        public const string UserNotPerission = "you dont have permission!";
     }
 }
