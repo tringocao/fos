@@ -27,6 +27,7 @@ namespace FOS.Repositories.Repositories
         bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
         bool UpdateFoodDetailByOrderId(string OrderId, string FoodDetail);
         Model.Domain.Order GetOrderByEventIdAndMail(string EventId, string Mail);
+        string GetOrderIdOfUserInEvent(string eventId, string userId);
     }
 
     public class OrderRepository : IOrderRepository
@@ -75,6 +76,11 @@ namespace FOS.Repositories.Repositories
         public DataModel.Order GetOrderByEventIdvsUserId(string eventid, string userId)
         {
             return _context.Orders.Where(order => order.IdEvent == eventid && order.IdUser == userId).FirstOrDefault();
+        }
+        public string GetOrderIdOfUserInEvent(string eventId, string userId)
+        {
+            var result = _context.Orders.Where(order => order.IdEvent == eventId && order.IdUser == userId).FirstOrDefault();
+            return result != null ? result.Id : "";
         }
         public IEnumerable<DataModel.Order> GetAllOrder()
         {
