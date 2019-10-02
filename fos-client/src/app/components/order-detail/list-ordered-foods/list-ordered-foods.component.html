@@ -68,7 +68,7 @@
           Price
         </th>
         <td mat-cell *matCellDef="let element" align="right">
-          {{ numberWithCommas(setNewPriceDJ(element)) + "đ" }}
+          {{ numberWithCommas(setNewPrice(element.Value["Price"],element.IdFood)) + "đ" }}
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>

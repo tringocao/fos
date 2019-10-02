@@ -70,7 +70,7 @@
           <app-adjust-price
             [baseCost]="element.Price"
             [adjustedCost]="
-              element.IsDiscountedFood ? setNewPrice(element) : element.Price
+              element.IsDiscountedFood ? setNewPrice(element.Price,element.Id) : element.Price
             "
           ></app-adjust-price>
           <!-- {{ numberWithCommas2(element.Price).toString() + "đ" }} -->
