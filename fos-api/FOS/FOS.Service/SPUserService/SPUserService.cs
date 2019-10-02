@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using FOS.Model.Domain;
+using FOS.Services.EventServices;
 
 namespace FOS.Services.SPUserService
 {
@@ -18,10 +19,12 @@ namespace FOS.Services.SPUserService
     {
         IGraphApiProvider _graphApiProvider;
         ISharepointContextProvider _sharepointContextProvider;
-        public SPUserService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IUserDtoMapper userDtoMapper)
+        IEventService _eventService;
+        public SPUserService(IGraphApiProvider graphApiProvider, ISharepointContextProvider sharepointContextProvider, IUserDtoMapper userDtoMapper, IEventService eventService)
         {
             _graphApiProvider = graphApiProvider;
             _sharepointContextProvider = sharepointContextProvider;
+            _eventService = eventService;
         }
 
         public async Task<List<Model.Domain.User>> GetUsers()
@@ -210,7 +213,7 @@ namespace FOS.Services.SPUserService
                 dynamic responseUser = JsonConvert.DeserializeObject(resultGroup);
 
                 List<Model.Domain.User> newList = responseUser.value.ToObject<List<Model.Domain.User>>();
-                if(newList.Count > 0)
+                if (newList.Count > 0)
                 {
                     listSearchUser.AddRange(newList);
 
@@ -222,6 +225,27 @@ namespace FOS.Services.SPUserService
             }
 
             return listSearchUser;
+        }
+        public async Task<bool> ValidateIsHost(int eventId)
+        {
+            try
+            {
+                //get host's event
+                Event eventInfo =  _eventService.GetEvent(eventId);
+                var hostId = eventInfo.HostId;
+                //get current user
+                User currentUser = await GetCurrentUser();
+
+                if(hostId != currentUser.Id)
+                {
+                    return false;
+                }
+
+                return true;
+            }catch(Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ using System.Web.Configuration;
 using System.Web.Http;
 using FOS.Model.Dto;
 using FOS.Model.Mapping;
+using FOS.Services.SPUserService;
+using FOS.Common.Constants;
 
 namespace FOS.API.Controllers
 {
@@ -31,13 +33,14 @@ namespace FOS.API.Controllers
         ISPListService _spListService;
         IEventService _eventService;
         private readonly IEventDtoMapper _eventDtoMapper;
+        ISPUserService _userService;
 
-
-        public SPListController(ISPListService spListService, IEventService eventService, IEventDtoMapper mapper)
+        public SPListController(ISPListService spListService, IEventService eventService, IEventDtoMapper mapper, ISPUserService userService)
         {
             _eventDtoMapper = mapper;
             _spListService = spListService;
             _eventService = eventService;
+            _userService = userService;
         }
         //// GET api/splist/getlist/{list-id}
         //public async Task<HttpResponseMessage> GetList(string Id)
@@ -111,6 +114,12 @@ namespace FOS.API.Controllers
         {
             try
             {
+                bool checkHost = await _userService.ValidateIsHost(Int32.Parse(id));
+                if (checkHost == false)
+                {
+                    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
+                }
+
                 var domainItem = _eventDtoMapper.DtoToDomain(item);
                 await _spListService.UpdateListItem(id, domainItem);
                 return ApiUtil.CreateSuccessfulResult();

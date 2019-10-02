@@ -19,5 +19,6 @@ namespace FOS.Services.SPUserService
 
         Task<List<User>> GroupListMemers(string groupId);
         Task<List<User>> SearchGroupOrUserByName(string searchName);
+        Task<bool> ValidateIsHost(int eventId);
     }
 }
