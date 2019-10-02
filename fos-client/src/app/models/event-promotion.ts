@@ -10,10 +10,10 @@
     
      import { Promotion } from './promotion';
 
-    export class RestaurantDetail    {
+    export class EventPromotion    {
            
-        public Rating: number = 0;   
-        public TotalReview: number = 0;   
-        public PromotionLists: Promotion[] = [];
+        public Id: number = 0;   
+        public EventId: number = 0;   
+        public Promotions: Promotion[] = [];
     }
          
