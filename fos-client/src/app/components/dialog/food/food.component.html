@@ -67,6 +67,10 @@
       <ng-container matColumnDef="Price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
         <td mat-cell *matCellDef="let element" class="align-right">
+          <app-adjust-price
+            [baseCost]="baseTotalCost"
+            [adjustedCost]="adjustedTotalCost"
+          ></app-adjust-price>
           {{ numberWithCommas2(element.Price).toString() + "đ" }}
         </td>
       </ng-container>

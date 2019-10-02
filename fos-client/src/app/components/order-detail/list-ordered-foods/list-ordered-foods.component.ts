@@ -24,6 +24,10 @@ import { Event } from "src/app/models/event";
 import moment from "moment";
 import { DialogCheckActionComponent } from "./dialog-check-action/dialog-check-action.component";
 import { Overlay } from "@angular/cdk/overlay";
+import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
+import { EventPromotion } from "src/app/models/event-promotion";
+import { Promotion } from "src/app/models/promotion";
+import { PromotionType } from "src/app/models/promotion-type";
 
 @Component({
   selector: "app-list-ordered-foods",
@@ -38,7 +42,15 @@ export class ListOrderedFoodsComponent implements OnInit {
   @Input() order: Order;
   @Input("isOrder") isOrder: boolean;
   @Output() valueChange = new EventEmitter<FoodDetailJson>();
-
+  @Output() saveOrder = new EventEmitter<void>();
+  eventPromotion: EventPromotion;
+  promotions: Promotion[] = [];
+  visible = true;
+  selectable = true;
+  removable = false;
+  addOnBlur = true;
+  showNewPrice = false;
+  discountPerItem: Promotion;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   foodOrdered: Food;
   displayedColumns2: string[] = [
@@ -56,7 +68,11 @@ export class ListOrderedFoodsComponent implements OnInit {
   year: number;
   hour: number;
   minutes: number;
-  constructor(public dialog: MatDialog, private overlay: Overlay) {}
+  constructor(
+    public dialog: MatDialog,
+    private overlay: Overlay,
+    private eventPromotionService: EventPromotionService
+  ) {}
   load = true;
   @Input() totalBudget: Number;
   ngOnInit() {
@@ -161,5 +177,28 @@ export class ListOrderedFoodsComponent implements OnInit {
   }
   toStandardDate(date: number) {
     return moment(date).format("MM/DD/YYYY HH:mm");
+  }
+  save() {
+    this.saveOrder.emit();
+  }
+
+  getDbPromotions(eventId: string) {
+    this.eventPromotionService.GetByEventId(Number(eventId)).then(promotion => {
+      this.eventPromotion = promotion;
+      this.promotions = this.eventPromotion.Promotions;
+      this.discountPerItem = this.promotions
+        .filter(p => p.PromotionType == PromotionType.DiscountPerItem)
+        .pop();
+      if (this.discountPerItem != null) {
+        this.showNewPrice = true;
+      }
+    });
+  }
+  setNewPrice(price: number) {
+    if (this.showNewPrice) {
+      if (this.discountPerItem.IsPercent) {
+        return price - (price * this.discountPerItem.Value) / 100;
+      } else return this.discountPerItem.Value;
+    }
   }
 }
