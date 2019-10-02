@@ -28,7 +28,7 @@ export class MenuComponent {
     private restaurantService: RestaurantService
   ) {
     this.overlay = overlay;
-    let restaurantItem: RestaurantDetail = { Rating: 0, TotalReview: 0 };
+    let restaurantItem: RestaurantDetail = { Rating: 0, TotalReview: 0, PromotionLists: [] };
 
     this.resDetail = restaurantItem;
   }

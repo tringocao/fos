@@ -21,8 +21,16 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             if (data.result == "success")
             {
                 deliveryInfos = JsonConvert.DeserializeObject<DeliveryDetail>(data.reply.delivery_detail.ToString());
-                deliveryInfos.PromotionOnAll = JsonConvert.DeserializeObject<List<Promotion>>(data.reply.delivery_detail.delivery.promotions.ToString());
-                deliveryInfos.PromotionOnItem = JsonConvert.DeserializeObject<Promotion>(data.reply.delivery_detail.price_slash_discount.ToString());
+                if (data.reply.delivery_detail.delivery.promotions != null)
+                {
+                    deliveryInfos.PromotionOnAll = JsonConvert.DeserializeObject<List<Promotion>>(data.reply.delivery_detail.delivery.promotions.ToString());
+
+                }
+                if (data.reply.delivery_detail.price_slash_discount != null)
+                {
+                    deliveryInfos.PromotionOnItem = JsonConvert.DeserializeObject<Promotion>(data.reply.delivery_detail.price_slash_discount.ToString());
+
+                }
 
             }
             return deliveryInfos;

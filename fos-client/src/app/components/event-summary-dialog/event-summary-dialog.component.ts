@@ -561,7 +561,7 @@ export class EventSummaryDialogComponent implements OnInit {
         if (promotion.Value > 0) {
           this.adjustedTotalCost = this.adjustedTotalCost - this.adjustedTotalCost * 100 / promotion.Value;
         }
-      } else {
+      } else if (promotion.PromotionType == PromotionType.ShipFee) {
         this.adjustedTotalCost = this.adjustedTotalCost + promotion.Value;
       }
     });

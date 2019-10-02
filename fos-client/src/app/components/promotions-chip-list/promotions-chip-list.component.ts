@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Promotion } from 'src/app/models/promotion';
 import { PromotionType } from 'src/app/models/promotion-type';
+import { EventPromotionService } from 'src/app/services/event-promotion/event-promotion.service';
 
 @Component({
   selector: 'app-promotions-chip-list',
@@ -8,7 +9,7 @@ import { PromotionType } from 'src/app/models/promotion-type';
   styleUrls: ['./promotions-chip-list.component.less']
 })
 export class PromotionsChipListComponent implements OnInit {
-  constructor() { }
+  constructor(private eventPromotionService: EventPromotionService) { }
 
   @Output() promotionChanged: EventEmitter<Promotion[]> = new EventEmitter();
 
@@ -23,13 +24,18 @@ export class PromotionsChipListComponent implements OnInit {
   promotionValue: string = '10';
 
   ngOnInit() {
-    for (let index = 0; index < 3; index++) {
-      const promotion = new Promotion();
-      promotion.PromotionType = index;
-      promotion.IsPercent = !(index === 2);
-      this.promotions.push(promotion);
-      this.promotionOptions.push(promotion);
-    }
+    // for (let index = 0; index < 3; index++) {
+    //   const promotion = new Promotion();
+    //   promotion.PromotionType = index;
+    //   promotion.IsPercent = !(index === 2);
+    //   this.promotions.push(promotion);
+    //   this.promotionOptions.push(promotion);
+    // }
+
+    this.eventPromotionService.getPromotionsByExternalService(64975, 1).then(promotions => {
+      this.promotions = promotions;
+      this.promotionChanged.emit(this.promotions);
+    } );
   }
 
   getPromotionName(promotionType: number): string {
