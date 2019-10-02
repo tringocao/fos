@@ -17,6 +17,7 @@ import {
 } from '@angular/animations';
 import { DishesSummary } from './../../models/dishes-summary';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { TablePaging } from 'src/app/models/table-paging';
 
 @Component({
   selector: 'app-summary-dishes-dialog',
@@ -46,7 +47,7 @@ export class SummaryDishesDialogComponent implements OnInit {
   ];
   dataSource: MatTableDataSource<DishesSummary>;
   isLoading = true;
-
+  pageSize: number;
   constructor(
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: RestaurantSummary,
@@ -57,6 +58,7 @@ export class SummaryDishesDialogComponent implements OnInit {
     this.overlayContainer
       .getContainerElement()
       .classList.add('app-theme1-theme');
+    this.pageSize = TablePaging.PagingNumber;
   }
 
   ngOnInit() {

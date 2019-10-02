@@ -1,0 +1,4 @@
+{
+  "Subject": "Cancel Event",
+  "Body": "Dear <b>[%EventUsers.UserName%]</b>,<br><br>Event <b>[%EventUsers.EventTitle%]</b> has been cancelled.<br><br>Sincerely,<br><b>FOS</b>"
+}
