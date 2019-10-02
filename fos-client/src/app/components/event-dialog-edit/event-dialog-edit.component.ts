@@ -150,7 +150,7 @@ export class EventDialogEditComponent implements OnInit {
   groups: CustomGroup[] = [];
   selectedGroup: string;
 
-  eventPromotion: EventPromotion;
+  eventPromotion: EventPromotion = new EventPromotion();
   promotions: Promotion[];
 
   visible = true;
@@ -476,6 +476,7 @@ export class EventDialogEditComponent implements OnInit {
               .UpdateEventListItem(self.data.EventId, self.eventListItem)
               .toPromise()
               .then(result => {
+                self.eventPromotion.EventId = Number(self.data.EventId);
                 self.eventPromotion.Promotions = self.promotions;
                 console.log(self.eventPromotion);
                 self.eventPromotionService.UpdateEventPromotion(

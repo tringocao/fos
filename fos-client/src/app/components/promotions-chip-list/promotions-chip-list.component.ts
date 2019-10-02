@@ -3,6 +3,7 @@ import { Promotion } from 'src/app/models/promotion';
 import { PromotionType } from 'src/app/models/promotion-type';
 import { EventPromotionService } from 'src/app/services/event-promotion/event-promotion.service';
 import { EventPromotion } from 'src/app/models/event-promotion';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-promotions-chip-list',
@@ -10,7 +11,7 @@ import { EventPromotion } from 'src/app/models/event-promotion';
   styleUrls: ['./promotions-chip-list.component.less']
 })
 export class PromotionsChipListComponent implements OnInit {
-  constructor(private eventPromotionService: EventPromotionService) { }
+  constructor(private eventPromotionService: EventPromotionService, private snackBar: MatSnackBar) { }
 
   @Input() deliveryId: number;
   @Input() eventId: string;
@@ -50,6 +51,23 @@ export class PromotionsChipListComponent implements OnInit {
 
   isPromotionPercent(): boolean {
     return this.promotionOptions[this.promotionType - 1 ].IsPercent;
+  }
+
+  toast(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
+
+  updateEventPromotion() {
+    this.eventPromotionService.UpdateEventPromotion(this.eventPromotion).then(response => {
+      if (response === null) {
+        this.toast("update success", "Dismiss");
+      }
+      if (response != null) {
+        this.toast("update fail", "Dismiss");
+      }
+    });
   }
 
   addToPromotions() {

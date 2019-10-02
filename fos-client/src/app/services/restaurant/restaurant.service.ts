@@ -186,7 +186,7 @@ export class RestaurantService {
   }
   getDiscountFoodIds(
     deliveryId: number,
-    idService: number
+    idService: number,
   ): Promise<Array<number>> {
     return new Promise<Array<number>>((resolve, reject) => {
       this.http
@@ -195,7 +195,7 @@ export class RestaurantService {
           {
             params: {
               idService: JSON.stringify(idService),
-              deliveryId: JSON.stringify(deliveryId)
+              deliveryId: JSON.stringify(deliveryId),
             }
           }
         )
