@@ -34,7 +34,6 @@ namespace FOS.Repositories.Repositories
             try
             {
                 return _context.EventPromotions.FirstOrDefault(o => o.EventId == idEvent);
-
             }
             catch (Exception e)
             {
@@ -61,7 +60,7 @@ namespace FOS.Repositories.Repositories
             {
                 DataModel.EventPromotion update = _context.EventPromotions.FirstOrDefault(o => o.EventId == discountEvent.EventId);
                 {
-                    _context.Entry(update).CurrentValues.SetValues(update);
+                    _context.Entry(update).CurrentValues.SetValues(discountEvent);
                     _context.SaveChanges();
                     return true;
                 }

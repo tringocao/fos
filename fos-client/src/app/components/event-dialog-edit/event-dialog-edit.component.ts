@@ -45,6 +45,9 @@ import { EventFormMailService } from 'src/app/services/event-form/event-form-mai
 import { UpdateEvent } from 'src/app/models/update-event';
 import {OverlayContainer} from '@angular/cdk/overlay';
 import { Order } from 'src/app/models/order';
+import { Promotion } from 'src/app/models/promotion';
+import { EventPromotionService } from 'src/app/services/event-promotion/event-promotion.service';
+import { EventPromotion } from 'src/app/models/event-promotion';
 @Component({
   selector: 'app-event-dialog-edit',
   templateUrl: './event-dialog-edit.component.html',
@@ -64,6 +67,7 @@ export class EventDialogEditComponent implements OnInit {
     private summaryService: SummaryService,
     private eventValidationService: EventFormValidationService,
     private eventMail: EventFormMailService,
+    private eventPromotionService: EventPromotionService,
     overlayContainer: OverlayContainer
   ) {
     this.ownerForm = new FormGroup({
@@ -137,6 +141,15 @@ export class EventDialogEditComponent implements OnInit {
   removeListUser: GraphUser[] = [];
   newListUser: GraphUser[] = [];
 
+  eventPromotion: EventPromotion;
+  promotions: Promotion[];
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+
+
   ngOnInit() {
     var self = this;
 
@@ -151,6 +164,7 @@ export class EventDialogEditComponent implements OnInit {
     self.ownerForm.get("MaximumBudget").setValue(self.data.MaximumBudget);
 
 
+    this.getDbPromotions(self.data.EventId);
     var dataHostTemp: userPicker = {
       Name: self.data.HostName,
       Email: '',
@@ -401,6 +415,9 @@ export class EventDialogEditComponent implements OnInit {
             .UpdateEventListItem(self.data.EventId, self.eventListItem)
             .toPromise()
             .then(result => {
+              self.eventPromotion.Promotions = self.promotions;
+              console.log(self.eventPromotion)
+              self.eventPromotionService.UpdateEventPromotion(self.eventPromotion);
               var updateEvent: UpdateEvent = {
                 IdEvent: self.data.EventId,
                 NewListUser: self.newListUser,
@@ -409,7 +426,7 @@ export class EventDialogEditComponent implements OnInit {
               self.eventMail.SendMailUpdateEvent(updateEvent).then(value=>{
                 self.toast('Update event successfuly!', 'Dismiss');
                 window.location.reload();
-              })
+              });
             });
             
           }
@@ -432,6 +449,33 @@ export class EventDialogEditComponent implements OnInit {
   SendEmail(id: string) {
     this.restaurantService.setEmail(id);
     console.log('Sent!');
+  }
+
+  fetchAllPromotions() {
+    this.eventPromotionService
+      .getPromotionsByExternalService(
+        Number(this.ownerForm.get("userInput").value.DeliveryId),
+        1
+      )
+      .then(promotions => {
+        this.promotions = promotions;
+        // this.promotionChanged.emit(this.promotions);
+      });
+  }
+  removePromotion(promotion: Promotion) {
+    this.promotions = this.promotions.filter(pr => pr !== promotion);
+  }
+
+  getDbPromotions(eventId: string) {
+    this.eventPromotionService
+      .GetByEventId(
+        Number(eventId)
+      )
+      .then(promotion => {
+        this.eventPromotion = promotion;
+        this.promotions = this.eventPromotion.Promotions;
+        // this.promotionChanged.emit(this.promotions);
+      });
   }
 
   toast(message: string, action: string) {

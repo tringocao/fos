@@ -90,6 +90,22 @@
           formControlName="MaximumBudget"
         />
       </mat-form-field>
+      <mat-form-field class="full-width">
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <app-promotions-chip
+              *ngFor="let promotion of promotions"
+              [visible]="visible"
+              [selectable]="selectable"
+              [removable]="removable"
+              [addOnBlur]="addOnBlur"
+              [promotion]="promotion"
+              (removePressed)="removePromotion($event)"
+            ></app-promotions-chip>
+          </mat-chip-list>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="fetchAllPromotions()">
+          Get all promotions
+        </button>
 
       <div class="event-data-time full-width">
         <app-datetimepicker

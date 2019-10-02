@@ -38,7 +38,9 @@ import { Event } from "src/app/models/event";
 import * as moment from "moment";
 import { Group } from "src/app/models/group";
 import { element } from "protractor";
-import {OverlayContainer} from '@angular/cdk/overlay';
+import { OverlayContainer } from "@angular/cdk/overlay";
+import { Promotion } from "src/app/models/promotion";
+import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -78,6 +80,7 @@ export class EventDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: MoreInfo,
     private fb: FormBuilder,
     private eventFormService: EventFormService,
+    private eventPromotionService: EventPromotionService,
     private http: HttpClient,
     private restaurantService: RestaurantService,
     private snackBar: MatSnackBar,
@@ -102,7 +105,7 @@ export class EventDialogComponent implements OnInit {
       userInputPicker: new FormControl(""),
       MaximumBudget: new FormControl("")
     });
-    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
+    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
   }
 
   apiUrl = environment.apiUrl;
@@ -147,6 +150,12 @@ export class EventDialogComponent implements OnInit {
   loading: boolean;
   eviroment = environment.apiUrl;
   listPickedUser: userPicker[];
+  promotions: Promotion[];
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
 
   displayFn(user: DeliveryInfos) {
     if (user) {
@@ -265,7 +274,7 @@ export class EventDialogComponent implements OnInit {
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
 
-    if(!choosingUser.Email){
+    if (!choosingUser.Email) {
       return;
     }
     console.log("choose User", choosingUser);
@@ -291,7 +300,7 @@ export class EventDialogComponent implements OnInit {
   SaveToSharePointEventList(): void {
     var self = this;
     if (self.eventUsers.length == 0) {
-      self.toast('Please choose participants!', 'Dismiss');
+      self.toast("Please choose participants!", "Dismiss");
       return;
     }
 
@@ -397,6 +406,7 @@ export class EventDialogComponent implements OnInit {
           console.log("new Id", newId.Data);
 
           self.SendEmail(newId.Data);
+          self.eventPromotionService.AddEventPromotion(Number(newId.Data), self.promotions);
 
           self.toast("added new event!", "Dismiss");
           self.dialogRef.close();
@@ -411,6 +421,20 @@ export class EventDialogComponent implements OnInit {
   SendEmail(id: string) {
     this.restaurantService.setEmail(id);
     console.log("Sent!");
+  }
+  fetchAllPromotions() {
+    this.eventPromotionService
+      .getPromotionsByExternalService(
+        Number(this.ownerForm.get("userInput").value.DeliveryId),
+        1
+      )
+      .then(promotions => {
+        this.promotions = promotions;
+        // this.promotionChanged.emit(this.promotions);
+      });
+  }
+  removePromotion(promotion: Promotion) {
+    this.promotions = this.promotions.filter(pr => pr !== promotion);
   }
 
   public HasError = (controlName: string, errorName: string) => {
@@ -591,7 +615,9 @@ export class EventDialogComponent implements OnInit {
   }
 
   getCurrentEventType() {
-    return this.ownerForm.controls["EventType"] ? this.ownerForm.controls["EventType"].value : "Open";
+    return this.ownerForm.controls["EventType"]
+      ? this.ownerForm.controls["EventType"].value
+      : "Open";
   }
 
   checkDatetimeValidation() {
@@ -649,16 +675,18 @@ export class EventDialogComponent implements OnInit {
   notifyMessage(eventHost: userPicker) {
     var self = this;
     console.log("change picker", event);
-    var newHost: userPicker[]  = this.eventUsers.filter(u => u.Email === eventHost.Email);
-    if(newHost.length == 0 ){
+    var newHost: userPicker[] = this.eventUsers.filter(
+      u => u.Email === eventHost.Email
+    );
+    if (newHost.length == 0) {
       var Host: EventUser = {
         Email: eventHost.Email,
         Id: eventHost.Id,
-        Img: '',
+        Img: "",
         IsGroup: 0,
         Name: eventHost.Name,
-        OrderStatus: 'Not ordered'
-      }
+        OrderStatus: "Not ordered"
+      };
       this.eventUsers.push(Host);
       self.table.renderRows();
     }

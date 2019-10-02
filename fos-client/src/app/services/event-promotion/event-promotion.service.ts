@@ -84,7 +84,7 @@ export class EventPromotionService {
   ): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http
-        .put<ApiOperationResult<void>>(
+        .post<ApiOperationResult<void>>(
           environment.apiUrl + "api/EventPromotion/AddEventPromotion",
           newPromos,
           {
@@ -107,7 +107,7 @@ export class EventPromotionService {
   ): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http
-        .put<ApiOperationResult<void>>(
+        .post<ApiOperationResult<void>>(
           environment.apiUrl + "api/EventPromotion/UpdateEventPromotion",
           eventPromo
         )
