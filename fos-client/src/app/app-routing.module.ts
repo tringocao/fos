@@ -41,16 +41,15 @@ const routes: Routes = [
     path: 'feedback/:id',
     component: FeedbackComponent
   },
-  { path: 'print',
+  {
+    path: 'print',
     outlet: 'print',
     component: PrintLayoutComponent,
-    children: [
-      { path: 'report/:id', component: EventSummaryPrintComponent }
-    ]
+    children: [{ path: 'report/:id', component: EventSummaryPrintComponent }]
   },
   {
     path: 'not-participant/:id',
-    component: NotParticipantComponent
+    component: NotParticipantComponent,
     children: [{ path: 'report/:id', component: EventSummaryPrintComponent }]
   },
   {

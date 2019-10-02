@@ -243,53 +243,56 @@ export class EventDialogEditComponent implements OnInit {
       );
 
     // var participants = JSON.parse(self.data.EventParticipantsJson);
-    const participants: Array<GraphUser> = JSON.parse(this.data.EventParticipantsJson);
+    const participants: Array<GraphUser> = JSON.parse(
+      this.data.EventParticipantsJson
+    );
 
-    this.orderService.GetOrdersByEventId(this.data.EventId).then((order: Array<Order>) =>{
-      order.forEach(o=>{
-
-        const userNotOrder: GraphUser[] = participants.filter(p =>p.Mail == o.Email);
-        if(o.OrderStatus == 0){
-          const UserNot: EventUser ={
-            Email: userNotOrder[0].Mail,
-            Name: userNotOrder[0].DisplayName,
-            OrderStatus: 'Not Ordered',
-            Img:'',
-            IsGroup: 0,
-            Id: userNotOrder[0].Id
+    this.orderService
+      .GetOrdersByEventId(this.data.EventId)
+      .then((order: Array<Order>) => {
+        order.forEach(o => {
+          const userNotOrder: GraphUser[] = participants.filter(
+            p => p.Mail == o.Email
+          );
+          if (o.OrderStatus == 0) {
+            const UserNot: EventUser = {
+              Email: userNotOrder[0].Mail,
+              Name: userNotOrder[0].DisplayName,
+              OrderStatus: 'Not Ordered',
+              Img: '',
+              IsGroup: 0,
+              Id: userNotOrder[0].Id
+            };
+            this.eventUsers.push(UserNot);
+          } else if (o.OrderStatus == 1) {
+            const UserNot: EventUser = {
+              Email: userNotOrder[0].Mail,
+              Name: userNotOrder[0].DisplayName,
+              OrderStatus: 'Ordered',
+              Img: '',
+              IsGroup: 0,
+              Id: userNotOrder[0].Id
+            };
+            this.eventUsers.push(UserNot);
+          } else if (o.OrderStatus == 2) {
+            const UserNot: EventUser = {
+              Email: userNotOrder[0].Mail,
+              Name: userNotOrder[0].DisplayName,
+              OrderStatus: 'Not Participant',
+              Img: '',
+              IsGroup: 0,
+              Id: userNotOrder[0].Id
+            };
+            this.eventUsers.push(UserNot);
           }
-          this.eventUsers.push(UserNot);
-        }else if(o.OrderStatus == 1){
-          const UserNot: EventUser ={
-            Email: userNotOrder[0].Mail,
-            Name: userNotOrder[0].DisplayName,
-            OrderStatus: 'Ordered',
-            Img:'',
-            IsGroup: 0,
-            Id: userNotOrder[0].Id
-          }
-          this.eventUsers.push(UserNot);
-        }else if(o.OrderStatus == 2){
-          const UserNot: EventUser ={
-            Email: userNotOrder[0].Mail,
-            Name: userNotOrder[0].DisplayName,
-            OrderStatus: 'Not Participant',
-            Img:'',
-            IsGroup: 0,
-            Id: userNotOrder[0].Id
-          }
-          this.eventUsers.push(UserNot);
-        }
+        });
+        this.table.renderRows();
       });
-    });
     this.userService.getCurrentUser().then(user => {
       this.customGroupService.getAllGroup(user.Id).then(allGroup => {
         this.groups = allGroup;
       });
     });
-      })
-      this.table.renderRows();
-    })
   }
   selectGroup($event) {
     this.selectedGroup = $event.value;
