@@ -42,6 +42,24 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { CustomGroupService } from 'src/app/services/custom-group/custom-group.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { CustomGroup } from 'src/app/models/custom-group';
+} from "@angular/forms";
+import { EventUser } from "../../models/eventuser";
+import { EventFormService } from "../../services/event-form/event-form.service";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { debounceTime, tap, switchMap, finalize } from "rxjs/operators";
+import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
+import { parseSelectorToR3Selector } from "@angular/compiler/src/core";
+import { User } from "src/app/models/user";
+import { DeliveryInfos } from "src/app/models/delivery-infos";
+import { GraphUser } from "src/app/models/graph-user";
+import { Event } from "src/app/models/event";
+import * as moment from "moment";
+import { Group } from "src/app/models/group";
+import { element } from "protractor";
+import { OverlayContainer } from "@angular/cdk/overlay";
+import { Promotion } from "src/app/models/promotion";
+import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -81,6 +99,7 @@ export class EventDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: MoreInfo,
     private fb: FormBuilder,
     private eventFormService: EventFormService,
+    private eventPromotionService: EventPromotionService,
     private http: HttpClient,
     private restaurantService: RestaurantService,
     private snackBar: MatSnackBar,
@@ -107,7 +126,7 @@ export class EventDialogComponent implements OnInit {
       userInputPicker: new FormControl(''),
       MaximumBudget: new FormControl('')
     });
-    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
+    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
   }
 
   apiUrl = environment.apiUrl;
@@ -154,6 +173,12 @@ export class EventDialogComponent implements OnInit {
   listPickedUser: userPicker[];
   groups: CustomGroup[] = [];
   selectedGroup: string;
+  promotions: Promotion[];
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
 
   displayFn(user: DeliveryInfos) {
     if (user) {
@@ -326,7 +351,7 @@ export class EventDialogComponent implements OnInit {
   SaveToSharePointEventList(): void {
     var self = this;
     if (self.eventUsers.length == 0) {
-      self.toast('Please choose participants!', 'Dismiss');
+      self.toast("Please choose participants!", "Dismiss");
       return;
     }
 
@@ -432,6 +457,7 @@ export class EventDialogComponent implements OnInit {
           console.log('new Id', newId.Data);
 
           self.SendEmail(newId.Data);
+          self.eventPromotionService.AddEventPromotion(Number(newId.Data), self.promotions);
 
           self.toast('added new event!', 'Dismiss');
           self.dialogRef.close();
@@ -446,6 +472,20 @@ export class EventDialogComponent implements OnInit {
   SendEmail(id: string) {
     this.restaurantService.setEmail(id);
     console.log('Sent!');
+  }
+  fetchAllPromotions() {
+    this.eventPromotionService
+      .getPromotionsByExternalService(
+        Number(this.ownerForm.get("userInput").value.DeliveryId),
+        1
+      )
+      .then(promotions => {
+        this.promotions = promotions;
+        // this.promotionChanged.emit(this.promotions);
+      });
+  }
+  removePromotion(promotion: Promotion) {
+    this.promotions = this.promotions.filter(pr => pr !== promotion);
   }
 
   public HasError = (controlName: string, errorName: string) => {
@@ -685,7 +725,7 @@ export class EventDialogComponent implements OnInit {
   }
   notifyMessage(eventHost: userPicker) {
     var self = this;
-    console.log('change picker', event);
+    console.log("change picker", event);
     var newHost: userPicker[] = this.eventUsers.filter(
       u => u.Email === eventHost.Email
     );
@@ -693,10 +733,10 @@ export class EventDialogComponent implements OnInit {
       var Host: EventUser = {
         Email: eventHost.Email,
         Id: eventHost.Id,
-        Img: '',
+        Img: "",
         IsGroup: 0,
         Name: eventHost.Name,
-        OrderStatus: 'Not ordered'
+        OrderStatus: "Not ordered"
       };
       this.eventUsers.push(Host);
       self.table.renderRows();

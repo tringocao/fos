@@ -50,6 +50,9 @@ import { CustomGroupService } from 'src/app/services/custom-group/custom-group.s
 import { Order } from 'src/app/models/order';
 import { EventUsers } from 'src/app/models/event-users';
 
+import { Promotion } from 'src/app/models/promotion';
+import { EventPromotionService } from 'src/app/services/event-promotion/event-promotion.service';
+import { EventPromotion } from 'src/app/models/event-promotion';
 @Component({
   selector: "app-event-dialog-edit",
   templateUrl: "./event-dialog-edit.component.html",
@@ -69,9 +72,10 @@ export class EventDialogEditComponent implements OnInit {
     private summaryService: SummaryService,
     private eventValidationService: EventFormValidationService,
     private eventMail: EventFormMailService,
-    overlayContainer: OverlayContainer,
     private userService: UserService,
     private customGroupService: CustomGroupService
+    private eventPromotionService: EventPromotionService,
+    overlayContainer: OverlayContainer
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -146,6 +150,15 @@ export class EventDialogEditComponent implements OnInit {
   groups: CustomGroup[] = [];
   selectedGroup: string;
 
+  eventPromotion: EventPromotion;
+  promotions: Promotion[];
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+
+
   ngOnInit() {
     var self = this;
 
@@ -159,6 +172,7 @@ export class EventDialogEditComponent implements OnInit {
     self.ownerForm.get('EventType').setValue(self.data.EventType);
     self.ownerForm.get('MaximumBudget').setValue(self.data.MaximumBudget);
 
+    this.getDbPromotions(self.data.EventId);
     var dataHostTemp: userPicker = {
       Name: self.data.HostName,
       Email: "",
@@ -460,20 +474,25 @@ export class EventDialogEditComponent implements OnInit {
           self.loading = true;
           if (this.checkRestaurant === false) {
             self.eventFormService
-              .UpdateEventListItem(self.data.EventId, self.eventListItem)
-              .toPromise()
-              .then(result => {
-                var updateEvent: UpdateEvent = {
-                  IdEvent: self.data.EventId,
-                  NewListUser: self.newListUser,
-                  RemoveListUser: self.removeListUser
-                };
-                self.eventMail.SendMailUpdateEvent(updateEvent).then(value => {
-                  self.toast('Update event successfuly!', 'Dismiss');
-                  window.location.reload();
-                });
+            .UpdateEventListItem(self.data.EventId, self.eventListItem)
+            .toPromise()
+            .then(result => {
+              self.eventPromotion.Promotions = self.promotions;
+              console.log(self.eventPromotion)
+              self.eventPromotionService.UpdateEventPromotion(self.eventPromotion);
+              var updateEvent: UpdateEvent = {
+                IdEvent: self.data.EventId,
+                NewListUser: self.newListUser,
+                RemoveListUser: self.removeListUser
+              }
+              self.eventMail.SendMailUpdateEvent(updateEvent).then(value=>{
+                self.toast('Update event successfuly!', 'Dismiss');
+                window.location.reload();
               });
-          } else {
+            });
+            
+          }
+          else{
             self.eventFormService
               .UpdateListItemWhenRestaurantChanges(
                 self.data.EventId,
@@ -495,6 +514,33 @@ export class EventDialogEditComponent implements OnInit {
   SendEmail(id: string) {
     this.restaurantService.setEmail(id);
     console.log("Sent!");
+  }
+
+  fetchAllPromotions() {
+    this.eventPromotionService
+      .getPromotionsByExternalService(
+        Number(this.ownerForm.get("userInput").value.DeliveryId),
+        1
+      )
+      .then(promotions => {
+        this.promotions = promotions;
+        // this.promotionChanged.emit(this.promotions);
+      });
+  }
+  removePromotion(promotion: Promotion) {
+    this.promotions = this.promotions.filter(pr => pr !== promotion);
+  }
+
+  getDbPromotions(eventId: string) {
+    this.eventPromotionService
+      .GetByEventId(
+        Number(eventId)
+      )
+      .then(promotion => {
+        this.eventPromotion = promotion;
+        this.promotions = this.eventPromotion.Promotions;
+        // this.promotionChanged.emit(this.promotions);
+      });
   }
 
   toast(message: string, action: string) {

@@ -547,7 +547,7 @@ export class EventSummaryDialogComponent implements OnInit {
       data: this.eventDetail.Name
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
+      if (result !== undefined) {
         this.reOpen();
       }
     });
@@ -559,9 +559,9 @@ export class EventSummaryDialogComponent implements OnInit {
         this.adjustedTotalCost = this.adjustedTotalCost - promotion.Value;
       } else if (promotion.IsPercent) {
         if (promotion.Value > 0) {
-          this.adjustedTotalCost = this.adjustedTotalCost - this.adjustedTotalCost * 100 / promotion.Value;
+          this.adjustedTotalCost = this.adjustedTotalCost - this.adjustedTotalCost / 100 * promotion.Value;
         }
-      } else if (promotion.PromotionType == PromotionType.ShipFee) {
+      } else if (promotion.PromotionType === PromotionType.ShipFee) {
         this.adjustedTotalCost = this.adjustedTotalCost + promotion.Value;
       }
     });

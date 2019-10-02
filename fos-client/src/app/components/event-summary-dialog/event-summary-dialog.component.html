@@ -213,8 +213,8 @@
                 <td mat-cell *matCellDef="let element">{{ element.Total }}đ</td>
                 <td mat-footer-cell *matFooterCellDef>
                   <app-adjust-price
-                  [baseCost]="baseTotalCost"
-                  [adjustedCost]="adjustedTotalCost"
+                    [baseCost]="baseTotalCost"
+                    [adjustedCost]="adjustedTotalCost"
                   ></app-adjust-price>
                 </td>
               </ng-container>
@@ -304,11 +304,11 @@
                 <th mat-header-cell *matHeaderCellDef>Edit Order</th>
                 <td mat-cell *matCellDef="let element">
                   <app-edit-make-order
-                  matTooltip="Edit Order By Host"
-                  [isHostUser]="isHostUser"
-                  [eventDetail]="eventDetail"
-                  [user]="element.User"
-                ></app-edit-make-order>
+                    matTooltip="Edit Order By Host"
+                    [isHostUser]="isHostUser"
+                    [eventDetail]="eventDetail"
+                    [user]="element.User"
+                  ></app-edit-make-order>
                 </td>
               </ng-container>
               <tr
@@ -322,7 +322,11 @@
             </table>
           </mat-tab>
         </mat-tab-group>
-        <app-promotions-chip-list (promotionChanged)="adjustPrice($event)"></app-promotions-chip-list>
+        <app-promotions-chip-list
+          *ngIf="eventDataAvailable"
+          [deliveryId]="eventDetail.DeliveryId"
+          (promotionChanged)="adjustPrice($event)"
+        ></app-promotions-chip-list>
       </mat-card-content>
       <mat-card-actions align="end">
         <button
@@ -370,9 +374,14 @@
         >
           Print
         </button>
-        <button (click)="sendEmailFeedback()" mat-flat-button color="warn" *ngIf="isHostUser">
+        <button
+          (click)="sendEmailFeedback()"
+          mat-flat-button
+          color="warn"
+          *ngIf="isHostUser"
+        >
           Send email feedbacks
-      </button>
+        </button>
         <button
           (click)="
             eventDetail.Status === 'Closed' ? openDialog() : resendOrder()
@@ -386,7 +395,7 @@
         <button (click)="onNoClick()" mat-stroked-button *ngIf="reOrder">
           Cancel
         </button>
-          <!-- <button mat-flat-button color="warn">Close</button> -->
+        <!-- <button mat-flat-button color="warn">Close</button> -->
       </mat-card-actions>
     </mat-card>
   </div>

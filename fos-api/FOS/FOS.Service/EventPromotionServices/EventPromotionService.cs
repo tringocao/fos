@@ -38,7 +38,12 @@ namespace FOS.Services.EventPromotionServices
 
         public EventPromotion GetByEventId(int eventId)
         {
-            return _eventPromotionMapper.MapToDomain(_eventPromotionRepository.GetByEventId(eventId));
+            var eventPromotion = _eventPromotionRepository.GetByEventId(eventId);
+            if (eventPromotion != null)
+            {
+                return _eventPromotionMapper.MapToDomain(eventPromotion);
+            }
+            return null;
         }
 
         public EventPromotion GetById(int id)
