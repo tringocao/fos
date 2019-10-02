@@ -1,4 +1,4 @@
-import { Event } from './../../models/event';
+import { Event } from "./../../models/event";
 import {
   MatSort,
   MatPaginator,
@@ -6,12 +6,12 @@ import {
   MatTable,
   MatSnackBar,
   ErrorStateMatcher
-} from '@angular/material';
+} from "@angular/material";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
-} from '@angular/material/dialog';
+} from "@angular/material/dialog";
 import {
   FormControl,
   FormGroup,
@@ -21,11 +21,11 @@ import {
   ValidatorFn,
   FormGroupDirective,
   NgForm
-} from '@angular/forms';
-import * as moment from 'moment';
-import { Component, Inject, OnInit, ViewChild, Input } from '@angular/core';
-import { EventFormService } from 'src/app/services/event-form/event-form.service';
-import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+} from "@angular/forms";
+import * as moment from "moment";
+import { Component, Inject, OnInit, ViewChild, Input } from "@angular/core";
+import { EventFormService } from "src/app/services/event-form/event-form.service";
+import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
 import {
   userPickerGroup,
   userPicker
@@ -48,11 +48,12 @@ import { CustomGroup } from './../../models/custom-group';
 import { UserService } from 'src/app/services/user/user.service';
 import { CustomGroupService } from 'src/app/services/custom-group/custom-group.service';
 import { Order } from 'src/app/models/order';
+import { EventUsers } from 'src/app/models/event-users';
 
 @Component({
-  selector: 'app-event-dialog-edit',
-  templateUrl: './event-dialog-edit.component.html',
-  styleUrls: ['./event-dialog-edit.component.less']
+  selector: "app-event-dialog-edit",
+  templateUrl: "./event-dialog-edit.component.html",
+  styleUrls: ["./event-dialog-edit.component.less"]
 })
 export class EventDialogEditComponent implements OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -90,14 +91,14 @@ export class EventDialogEditComponent implements OnInit {
       EventType: new FormControl(''),
       MaximumBudget: new FormControl('')
     });
-    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
+    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
   }
   //global
   apiUrl = environment.apiUrl;
   eventType: string = 'Open';
   matcher = new MyErrorStateMatcher();
-  eventSelectedBar = 'Open';
-  createdUser = { id: '' };
+  eventSelectedBar = "Open";
+  createdUser = { id: "" };
   dateEventTime: string;
   dateTimeToClose: string;
   dateToReminder: string;
@@ -115,11 +116,11 @@ export class EventDialogEditComponent implements OnInit {
   private ToDateString(date: Date): string {
     return (
       date.getFullYear().toString() +
-      '-' +
-      ('0' + (date.getMonth() + 1)).slice(-2) +
-      '-' +
-      ('0' + date.getDate()).slice(-2) +
-      'T' +
+      "-" +
+      ("0" + (date.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("0" + date.getDate()).slice(-2) +
+      "T" +
       date.toTimeString().slice(0, 5)
     );
   }
@@ -128,7 +129,7 @@ export class EventDialogEditComponent implements OnInit {
 
   hostPickerGroup = [];
 
-  displayedColumns = ['avatar', 'name', 'email', 'order status', 'action'];
+  displayedColumns = ["avatar", "name", "email", "order status", "action"];
 
   isLoading = false;
   isHostLoading = false;
@@ -148,10 +149,10 @@ export class EventDialogEditComponent implements OnInit {
   ngOnInit() {
     var self = this;
 
-    self.ownerForm.get('EventType').setValue(self.data.EventType);
-    self.ownerForm.get('title').setValue(self.data.Name);
-    self.ownerForm.get('EventType').setValue(self.data.EventType);
-    self.ownerForm.get('MaximumBudget').setValue(self.data.MaximumBudget);
+    self.ownerForm.get("EventType").setValue(self.data.EventType);
+    self.ownerForm.get("title").setValue(self.data.Name);
+    self.ownerForm.get("EventType").setValue(self.data.EventType);
+    self.ownerForm.get("MaximumBudget").setValue(self.data.MaximumBudget);
 
     self.ownerForm.get('EventType').setValue(self.data.EventType);
     self.ownerForm.get('title').setValue(self.data.Name);
@@ -160,13 +161,13 @@ export class EventDialogEditComponent implements OnInit {
 
     var dataHostTemp: userPicker = {
       Name: self.data.HostName,
-      Email: '',
-      Img: '',
+      Email: "",
+      Img: "",
       Id: self.data.HostId,
       IsGroup: 0
     };
 
-    self.ownerForm.get('userInputHost').setValue(dataHostTemp);
+    self.ownerForm.get("userInputHost").setValue(dataHostTemp);
 
     var newCloseTime = new Date(this.data.CloseTime);
     var closeTime = this.ToDateString(newCloseTime);
@@ -204,26 +205,26 @@ export class EventDialogEditComponent implements OnInit {
 
     //restaurant
     var restaurantTemp: DeliveryInfos = {
-      CityId: '1',
+      CityId: "1",
       RestaurantId: self.data.RestaurantId,
-      IsOpen: '',
-      IsFoodyDelivery: '',
-      Campaigns: '',
-      PromotionGroups: '',
-      Photo: '',
-      Operating: '',
-      Address: '',
+      IsOpen: "",
+      IsFoodyDelivery: "",
+      Campaigns: "",
+      PromotionGroups: "",
+      Photo: "",
+      Operating: "",
+      Address: "",
       DeliveryId: self.data.DeliveryId,
       Categories: self.data.Category,
       Name: self.data.Restaurant,
-      UrlRewriteName: '',
+      UrlRewriteName: "",
       IsFavorite: false
     };
 
-    self.ownerForm.get('userInput').setValue(restaurantTemp);
+    self.ownerForm.get("userInput").setValue(restaurantTemp);
 
     self.ownerForm
-      .get('userInput')
+      .get("userInput")
       .valueChanges.pipe(
         debounceTime(300),
         tap(() => (self.isLoading = true)),
@@ -322,13 +323,13 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   toStandardDate(date: any) {
-    return moment(date).format('YYYY-MM-DD');
+    return moment(date).format("YYYY-MM-DD");
   }
 
   UpdateToSharePointEventList(): void {
     var self = this;
     if (self.eventUsers.length == 0) {
-      self.toast('Please choose participants!', 'Dismiss');
+      self.toast("Please choose participants!", "Dismiss");
       return;
     }
 
@@ -342,7 +343,7 @@ export class EventDialogEditComponent implements OnInit {
 
     var jsonParticipants: GraphUser[] = [];
     var numberParticipant = 0;
-    console.log('check value', numberParticipant);
+    console.log("check value", numberParticipant);
 
     let promises: Array<Promise<void>> = [];
     this.eventUsers.map(user => {
@@ -419,26 +420,26 @@ export class EventDialogEditComponent implements OnInit {
       var myJSON: string = JSON.stringify(jsonParticipants);
 
       self.eventListItem = {
-        Name: self.ownerForm.get('title').value,
-        EventId: self.ownerForm.get('title').value,
-        Restaurant: self.ownerForm.get('userInput').value.Name,
-        MaximumBudget: self.ownerForm.get('MaximumBudget').value,
+        Name: self.ownerForm.get("title").value,
+        EventId: self.ownerForm.get("title").value,
+        Restaurant: self.ownerForm.get("userInput").value.Name,
+        MaximumBudget: self.ownerForm.get("MaximumBudget").value,
         CloseTime: new Date(dateTimeToClose),
         RemindTime: new Date(dateToReminder),
-        HostName: self.ownerForm.get('userInputHost').value.Name,
+        HostName: self.ownerForm.get("userInputHost").value.Name,
         Participants: numberParticipant.toString(),
-        Category: self.ownerForm.get('userInput').value.Categories,
-        RestaurantId: self.ownerForm.get('userInput').value.RestaurantId,
+        Category: self.ownerForm.get("userInput").value.Categories,
+        RestaurantId: self.ownerForm.get("userInput").value.RestaurantId,
         ServiceId: self.data.ServiceId,
-        DeliveryId: self.ownerForm.get('userInput').value.DeliveryId,
+        DeliveryId: self.ownerForm.get("userInput").value.DeliveryId,
         CreatedBy: self.data.CreatedBy,
-        HostId: self.ownerForm.get('userInputHost').value.Id,
+        HostId: self.ownerForm.get("userInputHost").value.Id,
         EventDate: new Date(eventDate),
         EventParticipantsJson: myJSON,
-        EventType: self.ownerForm.get('EventType').value,
+        EventType: self.ownerForm.get("EventType").value,
         Action: null,
         IsMyEvent: null,
-        Status: 'Opened'
+        Status: "Opened"
       };
       self.loading = false;
       self.openDialog();
@@ -448,9 +449,9 @@ export class EventDialogEditComponent implements OnInit {
   openDialog(): void {
     var self = this;
     const dialogRef = this.dialog.open(EventDialogConfirmComponent, {
-      width: '450px',
+      width: "450px",
       data:
-        'If you update event information, system will resend email to all attendees.'
+        "If you update event information, system will resend email to all attendees."
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -493,7 +494,7 @@ export class EventDialogEditComponent implements OnInit {
 
   SendEmail(id: string) {
     this.restaurantService.setEmail(id);
-    console.log('Sent!');
+    console.log("Sent!");
   }
 
   toast(message: string, action: string) {
@@ -504,7 +505,7 @@ export class EventDialogEditComponent implements OnInit {
 
   AddUserToTable(): void {
     var self = this;
-    console.log('Nhan add card');
+    console.log("Nhan add card");
 
     console.log(this.userSelect);
 
@@ -512,7 +513,7 @@ export class EventDialogEditComponent implements OnInit {
     if (!choosingUser.Email) {
       return;
     }
-    console.log('choose User', choosingUser);
+    console.log("choose User", choosingUser);
 
     var flag = false;
     self.eventUsers.forEach(element => {
@@ -525,10 +526,10 @@ export class EventDialogEditComponent implements OnInit {
         self.eventUsers.push({
           Name: choosingUser.Name,
           Email: choosingUser.Email,
-          Img: '',
+          Img: "",
           Id: choosingUser.Id,
           IsGroup: 0,
-          OrderStatus: 'Not Order'
+          OrderStatus: "Not Order"
         });
         self.table.renderRows();
       }
@@ -536,7 +537,7 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   DeleteUserInTable(name: string): void {
-    console.log('xoa ', name);
+    console.log("xoa ", name);
     for (var j = 0; j < this.eventUsers.length; j++) {
       if (name == this.eventUsers[j].Name) {
         this.eventUsers.splice(j, 1);
@@ -549,7 +550,7 @@ export class EventDialogEditComponent implements OnInit {
 
   public CreateOwner = ownerFormValue => {
     if (this.ownerForm.valid) {
-      console.log('pass');
+      console.log("pass");
     }
   };
 
@@ -798,7 +799,7 @@ export class EventDialogEditComponent implements OnInit {
       var Host: EventUser = {
         Email: eventHost.Email,
         Id: eventHost.Id,
-        Img: '',
+        Img: "",
         IsGroup: 0,
         Name: eventHost.Name,
         OrderStatus: 'Not order'
@@ -818,8 +819,21 @@ export class EventDialogEditComponent implements OnInit {
         this.summaryService
           .updateEventStatus(this.data.EventId, 'Error')
           .then(result => {
-            this.loading = false;
-            window.location.reload();
+            const ListUserCancel: EventUsers[] = [];
+
+            this.eventUsers.forEach((u: EventUser) => {
+              const testUser: EventUsers = {
+                UserMail: u.Email,
+                EventId: this.data.EventId,
+                EventTitle: this.ownerForm.get('title').value.toString(),
+                UserName: u.Name,
+              };
+              ListUserCancel.push(testUser);
+            });
+            this.eventMail.SendCancelEventMail(ListUserCancel).then(() => {
+              this.loading = false;
+              window.location.reload();
+            });
           });
       }
     });
