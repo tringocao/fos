@@ -172,6 +172,7 @@
     <Compile Include="Dto\Restaurant.cs" />
     <Compile Include="Dto\RestaurantDetail.cs" />
     <Compile Include="Dto\RestaurantSummary.cs" />
+    <Compile Include="Dto\TablePaging.cs" />
     <Compile Include="Dto\UpdateEvent.cs" />
     <Compile Include="Dto\User.cs" />
     <Compile Include="Dto\UserFeedback.cs" />
@@ -972,6 +973,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Restaurant.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\table-paging.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\TablePaging.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\update-event.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
