@@ -18,6 +18,7 @@
     #foodlist
     [data]="data"
     [isOrder]="isOrder"
+    [discountPerItem]="discountPerItem"
     [checkedData]="checkedData"
     (valueChange)="getFoodFromMenu($event)"
   ></app-food>
@@ -28,6 +29,8 @@
     [order]="order"
     [isOrder]="isOrder"
     [event]="event"
+    [promotions]="promotions"
+    [discountPerItem]="discountPerItem"
     [totalBudget]="totalBudget"
     (valueChange)="deleteFoodFromMenu($event)"
     (saveOrder)="save()"

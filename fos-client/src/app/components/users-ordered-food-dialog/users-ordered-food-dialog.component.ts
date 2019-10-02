@@ -41,7 +41,7 @@ export class UsersOrderedFoodDialogComponent implements OnInit {
   }
   makeOrderByHost(row: any) {
     if (this.data.isHostUser) {
-      debugger;
+      //debugger;
       this.orderService
         .GetByEventvsUserId(this.data.eventDetail.EventId, row.Id)
         .then(order => {

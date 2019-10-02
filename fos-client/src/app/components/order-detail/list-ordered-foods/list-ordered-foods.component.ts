@@ -43,14 +43,12 @@ export class ListOrderedFoodsComponent implements OnInit {
   @Input("isOrder") isOrder: boolean;
   @Output() valueChange = new EventEmitter<FoodDetailJson>();
   @Output() saveOrder = new EventEmitter<void>();
-  eventPromotion: EventPromotion;
-  promotions: Promotion[] = [];
+  @Input() promotions: Promotion[] = [];
   visible = true;
   selectable = true;
   removable = false;
   addOnBlur = true;
-  showNewPrice = false;
-  discountPerItem: Promotion;
+  @Input() discountPerItem: Promotion;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   foodOrdered: Food;
   displayedColumns2: string[] = [
@@ -68,11 +66,7 @@ export class ListOrderedFoodsComponent implements OnInit {
   year: number;
   hour: number;
   minutes: number;
-  constructor(
-    public dialog: MatDialog,
-    private overlay: Overlay,
-    private eventPromotionService: EventPromotionService
-  ) {}
+  constructor(public dialog: MatDialog, private overlay: Overlay) {}
   load = true;
   @Input() totalBudget: Number;
   ngOnInit() {
@@ -90,7 +84,7 @@ export class ListOrderedFoodsComponent implements OnInit {
         ["Name"]: food.Name,
         ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
-        ["Total"]: food.Price.toString(),
+        ["Total"]: this.setNewPrice(food).toString(),
         ["Comment"]: "",
         ["Photo"]: food.Photos,
         ["IsDiscountedFood"]: food.IsDiscountedFood ? "true" : "false"
@@ -125,7 +119,7 @@ export class ListOrderedFoodsComponent implements OnInit {
     var getItem = this.dataSource2.data.findIndex(x => x.IdFood == food.IdFood);
     var f = this.dataSource2.data[getItem];
     f.Value["Amount"] = amount.toString();
-    var total = Number(f.Value["Amount"]) * Number(f.Value["Price"]);
+    var total = Number(f.Value["Amount"]) * this.setNewPriceDJ(f);
     f.Value["Total"] = (total >= 0 ? total : 0).toString();
     this.dataSource2.data[getItem] = f;
     this.dataSource2.filter = "";
@@ -182,23 +176,32 @@ export class ListOrderedFoodsComponent implements OnInit {
     this.saveOrder.emit();
   }
 
-  getDbPromotions(eventId: string) {
-    this.eventPromotionService.GetByEventId(Number(eventId)).then(promotion => {
-      this.eventPromotion = promotion;
-      this.promotions = this.eventPromotion.Promotions;
-      this.discountPerItem = this.promotions
-        .filter(p => p.PromotionType == PromotionType.DiscountPerItem)
-        .pop();
-      if (this.discountPerItem != null) {
-        this.showNewPrice = true;
-      }
-    });
-  }
-  setNewPrice(price: number) {
-    if (this.showNewPrice) {
+  setNewPrice(food: Food) {
+    if (this.discountPerItem == null) return food.Price;
+    if (this.discountPerItem.DiscountedFoodIds == null) {
       if (this.discountPerItem.IsPercent) {
-        return price - (price * this.discountPerItem.Value) / 100;
+        return food.Price - (food.Price * this.discountPerItem.Value) / 100;
       } else return this.discountPerItem.Value;
+    } else {
+      var percent = this.discountPerItem.DiscountedFoodIds[food.Id];
+      return food.Price - (food.Price * percent) / 100;
+    }
+  }
+  setNewPriceDJ(food: FoodDetailJson) {
+    if (this.discountPerItem == null) return Number(food.Value["Price"]);
+    if (this.discountPerItem.DiscountedFoodIds == null) {
+      if (this.discountPerItem.IsPercent) {
+        return (
+          Number(food.Value["Price"]) -
+          (Number(food.Value["Price"]) * this.discountPerItem.Value) / 100
+        );
+      } else return this.discountPerItem.Value;
+    } else {
+      var percent = this.discountPerItem.DiscountedFoodIds[food.IdFood];
+      return (
+        Number(food.Value["Price"]) -
+        (Number(food.Value["Price"]) * percent) / 100
+      );
     }
   }
 }

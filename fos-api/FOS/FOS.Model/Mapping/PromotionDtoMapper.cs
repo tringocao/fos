@@ -43,10 +43,11 @@ namespace FOS.Model.Mapping
             {
                 Expired = oDate,
                 IsPercent = promotion.DiscountValueType == "1" ? true : false,
-                MaxDiscountAmount = promotion.MaxDiscountAmount !=null ? Int32.Parse(promotion.MaxDiscountAmount) : 0,
-                MinOrderAmount = promotion.MinOrderAmount != null ? Int32.Parse(promotion.MinOrderAmount) : 0,
-                Value = promotion.DiscountAmount != null ? Int32.Parse(promotion.DiscountAmount) : 0,
-                PromotionType = PromotionType
+                MaxDiscountAmount = promotion.MaxDiscountAmount != null ? (int)float.Parse(promotion.MaxDiscountAmount) : 0,
+                MinOrderAmount = promotion.MinOrderAmount != null ? (int)float.Parse(promotion.MinOrderAmount) : 0,
+                Value = promotion.DiscountAmount != null ? (int)float.Parse(promotion.DiscountAmount) : 0,
+                PromotionType = PromotionType,
+                DiscountedFoodIds = promotion.DiscountedFoodIds
             };
         }
         public Domain.NowModel.Promotion ToModel(Dto.Promotion promotion)
@@ -82,7 +83,8 @@ namespace FOS.Model.Mapping
                 MinOrderAmount = promotion.MinOrderAmount.ToString(),
                 DiscountValueType = promotion.IsPercent ? "1" : "3",
                 DiscountAmount = promotion.Value.ToString(),
-                DiscountOnType = discountOnType
+                DiscountOnType = discountOnType,
+                DiscountedFoodIds = promotion.DiscountedFoodIds
             };
         }
     }
