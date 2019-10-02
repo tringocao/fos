@@ -20,7 +20,10 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             DeliveryDetail deliveryInfos = new DeliveryDetail();
             if (data.result == "success")
             {
-                deliveryInfos = ChoJSONReader<DeliveryDetail>.LoadText(data.reply.delivery_detail.ToString());
+                deliveryInfos = JsonConvert.DeserializeObject<DeliveryDetail>(data.reply.delivery_detail.ToString());
+                deliveryInfos.PromotionOnAll = JsonConvert.DeserializeObject<List<Promotion>>(data.reply.delivery_detail.delivery.promotions.ToString());
+                deliveryInfos.PromotionOnItem = JsonConvert.DeserializeObject<Promotion>(data.reply.delivery_detail.price_slash_discount.ToString());
+
             }
             return deliveryInfos;
         }

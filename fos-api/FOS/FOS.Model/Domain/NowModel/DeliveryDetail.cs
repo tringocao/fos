@@ -10,11 +10,9 @@ namespace FOS.Model.Domain.NowModel
 {
     public class DeliveryDetail
     {
-        [ChoJSONRecordField]
+        [JsonProperty("rating")]
         public dynamic Rating { get; set; }
-        [ChoJSONRecordField(JSONPath = "$.delivery.promotions")]
         public List<Promotion> PromotionOnAll { get; set; }
-        [ChoJSONRecordField(JSONPath = "$.price_slash_discount")]
         public Promotion PromotionOnItem { get; set; }
     }
 }

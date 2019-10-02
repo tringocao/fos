@@ -32,13 +32,15 @@ namespace FOS.Model.Mapping
                         break;
                     }
             }
+            DateTime oDate = DateTime.ParseExact(promotion.Expired, "dd/MM/yyyy HH:mm", null);
+
             return new Dto.Promotion()
             {
-                Expired = DateTime.Parse(promotion.Expired),
+                Expired = oDate,
                 IsPercent = promotion.DiscountValueType == "1" ? true : false,
-                MaxDiscountAmount = promotion.MaxDiscountAmount.Length > 0 ? Int32.Parse(promotion.MaxDiscountAmount) : 0,
-                MinOrderAmount = promotion.MinOrderAmount.Length > 0 ? Int32.Parse(promotion.MinOrderAmount) : 0,
-                Value = promotion.DiscountAmount.Length > 0 ? Int32.Parse(promotion.DiscountAmount) : 0,
+                MaxDiscountAmount = promotion.MaxDiscountAmount !=null ? Int32.Parse(promotion.MaxDiscountAmount) : 0,
+                MinOrderAmount = promotion.MinOrderAmount != null ? Int32.Parse(promotion.MinOrderAmount) : 0,
+                Value = promotion.DiscountAmount != null ? Int32.Parse(promotion.DiscountAmount) : 0,
                 PromotionType = PromotionType
             };
         }
