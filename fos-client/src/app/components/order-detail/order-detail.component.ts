@@ -65,7 +65,6 @@ export class OrderDetailComponent implements OnInit {
       }
     })
 
-    debugger;
     this.isWildParticipant = false;
     // check if wild guest order
     if (this.idOrder.includes("ffa")) {

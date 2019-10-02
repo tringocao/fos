@@ -13,5 +13,6 @@ namespace FOS.Services.EventServices
     {
         IEnumerable<Model.Domain.Event> GetAllEvent(string userId);
         Model.Domain.Event GetEvent(int id);
+        bool ValidateEventInfo(Model.Domain.Event eventInfo);
     }
 }
