@@ -10,5 +10,6 @@ namespace FOS.Services.FoodServices
         Task<List<FoodCategory>> GetFoodCataloguesAsync(DeliveryInfos delivery);
         Task<List<FoodCategory>> GetFoodCataloguesFromDeliveryIdAsync(int deliveryId);
         Task<List<Food>> GetFoodFromCatalogueAsync(int deliveryId, int dishTypeId);
+        Task<List<int>> GetDiscountedFoodIds(int deliveryId);
     }
 }

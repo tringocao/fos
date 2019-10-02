@@ -45,7 +45,21 @@ namespace FOS.API.Controllers
                 return ApiUtil<List<FoodCategory>>.CreateFailResult(e.ToString());
             }
         }
-
+        [HttpGet]
+        [Route("GetDiscountedFoodIds")]
+        public async Task<ApiResponse<IEnumerable<int>>> GetDiscountedFoodIds(int idService, int deliveryId)
+        {
+            try
+            {
+                _foodService.GetExternalServiceById(idService);
+                var list = await _foodService.GetDiscountedFoodIds(deliveryId);
+                return ApiUtil<IEnumerable<int>>.CreateSuccessfulResult(list);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<IEnumerable<int>>.CreateFailResult(e.ToString());
+            }
+        }
         // GET: api/Food/5
         [HttpGet]
         [Route("GetFood")]

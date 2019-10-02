@@ -13,12 +13,12 @@ namespace FOS.Model.Mapping
 
         public Dto.Promotion ToDto(Domain.NowModel.Promotion promotion)
         {
-            Dto.PromotionType PromotionType;
+            Dto.PromotionType PromotionType = Dto.PromotionType.FreeShip;
             switch (promotion.DiscountOnType)
             {
                 case "3":
                     {
-                        PromotionType = Dto.PromotionType.ShipFee;
+                        PromotionType = Dto.PromotionType.FreeShip;
                         break;
                     }
                 case "2":
@@ -26,9 +26,14 @@ namespace FOS.Model.Mapping
                         PromotionType = Dto.PromotionType.DiscountAll;
                         break;
                     }
-                default:
+                case null:
                     {
                         PromotionType = Dto.PromotionType.DiscountPerItem;
+                        break;
+                    }
+                case "4":
+                    {
+                        PromotionType = Dto.PromotionType.ShipFee;
                         break;
                     }
             }
@@ -49,7 +54,7 @@ namespace FOS.Model.Mapping
             string discountOnType = null;
             switch (promotion.PromotionType)
             {
-                case PromotionType.ShipFee:
+                case PromotionType.FreeShip:
                     {
                         discountOnType = "3";
                         break;
@@ -62,6 +67,11 @@ namespace FOS.Model.Mapping
                 case PromotionType.DiscountAll:
                     {
                         discountOnType = "2";
+                        break;
+                    }
+                case PromotionType.ShipFee:
+                    {
+                        discountOnType = "4";
                         break;
                     }
             }

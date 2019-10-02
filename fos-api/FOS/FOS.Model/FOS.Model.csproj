@@ -127,7 +127,6 @@
     <Compile Include="Domain\EventPromotion.cs" />
     <Compile Include="Domain\FeedBack.cs" />
     <Compile Include="Domain\NowModel\Promotion.cs" />
-    <Compile Include="Domain\PromotionType.cs" />
     <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
     <Compile Include="Domain\DishesSummary.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
@@ -694,6 +693,10 @@
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Food.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\food.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\Food.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\graph-user.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\GraphUser.cs</CustomToolNamespace>
@@ -813,6 +816,14 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\promotion-type.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\PromotionType.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\promotion-type.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\PromotionType.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\promotion.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\Promotion.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\promotion.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

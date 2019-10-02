@@ -17,6 +17,7 @@
         public IsPercent: boolean = false;   
         public Expired: Date = null;   
         public MaxDiscountAmount: number = null;   
-        public MinOrderAmount: number = null;
+        public MinOrderAmount: number = null;   
+        public DiscountedFoodIds: number[] = [];
     }
          

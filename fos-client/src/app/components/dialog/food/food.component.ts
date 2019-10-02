@@ -154,7 +154,8 @@ export class FoodComponent implements OnInit {
       Photos: null,
       Description: null,
       Price: null,
-      IsChecked: null
+      IsChecked: null,
+      IsDiscountedFood: food.Value["IsDiscountedFood"] === "true"
     };
   }
 }

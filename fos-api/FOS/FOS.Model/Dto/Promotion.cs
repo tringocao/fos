@@ -15,5 +15,6 @@ namespace FOS.Model.Dto
         public DateTime? Expired { set; get; }
         public int? MaxDiscountAmount { set; get; }
         public int? MinOrderAmount { set; get; }
+        public List<int> DiscountedFoodIds { set; get; }
     }
 }

@@ -31,6 +31,24 @@ namespace FOS.Services.FoodServices
             return await GetFoodCataloguesAsync(
                 new DeliveryInfos() { DeliveryId = deliveryId});
         }
+        public async Task<List<int>> GetDiscountedFoodIds(int deliveryId)
+        {
+            List<int> DiscountedFoodIds = new List<int>();
+            var menu =  await GetFoodCataloguesAsync(
+                new DeliveryInfos() { DeliveryId = deliveryId });
+            foreach (var dishType in menu)
+            {
+                foreach(var dish in dishType.Dishes)
+                {
+                    if(dish.DiscountPrice != null)
+                    {
+                        DiscountedFoodIds.Add(dish.Id);
+                    }
+                }
+                
+            }
+            return DiscountedFoodIds;
+        }
         public async Task<List<Food>> GetFoodFromCatalogueAsync(int deliveryId, int dishTypeId)
         {
             var listFoodCatalogue = await GetFoodCataloguesFromDeliveryIdAsync(deliveryId);

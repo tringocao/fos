@@ -184,7 +184,30 @@ export class RestaurantService {
         .catch(alert => console.log(alert));
     });
   }
-
+  getDiscountFoodIds(
+    deliveryId: number,
+    idService: number
+  ): Promise<Array<number>> {
+    return new Promise<Array<number>>((resolve, reject) => {
+      this.http
+        .get<ApiOperationResult<Array<number>>>(
+          environment.apiUrl + "GetDiscountedFoodIds",
+          {
+            params: {
+              idService: JSON.stringify(idService),
+              deliveryId: JSON.stringify(deliveryId)
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
   SearchRestaurantName(
     name: string,
     limit: number,
