@@ -35,7 +35,8 @@ import {
   MatListModule,
   MatInputModule,
   MatTooltipModule,
-  MatRadioModule
+  MatRadioModule,
+  MatExpansionModule
 } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
@@ -100,6 +101,8 @@ import { WClockComponent } from './components/datetimepicker/time-dialog/w-clock
 import { WTimeComponent } from './components/datetimepicker/time-dialog/w-time/w-time.component';
 import { DialogCheckActionComponent } from './components/order-detail/list-ordered-foods/dialog-check-action/dialog-check-action.component';
 import { UsersOrderedFoodDialogComponent } from './components/users-ordered-food-dialog/users-ordered-food-dialog.component';
+import { CustomGroupPageComponent } from './pages/custom-group-page/custom-group-page.component';
+import { CreateUpdateCustomGroupComponent } from './components/create-update-custom-group/create-update-custom-group.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +148,9 @@ import { UsersOrderedFoodDialogComponent } from './components/users-ordered-food
     WClockComponent,
     WTimeComponent,
     DialogCheckActionComponent,
-    UsersOrderedFoodDialogComponent
+    UsersOrderedFoodDialogComponent,
+    CustomGroupPageComponent,
+    CreateUpdateCustomGroupComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -199,6 +204,7 @@ import { UsersOrderedFoodDialogComponent } from './components/users-ordered-food
     MatSlideToggleModule,
     MatRadioModule,
     LightboxModule,
+    MatExpansionModule,
     MatDatepickerModule, // <----- import(must)
     MatNativeDateModule // <----- import for date formating(optional)
   ],

@@ -102,6 +102,7 @@
     <Compile Include="Domain\ApiResponse.cs" />
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\CustomGroup.cs" />
     <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
     <Compile Include="Domain\DishesSummary.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Dto\Category.cs" />
     <Compile Include="Dto\CategoryGroup.cs" />
     <Compile Include="Dto\Comment.cs" />
+    <Compile Include="Dto\CustomGroup.cs" />
     <Compile Include="Dto\DeliveryInfos.cs" />
     <Compile Include="Dto\DishesSummary.cs" />
     <Compile Include="Dto\Event.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Mapping\CategoryDtoMapper.cs" />
     <Compile Include="Mapping\CategoryGroupDtoMapper.cs" />
     <Compile Include="Mapping\Config.cs" />
+    <Compile Include="Mapping\CustomGroupDtoMapper.cs" />
     <Compile Include="Mapping\DeliveryInfosDtoMapper.cs" />
     <Compile Include="Mapping\DishesSummaryDtoMapper.cs" />
     <Compile Include="Mapping\EventDtoMapper.cs" />
@@ -336,6 +339,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\comment.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Comment.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\custom-group.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\CustomGroup.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\delivery-infos.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

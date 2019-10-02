@@ -7,6 +7,7 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
 import { EventSummaryDialogComponent } from './components/event-summary-dialog/event-summary-dialog.component';
 import { PrintLayoutComponent } from './print-layout/print-layout.component';
 import { EventSummaryPrintComponent } from './components/event-summary-dialog/event-summary-print/event-summary-print.component';
+import { CustomGroupPageComponent } from './pages/custom-group-page/custom-group-page.component';
 
 const routes: Routes = [
   {
@@ -34,12 +35,15 @@ const routes: Routes = [
     path: 'events/summary/:id',
     component: EventSummaryDialogComponent
   },
-  { path: 'print',
+  {
+    path: 'print',
     outlet: 'print',
     component: PrintLayoutComponent,
-    children: [
-      { path: 'report/:id', component: EventSummaryPrintComponent }
-    ]
+    children: [{ path: 'report/:id', component: EventSummaryPrintComponent }]
+  },
+  {
+    path: 'custom-group',
+    component: CustomGroupPageComponent
   }
 ];
 

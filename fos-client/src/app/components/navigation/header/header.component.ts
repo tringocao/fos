@@ -4,35 +4,37 @@ import {
   Output,
   EventEmitter,
   OnChanges
-} from "@angular/core";
-import { MatDialog } from "@angular/material";
-import { SettingDialogComponent } from "./setting-dialog/setting-dialog.component";
-import { Overlay } from "@angular/cdk/overlay";
-import { UserService } from "src/app/services/user/user.service";
-import { User } from "src/app/models/user";
-import { OauthService } from "src/app/services/oauth/oauth.service";
+} from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { SettingDialogComponent } from './setting-dialog/setting-dialog.component';
+import { Overlay } from '@angular/cdk/overlay';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/models/user';
+import { OauthService } from 'src/app/services/oauth/oauth.service';
 import {
   Router,
   NavigationStart,
   NavigationEnd,
   NavigationError,
   Event
-} from "@angular/router";
+} from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: "app-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.less"]
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
-  title = "angular-theme";
-  appId = "theme1";
+  title = 'angular-theme';
+  appId = 'theme1';
   user: User;
   displayName: string;
   isUserLoaded: boolean = false;
   @Output() change = new EventEmitter();
   url: string;
+  customGroupLink: string;
 
   constructor(
     public dialog: MatDialog,
@@ -52,13 +54,13 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(SettingDialogComponent, {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       autoFocus: false,
-      maxHeight: "98vh",
-      maxWidth: "80%",
+      maxHeight: '98vh',
+      maxWidth: '80%',
       data: this.user
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
+      console.log('The dialog was closed');
     });
   }
 
@@ -68,6 +70,7 @@ export class HeaderComponent implements OnInit {
       this.displayName = user.DisplayName;
       this.isUserLoaded = true;
     });
+    this.customGroupLink = '/custom-group';
   }
 
   public onToggleSidenav = () => {
@@ -81,4 +84,5 @@ export class HeaderComponent implements OnInit {
   logOut() {
     this.oauthService.logOut();
   }
+  showGroup() {}
 }
