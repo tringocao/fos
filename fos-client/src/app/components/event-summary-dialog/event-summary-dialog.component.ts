@@ -120,7 +120,7 @@ export class EventSummaryDialogComponent implements OnInit {
   eventDetail: Event;
   foods: FoodReport[] = [];
   foods4Reorder: string[] = [];
-  discountedFoods: number[] = [];
+  discountedFoods: { [key: number]: number; };
   discountedPercent: number = 0;
 
   promotions: Promotion[];
@@ -584,17 +584,11 @@ export class EventSummaryDialogComponent implements OnInit {
       .getDiscountFoodIds(
         Number(this.eventDetail.DeliveryId),
         1,
+        promotion
       )
-      .then(foodIds => {
-        console.log(foodIds);
-        this.discountedFoods = foodIds;
+      .then(_promotion => {
+        this.discountedFoods = _promotion.DiscountedFoodIds;
         this.discountedPercent = promotion.Value;
-        // const discountedFoodReports = this.foods.map(food => {
-        //   if (foodIds.includes(Number(food.FoodId))) {
-
-        //   }
-        //   return food;
-        // });
       });
   }
   getDiscountedPrice(report: FoodReport) {
