@@ -44,9 +44,9 @@
       </mat-radio-group>
       <div class="event-type-hint">
         {{
-          getCurrentEventType() == "Open"
-            ? "Open for everyone"
-            : "Only for invited person"
+          getCurrentEventType() == 'Open'
+            ? 'Open for everyone'
+            : 'Only for invited person'
         }}<br />
       </div>
 
@@ -138,7 +138,7 @@
       </div>
 
       <mat-grid-list cols="10" rowHeight="100px">
-        <mat-grid-tile [colspan]="8">
+        <mat-grid-tile [colspan]="4">
           <app-event-dialog-userpicker
             class="full-width"
             (ListenChildComponentEvent)="notifyMessage($event)"
@@ -149,6 +149,21 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <button mat-flat-button color="primary" (click)="AddUserToTable()">
+            Add
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="4" class="custom-group">
+          <mat-form-field class="full-width">
+            <mat-label>Custom group</mat-label>
+            <mat-select (selectionChange)="selectGroup($event)">
+              <mat-option *ngFor="let group of groups" [value]="group.ID">
+                {{ group.Name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-flat-button color="primary" (click)="addGroupToTable()">
             Add
           </button>
         </mat-grid-tile>

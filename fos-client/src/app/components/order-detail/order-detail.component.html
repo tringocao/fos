@@ -30,18 +30,6 @@
     [event]="event"
     [totalBudget]="totalBudget"
     (valueChange)="deleteFoodFromMenu($event)"
+    (saveOrder)="save()"
   ></app-list-ordered-foods>
-</div>
-<div *ngIf="isDataAvailable" class="example-button-row">
-  <button
-    [disabled]="!isOrder"
-    mat-flat-button
-    color="primary"
-    (click)="save()"
-  >
-    Save Order
-  </button>
-  <button [disabled]="!isOrder" mat-stroked-button (click)="onNoClick()">
-    Cancel
-  </button>
 </div>

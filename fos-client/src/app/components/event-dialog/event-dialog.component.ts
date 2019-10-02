@@ -27,7 +27,6 @@ import {
 import { EventUser } from "../../models/eventuser";
 import { EventFormService } from "../../services/event-form/event-form.service";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment";
 import { debounceTime, tap, switchMap, finalize } from "rxjs/operators";
 import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
 import { parseSelectorToR3Selector } from "@angular/compiler/src/core";
@@ -39,8 +38,13 @@ import * as moment from "moment";
 import { Group } from "src/app/models/group";
 import { element } from "protractor";
 import { OverlayContainer } from "@angular/cdk/overlay";
+import { CustomGroupService } from "src/app/services/custom-group/custom-group.service";
+import { UserService } from "src/app/services/user/user.service";
+import { CustomGroup } from "src/app/models/custom-group";
+
 import { Promotion } from "src/app/models/promotion";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
+import { environment } from "src/environments/environment";
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -84,7 +88,9 @@ export class EventDialogComponent implements OnInit {
     private http: HttpClient,
     private restaurantService: RestaurantService,
     private snackBar: MatSnackBar,
-    overlayContainer: OverlayContainer
+    overlayContainer: OverlayContainer,
+    private userService: UserService,
+    private customGroupService: CustomGroupService
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -150,6 +156,8 @@ export class EventDialogComponent implements OnInit {
   loading: boolean;
   eviroment = environment.apiUrl;
   listPickedUser: userPicker[];
+  groups: CustomGroup[] = [];
+  selectedGroup: string;
   promotions: Promotion[];
 
   visible = true;
@@ -236,6 +244,34 @@ export class EventDialogComponent implements OnInit {
             self.isLoading = false;
           })
       );
+    this.userService.getCurrentUser().then(user => {
+      this.customGroupService.getAllGroup(user.Id).then(allGroup => {
+        this.groups = allGroup;
+      });
+    });
+  }
+
+  selectGroup($event) {
+    this.selectedGroup = $event.value;
+  }
+  addGroupToTable() {
+    if (this.selectedGroup && this.selectedGroup.length > 0) {
+      const group = this.groups.find(g => g.ID === this.selectedGroup);
+      group.Users.forEach(user => {
+        if (!this.eventUsers.find(u => u.Id === user.Id)) {
+          const eventUser = {
+            Name: user.DisplayName,
+            Email: user.Mail,
+            Img: "",
+            Id: user.Id,
+            IsGroup: 0,
+            OrderStatus: "Not Order"
+          };
+          this.eventUsers.push(eventUser);
+          this.table.renderRows();
+        }
+      });
+    }
   }
 
   // public OnCancel = () => {
@@ -406,7 +442,10 @@ export class EventDialogComponent implements OnInit {
           console.log("new Id", newId.Data);
 
           self.SendEmail(newId.Data);
-          self.eventPromotionService.AddEventPromotion(Number(newId.Data), self.promotions);
+          self.eventPromotionService.AddEventPromotion(
+            Number(newId.Data),
+            self.promotions
+          );
 
           self.toast("added new event!", "Dismiss");
           self.dialogRef.close();

@@ -11,7 +11,7 @@ namespace FOS.Repositories.Repositories
 {
     public interface IOrderRepository
     {
-        bool AddOrder(DataModel.Order order);
+        Task<bool> AddOrder(DataModel.Order order);
         DataModel.Order GetOrder(Guid id);
         IEnumerable<Order> GetAllOrder();
         IEnumerable<DataModel.Order> GetAllOrderByEventId(string eventId);
@@ -24,6 +24,8 @@ namespace FOS.Repositories.Repositories
         List<Model.Domain.UserNotOrderEmail> GetUserAlreadyOrderEmail(string eventId);
         bool DeleteOrderByUserId(string idUser, string idEvent);
         bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
+        bool UpdateFoodDetailByOrderId(string OrderId, string FoodDetail);
+        Model.Domain.Order GetOrderByEventIdAndMail(string EventId, string Mail);
     }
 
     public class OrderRepository : IOrderRepository
@@ -34,12 +36,12 @@ namespace FOS.Repositories.Repositories
             _context = context;
         }
 
-        public bool AddOrder(DataModel.Order order)
+        public async Task<bool> AddOrder(DataModel.Order order)
         {
             try
             {
                 _context.Orders.Add(order);
-                _context.SaveChanges();
+                  _context.SaveChanges();
 
                 return true;
             }
@@ -88,10 +90,10 @@ namespace FOS.Repositories.Repositories
 
         public IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId)
         {
-            var orders = _context.Orders.Where(order => 
+            var orders = _context.Orders.Where(order =>
             order.IdEvent == eventId && order.FoodDetail.Length == 0 && order.OrderStatus == 0).ToList();
             var result = new List<Model.Domain.UserNotOrder>();
-            foreach(var order in orders)
+            foreach (var order in orders)
             {
                 var item = new Model.Domain.UserNotOrder();
                 item.OrderId = order.Id;
@@ -193,6 +195,46 @@ namespace FOS.Repositories.Repositories
                     }
                 }
                 return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public bool UpdateFoodDetailByOrderId(string OrderId, string FoodDetail)
+        {
+            try
+            {
+                using (var db = _context)
+                {
+                    var result = db.Orders.SingleOrDefault(o => o.Id == OrderId);
+                    if (result != null)
+                    {
+                        result.FoodDetail = FoodDetail;
+                        db.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public Model.Domain.Order GetOrderByEventIdAndMail(string EventId, string Mail)
+        {
+            try
+            {
+                Model.Domain.Order orderInfo = new Model.Domain.Order();
+                var result = _context.Orders.SingleOrDefault(o => o.IdEvent == EventId && o.Email == Mail);
+                if (result != null)
+                {
+                    orderInfo.OrderStatus = result.OrderStatus;
+                    orderInfo.Id = new Guid(result.Id);
+                    orderInfo.IdEvent = result.IdEvent;
+                    _context.SaveChanges();
+                }
+                return orderInfo;
             }
             catch (Exception e)
             {

@@ -56,6 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\CustomGroup.cs" />
     <Compile Include="DataModel\EventPromotion.cs" />
     <Compile Include="DataModel\ExternalServiceAPI.cs" />
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
@@ -64,21 +65,25 @@
     <Compile Include="DataModel\Order.cs" />
     <Compile Include="DataModel\RecurrenceEvent.cs" />
     <Compile Include="DataModel\ReportFile.cs" />
+    <Compile Include="DataModel\GraphUserInGroup.cs" />
     <Compile Include="FosContext.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
     <Compile Include="Mapping\EventPromotionMapper.cs" />
+    <Compile Include="Mapping\CustomGroupMapper.cs" />
+    <Compile Include="Mapping\GraphUserMapper.cs" />
     <Compile Include="Mapping\FeedbackMapper.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
-    <Compile Include="Migrations\201910020242464_init.cs" />
-    <Compile Include="Migrations\201910020242464_init.Designer.cs">
-      <DependentUpon>201910020242464_init.cs</DependentUpon>
+    <Compile Include="Migrations\201910020635359_inti5.cs" />
+    <Compile Include="Migrations\201910020635359_inti5.Designer.cs">
+      <DependentUpon>201910020635359_inti5.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EventPromotionRepository.cs" />
+    <Compile Include="Repositories\CustomGroupRepository.cs" />
     <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,8 +127,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910020242464_init.resx">
-      <DependentUpon>201910020242464_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910020635359_inti5.resx">
+      <DependentUpon>201910020635359_inti5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

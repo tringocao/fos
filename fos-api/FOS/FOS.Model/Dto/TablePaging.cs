@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Domain
+namespace FOS.Model.Dto
 {
-    public enum PromotionType
+    public enum TablePaging
     {
-        DiscountPerItem = 0,
-        DiscountAll = 1,
-        ShipFee = 2,
+        PagingNumber = 20
     }
 }

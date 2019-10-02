@@ -11,5 +11,6 @@ namespace FOS.Model.Dto
         DiscountPerItem = 0,
         DiscountAll = 1,
         ShipFee = 2,
+        FreeShip = 3
     }
 }

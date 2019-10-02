@@ -168,6 +168,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomGroupService\CustomGroupService.cs" />
+    <Compile Include="CustomGroupService\ICustomGroupService.cs" />
     <Compile Include="DeliveryServices\DeliveryService.cs" />
     <Compile Include="DeliveryServices\IDeliveryService.cs" />
     <Compile Include="EventPromotionServices\EventPromotionService.cs" />
@@ -226,7 +228,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
+    <Folder Include="bin\Debug\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>

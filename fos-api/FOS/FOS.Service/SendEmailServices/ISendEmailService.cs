@@ -16,5 +16,8 @@ namespace FOS.Services.SendEmailServices
         Task SendEmailToAlreadyOrderedUserAsync(List<UserFeedbackMailInfo> users, string emailTemplateJson);
         Task SendMailUpdateEvent(List<Model.Domain.GraphUser> removeListUser, List<Model.Domain.User> newListUser, string idEvent, string html);
         Task<IEnumerable<UserNotOrderMailInfo>> FilterUserIsParticipant(IEnumerable<UserNotOrderMailInfo> users);
+        Task SendCancelEventMail(List<Model.Domain.EventUsers> listUser, Dictionary<string, string> emailTemplateDictionary);
+        Dictionary<string, string> GetEmailTemplate(string templateLink);
+        Task<List<Model.Domain.EventUsers>> FilterUser(List<Model.Domain.EventUsers> users);
     }
 }

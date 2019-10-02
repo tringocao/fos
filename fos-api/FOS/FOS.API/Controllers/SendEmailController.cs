@@ -25,11 +25,13 @@ namespace FOS.API.Controllers
         ISendEmailService _sendEmailService;
         private readonly INewGraphUserDtoMapper _newGraphUserDtoMapper;
         IUserReorderDtoMapper _userReorderDtoMapper;
-        public SendEmailController(ISendEmailService sendEmailService, INewGraphUserDtoMapper mapper, IUserReorderDtoMapper userReorderDtoMapper)
+        IEventUserDtoMapper _eventUserDtoMapper;
+        public SendEmailController(ISendEmailService sendEmailService, INewGraphUserDtoMapper mapper, IUserReorderDtoMapper userReorderDtoMapper, IEventUserDtoMapper eventUserDtoMapper)
         {
             _sendEmailService = sendEmailService;
             _newGraphUserDtoMapper = mapper;
             _userReorderDtoMapper = userReorderDtoMapper;
+            _eventUserDtoMapper = eventUserDtoMapper;
         }
         [HttpGet]
         [Route("SendEmail")]
@@ -113,6 +115,26 @@ namespace FOS.API.Controllers
             try
             {
 
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpPost]
+        [Route("SendCancelEventMail")]
+        public async Task<ApiResponse> SendCancelEventMail([FromBody]List<Model.Dto.EventUsers> users)
+        {
+            try
+            {
+                var emailTemplateDictionary = _sendEmailService.GetEmailTemplate(@"App_Data\CancelEventEmailTemplate.json");
+
+                var dtoUsers = users.Select(
+                    u => _eventUserDtoMapper.ToDomain(u)
+                ).ToList();
+
+                await _sendEmailService.SendCancelEventMail(dtoUsers, emailTemplateDictionary);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
