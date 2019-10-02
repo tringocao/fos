@@ -15,6 +15,7 @@ import { UserNotOrder } from 'src/app/models/user-not-order';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SummaryService } from 'src/app/services/summary/summary.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { reject } from 'q';
 
 @Component({
   selector: 'app-reminder-dialog',
@@ -64,7 +65,8 @@ export class ReminderDialogComponent implements OnInit {
         });
         this.dataSource = new MatTableDataSource(this.graphUserNotOrder);
         this.dataSource.paginator = this.paginator;
-      });
+      })
+      .catch(error => this.toast(error, 'Dismiss'));
   }
 
   toast(message: string, action: string) {
@@ -91,14 +93,14 @@ export class ReminderDialogComponent implements OnInit {
 
       info.push(element);
     });
-    this.orderService.SendEmailToNotOrderedUser(info).then(response => {
-      if (response === null) {
-        this.toast('Reminder success', 'Dismiss');
-      }
-      if (response != null && response.ErrorMessage != null) {
-        this.toast('Reminder fail', 'Dismiss');
-      }
-    });
+    this.orderService
+      .SendEmailToNotOrderedUser(info)
+      .then(response => {
+        if (response === null) {
+          this.toast('Reminder success', 'Dismiss');
+        }
+      })
+      .catch(error => this.toast(error, 'Dismiss'));
   }
 
   closeEvent($event) {

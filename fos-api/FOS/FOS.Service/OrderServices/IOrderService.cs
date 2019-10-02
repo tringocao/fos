@@ -21,5 +21,6 @@ namespace FOS.Services.OrderServices
         Task<bool> UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
         Task<bool> UpdateFoodDetailByOrderId(string OrderId, string FoodDetail);
         Task<Order> GetOrderByEventIdAndMail(string EventId, string Mail);
+        string GetOrderIdOfUserInEvent(string eventId, string userId);
     }
 }
