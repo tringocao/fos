@@ -117,9 +117,8 @@ namespace FOS.Services.SendEmailServices
                     emailTemplate.NotParticipant = hostname + "not-participant/" + user.OrderId;
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
-                    //emailp.BCC = new List<string> { host.Mail };
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                    emailp.Subject = subject.ToString();
+                    emailp.Subject = Parse(subject.ToString(), user);
 
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
