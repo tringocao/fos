@@ -31,6 +31,8 @@ namespace FOS.Repositories
         public DbSet<DiscountEvent> DiscountEvents { get; set; }
 
         public DbSet<ReportFile> ReportFiles { get; set; }
+        public DbSet<CustomGroup> CustomGroups { get; set; }
+        public DbSet<GraphUserInGroup> GraphUserInGroup { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

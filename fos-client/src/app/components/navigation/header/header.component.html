@@ -61,6 +61,10 @@
               Theme 2
             </button>
           </mat-menu>
+          <button mat-menu-item [routerLink]="customGroupLink">
+            <mat-icon>group</mat-icon>
+            <span>Custom group</span>
+          </button>
           <button mat-menu-item (click)="logOut()">
             <mat-icon>exit_to_app</mat-icon>Log Out
           </button>

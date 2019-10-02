@@ -64,7 +64,10 @@ namespace FOS.API
                 new PerResolveLifetimeManager());
             container.RegisterType<Repositories.Mapping.IOrderMapper, Repositories.Mapping.OrderMapper>();
             container.RegisterType<Repositories.Mapping.IRecurrenceEventMapper, Repositories.Mapping.RecurrenceEventMapper>();
+            container.RegisterType<Repositories.Mapping.IGraphUserMapper, Repositories.Mapping.GraphUserMapper>();
+            container.RegisterType<Repositories.Mapping.ICustomGroupMapper, Repositories.Mapping.CustomGroupMapper>();
 
+            container.RegisterType<Repositories.Repositories.ICustomGroupRepository, Repositories.Repositories.CustomGroupRepository>();
             container.RegisterType<Repositories.Repositories.IRecurrenceEventRepository, Repositories.Repositories.RecurrenceEventRepository>();
             container.RegisterType<Repositories.Repositories.IOrderRepository, Repositories.Repositories.OrderRepository>();
             container.RegisterType<Repositories.Infrastructor.IDbFactory, Repositories.Infrastructor.DbFactory>();
@@ -113,7 +116,7 @@ namespace FOS.API
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<Services.EventServices.IEventService, Services.EventServices.EventService>();
-
+            container.RegisterType<Services.CustomGroupService.ICustomGroupService, Services.CustomGroupService.CustomGroupService>();
 
             container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>(
                 new TransientLifetimeManager(),
@@ -156,6 +159,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IDishesSummaryDtoMapper, Model.Mapping.DishesSummaryDtoMapper>();
             container.RegisterType<Model.Mapping.IUserNotOrderDtoMapper, Model.Mapping.UserNotOrderDtoMapper>();
             container.RegisterType<Model.Mapping.INewGraphUserDtoMapper, Model.Mapping.NewGraphUserDtoMapper>();
+            container.RegisterType<Model.Mapping.ICustomGroupDtoMapper, Model.Mapping.CustomGroupDtoMapper>();
             container.RegisterType<Model.Mapping.IUserReorderDtoMapper, Model.Mapping.UserReorderDtoMapper>();
             container.RegisterType<Model.Mapping.IEventUserDtoMapper, Model.Mapping.EventUserDtoMapper>();
 
