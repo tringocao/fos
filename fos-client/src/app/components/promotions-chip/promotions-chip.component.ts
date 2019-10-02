@@ -27,7 +27,7 @@ export class PromotionsChipComponent implements OnInit {
   ngOnInit() {}
 
   getPromotionName(promotionType: number): string {
-    return PromotionType[promotionType];
+    return PromotionType[promotionType].split(/(?=[A-Z])/).join(" ");
   }
 
   getPromotionStyle(promotionType: number) {

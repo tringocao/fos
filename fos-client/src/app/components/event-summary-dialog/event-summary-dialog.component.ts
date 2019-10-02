@@ -273,6 +273,7 @@ export class EventSummaryDialogComponent implements OnInit {
       this.totalCost = item.Total + this.totalCost;
     });
     this.baseTotalCost = this.totalCost;
+    this.adjustedTotalCost = this.totalCost;
   }
 
   getPersonGroupView(order, orders) {

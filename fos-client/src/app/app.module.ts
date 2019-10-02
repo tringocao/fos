@@ -108,6 +108,7 @@ import { FeedbackComponent } from "./components/feedback/feedback/feedback.compo
 import { StarRatingComponent } from "./components/star-rating/star-rating.component";
 import { PromotionsChipComponent } from './components/promotions-chip/promotions-chip.component';
 import { PromotionsChipListComponent } from './components/promotions-chip-list/promotions-chip-list.component';
+import { AdjustPriceComponent } from './components/adjust-price/adjust-price.component';
 
 @NgModule({
   declarations: [
@@ -160,7 +161,8 @@ import { PromotionsChipListComponent } from './components/promotions-chip-list/p
     FeedbackComponent,
     StarRatingComponent,
     PromotionsChipComponent,
-    PromotionsChipListComponent
+    PromotionsChipListComponent,
+    AdjustPriceComponent
   ],
   // declarations: [
   //     AppComponent,

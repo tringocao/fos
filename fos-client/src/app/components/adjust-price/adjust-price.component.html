@@ -1,0 +1,2 @@
+<span [ngStyle]="{'text-decoration': (adjustedCost !== baseCost) ? 'line-through' : 'none'}">{{ baseCost }}đ </span><br/>
+<span *ngIf="adjustedCost !== baseCost">{{ adjustedCost }}đ</span>

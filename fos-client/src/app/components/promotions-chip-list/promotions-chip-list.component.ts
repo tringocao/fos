@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Promotion } from 'src/app/models/promotion';
 import { PromotionType } from 'src/app/models/promotion-type';
 
@@ -9,6 +9,7 @@ import { PromotionType } from 'src/app/models/promotion-type';
 })
 export class PromotionsChipListComponent implements OnInit {
   constructor() { }
+
   @Output() promotionChanged: EventEmitter<Promotion[]> = new EventEmitter();
 
   visible = true;
