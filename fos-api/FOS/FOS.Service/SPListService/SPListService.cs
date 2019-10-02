@@ -239,5 +239,27 @@ namespace FOS.Services.SPListService
                 throw e;
             }
         }
+        public async Task SetTime2Close(string id, DateTime dateTime)
+        {
+            try
+            {
+                using (ClientContext context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    List members = context.Web.Lists.GetByTitle("Event List");
+
+                    ListItem listItem = members.GetItemById(id);
+                    context.Load(listItem, li => li["EventTimeToClose"]);
+                    context.ExecuteQuery();
+                    listItem["EventTimeToClose"] = dateTime.ToLocalTime();
+
+                    listItem.Update();
+                    context.ExecuteQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

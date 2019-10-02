@@ -152,6 +152,8 @@
     <Compile Include="CustomGroupService\ICustomGroupService.cs" />
     <Compile Include="DeliveryServices\DeliveryService.cs" />
     <Compile Include="DeliveryServices\IDeliveryService.cs" />
+    <Compile Include="DiscountEventServices\DiscountEventService.cs" />
+    <Compile Include="DiscountEventServices\IDiscountEventService.cs" />
     <Compile Include="EventServices\EventService.cs" />
     <Compile Include="EventServices\IEventService.cs" />
     <Compile Include="ExternalServices\ExternalServiceFactory.cs" />
@@ -163,6 +165,8 @@
     <Compile Include="ExternalServices\NowService\NowService.cs" />
     <Compile Include="ExternalServices\NowService\RequestMethodFactory.cs" />
     <Compile Include="FavoriteService\IFavoriteService.cs" />
+    <Compile Include="FeedbackServices\FeedbackService.cs" />
+    <Compile Include="FeedbackServices\IFeedbackService.cs" />
     <Compile Include="FoodServices\FoodService.cs" />
     <Compile Include="FavoriteService\FavoriteService.cs" />
     <Compile Include="FoodServices\IFoodService.cs" />

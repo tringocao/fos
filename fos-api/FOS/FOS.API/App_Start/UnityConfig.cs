@@ -1,3 +1,5 @@
+using FOS.Repositories.Mapping;
+using FOS.Services.FeedbackServices;
 using FOS.Services.Providers;
 using FOS.Services.SPListService;
 using FOS.Services.SPUserService;
@@ -83,6 +85,10 @@ namespace FOS.API
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
+            container.RegisterType<Repositories.Repositories.IFeedbackRepository, Repositories.Repositories.FeedbackRepository>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
             //container.RegisterType<Repositories.Repositories.IFOSHostLinkRepository, Repositories.Repositories.FOSHostLinkRepository>();
 
             container.RegisterType<Services.ExternalServices.IExternalServiceFactory, Services.ExternalServices.ExternalServiceFactory>(
@@ -154,9 +160,11 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IUserNotOrderDtoMapper, Model.Mapping.UserNotOrderDtoMapper>();
             container.RegisterType<Model.Mapping.INewGraphUserDtoMapper, Model.Mapping.NewGraphUserDtoMapper>();
             container.RegisterType<Model.Mapping.ICustomGroupDtoMapper, Model.Mapping.CustomGroupDtoMapper>();
+            container.RegisterType<Model.Mapping.IUserReorderDtoMapper, Model.Mapping.UserReorderDtoMapper>();
 
             container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
             container.RegisterType<Model.Mapping.IGroupDtoMapper, Model.Mapping.GroupDtoMapper>();
+            container.RegisterType<Model.Mapping.IFeedbackDtoMapper, Model.Mapping.FeedbackDtoMapper>();
             container.RegisterType<IGraphApiProvider, GraphApiProvider>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
@@ -178,6 +186,14 @@ namespace FOS.API
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<ISummaryService, SummaryService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
+            container.RegisterType<IFeedbackService, FeedbackService>(
+                new TransientLifetimeManager(),
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<LoggingInterceptor>());
+            container.RegisterType<IFeedbackMapper, FeedbackMapper>(
                 new TransientLifetimeManager(),
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<LoggingInterceptor>());

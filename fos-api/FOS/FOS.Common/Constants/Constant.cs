@@ -11,5 +11,8 @@ namespace FOS.Common.Constants
         public const string email_template = @"~/App_Data/email_template.txt";
         public const string ReminderSubject = "Reminder";
         public const string RemindEventEmailTemplate = @"~/App_Data/RemindEventEmailTemplate.json";
+        public const string FeedbackEmailTemplate = @"~/App_Data/FeedbackEmailTemplate.json";
+        public const string ReorderEmailTemplate = @"~/App_Data/ReorderEmailTemplate.json";
+
     }
 }

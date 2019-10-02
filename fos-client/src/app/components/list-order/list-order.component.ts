@@ -129,7 +129,7 @@ export class ListOrderComponent implements OnInit, OnChanges {
     const eventError: Event[] = [];
     const eventClose: Event[] = [];
     events.forEach(item => {
-      if (item.Status === 'Opened') {
+      if (item.Status === 'Opened'|| item.Status === 'Reopened') {
         eventOpen.push(item);
       } else if (item.Status === 'Closed') {
         eventClose.push(item);

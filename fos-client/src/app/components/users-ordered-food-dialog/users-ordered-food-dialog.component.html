@@ -1,6 +1,6 @@
 <div class="users-dialog">
   <div class="dialog-header">
-    <h2>Users order {{ data.food }}</h2>
+    <h2>Users ordered {{ data.food }}</h2>
   </div>
   <div mat-dialog-content>
     <table mat-table [dataSource]="dataSource">
@@ -27,7 +27,17 @@
         <th mat-header-cell *matHeaderCellDef>Email</th>
         <td mat-cell *matCellDef="let element">{{ element.Mail }}</td>
       </ng-container>
-
+      <ng-container matColumnDef="editMakeOrder" *ngIf="data.isHostUser">
+        <th mat-header-cell *matHeaderCellDef>Edit Order</th>
+        <td mat-cell *matCellDef="let element">
+          <app-edit-make-order
+            matTooltip="Edit Order By Host"
+            [isHostUser]="data.isHostUser"
+            [eventDetail]="data.eventDetail"
+            [user]="element"
+          ></app-edit-make-order>
+        </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>

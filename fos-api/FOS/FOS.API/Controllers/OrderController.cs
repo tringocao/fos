@@ -1,4 +1,5 @@
 ﻿using FOS.API.App_Start;
+using FOS.Common.Constants;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
 using FOS.Model.Mapping;
@@ -48,7 +49,7 @@ namespace FOS.API.Controllers
         }
         [HttpGet]
         [Route("GetById")]
-        public  ApiResponse<Model.Dto.Order> GetById(string orderId)
+        public ApiResponse<Model.Dto.Order> GetById(string orderId)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace FOS.API.Controllers
             {
                 var orders = _orderService.GetOrders(eventId);
                 return ApiUtil<List<Model.Dto.Order>>.CreateSuccessfulResult(
-                    orders.Select(_order => 
+                    orders.Select(_order =>
                     _orderDtoMapper.ToDto(_order)).ToList()
                );
             }
@@ -121,7 +122,7 @@ namespace FOS.API.Controllers
             {
                 Guid idOrder = Guid.NewGuid();
                 order.Id = idOrder.ToString();
-
+                order.OrderStatus = EventEmail.Ordered;
                 var user = await _spUserService.GetCurrentUser();
 
                 _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
@@ -147,7 +148,6 @@ namespace FOS.API.Controllers
         {
             try
             {
-                
                 _orderService.UpdateOrder(_orderDtoMapper.ToModel(order));
                 return ApiUtil.CreateSuccessfulResult();
 
@@ -172,6 +172,34 @@ namespace FOS.API.Controllers
             catch (Exception e)
             {
                 return null;
+            }
+        }
+        [HttpGet]
+        [Route("UpdateOrderStatusByOrderId")]
+        public async Task<ApiResponse> UpdateOrderStatusByOrderId(string OrderId, int OrderStatus)
+        {
+            try
+            {
+                await _orderService.UpdateOrderStatusByOrderId(OrderId, OrderStatus);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpGet]
+        [Route("UpdateFoodDetailByOrderId")]
+        public async Task<ApiResponse> UpdateFoodDetailByOrderId(string OrderId, string FoodDetail)
+        {
+            try
+            {
+                await _orderService.UpdateFoodDetailByOrderId(OrderId, FoodDetail);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
             }
         }
         //// GET: api/Order/5

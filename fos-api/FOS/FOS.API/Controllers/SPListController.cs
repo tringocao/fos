@@ -135,6 +135,20 @@ namespace FOS.API.Controllers
                 return ApiUtil.CreateFailResult(e.ToString());
             }
         }
+        [HttpPut]
+        [Route("SetTime2Close")]
+        public async Task<ApiResponse> SetTime2Close(string id,[FromBody]DateTime dateTime)
+        {
+            try
+            {
+                await _spListService.SetTime2Close(id, dateTime);
+                return ApiUtil.CreateSuccessfulResult();
+            }
+            catch (Exception e)
+            {
+                return ApiUtil.CreateFailResult(e.ToString());
+            }
+        }
         [HttpPost]
         [Route("UpdateListItemWhenRestaurantChanges")]
         public async Task<ApiResponse> UpdateListItemWhenRestaurantChanges(string id, [FromBody]Model.Dto.Event item)
