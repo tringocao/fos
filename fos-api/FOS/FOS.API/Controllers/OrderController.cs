@@ -5,6 +5,7 @@ using FOS.Model.Dto;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services;
+using FOS.Services.EventServices;
 using FOS.Services.OrderServices;
 using FOS.Services.SPListService;
 using FOS.Services.SPUserService;
@@ -30,6 +31,7 @@ namespace FOS.API.Controllers
         IGraphUserDtoMapper _graphUserDtoMapper;
         private readonly IUserNotOrderEmailDtoMapper _userNotOrderEmailDtoMapper;
         private readonly IUserNotOrderDtoMapper _userNotOrderDtoMapper;
+        private readonly IEventService _eventService;
 
         public OrderController(IOrderDtoMapper mapper,
             IOrderService service,
@@ -37,7 +39,8 @@ namespace FOS.API.Controllers
             ISPUserService spUserService,
             IGraphUserDtoMapper graphUserDtoMapper,
             IUserNotOrderEmailDtoMapper userNotOrderEmailDtoMapper,
-            IUserNotOrderDtoMapper userNotOrderDtoMapper)
+            IUserNotOrderDtoMapper userNotOrderDtoMapper,
+            IEventService eventService)
         {
             _orderDtoMapper = mapper;
             _orderService = service;
@@ -46,6 +49,7 @@ namespace FOS.API.Controllers
             _graphUserDtoMapper = graphUserDtoMapper;
             _userNotOrderEmailDtoMapper = userNotOrderEmailDtoMapper;
             _userNotOrderDtoMapper = userNotOrderDtoMapper;
+            _eventService = eventService;
         }
         [HttpGet]
         [Route("GetById")]
@@ -97,13 +101,32 @@ namespace FOS.API.Controllers
                 return ApiUtil<Model.Dto.Order>.CreateFailResult(e.ToString());
             }
         }
-
         [HttpGet]
-        [Route("GetUserNotOrdered")]
-        public ApiResponse<IEnumerable<Model.Dto.UserNotOrder>> GetUserNotOrdered(string eventId)
+        [Route("GetOrderIdOfUserInEvent")]
+        public ApiResponse<string> GetOrderIdOfUserInEvent(string eventId, string userId)
         {
             try
             {
+                var result = _orderService.GetOrderIdOfUserInEvent(eventId, userId);
+                return ApiUtil<string>.CreateSuccessfulResult(result);
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<string>.CreateFailResult(e.ToString());
+            }
+        }
+        [HttpGet]
+        [Route("GetUserNotOrdered")]
+        public async Task<ApiResponse<IEnumerable<Model.Dto.UserNotOrder>>> GetUserNotOrdered(string eventId)
+        {
+            try
+            {
+                var id = Int32.Parse(eventId);
+                var isHost = await _spUserService.ValidateIsHost(id);
+                if (!isHost)
+                {
+                    return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateFailResult(Constant.UserNotPerission);
+                }
                 var user = _orderService.GetUserNotOrdered(eventId);
                 var result = _userNotOrderDtoMapper.ListToDomain(user);
                 return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateSuccessfulResult(result);
@@ -125,7 +148,7 @@ namespace FOS.API.Controllers
                 order.OrderStatus = EventEmail.Ordered;
                 var user = await _spUserService.GetCurrentUser();
 
-                _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
+                await _orderService.CreateWildOrder(_orderDtoMapper.ToModel(order));
                 Model.Dto.GraphUser _user = new Model.Dto.GraphUser()
                 {
                     Id = order.IdUser,
@@ -144,10 +167,21 @@ namespace FOS.API.Controllers
 
         [HttpPost]
         [Route("UpdateOrder")]
-        public ApiResponse UpdateOrder([FromBody]Model.Dto.Order order)
+        public async Task<ApiResponse> UpdateOrder([FromBody]Model.Dto.Order order)
         {
             try
             {
+                var eventId = Int32.Parse(order.IdEvent);
+                var result = _eventService.GetEvent(eventId);
+                if(result.Status == EventStatus.Closed)
+                {
+                    var isHost = await _spUserService.ValidateIsHost(eventId);
+                    if (!isHost)
+                    {
+                        return ApiUtil.CreateFailResult(Constant.UserNotPerission);
+                    }
+                }
+
                 _orderService.UpdateOrder(_orderDtoMapper.ToModel(order));
                 return ApiUtil.CreateSuccessfulResult();
 
