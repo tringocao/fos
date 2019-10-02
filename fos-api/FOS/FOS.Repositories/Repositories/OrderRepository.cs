@@ -11,7 +11,7 @@ namespace FOS.Repositories.Repositories
 {
     public interface IOrderRepository
     {
-        bool AddOrder(DataModel.Order order);
+        Task<bool> AddOrder(DataModel.Order order);
         DataModel.Order GetOrder(Guid id);
         IEnumerable<Order> GetAllOrder();
         IEnumerable<DataModel.Order> GetAllOrderByEventId(string eventId);
@@ -36,12 +36,12 @@ namespace FOS.Repositories.Repositories
             _context = context;
         }
 
-        public bool AddOrder(DataModel.Order order)
+        public async Task<bool> AddOrder(DataModel.Order order)
         {
             try
             {
                 _context.Orders.Add(order);
-                _context.SaveChanges();
+                  _context.SaveChanges();
 
                 return true;
             }

@@ -7,7 +7,7 @@ namespace FOS.Services.OrderServices
 {
     public interface IOrderService
     {
-        bool CreateWildOrder(Order order);
+        Task<bool> CreateWildOrder(Order order);
         Task<bool> CreateOrderWithEmptyFoods(Guid id, string UserId, string RestaurantId, string DeliveyId, string EventId, string Email, int OrderStatus);
         Order GetOrder(Guid id);
         List<Order> GetOrders(string eventId);

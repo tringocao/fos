@@ -43,7 +43,7 @@ namespace FOS.Services.OrderServices
                 OrderStatus = OrderStatus
             };
             _orderMapper.MapToEfObject(efOrder, newOrder);
-            return _repository.AddOrder(efOrder);
+            return await _repository.AddOrder(efOrder);
         }
         public Order GetOrder(Guid id)
         {
@@ -60,11 +60,11 @@ namespace FOS.Services.OrderServices
             return orders.Select(order => _orderMapper.MapToDomain(order)).ToList();
         }
 
-        public bool CreateWildOrder(Order order)
+        public Task<bool> CreateWildOrder(Order order)
         {
             Repositories.DataModel.Order efOrder = new Repositories.DataModel.Order();
             _orderMapper.MapToEfObject(efOrder, order);
-            return _repository.AddOrder(efOrder);
+            return  _repository.AddOrder(efOrder);
         }
 
 
