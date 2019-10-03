@@ -238,6 +238,16 @@ export class OrderDetailComponent implements OnInit {
       this.discountPerItem = this.promotions
         .filter(p => p.PromotionType == PromotionType.DiscountPerItem)
         .pop();
+      this.restaurantService
+        .getDiscountFoodIds(
+          Number(this.event.DeliveryId),
+          1,
+          this.discountPerItem
+        )
+        .then(p => {
+          debugger;
+          this.discountPerItem = p;
+        });
     });
   }
 }

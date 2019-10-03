@@ -42,8 +42,7 @@ namespace FOS.Services.FoodServices
                 {
                     if (dish.DiscountPrice != null)
                     {
-                        float percent = 100 - dish.DiscountPrice.Value * 100 / dish.Price.Value;
-                        promotion.DiscountedFoodIds.Add(dish.Id,(int)percent);
+                        promotion.DiscountedFoodIds.Add(dish.Id, (int)dish.DiscountPrice.Value);
                     }
                 }
             }

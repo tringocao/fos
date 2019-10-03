@@ -84,7 +84,7 @@ export class ListOrderedFoodsComponent implements OnInit {
         ["Name"]: food.Name,
         ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
-        ["Total"]: this.setNewPrice(food).toString(),
+        ["Total"]: this.setNewPrice(food.Price, food.Id).toString(),
         ["Comment"]: "",
         ["Photo"]: food.Photos,
         ["IsDiscountedFood"]: food.IsDiscountedFood ? "true" : "false"
@@ -119,7 +119,9 @@ export class ListOrderedFoodsComponent implements OnInit {
     var getItem = this.dataSource2.data.findIndex(x => x.IdFood == food.IdFood);
     var f = this.dataSource2.data[getItem];
     f.Value["Amount"] = amount.toString();
-    var total = Number(f.Value["Amount"]) * this.setNewPriceDJ(f);
+    var total =
+      Number(f.Value["Amount"]) *
+      this.setNewPrice(Number(f.Value["Price"]), f.IdFood);
     f.Value["Total"] = (total >= 0 ? total : 0).toString();
     this.dataSource2.data[getItem] = f;
     this.dataSource2.filter = "";
@@ -176,32 +178,12 @@ export class ListOrderedFoodsComponent implements OnInit {
     this.saveOrder.emit();
   }
 
-  setNewPrice(food: Food) {
-    if (this.discountPerItem == null) return food.Price;
+  setNewPrice(price: number, foodId: string) {
+    if (this.discountPerItem == null) return price;
     if (this.discountPerItem.DiscountedFoodIds == null) {
-      if (this.discountPerItem.IsPercent) {
-        return food.Price - (food.Price * this.discountPerItem.Value) / 100;
-      } else return this.discountPerItem.Value;
+      return price;
     } else {
-      var percent = this.discountPerItem.DiscountedFoodIds[food.Id];
-      return food.Price - (food.Price * percent) / 100;
-    }
-  }
-  setNewPriceDJ(food: FoodDetailJson) {
-    if (this.discountPerItem == null) return Number(food.Value["Price"]);
-    if (this.discountPerItem.DiscountedFoodIds == null) {
-      if (this.discountPerItem.IsPercent) {
-        return (
-          Number(food.Value["Price"]) -
-          (Number(food.Value["Price"]) * this.discountPerItem.Value) / 100
-        );
-      } else return this.discountPerItem.Value;
-    } else {
-      var percent = this.discountPerItem.DiscountedFoodIds[food.IdFood];
-      return (
-        Number(food.Value["Price"]) -
-        (Number(food.Value["Price"]) * percent) / 100
-      );
+      return this.discountPerItem.DiscountedFoodIds[foodId];
     }
   }
 }
