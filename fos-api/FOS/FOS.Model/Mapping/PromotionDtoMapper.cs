@@ -78,7 +78,7 @@ namespace FOS.Model.Mapping
             }
             return new Domain.NowModel.Promotion()
             {
-                Expired = promotion.Expired.Value.ToString("dd/MM/yyyy HH:mm"),
+                Expired = (promotion.Expired != null) ? promotion.Expired.Value.ToString("dd/MM/yyyy HH:mm") : DateTime.MaxValue.ToString("dd/MM/yyyy HH:mm"),
                 MaxDiscountAmount = promotion.MaxDiscountAmount.ToString(),
                 MinOrderAmount = promotion.MinOrderAmount.ToString(),
                 DiscountValueType = promotion.IsPercent ? "1" : "3",

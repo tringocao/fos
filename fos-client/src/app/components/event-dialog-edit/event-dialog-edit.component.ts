@@ -533,8 +533,13 @@ export class EventDialogEditComponent implements OnInit {
 
   getDbPromotions(eventId: string) {
     this.eventPromotionService.GetByEventId(Number(eventId)).then(promotion => {
-      this.eventPromotion = promotion;
-      this.promotions = this.eventPromotion.Promotions;
+      if (promotion) {
+        this.eventPromotion = promotion;
+        this.promotions = this.eventPromotion.Promotions;
+      } else {
+        this.eventPromotion = new EventPromotion();
+        this.promotions = this.eventPromotion.Promotions;
+      }
       // this.promotionChanged.emit(this.promotions);
     });
   }
