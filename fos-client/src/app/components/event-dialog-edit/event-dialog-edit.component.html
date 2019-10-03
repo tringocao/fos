@@ -28,7 +28,7 @@
         >
       </mat-form-field>
 
-      <mat-label>Event Type</mat-label>
+      <mat-label class="fog">Event Type</mat-label>
       <mat-radio-group
         aria-labelledby="Event Type"
         class="radio-group"
@@ -90,8 +90,9 @@
           formControlName="MaximumBudget"
         />
       </mat-form-field>
+      <mat-label class="fog">Restaurant's Promotions</mat-label>
+
       <mat-form-field class="full-width">
-        <mat-label>Restaurant's Promotions</mat-label>
         <mat-chip-list #chipList aria-label="Fruit selection">
           <app-promotions-chip
             *ngFor="let promotion of promotions"
