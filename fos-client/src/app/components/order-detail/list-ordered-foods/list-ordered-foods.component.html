@@ -57,7 +57,11 @@
           Price
         </th>
         <td mat-cell *matCellDef="let element" align="right">
-          {{ numberWithCommas(setNewPrice(element.Value["Price"],element.IdFood)) + "đ" }}
+          {{
+            numberWithCommas(
+              setNewPrice(element.Value["Price"], element.IdFood)
+            ) + "đ"
+          }}
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
@@ -216,16 +220,15 @@
       ></tr>
       <!-- <tr mat-footer-row *matFooterRowDef="['disclaimer3','disclaimer4']; sticky: true" class="example-second-footer-row"></tr> -->
     </table>
-
-    <div class="example-button-row">
-      <button
-        [disabled]="!isOrder"
-        mat-flat-button
-        color="primary"
-        (click)="save()"
-      >
-        Save Order
-      </button>
-    </div>
+  </div>
+  <div class="example-button-row">
+    <button
+      [disabled]="!isOrder"
+      mat-flat-button
+      color="primary"
+      (click)="save()"
+    >
+      Save Order
+    </button>
   </div>
 </div>
