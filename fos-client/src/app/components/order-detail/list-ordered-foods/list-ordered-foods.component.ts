@@ -84,7 +84,7 @@ export class ListOrderedFoodsComponent implements OnInit {
         ["Name"]: food.Name,
         ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
-        ["Total"]: this.setNewPrice(food.Price,food.Id).toString(),
+        ["Total"]: this.setNewPrice(food.Price, food.Id).toString(),
         ["Comment"]: "",
         ["Photo"]: food.Photos,
         ["IsDiscountedFood"]: food.IsDiscountedFood ? "true" : "false"
@@ -119,7 +119,9 @@ export class ListOrderedFoodsComponent implements OnInit {
     var getItem = this.dataSource2.data.findIndex(x => x.IdFood == food.IdFood);
     var f = this.dataSource2.data[getItem];
     f.Value["Amount"] = amount.toString();
-    var total = Number(f.Value["Amount"]) * this.setNewPrice(Number(f.Value["Price"]),f.IdFood);
+    var total =
+      Number(f.Value["Amount"]) *
+      this.setNewPrice(Number(f.Value["Price"]), f.IdFood);
     f.Value["Total"] = (total >= 0 ? total : 0).toString();
     this.dataSource2.data[getItem] = f;
     this.dataSource2.filter = "";
@@ -179,12 +181,9 @@ export class ListOrderedFoodsComponent implements OnInit {
   setNewPrice(price: number, foodId: string) {
     if (this.discountPerItem == null) return price;
     if (this.discountPerItem.DiscountedFoodIds == null) {
-      if (this.discountPerItem.IsPercent) {
-        return price - (price * this.discountPerItem.Value) / 100;
-      } else return this.discountPerItem.Value;
+      return price;
     } else {
-      var percent = this.discountPerItem.DiscountedFoodIds[foodId];
-      return price - (price * percent) / 100;
+      return this.discountPerItem.DiscountedFoodIds[foodId];
     }
   }
 }
