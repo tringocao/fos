@@ -20,7 +20,7 @@ namespace FOS.Services.ExcelService
                 using (var stream = File.CreateText(file))
                 {
                     string csvHeader = string.Format("{0},{1},{2},{3},{4}", "Name", "Food", "Price", "PayExtra", "Comment");
-                    stream.WriteLine(csvHeader);
+                    stream.WriteLine(csvHeader, Encoding.UTF8);
                     foreach (UserOrder u in userOrder)
                     {
                         string displayName = u.User.DisplayName;
@@ -35,7 +35,7 @@ namespace FOS.Services.ExcelService
 
                         string csvRow = string.Format("{0},{1},{2},{3},{4}", displayName, food, price, payExtra, comment);
 
-                        stream.WriteLine(csvRow);
+                        stream.WriteLine(csvRow, Encoding.UTF8);
                     }
                 }
                 await ConvertCSVToExcel();

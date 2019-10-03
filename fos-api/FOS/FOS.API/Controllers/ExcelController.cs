@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace FOS.API.Controllers
 {
@@ -52,6 +53,7 @@ namespace FOS.API.Controllers
             try
             {               
                 response.Content = new StreamContent(new FileStream(Common.Constants.Constant.FileXlsxDirectory, FileMode.Open, FileAccess.Read));
+                //response.Content.Headers.ContentType.CharSet = Encoding.UTF8.HeaderName;
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
                 response.Content.Headers.ContentDisposition.FileName = Common.Constants.Constant.FileXlsxNameWithExtension;
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
