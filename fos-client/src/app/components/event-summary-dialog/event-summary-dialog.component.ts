@@ -49,6 +49,7 @@ import { OpenEventDialogComponent } from './open-event-dialog/open-event-dialog.
 import { EventDialogEditComponent } from '../event-dialog-edit/event-dialog-edit.component';
 import { ReminderDialogComponent } from '../reminder-dialog/reminder-dialog.component';
 import { FeedbackService } from 'src/app/services/feedback/feedback.service';
+import { ExcelService } from 'src/app/services/print/excel/excel.service';
 
 @Component({
   selector: 'app-event-summary-dialog',
@@ -73,7 +74,8 @@ export class EventSummaryDialogComponent implements OnInit {
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>,
     private overlay: Overlay,
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
+    private excelService: ExcelService
   ) {
     overlayContainer.getContainerElement().classList.add('app-theme1-theme');
     console.log(router.routerState);
@@ -552,6 +554,11 @@ export class EventSummaryDialogComponent implements OnInit {
       if (result != undefined) {
         this.reOpen();
       }
+    });
+  }
+  exportExcel() {
+    this.excelService.CreateCSV(this.orderByPerson).then(value => {
+      window.open(environment.apiUrl + 'api/Excel/DownloadCSV');
     });
   }
 }

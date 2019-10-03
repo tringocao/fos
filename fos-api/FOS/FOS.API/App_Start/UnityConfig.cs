@@ -117,6 +117,7 @@ namespace FOS.API
                 new InterceptionBehavior<LoggingInterceptor>());
             container.RegisterType<Services.EventServices.IEventService, Services.EventServices.EventService>();
             container.RegisterType<Services.CustomGroupService.ICustomGroupService, Services.CustomGroupService.CustomGroupService>();
+            container.RegisterType<Services.ExcelService.IExcelService, Services.ExcelService.ExcelService>();
 
             container.RegisterType<Services.FoodServices.IFoodService, Services.FoodServices.FoodService>(
                 new TransientLifetimeManager(),
@@ -162,6 +163,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.ICustomGroupDtoMapper, Model.Mapping.CustomGroupDtoMapper>();
             container.RegisterType<Model.Mapping.IUserReorderDtoMapper, Model.Mapping.UserReorderDtoMapper>();
             container.RegisterType<Model.Mapping.IEventUserDtoMapper, Model.Mapping.EventUserDtoMapper>();
+            container.RegisterType<Model.Mapping.IUserOrderDtoMapper, Model.Mapping.UserOrderDtoMapper>();
 
             container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
             container.RegisterType<Model.Mapping.IGroupDtoMapper, Model.Mapping.GroupDtoMapper>();

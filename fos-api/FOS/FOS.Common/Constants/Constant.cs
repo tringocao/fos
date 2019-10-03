@@ -16,5 +16,10 @@ namespace FOS.Common.Constants
         public const string CancelEmailTemplate = @"~/App_Data/CancelEventEmailTemplate.json";
         public const string UserNotPerission = "You don't have permission to do this action";
         public const string NotValidEventInfo = "Your event information is not valid!";
+        public const string FileXlsxName = "Summary";
+        public const string FileXlsxNameWithExtension = "Summary.xlsx";
+        public const string FileXlsxDirectory = @"C:\FOS\Summary.xlsx";
+        public const string FileCsvDirectory = @"C:\FOS\Summary.csv";
+        public const string RootDirectory = @"C:\FOS\";
     }
 }
