@@ -15,6 +15,7 @@ export class PromotionsChipListComponent implements OnInit {
 
   @Input() deliveryId: number;
   @Input() eventId: string;
+  @Input() changable: boolean;
   @Output() promotionChanged: EventEmitter<Promotion[]> = new EventEmitter();
 
   visible = true;
@@ -60,6 +61,11 @@ export class PromotionsChipListComponent implements OnInit {
   }
 
   updateEventPromotion() {
+    this.eventPromotion.Promotions.forEach(promotion => {
+      if (promotion.PromotionType !== PromotionType.DiscountPerItem) {
+        promotion.DiscountedFoodIds = null;
+      }
+    });
     this.eventPromotionService.UpdateEventPromotion(this.eventPromotion).then(response => {
       if (response === null) {
         this.toast("update success", "Dismiss");
@@ -75,6 +81,8 @@ export class PromotionsChipListComponent implements OnInit {
     promotion.PromotionType = this.promotionType;
     promotion.Value = Number(this.promotionValue);
     promotion.IsPercent = this.isPromotionPercent();
+    promotion.MaxDiscountAmount = 0;
+    promotion.MinOrderAmount = 0;
     this.promotions.push(promotion);
     this.promotionChanged.emit(this.promotions);
     // console.log(this.promotions);

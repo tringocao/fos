@@ -81,10 +81,12 @@ namespace FOS.API.Controllers
                 if (eventPromotion != null)
                 {
                     return ApiUtil<Model.Dto.EventPromotion>.CreateSuccessfulResult(
-    _eventPromotionDtoMapper.ToDto(eventPromotion)
-);
+                        _eventPromotionDtoMapper.ToDto(eventPromotion)
+                    );
                 }
-                throw new Exception();
+                return ApiUtil<Model.Dto.EventPromotion>.CreateSuccessfulResult(
+                    null
+                );
             }
             catch (Exception e)
             {

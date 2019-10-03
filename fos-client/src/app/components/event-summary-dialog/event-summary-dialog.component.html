@@ -346,6 +346,7 @@
           [eventId]="eventDetail.EventId"
           [promotions]="promotions"
           [eventPromotion]="eventPromotion"
+          [changable]="promoteChangeAble"
           (promotionChanged)="adjustPrice($event)"
         ></app-promotions-chip-list>
       </mat-card-content>

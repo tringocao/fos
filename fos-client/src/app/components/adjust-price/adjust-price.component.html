@@ -1,7 +1,5 @@
 <span
-  [ngStyle]="{
-    'text-decoration': adjustedCost !== baseCost ? 'line-through' : 'none'
-  }"
+  [ngClass]="adjustedCost !== baseCost ? 'old-price' : 'new-price'"
   >{{ numberWithCommas(baseCost) }}đ </span
 ><br />
 <span *ngIf="adjustedCost !== baseCost"

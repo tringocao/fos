@@ -10,7 +10,7 @@
       (removePressed)="removePromotion($event)"
     ></app-promotions-chip>
   </mat-chip-list>
-  <div class="action-menu">
+  <div class="action-menu" *ngIf="changable">
     <mat-form-field>
       <mat-label>Promotion Type</mat-label>
       <mat-select [(value)]="promotionType">
