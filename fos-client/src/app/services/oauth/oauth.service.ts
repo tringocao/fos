@@ -44,4 +44,11 @@ export class OauthService {
       }
     );
   }
+
+  checkAuthError(response) {
+    if (response && response.error.Error === 401) {
+      alert('Your session has expired. Please refresh the page and try again.');
+    }
+    console.log(response);
+  }
 }
