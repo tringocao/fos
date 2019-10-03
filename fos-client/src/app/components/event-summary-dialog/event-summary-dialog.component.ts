@@ -53,16 +53,6 @@ import { Promotion } from "src/app/models/promotion";
 import { PromotionType } from "src/app/models/promotion-type";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
-import { FoodReport } from 'src/app/models/food-report';
-import { Comment } from 'src/app/models/comment';
-import { UserOrder } from 'src/app/models/user-order';
-import { UserReorder } from 'src/app/models/user-reorder';
-import { UsersOrderedFoodDialogComponent } from '../users-ordered-food-dialog/users-ordered-food-dialog.component';
-import { debug } from 'util';
-import { OpenEventDialogComponent } from './open-event-dialog/open-event-dialog.component';
-import { EventDialogEditComponent } from '../event-dialog-edit/event-dialog-edit.component';
-import { ReminderDialogComponent } from '../reminder-dialog/reminder-dialog.component';
-import { FeedbackService } from 'src/app/services/feedback/feedback.service';
 
 @Component({
   selector: 'app-event-summary-dialog',
