@@ -267,8 +267,8 @@ export class EventSummaryDialogComponent implements OnInit {
               this.eventPromotion.EventId = id;
               this.promotions = this.eventPromotion.Promotions;
               this.promotionDataAvailable = true;
+              this.getOrdersInfo(id);
             }
-            this.getOrdersInfo(id);
             this.restaurantService
               .getRestaurants(
                 [Number(this.eventDetail.RestaurantId)],
