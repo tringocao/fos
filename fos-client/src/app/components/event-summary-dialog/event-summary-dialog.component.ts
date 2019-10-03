@@ -388,7 +388,10 @@ export class EventSummaryDialogComponent implements OnInit {
 
         this.orderByPerson.push(orderItem);
         if (this.orderByPerson.length == orders.length) {
-          this.personViewDataAvailable = true;
+          const orderedUsers = this.orderByPerson.filter(order => order.Food !== '');
+          this.orderByPerson = orderedUsers;
+
+          this.personGroupViewdataSource = new MatTableDataSource(this.orderByPerson);
           // this.dishViewDataAvailable = true;
           this.eventData.orderByPerson = this.orderByPerson;
           this.personViewDataAvailable = true;
@@ -668,6 +671,7 @@ export class EventSummaryDialogComponent implements OnInit {
       this.adjustedTotalCost = this.baseTotalCost;
       this.orderByPerson.forEach(order => {
         order.Cost = order.Price;
+        this.getPayExtra(order);
       });
       promotions.forEach((promotion: Promotion) => {
         if (
