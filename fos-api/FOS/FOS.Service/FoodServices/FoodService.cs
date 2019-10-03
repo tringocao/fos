@@ -42,7 +42,8 @@ namespace FOS.Services.FoodServices
                 {
                     if (dish.DiscountPrice != null)
                     {
-                        promotion.DiscountedFoodIds.Add(dish.Id, (int)dish.DiscountPrice.Value);
+                        float difference = dish.DiscountPrice.Value - dish.Price.Value;
+                        promotion.DiscountedFoodIds.Add(dish.Id, (int)difference);
                     }
                 }
             }

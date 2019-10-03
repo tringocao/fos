@@ -235,71 +235,73 @@ export class EventSummaryDialogComponent implements OnInit {
                 .then(eventPromotion => {
                   console.log(eventPromotion.DiscountedFoodIds);
                   this.discountedFoodIds = eventPromotion.DiscountedFoodIds;
-
-                  this.restaurantService
-                    .getRestaurants(
-                      [Number(this.eventDetail.RestaurantId)],
-                      Number(this.eventDetail.ServiceId),
-                      217
-                    )
-                    .then(result => {
-                      console.log(result[0]);
-                      this.restaurant = result[0];
-                      this.restaurant.address = result[0].Address;
-
-                      this.restaurantService
-                        .getRestaurantDetail(
-                          Number(this.restaurant.DeliveryId),
-                          Number(this.eventDetail.ServiceId)
-                        )
-                        .then(result => {
-                          this.restaurant.Rating = Number(result.Rating);
-                          this.restaurant.TotalReview = Number(
-                            result.TotalReview
-                          );
-                          this.restaurant.isLoaded = true;
-                          this.eventData.restaurant = this.restaurant;
-                        });
-                      console.log(this.restaurant);
-                      // this.restaurant.RestaurantUrl = "01234";
-                    });
-                  this.isHost(result);
-                  this.orderService.GetOrdersByEventId(id).then(orders => {
-                    this.orders = orders;
-                    console.log(orders);
-                    var foodList: string[] = [];
-                    var orderProceed = 0;
-                    this.orders = orders;
-                    orders.forEach(order => {
-                      this.getPersonGroupView(order, orders);
-
-                      order.FoodDetail.forEach(food => {
-                        this.getDishGroupView(
-                          food,
-                          foodList,
-                          order.FoodDetail,
-                          orderProceed
-                        );
-                      });
-                      orderProceed++;
-                      if (orderProceed == orders.length) {
-                        console.log(orderProceed);
-                        this.dishGroupViewdataSource = new MatTableDataSource(
-                          this.foods
-                        );
-                        this.dishViewDataAvailable = true;
-                        this.eventData.foods = this.foods;
-                      }
-                    });
-                    this.getUserOrderFoodAndGetTotalCost(orders);
-                  });
+                  this.getOrdersInfo(id);
                 });
+            } else {
+              this.getOrdersInfo(id);
             }
+            this.restaurantService
+              .getRestaurants(
+                [Number(this.eventDetail.RestaurantId)],
+                Number(this.eventDetail.ServiceId),
+                217
+              )
+              .then(result => {
+                console.log(result[0]);
+                this.restaurant = result[0];
+                this.restaurant.address = result[0].Address;
+
+                this.restaurantService
+                  .getRestaurantDetail(
+                    Number(this.restaurant.DeliveryId),
+                    Number(this.eventDetail.ServiceId)
+                  )
+                  .then(result => {
+                    this.restaurant.Rating = Number(result.Rating);
+                    this.restaurant.TotalReview = Number(result.TotalReview);
+                    this.restaurant.isLoaded = true;
+                    this.eventData.restaurant = this.restaurant;
+                  });
+                console.log(this.restaurant);
+                // this.restaurant.RestaurantUrl = "01234";
+              });
+            this.isHost(result);
           });
       });
     });
 
     // this.dishGroupViewdataSource = this.orderByDish;
+  }
+  getOrdersInfo(id) {
+    this.orderService.GetOrdersByEventId(id).then(orders => {
+      this.orders = orders;
+      console.log(orders);
+      var foodList: string[] = [];
+      var orderProceed = 0;
+      this.orders = orders;
+      orders.forEach(order => {
+        this.getPersonGroupView(order, orders);
+
+        order.FoodDetail.forEach(food => {
+          this.getDishGroupView(
+            food,
+            foodList,
+            order.FoodDetail,
+            orderProceed
+          );
+        });
+        orderProceed++;
+        if (orderProceed == orders.length) {
+          console.log(orderProceed);
+          this.dishGroupViewdataSource = new MatTableDataSource(
+            this.foods
+          );
+          this.dishViewDataAvailable = true;
+          this.eventData.foods = this.foods;
+        }
+      });
+      this.getUserOrderFoodAndGetTotalCost(orders);
+    });
   }
 
   getUserOrderFoodAndGetTotalCost(orders: Order[]) {
@@ -314,7 +316,7 @@ export class EventSummaryDialogComponent implements OnInit {
     });
     this.baseTotalCost = this.totalCost;
     this.adjustedTotalCost = this.totalCost;
-    this.adjustPrice(this.promotions)
+    this.adjustPrice(this.promotions);
   }
 
   getPersonGroupView(order, orders) {
@@ -330,7 +332,7 @@ export class EventSummaryDialogComponent implements OnInit {
         var comments: Comment[] = [];
         var total = 0;
         order.FoodDetail.forEach(food => {
-          console.log(food)
+          console.log(food);
           foods += food.Value.Amount + "x " + food.Value.Name + ", ";
           // comment += ' ' + food.Value.Comment;
           if (food.Value.Comment !== "") {
@@ -349,7 +351,8 @@ export class EventSummaryDialogComponent implements OnInit {
             }
           }
 
-          total += Number(this.getDiscountedPrice(food)) * Number(food.Value.Amount);
+          total +=
+            Number(this.getDiscountedPrice(food)) * Number(food.Value.Amount);
         });
         orderItem.Food = foods;
         orderItem.Comments = comments;
@@ -375,7 +378,7 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getDishGroupView(food, foodList, foodDetail, foodProceed) {
-    console.log(food)
+    console.log(food);
     var _food: FoodReport = {
       FoodId: food.IdFood,
       Name: food.Value.Name,
@@ -396,10 +399,7 @@ export class EventSummaryDialogComponent implements OnInit {
       NumberOfUser: 0,
       UserIds: []
     };
-    if (this.discountedFoodIds) {
-      _food.Price = this.getDiscountedPrice(food);
-      console.log(_food.Price);
-    }
+    _food.Price = this.getDiscountedPrice(food);
     // _food.Price = Number(_foo);
     _food.Total = _food.Amount * _food.Price;
     if (!foodList.includes(food.IdFood)) {
@@ -611,19 +611,12 @@ export class EventSummaryDialogComponent implements OnInit {
       }
     });
   }
-
   getDiscountedPrice(food: FoodDetailJson): number {
-    // value = null => list => percent
-    // value => - percent, value
-    if (this.promotion == null) {
-      return Number(food.Value.Price);
-    } else {
-      const percent = this.discountedFoodIds[food.IdFood];
-      return (
-        Number(food.Value.Price) -
-        (Number(food.Value.Price) * percent) / 100
-      );
+    if (this.promotion && this.discountedFoodIds && this.discountedFoodIds[food.IdFood]) {
+      console.log(Number(food.Value.Price) + this.discountedFoodIds[food.IdFood])
+      return Number(food.Value.Price) + this.discountedFoodIds[food.IdFood];
     }
+    return Number(food.Value.Price);
   }
   getDiscountedPricePerPerson(price: number) {
     this.promotions.forEach(promotion => {
@@ -631,15 +624,17 @@ export class EventSummaryDialogComponent implements OnInit {
         !promotion.IsPercent &&
         promotion.PromotionType !== PromotionType.ShipFee
       ) {
-        const newPrice = (price - promotion.Value  > 0) ? (price - promotion.Value) : 0;
+        const newPrice =
+          price - promotion.Value > 0 ? price - promotion.Value : 0;
         console.log(newPrice);
         return newPrice;
       } else if (promotion.IsPercent) {
         if (promotion.Value > 0) {
           if (promotion.PromotionType === PromotionType.DiscountAll) {
-            const newPrice = (price -
-              (price / 100) * promotion.Value) > 0 ? (price -
-                (price / 100) * promotion.Value) : 0;
+            const newPrice =
+              price - (price / 100) * promotion.Value > 0
+                ? price - (price / 100) * promotion.Value
+                : 0;
             console.log(newPrice);
             return newPrice;
           }
@@ -647,7 +642,7 @@ export class EventSummaryDialogComponent implements OnInit {
       } else if (promotion.PromotionType === PromotionType.ShipFee) {
         const newPrice = price + promotion.Value / this.orderByPerson.length;
         console.log(newPrice);
-        return newPrice
+        return newPrice;
       }
     });
     return price;
@@ -655,7 +650,7 @@ export class EventSummaryDialogComponent implements OnInit {
   getOriginalPrice(report: FoodReport) {
     if (this.discountedFoodIds && this.discountedFoodIds[report.FoodId]) {
       return (
-        report.Price * 100 / (100 - this.discountedFoodIds[report.FoodId])
+        report.Price - this.discountedFoodIds[report.FoodId]
       );
     }
     return report.Price;

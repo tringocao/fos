@@ -297,7 +297,7 @@
                 <td mat-cell *matCellDef="let element">
                   <app-adjust-price
                   [baseCost]="element.Price"
-                  [adjustedCost]="getDiscountedPricePerPerson(element.Price)"
+                  [adjustedCost]="element.Price"
                 ></app-adjust-price>
                 </td>
               </ng-container>
