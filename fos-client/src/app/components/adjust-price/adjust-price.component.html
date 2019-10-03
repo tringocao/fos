@@ -1,7 +1,6 @@
-<span
-  [ngClass]="adjustedCost !== baseCost ? 'old-price' : 'new-price'"
+<span [ngClass]="adjustedCost !== baseCost ? 'old-price' : 'new-price'"
   >{{ numberWithCommas(baseCost) }}đ </span
 ><br />
-<span *ngIf="adjustedCost !== baseCost"
+<span *ngIf="adjustedCost !== baseCost" class="new-price"
   >{{ numberWithCommas(adjustedCost) }}đ</span
 >
