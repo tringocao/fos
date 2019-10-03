@@ -439,16 +439,19 @@ export class EventDialogComponent implements OnInit {
         .AddEventListItem(eventListitem)
         .toPromise()
         .then(newId => {
-          console.log("new Id", newId.Data);
-
-          self.SendEmail(newId.Data);
-          self.eventPromotionService.AddEventPromotion(
-            Number(newId.Data),
-            self.promotions
-          );
-
-          self.toast("added new event!", "Dismiss");
-          self.dialogRef.close();
+          if( newId.Success === true) {
+            console.log('new Id', newId.Data);
+            self.eventPromotionService.AddEventPromotion(
+                Number(newId.Data),
+                self.promotions
+            );
+            self.SendEmail(newId.Data);
+            self.toast('added new event!', 'Dismiss');
+            self.dialogRef.close();
+          } else {
+            self.toast(newId.ErrorMessage.toString(), 'Dismiss');
+            self.loading = false;
+          }
         });
     });
   }

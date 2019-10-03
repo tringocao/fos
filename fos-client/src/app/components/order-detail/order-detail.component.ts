@@ -1,3 +1,21 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DeliveryInfos } from 'src/app/models/delivery-infos';
+import { RestaurantDetail } from 'src/app/models/restaurant-detail';
+import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
+import { OrderService } from 'src/app/services/order/order.service';
+import { User } from 'src/app/models/user';
+import { Event } from 'src/app/models/event';
+import { Order } from 'src/app/models/order';
+import { UserService } from 'src/app/services/user/user.service';
+import { Food } from 'src/app/models/food';
+import { ListOrderedFoodsComponent } from './list-ordered-foods/list-ordered-foods.component';
+import { EventFormService } from 'src/app/services/event-form/event-form.service';
+import { FoodDetailJson } from 'src/app/models/food-detail-json';
+import { MatSnackBar } from '@angular/material';
+import { FoodComponent } from '../dialog/food/food.component';
+import { environment } from 'src/environments/environment';
+import { promise } from 'protractor';
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeliveryInfos } from "src/app/models/delivery-infos";
@@ -30,9 +48,9 @@ interface FoodCheck {
   checked: boolean;
 }
 @Component({
-  selector: "app-order-detail",
-  templateUrl: "./order-detail.component.html",
-  styleUrls: ["./order-detail.component.less"]
+  selector: 'app-order-detail',
+  templateUrl: './order-detail.component.html',
+  styleUrls: ['./order-detail.component.less']
 })
 export class OrderDetailComponent implements OnInit {
   idOrder: string;
@@ -67,20 +85,22 @@ export class OrderDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.data = { restaurant: null, detail: null, idService: 1 };
-    this.idOrder = this.route.snapshot.paramMap.get("id");
-    const promise = await this.orderService
-      .GetOrder(this.idOrder)
-      .then(value => {
-        if (value.OrderStatus == 2) {
-          this.router.navigateByUrl("not-participant/" + this.idOrder);
-        }
-      });
+    this.idOrder = this.route.snapshot.paramMap.get('id');
 
-    //debugger;
     this.isWildParticipant = false;
     // check if wild guest order
-    if (this.idOrder.includes("ffa")) {
+    if (this.idOrder.includes('ffa')) {
       var eventId = this.idOrder.slice(3);
+      this.userService.getCurrentUser().then(user => {
+        this.orderService
+          .GetOrderIdOfUserInEvent(eventId, user.Id)
+          .then(result => {
+            if (result && result.length > 0) {
+              window.location.href =
+                environment.baseUrl + 'make-order/' + result;
+            }
+          });
+      });
       this.isWildParticipant = true;
       this.eventFormService.GetEventById(eventId).then(event => {
         this.event = event;
@@ -107,7 +127,7 @@ export class OrderDetailComponent implements OnInit {
                   })
                   .then(() => {
                     this.order = {
-                      Id: "1",
+                      Id: '1',
                       OrderDate: new Date(),
                       IdUser: this.orderUser.Id,
                       IdEvent: this.event.EventId,
@@ -115,7 +135,7 @@ export class OrderDetailComponent implements OnInit {
                       IdDelivery: Number(this.event.DeliveryId),
                       FoodDetail: [],
                       OrderStatus: 0,
-                      Email: ""
+                      Email: ''
                     };
                     this.checkedData = this.order.FoodDetail;
 
@@ -123,7 +143,7 @@ export class OrderDetailComponent implements OnInit {
                     this.userService.getUserById(event.HostId).then(user => {
                       this.hostUser = user;
                       if (
-                        this.event.Status == "Closed" &&
+                        this.event.Status == 'Closed' &&
                         this.hostUser.Id != this.orderUser.Id
                       ) {
                         this.isOrder = false;
@@ -139,6 +159,11 @@ export class OrderDetailComponent implements OnInit {
           });
       });
     } else {
+      await this.orderService.GetOrder(this.idOrder).then(value => {
+        if (value.OrderStatus === 2) {
+          this.router.navigateByUrl('not-participant/' + this.idOrder);
+        }
+      });
       this.getOrderInfor(this.idOrder);
     }
   }
@@ -168,7 +193,7 @@ export class OrderDetailComponent implements OnInit {
         this.data.detail = restaurantd;
         this.totalBudget = Number(this.event.MaximumBudget);
         this.userService.getCurrentUser().then(user => {
-          if (this.event.Status == "Closed" && this.hostUser.Id != user.Id) {
+          if (this.event.Status == 'Closed' && this.hostUser.Id != user.Id) {
             this.isOrder = false;
           }
           this.loading = false;
@@ -222,11 +247,12 @@ export class OrderDetailComponent implements OnInit {
     this.orderService
       .SetOrder(this.order, this.isWildParticipant)
       .then(result => {
-        this.toast("Save!", "Dismiss");
-        if (this.idOrder.includes("ffa")) {
+        this.toast('Save!', 'Dismiss');
+        if (this.idOrder.includes('ffa')) {
           window.close();
         }
-      });
+      })
+      .catch(error => this.toast(error, 'Dismiss'));
   }
   deleteFoodFromMenu($event: FoodDetailJson) {
     this.foodlist.unChecked(this.foodlist.MapFoodDetail2Food($event));

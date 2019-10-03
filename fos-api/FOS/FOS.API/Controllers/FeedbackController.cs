@@ -7,6 +7,7 @@ using FOS.Services.EventServices;
 using FOS.Services.FeedbackServices;
 using FOS.Services.OrderServices;
 using FOS.Services.SendEmailServices;
+using FOS.Services.SPUserService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +27,15 @@ namespace FOS.API.Controllers
         private ISendEmailService _sendEmailService;
         private IOrderService _orderService;
         private IEventService _eventService;
-
-        public FeedbackController(IFeedbackService feedbackService, IFeedbackDtoMapper feedbackDtoMapper, ISendEmailService sendEmailService, IOrderService orderService, IEventService eventService)
+        private readonly ISPUserService _spUserService;
+        public FeedbackController(IFeedbackService feedbackService, IFeedbackDtoMapper feedbackDtoMapper, ISendEmailService sendEmailService, IOrderService orderService, IEventService eventService, ISPUserService userService)
         {
             _feedbackService = feedbackService;
             _feedbackDtoMapper = feedbackDtoMapper;
             _sendEmailService = sendEmailService;
             _orderService = orderService;
             _eventService = eventService;
+            _spUserService = userService;
         }
         [HttpGet]
         [Route("GetById/{id}")]
@@ -73,6 +75,13 @@ namespace FOS.API.Controllers
         {
             try
             {
+                var id = Int32.Parse(eventId);
+                var isHost = await _spUserService.ValidateIsHost(id);
+                if (!isHost)
+                {
+                    return ApiUtil<IEnumerable<Model.Dto.UserNotOrder>>.CreateFailResult(Constant.UserNotPerission);
+                }
+
                 var listUser = await _orderService.GetUserAlreadyOrderEmail(eventId);
                 string path = System.Web.HttpContext.Current.Server.MapPath(Constant.FeedbackEmailTemplate);
                 string emailTemplateJson = System.IO.File.ReadAllText(path);
