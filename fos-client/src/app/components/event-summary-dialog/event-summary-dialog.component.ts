@@ -226,7 +226,6 @@ export class EventSummaryDialogComponent implements OnInit {
             );
             if (discountPerItemPromotions.length > 0) {
               this.promotion = discountPerItemPromotions[0];
-              console.log(discountPerItemPromotions);
               this.restaurantService
                 .getDiscountFoodIds(
                   Number(this.eventDetail.DeliveryId),
@@ -621,21 +620,27 @@ export class EventSummaryDialogComponent implements OnInit {
       });
   }
   getDiscountedPrice(food: FoodDetailJson): number {
-    if (this.promotion === null) {
+    // value = null => list => percent
+    // value => - percent, value
+    if (this.promotion == null) {
       return Number(food.Value.Price);
     }
-    if (this.discountedFoodIds && this.discountedFoodIds[food.IdFood]) {
+    if (this.discountedFoodIds == null) {
       if (this.promotion.IsPercent) {
         return (
-          (Number(food.Value.Price) * (100 - this.discountedFoodIds[food.IdFood])) / 100
+          Number(food.Value.Price) -
+          (Number(food.Value.Price) * this.promotion.Value) / 100
         );
       } else {
         return this.promotion.Value;
       }
     } else {
-
+      const percent = this.discountedFoodIds[food.IdFood];
+      return (
+        Number(food.Value.Price) -
+        (Number(food.Value.Price) * percent) / 100
+      );
     }
-    return Number(food.Value.Price);
   }
   getDiscountedPricePerPerson(price: number) {
     this.promotions.forEach(promotion => {

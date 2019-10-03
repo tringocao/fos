@@ -1,12 +1,17 @@
 <div [ngClass]="getPromotionStyle(promotion.PromotionType)">
-<mat-chip
-  color="primary"
-  [selectable]="selectable"
-  [removable]="removable"
-  (removed)="removePromotion()"
->
-  {{ getPromotionName(promotion.PromotionType) }}: {{ promotion.Value }}
-  <span matSuffix>{{promotion.IsPercent ? '%' : 'đ'}}</span>
-  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-</mat-chip>
+  <mat-chip
+    color="primary"
+    [selectable]="selectable"
+    [removable]="removable"
+    (removed)="removePromotion()"
+  >
+    <span *ngIf="promotion.PromotionType > 0">
+      {{ getPromotionName(promotion.PromotionType) }}: {{ promotion.Value }}
+      <span matSuffix>{{ promotion.IsPercent ? "%" : "đ" }}</span>
+    </span>
+    <span *ngIf="promotion.PromotionType === 0">
+      Discount Some Items
+    </span>
+    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+  </mat-chip>
 </div>
