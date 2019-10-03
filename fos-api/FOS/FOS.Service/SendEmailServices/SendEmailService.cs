@@ -152,7 +152,7 @@ namespace FOS.Services.SendEmailServices
                         emailp.From = host.Mail;
                         //emailp.BCC = new List<string> { host.Mail };
                         emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                        emailp.Subject = subject.ToString();
+                        emailp.Subject = Parse(subject.ToString(), user);
 
                         Utility.SendEmail(clientContext, emailp);
                         clientContext.ExecuteQuery();
@@ -267,7 +267,7 @@ namespace FOS.Services.SendEmailServices
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                    emailp.Subject = subject.ToString();
+                    emailp.Subject = Parse(subject.ToString(), user);
 
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
@@ -292,7 +292,7 @@ namespace FOS.Services.SendEmailServices
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
                     emailp.Body = Parse(body, user);
-                    emailp.Subject = subject.ToString();
+                    emailp.Subject = Parse(subject.ToString(), user);
 
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
