@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\CustomGroup.cs" />
-    <Compile Include="DataModel\DiscountEvent.cs" />
+    <Compile Include="DataModel\EventPromotion.cs" />
     <Compile Include="DataModel\ExternalServiceAPI.cs" />
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
     <Compile Include="DataModel\FeedBack.cs" />
@@ -71,15 +71,23 @@
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
+    <Compile Include="Mapping\EventPromotionMapper.cs" />
     <Compile Include="Mapping\CustomGroupMapper.cs" />
     <Compile Include="Mapping\GraphUserMapper.cs" />
-    <Compile Include="Mapping\DiscountEventMapper.cs" />
     <Compile Include="Mapping\FeedbackMapper.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
+    <Compile Include="Migrations\201910030902505_init3.cs" />
+    <Compile Include="Migrations\201910030902505_init3.Designer.cs">
+      <DependentUpon>201910030902505_init3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910030905509_init4.cs" />
+    <Compile Include="Migrations\201910030905509_init4.Designer.cs">
+      <DependentUpon>201910030905509_init4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\EventPromotionRepository.cs" />
     <Compile Include="Repositories\CustomGroupRepository.cs" />
-    <Compile Include="Repositories\DiscountEventRepository.cs" />
     <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +119,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201910030902505_init3.resx">
+      <DependentUpon>201910030902505_init3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910030905509_init4.resx">
+      <DependentUpon>201910030905509_init4.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">

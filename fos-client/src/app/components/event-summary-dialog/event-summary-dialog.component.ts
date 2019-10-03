@@ -39,16 +39,20 @@ import { UserNotOrderMailInfo } from 'src/app/models/user-not-order-mail-info';
 import { Order } from 'src/app/models/order';
 import { User } from 'src/app/models/user';
 
-import { FoodReport } from 'src/app/models/food-report';
-import { Comment } from 'src/app/models/comment';
-import { UserOrder } from 'src/app/models/user-order';
-import { UserReorder } from 'src/app/models/user-reorder';
-import { UsersOrderedFoodDialogComponent } from '../users-ordered-food-dialog/users-ordered-food-dialog.component';
-import { debug } from 'util';
-import { OpenEventDialogComponent } from './open-event-dialog/open-event-dialog.component';
-import { EventDialogEditComponent } from '../event-dialog-edit/event-dialog-edit.component';
-import { ReminderDialogComponent } from '../reminder-dialog/reminder-dialog.component';
-import { FeedbackService } from 'src/app/services/feedback/feedback.service';
+import { FoodReport } from "src/app/models/food-report";
+import { Comment } from "src/app/models/comment";
+import { UserOrder } from "src/app/models/user-order";
+import { UserReorder } from "src/app/models/user-reorder";
+import { UsersOrderedFoodDialogComponent } from "../users-ordered-food-dialog/users-ordered-food-dialog.component";
+import { debug } from "util";
+import { OpenEventDialogComponent } from "./open-event-dialog/open-event-dialog.component";
+import { EventDialogEditComponent } from "../event-dialog-edit/event-dialog-edit.component";
+import { ReminderDialogComponent } from "../reminder-dialog/reminder-dialog.component";
+import { FeedbackService } from "src/app/services/feedback/feedback.service";
+import { Promotion } from "src/app/models/promotion";
+import { PromotionType } from "src/app/models/promotion-type";
+import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
+import { EventPromotion } from "src/app/models/event-promotion";
 
 @Component({
   selector: 'app-event-summary-dialog',
@@ -73,7 +77,8 @@ export class EventSummaryDialogComponent implements OnInit {
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>,
     private overlay: Overlay,
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
+    private eventPromotionService: EventPromotionService
   ) {
     overlayContainer.getContainerElement().classList.add('app-theme1-theme');
     console.log(router.routerState);
@@ -82,6 +87,7 @@ export class EventSummaryDialogComponent implements OnInit {
 
   eventData: any;
   emailDataAvailable: boolean;
+  promotionDataAvailable: boolean = false;
   eventDataAvailable: boolean;
   dishViewDataAvailable: boolean;
   personViewDataAvailable: boolean;
@@ -116,13 +122,25 @@ export class EventSummaryDialogComponent implements OnInit {
   foods: FoodReport[] = [];
   foods4Reorder: string[] = [];
 
+  discountedFoods: number[];
+  discountedPercent: number = 0;
+
+  promotions: Promotion[];
+  promotion: Promotion;
+  discountedFoodIds: { [key: number]: number };
+  eventPromotion: EventPromotion;
+
   orderByDish: any[] = [];
   orderByPerson: UserOrder[] = [];
   eventId: number;
   totalCost: number;
+  baseTotalCost: number = 0;
+  adjustedTotalCost: number;
   orders: Order[];
   users: User[];
   isHostUser: boolean = false;
+  promoteChangeAble: boolean = true;
+
   toStandardDate(date: Date) {
     return moment(date).format('DD/MM/YYYY HH:mm');
   }
@@ -183,10 +201,12 @@ export class EventSummaryDialogComponent implements OnInit {
     this.dishViewDataAvailable = false;
     this.emailDataAvailable = false;
     this.eventData = {};
+    
 
     this.dishGroupViewdataSource = this.foods;
     this.personGroupViewdataSource = this.orderByPerson;
     this.totalCost = 0;
+    this.adjustedTotalCost = 0;
     this.users = [];
     this.eventDetail = new Event();
 
@@ -197,63 +217,113 @@ export class EventSummaryDialogComponent implements OnInit {
         this.eventDetail = result;
         this.eventData.eventDetail = this.eventDetail;
         this.eventDataAvailable = true;
-        this.restaurantService
-          .getRestaurants(
-            [Number(this.eventDetail.RestaurantId)],
-            Number(this.eventDetail.ServiceId),
-            217
-          )
-          .then(result => {
-            console.log(result[0]);
-            this.restaurant = result[0];
-            this.restaurant.address = result[0].Address;
 
+        this.eventPromotionService
+          .GetByEventId(Number(id))
+          .then(eventPromotion => {
+            if (eventPromotion) {
+              this.promotions = eventPromotion.Promotions;
+              this.eventPromotion = eventPromotion;
+              this.promotionDataAvailable = true;
+              const discountPerItemPromotions = eventPromotion.Promotions.filter(
+                p => p.PromotionType === PromotionType.DiscountPerItem
+              );
+              if (discountPerItemPromotions.length > 0) {
+                this.promotion = discountPerItemPromotions[0];
+                if (this.eventDetail.Status === 'Closed') {
+                  this.discountedFoodIds = this.promotion.DiscountedFoodIds;
+                  this.promoteChangeAble = false;
+                  this.getOrdersInfo(id);
+                } else {
+                  this.restaurantService
+                    .getDiscountFoodIds(
+                      Number(this.eventDetail.DeliveryId),
+                      1,
+                      this.promotion
+                    )
+                    .then(eventPromotion => {
+                      console.log(eventPromotion.DiscountedFoodIds);
+                      this.promotion = eventPromotion;
+                      const promontionIndex = this.eventPromotion.Promotions.findIndex(
+                        p => p.PromotionType === PromotionType.DiscountPerItem
+                      );
+                      if (promontionIndex !== -1) {
+                        this.eventPromotion.Promotions[
+                          promontionIndex
+                        ] = this.promotion;
+                        this.eventPromotionService.UpdateEventPromotion(
+                          this.eventPromotion
+                        );
+                      }
+                      this.discountedFoodIds = eventPromotion.DiscountedFoodIds;
+                      this.getOrdersInfo(id);
+                    });
+                }
+              } else {
+                this.getOrdersInfo(id);
+              }
+            } else {
+              this.eventPromotion = new EventPromotion();
+              this.eventPromotion.EventId = id;
+              this.promotions = this.eventPromotion.Promotions;
+              this.promotionDataAvailable = true;
+              this.getOrdersInfo(id);
+            }
             this.restaurantService
-              .getRestaurantDetail(
-                Number(this.restaurant.DeliveryId),
-                Number(this.eventDetail.ServiceId)
+              .getRestaurants(
+                [Number(this.eventDetail.RestaurantId)],
+                Number(this.eventDetail.ServiceId),
+                217
               )
               .then(result => {
-                this.restaurant.Rating = Number(result.Rating);
-                this.restaurant.TotalReview = Number(result.TotalReview);
-                this.restaurant.isLoaded = true;
-                this.eventData.restaurant = this.restaurant;
-              });
-            console.log(this.restaurant);
-            // this.restaurant.RestaurantUrl = "01234";
-          });
-        this.isHost(result);
-      });
-      this.orderService.GetOrdersByEventId(id).then(orders => {
-        this.orders = orders;
-        console.log(orders);
-        var foodList: string[] = [];
-        var orderProceed = 0;
-        this.orders = orders;
-        orders.forEach(order => {
-          this.getPersonGroupView(order, orders);
+                console.log(result[0]);
+                this.restaurant = result[0];
+                this.restaurant.address = result[0].Address;
 
-          order.FoodDetail.forEach(food => {
-            this.getDishGroupView(
-              food,
-              foodList,
-              order.FoodDetail,
-              orderProceed
-            );
+                this.restaurantService
+                  .getRestaurantDetail(
+                    Number(this.restaurant.DeliveryId),
+                    Number(this.eventDetail.ServiceId)
+                  )
+                  .then(result => {
+                    this.restaurant.Rating = Number(result.Rating);
+                    this.restaurant.TotalReview = Number(result.TotalReview);
+                    this.restaurant.isLoaded = true;
+                    this.eventData.restaurant = this.restaurant;
+                  });
+                console.log(this.restaurant);
+                // this.restaurant.RestaurantUrl = "01234";
+              });
+            this.isHost(result);
           });
-          orderProceed++;
-          if (orderProceed == orders.length) {
-            console.log(orderProceed);
-            this.dishGroupViewdataSource = new MatTableDataSource(this.foods);
-            this.dishViewDataAvailable = true;
-            this.eventData.foods = this.foods;
-          }
-        });
-        this.getUserOrderFoodAndGetTotalCost(orders);
       });
     });
 
     // this.dishGroupViewdataSource = this.orderByDish;
+  }
+  getOrdersInfo(id) {
+    this.orderService.GetOrdersByEventId(id).then(orders => {
+      this.orders = orders;
+      console.log(orders);
+      var foodList: string[] = [];
+      var orderProceed = 0;
+      this.orders = orders;
+      orders.forEach(order => {
+        this.getPersonGroupView(order, orders);
+
+        order.FoodDetail.forEach(food => {
+          this.getDishGroupView(food, foodList, order.FoodDetail, orderProceed);
+        });
+        orderProceed++;
+        if (orderProceed == orders.length) {
+          console.log(orderProceed);
+          this.dishGroupViewdataSource = new MatTableDataSource(this.foods);
+          this.dishViewDataAvailable = true;
+          this.eventData.foods = this.foods;
+        }
+      });
+      this.getUserOrderFoodAndGetTotalCost(orders);
+    });
   }
 
   getUserOrderFoodAndGetTotalCost(orders: Order[]) {
@@ -266,6 +336,11 @@ export class EventSummaryDialogComponent implements OnInit {
       });
       this.totalCost = item.Total + this.totalCost;
     });
+    this.baseTotalCost = this.totalCost;
+    this.adjustedTotalCost = this.totalCost;
+    if (this.promotions) {
+      this.adjustPrice(this.promotions);
+    }
   }
 
   getPersonGroupView(order, orders) {
@@ -274,15 +349,17 @@ export class EventSummaryDialogComponent implements OnInit {
       .getUserById(order.IdUser)
       .then((user: User) => {
         orderItem.User = user;
+        this.users.push(user);
       })
       .then(() => {
-        var foods = '';
+        var foods = "";
         var comments: Comment[] = [];
         var total = 0;
         order.FoodDetail.forEach(food => {
-          foods += food.Value.Amount + 'x ' + food.Value.Name + ', ';
+          console.log(food);
+          foods += food.Value.Amount + "x " + food.Value.Name + ", ";
           // comment += ' ' + food.Value.Comment;
-          if (food.Value.Comment !== '') {
+          if (food.Value.Comment !== "") {
             if (
               comments.some(_comment => _comment.Value == food.Value.Comment)
             ) {
@@ -298,17 +375,15 @@ export class EventSummaryDialogComponent implements OnInit {
             }
           }
 
-          total += Number(food.Value.Total);
+          total +=
+            Number(this.getDiscountedPrice(food)) * Number(food.Value.Amount);
         });
         orderItem.Food = foods;
         orderItem.Comments = comments;
+
         orderItem.Price = total;
-        if (this.eventDetail && this.eventDetail.MaximumBudget) {
-          orderItem.PayExtra =
-            Number(this.eventDetail.MaximumBudget) < total
-              ? total - Number(this.eventDetail.MaximumBudget)
-              : 0;
-        }
+        orderItem.Cost = total;
+        this.getPayExtra(orderItem);
         // orderItem.comment = comment;
 
         this.orderByPerson.push(orderItem);
@@ -317,11 +392,15 @@ export class EventSummaryDialogComponent implements OnInit {
           // this.dishViewDataAvailable = true;
           this.eventData.orderByPerson = this.orderByPerson;
           this.personViewDataAvailable = true;
+          if (this.promotions) {
+            this.adjustPrice(this.promotions);
+          }
         }
       });
   }
 
   getDishGroupView(food, foodList, foodDetail, foodProceed) {
+    console.log(food);
     var _food: FoodReport = {
       FoodId: food.IdFood,
       Name: food.Value.Name,
@@ -342,6 +421,8 @@ export class EventSummaryDialogComponent implements OnInit {
       NumberOfUser: 0,
       UserIds: []
     };
+    _food.Price = this.getDiscountedPrice(food);
+    // _food.Price = Number(_foo);
     _food.Total = _food.Amount * _food.Price;
     if (!foodList.includes(food.IdFood)) {
       foodList.push(food.IdFood);
@@ -549,9 +630,78 @@ export class EventSummaryDialogComponent implements OnInit {
       data: this.eventDetail.Name
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
+      if (result !== undefined) {
         this.reOpen();
       }
     });
+  }
+  getDiscountedPrice(food: FoodDetailJson): number {
+    if (
+      this.promotion &&
+      this.discountedFoodIds &&
+      this.discountedFoodIds[food.IdFood]
+    ) {
+      console.log(
+        Number(food.Value.Price) + this.discountedFoodIds[food.IdFood]
+      );
+      return Number(food.Value.Price) + this.discountedFoodIds[food.IdFood];
+    }
+    return Number(food.Value.Price);
+  }
+  getOriginalPrice(report: FoodReport) {
+    if (this.discountedFoodIds && this.discountedFoodIds[report.FoodId]) {
+      return report.Price - this.discountedFoodIds[report.FoodId];
+    }
+    return report.Price;
+  }
+
+  getPayExtra(orderItem) {
+    if (this.eventDetail && this.eventDetail.MaximumBudget) {
+      orderItem.PayExtra =
+        Number(this.eventDetail.MaximumBudget) < orderItem.Cost
+          ? orderItem.Cost - Number(this.eventDetail.MaximumBudget)
+          : 0;
+    }
+  }
+  adjustPrice(promotions: Promotion[]) {
+    if (this.baseTotalCost > 0) {
+      this.adjustedTotalCost = this.baseTotalCost;
+      this.orderByPerson.forEach(order => {
+        order.Cost = order.Price;
+      });
+      promotions.forEach((promotion: Promotion) => {
+        if (
+          !promotion.IsPercent &&
+          promotion.PromotionType !== PromotionType.ShipFee
+        ) {
+          this.adjustedTotalCost = this.adjustedTotalCost - promotion.Value;
+          this.orderByPerson.forEach(order => {
+            order.Cost =
+              order.Cost - promotion.Value / this.orderByPerson.length;
+            this.getPayExtra(order);
+          });
+        } else if (promotion.IsPercent) {
+          if (promotion.Value > 0) {
+            if (promotion.PromotionType === PromotionType.DiscountAll) {
+              this.adjustedTotalCost =
+                this.adjustedTotalCost -
+                (this.adjustedTotalCost / 100) * promotion.Value;
+              this.orderByPerson.forEach(order => {
+                order.Cost = order.Cost - (order.Cost / 100) * promotion.Value;
+                this.getPayExtra(order);
+              });
+            }
+          }
+        } else if (promotion.PromotionType === PromotionType.ShipFee) {
+          this.adjustedTotalCost = this.adjustedTotalCost + promotion.Value;
+          this.orderByPerson.forEach(order => {
+            order.Cost =
+              order.Cost + promotion.Value / this.orderByPerson.length;
+            this.getPayExtra(order);
+          });
+        }
+      });
+      this.totalCost = this.adjustedTotalCost;
+    }
   }
 }

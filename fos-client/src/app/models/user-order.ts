@@ -16,6 +16,7 @@ import { Comment } from './comment';
         public User: User = null;   
         public Food: string = null;   
         public Price: number = 0;   
+        public Cost: number = 0;   
         public PayExtra: number = 0;   
         public Comments: Comment[] = [];
     }

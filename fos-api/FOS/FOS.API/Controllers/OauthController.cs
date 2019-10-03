@@ -47,7 +47,7 @@ namespace FOS.API.Controllers
         // GET: api/oauth/checkauth
         [HttpGet]
         [OverrideAuthentication]
-        public async Task<HttpResponseMessage> CheckAuth()
+        public async Task<HttpResponseMessage> CheckAuth(string redirectUrl)
         {
             var authenticated = await _oAuthService.CheckAuthenticationAsync();
             var response = new HttpResponseMessage();
@@ -56,8 +56,9 @@ namespace FOS.API.Controllers
                 new AuthClientRespond()
                 {
                     redirect = !authenticated,
-                    redirectUrl = _oAuthService.GetAuthCodePath(new State(
-                        WebConfigurationManager.AppSettings[OAuth.HOME_URI]
+                    redirectUrl = _oAuthService.GetAuthCodePath(
+                        new State(
+                        redirectUrl != null ? redirectUrl : WebConfigurationManager.AppSettings[OAuth.HOME_URI]
                     ))
                 }, new JsonMediaTypeFormatter(), "application/json"
             );

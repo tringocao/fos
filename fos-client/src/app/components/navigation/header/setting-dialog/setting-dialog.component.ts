@@ -89,9 +89,13 @@ export class SettingDialogComponent implements OnInit {
     if (this.recurrenceEvent.Id == 0) {
       this.recurrenceEvent.Id = null;
       this.recurrenceEvent.UserMail = this.data.Mail;
+      this.recurrenceEvent.UserName = this.data.DisplayName;
+
       this.recurrenceEventService.addRecurrenceEvent(this.recurrenceEvent);
     } else {
       this.recurrenceEvent.UserMail = this.data.Mail;
+      this.recurrenceEvent.UserName = this.data.DisplayName;
+
       this.recurrenceEventService.updateRecurrenceEvent(this.recurrenceEvent);
     }
     this.onNoClick();

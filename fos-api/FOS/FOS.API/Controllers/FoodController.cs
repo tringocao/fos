@@ -21,11 +21,13 @@ namespace FOS.API.Controllers
         IFoodService _foodService;
         IFoodDtoMapper _foodDtoMapper;
         IFoodCategoryDtoMapper _foodCategoryDtoMapper;
-        public FoodController(IFoodService foodService, IFoodDtoMapper foodDtoMapper, IFoodCategoryDtoMapper foodCategoryDtoMapper)
+        IPromotionDtoMapper _promotionDtoMapper;
+        public FoodController(IFoodService foodService, IFoodDtoMapper foodDtoMapper, IFoodCategoryDtoMapper foodCategoryDtoMapper,IPromotionDtoMapper promotionDtoMapper)
         {
             _foodService = foodService;
             _foodDtoMapper = foodDtoMapper;
             _foodCategoryDtoMapper = foodCategoryDtoMapper;
+            _promotionDtoMapper = promotionDtoMapper;
         }
         // GET: api/Food
         [HttpGet]
@@ -45,7 +47,21 @@ namespace FOS.API.Controllers
                 return ApiUtil<List<FoodCategory>>.CreateFailResult(e.ToString());
             }
         }
-
+        [HttpPut]
+        [Route("GetDiscountedFoodIds")]
+        public async Task<ApiResponse<Model.Dto.Promotion>> GetDiscountedFoodIds(int idService, int deliveryId,[FromBody] Model.Dto.Promotion promotion)
+        {
+            try
+            {
+                _foodService.GetExternalServiceById(idService);
+                var newPromotion = await _foodService.GetDiscountedFoodIds(deliveryId, _promotionDtoMapper.ToModel(promotion));
+                return ApiUtil<Promotion>.CreateSuccessfulResult(_promotionDtoMapper.ToDto(newPromotion));
+            }
+            catch (Exception e)
+            {
+                return ApiUtil<Promotion>.CreateFailResult(e.ToString());
+            }
+        }
         // GET: api/Food/5
         [HttpGet]
         [Route("GetFood")]

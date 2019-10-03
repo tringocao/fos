@@ -8,6 +8,7 @@ import { FoodCategory } from "src/app/models/food-category";
 import { CategoryGroup } from "src/app/models/category-group";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Restaurant } from "src/app/models/restaurant";
+import { Promotion } from "src/app/models/promotion";
 
 @Injectable({
   providedIn: "root"
@@ -184,7 +185,32 @@ export class RestaurantService {
         .catch(alert => console.log(alert));
     });
   }
-
+  getDiscountFoodIds(
+    deliveryId: number,
+    idService: number,
+    promotion: Promotion
+  ): Promise<Promotion> {
+    return new Promise<Promotion>((resolve, reject) => {
+      this.http
+        .put<ApiOperationResult<Promotion>>(
+          environment.apiUrl + "GetDiscountedFoodIds",
+          promotion,
+          {
+            params: {
+              idService: JSON.stringify(idService),
+              deliveryId: JSON.stringify(deliveryId),
+            }
+          }
+        )
+        .toPromise()
+        .then(result => {
+          if (result.Success) {
+            resolve(result.Data);
+          } else reject(new Error(JSON.stringify(result.ErrorMessage)));
+        })
+        .catch(alert => console.log(alert));
+    });
+  }
   SearchRestaurantName(
     name: string,
     limit: number,

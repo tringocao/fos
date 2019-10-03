@@ -14,7 +14,8 @@ import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Food } from "src/app/models/food";
 import { SelectionModel } from "@angular/cdk/collections";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
-import { TablePaging } from 'src/app/models/table-paging';
+import { TablePaging } from "src/app/models/table-paging";
+import { Promotion } from "src/app/models/promotion";
 
 interface RestaurantMore {
   restaurant: DeliveryInfos;
@@ -37,6 +38,8 @@ export class FoodComponent implements OnInit {
   count = 0;
   foodCategory: FoodCategory[] = [];
   @Input("data") data: RestaurantMore;
+  @Input() discountPerItem: Promotion;
+
   @Input("isOrder") isOrder: boolean;
   @Output() valueChange = new EventEmitter<FoodCheck>();
   @Input("checkedData") checkedData: FoodDetailJson[];
@@ -94,7 +97,7 @@ export class FoodComponent implements OnInit {
   }
   ngOnInit() {
     if (this.isOrder) {
-      debugger;
+      //debugger;
       this.displayedColumns2 = [
         "select",
         "Photos",
@@ -157,7 +160,18 @@ export class FoodComponent implements OnInit {
       Photos: null,
       Description: null,
       Price: null,
-      IsChecked: null
+      IsChecked: null,
+      IsDiscountedFood: food.Value["IsDiscountedFood"] === "true"
     };
+  }
+  setNewPrice(price: number, foodId: string): number {
+    if (this.discountPerItem == null) return price;
+    if (!this.discountPerItem.DiscountedFoodIds[Number(foodId)]) {
+      return price;
+    } else {
+      var newPrice =
+        price + this.discountPerItem.DiscountedFoodIds[Number(foodId)];
+      return newPrice;
+    }
   }
 }

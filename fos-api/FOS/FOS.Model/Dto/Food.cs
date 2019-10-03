@@ -14,6 +14,8 @@ namespace FOS.Model.Dto
         public string Description { get; set; }
         public float Price { get; set; }
         public bool IsChecked { get; set; }
+        public bool IsDiscountedFood { get; set; }
+
 
     }
 }
