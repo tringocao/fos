@@ -29,10 +29,13 @@
         placeholder="Promotion value"
         value="10"
       />
-      <span matSuffix>{{ isPromotionPercent() ? '%' : 'đ' }}</span>
+      <span matSuffix>{{ isPromotionPercent() ? "%" : "đ" }}</span>
     </mat-form-field>
     <button (click)="addToPromotions()" mat-flat-button color="primary">
       Add
+    </button>
+    <button (click)="updateEventPromotion()" mat-flat-button color="primary">
+      Update
     </button>
   </div>
 </div>

@@ -164,15 +164,15 @@ export class FoodComponent implements OnInit {
       IsDiscountedFood: food.Value["IsDiscountedFood"] === "true"
     };
   }
-  setNewPrice(food: Food) {
-    if (this.discountPerItem == null) return food.Price;
+  setNewPrice(price: number, foodId: string) {
+    if (this.discountPerItem == null) return price;
     if (this.discountPerItem.DiscountedFoodIds == null) {
       if (this.discountPerItem.IsPercent) {
-        return food.Price - (food.Price * this.discountPerItem.Value) / 100;
+        return price - (price * this.discountPerItem.Value) / 100;
       } else return this.discountPerItem.Value;
     } else {
-      var percent = this.discountPerItem.DiscountedFoodIds[food.Id];
-      return food.Price - (food.Price * percent) / 100;
+      var percent = this.discountPerItem.DiscountedFoodIds[foodId];
+      return price - (price * percent) / 100;
     }
   }
 }

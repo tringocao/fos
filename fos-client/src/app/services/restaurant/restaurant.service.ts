@@ -198,7 +198,7 @@ export class RestaurantService {
           {
             params: {
               idService: JSON.stringify(idService),
-              deliveryId: JSON.stringify(deliveryId)
+              deliveryId: JSON.stringify(deliveryId),
             }
           }
         )
