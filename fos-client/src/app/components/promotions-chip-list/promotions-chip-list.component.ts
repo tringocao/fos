@@ -22,8 +22,8 @@ export class PromotionsChipListComponent implements OnInit {
   removable = true;
   addOnBlur = true;
 
-  eventPromotion: EventPromotion;
-  promotions: Promotion[] = [];
+  @Input() eventPromotion: EventPromotion;
+  @Input() promotions: Promotion[] = [];
   promotionOptions: Promotion[] = [];
   promotionType: PromotionType = PromotionType.DiscountAll;
   promotionValue: string = '10';
@@ -38,11 +38,11 @@ export class PromotionsChipListComponent implements OnInit {
         this.promotionOptions.push(promotion);
       }
     });
-    this.eventPromotionService.GetByEventId(Number(this.eventId)).then(eventPromotion => {
-      this.eventPromotion = eventPromotion;
-      this.promotions = this.eventPromotion.Promotions;
-      this.promotionChanged.emit(this.promotions);
-    });
+    // this.eventPromotionService.GetByEventId(Number(this.eventId)).then(eventPromotion => {
+    //   this.eventPromotion = eventPromotion;
+    //   this.promotions = this.eventPromotion.Promotions;
+    //   this.promotionChanged.emit(this.promotions);
+    // });
   }
 
   getPromotionName(promotionType: number): string {

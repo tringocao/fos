@@ -4,7 +4,7 @@
       *ngFor="let promotion of promotions"
       [visible]="visible"
       [selectable]="selectable"
-      [removable]="removable"
+      [removable]="promotion.PromotionType > 0"
       [addOnBlur]="addOnBlur"
       [promotion]="promotion"
       (removePressed)="removePromotion($event)"
@@ -31,11 +31,13 @@
       />
       <span matSuffix>{{ isPromotionPercent() ? "%" : "đ" }}</span>
     </mat-form-field>
+    <div class="action-button">
     <button (click)="addToPromotions()" mat-flat-button color="primary">
       Add
     </button>
     <button (click)="updateEventPromotion()" mat-flat-button color="primary">
       Update
     </button>
+  </div>
   </div>
 </div>
