@@ -667,6 +667,7 @@ export class EventSummaryDialogComponent implements OnInit {
     }
   }
   adjustPrice(promotions: Promotion[]) {
+    this.eventPromotion.Promotions = promotions;
     if (this.baseTotalCost > 0) {
       this.adjustedTotalCost = this.baseTotalCost;
       this.orderByPerson.forEach(order => {
