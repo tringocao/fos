@@ -119,7 +119,6 @@ export class OrderDetailComponent implements OnInit {
                     };
                     this.checkedData = this.order.FoodDetail;
 
-                    this.isDataAvailable = true;
                     this.totalBudget = Number(event.MaximumBudget);
                     this.userService.getUserById(event.HostId).then(user => {
                       this.hostUser = user;
@@ -130,6 +129,8 @@ export class OrderDetailComponent implements OnInit {
                         this.isOrder = false;
                       }
                       this.loading = false;
+                      this.isDataAvailable = true;
+
                       this.getDbPromotions(this.event.EventId);
                     });
                     this.nameEvent = event.Name;
@@ -165,7 +166,6 @@ export class OrderDetailComponent implements OnInit {
       .getRestaurantDetail(IdDelivery, Number(this.event.ServiceId))
       .then(restaurantd => {
         this.data.detail = restaurantd;
-        this.isDataAvailable = true;
         this.totalBudget = Number(this.event.MaximumBudget);
         this.userService.getCurrentUser().then(user => {
           if (this.event.Status == "Closed" && this.hostUser.Id != user.Id) {
@@ -173,6 +173,7 @@ export class OrderDetailComponent implements OnInit {
           }
           this.loading = false;
           this.getDbPromotions(this.event.EventId);
+          this.isDataAvailable = true;
         });
       });
   }
@@ -245,7 +246,6 @@ export class OrderDetailComponent implements OnInit {
           this.discountPerItem
         )
         .then(p => {
-          debugger;
           this.discountPerItem = p;
         });
     });

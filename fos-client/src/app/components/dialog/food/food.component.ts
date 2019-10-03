@@ -164,12 +164,14 @@ export class FoodComponent implements OnInit {
       IsDiscountedFood: food.Value["IsDiscountedFood"] === "true"
     };
   }
-  setNewPrice(price: number, foodId: string) {
+  setNewPrice(price: number, foodId: string): number {
     if (this.discountPerItem == null) return price;
-    if (this.discountPerItem.DiscountedFoodIds == null) {
+    if (!this.discountPerItem.DiscountedFoodIds[Number(foodId)]) {
       return price;
     } else {
-      return this.discountPerItem.DiscountedFoodIds[foodId];
+      var newPrice =
+        price + this.discountPerItem.DiscountedFoodIds[Number(foodId)];
+      return newPrice;
     }
   }
 }

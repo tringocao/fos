@@ -84,7 +84,7 @@ export class ListOrderedFoodsComponent implements OnInit {
         ["Name"]: food.Name,
         ["Price"]: food.Price.toString(),
         ["Amount"]: "1",
-        ["Total"]: this.setNewPrice(food.Price, food.Id).toString(),
+        ["Total"]: this.setNewPrice(food.Price.toString(), food.Id).toString(),
         ["Comment"]: "",
         ["Photo"]: food.Photos,
         ["IsDiscountedFood"]: food.IsDiscountedFood ? "true" : "false"
@@ -102,7 +102,7 @@ export class ListOrderedFoodsComponent implements OnInit {
     }
     this.dataSource2.filter = "";
   }
-  numberWithCommas(x: Number) {
+  numberWithCommas(x: number) {
     if (x < 0) return 0;
     if (x != undefined) {
       var parts = x.toString().split(".");
@@ -120,8 +120,7 @@ export class ListOrderedFoodsComponent implements OnInit {
     var f = this.dataSource2.data[getItem];
     f.Value["Amount"] = amount.toString();
     var total =
-      Number(f.Value["Amount"]) *
-      this.setNewPrice(Number(f.Value["Price"]), f.IdFood);
+      Number(f.Value["Amount"]) * this.setNewPrice(f.Value["Price"], f.IdFood);
     f.Value["Total"] = (total >= 0 ? total : 0).toString();
     this.dataSource2.data[getItem] = f;
     this.dataSource2.filter = "";
@@ -178,12 +177,14 @@ export class ListOrderedFoodsComponent implements OnInit {
     this.saveOrder.emit();
   }
 
-  setNewPrice(price: number, foodId: string) {
-    if (this.discountPerItem == null) return price;
-    if (this.discountPerItem.DiscountedFoodIds == null) {
-      return price;
+  setNewPrice(price: string, foodId: string): number {
+    if (this.discountPerItem == null) return Number(price);
+    if (!this.discountPerItem.DiscountedFoodIds[Number(foodId)]) {
+      return Number(price);
     } else {
-      return this.discountPerItem.DiscountedFoodIds[foodId];
+      var newPrice =
+        Number(price) + this.discountPerItem.DiscountedFoodIds[Number(foodId)];
+      return newPrice;
     }
   }
 }
