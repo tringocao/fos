@@ -57,7 +57,11 @@
           Price
         </th>
         <td mat-cell *matCellDef="let element" align="right">
-          {{ numberWithCommas(setNewPrice(element.Value["Price"],element.IdFood)) + "đ" }}
+          {{
+            numberWithCommas(
+              setNewPrice(element.Value["Price"], element.IdFood)
+            ) + "đ"
+          }}
         </td>
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
@@ -188,6 +192,35 @@
       <ng-container matColumnDef="8">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
+      <ng-container matColumnDef="0">
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="-2">
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="-4">
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="-6">
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="-8">
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+      <ng-container matColumnDef="saveOrder">
+        <td mat-footer-cell *matFooterCellDef>
+          <div class="example-button-row">
+            <button
+              [disabled]="!isOrder"
+              mat-flat-button
+              color="primary"
+              (click)="save()"
+            >
+              Save Order
+            </button>
+          </div>
+        </td>
+      </ng-container>
       <tr
         mat-header-row
         *matHeaderRowDef="displayedColumns2; sticky: true"
@@ -214,18 +247,15 @@
         "
         class="example-second-footer-row"
       ></tr>
+      <tr
+        mat-footer-row
+        *matFooterRowDef="
+          ['0', '-2', '-4', '-6', 'saveOrder', '-8'];
+          sticky: true
+        "
+        class="example-second-footer-row"
+      ></tr>
       <!-- <tr mat-footer-row *matFooterRowDef="['disclaimer3','disclaimer4']; sticky: true" class="example-second-footer-row"></tr> -->
     </table>
-
-    <div class="example-button-row">
-      <button
-        [disabled]="!isOrder"
-        mat-flat-button
-        color="primary"
-        (click)="save()"
-      >
-        Save Order
-      </button>
-    </div>
   </div>
 </div>

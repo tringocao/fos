@@ -1,17 +1,20 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Promotion } from 'src/app/models/promotion';
-import { PromotionType } from 'src/app/models/promotion-type';
-import { EventPromotionService } from 'src/app/services/event-promotion/event-promotion.service';
-import { EventPromotion } from 'src/app/models/event-promotion';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
+import { Promotion } from "src/app/models/promotion";
+import { PromotionType } from "src/app/models/promotion-type";
+import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
+import { EventPromotion } from "src/app/models/event-promotion";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
-  selector: 'app-promotions-chip-list',
-  templateUrl: './promotions-chip-list.component.html',
-  styleUrls: ['./promotions-chip-list.component.less']
+  selector: "app-promotions-chip-list",
+  templateUrl: "./promotions-chip-list.component.html",
+  styleUrls: ["./promotions-chip-list.component.less"]
 })
 export class PromotionsChipListComponent implements OnInit {
-  constructor(private eventPromotionService: EventPromotionService, private snackBar: MatSnackBar) { }
+  constructor(
+    private eventPromotionService: EventPromotionService,
+    private snackBar: MatSnackBar
+  ) {}
 
   @Input() deliveryId: number;
   @Input() eventId: string;
@@ -27,10 +30,13 @@ export class PromotionsChipListComponent implements OnInit {
   @Input() promotions: Promotion[] = [];
   promotionOptions: Promotion[] = [];
   promotionType: PromotionType = PromotionType.DiscountAll;
-  promotionValue: string = '10';
+  promotionValue: string = "10";
+  promotionTypeOfValue: string = "%";
 
   ngOnInit() {
-    const PromotionTypes = Object.keys(PromotionType).filter(key => !isNaN(Number(PromotionType[key])));
+    const PromotionTypes = Object.keys(PromotionType).filter(
+      key => !isNaN(Number(PromotionType[key]))
+    );
     PromotionTypes.forEach((type, index) => {
       if (index > 0) {
         const promotion = new Promotion();
@@ -47,11 +53,11 @@ export class PromotionsChipListComponent implements OnInit {
   }
 
   getPromotionName(promotionType: number): string {
-    return PromotionType[promotionType].split(/(?=[A-Z])/).join(' ');
+    return PromotionType[promotionType].split(/(?=[A-Z])/).join(" ");
   }
 
   isPromotionPercent(): boolean {
-    return this.promotionOptions[this.promotionType - 1 ].IsPercent;
+    return this.promotionOptions[this.promotionType - 1].IsPercent;
   }
 
   toast(message: string, action: string) {
@@ -80,7 +86,7 @@ export class PromotionsChipListComponent implements OnInit {
     const promotion = new Promotion();
     promotion.PromotionType = this.promotionType;
     promotion.Value = Number(this.promotionValue);
-    promotion.IsPercent = this.isPromotionPercent();
+    promotion.IsPercent = this.promotionTypeOfValue === "%";
     promotion.MaxDiscountAmount = 0;
     promotion.MinOrderAmount = 0;
     this.promotions.push(promotion);
@@ -92,5 +98,4 @@ export class PromotionsChipListComponent implements OnInit {
     this.promotions = this.promotions.filter(pr => pr !== promotion);
     this.promotionChanged.emit(this.promotions);
   }
-
 }

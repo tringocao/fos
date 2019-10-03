@@ -79,7 +79,8 @@ namespace FOS.Repositories.Repositories
                 TypeRepeat = "Daily",
                 Version = 1,
                 StartTempDate = DateTime.Now.ToString(),
-                UserMail = ""
+                UserMail = "",
+                UserName =""
             };
             else return recurrenceEventByUserId;
         }
