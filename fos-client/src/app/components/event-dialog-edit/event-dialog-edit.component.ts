@@ -447,11 +447,11 @@ export class EventDialogEditComponent implements OnInit {
   }
 
   openDialog(): void {
-    var self = this;
+    const self = this;
     const dialogRef = this.dialog.open(EventDialogConfirmComponent, {
       width: '450px',
       data:
-        'If you update event information, system will resend email to all attendees.'
+        'If you change restaurant, system will resend email to all attendees.'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -463,18 +463,20 @@ export class EventDialogEditComponent implements OnInit {
               .UpdateEventListItem(self.data.EventId, self.eventListItem)
               .toPromise()
               .then(result => {
-                var updateEvent: UpdateEvent = {
-                  IdEvent: self.data.EventId,
-                  NewListUser: self.newListUser,
-                  RemoveListUser: self.removeListUser
-                };
-                self.eventMail
-                  .SendMailUpdateEvent(updateEvent)
-                  .then(value => {
+                if (result.Success === true) {
+                  const updateEvent: UpdateEvent = {
+                    IdEvent: self.data.EventId,
+                    NewListUser: self.newListUser,
+                    RemoveListUser: self.removeListUser
+                  };
+                  self.eventMail.SendMailUpdateEvent(updateEvent).then(value => {
                     self.toast('Update event successfuly!', 'Dismiss');
                     window.location.reload();
-                  })
-                  .catch(error => this.toast(error, 'Dismiss'));
+                  });
+                } else {
+                  self.loading = false;
+                  self.toast(result.ErrorMessage.toString(), 'Dismiss');
+                }
               });
           } else {
             self.eventFormService
@@ -484,10 +486,15 @@ export class EventDialogEditComponent implements OnInit {
               )
               .toPromise()
               .then(result => {
-                console.log('Update', result);
-                self.SendEmail(self.data.EventId);
-                self.toast('Update event successfuly!', 'Dismiss');
-                window.location.reload();
+                if (result.Success === true) {
+                  console.log('Update', result);
+                  self.SendEmail(self.data.EventId);
+                  self.toast('Update event successfuly!', 'Dismiss');
+                  window.location.reload();
+                } else {
+                  self.loading = false;
+                  self.toast(result.ErrorMessage.toString(), 'Dismiss');
+                }
               });
           }
         }
