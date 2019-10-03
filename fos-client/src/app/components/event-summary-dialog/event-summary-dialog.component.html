@@ -400,7 +400,7 @@
           (click)="sendEmailFeedback()"
           mat-flat-button
           color="warn"
-          *ngIf="isHostUser"
+          *ngIf="isHostUser && !reOrder"
         >
           Send email feedbacks
         </button>
