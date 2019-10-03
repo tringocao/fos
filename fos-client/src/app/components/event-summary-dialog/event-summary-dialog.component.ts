@@ -283,19 +283,12 @@ export class EventSummaryDialogComponent implements OnInit {
         this.getPersonGroupView(order, orders);
 
         order.FoodDetail.forEach(food => {
-          this.getDishGroupView(
-            food,
-            foodList,
-            order.FoodDetail,
-            orderProceed
-          );
+          this.getDishGroupView(food, foodList, order.FoodDetail, orderProceed);
         });
         orderProceed++;
         if (orderProceed == orders.length) {
           console.log(orderProceed);
-          this.dishGroupViewdataSource = new MatTableDataSource(
-            this.foods
-          );
+          this.dishGroupViewdataSource = new MatTableDataSource(this.foods);
           this.dishViewDataAvailable = true;
           this.eventData.foods = this.foods;
         }
@@ -356,9 +349,9 @@ export class EventSummaryDialogComponent implements OnInit {
         });
         orderItem.Food = foods;
         orderItem.Comments = comments;
-        const price = this.getDiscountedPricePerPerson(total);
-        console.log(price);
-        orderItem.Price = price;
+
+        orderItem.Price = total;
+        orderItem.Cost = total;
         if (this.eventDetail && this.eventDetail.MaximumBudget) {
           orderItem.PayExtra =
             Number(this.eventDetail.MaximumBudget) < total
@@ -373,6 +366,7 @@ export class EventSummaryDialogComponent implements OnInit {
           // this.dishViewDataAvailable = true;
           this.eventData.orderByPerson = this.orderByPerson;
           this.personViewDataAvailable = true;
+          this.adjustPrice(this.promotions);
         }
       });
   }
@@ -612,68 +606,57 @@ export class EventSummaryDialogComponent implements OnInit {
     });
   }
   getDiscountedPrice(food: FoodDetailJson): number {
-    if (this.promotion && this.discountedFoodIds && this.discountedFoodIds[food.IdFood]) {
-      console.log(Number(food.Value.Price) + this.discountedFoodIds[food.IdFood])
+    if (
+      this.promotion &&
+      this.discountedFoodIds &&
+      this.discountedFoodIds[food.IdFood]
+    ) {
+      console.log(
+        Number(food.Value.Price) + this.discountedFoodIds[food.IdFood]
+      );
       return Number(food.Value.Price) + this.discountedFoodIds[food.IdFood];
     }
     return Number(food.Value.Price);
   }
-  getDiscountedPricePerPerson(price: number) {
-    this.promotions.forEach(promotion => {
-      if (
-        !promotion.IsPercent &&
-        promotion.PromotionType !== PromotionType.ShipFee
-      ) {
-        const newPrice =
-          price - promotion.Value > 0 ? price - promotion.Value : 0;
-        console.log(newPrice);
-        return newPrice;
-      } else if (promotion.IsPercent) {
-        if (promotion.Value > 0) {
-          if (promotion.PromotionType === PromotionType.DiscountAll) {
-            const newPrice =
-              price - (price / 100) * promotion.Value > 0
-                ? price - (price / 100) * promotion.Value
-                : 0;
-            console.log(newPrice);
-            return newPrice;
-          }
-        }
-      } else if (promotion.PromotionType === PromotionType.ShipFee) {
-        const newPrice = price + promotion.Value / this.orderByPerson.length;
-        console.log(newPrice);
-        return newPrice;
-      }
-    });
-    return price;
-  }
   getOriginalPrice(report: FoodReport) {
     if (this.discountedFoodIds && this.discountedFoodIds[report.FoodId]) {
-      return (
-        report.Price - this.discountedFoodIds[report.FoodId]
-      );
+      return report.Price - this.discountedFoodIds[report.FoodId];
     }
     return report.Price;
   }
   adjustPrice(promotions: Promotion[]) {
     if (this.baseTotalCost > 0) {
       this.adjustedTotalCost = this.baseTotalCost;
+      this.orderByPerson.forEach(order => {
+        order.Cost = order.Price;
+      });
       promotions.forEach((promotion: Promotion) => {
         if (
           !promotion.IsPercent &&
           promotion.PromotionType !== PromotionType.ShipFee
         ) {
           this.adjustedTotalCost = this.adjustedTotalCost - promotion.Value;
+          this.orderByPerson.forEach(order => {
+            order.Cost = order.Cost - promotion.Value / this.orderByPerson.length;
+          });
         } else if (promotion.IsPercent) {
           if (promotion.Value > 0) {
             if (promotion.PromotionType === PromotionType.DiscountAll) {
               this.adjustedTotalCost =
                 this.adjustedTotalCost -
                 (this.adjustedTotalCost / 100) * promotion.Value;
+              this.orderByPerson.forEach(order => {
+                order.Cost =
+                  order.Cost - (order.Cost / 100) * promotion.Value;
+              });
             }
           }
         } else if (promotion.PromotionType === PromotionType.ShipFee) {
           this.adjustedTotalCost = this.adjustedTotalCost + promotion.Value;
+          this.orderByPerson.forEach(order => {
+            order.Cost =
+              order.Cost + promotion.Value / this.orderByPerson.length;
+          });
         }
       });
       this.totalCost = this.adjustedTotalCost;
