@@ -19,7 +19,8 @@ namespace FOS.Model.Mapping
                 Name = food.Name,
                 Photos = food.Photos.FirstOrDefault().Value,
                 Price = food.Price.Value,
-                IsChecked = false
+                IsChecked = false,
+                IsDiscountedFood = food.DiscountPrice != null ? true: false
             };
         }
     }

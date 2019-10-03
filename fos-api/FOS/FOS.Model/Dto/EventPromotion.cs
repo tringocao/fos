@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FOS.Model.Dto
 {
-    public class DiscountEvent
+    public class EventPromotion
     {
         public int Id { get; set; }
 
         public int EventId { get; set; }
-        public Dictionary<string, float> Discounts { get; set; }
+        public List<Model.Dto.Promotion> Promotions { get; set; }
     }
 }

@@ -17,6 +17,7 @@
         public Photos: string = null;   
         public Description: string = null;   
         public Price: number = 0;   
-        public IsChecked: boolean = false;
+        public IsChecked: boolean = false;   
+        public IsDiscountedFood: boolean = false;
     }
          

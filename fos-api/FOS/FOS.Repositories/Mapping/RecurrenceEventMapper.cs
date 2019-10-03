@@ -27,7 +27,8 @@ namespace FOS.Repositories.Mapping
                 UserId = efObject.UserId != null ? efObject.UserId : null,
                 StartTempDate = efObject.StartTempDate != null ? DateTime.Parse(efObject.StartTempDate): DateTime.Parse(efObject.StartDate),
                 Version = efObject.Version,
-                UserMail = efObject.UserMail
+                UserMail = efObject.UserMail,
+                UserName = efObject.UserName
             };
         }
 
@@ -42,6 +43,7 @@ namespace FOS.Repositories.Mapping
             efObject.Version = domObject.Version;
             efObject.StartTempDate = domObject.StartTempDate.ToString();
             efObject.UserMail = domObject.UserMail;
+            efObject.UserName = domObject.UserName;
 
         }
     }

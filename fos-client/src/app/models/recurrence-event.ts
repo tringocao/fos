@@ -20,6 +20,7 @@
         public Id: number = 0;   
         public TypeRepeat: RepeateType = null;   
         public UserId: string = null;   
-        public UserMail: string = null;
+        public UserMail: string = null;   
+        public UserName: string = null;
     }
          

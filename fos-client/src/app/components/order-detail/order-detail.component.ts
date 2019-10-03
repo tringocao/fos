@@ -1,21 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DeliveryInfos } from 'src/app/models/delivery-infos';
-import { RestaurantDetail } from 'src/app/models/restaurant-detail';
-import { RestaurantService } from 'src/app/services/restaurant/restaurant.service';
-import { OrderService } from 'src/app/services/order/order.service';
-import { User } from 'src/app/models/user';
-import { Event } from 'src/app/models/event';
-import { Order } from 'src/app/models/order';
-import { UserService } from 'src/app/services/user/user.service';
-import { Food } from 'src/app/models/food';
-import { ListOrderedFoodsComponent } from './list-ordered-foods/list-ordered-foods.component';
-import { EventFormService } from 'src/app/services/event-form/event-form.service';
-import { FoodDetailJson } from 'src/app/models/food-detail-json';
-import { MatSnackBar } from '@angular/material';
-import { FoodComponent } from '../dialog/food/food.component';
-import { environment } from 'src/environments/environment';
-import { promise } from 'protractor';
+import { ActivatedRoute, Router } from "@angular/router";
+import { DeliveryInfos } from "src/app/models/delivery-infos";
+import { RestaurantDetail } from "src/app/models/restaurant-detail";
+import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
+import { OrderService } from "src/app/services/order/order.service";
+import { User } from "src/app/models/user";
+import { Event } from "src/app/models/event";
+import { Order } from "src/app/models/order";
+import { UserService } from "src/app/services/user/user.service";
+import { Food } from "src/app/models/food";
+import { ListOrderedFoodsComponent } from "./list-ordered-foods/list-ordered-foods.component";
+import { EventFormService } from "src/app/services/event-form/event-form.service";
+import { FoodDetailJson } from "src/app/models/food-detail-json";
+import { MatSnackBar } from "@angular/material";
+import { FoodComponent } from "../dialog/food/food.component";
+import { environment } from "src/environments/environment";
+import { promise } from "protractor";
+import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
+import { EventPromotion } from "src/app/models/event-promotion";
+import { Promotion } from "src/app/models/promotion";
+import { PromotionType } from "src/app/models/promotion-type";
 interface RestaurantMore {
   restaurant: DeliveryInfos;
   detail: RestaurantDetail;
@@ -46,6 +50,10 @@ export class OrderDetailComponent implements OnInit {
   idService: number;
   isWildParticipant: boolean;
   nameEvent: string;
+  eventPromotion: EventPromotion;
+  promotions: Promotion[] = [];
+  discountPerItem: Promotion;
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
@@ -53,7 +61,8 @@ export class OrderDetailComponent implements OnInit {
     private userService: UserService,
     private eventFormService: EventFormService,
     private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private eventPromotionService: EventPromotionService
   ) {}
 
   async ngOnInit() {
@@ -112,7 +121,6 @@ export class OrderDetailComponent implements OnInit {
                     };
                     this.checkedData = this.order.FoodDetail;
 
-                    this.isDataAvailable = true;
                     this.totalBudget = Number(event.MaximumBudget);
                     this.userService.getUserById(event.HostId).then(user => {
                       this.hostUser = user;
@@ -123,6 +131,9 @@ export class OrderDetailComponent implements OnInit {
                         this.isOrder = false;
                       }
                       this.loading = false;
+                      this.isDataAvailable = true;
+
+                      this.getDbPromotions(this.event.EventId);
                     });
                     this.nameEvent = event.Name;
                   });
@@ -162,13 +173,14 @@ export class OrderDetailComponent implements OnInit {
       .getRestaurantDetail(IdDelivery, Number(this.event.ServiceId))
       .then(restaurantd => {
         this.data.detail = restaurantd;
-        this.isDataAvailable = true;
         this.totalBudget = Number(this.event.MaximumBudget);
         this.userService.getCurrentUser().then(user => {
           if (this.event.Status == 'Closed' && this.hostUser.Id != user.Id) {
             this.isOrder = false;
           }
           this.loading = false;
+          this.getDbPromotions(this.event.EventId);
+          this.isDataAvailable = true;
         });
       });
   }
@@ -226,5 +238,24 @@ export class OrderDetailComponent implements OnInit {
   }
   deleteFoodFromMenu($event: FoodDetailJson) {
     this.foodlist.unChecked(this.foodlist.MapFoodDetail2Food($event));
+  }
+  getDbPromotions(eventId: string) {
+    this.eventPromotionService.GetByEventId(Number(eventId)).then(promotion => {
+      this.eventPromotion = promotion;
+      console.log(this.eventPromotion);
+      this.promotions = this.eventPromotion.Promotions;
+      this.discountPerItem = this.promotions
+        .filter(p => p.PromotionType == PromotionType.DiscountPerItem)
+        .pop();
+      this.restaurantService
+        .getDiscountFoodIds(
+          Number(this.event.DeliveryId),
+          1,
+          this.discountPerItem
+        )
+        .then(p => {
+          this.discountPerItem = p;
+        });
+    });
   }
 }

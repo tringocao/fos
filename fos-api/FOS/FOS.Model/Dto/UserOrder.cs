@@ -11,6 +11,7 @@ namespace FOS.Model.Dto
         public User User { get; set; }
         public string Food { get; set; }
         public int Price { get; set; }
+        public int Cost { get; set; }
         public int PayExtra { get; set; }
         public List<Comment> Comments { get; set; }
     }

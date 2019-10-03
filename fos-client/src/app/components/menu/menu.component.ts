@@ -28,23 +28,31 @@ export class MenuComponent {
     private restaurantService: RestaurantService
   ) {
     this.overlay = overlay;
-    let restaurantItem: RestaurantDetail = { Rating: 0, TotalReview: 0 };
+    let restaurantItem: RestaurantDetail = {
+      Rating: 0,
+      TotalReview: 0,
+      PromotionLists: []
+    };
 
     this.resDetail = restaurantItem;
   }
 
   openDialog(): void {
     this.restaurantService
-      .getRestaurantDetail(Number(this.restaurant.DeliveryId),this.idService)
+      .getRestaurantDetail(Number(this.restaurant.DeliveryId), this.idService)
       .then(result => {
         this.resDetail.Rating = Number(result.Rating);
         this.resDetail.TotalReview = Number(result.TotalReview);
         const dialogRef = this.dialog.open(DialogComponent, {
           scrollStrategy: this.overlay.scrollStrategies.noop(),
           autoFocus: false,
-          maxHeight: "98vh",
+          maxHeight: "100vh",
           width: "80%",
-          data: { restaurant: this.restaurant, detail: this.resDetail, idService: this.idService }
+          data: {
+            restaurant: this.restaurant,
+            detail: this.resDetail,
+            idService: this.idService
+          }
         });
 
         dialogRef.afterClosed().subscribe(result => {

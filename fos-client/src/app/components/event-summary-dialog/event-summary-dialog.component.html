@@ -204,14 +204,29 @@
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Price</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ element.Price ? element.Price + "đ" : "" }}
+                    <app-adjust-price
+                    [baseCost]="getOriginalPrice(element)"
+                    [adjustedCost]="element.Price"
+                  ></app-adjust-price>
+                  <!-- {{ element.Price ? element.Price + "đ" : "" }}
+                  {{ getDiscountedPrice(element) }} -->
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
               <ng-container matColumnDef="total">
                 <th mat-header-cell *matHeaderCellDef>Total</th>
-                <td mat-cell *matCellDef="let element">{{ element.Total }}đ</td>
-                <td mat-footer-cell *matFooterCellDef>{{ totalCost }}đ</td>
+                <td mat-cell *matCellDef="let element">
+                  <app-adjust-price
+                  [baseCost]="element.Total"
+                  [adjustedCost]="element.Total"
+                ></app-adjust-price>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                  <app-adjust-price
+                    [baseCost]="baseTotalCost"
+                    [adjustedCost]="adjustedTotalCost"
+                  ></app-adjust-price>
+                </td>
               </ng-container>
               <ng-container matColumnDef="totalComment">
                 <th mat-header-cell *matHeaderCellDef>Comment</th>
@@ -279,12 +294,20 @@
               </ng-container>
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Price</th>
-                <td mat-cell *matCellDef="let element">{{ element.Price }}đ</td>
+                <td mat-cell *matCellDef="let element">
+                  <app-adjust-price
+                  [baseCost]="element.Price"
+                  [adjustedCost]="element.Cost"
+                ></app-adjust-price>
+                </td>
               </ng-container>
               <ng-container matColumnDef="pay-extra">
                 <th mat-header-cell *matHeaderCellDef>Pay extra</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ element.PayExtra }}đ
+                    <app-adjust-price
+                    [baseCost]="element.PayExtra"
+                    [adjustedCost]="element.PayExtra"
+                  ></app-adjust-price>
                 </td>
               </ng-container>
               <ng-container matColumnDef="comment">
@@ -299,11 +322,11 @@
                 <th mat-header-cell *matHeaderCellDef>Edit Order</th>
                 <td mat-cell *matCellDef="let element">
                   <app-edit-make-order
-                  matTooltip="Edit Order By Host"
-                  [isHostUser]="isHostUser"
-                  [eventDetail]="eventDetail"
-                  [user]="element.User"
-                ></app-edit-make-order>
+                    matTooltip="Edit Order By Host"
+                    [isHostUser]="isHostUser"
+                    [eventDetail]="eventDetail"
+                    [user]="element.User"
+                  ></app-edit-make-order>
                 </td>
               </ng-container>
               <tr
@@ -317,6 +340,15 @@
             </table>
           </mat-tab>
         </mat-tab-group>
+        <app-promotions-chip-list
+          *ngIf="promotionDataAvailable"
+          [deliveryId]="eventDetail.DeliveryId"
+          [eventId]="eventDetail.EventId"
+          [promotions]="promotions"
+          [eventPromotion]="eventPromotion"
+          [changable]="promoteChangeAble"
+          (promotionChanged)="adjustPrice($event)"
+        ></app-promotions-chip-list>
       </mat-card-content>
       <mat-card-actions align="end">
         <button
@@ -364,12 +396,19 @@
         >
           Print
         </button>
+        <button
+          (click)="sendEmailFeedback()"
+          mat-flat-button
+          color="warn"
+          *ngIf="isHostUser"
+        >
+      </button>
         <button (click)="exportExcel()" mat-flat-button color="primary">
           Export To Excel
         </button>
         <button (click)="sendEmailFeedback()" mat-flat-button color="warn" *ngIf="isHostUser">
           Send email feedbacks
-      </button>
+        </button>
         <button
           (click)="
             eventDetail.Status === 'Closed' ? openDialog() : resendOrder()
@@ -383,7 +422,7 @@
         <button (click)="onNoClick()" mat-stroked-button *ngIf="reOrder">
           Cancel
         </button>
-          <!-- <button mat-flat-button color="warn">Close</button> -->
+        <!-- <button mat-flat-button color="warn">Close</button> -->
       </mat-card-actions>
     </mat-card>
   </div>
