@@ -31,11 +31,13 @@
       />
       <span matSuffix>{{ isPromotionPercent() ? "%" : "đ" }}</span>
     </mat-form-field>
+    <div class="action-button">
     <button (click)="addToPromotions()" mat-flat-button color="primary">
       Add
     </button>
     <button (click)="updateEventPromotion()" mat-flat-button color="primary">
       Update
     </button>
+  </div>
   </div>
 </div>
