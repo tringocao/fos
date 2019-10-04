@@ -254,6 +254,7 @@ export class EventDialogEditComponent implements OnInit {
           .then(result => {
             self.restaurant = result;
             self.isLoading = false;
+            this.fetchAllPromotions();
           })
       );
 

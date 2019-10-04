@@ -114,21 +114,27 @@
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">{{ element.Name }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef>Amount</th>
             <td mat-cell *matCellDef="let element">{{ element.Amount }}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef>Price</th>
             <td mat-cell *matCellDef="let element">
               {{ numberWithCommas(element.Price) }}đ
             </td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <ng-container matColumnDef="total">
             <th mat-header-cell *matHeaderCellDef>Total</th>
             <td mat-cell *matCellDef="let element">
               {{ numberWithCommas(element.Total) }}đ
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              {{ numberWithCommas(total) }}đ
             </td>
           </ng-container>
           <ng-container matColumnDef="totalComment">
@@ -138,6 +144,7 @@
                 {{ comment.Amount }}x {{ comment.Value }},
               </span>
             </td>
+            <td mat-footer-cell *matFooterCellDef></td>
           </ng-container>
           <ng-container matColumnDef="showUsers">
             <th mat-header-cell *matHeaderCellDef>Users</th>
@@ -154,6 +161,10 @@
             mat-row
             *matRowDef="let row; columns: dishGroupViewDisplayedColumns"
           ></tr>
+          <tr
+          mat-footer-row
+          *matFooterRowDef="dishGroupViewDisplayedColumns"
+        ></tr>
         </table>
 
         <img src="" />

@@ -159,7 +159,8 @@ export class EventSummaryDialogComponent implements OnInit {
       eventDetail: this.eventDetail,
       foods: this.foods,
       orderByPerson: this.orderByPerson,
-      users: this.users
+      users: this.users,
+      total: this.totalCost,
     });
   }
 
@@ -337,6 +338,7 @@ export class EventSummaryDialogComponent implements OnInit {
         }
       });
       this.totalCost = item.Total + this.totalCost;
+      this.eventData.totalCost = this.totalCost;
     });
     this.baseTotalCost = this.totalCost;
     this.adjustedTotalCost = this.totalCost;
