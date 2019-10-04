@@ -10,10 +10,10 @@
         [promotion]="promotion"
         (removePressed)="removePromotion($event)"
       ></app-promotions-chip>
-      <mat-chip color="primary" (click)="addNewPromotion()">
+      <mat-chip color="primary" (click)="addNewPromotion()" matTooltip="Add a promotion" matTooltipPosition="above">
         +
       </mat-chip>
-      <mat-chip color="primary" (click)="updateEventPromotion()">
+      <mat-chip color="primary" (click)="updateEventPromotion()" matTooltip="Save promotion list" matTooltipPosition="above">
         <mat-icon>system_update_alt</mat-icon>
       </mat-chip>
     </mat-chip-list>
