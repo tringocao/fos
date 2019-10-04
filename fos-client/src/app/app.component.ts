@@ -17,7 +17,7 @@ export class AppComponent {
   constructor(private oauthService: OauthService, private route: ActivatedRoute, private printService:PrintService) {
     this.appId = "theme1";
     this.showIcon = this.route.snapshot.paramMap.get("id") == null;
-    this.oauthService.checkOauth();
+    // this.oauthService.checkOauth();
   }
   changeTheme($event) {
     this.appId = $event.theme;

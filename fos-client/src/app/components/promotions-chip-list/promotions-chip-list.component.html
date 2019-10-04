@@ -1,47 +1,4 @@
 <div class="container">
-  <div class="action-menu" *ngIf="changable">
-    <mat-form-field>
-      <mat-label>Promotion Type</mat-label>
-      <mat-select [(value)]="promotionType">
-        <mat-option
-          *ngFor="let promotion of promotionOptions"
-          [value]="promotion.PromotionType"
-          >{{ getPromotionName(promotion.PromotionType) }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select [(value)]="promotionTypeOfValue">
-        <mat-option value="%">
-          %
-        </mat-option>
-        <mat-option value="đ">
-          đ
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Value</mat-label>
-      <input
-        [(ngModel)]="promotionValue"
-        matInput
-        placeholder="Promotion value"
-        value="10"
-      />
-      <span matSuffix>
-        {{ promotionTypeOfValue }}
-      </span>
-    </mat-form-field>
-
-    <div class="action-button">
-      <button (click)="addToPromotions()" mat-flat-button color="primary">
-        Add
-      </button>
-      <button (click)="updateEventPromotion()" mat-flat-button color="primary">
-        Update
-      </button>
-    </div>
-  </div>
   <div class="container2">
     <mat-chip-list #chipList aria-label="Fruit selection">
       <app-promotions-chip
@@ -53,6 +10,12 @@
         [promotion]="promotion"
         (removePressed)="removePromotion($event)"
       ></app-promotions-chip>
+      <mat-chip color="primary" (click)="addNewPromotion()" matTooltip="Add a promotion" matTooltipPosition="above">
+        +
+      </mat-chip>
+      <mat-chip color="primary" (click)="updateEventPromotion()" matTooltip="Save promotion list" matTooltipPosition="above">
+        <mat-icon>system_update_alt</mat-icon>
+      </mat-chip>
     </mat-chip-list>
   </div>
 </div>

@@ -20,9 +20,16 @@ namespace FOS.Services.ExternalServices.NowService.Convert
             if (data.result == "success")
             {
                 deliveryInfos = JsonConvert.DeserializeObject<DeliveryDetail>(data.reply.delivery_detail.ToString());
-                if (data.reply.delivery_detail.delivery.promotions != null)
+                deliveryInfos.PromotionOnAll = new List<Promotion>();
+
+                if (data.reply.delivery_detail.delivery.promotions != null )
                 {
-                    deliveryInfos.PromotionOnAll = JsonConvert.DeserializeObject<List<Promotion>>(data.reply.delivery_detail.delivery.promotions.ToString());
+                    List<Promotion> list = JsonConvert.DeserializeObject<List<Promotion>>(data.reply.delivery_detail.delivery.promotions.ToString());
+                    if(list.Count() > 0)
+                    {
+                        deliveryInfos.PromotionOnAll.AddRange(list);
+                    }
+                    
 
                 }
                 if (data.reply.delivery_detail.price_slash_discount != null)
@@ -30,7 +37,31 @@ namespace FOS.Services.ExternalServices.NowService.Convert
                     deliveryInfos.PromotionOnItem = JsonConvert.DeserializeObject<Promotion>(data.reply.delivery_detail.price_slash_discount.ToString());
 
                 }
+                if (data.reply.delivery_detail.campaigns != null)
+                {
+                    foreach(var item in  data.reply.delivery_detail.campaigns)
+                    {
+                        if(item.campaign_type == "2")
+                        {
+                            item.discount_amount = "15000";
 
+                        }
+                    }
+                    List<Promotion> freeShip = JsonConvert.DeserializeObject<List<Promotion>>(data.reply.delivery_detail.campaigns.ToString());
+                    foreach(var fs in freeShip)
+                    {
+                        if(fs.CampaignType == "2")
+                        {
+                            fs.DiscountValueType = "3";
+                            fs.DiscountOnType = "3";
+                            fs.MaxDiscountAmount = "15000";
+                            fs.MinOrderAmount = "0";
+                            deliveryInfos.PromotionOnAll.Add(fs);
+
+                        }
+                    }
+
+                }
             }
             return deliveryInfos;
         }

@@ -7,6 +7,7 @@ import { Order } from 'src/app/models/order';
 import { UserNotOrderMailInfo } from './../../models/user-not-order-mail-info';
 import { UserNotOrder } from 'src/app/models/user-not-order';
 import { UserReorder } from 'src/app/models/user-reorder';
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class OrderService {
   private baseUrl: string;
 
   constructor(
-    private http: HttpClient // , private envService: EnvironmentService
+    private http: HttpClient, // , private envService: EnvironmentService
+    private oauthService: OauthService
   ) {
     // this.baseUrl = envService.getApiUrl() + "/api/order";
   }
@@ -37,7 +39,7 @@ export class OrderService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   SetOrder(order: Order, isWildOrder: boolean): Promise<void> {
@@ -56,7 +58,7 @@ export class OrderService {
             reject(result.ErrorMessage);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetOrder(orderId: string): Promise<Order> {
@@ -76,7 +78,7 @@ export class OrderService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetOrdersByEventId(eventId: string): Promise<Order[]> {
@@ -96,7 +98,7 @@ export class OrderService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetUserNotOrdered(eventId: string) {
@@ -118,7 +120,7 @@ export class OrderService {
             reject(result.ErrorMessage);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   SendEmailToNotOrderedUser(users: UserNotOrderMailInfo[]) {
@@ -136,7 +138,7 @@ export class OrderService {
             reject(result.ErrorMessage);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   SendEmailToReOrderedUser(users: UserReorder[]) {
@@ -154,7 +156,7 @@ export class OrderService {
             reject(result.ErrorMessage);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetByEventvsUserId(eventId: string, userId: string) {
@@ -175,7 +177,7 @@ export class OrderService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetOrderIdOfUserInEvent(eventId: string, userId: string) {
@@ -196,7 +198,7 @@ export class OrderService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   UpdateOrderStatusByOrderId(
@@ -220,7 +222,7 @@ export class OrderService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   UpdateFoodDetailByOrderId(
@@ -244,7 +246,7 @@ export class OrderService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 }
