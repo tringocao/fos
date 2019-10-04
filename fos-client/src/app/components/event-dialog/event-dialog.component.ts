@@ -45,6 +45,7 @@ import { CustomGroup } from "src/app/models/custom-group";
 import { Promotion } from "src/app/models/promotion";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { environment } from "src/environments/environment";
+import { NoPromotionsNotificationComponent } from "./no-promotions-notification/no-promotions-notification.component";
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -80,6 +81,7 @@ export class EventDialogComponent implements OnInit {
   public ownerForm: FormGroup;
   public userInputPicker: any;
   constructor(
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<EventDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MoreInfo,
     private fb: FormBuilder,
@@ -472,6 +474,19 @@ export class EventDialogComponent implements OnInit {
       )
       .then(promotions => {
         this.promotions = promotions;
+        if (this.promotions.length == 0) {
+          const dialogRef = this.dialog.open(
+            NoPromotionsNotificationComponent,
+            {
+              maxWidth: "50%",
+              data: this.ownerForm.get("userInput").value.Name
+            }
+          );
+
+          dialogRef.afterClosed().subscribe(result => {
+            console.log("The dialog was closed");
+          });
+        }
         // this.promotionChanged.emit(this.promotions);
       });
   }

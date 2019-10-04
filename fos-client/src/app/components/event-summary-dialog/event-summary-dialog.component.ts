@@ -102,11 +102,10 @@ export class EventSummaryDialogComponent implements OnInit {
     "picture",
     "name",
     "amount",
+    "totalComment",
     "price",
     "total",
-    "totalComment",
-    "numberOfUser",
-    "showUsers"
+    "numberOfUser"
   ];
   personGroupViewDisplayedColumns: string[] = [
     "user",
@@ -488,11 +487,10 @@ export class EventSummaryDialogComponent implements OnInit {
       "picture",
       "name",
       "amount",
+      "totalComment",
       "price",
       "total",
-      "totalComment",
-      "numberOfUser",
-      "showUsers"
+      "numberOfUser"
     ];
     this.reOrder = true;
   }
@@ -529,11 +527,10 @@ export class EventSummaryDialogComponent implements OnInit {
       "picture",
       "name",
       "amount",
+      "totalComment",
       "price",
       "total",
-      "totalComment",
-      "numberOfUser",
-      "showUsers"
+      "numberOfUser"
     ];
   }
 

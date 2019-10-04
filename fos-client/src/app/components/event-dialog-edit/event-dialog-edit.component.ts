@@ -53,6 +53,7 @@ import { EventUsers } from "src/app/models/event-users";
 import { Promotion } from "src/app/models/promotion";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
+import { NoPromotionsNotificationComponent } from "../event-dialog/no-promotions-notification/no-promotions-notification.component";
 @Component({
   selector: 'app-event-dialog-edit',
   templateUrl: './event-dialog-edit.component.html',
@@ -534,6 +535,19 @@ export class EventDialogEditComponent implements OnInit {
       )
       .then(promotions => {
         this.promotions = promotions;
+        if (this.promotions.length == 0) {
+          const dialogRef = this.dialog.open(
+            NoPromotionsNotificationComponent,
+            {
+              maxWidth: "50%",
+              data: this.ownerForm.get("userInput").value.Name
+            }
+          );
+
+          dialogRef.afterClosed().subscribe(result => {
+            console.log("The dialog was closed");
+          });
+        }
         // this.promotionChanged.emit(this.promotions);
       });
   }

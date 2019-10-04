@@ -1,4 +1,5 @@
 <div class="action-menu">
+  <h2>Add a promotion</h2>
   <div class="selector">
     <mat-form-field>
       <mat-label>Promotion Type</mat-label>
@@ -10,28 +11,30 @@
         >
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Value</mat-label>
-      <input
-        [(ngModel)]="promotionValue"
-        matInput
-        placeholder="Promotion value"
-        value="10"
-      />
-      <!-- <span matSuffix>
+    <div>
+      <mat-form-field>
+        <mat-label>Value</mat-label>
+        <input
+          [(ngModel)]="promotionValue"
+          matInput
+          placeholder="Promotion value"
+          value="10"
+        />
+        <!-- <span matSuffix>
         {{ promotionTypeOfValue }}
       </span> -->
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select [(value)]="promotionTypeOfValue">
-        <mat-option value="%">
-          %
-        </mat-option>
-        <mat-option value="đ">
-          đ
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      </mat-form-field>
+      <mat-form-field class="percent">
+        <mat-select [(value)]="promotionTypeOfValue">
+          <mat-option value="%">
+            %
+          </mat-option>
+          <mat-option value="đ">
+            đ
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 
   <div class="action-button">

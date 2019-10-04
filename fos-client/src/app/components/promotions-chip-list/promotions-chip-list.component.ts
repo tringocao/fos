@@ -87,8 +87,7 @@ export class PromotionsChipListComponent implements OnInit {
 
   addNewPromotion() {
     const dialogRef = this.dialog.open(AddPromotionDialogComponent, {
-      maxHeight: "98vh",
-      width: "80%",
+      maxWidth: "50%",
       data: {}
     });
 
