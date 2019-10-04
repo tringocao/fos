@@ -14,10 +14,18 @@ export class AppComponent {
   appId: string;
   idOrder: any;
   showIcon: boolean;
-  constructor(private oauthService: OauthService, private route: ActivatedRoute, private printService:PrintService) {
+  isAuthenticated = false;
+  constructor(private oauthService: OauthService, private route: ActivatedRoute, private printService: PrintService) {
     this.appId = "theme1";
     this.showIcon = this.route.snapshot.paramMap.get("id") == null;
-    // this.oauthService.checkOauth();
+    this.oauthService.checkOauth().then((result: any) => {
+      if (result.redirect) {
+        window.location.href = result.redirectUrl;
+      }
+      else {
+        this.isAuthenticated = true;
+      }
+    });
   }
   changeTheme($event) {
     this.appId = $event.theme;
