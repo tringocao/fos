@@ -71,6 +71,12 @@ namespace FOS.API.Controllers
             try
             {
                 var itemModel = _eventDtoMapper.DtoToDomain(item);
+                bool check = _eventService.ValidateEventInfo(itemModel);
+                if (check == false)
+                {
+                    return ApiUtil<string>.CreateFailResult(Constant.NotValidEventInfo);
+                }
+
                 var result = _spListService.AddEventListItem(id, itemModel);
                 return ApiUtil<string>.CreateSuccessfulResult(result);
             }
@@ -114,6 +120,7 @@ namespace FOS.API.Controllers
         {
             try
             {
+                
                 bool checkHost = await _userService.ValidateIsHost(Int32.Parse(id));
                 if (checkHost == false)
                 {
@@ -121,6 +128,11 @@ namespace FOS.API.Controllers
                 }
 
                 var domainItem = _eventDtoMapper.DtoToDomain(item);
+                bool check = _eventService.ValidateEventInfo(domainItem);
+                if (check == false)
+                {
+                    return ApiUtil<string>.CreateFailResult(Constant.NotValidEventInfo);
+                }
                 await _spListService.UpdateListItem(id, domainItem);
                 return ApiUtil.CreateSuccessfulResult();
             }
@@ -136,6 +148,27 @@ namespace FOS.API.Controllers
         {
             try
             {
+                bool checkHost = await _userService.ValidateIsHost(Int32.Parse(id));
+                if (checkHost == false)
+                {
+                    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
+                }
+                if(eventStatus == EventStatus.Reopened)
+                {
+                   Model.Domain.Event currEvent =   _eventService.GetEvent(Int32.Parse(id));
+                    if(currEvent.Status != EventStatus.Closed)
+                    {
+                        return ApiUtil.CreateFailResult(Constant.NotValidEventInfo);
+                    }
+                }
+                if (eventStatus == EventStatus.Error)
+                {
+                    Model.Domain.Event currEvent = _eventService.GetEvent(Int32.Parse(id));
+                    if (currEvent.Status != EventStatus.Opened)
+                    {
+                        return ApiUtil.CreateFailResult(Constant.NotValidEventInfo);
+                    }
+                }
                 await _spListService.UpdateEventStatus(id, eventStatus);
                 return ApiUtil.CreateSuccessfulResult();
             }
@@ -165,6 +198,17 @@ namespace FOS.API.Controllers
             try
             {
                 var domainItem = _eventDtoMapper.DtoToDomain(item);
+                bool checkHost = await _userService.ValidateIsHost(Int32.Parse(id));
+                if (checkHost == false)
+                {
+                    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
+                }
+
+                bool check = _eventService.ValidateEventInfo(domainItem);
+                if (check == false)
+                {
+                    return ApiUtil<string>.CreateFailResult(Constant.NotValidEventInfo);
+                }
                 await _spListService.UpdateListItemWhenRestaurantChanges(id, domainItem);
                 return ApiUtil.CreateSuccessfulResult();
             }

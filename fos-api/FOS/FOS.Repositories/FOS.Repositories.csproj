@@ -57,7 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\CustomGroup.cs" />
-    <Compile Include="DataModel\DiscountEvent.cs" />
+    <Compile Include="DataModel\EventPromotion.cs" />
     <Compile Include="DataModel\ExternalServiceAPI.cs" />
     <Compile Include="DataModel\FavoriteRestaurant.cs" />
     <Compile Include="DataModel\FeedBack.cs" />
@@ -71,15 +71,19 @@
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\RepositoryBaseFactory.cs" />
+    <Compile Include="Mapping\EventPromotionMapper.cs" />
     <Compile Include="Mapping\CustomGroupMapper.cs" />
     <Compile Include="Mapping\GraphUserMapper.cs" />
-    <Compile Include="Mapping\DiscountEventMapper.cs" />
     <Compile Include="Mapping\FeedbackMapper.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
+    <Compile Include="Migrations\201910031020083_newCodedd.cs" />
+    <Compile Include="Migrations\201910031020083_newCodedd.Designer.cs">
+      <DependentUpon>201910031020083_newCodedd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\EventPromotionRepository.cs" />
     <Compile Include="Repositories\CustomGroupRepository.cs" />
-    <Compile Include="Repositories\DiscountEventRepository.cs" />
     <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,6 +125,11 @@
       <Project>{8252d347-1bad-4276-a6e3-180fb9f0a3db}</Project>
       <Name>FOS.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201910031020083_newCodedd.resx">
+      <DependentUpon>201910031020083_newCodedd.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -120,7 +120,7 @@ namespace FOS.Services
                 new KeyValuePair<string, string>("refresh_token", token),
             });
             HttpResponseMessage response = await client.PostAsync(path, content);
-            var resultContentString = await response.Content.ReadAsStringAsync();
+                var resultContentString = await response.Content.ReadAsStringAsync();
             var resultContent = await response.Content.ReadAsAsync<OAuthResponse>();
             //return resultContent;
             if (resultContent.access_token != null)

@@ -195,36 +195,44 @@ namespace FOS.Services.SendEmailServices
 
         public async Task SendMailUpdateEvent(List<Model.Domain.GraphUser> removeListUser, List<Model.Domain.User> newListUser, string idEvent, string html)
         {
-            foreach (var deleteUser in removeListUser)
+            try
             {
-                _orderService.DeleteOrderByUserId(deleteUser.Id, idEvent);
-            }
-
-            ReadEmailTemplate(html);
-            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
-            {
-                await GetDataByEventIdAsync(clientContext, idEvent);
-                var emailp = new EmailProperties();
-                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
-
-                foreach (var user in newListUser)
+                foreach (var deleteUser in removeListUser)
                 {
-                    Guid idOrder = Guid.NewGuid();
-                    emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;
-                    emailp.To = new List<string>() { user.Mail };
-                    emailp.From = emailTemplate.HostUserEmail.Mail;
-                    //emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
-                    emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                    emailp.Subject = Parse(emailTemplate.Subject.ToString(), emailTemplate);
-
-                    Utility.SendEmail(clientContext, emailp);
-                    clientContext.ExecuteQuery();
-
-                    _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id,
-                        emailTemplate.EventRestaurantId,
-                        emailTemplate.EventDeliveryId,
-                        emailTemplate.EventId, user.Mail, EventEmail.NewOder);
+                    _orderService.DeleteOrderByUserId(deleteUser.Id, idEvent);
                 }
+
+                ReadEmailTemplate(html);
+                using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    await GetDataByEventIdAsync(clientContext, idEvent);
+                    var emailp = new EmailProperties();
+                    string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+
+                    foreach (var user in newListUser)
+                    {
+                        Guid idOrder = Guid.NewGuid();
+                        emailTemplate.MakeOrder = hostname + "make-order/" + idOrder;
+                        emailTemplate.NotParticipant = hostname + "make-order/" + idOrder;
+                        emailp.To = new List<string>() { user.Mail };
+                        emailp.From = emailTemplate.HostUserEmail.Mail;
+                        //emailp.BCC = new List<string> { emailTemplate.HostUserEmail.Mail };
+                        emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
+                        emailp.Subject = Parse(emailTemplate.Subject.ToString(), emailTemplate);
+
+                        Utility.SendEmail(clientContext, emailp);
+                        clientContext.ExecuteQuery();
+
+                        await _orderService.CreateOrderWithEmptyFoods(idOrder, user.Id,
+                             emailTemplate.EventRestaurantId,
+                             emailTemplate.EventDeliveryId,
+                             emailTemplate.EventId, user.Mail, EventEmail.NewOder);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
             }
         }
 
@@ -251,15 +259,17 @@ namespace FOS.Services.SendEmailServices
 
         public async Task SendEmailToAlreadyOrderedUserAsync(List<UserFeedbackMailInfo> users, string emailTemplateJson)
         {
-            var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
-            jsonTemplate.TryGetValue("Body", out object body);
-            ReadEmailTemplate(body.ToString());
-            jsonTemplate.TryGetValue("Subject", out object subject);
-            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            try
             {
-                var emailp = new EmailProperties();
-                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
-                var host = await _sPUserService.GetCurrentUser();
+                var jsonTemplate = ReadEmailJsonTemplate(emailTemplateJson);
+                jsonTemplate.TryGetValue("Body", out object body);
+                ReadEmailTemplate(body.ToString());
+                jsonTemplate.TryGetValue("Subject", out object subject);
+                using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+                {
+                    var emailp = new EmailProperties();
+                    string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                    var host = await _sPUserService.GetCurrentUser();
 
                 foreach (var user in users)
                 {
@@ -269,34 +279,44 @@ namespace FOS.Services.SendEmailServices
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
                     emailp.Subject = Parse(subject.ToString(), user);
 
-                    Utility.SendEmail(clientContext, emailp);
-                    clientContext.ExecuteQuery();
+                        Utility.SendEmail(clientContext, emailp);
+                        clientContext.ExecuteQuery();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
         public async Task SendCancelEventMail(List<Model.Domain.EventUsers> listUser, Dictionary<string, string> emailTemplateDictionary)
         {
-
-
-            using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            try
             {
-                var emailp = new EmailProperties();
-                string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
-                var host = await _sPUserService.GetCurrentUser();
-                List<Model.Domain.EventUsers> filterList = await FilterUser(listUser);
-                foreach (var user in filterList)
+                using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
                 {
-                    emailTemplateDictionary.TryGetValue("Body", out string body);
-                    emailTemplateDictionary.TryGetValue("Subject", out string subject);
+                    var emailp = new EmailProperties();
+                    string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
+                    var host = await _sPUserService.GetCurrentUser();
+                    List<Model.Domain.EventUsers> filterList = await FilterUser(listUser);
+                    foreach (var user in filterList)
+                    {
+                        emailTemplateDictionary.TryGetValue("Body", out string body);
+                        emailTemplateDictionary.TryGetValue("Subject", out string subject);
 
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
                     emailp.Body = Parse(body, user);
                     emailp.Subject = Parse(subject.ToString(), user);
 
-                    Utility.SendEmail(clientContext, emailp);
-                    clientContext.ExecuteQuery();
+                        Utility.SendEmail(clientContext, emailp);
+                        clientContext.ExecuteQuery();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 

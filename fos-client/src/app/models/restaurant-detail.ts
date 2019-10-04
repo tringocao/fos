@@ -8,11 +8,12 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-     
+     import { Promotion } from './promotion';
 
     export class RestaurantDetail    {
            
         public Rating: number = 0;   
-        public TotalReview: number = 0;
+        public TotalReview: number = 0;   
+        public PromotionLists: Promotion[] = [];
     }
          

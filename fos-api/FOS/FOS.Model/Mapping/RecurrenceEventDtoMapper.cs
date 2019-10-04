@@ -26,7 +26,8 @@ namespace FOS.Model.Mapping
                 UserId = recurrenceEvent.UserId != null ? recurrenceEvent.UserId : null,
                 UserMail = recurrenceEvent.UserMail,
                 StartTempDate = recurrenceEvent.StartTempDate,
-                Version = recurrenceEvent.Version
+                Version = recurrenceEvent.Version,
+                UserName = recurrenceEvent.UserName
             };
         }
 
@@ -42,7 +43,9 @@ namespace FOS.Model.Mapping
                 UserId = recurrenceEvent.UserId != null ? recurrenceEvent.UserId : null,
                 StartTempDate = recurrenceEvent.StartTempDate,
                 Version = recurrenceEvent.Version,
-                UserMail = recurrenceEvent.UserMail
+                UserMail = recurrenceEvent.UserMail,
+                UserName = recurrenceEvent.UserName
+
 
             };
         }

@@ -14,6 +14,8 @@ namespace FOS.Common.Constants
         public const string FeedbackEmailTemplate = @"~/App_Data/FeedbackEmailTemplate.json";
         public const string ReorderEmailTemplate = @"~/App_Data/ReorderEmailTemplate.json";
         public const string CancelEmailTemplate = @"~/App_Data/CancelEventEmailTemplate.json";
+        public const string ReportEmailTemplate = @"~/App_Data/ReportEmailTemplate.json";
         public const string UserNotPerission = "You don't have permission to do this action";
+        public const string NotValidEventInfo = "Your event information is not valid!";
     }
 }

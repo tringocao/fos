@@ -10,7 +10,11 @@ export class OauthService {
   constructor(private http: HttpClient) { }
 
   checkOauth() {
-    this.http.get(environment.apiUrl + "/api/oauth/CheckAuth").subscribe(
+    this.http.get(environment.apiUrl + "/api/oauth/CheckAuth", {
+      params: {
+        redirectUrl: window.location.href
+      }
+    }).subscribe(
       (data: authRespond) => {
         console.log("request data");
         console.log(data.redirect);
