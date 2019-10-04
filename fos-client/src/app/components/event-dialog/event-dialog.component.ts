@@ -244,6 +244,7 @@ export class EventDialogComponent implements OnInit {
           .then(result => {
             self.restaurant = result;
             self.isLoading = false;
+            self.fetchAllPromotions();
           })
       );
     this.userService.getCurrentUser().then(user => {

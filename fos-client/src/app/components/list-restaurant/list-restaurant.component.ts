@@ -110,8 +110,8 @@ export class ListRestaurantComponent implements OnInit {
         this.toast(data.Name + ' added! ', 'Dismiss');
       }
     });
+    this.favoriteRestaurants.push(restaurantId);
     this.favoriteService.addFavoriteRestaurant(restaurantId).then(response => {
-      this.favoriteRestaurants.push(restaurantId)
       // console.log(this.dataSource.data);
       if (response != null && response.ErrorMessage != null) {
         this.toast('Error happnened ', 'Dismiss');
@@ -141,6 +141,7 @@ export class ListRestaurantComponent implements OnInit {
         this.toast(data.Name + ' removed! ', 'Dismiss');
       }
     });
+    this.favoriteRestaurants = this.favoriteRestaurants.filter(id => id !== restaurantId);
     this.favoriteService
       .removeFavoriteRestaurant(restaurantId)
       .then(response => {

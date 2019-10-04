@@ -53,17 +53,19 @@ export class DatetimepickerComponent implements OnInit {
   public HasError = (controlName: string, errorName: string) => {
     // debugger;
     return this.formGroup.controls[controlName].hasError(errorName);
-  };
+  }
 
   openDialog(): void {
     console.log(this.itime)
-    console.log(this.userTime) 
-    if (this.userTime) {
-      this.itime = {
-        hour: moment(this.userTime).format('HH'),
-        minute: moment(this.userTime).format('mm'),
-        meriden: "AM",
-        format: 24,
+    console.log(this.userTime)
+    if (!this.itime) {
+      if (this.userTime) {
+        this.itime = {
+          hour: moment(this.userTime).format('HH'),
+          minute: moment(this.userTime).format('mm'),
+          meriden: "AM",
+          format: 24,
+        }
       }
     }
     const dialogRef = this.dialog.open(TimeDialogComponent, {

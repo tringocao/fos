@@ -1,5 +1,5 @@
 <div class="app-{{ appId }}-theme">
-  <mat-sidenav-container>
+  <mat-sidenav-container *ngIf="isAuthenticated">
     <mat-sidenav #sidenav role="navigation" position="start">
       <!--this is a place for us to add side-nav code-->
     </mat-sidenav>

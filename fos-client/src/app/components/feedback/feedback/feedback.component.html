@@ -1,14 +1,17 @@
 <app-loading [loading]="loading"></app-loading>
 <div class="container" *ngIf="eventDataAvailable">
   <div class="event">
-    {{ event.Name }}
+   Feedback for event: {{ event.Name }}
   </div>
-  <app-star-rating
+  <div class="restaurant">
+    Rating for Restaurant: {{ event.Restaurant }}
+    <app-star-rating
     [rating]="rating"
     [starCount]="starCount"
     [color]="starColor"
     (ratingUpdated)="OnRatingChanged($event)"
   ></app-star-rating>
+  </div>
   <table mat-table [dataSource]="dishViewdataSource">
     <ng-container matColumnDef="picture">
       <th mat-header-cell *matHeaderCellDef>Picture</th>
