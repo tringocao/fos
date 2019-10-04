@@ -14,9 +14,10 @@
           style="
           color: #e57d13;
         "
-          >Summary
+          >
+          Event
         </span>
-        Event
+        Summary
       </h1>
       <mat-card-content>
         <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
@@ -404,7 +405,7 @@
           (click)="sendEmailFeedback()"
           mat-flat-button
           color="warn"
-          *ngIf="isHostUser && !reOrder"
+          *ngIf="isHostUser && eventDetail.Status === 'Closed'"
         >
           Send email feedbacks
         </button>

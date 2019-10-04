@@ -685,7 +685,8 @@ export class EventSummaryDialogComponent implements OnInit {
       promotions.forEach((promotion: Promotion) => {
         if (
           !promotion.IsPercent &&
-          promotion.PromotionType !== PromotionType.ShipFee
+          promotion.PromotionType !== PromotionType.ShipFee &&
+          promotion.PromotionType !== PromotionType.DiscountPerItem
         ) {
           this.adjustedTotalCost = this.adjustedTotalCost - promotion.Value;
           this.orderByPerson.forEach(order => {
