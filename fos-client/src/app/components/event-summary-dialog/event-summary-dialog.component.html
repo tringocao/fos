@@ -349,6 +349,7 @@
           [promotions]="promotions"
           [eventPromotion]="eventPromotion"
           [changable]="promoteChangeAble"
+          [isHost]="isHostUser"
           (promotionChanged)="adjustPrice($event)"
         ></app-promotions-chip-list>
       </mat-card-content>
