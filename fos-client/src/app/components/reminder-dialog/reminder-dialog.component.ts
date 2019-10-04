@@ -87,6 +87,7 @@ export class ReminderDialogComponent implements OnInit {
       element.EventRestaurant = this.data.event.Restaurant;
       element.EventTitle = this.data.event.Name;
       element.UserMail = item.Mail;
+      element.UserName = item.DisplayName;
       element.OrderId = this.userNotOrder.filter(
         user => user.UserId === item.Id
       )[0].OrderId;

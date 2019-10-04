@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FOS.Model.Dto
+namespace FOS.Model.Domain
 {
-    public class UserNotOrderMailInfo
+    public class ReportEmailTemplate
     {
-        public string UserMail { get; set; }
-        public string OrderId { get; set; }
         public string EventTitle { get; set; }
-        public string EventRestaurant { get; set; }
         public string UserName { get; set; }
+        public string ImageUrl { get; set; }
+        public string LinkToEventReport { get; set; }
     }
 }

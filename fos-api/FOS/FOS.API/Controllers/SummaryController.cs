@@ -1,4 +1,5 @@
 ﻿using FOS.API.App_Start;
+using FOS.Common.Constants;
 using FOS.Model.Domain;
 using FOS.Model.Dto;
 using FOS.Model.Mapping;
@@ -7,6 +8,7 @@ using FOS.Repositories.DataModel;
 using FOS.Services.SendEmailServices;
 using FOS.Services.SPUserService;
 using FOS.Services.SummaryService;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,15 +26,13 @@ namespace FOS.API.Controllers
     public class SummaryController : ApiController
     {
         ISummaryService _summaryService;
-        ISendEmailService _sendEmailService;
         ISPUserService _spUserService;
         IRestaurantSummaryDtoMapper _restaurantSummaryDtoMapper;
         IDishesSummaryDtoMapper _dishesSummaryDtoMapper;
 
-        public SummaryController(ISummaryService summaryService, ISendEmailService sendEmailService, ISPUserService spUserService, IRestaurantSummaryDtoMapper restaurantSummaryDtoMapper, IDishesSummaryDtoMapper dishesSummaryDtoMapper)
+        public SummaryController(ISummaryService summaryService, ISPUserService spUserService, IRestaurantSummaryDtoMapper restaurantSummaryDtoMapper, IDishesSummaryDtoMapper dishesSummaryDtoMapper)
         {
             _summaryService = summaryService;
-            _sendEmailService = sendEmailService;
             _spUserService = spUserService;
             _restaurantSummaryDtoMapper = restaurantSummaryDtoMapper;
             _dishesSummaryDtoMapper = dishesSummaryDtoMapper;
@@ -59,10 +59,7 @@ namespace FOS.API.Controllers
         {
             try
             {
-                Model.Domain.User sender = await _spUserService.GetCurrentUser();
-                string reportId = await _summaryService.AddReport(report);
-                string html = _summaryService.BuildHtmlEmail(reportUrl, eventId, reportId);
-                _summaryService.SendReport(sender.UserPrincipalName, html, "Event Report");
+                await _summaryService.SendReportAsync(eventId, reportUrl, report);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
