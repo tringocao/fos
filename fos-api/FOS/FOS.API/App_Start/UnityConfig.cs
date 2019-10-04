@@ -181,6 +181,7 @@ namespace FOS.API
             container.RegisterType<Model.Mapping.IPromotionDtoMapper, Model.Mapping.PromotionDtoMapper>();
             container.RegisterType<Model.Mapping.IEventUserDtoMapper, Model.Mapping.EventUserDtoMapper>();
             container.RegisterType<Model.Mapping.IUserOrderDtoMapper, Model.Mapping.UserOrderDtoMapper>();
+            container.RegisterType<Model.Mapping.IExcelModelDtoMapper, Model.Mapping.ExcelModelDtoMapper>();
 
             container.RegisterType<Model.Mapping.IUserNotOrderEmailDtoMapper, Model.Mapping.UserNotOrderEmailDtoMapper>();
             container.RegisterType<Model.Mapping.IGroupDtoMapper, Model.Mapping.GroupDtoMapper>();

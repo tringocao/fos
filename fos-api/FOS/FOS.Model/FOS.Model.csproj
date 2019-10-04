@@ -128,9 +128,12 @@
     <Compile Include="Domain\CustomGroup.cs" />
     <Compile Include="Domain\EventPromotion.cs" />
     <Compile Include="Domain\EventUsers.cs" />
+    <Compile Include="Domain\ExcelModel.cs" />
     <Compile Include="Domain\FeedBack.cs" />
+    <Compile Include="Domain\FoodReport.cs" />
     <Compile Include="Domain\NowModel\Promotion.cs" />
     <Compile Include="Domain\ReportEmailTemplate.cs" />
+    <Compile Include="Domain\RestaurantExcel.cs" />
     <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
     <Compile Include="Domain\DishesSummary.cs" />
     <Compile Include="Domain\EmailTemplate.cs" />
@@ -182,6 +185,7 @@
     <Compile Include="Dto\EventAction.cs" />
     <Compile Include="Dto\EventPromotion.cs" />
     <Compile Include="Dto\EventUsers.cs" />
+    <Compile Include="Dto\ExcelModel.cs" />
     <Compile Include="Dto\ExternalService.cs" />
     <Compile Include="Dto\FavoriteRestaurant.cs" />
     <Compile Include="Dto\FeedBack.cs" />
@@ -201,6 +205,7 @@
     <Compile Include="Dto\Report.cs" />
     <Compile Include="Dto\Restaurant.cs" />
     <Compile Include="Dto\RestaurantDetail.cs" />
+    <Compile Include="Dto\RestaurantExcel.cs" />
     <Compile Include="Dto\RestaurantSummary.cs" />
     <Compile Include="Dto\TablePaging.cs" />
     <Compile Include="Dto\UpdateEvent.cs" />
@@ -224,10 +229,12 @@
     <Compile Include="Mapping\EventDtoMapper.cs" />
     <Compile Include="Mapping\EventPromotionDtoMapper.cs" />
     <Compile Include="Mapping\EventUserDtoMapper.cs" />
+    <Compile Include="Mapping\ExcelModelDtoMapper.cs" />
     <Compile Include="Mapping\FavoriteRestaurantDtoMapper.cs" />
     <Compile Include="Mapping\FeedbackDtoMapper.cs" />
     <Compile Include="Mapping\FoodCategoryDtoMapper.cs" />
     <Compile Include="Mapping\FoodDtoMapper.cs" />
+    <Compile Include="Mapping\FoodReportDtoMapper.cs" />
     <Compile Include="Mapping\GraphUserDtoMapper.cs" />
     <Compile Include="Mapping\GroupDtoMapper.cs" />
     <Compile Include="Mapping\JsonDtoMapper.cs" />
@@ -238,6 +245,7 @@
     <Compile Include="Mapping\RecurrenceEventDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantDetailDtoMapper.cs" />
+    <Compile Include="Mapping\RestaurantExcelDtoMapper.cs" />
     <Compile Include="Mapping\RestaurantSummaryDtoMapper.cs" />
     <Compile Include="Mapping\UserDtoMapper.cs" />
     <Compile Include="Mapping\UserNotOrderDtoMapper.cs" />
@@ -255,6 +263,7 @@
   <ItemGroup>
     <Folder Include="bin\Debug\" />
     <Folder Include="bin\Release\" />
+    <Folder Include="Dto\..\..\..\..\fos-client\src\app\models\" />
     <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
@@ -549,6 +558,26 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\event.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Event.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\excel-model.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\ExcelModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\excel-model.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\ExcelModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\excel-model.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\ExcelModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\excel-model.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\ExcelModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\excel-model.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\ExcelModel.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\external-service.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
@@ -1049,6 +1078,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant-detail.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\RestaurantDetail.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant-excel.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\RestaurantExcel.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\restaurant-summary.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
