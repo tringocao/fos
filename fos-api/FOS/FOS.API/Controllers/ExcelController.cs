@@ -1,5 +1,4 @@
 ﻿using FOS.API.App_Start;
-using FOS.Model.Domain;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.CustomGroupService;
@@ -15,6 +14,8 @@ using System.Web;
 using System.Web.Http;
 using System.Threading.Tasks;
 using System.Text;
+using FOS.Model.Dto;
+using FOS.Model.Domain;
 
 namespace FOS.API.Controllers
 {
@@ -24,20 +25,22 @@ namespace FOS.API.Controllers
     {
         IExcelService _excelService;
         IUserOrderDtoMapper _userOrderDtoMapper;
+        IExcelModelDtoMapper _excelMapper;
 
-        public ExcelController(IUserOrderDtoMapper userOrderDtoMapper, IExcelService excelService)
+        public ExcelController(IUserOrderDtoMapper userOrderDtoMapper, IExcelService excelService, IExcelModelDtoMapper excelMapper)
         {
             _userOrderDtoMapper = userOrderDtoMapper;
             _excelService = excelService;
+            _excelMapper = excelMapper;
         }
         [HttpPost]
         [Route("CreateCSV")]
-        public async Task<ApiResponse> CreateGroup([FromBody]List<Model.Dto.UserOrder> listUser)
+        public async Task<ApiResponse> CreateGroup([FromBody]Model.Dto.ExcelModel excelModel)
         {
             try
             {
-                List<Model.Domain.UserOrder> domainUser = listUser.Select(l=>_userOrderDtoMapper.ToDomain(l)).ToList();
-                await _excelService.ExportCSV(domainUser);
+                Model.Domain.ExcelModel domainExcelModel = _excelMapper.ToDomain(excelModel);
+                await _excelService.ExportCSV(domainExcelModel);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
@@ -52,10 +55,10 @@ namespace FOS.API.Controllers
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             try
             {               
-                response.Content = new StreamContent(new FileStream(Common.Constants.Constant.FileCsvDirectory, FileMode.Open, FileAccess.Read));
+                response.Content = new StreamContent(new FileStream(Common.Constants.Constant.FileXlsxDirectory, FileMode.Open, FileAccess.Read));
                 //response.Content.Headers.ContentType.CharSet = Encoding.UTF8.HeaderName;
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-                response.Content.Headers.ContentDisposition.FileName = Common.Constants.Constant.FileCsvNameWithExtension;
+                response.Content.Headers.ContentDisposition.FileName = Common.Constants.Constant.FileXlsxNameWithExtension;
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                 return response;
