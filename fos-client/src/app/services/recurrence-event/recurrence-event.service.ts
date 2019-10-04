@@ -2,13 +2,15 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { RecurrenceEvent } from "src/app/models/recurrence-event";
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class RecurrenceEventService {
   constructor(
-    private http: HttpClient // , private envService: EnvironmentService
+    private http: HttpClient, // , private envService: EnvironmentService
+    private oauthService: OauthService
   ) {
     // this.baseUrl = envService.getApiUrl() + "/api/order";
   }
@@ -30,7 +32,7 @@ export class RecurrenceEventService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   updateRecurrenceEvent(recurrenceEvent: RecurrenceEvent): Promise<void> {
@@ -46,7 +48,7 @@ export class RecurrenceEventService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   addRecurrenceEvent(recurrenceEvent: RecurrenceEvent): Promise<void> {
@@ -62,7 +64,7 @@ export class RecurrenceEventService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getById(id: number): Promise<RecurrenceEvent> {
@@ -82,7 +84,7 @@ export class RecurrenceEventService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getByUserId(userId: string): Promise<RecurrenceEvent> {
@@ -102,7 +104,7 @@ export class RecurrenceEventService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   removeRecurrenceEvent(id: number): Promise<void> {
@@ -122,7 +124,7 @@ export class RecurrenceEventService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 }

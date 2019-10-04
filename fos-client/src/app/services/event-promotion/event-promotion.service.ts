@@ -3,13 +3,14 @@ import { HttpClient, XhrFactory } from "@angular/common/http";
 import { Promotion } from 'src/app/models/promotion';
 import { environment } from "src/environments/environment";
 import { EventPromotion } from 'src/app/models/event-promotion';
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventPromotionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private oauthService: OauthService) { }
   getPromotionsByExternalService(
     deliveryId: number,
     idService: number
@@ -31,7 +32,7 @@ export class EventPromotionService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetByEventId(
@@ -53,7 +54,7 @@ export class EventPromotionService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   UpdateEventPromotionByEventId(
@@ -76,7 +77,7 @@ export class EventPromotionService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   AddEventPromotion(
@@ -99,7 +100,7 @@ export class EventPromotionService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   UpdateEventPromotion(
@@ -117,7 +118,7 @@ export class EventPromotionService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 }

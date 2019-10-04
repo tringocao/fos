@@ -112,7 +112,8 @@ namespace FOS.ReminderService
                         user.EventTitle,
                         user.EventRestaurant,
                         user.UserMail.ToString(),
-                        hostname + "make-order/" + user.OrderId);
+                        hostname + "make-order/" + user.OrderId,
+                        hostname + "not-participant/"+ user.OrderId);
                     emailp.Subject = subject.ToString();
 
                     Utility.SendEmail(clientContext, emailp);

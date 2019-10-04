@@ -3,7 +3,8 @@ import { Promotion } from "src/app/models/promotion";
 import { PromotionType } from "src/app/models/promotion-type";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar, MatDialog, MatDialogRef } from "@angular/material";
+import { AddPromotionDialogComponent } from "../event-summary-dialog/add-promotion-dialog/add-promotion-dialog.component";
 
 @Component({
   selector: "app-promotions-chip-list",
@@ -13,7 +14,9 @@ import { MatSnackBar } from "@angular/material";
 export class PromotionsChipListComponent implements OnInit {
   constructor(
     private eventPromotionService: EventPromotionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<AddPromotionDialogComponent>
   ) {}
 
   @Input() deliveryId: number;
@@ -72,23 +75,36 @@ export class PromotionsChipListComponent implements OnInit {
         promotion.DiscountedFoodIds = null;
       }
     });
-    this.eventPromotionService.UpdateEventPromotion(this.eventPromotion).then(response => {
-      if (response === null) {
+    this.eventPromotionService
+      .UpdateEventPromotion(this.eventPromotion)
+      .then(response => {
+        if (response != null) {
+          this.toast("update fail", "Dismiss");
+        }
         this.toast("update success", "Dismiss");
-      }
-      if (response != null) {
-        this.toast("update fail", "Dismiss");
+      });
+  }
+
+  addNewPromotion() {
+    const dialogRef = this.dialog.open(AddPromotionDialogComponent, {
+      maxWidth: "50%",
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe((promotion: Promotion) => {
+      if (promotion && promotion.PromotionType) {
+        this.addToPromotions(promotion);
       }
     });
   }
 
-  addToPromotions() {
-    const promotion = new Promotion();
-    promotion.PromotionType = this.promotionType;
-    promotion.Value = Number(this.promotionValue);
-    promotion.IsPercent = this.promotionTypeOfValue === "%";
-    promotion.MaxDiscountAmount = 0;
-    promotion.MinOrderAmount = 0;
+  addToPromotions(promotion) {
+    // const promotion = new Promotion();
+    // promotion.PromotionType = this.promotionType;
+    // promotion.Value = Number(this.promotionValue);
+    // promotion.IsPercent = this.promotionTypeOfValue === "%";
+    // promotion.MaxDiscountAmount = 0;
+    // promotion.MinOrderAmount = 0;
     this.promotions.push(promotion);
     this.promotionChanged.emit(this.promotions);
     // console.log(this.promotions);

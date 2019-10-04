@@ -124,6 +124,7 @@
     <Compile Include="Domain\ApiResponse.cs" />
     <Compile Include="Domain\APIs.cs" />
     <Compile Include="Domain\AuthClientRespond.cs" />
+    <Compile Include="Domain\Comment.cs" />
     <Compile Include="Domain\CustomGroup.cs" />
     <Compile Include="Domain\EventPromotion.cs" />
     <Compile Include="Domain\EventUsers.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserNotOrder.cs" />
     <Compile Include="Domain\UserNotOrderEmail.cs" />
+    <Compile Include="Domain\UserOrder.cs" />
     <Compile Include="Domain\UserReorder.cs" />
     <Compile Include="Dto\Category.cs" />
     <Compile Include="Dto\CategoryGroup.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="Mapping\APIsDtoMapper.cs" />
     <Compile Include="Mapping\CategoryDtoMapper.cs" />
     <Compile Include="Mapping\CategoryGroupDtoMapper.cs" />
+    <Compile Include="Mapping\CommentsDtoMapper.cs" />
     <Compile Include="Mapping\Config.cs" />
     <Compile Include="Mapping\CustomGroupDtoMapper.cs" />
     <Compile Include="Mapping\DeliveryInfosDtoMapper.cs" />
@@ -239,6 +242,7 @@
     <Compile Include="Mapping\UserDtoMapper.cs" />
     <Compile Include="Mapping\UserNotOrderDtoMapper.cs" />
     <Compile Include="Mapping\UserNotOrderEmailDtoMapper.cs" />
+    <Compile Include="Mapping\UserOrderDtoMapper.cs" />
     <Compile Include="Mapping\UserReorderDtoMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ApiUtil.cs" />
@@ -383,6 +387,10 @@
       <CustomToolNamespace>Dto\Comment.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\comment.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\Comment.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\comments.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\Comment.cs</CustomToolNamespace>
     </TypeScriptCompile>

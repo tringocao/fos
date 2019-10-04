@@ -9,7 +9,7 @@ import { Order } from "src/app/models/order";
 import { FoodDetailJson } from "src/app/models/food-detail-json";
 import { EventFormService } from "src/app/services/event-form/event-form.service";
 import { Event } from "src/app/models/event";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource, MatSnackBar } from "@angular/material";
 import { StarRatingColor } from "../../star-rating/star-rating.component";
 import { FeedBack } from "src/app/models/feed-back";
 import { UserRating } from "src/app/models/user-rating";
@@ -27,7 +27,8 @@ export class FeedbackComponent implements OnInit {
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private orderService: OrderService,
-    private eventFormService: EventFormService
+    private eventFormService: EventFormService,
+    private snackBar: MatSnackBar
   ) {}
   restaurant: DeliveryInfos;
   orderId: string;
@@ -120,6 +121,12 @@ export class FeedbackComponent implements OnInit {
     });
   }
 
+  toast(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
+
   Submit() {
     const ratingIndex = this.feedback.Ratings.findIndex(
       rating => rating.UserId === this.order.IdUser
@@ -146,6 +153,17 @@ export class FeedbackComponent implements OnInit {
     });
     console.log(this.feedback);
 
-    this.feedbackService.feedBackEvent(this.feedback);
+    this.feedbackService.feedBackEvent(this.feedback).then(result => {
+      this.toast('Feedback Submitted!', 'Dismiss');
+    });
+  }
+
+  numberWithCommas(x: Number) {
+    if (x < 0) return 0;
+    if (x != undefined) {
+      var parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return parts.join(".");
+    }
   }
 }
