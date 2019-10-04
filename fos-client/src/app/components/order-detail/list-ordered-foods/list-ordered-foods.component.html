@@ -24,9 +24,9 @@
 
   <h4>
     Time to close:
-    {{ month }}/{{ day }}/{{ year }} {{ hour }}:{{ minutes }}
+    {{ toStandardDate(event.CloseTime) }}
   </h4>
-  <h4>Event date: {{ toStandardDate(event.CloseTime) }}</h4>
+  <h4>Event date: {{ toStandardDate(event.EventTime) }}</h4>
 </div>
 
 <div class="restaurants ">
@@ -204,11 +204,11 @@
       <ng-container matColumnDef="-6">
         <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
-      <ng-container matColumnDef="-8">
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+      <!-- <ng-container matColumnDef="-8">
+        <td mat-footer-cell *matFooterCellDef colspan="2"></td>
+      </ng-container> -->
       <ng-container matColumnDef="saveOrder">
-        <td mat-footer-cell *matFooterCellDef>
+        <td mat-footer-cell *matFooterCellDef colspan="2">
           <div class="example-button-row">
             <button
               [disabled]="!isOrder"
@@ -249,10 +249,7 @@
       ></tr>
       <tr
         mat-footer-row
-        *matFooterRowDef="
-          ['0', '-2', '-4', '-6', 'saveOrder', '-8'];
-          sticky: true
-        "
+        *matFooterRowDef="['0', '-2', '-4', '-6', 'saveOrder']; sticky: true"
         class="example-second-footer-row"
       ></tr>
       <!-- <tr mat-footer-row *matFooterRowDef="['disclaimer3','disclaimer4']; sticky: true" class="example-second-footer-row"></tr> -->
