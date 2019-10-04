@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FOS.Repositories.DataModel;
 using FOS.Model;
 using AutoMapper;
+using FOS.Common.Constants;
 
 namespace FOS.Repositories.Repositories
 {
@@ -26,6 +27,7 @@ namespace FOS.Repositories.Repositories
         bool UpdateOrderStatusByOrderId(string OrderId, int OrderStatus);
         bool UpdateFoodDetailByOrderId(string OrderId, string FoodDetail);
         Model.Domain.Order GetOrderByEventIdAndMail(string EventId, string Mail);
+        string GetOrderIdOfUserInEvent(string eventId, string userId);
     }
 
     public class OrderRepository : IOrderRepository
@@ -75,6 +77,11 @@ namespace FOS.Repositories.Repositories
         {
             return _context.Orders.Where(order => order.IdEvent == eventid && order.IdUser == userId).FirstOrDefault();
         }
+        public string GetOrderIdOfUserInEvent(string eventId, string userId)
+        {
+            var result = _context.Orders.Where(order => order.IdEvent == eventId && order.IdUser == userId).FirstOrDefault();
+            return result != null ? result.Id : "";
+        }
         public IEnumerable<DataModel.Order> GetAllOrder()
         {
             var list = _context.Orders.ToList();
@@ -91,7 +98,7 @@ namespace FOS.Repositories.Repositories
         public IEnumerable<Model.Domain.UserNotOrder> GetUserNotOrdered(string eventId)
         {
             var orders = _context.Orders.Where(order =>
-            order.IdEvent == eventId && order.FoodDetail.Length == 0 && order.OrderStatus == 0).ToList();
+            order.IdEvent == eventId && order.OrderStatus == EventEmail.NewOder).ToList();
             var result = new List<Model.Domain.UserNotOrder>();
             foreach (var order in orders)
             {
@@ -135,7 +142,7 @@ namespace FOS.Repositories.Repositories
         public List<Model.Domain.UserNotOrderEmail> GetUserNotOrderEmail(string eventId)
         {
             var orders = _context.Orders.Where(order =>
-            order.IdEvent == eventId && order.FoodDetail.Length == 0 && order.OrderStatus == 0).ToList();
+            order.IdEvent == eventId && order.OrderStatus == EventEmail.NewOder).ToList();
 
             var result = new List<Model.Domain.UserNotOrderEmail>();
             foreach (var order in orders)

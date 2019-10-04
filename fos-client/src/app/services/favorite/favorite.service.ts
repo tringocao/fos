@@ -2,12 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient, XhrFactory } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { FavoriteRestaurant } from "src/app/models/favorite-restaurant";
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class FavoriteService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private oauthService: OauthService) {}
 
   addFavoriteRestaurant(
     restaurantId
@@ -26,7 +27,7 @@ export class FavoriteService {
             resolve(null);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   removeFavoriteRestaurant(restaurantId: string) {
@@ -44,7 +45,7 @@ export class FavoriteService {
             resolve(null);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getFavorite(): Promise<Array<FavoriteRestaurant>> {
@@ -59,7 +60,7 @@ export class FavoriteService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 }

@@ -62,6 +62,7 @@ namespace FOS.Services.EventServices
         }
         private void SetListAction(Event eventModel, string userId)
         {
+
             var isParticipant = eventModel.EventParticipantsJson.Contains(userId);
             var isHost = eventModel.HostId == userId;
 
@@ -94,6 +95,59 @@ namespace FOS.Services.EventServices
                 var result = _eventDtoMapper.ListItemToEventModel(item);
 
                 return result;
+            }
+        }
+        public bool ValidateEventInfo(Event eventInfo)
+        {
+            try
+            {
+                bool valid = true;
+                if (eventInfo.Name == "")
+                {
+                    valid = false;
+                }
+                bool isNumeric = int.TryParse(eventInfo.MaximumBudget, out int n);
+                if (isNumeric == false)
+                {
+                    valid = false;
+                }
+                DateTime temp;
+                if (DateTime.TryParse(eventInfo.EventDate.ToString(), out temp) == false)
+                {
+                    valid = false;
+                }
+                if (DateTime.TryParse(eventInfo.CloseTime.ToString(), out temp) == false)
+                {
+                    valid = false;
+                }
+                if(eventInfo.RemindTime != null)
+                {
+                    if (DateTime.TryParse(eventInfo.RemindTime.ToString(), out temp) == false)
+                    {
+                        valid = false;
+                    }
+                }
+                if(eventInfo.RestaurantId == null)
+                {
+                    valid = false;
+                }
+                if(eventInfo.HostName == null)
+                {
+                    valid = false;
+                }
+                if(eventInfo.EventParticipantsJson == null)
+                {
+                    valid = false;
+                }
+                if(Int32.Parse(eventInfo.Participants) == 0)
+                {
+                    valid = false;
+                }
+                return valid;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

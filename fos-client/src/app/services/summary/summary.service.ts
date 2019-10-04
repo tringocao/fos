@@ -5,12 +5,13 @@ import { Report } from "src/app/models/report";
 import { Event } from "src/app/models/event";
 import { RestaurantSummary } from "src/app/models/restaurant-summary";
 import { DishesSummary } from "./../../models/dishes-summary";
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class SummaryService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private oauthService: OauthService) {}
 
   sendEmail(report: Report): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -26,7 +27,7 @@ export class SummaryService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 
@@ -56,7 +57,7 @@ export class SummaryService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetRestaurantSummary() {
@@ -71,7 +72,7 @@ export class SummaryService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getDishesSummary(
@@ -97,7 +98,7 @@ export class SummaryService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 
@@ -121,7 +122,7 @@ export class SummaryService {
             resolve(null);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   SetTime2CloseToEventDate(eventId: string): Promise<ApiOperationResult<void>> {
@@ -139,7 +140,7 @@ export class SummaryService {
             resolve(null);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 }

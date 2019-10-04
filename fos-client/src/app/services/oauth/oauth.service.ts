@@ -10,7 +10,11 @@ export class OauthService {
   constructor(private http: HttpClient) { }
 
   checkOauth() {
-    this.http.get(environment.apiUrl + "/api/oauth/CheckAuth").subscribe(
+    this.http.get(environment.apiUrl + "/api/oauth/CheckAuth", {
+      params: {
+        redirectUrl: window.location.href
+      }
+    }).subscribe(
       (data: authRespond) => {
         console.log("request data");
         console.log(data.redirect);
@@ -39,5 +43,13 @@ export class OauthService {
         console.log(error);
       }
     );
+  }
+
+  checkAuthError(response) {
+    if (response && response.error.Error === 401) {
+      alert('Your session has expired. Please refresh the page and try again.');
+      this.checkOauth();
+    }
+    console.log(response);
   }
 }

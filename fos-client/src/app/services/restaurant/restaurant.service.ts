@@ -9,6 +9,7 @@ import { CategoryGroup } from "src/app/models/category-group";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { Restaurant } from "src/app/models/restaurant";
 import { Promotion } from "src/app/models/promotion";
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: "root"
@@ -16,7 +17,7 @@ import { Promotion } from "src/app/models/promotion";
 export class RestaurantService {
   ids: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private oauthService: OauthService) {}
   setEmail(id: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.http
@@ -31,7 +32,7 @@ export class RestaurantService {
             resolve(result);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getFood(deliveryId: number, idService: number): Promise<Array<FoodCategory>> {
@@ -52,7 +53,7 @@ export class RestaurantService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getRestaurantIds(
@@ -82,7 +83,7 @@ export class RestaurantService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getRestaurantDetail(
@@ -106,7 +107,7 @@ export class RestaurantService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getRestaurantDetailById(
@@ -132,7 +133,7 @@ export class RestaurantService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getRestaurants(
@@ -162,7 +163,7 @@ export class RestaurantService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   GetMetadataForCategory(idService: number = 1): Promise<Array<CategoryGroup>> {
@@ -182,7 +183,7 @@ export class RestaurantService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   getDiscountFoodIds(
@@ -208,7 +209,7 @@ export class RestaurantService {
             resolve(result.Data);
           } else reject(new Error(JSON.stringify(result.ErrorMessage)));
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
   SearchRestaurantName(
