@@ -1,5 +1,4 @@
-﻿using ChoETL;
-using FOS.Model.Domain.NowModel;
+﻿using FOS.Model.Domain.NowModel;
 using FOS.Model.Mapping;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

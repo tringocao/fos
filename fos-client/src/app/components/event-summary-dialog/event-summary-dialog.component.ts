@@ -53,6 +53,7 @@ import { Promotion } from "src/app/models/promotion";
 import { PromotionType } from "src/app/models/promotion-type";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
+import { ExcelService } from 'src/app/services/print/excel/excel.service';
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -78,7 +79,8 @@ export class EventSummaryDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>,
     private overlay: Overlay,
     private feedbackService: FeedbackService,
-    private eventPromotionService: EventPromotionService
+    private eventPromotionService: EventPromotionService,
+    private excelService: ExcelService
   ) {
     overlayContainer.getContainerElement().classList.add("app-theme1-theme");
     console.log(router.routerState);
@@ -714,5 +716,10 @@ export class EventSummaryDialogComponent implements OnInit {
       });
       this.totalCost = this.adjustedTotalCost;
     }
+  }
+  exportExcel() {
+    this.excelService.CreateCSV(this.orderByPerson).then(value => {
+      window.open(environment.apiUrl + 'api/Excel/DownloadCSV');
+    });
   }
 }
