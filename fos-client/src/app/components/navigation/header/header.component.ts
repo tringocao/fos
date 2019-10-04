@@ -43,9 +43,11 @@ export class HeaderComponent implements OnInit {
     private oauthService: OauthService,
     private router: Router
   ) {
+    this.url = window.location.href.replace(environment.baseUrl, '/');
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         this.url = event.url;
+        console.log('current url: ', this.url);
       }
     });
   }
