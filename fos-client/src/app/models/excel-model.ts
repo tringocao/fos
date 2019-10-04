@@ -20,6 +20,7 @@ import { User } from './user';
         public RestaurantExcel: RestaurantExcel = null;   
         public FoodReport: FoodReport[] = [];   
         public UserOrder: UserOrder[] = [];   
-        public User: User[] = [];
+        public User: User[] = [];   
+        public Total: number = 0;
     }
          

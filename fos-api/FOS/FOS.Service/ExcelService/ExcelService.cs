@@ -59,6 +59,10 @@ namespace FOS.Services.ExcelService
 
                         stream.WriteLine(csvRow, Encoding.UTF8);
                     }
+                    string total = string.Format("{0},{1},{2},{3},{4},{5}", "", "", "", excelModel.Total.ToString(), "", "");
+
+                    stream.WriteLine(total, Encoding.UTF8);
+
                     stream.WriteLine("", Encoding.UTF8);
                     string csvUserHeader = string.Format("{0},{1},{2},{3},{4}", "User", "Food", "Price", "Pay Extra", "Comment");
                     stream.WriteLine(csvUserHeader, Encoding.UTF8);

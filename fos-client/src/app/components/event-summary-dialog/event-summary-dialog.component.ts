@@ -733,7 +733,8 @@ export class EventSummaryDialogComponent implements OnInit {
       FoodReport : this.foods,
       RestaurantExcel: this.restaurant,
       UserOrder: this.orderByPerson,
-      User: this.users
+      User: this.users,
+      Total: this.totalCost
     };
     this.excelService.CreateCSV(excelModel).then(value => {
       window.open(environment.apiUrl + 'api/Excel/DownloadCSV');

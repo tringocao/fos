@@ -13,5 +13,6 @@ namespace FOS.Model.Dto
         public List<FoodReport> FoodReport { get; set; }
         public List<UserOrder> UserOrder { get; set; }
         public List<User> User { get; set; }
+        public int Total { get; set; }
     }
 }

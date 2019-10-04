@@ -31,6 +31,7 @@ namespace FOS.Model.Mapping
                 RestaurantExcel = restaurantMapper.ToDomain(dto.RestaurantExcel),
                 FoodReport = listFoodReport,
                 User = listUser,
+                Total = dto.Total
             };
         }
         public Dto.ExcelModel ToDto(Domain.ExcelModel domain)
@@ -51,6 +52,7 @@ namespace FOS.Model.Mapping
                 RestaurantExcel = restaurantMapper.ToDto(domain.RestaurantExcel),
                 FoodReport = listFoodReport,
                 User = listUser,
+                Total = domain.Total
             };
         }
     }
