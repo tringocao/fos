@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
@@ -30,9 +30,9 @@ interface FoodCheck {
   checked: boolean;
 }
 @Component({
-  selector: 'app-order-detail',
-  templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.less']
+  selector: "app-order-detail",
+  templateUrl: "./order-detail.component.html",
+  styleUrls: ["./order-detail.component.less"]
 })
 export class OrderDetailComponent implements OnInit {
   idOrder: string;
@@ -67,11 +67,11 @@ export class OrderDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.data = { restaurant: null, detail: null, idService: 1 };
-    this.idOrder = this.route.snapshot.paramMap.get('id');
+    this.idOrder = this.route.snapshot.paramMap.get("id");
 
     this.isWildParticipant = false;
     // check if wild guest order
-    if (this.idOrder.includes('ffa')) {
+    if (this.idOrder.includes("ffa")) {
       var eventId = this.idOrder.slice(3);
       this.userService.getCurrentUser().then(user => {
         this.orderService
@@ -79,7 +79,7 @@ export class OrderDetailComponent implements OnInit {
           .then(result => {
             if (result && result.length > 0) {
               window.location.href =
-                environment.baseUrl + 'make-order/' + result;
+                environment.baseUrl + "make-order/" + result;
             }
           });
       });
@@ -109,7 +109,7 @@ export class OrderDetailComponent implements OnInit {
                   })
                   .then(() => {
                     this.order = {
-                      Id: '1',
+                      Id: "1",
                       OrderDate: new Date(),
                       IdUser: this.orderUser.Id,
                       IdEvent: this.event.EventId,
@@ -117,7 +117,7 @@ export class OrderDetailComponent implements OnInit {
                       IdDelivery: Number(this.event.DeliveryId),
                       FoodDetail: [],
                       OrderStatus: 0,
-                      Email: ''
+                      Email: ""
                     };
                     this.checkedData = this.order.FoodDetail;
 
@@ -125,7 +125,7 @@ export class OrderDetailComponent implements OnInit {
                     this.userService.getUserById(event.HostId).then(user => {
                       this.hostUser = user;
                       if (
-                        this.event.Status == 'Closed' &&
+                        this.event.Status == "Closed" &&
                         this.hostUser.Id != this.orderUser.Id
                       ) {
                         this.isOrder = false;
@@ -133,7 +133,7 @@ export class OrderDetailComponent implements OnInit {
                       this.loading = false;
                       this.isDataAvailable = true;
 
-                      this.getDbPromotions(this.event.EventId);
+                      this.getDbPromotions(this.event.EventId, this.order);
                     });
                     this.nameEvent = event.Name;
                   });
@@ -143,7 +143,7 @@ export class OrderDetailComponent implements OnInit {
     } else {
       await this.orderService.GetOrder(this.idOrder).then(value => {
         if (value.OrderStatus === 2) {
-          this.router.navigateByUrl('not-participant/' + this.idOrder);
+          this.router.navigateByUrl("not-participant/" + this.idOrder);
         }
       });
       this.getOrderInfor(this.idOrder);
@@ -153,49 +153,51 @@ export class OrderDetailComponent implements OnInit {
     return this.orderService.GetOrder(this.idOrder).then(order => {
       this.order = order;
       this.checkedData = order.FoodDetail;
-      this.GetEventById(this.order.IdEvent);
+      this.GetEventById(order);
       this.userService.getUserById(order.IdUser).then(user => {
         this.orderUser = user;
       });
     });
   }
 
-  getRestaurant(IdRestaurant: Array<number>) {
+  getRestaurant(IdRestaurant: Array<number>, order: Order) {
     return this.restaurantService
       .getRestaurants(IdRestaurant, Number(this.event.ServiceId), 217)
       .then(restaurant => {
         this.data.restaurant = restaurant[0];
-        this.getRestaurantDetail(this.order.IdDelivery);
+        this.getRestaurantDetail(order);
       });
   }
-  getRestaurantDetail(IdDelivery: number) {
+  getRestaurantDetail(order: Order) {
     return this.restaurantService
-      .getRestaurantDetail(IdDelivery, Number(this.event.ServiceId))
+      .getRestaurantDetail(order.IdDelivery, Number(this.event.ServiceId))
       .then(restaurantd => {
         this.data.detail = restaurantd;
         this.totalBudget = Number(this.event.MaximumBudget);
         this.userService.getCurrentUser().then(user => {
-          if (this.event.Status == 'Closed' && this.hostUser.Id != user.Id) {
+          if (this.event.Status == "Closed" && this.hostUser.Id != user.Id) {
             this.isOrder = false;
           }
           this.loading = false;
-          this.getDbPromotions(this.event.EventId);
-          this.isDataAvailable = true;
+          if (this.order != null) {
+            this.isDataAvailable = true;
+          }
         });
       });
   }
-  getUserById(IdUser: string) {
+  getUserById(IdUser: string, order: Order) {
     return this.userService.getUserById(IdUser).then(user => {
       this.hostUser = user;
 
-      this.getRestaurant([this.order.IdRestaurant]);
+      this.getRestaurant([order.IdRestaurant], order);
     });
   }
-  GetEventById(IdEvent: string) {
-    return this.eventFormService.GetEventById(IdEvent).then(event => {
+  GetEventById(order: Order) {
+    return this.eventFormService.GetEventById(order.IdEvent).then(event => {
       this.event = event;
       this.nameEvent = event.Name;
-      this.getUserById(this.event.HostId);
+      this.getDbPromotions(this.event.EventId, order);
+      this.getUserById(this.event.HostId, order);
     });
   }
   isClosed(dateParameter: Date) {
@@ -229,17 +231,17 @@ export class OrderDetailComponent implements OnInit {
     this.orderService
       .SetOrder(this.order, this.isWildParticipant)
       .then(result => {
-        this.toast('Save!', 'Dismiss');
-        if (this.idOrder.includes('ffa')) {
+        this.toast("Save!", "Dismiss");
+        if (this.idOrder.includes("ffa")) {
           window.close();
         }
       })
-      .catch(error => this.toast(error, 'Dismiss'));
+      .catch(error => this.toast(error, "Dismiss"));
   }
   deleteFoodFromMenu($event: FoodDetailJson) {
     this.foodlist.unChecked(this.foodlist.MapFoodDetail2Food($event));
   }
-  getDbPromotions(eventId: string) {
+  getDbPromotions(eventId: string, order: Order) {
     this.eventPromotionService.GetByEventId(Number(eventId)).then(promotion => {
       this.eventPromotion = promotion;
       console.log(this.eventPromotion);
@@ -247,15 +249,22 @@ export class OrderDetailComponent implements OnInit {
       this.discountPerItem = this.promotions
         .filter(p => p.PromotionType == PromotionType.DiscountPerItem)
         .pop();
-      this.restaurantService
-        .getDiscountFoodIds(
-          Number(this.event.DeliveryId),
-          1,
-          this.discountPerItem
-        )
-        .then(p => {
-          this.discountPerItem = p;
-        });
+      if (this.discountPerItem == null) {
+        this.order = order;
+        if (this.loading == false) this.isDataAvailable = true;
+      } else {
+        this.restaurantService
+          .getDiscountFoodIds(
+            Number(this.event.DeliveryId),
+            1,
+            this.discountPerItem
+          )
+          .then(p => {
+            this.discountPerItem = p;
+            this.order = order;
+            if (this.loading == false) this.isDataAvailable = true;
+          });
+      }
     });
   }
 }

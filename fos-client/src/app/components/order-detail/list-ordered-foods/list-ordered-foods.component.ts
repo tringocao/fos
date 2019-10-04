@@ -149,6 +149,9 @@ export class ListOrderedFoodsComponent implements OnInit {
   updateTable() {
     this.setDate(new Date(this.event.CloseTime));
     this.dataSource2.data = this.order.FoodDetail;
+    this.order.FoodDetail.forEach(f => {
+      this.onBlurMethodAmount(Number(f.Value["Amount"]), f);
+    });
     this.dataSource2.sort = this.sort;
     this.load = false;
   }
