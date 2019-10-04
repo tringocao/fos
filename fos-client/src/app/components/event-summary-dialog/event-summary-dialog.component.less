@@ -22,12 +22,9 @@
   }
 
   .card {
-    width: 80%;
+    width: 95%;
     box-sizing: border-box;
-    box-shadow: none;
-    border-width: thin;
-    border-color: black;
-    border-style: solid;
+    border-bottom: 4px solid #e57d13;
   }
   .grid-tile-row {
     justify-content: flex-start !important ;
@@ -37,6 +34,7 @@
     width: 100%;
     display: flex;
     align-items: flex-start;
+    height: -webkit-fill-available;
   }
   .label-inside-grid {
     .text-inside-grid;
@@ -44,7 +42,6 @@
   }
   .mat-grid-tile {
     overflow: hidden;
-    padding: 10px;
   }
   .mat-cell {
     padding-left: 5px;

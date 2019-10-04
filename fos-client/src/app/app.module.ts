@@ -112,6 +112,8 @@ import { CreateUpdateCustomGroupComponent } from "./components/create-update-cus
 import { PromotionsChipComponent } from "./components/promotions-chip/promotions-chip.component";
 import { PromotionsChipListComponent } from "./components/promotions-chip-list/promotions-chip-list.component";
 import { AdjustPriceComponent } from "./components/adjust-price/adjust-price.component";
+import { NoPromotionsNotificationComponent } from "./components/event-dialog/no-promotions-notification/no-promotions-notification.component";
+import { AddPromotionDialogComponent } from "./components/event-summary-dialog/add-promotion-dialog/add-promotion-dialog.component";
 
 @NgModule({
   declarations: [
@@ -168,7 +170,9 @@ import { AdjustPriceComponent } from "./components/adjust-price/adjust-price.com
     AdjustPriceComponent,
     StarRatingComponent,
     CustomGroupPageComponent,
-    CreateUpdateCustomGroupComponent
+    CreateUpdateCustomGroupComponent,
+    NoPromotionsNotificationComponent,
+    AddPromotionDialogComponent
   ],
   // declarations: [
   //     AppComponent,
@@ -255,7 +259,8 @@ import { AdjustPriceComponent } from "./components/adjust-price/adjust-price.com
     DialogCheckActionComponent,
     UsersOrderedFoodDialogComponent,
     OpenEventDialogComponent,
-    MatChipsModule
+    MatChipsModule,
+    NoPromotionsNotificationComponent
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -274,7 +279,9 @@ import { AdjustPriceComponent } from "./components/adjust-price/adjust-price.com
     DialogCheckActionComponent,
     UsersOrderedFoodDialogComponent,
     OpenEventDialogComponent,
-    UsersOrderedFoodDialogComponent
+    UsersOrderedFoodDialogComponent,
+    NoPromotionsNotificationComponent,
+    AddPromotionDialogComponent
   ]
 })
 export class AppModule {}

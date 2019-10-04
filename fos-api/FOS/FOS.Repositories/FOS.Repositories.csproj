@@ -77,14 +77,6 @@
     <Compile Include="Mapping\FeedbackMapper.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
-    <Compile Include="Migrations\201910030902505_init3.cs" />
-    <Compile Include="Migrations\201910030902505_init3.Designer.cs">
-      <DependentUpon>201910030902505_init3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910030905509_init4.cs" />
-    <Compile Include="Migrations\201910030905509_init4.Designer.cs">
-      <DependentUpon>201910030905509_init4.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EventPromotionRepository.cs" />
     <Compile Include="Repositories\CustomGroupRepository.cs" />
@@ -119,14 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910030902505_init3.resx">
-      <DependentUpon>201910030902505_init3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910030905509_init4.resx">
-      <DependentUpon>201910030905509_init4.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">

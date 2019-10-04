@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { CustomGroup } from './../../models/custom-group';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomGroupService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private oauthService: OauthService) {}
 
   getAllGroup(ownerId: string): Promise<Array<CustomGroup>> {
     return new Promise<Array<CustomGroup>>((resolve, reject) => {
@@ -26,7 +27,7 @@ export class CustomGroupService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 
@@ -45,7 +46,7 @@ export class CustomGroupService {
             resolve(null);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 
@@ -62,7 +63,7 @@ export class CustomGroupService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 
@@ -79,7 +80,7 @@ export class CustomGroupService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 }

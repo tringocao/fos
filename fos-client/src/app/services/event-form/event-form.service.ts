@@ -8,6 +8,7 @@ import { User } from "src/app/models/user";
 import { GraphUser } from "src/app/models/graph-user";
 import { Event } from "src/app/models/event";
 import { Group } from 'src/app/models/group';
+import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
   providedIn: "root"
@@ -19,7 +20,7 @@ export class EventFormService {
     });
   }
 
-  constructor(private http: HttpClient, private _snackBar: MatSnackBar) {}
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar, private oauthService: OauthService) {}
 
   // GetAvatarByUserId(userId: string): Observable<ApiOperationResult<any>>{
   //     return this.http
@@ -208,7 +209,7 @@ export class EventFormService {
             resolve(result.Data);
           }
         })
-        .catch(alert => console.log(alert));
+        .catch(alert => this.oauthService.checkAuthError(alert));
     });
   }
 
