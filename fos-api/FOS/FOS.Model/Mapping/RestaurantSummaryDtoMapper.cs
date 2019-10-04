@@ -24,7 +24,8 @@ namespace FOS.Model.Mapping
                 Percent = restaurantSummary.Percent,
                 DeliveryId = restaurantSummary.DeliveryId,
                 ServiceId = restaurantSummary.ServiceId,
-                AppearTime = restaurantSummary.AppearTimes
+                AppearTime = restaurantSummary.AppearTimes,
+                AverageRating = restaurantSummary.AverageRating
             };
         }
         public IEnumerable<Model.Dto.RestaurantSummary> ListToDto(IEnumerable<Model.Domain.RestaurantSummary> restaurantSummary)
