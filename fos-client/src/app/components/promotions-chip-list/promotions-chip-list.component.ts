@@ -94,8 +94,10 @@ export class PromotionsChipListComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.afterClosed().subscribe(promotion => {
-      this.addToPromotions(promotion);
+    dialogRef.afterClosed().subscribe((promotion: Promotion) => {
+      if (promotion && promotion.PromotionType) {
+        this.addToPromotions(promotion);
+      }
     });
   }
 

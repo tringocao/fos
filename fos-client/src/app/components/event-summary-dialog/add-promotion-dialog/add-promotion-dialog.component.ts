@@ -40,10 +40,6 @@ export class AddPromotionDialogComponent implements OnInit {
     this.dialogRef.close(promotion);
   }
 
-  updatePromotion() {
-    this.dialogRef.close('update');
-  }
-
   getPromotionName(promotionType: number): string {
     return PromotionType[promotionType].split(/(?=[A-Z])/).join(" ");
   }
