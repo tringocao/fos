@@ -9,9 +9,15 @@
   </div>
   <div id="report" class="event-summary">
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>Summary Event</mat-card-title>
-      </mat-card-header>
+      <h1 style="text-align:center">
+        <span
+          style="
+          color: #e57d13;
+        "
+          >Summary
+        </span>
+        Event
+      </h1>
       <mat-card-content>
         <mat-grid-list class="grid-card" cols="2" rowHeight="fit">
           <mat-grid-tile>
@@ -155,6 +161,7 @@
             </mat-card>
           </mat-grid-tile>
         </mat-grid-list>
+
         <mat-tab-group dynamicHeight #tabGroup>
           <mat-tab label="Dishes Group View">
             <table mat-table [dataSource]="dishGroupViewdataSource">
@@ -204,7 +211,7 @@
               <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef>Price</th>
                 <td mat-cell *matCellDef="let element">
-                    <app-adjust-price
+                  <app-adjust-price
                     [baseCost]="getOriginalPrice(element)"
                     [adjustedCost]="element.Price"
                   ></app-adjust-price>
@@ -217,9 +224,9 @@
                 <th mat-header-cell *matHeaderCellDef>Total</th>
                 <td mat-cell *matCellDef="let element">
                   <app-adjust-price
-                  [baseCost]="element.Total"
-                  [adjustedCost]="element.Total"
-                ></app-adjust-price>
+                    [baseCost]="element.Total"
+                    [adjustedCost]="element.Total"
+                  ></app-adjust-price>
                 </td>
                 <td mat-footer-cell *matFooterCellDef>
                   <app-adjust-price
@@ -240,26 +247,20 @@
               <ng-container matColumnDef="numberOfUser">
                 <th mat-header-cell *matHeaderCellDef>Number of users</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ element.NumberOfUser }}
-                </td>
-                <td mat-footer-cell *matFooterCellDef></td>
-              </ng-container>
-              <ng-container matColumnDef="showUsers">
-                <th mat-header-cell *matHeaderCellDef>Show users</th>
-                <td mat-cell *matCellDef="let element">
-                  <button
-                    class="show-users-button"
-                    (click)="showUsers(element.UserIds, element.Name)"
-                    mat-icon-button
-                    matTooltip="Show users ordered this food"
+                  {{ element.NumberOfUser }}x<button
+                  class="show-users-button"
+                  (click)="showUsers(element.UserIds, element.Name)"
+                  mat-icon-button
+                  matTooltip="Show users ordered this food"
+                >
+                  <mat-icon aria-hidden="false" aria-label="People icon"
+                    >people</mat-icon
                   >
-                    <mat-icon aria-hidden="false" aria-label="People icon"
-                      >people</mat-icon
-                    >
-                  </button>
+                </button>
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
               </ng-container>
+
               <tr
                 mat-header-row
                 *matHeaderRowDef="dishGroupViewDisplayedColumns"
@@ -296,15 +297,15 @@
                 <th mat-header-cell *matHeaderCellDef>Price</th>
                 <td mat-cell *matCellDef="let element">
                   <app-adjust-price
-                  [baseCost]="element.Price"
-                  [adjustedCost]="element.Cost"
-                ></app-adjust-price>
+                    [baseCost]="element.Price"
+                    [adjustedCost]="element.Cost"
+                  ></app-adjust-price>
                 </td>
               </ng-container>
               <ng-container matColumnDef="pay-extra">
                 <th mat-header-cell *matHeaderCellDef>Pay extra</th>
                 <td mat-cell *matCellDef="let element">
-                    <app-adjust-price
+                  <app-adjust-price
                     [baseCost]="element.PayExtra"
                     [adjustedCost]="element.PayExtra"
                   ></app-adjust-price>

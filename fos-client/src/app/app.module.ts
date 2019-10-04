@@ -113,7 +113,7 @@ import { PromotionsChipComponent } from "./components/promotions-chip/promotions
 import { PromotionsChipListComponent } from "./components/promotions-chip-list/promotions-chip-list.component";
 import { AdjustPriceComponent } from "./components/adjust-price/adjust-price.component";
 import { NoPromotionsNotificationComponent } from "./components/event-dialog/no-promotions-notification/no-promotions-notification.component";
-import { AddPromotionDialogComponent } from './components/event-summary-dialog/add-promotion-dialog/add-promotion-dialog.component';
+import { AddPromotionDialogComponent } from "./components/event-summary-dialog/add-promotion-dialog/add-promotion-dialog.component";
 
 @NgModule({
   declarations: [
@@ -171,7 +171,7 @@ import { AddPromotionDialogComponent } from './components/event-summary-dialog/a
     StarRatingComponent,
     CustomGroupPageComponent,
     CreateUpdateCustomGroupComponent,
-    NoPromotionsNotificationComponent
+    NoPromotionsNotificationComponent,
     AddPromotionDialogComponent
   ],
   // declarations: [
@@ -280,8 +280,8 @@ import { AddPromotionDialogComponent } from './components/event-summary-dialog/a
     UsersOrderedFoodDialogComponent,
     OpenEventDialogComponent,
     UsersOrderedFoodDialogComponent,
-    NoPromotionsNotificationComponent
-    AddPromotionDialogComponent,
+    NoPromotionsNotificationComponent,
+    AddPromotionDialogComponent
   ]
 })
 export class AppModule {}
