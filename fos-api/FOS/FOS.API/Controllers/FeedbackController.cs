@@ -86,17 +86,23 @@ namespace FOS.API.Controllers
                 string path = System.Web.HttpContext.Current.Server.MapPath(Constant.FeedbackEmailTemplate);
                 string emailTemplateJson = System.IO.File.ReadAllText(path);
 
-                var userFeedbackEmailInfos = listUser.Select(user => {
+                var listMailInfo = new List<Model.Dto.UserFeedbackMailInfo>();
+                foreach (var user in listUser)
+                {
+                    var orderGuid = new Guid(user.OrderId);
+                    var order = _orderService.GetOrder(orderGuid);
+                    var thisUser = await _spUserService.GetUserById(order.IdUser);
+
                     var feedBackMailInfo = new Model.Dto.UserFeedbackMailInfo();
                     feedBackMailInfo.UserMail = user.UserEmail;
                     feedBackMailInfo.OrderId = user.OrderId;
                     Event eventData = _eventService.GetEvent(Int32.Parse(eventId));
                     feedBackMailInfo.EventTitle = eventData.Name;
                     feedBackMailInfo.EventRestaurant = eventData.Restaurant;
-
-                    return feedBackMailInfo;
-                }).ToList();
-                await _sendEmailService.SendEmailToAlreadyOrderedUserAsync(userFeedbackEmailInfos, emailTemplateJson);
+                    feedBackMailInfo.UserName = thisUser.DisplayName;
+                    listMailInfo.Add(feedBackMailInfo);
+                }
+                await _sendEmailService.SendEmailToAlreadyOrderedUserAsync(listMailInfo, emailTemplateJson);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)

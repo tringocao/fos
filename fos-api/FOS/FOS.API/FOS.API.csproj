@@ -586,6 +586,8 @@
     <Content Include="obj\Release\FOS.API.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Release\FOS.API.csprojAssemblyReference.cache" />
     <Content Include="App_Data\FeedbackEmailTemplate.json" />
+    <Content Include="App_Data\CancelEventEmailTemplate.json" />
+    <Content Include="App_Data\ReportEmailTemplate.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

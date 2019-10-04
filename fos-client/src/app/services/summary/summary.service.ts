@@ -8,7 +8,7 @@ import { DishesSummary } from "./../../models/dishes-summary";
 import { OauthService } from '../oauth/oauth.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class SummaryService {
   constructor(private http: HttpClient, private oauthService: OauthService) {}
@@ -18,7 +18,7 @@ export class SummaryService {
       console.log(report);
       this.http
         .post<ApiOperationResult<void>>(
-          environment.apiUrl + "api/summary/sendreport",
+          environment.apiUrl + 'api/summary/sendreport',
           report
         )
         .toPromise()
@@ -39,7 +39,7 @@ export class SummaryService {
     return new Promise<void>((resolve, reject) => {
       this.http
         .post<ApiOperationResult<void>>(
-          environment.apiUrl + "api/summary/addreport",
+          environment.apiUrl + 'api/summary/addreport',
           {
             Name: eventId,
             Content: content
@@ -64,7 +64,7 @@ export class SummaryService {
     return new Promise<RestaurantSummary[]>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<RestaurantSummary[]>>(
-          environment.apiUrl + "api/summary/GetRestaurantSummary"
+          environment.apiUrl + 'api/summary/GetRestaurantSummary'
         )
         .toPromise()
         .then(result => {
@@ -83,7 +83,7 @@ export class SummaryService {
     return new Promise<DishesSummary[]>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<DishesSummary[]>>(
-          environment.apiUrl + "api/summary/GetDishesSummary",
+          environment.apiUrl + 'api/summary/GetDishesSummary',
           {
             params: {
               restaurantId,
@@ -110,9 +110,9 @@ export class SummaryService {
       this.http
         .post<ApiOperationResult<void>>(
           environment.apiUrl +
-            "api/splist/UpdateEventStatus?Id=" +
+            'api/splist/UpdateEventStatus?Id=' +
             eventId +
-            "&eventStatus=" +
+            '&eventStatus=' +
             status,
           {}
         )
@@ -130,7 +130,7 @@ export class SummaryService {
       this.http
         .post<ApiOperationResult<void>>(
           environment.apiUrl +
-            "api/splist/SetTime2CloseToEventDate?Id=" +
+            'api/splist/SetTime2CloseToEventDate?Id=' +
             eventId,
           {}
         )

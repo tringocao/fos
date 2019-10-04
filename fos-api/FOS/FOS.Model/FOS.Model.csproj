@@ -132,6 +132,7 @@
     <Compile Include="Domain\FeedBack.cs" />
     <Compile Include="Domain\FoodReport.cs" />
     <Compile Include="Domain\NowModel\Promotion.cs" />
+    <Compile Include="Domain\ReportEmailTemplate.cs" />
     <Compile Include="Domain\RestaurantExcel.cs" />
     <Compile Include="Domain\ServiceModel\CloseEventEmailTemplate.cs" />
     <Compile Include="Domain\DishesSummary.cs" />
@@ -1158,6 +1159,10 @@
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\UpdateEvent.cs</CustomToolNamespace>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-feedback-mail-info.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserFeedbackMailInfo.cs</CustomToolNamespace>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-feedback.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\UserFeedback.cs</CustomToolNamespace>
@@ -1165,6 +1170,10 @@
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-not-order-email.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>
       <CustomToolNamespace>Dto\UserNotOrderEmail.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-not-order-mail-info.ts">
+      <DependentUpon>ModelGenerator.tst</DependentUpon>
+      <CustomToolNamespace>Dto\UserNotOrderMailInfo.cs</CustomToolNamespace>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Dto\..\..\..\..\fos-client\src\app\models\user-not-order-mail-info.ts">
       <DependentUpon>ModelGenerator.tst</DependentUpon>

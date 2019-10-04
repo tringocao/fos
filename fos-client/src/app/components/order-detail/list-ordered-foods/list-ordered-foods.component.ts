@@ -61,11 +61,6 @@ export class ListOrderedFoodsComponent implements OnInit {
   ];
   dataSource2: MatTableDataSource<FoodDetailJson>;
   public FoodOfAmount: any = {};
-  day: number;
-  month: number;
-  year: number;
-  hour: number;
-  minutes: number;
   constructor(public dialog: MatDialog, private overlay: Overlay) {}
   load = true;
   @Input() totalBudget: Number;
@@ -139,16 +134,14 @@ export class ListOrderedFoodsComponent implements OnInit {
   //   })
   // }
   setDate(date: Date) {
-    var check = moment(date);
-    this.day = check.date();
-    this.month = check.month();
-    this.year = check.year();
-    this.hour = check.hour();
-    this.minutes = check.minute();
+    return moment(date).format("MM/DD/YYYY HH:mm");
   }
   updateTable() {
     this.setDate(new Date(this.event.CloseTime));
     this.dataSource2.data = this.order.FoodDetail;
+    this.order.FoodDetail.forEach(f => {
+      this.onBlurMethodAmount(Number(f.Value["Amount"]), f);
+    });
     this.dataSource2.sort = this.sort;
     this.load = false;
   }
