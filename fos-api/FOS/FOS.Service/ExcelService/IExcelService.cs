@@ -9,6 +9,6 @@ namespace FOS.Services.ExcelService
 {
     public interface IExcelService
     {
-        Task<bool> ExportCSV(List<UserOrder> userOrder);
+        Task<bool> ExportCSV(ExcelModel excelModel);
     }
 }

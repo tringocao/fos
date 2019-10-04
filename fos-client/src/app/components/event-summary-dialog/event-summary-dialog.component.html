@@ -397,7 +397,7 @@
         >
           Print
         </button>
-        <button (click)="exportExcel()" mat-flat-button color="primary">
+        <button (click)="exportExcel()" mat-flat-button color="primary" *ngIf="isHostUser && !reOrder">
           Export To Excel
         </button>
         <button
