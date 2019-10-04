@@ -52,10 +52,10 @@ namespace FOS.API.Controllers
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             try
             {               
-                response.Content = new StreamContent(new FileStream(Common.Constants.Constant.FileXlsxDirectory, FileMode.Open, FileAccess.Read));
+                response.Content = new StreamContent(new FileStream(Common.Constants.Constant.FileCsvDirectory, FileMode.Open, FileAccess.Read));
                 //response.Content.Headers.ContentType.CharSet = Encoding.UTF8.HeaderName;
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-                response.Content.Headers.ContentDisposition.FileName = Common.Constants.Constant.FileXlsxNameWithExtension;
+                response.Content.Headers.ContentDisposition.FileName = Common.Constants.Constant.FileCsvNameWithExtension;
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                 return response;
