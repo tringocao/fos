@@ -78,12 +78,10 @@ export class PromotionsChipListComponent implements OnInit {
     this.eventPromotionService
       .UpdateEventPromotion(this.eventPromotion)
       .then(response => {
-        if (response === null) {
-          this.toast("update success", "Dismiss");
-        }
         if (response != null) {
           this.toast("update fail", "Dismiss");
         }
+        this.toast("update success", "Dismiss");
       });
   }
 

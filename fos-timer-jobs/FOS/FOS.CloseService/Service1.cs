@@ -112,13 +112,15 @@ namespace FOS.CloseService
             coreService.ChangeStatusToClose(clientContext, element);
 
             CloseEventEmailTemplate emailTemplate = new CloseEventEmailTemplate();
+            var host = element[EventConstantWS.EventHost] as FieldUserValue;
+            emailTemplate.HostName = host.LookupValue;
             emailTemplate.EventTitle = element[EventConstantWS.EventTitle].ToString();
-            emailTemplate.EventSummaryLink = coreService.BuildLink(clientUrl + "/events/summary/" + element["ID"], "link");
+            emailTemplate.EventSummaryLink = clientUrl + "/events/summary/" + element["ID"];
             var emailTemplateDictionary = coreService.GetEmailTemplate(EventConstantWS.CloseEventEmailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Body, out string body);
             body = coreService.Parse(body, emailTemplate);
             emailTemplateDictionary.TryGetValue(EventEmail.Subject, out string subject);
-            var host = element[EventConstantWS.EventHost] as FieldUserValue;
+            subject = coreService.Parse(subject, emailTemplate);
 
             coreService.SendEmail(clientContext, noReplyEmail, host.Email, body, subject);
         }

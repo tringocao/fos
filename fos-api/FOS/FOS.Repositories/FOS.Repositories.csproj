@@ -77,10 +77,6 @@
     <Compile Include="Mapping\FeedbackMapper.cs" />
     <Compile Include="Mapping\OrderMapper.cs" />
     <Compile Include="Mapping\RecurrenceEventMapper.cs" />
-    <Compile Include="Migrations\201910031016243_inti444.cs" />
-    <Compile Include="Migrations\201910031016243_inti444.Designer.cs">
-      <DependentUpon>201910031016243_inti444.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EventPromotionRepository.cs" />
     <Compile Include="Repositories\CustomGroupRepository.cs" />
@@ -117,11 +113,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910031016243_inti444.resx">
-      <DependentUpon>201910031016243_inti444.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\FOS.Common\FOS.Common.csproj">
       <Project>{867c7a27-0781-4a5a-8f2f-8251de4eddd6}</Project>
       <Name>FOS.Common</Name>
@@ -130,6 +121,11 @@
       <Project>{8252d347-1bad-4276-a6e3-180fb9f0a3db}</Project>
       <Name>FOS.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201910031146455_init.resx">
+      <DependentUpon>201910031146455_init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,9 +12,9 @@ namespace FOS.Services.SummaryService
     {
         Task SendEmailReportAsync(Model.Dto.Report report);
         string GetReportContentByEventId(string eventId);
-        Task<string> AddReport(ReportFile report);
-        void SendReport(string userEmail, string html, string subject);
-        string BuildHtmlEmail(string reportUrl, string eventId, string reportId);
+        string AddReport(ReportFile report);
+        Task SendReportAsync(string eventId, string reportUrl, ReportFile report);
+        Task<ReportEmailTemplate> BuildEmailTemplate(string reportUrl, string eventId, string reportId);
         IEnumerable<RestaurantSummary> GetRestaurantSummary();
         IEnumerable<DishesSummary> GetDishesSummary(string restaurantId, string deliveryId, string serviceId);
     }

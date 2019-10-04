@@ -20,5 +20,7 @@ namespace FOS.Services.SPUserService
         Task<List<User>> GroupListMemers(string groupId);
         Task<List<User>> SearchGroupOrUserByName(string searchName);
         Task<bool> ValidateIsHost(int eventId);
+        Microsoft.SharePoint.Client.User GetUserByMail(string mail);
+        Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.Utilities.PrincipalInfo> GetUserPrincipalInfoByMail(string mail);
     }
 }

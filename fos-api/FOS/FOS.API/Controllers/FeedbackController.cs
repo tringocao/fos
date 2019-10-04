@@ -93,6 +93,7 @@ namespace FOS.API.Controllers
                     Event eventData = _eventService.GetEvent(Int32.Parse(eventId));
                     feedBackMailInfo.EventTitle = eventData.Name;
                     feedBackMailInfo.EventRestaurant = eventData.Restaurant;
+                    feedBackMailInfo.UserName = _spUserService.GetUserPrincipalInfoByMail(user.UserEmail).Value.DisplayName;
 
                     return feedBackMailInfo;
                 }).ToList();

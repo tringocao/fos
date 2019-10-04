@@ -53,6 +53,7 @@ import { Promotion } from "src/app/models/promotion";
 import { PromotionType } from "src/app/models/promotion-type";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
+import { ExcelService } from 'src/app/services/print/excel/excel.service';
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -78,7 +79,8 @@ export class EventSummaryDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>,
     private overlay: Overlay,
     private feedbackService: FeedbackService,
-    private eventPromotionService: EventPromotionService
+    private eventPromotionService: EventPromotionService,
+    private excelService: ExcelService
   ) {
     overlayContainer.getContainerElement().classList.add("app-theme1-theme");
     console.log(router.routerState);
@@ -155,7 +157,8 @@ export class EventSummaryDialogComponent implements OnInit {
       restaurant: this.restaurant,
       eventDetail: this.eventDetail,
       foods: this.foods,
-      orderByPerson: this.orderByPerson
+      orderByPerson: this.orderByPerson,
+      users: this.users
     });
   }
 
@@ -348,6 +351,7 @@ export class EventSummaryDialogComponent implements OnInit {
       .then((user: User) => {
         orderItem.User = user;
         this.users.push(user);
+        this.eventData.users = this.users;
       })
       .then(() => {
         var foods = "";
@@ -535,7 +539,11 @@ export class EventSummaryDialogComponent implements OnInit {
   sendEmailFeedback() {
     this.feedbackService
       .sendFeedbackEmail(this.eventDetail.EventId)
+      .then(result => {
+        this.toast("Feedback Email Sent!", "Dismiss");
+      })
       .catch(error => this.toast(error, "Dismiss"));
+    this.toast("Feedback Email Sent!", "Dismiss");
   }
   sendEmailReorder() {
     const info: UserReorder[] = [];
@@ -708,5 +716,10 @@ export class EventSummaryDialogComponent implements OnInit {
       });
       this.totalCost = this.adjustedTotalCost;
     }
+  }
+  exportExcel() {
+    this.excelService.CreateCSV(this.orderByPerson).then(value => {
+      window.open(environment.apiUrl + 'api/Excel/DownloadCSV');
+    });
   }
 }
