@@ -85,6 +85,7 @@ export class FeedbackComponent implements OnInit {
   GetEventById(eventId: string) {
     return this.eventFormService.GetEventById(eventId).then((event: Event) => {
       this.event = event;
+      console.log(this.event)
       this.loading = false;
       this.feedback.DeliveryId = this.event.DeliveryId;
       this.feedbackService

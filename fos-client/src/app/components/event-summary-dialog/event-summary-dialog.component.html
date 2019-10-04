@@ -401,7 +401,7 @@
           (click)="sendEmailFeedback()"
           mat-flat-button
           color="warn"
-          *ngIf="isHostUser && !reOrder"
+          *ngIf="isHostUser && eventDetail.Status === 'Closed'"
         >
           Send email feedbacks
         </button>
