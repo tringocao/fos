@@ -1,4 +1,4 @@
-@import '../../../styles/global/variables.less';
+@import "../../../styles/global/variables.less";
 
 .orders {
   padding: 1rem;
@@ -73,10 +73,20 @@
     text-align: right;
     padding-right: 2.15rem;
   }
+  .align-center {
+    text-align: center;
+    padding-right: 2.15rem;
+  }
   .mat-column-MaximumBudget ::ng-deep .mat-sort-header-container {
     justify-content: flex-end;
   }
   th.mat-column-MaximumBudget {
+    padding-right: 1rem;
+  }
+  .mat-column-CloseTime ::ng-deep .mat-sort-header-container {
+    justify-content: center;
+  }
+  th.mat-column-CloseTime {
     padding-right: 1rem;
   }
   .dot {
