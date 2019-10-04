@@ -54,6 +54,7 @@ import { PromotionType } from "src/app/models/promotion-type";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
 import { ExcelService } from 'src/app/services/print/excel/excel.service';
+import { ExcelModel } from 'src/app/models/excel-model';
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -721,7 +722,21 @@ export class EventSummaryDialogComponent implements OnInit {
     }
   }
   exportExcel() {
-    this.excelService.CreateCSV(this.orderByPerson).then(value => {
+    // restaurant: this.restaurant,
+    //   eventDetail: this.eventDetail,
+    //   foods: this.foods,
+    //   orderByPerson: this.orderByPerson,
+    //   users: this.users
+
+    const excelModel: ExcelModel = {
+      Event : this.eventDetail,
+      FoodReport : this.foods,
+      RestaurantExcel: this.restaurant,
+      UserOrder: this.orderByPerson,
+      User: this.users,
+      Total: this.totalCost
+    };
+    this.excelService.CreateCSV(excelModel).then(value => {
       window.open(environment.apiUrl + 'api/Excel/DownloadCSV');
     });
   }
