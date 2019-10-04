@@ -35,8 +35,11 @@ namespace FOS.Repositories.Repositories
             var _favoriteRestaurant = _context.FavoriteRestaurants.Where(
                 fav => fav.RestaurantId == favoriteRestaurant.RestaurantId && fav.UserId == favoriteRestaurant.UserId).FirstOrDefault();
             //var _favoriteRestaurant = Mapper.Map<FavoriteRestaurant, DataModel.FavoriteRestaurant>(favoriteRestaurantEntity);
-            _context.FavoriteRestaurants.Remove(_favoriteRestaurant);
-            _context.SaveChanges();
+            if (_favoriteRestaurant != null)
+            {
+                _context.FavoriteRestaurants.Remove(_favoriteRestaurant);
+                _context.SaveChanges();
+            }
         }
 
         public IEnumerable<FavoriteRestaurant> GetAll()

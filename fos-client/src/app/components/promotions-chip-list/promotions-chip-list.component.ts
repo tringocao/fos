@@ -20,6 +20,7 @@ export class PromotionsChipListComponent implements OnInit {
   ) {}
 
   @Input() deliveryId: number;
+  @Input() isHost: boolean;
   @Input() eventId: string;
   @Input() changable: boolean;
   @Output() promotionChanged: EventEmitter<Promotion[]> = new EventEmitter();

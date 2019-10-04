@@ -65,6 +65,7 @@ export class EventSummaryPrintComponent implements OnInit {
   foods: any[];
   orderByDish: any[] = [];
   orderByPerson: any[] = [];
+  total: number;
 
   toStandardDate(date: Date) {
     return moment(date).format("DD/MM/YYYY HH:mm");
@@ -82,6 +83,7 @@ export class EventSummaryPrintComponent implements OnInit {
     this.dishGroupViewdataSource = this.data.foods;
     this.personGroupViewdataSource = this.data.orderByPerson;
     this.users = this.data.users;
+    this.total = this.data.total;
 
     this.eventDataAvailable = true;
     this.restaurant.isLoaded = true;
