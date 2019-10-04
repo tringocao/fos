@@ -10,12 +10,9 @@
     
      
 
-    export class UserNotOrderMailInfo    {
+    export class Comments    {
            
-        public UserMail: string = null;   
-        public OrderId: string = null;   
-        public EventTitle: string = null;   
-        public EventRestaurant: string = null;   
-        public UserName: string = null;
+        public Value: string = null;   
+        public Amount: number = 0;
     }
          

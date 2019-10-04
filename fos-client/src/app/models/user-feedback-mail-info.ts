@@ -10,12 +10,12 @@
     
      
 
-    export class UserNotOrderMailInfo    {
+    export class UserFeedbackMailInfo    {
            
         public UserMail: string = null;   
+        public UserName: string = null;   
         public OrderId: string = null;   
         public EventTitle: string = null;   
-        public EventRestaurant: string = null;   
-        public UserName: string = null;
+        public EventRestaurant: string = null;
     }
          

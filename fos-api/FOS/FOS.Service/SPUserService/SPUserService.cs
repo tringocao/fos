@@ -247,5 +247,30 @@ namespace FOS.Services.SPUserService
                 throw e;
             }
         }
+        public Microsoft.SharePoint.Client.User GetUserByMail(string mail)
+        {
+            using (var context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                var result = GetUserPrincipalInfoByMail(mail);
+                if (result != null)
+                {
+                    var user = context.Web.EnsureUser(result.Value.LoginName);
+                    context.Load(user);
+                    context.ExecuteQuery();
+                    return user;
+                }
+                return null;
+            }
+        }
+        public Microsoft.SharePoint.Client.ClientResult<Microsoft.SharePoint.Client.Utilities.PrincipalInfo> GetUserPrincipalInfoByMail(string mail)
+        {
+            using (var context = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
+            {
+                var result = Microsoft.SharePoint.Client.Utilities.Utility.ResolvePrincipal(context, context.Web, mail, Microsoft.SharePoint.Client.Utilities.PrincipalType.User, Microsoft.SharePoint.Client.Utilities.PrincipalSource.All, null, true);
+                context.ExecuteQuery();
+
+                return result;
+            }
+        }
     }
 }

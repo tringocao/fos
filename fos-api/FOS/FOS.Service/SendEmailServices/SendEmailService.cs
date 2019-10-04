@@ -117,9 +117,8 @@ namespace FOS.Services.SendEmailServices
                     emailTemplate.NotParticipant = hostname + "not-participant/" + user.OrderId;
                     emailp.To = new List<string>() { user.UserMail };
                     emailp.From = host.Mail;
-                    //emailp.BCC = new List<string> { host.Mail };
                     emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                    emailp.Subject = subject.ToString();
+                    emailp.Subject = Parse(subject.ToString(), user);
 
                     Utility.SendEmail(clientContext, emailp);
                     clientContext.ExecuteQuery();
@@ -153,7 +152,7 @@ namespace FOS.Services.SendEmailServices
                         emailp.From = host.Mail;
                         //emailp.BCC = new List<string> { host.Mail };
                         emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                        emailp.Subject = subject.ToString();
+                        emailp.Subject = Parse(subject.ToString(), user);
 
                         Utility.SendEmail(clientContext, emailp);
                         clientContext.ExecuteQuery();
@@ -272,13 +271,13 @@ namespace FOS.Services.SendEmailServices
                     string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
                     var host = await _sPUserService.GetCurrentUser();
 
-                    foreach (var user in users)
-                    {
-                        emailTemplate.FeedBack = hostname + "/feedback/" + user.OrderId;
-                        emailp.To = new List<string>() { user.UserMail };
-                        emailp.From = host.Mail;
-                        emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
-                        emailp.Subject = subject.ToString();
+                foreach (var user in users)
+                {
+                    emailTemplate.FeedBack = hostname + "/feedback/" + user.OrderId;
+                    emailp.To = new List<string>() { user.UserMail };
+                    emailp.From = host.Mail;
+                    emailp.Body = Parse(Parse(emailTemplate.Html.ToString(), emailTemplate), user);
+                    emailp.Subject = Parse(subject.ToString(), user);
 
                         Utility.SendEmail(clientContext, emailp);
                         clientContext.ExecuteQuery();
@@ -305,10 +304,10 @@ namespace FOS.Services.SendEmailServices
                         emailTemplateDictionary.TryGetValue("Body", out string body);
                         emailTemplateDictionary.TryGetValue("Subject", out string subject);
 
-                        emailp.To = new List<string>() { user.UserMail };
-                        emailp.From = host.Mail;
-                        emailp.Body = Parse(body, user);
-                        emailp.Subject = subject.ToString();
+                    emailp.To = new List<string>() { user.UserMail };
+                    emailp.From = host.Mail;
+                    emailp.Body = Parse(body, user);
+                    emailp.Subject = Parse(subject.ToString(), user);
 
                         Utility.SendEmail(clientContext, emailp);
                         clientContext.ExecuteQuery();

@@ -10,5 +10,6 @@ namespace FOS.Model.Domain.ServiceModel
     {
         public string EventTitle { get; set; }
         public string EventSummaryLink { get; set; }
+        public string HostName { get; set; }
     }
 }

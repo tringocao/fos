@@ -47,7 +47,7 @@ namespace FOS.Services.SummaryService
             return _reportFileRepository.GetOne(eventId).Content;
         }
 
-        public async Task<string> AddReport(ReportFile report)
+        public string AddReport(ReportFile report)
         {
             Guid reportId = Guid.NewGuid();
             report.Name = reportId.ToString();
@@ -57,27 +57,44 @@ namespace FOS.Services.SummaryService
             return reportId.ToString();
         }
 
-        public string BuildHtmlEmail(string reportUrl, string eventId, string reportId)
+        public async Task<ReportEmailTemplate> BuildEmailTemplate(string reportUrl, string eventId, string reportId)
         {
             var imageUrl = WebConfigurationManager.AppSettings[OAuth.WEBAPI_HOME_URI] + "api/summary/GetImage/" + reportId;
-            var html = "<html> <a href='" + reportUrl + "'>Click here to go to event report" + "</a>" +
-                "</a></br><img data-imagetype='External' style='width: 500px; height: 500px;' src='" + imageUrl + "' />"+
-                "</br>Click <a href='" + imageUrl + "' target='_blank'>here </a> if you couldn't see the image" +
-            "</html>";
-            return html;
+            var currentUser = await _spUserService.GetCurrentUser(); 
+            var reportEmailTemplate = new ReportEmailTemplate();
+            var eventIdIntValue = Int32.Parse(eventId);
+            reportEmailTemplate.EventTitle = _eventService.GetEvent(eventIdIntValue).Name;
+            reportEmailTemplate.ImageUrl = imageUrl;
+            reportEmailTemplate.LinkToEventReport = reportUrl;
+            reportEmailTemplate.UserName = currentUser.DisplayName;
+
+            return reportEmailTemplate;
         }
 
 
-        public void SendReport(string userEmail, string html, string subject = "Event Report")
+        public async Task SendReportAsync(string eventId, string reportUrl, ReportFile report)
         {
             using (ClientContext clientContext = _sharepointContextProvider.GetSharepointContextFromUrl(APIResource.SHAREPOINT_CONTEXT + "/sites/FOS/"))
             {
+                string path = System.Web.HttpContext.Current.Server.MapPath(Constant.ReportEmailTemplate);
+                string emailTemplateJson = System.IO.File.ReadAllText(path);
+                var jsonTemplate = JsonConvert.DeserializeObject<Dictionary<string, string>>(emailTemplateJson);
+                jsonTemplate.TryGetValue("Body", out string body);
+                jsonTemplate.TryGetValue("Subject", out string subject);
+
+                Model.Domain.User sender = await _spUserService.GetCurrentUser();
+                string reportId = AddReport(report);
+                var emailTemplate = await BuildEmailTemplate(reportUrl, eventId, reportId);
+
+                subject = _sendEmailService.Parse(subject, emailTemplate);
+                body = _sendEmailService.Parse(body, emailTemplate);
+
                 var emailp = new EmailProperties();
                 string hostname = WebConfigurationManager.AppSettings[OAuth.HOME_URI];
 
-                emailp.To = new List<string>() { userEmail };
-                emailp.From = userEmail;
-                emailp.Body = html;
+                emailp.To = new List<string>() { sender.Mail };
+                emailp.From = sender.Mail;
+                emailp.Body = body;
                 emailp.Subject = subject;
 
                 Utility.SendEmail(clientContext, emailp);
