@@ -26,6 +26,7 @@ export class CustomGroupPageComponent implements OnInit {
   displayedColumns: string[] = ['Name', 'Update', 'Delete'];
   dataSource: MatTableDataSource<CustomGroup>;
   isLoading = true;
+  tempData = 0;
 
   @ViewChild(MatDrawer, { static: true }) public nav: MatDrawer;
   constructor(
@@ -54,13 +55,18 @@ export class CustomGroupPageComponent implements OnInit {
     });
   }
   createGroup() {
+    this.tempData++;
     this.isCreateGroup = true;
     this.group = null;
     this.drawer.open();
   }
   updateGroup(element: CustomGroup) {
+    this.tempData++;
     this.isCreateGroup = false;
-    this.group = element;
+    const groupUpdate = this.allGroup.find(item => {
+      return item.ID === element.ID;
+    });
+    this.group = groupUpdate;
     this.drawer.open();
   }
   removeGroup(element: CustomGroup) {
@@ -80,7 +86,6 @@ export class CustomGroupPageComponent implements OnInit {
     });
   }
   loadAllGroup() {
-    console.log('reload all group');
     this.isLoading = true;
     this.customGroupService.getAllGroup(this.currentUser.Id).then(allGroup => {
       this.allGroup = allGroup;

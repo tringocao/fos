@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   displayName: string;
   isUserLoaded: boolean = false;
   @Output() change = new EventEmitter();
-  url: string;
+  url: string = window.location.href.replace(environment.baseUrl, '/');
   customGroupLink: string;
 
   constructor(
@@ -43,11 +43,9 @@ export class HeaderComponent implements OnInit {
     private oauthService: OauthService,
     private router: Router
   ) {
-    this.url = window.location.href.replace(environment.baseUrl, '/');
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         this.url = event.url;
-        console.log('current url: ', this.url);
       }
     });
   }

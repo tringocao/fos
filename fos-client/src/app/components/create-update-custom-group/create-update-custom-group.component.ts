@@ -4,7 +4,8 @@ import {
   ViewChild,
   Input,
   OnChanges,
-  Output
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { MatTable, MatSnackBar } from '@angular/material';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -16,8 +17,8 @@ import { CustomGroup } from './../../models/custom-group';
 import { User } from 'src/app/models/user';
 import { GraphUser } from 'src/app/models/graph-user';
 import { EventFormService } from 'src/app/services/event-form/event-form.service';
-import { EventEmitter } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
+
 @Component({
   selector: 'app-create-update-custom-group',
   templateUrl: './create-update-custom-group.component.html',
@@ -27,6 +28,7 @@ export class CreateUpdateCustomGroupComponent implements OnInit, OnChanges {
   @Input() isCreate: boolean;
   @Input() group: CustomGroup;
   @Input() currentUser: User;
+  @Input() tempData: number;
   panelOpenState = false;
   displayedColumns = ['avatar', 'name', 'email', 'action'];
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
@@ -85,13 +87,16 @@ export class CreateUpdateCustomGroupComponent implements OnInit, OnChanges {
       this.eventUsers = [];
     }
   }
+
   public CreateOwner = ownerFormValue => {
     if (this.ownerForm.valid) {
       console.log('pass');
     }
+    // tslint:disable-next-line:semicolon
   };
   public HasError = (controlName: string, errorName: string) => {
     return this.ownerForm.controls[controlName].hasError(errorName);
+    // tslint:disable-next-line:semicolon
   };
   AddUserToTable(): void {
     const self = this;
