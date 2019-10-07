@@ -47,9 +47,9 @@ import { EventPromotionService } from "src/app/services/event-promotion/event-pr
 import { environment } from "src/environments/environment";
 import { NoPromotionsNotificationComponent } from "./no-promotions-notification/no-promotions-notification.component";
 import { Restaurant } from "src/app/models/restaurant";
-import { OrderService } from 'src/app/services/order/order.service';
-import { Order } from 'src/app/models/order';
-import { DataRoutingService } from 'src/app/data-routing.service';
+import { OrderService } from "src/app/services/order/order.service";
+import { Order } from "src/app/models/order";
+import { DataRoutingService } from "src/app/data-routing.service";
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -100,7 +100,7 @@ export class EventDialogComponent implements OnInit {
     private userService: UserService,
     private dataRouting: DataRoutingService,
     private customGroupService: CustomGroupService,
-    private orderService: OrderService,
+    private orderService: OrderService
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -384,7 +384,9 @@ export class EventDialogComponent implements OnInit {
         Participants: numberParticipant.toString(),
         Category: self.ownerForm.get("userInput").value.Categories,
         RestaurantId: self.ownerForm.get("userInput").value.RestaurantId,
-        ServiceId: self.clonedEventInfo ? self.clonedEventInfo.ServiceId : self.data.idService.toString(),
+        ServiceId: self.clonedEventInfo
+          ? self.clonedEventInfo.ServiceId
+          : self.data.idService.toString(),
         DeliveryId: self.ownerForm.get("userInput").value.DeliveryId,
         CreatedBy: self.createdUser.id,
         HostId: self.ownerForm.get("userInputHost").value.Id,
@@ -712,8 +714,20 @@ export class EventDialogComponent implements OnInit {
 
   SetClonedEventData(clonnedEventData: Event, self) {
     console.log(clonnedEventData);
-    self.ownerForm.get('MaximumBudget').setValue(clonnedEventData ? clonnedEventData.MaximumBudget : 0);
-    self.ownerForm.get('EventType').setValue(clonnedEventData ? clonnedEventData.EventType : 'Open');
+    self.ownerForm
+      .get("MaximumBudget")
+      .setValue(
+        clonnedEventData && clonnedEventData.MaximumBudget
+          ? clonnedEventData.MaximumBudget
+          : 0
+      );
+    self.ownerForm
+      .get("EventType")
+      .setValue(
+        clonnedEventData && clonnedEventData.EventType
+          ? clonnedEventData.EventType
+          : "Open"
+      );
 
     //get currentUser
     self.loading = true;
@@ -747,14 +761,30 @@ export class EventDialogComponent implements OnInit {
       });
 
     const restaurant = new DeliveryInfos();
-    restaurant.Name = clonnedEventData ? clonnedEventData.Restaurant : '';
-    if (clonnedEventData) {
-      restaurant.DeliveryId = clonnedEventData.DeliveryId;
-      restaurant.Categories = clonnedEventData.Category;
-      restaurant.RestaurantId = clonnedEventData.RestaurantId;
-    }
+    restaurant.Name =
+      clonnedEventData && clonnedEventData.Restaurant
+        ? clonnedEventData.Restaurant
+        : self.data.restaurant.Name;
+    restaurant.DeliveryId =
+      clonnedEventData && clonnedEventData.DeliveryId
+        ? clonnedEventData.DeliveryId
+        : self.data.restaurant.DeliveryId;
+    restaurant.Categories =
+      clonnedEventData && clonnedEventData.Category
+        ? clonnedEventData.Category
+        : self.data.restaurant.Categories;
+    restaurant.RestaurantId =
+      clonnedEventData && clonnedEventData.RestaurantId
+        ? clonnedEventData.RestaurantId
+        : self.data.restaurant.RestaurantId;
 
-    self.ownerForm.get("userInput").setValue(clonnedEventData ? restaurant : self.data.restaurant);
+    self.ownerForm
+      .get("userInput")
+      .setValue(
+        clonnedEventData && clonnedEventData.Restaurant
+          ? restaurant
+          : self.data.restaurant
+      );
     self.ownerForm
       .get("userInput")
       .valueChanges.pipe(
@@ -762,13 +792,26 @@ export class EventDialogComponent implements OnInit {
         tap(() => (self.isLoading = true)),
         switchMap(value =>
           self.restaurantService
-            .SearchRestaurantName(value, 4, self.data.idService, 217)
+            .SearchRestaurantName(
+              value,
+              4,
+              clonnedEventData && clonnedEventData.ServiceId
+                ? Number(clonnedEventData.ServiceId)
+                : self.data.idService,
+              217
+            )
             .pipe(finalize(() => (self.isLoading = true)))
         )
       )
       .subscribe(data =>
         self.restaurantService
-          .getRestaurants(data.Data, self.data.idService, 217)
+          .getRestaurants(
+            data.Data,
+            clonnedEventData && clonnedEventData.ServiceId
+              ? Number(clonnedEventData.ServiceId)
+              : self.data.idService,
+            217
+          )
           .then(result => {
             self.restaurant = result;
             self.isLoading = false;
@@ -807,7 +850,6 @@ export class EventDialogComponent implements OnInit {
               Id: userNotOrder[0].Id
             };
             this.pushUserToParticipants(UserNot);
-
           } else if (o.OrderStatus == 1) {
             const UserNot: EventUser = {
               Email: userNotOrder[0].Mail,
