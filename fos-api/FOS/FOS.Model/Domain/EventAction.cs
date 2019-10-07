@@ -10,6 +10,7 @@ namespace FOS.Model.Domain
     {
         public bool CanViewEvent { get; set; }
         public bool CanEditEvent { get; set; }
+        public bool CanCloneEvent { get; set; }
         public bool CanCloseEvent { get; set; }
         public bool CanMakeOrder { get; set; }
         public bool CanSendRemind { get; set; }

@@ -94,6 +94,7 @@ namespace FOS.Model.Mapping
                 {
                     CanCloseEvent = eventDomain.Action.CanCloseEvent,
                     CanEditEvent = eventDomain.Action.CanEditEvent,
+                    CanCloneEvent = eventDomain.Action.CanCloneEvent,
                     CanMakeOrder = eventDomain.Action.CanMakeOrder,
                     CanSendRemind = eventDomain.Action.CanSendRemind,
                     CanViewEvent = eventDomain.Action.CanViewEvent,

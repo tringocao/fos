@@ -85,60 +85,62 @@ export class OrderDetailComponent implements OnInit {
       });
       this.isWildParticipant = true;
       this.eventFormService.GetEventById(eventId).then(event => {
-        this.event = event;
-        console.log(this.event);
-        this.restaurantService
-          .getRestaurants(
-            [Number(this.event.RestaurantId)],
-            Number(this.event.ServiceId),
-            217
-          )
-          .then(restaurant => {
-            this.data.restaurant = restaurant[0];
-            this.restaurantService
-              .getRestaurantDetail(
-                Number(event.DeliveryId),
-                Number(this.event.ServiceId)
-              )
-              .then(restaurantd => {
-                this.data.detail = restaurantd;
-                this.userService
-                  .getCurrentUser()
-                  .then(user => {
-                    this.orderUser = user;
-                  })
-                  .then(() => {
-                    this.order = {
-                      Id: "1",
-                      OrderDate: new Date(),
-                      IdUser: this.orderUser.Id,
-                      IdEvent: this.event.EventId,
-                      IdRestaurant: Number(this.event.RestaurantId),
-                      IdDelivery: Number(this.event.DeliveryId),
-                      FoodDetail: [],
-                      OrderStatus: 0,
-                      Email: ""
-                    };
-                    this.checkedData = this.order.FoodDetail;
-
-                    this.totalBudget = Number(event.MaximumBudget);
-                    this.userService.getUserById(event.HostId).then(user => {
-                      this.hostUser = user;
-                      if (
-                        this.event.Status == "Closed" &&
-                        this.hostUser.Id != this.orderUser.Id
-                      ) {
-                        this.isOrder = false;
-                      }
-                      this.loading = false;
-                      this.isDataAvailable = true;
-
-                      this.getDbPromotions(this.event.EventId, this.order);
+        if (event && event.EventType === 'Open') {
+          this.event = event;
+          console.log(this.event);
+          this.restaurantService
+            .getRestaurants(
+              [Number(this.event.RestaurantId)],
+              Number(this.event.ServiceId),
+              217
+            )
+            .then(restaurant => {
+              this.data.restaurant = restaurant[0];
+              this.restaurantService
+                .getRestaurantDetail(
+                  Number(event.DeliveryId),
+                  Number(this.event.ServiceId)
+                )
+                .then(restaurantd => {
+                  this.data.detail = restaurantd;
+                  this.userService
+                    .getCurrentUser()
+                    .then(user => {
+                      this.orderUser = user;
+                    })
+                    .then(() => {
+                      this.order = {
+                        Id: "1",
+                        OrderDate: new Date(),
+                        IdUser: this.orderUser.Id,
+                        IdEvent: this.event.EventId,
+                        IdRestaurant: Number(this.event.RestaurantId),
+                        IdDelivery: Number(this.event.DeliveryId),
+                        FoodDetail: [],
+                        OrderStatus: 0,
+                        Email: ""
+                      };
+                      this.checkedData = this.order.FoodDetail;
+  
+                      this.totalBudget = Number(event.MaximumBudget);
+                      this.userService.getUserById(event.HostId).then(user => {
+                        this.hostUser = user;
+                        if (
+                          this.event.Status == "Closed" &&
+                          this.hostUser.Id != this.orderUser.Id
+                        ) {
+                          this.isOrder = false;
+                        }
+                        this.loading = false;
+                        this.isDataAvailable = true;
+  
+                        this.getDbPromotions(this.event.EventId, this.order);
+                      });
+                      this.nameEvent = event.Name;
                     });
-                    this.nameEvent = event.Name;
-                  });
-              });
-          });
+                });
+            });
+        }
       });
     } else {
       await this.orderService.GetOrder(this.idOrder).then(value => {

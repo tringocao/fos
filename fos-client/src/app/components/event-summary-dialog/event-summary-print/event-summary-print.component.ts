@@ -68,7 +68,7 @@ export class EventSummaryPrintComponent implements OnInit {
   total: number;
 
   toStandardDate(date: Date) {
-    return moment(date).format("DD/MM/YYYY HH:mm");
+    return moment(date).format("MM/DD/YYYY HH:mm");
   }
 
   ngOnInit() {
