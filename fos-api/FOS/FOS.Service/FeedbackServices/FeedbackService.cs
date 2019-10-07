@@ -26,7 +26,7 @@ namespace FOS.Services.FeedbackServices
             var _feedback = _feedbackRepository.GetById(DeliveryId);
             if (_feedback != null)
             {
-                return _feedbackMapper.MapToDomain(_feedbackRepository.GetById(DeliveryId));
+                return _feedbackMapper.MapToDomain(_feedback);
             }
             return null;
         }

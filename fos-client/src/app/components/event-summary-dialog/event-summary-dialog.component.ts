@@ -54,6 +54,9 @@ import { PromotionType } from "src/app/models/promotion-type";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
 import { ExcelService } from 'src/app/services/print/excel/excel.service';
+import { ExcelModel } from 'src/app/models/excel-model';
+import { DataRoutingService } from 'src/app/data-routing.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -81,10 +84,19 @@ export class EventSummaryDialogComponent implements OnInit {
     private feedbackService: FeedbackService,
     private eventPromotionService: EventPromotionService,
     private excelService: ExcelService
-  ) {
-    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
-    console.log(router.routerState);
-  }
+    ,
+    private dataRouting: DataRoutingService
+ ) {
+      this.getNavTitleSubscription = this.dataRouting.getNavTitle()
+   .subscribe((appTheme: string) => this.appTheme = appTheme);
+   overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme");
+ }
+ ngOnDestroy() {
+   // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+   this.getNavTitleSubscription.unsubscribe();
+ }
+ private getNavTitleSubscription: Subscription;
+ appTheme: string;
   selection = new SelectionModel<FoodReport>(true, []);
 
   eventData: any;
@@ -721,8 +733,24 @@ export class EventSummaryDialogComponent implements OnInit {
     }
   }
   exportExcel() {
-    this.excelService.CreateCSV(this.orderByPerson).then(value => {
-      window.open(environment.apiUrl + 'api/Excel/DownloadCSV');
+    // restaurant: this.restaurant,
+    //   eventDetail: this.eventDetail,
+    //   foods: this.foods,
+    //   orderByPerson: this.orderByPerson,
+    //   users: this.users
+
+    const excelModel: ExcelModel = {
+      Event : this.eventDetail,
+      FoodReport : this.foods,
+      RestaurantExcel: this.restaurant,
+      UserOrder: this.orderByPerson,
+      User: this.users,
+      Total: this.totalCost
+    };
+    this.excelService.CreateCSV(excelModel).then(value => {
+      if ( value === true) {
+        window.open(environment.apiUrl + 'api/Excel/DownloadCSV?eventId=' + this.eventDetail.EventId.toString());
+      }
     });
   }
 }

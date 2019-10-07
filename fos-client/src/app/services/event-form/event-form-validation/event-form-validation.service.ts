@@ -28,7 +28,7 @@ export class EventFormValidationService {
   ): Array<GraphUser> {
     var participants = JSON.parse(currentDataEvent.EventParticipantsJson);
     var newUser: GraphUser[] = [];
-
+    debugger;
     changeUsers.forEach(element => {
       var user: GraphUser[] = participants.filter(
         item => item.Mail === element.Mail

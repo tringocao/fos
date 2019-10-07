@@ -10,16 +10,9 @@
     
      
 
-    export class RestaurantSummary    {
+    export class RestaurantExcel    {
            
-        public Rank: number = 0;   
-        public Restaurant: string = null;   
-        public Percent: number = 0;   
-        public RelativePercent: number = 0;   
-        public RestaurantId: string = null;   
-        public DeliveryId: string = null;   
-        public ServiceId: string = null;   
-        public AppearTime: number = 0;   
-        public AverageRating: number = 0;
+        public Name: string = null;   
+        public Address: string = null;
     }
          

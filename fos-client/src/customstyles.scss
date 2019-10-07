@@ -13,14 +13,15 @@ $my-theme: (
   )
 );
 $my-jungle: (
-  50: #3b8a21,
+  50: #4b4c02,
   contrast: (
-    50: #3b8a21
+    50: #4b4c02
   )
 );
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
+
 .app-theme1-theme {
   $my-app-primary: mat-palette($my-theme, 50);
   $my-app-accent: mat-palette($mat-red, 500);
@@ -32,16 +33,18 @@ $my-jungle: (
   // Alternatively, you can import and @include the theme mixins for each component
   // that you are using.
   @include angular-material-theme($my-app-theme);
+  --color-primary: #{mat-color($my-app-primary)};
+  --color-accent: #{mat-color($my-app-accent)};
+  --color-warn: #{mat-color($my-app-accent)};
 }
 
 .app-theme2-theme {
-  $alternate-primary: mat-palette($mat-grey, 900);
-  $alternate-accent: mat-palette($mat-indigo, 500);
-  $alternate-warn: mat-palette($mat-indigo, 500);
-  $alternate-theme: mat-light-theme(
-    $alternate-primary,
-    $alternate-accent,
-    $alternate-warn
-  );
-  @include angular-material-theme($alternate-theme);
+  $my-app-primary: mat-palette($mat-grey, 900);
+  $my-app-accent: mat-palette($mat-indigo, 500);
+  $my-app-warn: mat-palette($mat-grey, 900);
+  $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+  @include angular-material-theme($my-app-theme);
+  --color-primary: #{mat-color($my-app-primary)};
+  --color-accent: #{mat-color($my-app-accent)};
+  --color-warn: #{mat-color($my-app-accent)};
 }

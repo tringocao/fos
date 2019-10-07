@@ -4,7 +4,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { Observable, Observer } from "rxjs";
+import { Observable, Observer, Subscription } from "rxjs";
 import {
   MatSort,
   MatPaginator,
@@ -98,6 +98,8 @@ export class EventDialogComponent implements OnInit {
     overlayContainer: OverlayContainer,
     private userService: UserService,
     private customGroupService: CustomGroupService,
+    private dataRouting: DataRoutingService
+    private customGroupService: CustomGroupService,
     private orderService: OrderService,
   ) {
     this.ownerForm = new FormGroup({
@@ -119,9 +121,19 @@ export class EventDialogComponent implements OnInit {
       userInputPicker: new FormControl(""),
       MaximumBudget: new FormControl("")
     });
-    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
+    this.getNavTitleSubscription = this.dataRouting
+      .getNavTitle()
+      .subscribe((appTheme: string) => (this.appTheme = appTheme));
+    overlayContainer
+      .getContainerElement()
+      .classList.add("app-" + this.appTheme + "-theme");
   }
-
+  ngOnDestroy() {
+    // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+    this.getNavTitleSubscription.unsubscribe();
+  }
+  private getNavTitleSubscription: Subscription;
+  appTheme: string;
   apiUrl = environment.apiUrl;
   eventType: string = "Open";
   matcher = new MyErrorStateMatcher();

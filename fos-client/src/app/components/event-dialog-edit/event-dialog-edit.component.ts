@@ -54,6 +54,8 @@ import { Promotion } from "src/app/models/promotion";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
 import { NoPromotionsNotificationComponent } from "../event-dialog/no-promotions-notification/no-promotions-notification.component";
+import { DataRoutingService } from 'src/app/data-routing.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-event-dialog-edit',
   templateUrl: './event-dialog-edit.component.html',
@@ -76,7 +78,8 @@ export class EventDialogEditComponent implements OnInit {
     private userService: UserService,
     private customGroupService: CustomGroupService,
     private eventPromotionService: EventPromotionService,
-    overlayContainer: OverlayContainer
+    overlayContainer: OverlayContainer    ,
+    private dataRouting: DataRoutingService
   ) {
     this.ownerForm = new FormGroup({
       title: new FormControl("", [Validators.required]),
@@ -96,8 +99,16 @@ export class EventDialogEditComponent implements OnInit {
       EventType: new FormControl(""),
       MaximumBudget: new FormControl("")
     });
-    overlayContainer.getContainerElement().classList.add('app-theme1-theme');
-  }
+    this.getNavTitleSubscription = this.dataRouting.getNavTitle()
+    .subscribe((appTheme: string) => this.appTheme = appTheme);
+    overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme"); 
+   }
+    ngOnDestroy() {
+      // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+      this.getNavTitleSubscription.unsubscribe();
+    }
+    private getNavTitleSubscription: Subscription;
+    appTheme: string;
   //global
   apiUrl = environment.apiUrl;
   eventType: string = "Open";

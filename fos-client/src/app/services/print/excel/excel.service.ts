@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { UserOrder } from 'src/app/models/user-order';
+import { ExcelModel } from 'src/app/models/excel-model';
 @Injectable({
   providedIn: 'root'
 })
 export class ExcelService {
 
   constructor(private http: HttpClient) { }
-  CreateCSV(userOrder: Array<UserOrder>): Promise<boolean> {
+  CreateCSV(excelModel: ExcelModel): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.http
         .post<ApiOperationResult<void>>(
           environment.apiUrl + 'api/Excel/CreateCSV/',
-          userOrder
+          excelModel
         )
         .toPromise()
         .then(result => {
@@ -24,11 +25,11 @@ export class ExcelService {
         .catch(alert => console.log(alert));
     });
   }
-  DownloadCSV(): Promise<void> {
+  DownloadCSV(eventId: number): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<void>>(
-          environment.apiUrl + 'api/Excel/DownloadCSV/',
+          environment.apiUrl + 'api/Excel/DownloadCSV/eventId?=' + eventId.toString(),
         )
         .toPromise()
         .then(result => {

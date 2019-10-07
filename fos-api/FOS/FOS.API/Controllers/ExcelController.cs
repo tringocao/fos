@@ -1,5 +1,4 @@
 ﻿using FOS.API.App_Start;
-using FOS.Model.Domain;
 using FOS.Model.Mapping;
 using FOS.Model.Util;
 using FOS.Services.CustomGroupService;
@@ -15,6 +14,9 @@ using System.Web;
 using System.Web.Http;
 using System.Threading.Tasks;
 using System.Text;
+using FOS.Model.Dto;
+using FOS.Model.Domain;
+using FOS.Services.EventServices;
 
 namespace FOS.API.Controllers
 {
@@ -24,20 +26,26 @@ namespace FOS.API.Controllers
     {
         IExcelService _excelService;
         IUserOrderDtoMapper _userOrderDtoMapper;
+        IExcelModelDtoMapper _excelMapper;
+        IEventService _eventService;
+        IEventDtoMapper _eventMapper;
 
-        public ExcelController(IUserOrderDtoMapper userOrderDtoMapper, IExcelService excelService)
+        public ExcelController(IUserOrderDtoMapper userOrderDtoMapper, IExcelService excelService, IExcelModelDtoMapper excelMapper, IEventService eventService, IEventDtoMapper eventMapper)
         {
             _userOrderDtoMapper = userOrderDtoMapper;
             _excelService = excelService;
+            _excelMapper = excelMapper;
+            _eventService = eventService;
+            _eventMapper = eventMapper;
         }
         [HttpPost]
         [Route("CreateCSV")]
-        public async Task<ApiResponse> CreateGroup([FromBody]List<Model.Dto.UserOrder> listUser)
+        public async Task<ApiResponse> CreateGroup([FromBody]Model.Dto.ExcelModel excelModel)
         {
             try
             {
-                List<Model.Domain.UserOrder> domainUser = listUser.Select(l=>_userOrderDtoMapper.ToDomain(l)).ToList();
-                await _excelService.ExportCSV(domainUser);
+                Model.Domain.ExcelModel domainExcelModel = _excelMapper.ToDomain(excelModel);
+                await _excelService.ExportCSV(domainExcelModel);
                 return ApiUtil.CreateSuccessfulResult();
             }
             catch (Exception e)
@@ -47,15 +55,19 @@ namespace FOS.API.Controllers
         }
         [HttpGet]
         [Route("DownloadCSV")]
-        public HttpResponseMessage DownloadCSV()
+        public HttpResponseMessage DownloadCSV(int eventId)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
             try
-            {               
-                response.Content = new StreamContent(new FileStream(Common.Constants.Constant.FileCsvDirectory, FileMode.Open, FileAccess.Read));
+            {
+                Model.Dto.Event eventDetail =  _eventMapper.DomainToDto(_eventService.GetEvent(eventId));
+                response.Content = new StreamContent(new FileStream(Common.Constants.Constant.FileXlsxDirectory, FileMode.Open, FileAccess.Read));
                 //response.Content.Headers.ContentType.CharSet = Encoding.UTF8.HeaderName;
+                DateTime eventDate = DateTime.Parse(eventDetail.EventDate.ToString());
+                string dateFormat = String.Format("{0:MM/dd/yyyy}", eventDate.ToLocalTime());
+                string fileName = eventDetail.Name + "_" + dateFormat + ".xlsx";
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-                response.Content.Headers.ContentDisposition.FileName = Common.Constants.Constant.FileCsvNameWithExtension;
+                response.Content.Headers.ContentDisposition.FileName = fileName;
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                 return response;

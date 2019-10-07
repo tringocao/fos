@@ -8,18 +8,19 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-     
+     import { Event } from './event';
+import { RestaurantExcel } from './restaurant-excel';
+import { FoodReport } from './food-report';
+import { UserOrder } from './user-order';
+import { User } from './user';
 
-    export class RestaurantSummary    {
+    export class ExcelModel    {
            
-        public Rank: number = 0;   
-        public Restaurant: string = null;   
-        public Percent: number = 0;   
-        public RelativePercent: number = 0;   
-        public RestaurantId: string = null;   
-        public DeliveryId: string = null;   
-        public ServiceId: string = null;   
-        public AppearTime: number = 0;   
-        public AverageRating: number = 0;
+        public Event: Event = null;   
+        public RestaurantExcel: RestaurantExcel = null;   
+        public FoodReport: FoodReport[] = [];   
+        public UserOrder: UserOrder[] = [];   
+        public User: User[] = [];   
+        public Total: number = 0;
     }
          

@@ -34,6 +34,7 @@ export class SummaryListComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [
     'Rank',
     'Restaurant',
+    'AverageRating',
     'Percent',
     'AppearTime',
     'RelativePercent'
