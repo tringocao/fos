@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 @Injectable()
 export class DataRoutingService {
   private navTitle$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    "Default nav title"
+    "theme1"
   );
 
   public setNavTitle(newNavTitle: string): void {
