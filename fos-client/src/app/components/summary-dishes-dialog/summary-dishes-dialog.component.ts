@@ -18,6 +18,8 @@ import {
 import { DishesSummary } from './../../models/dishes-summary';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { TablePaging } from 'src/app/models/table-paging';
+import { DataRoutingService } from 'src/app/data-routing.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-summary-dishes-dialog',
@@ -54,12 +56,22 @@ export class SummaryDishesDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DishesSummary>,
     public summaryService: SummaryService,
     private overlayContainer: OverlayContainer
+    ,
+    private dataRouting: DataRoutingService
   ) {
-    this.overlayContainer
+    this.getNavTitleSubscription = this.dataRouting
+      .getNavTitle()
+      .subscribe((appTheme: string) => (this.appTheme = appTheme));
+    overlayContainer
       .getContainerElement()
-      .classList.add('app-theme1-theme');
-    this.pageSize = TablePaging.PagingNumber;
+      .classList.add("app-" + this.appTheme + "-theme");
   }
+  ngOnDestroy() {
+    // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+    this.getNavTitleSubscription.unsubscribe();
+  }
+  private getNavTitleSubscription: Subscription;
+  appTheme: string;
 
   ngOnInit() {
     this.summaryService

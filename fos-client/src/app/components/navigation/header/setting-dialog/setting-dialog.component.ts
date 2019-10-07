@@ -6,6 +6,8 @@ import { RecurrenceEventService } from "src/app/services/recurrence-event/recurr
 import { RepeateType } from "src/app/models/repeate-type";
 import { RecurrenceEvent } from "src/app/models/recurrence-event";
 import { OverlayContainer } from "@angular/cdk/overlay";
+import { DataRoutingService } from 'src/app/data-routing.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "app-setting-dialog",
@@ -21,19 +23,29 @@ export class SettingDialogComponent implements OnInit {
   endDate: Date;
   startTime: string;
   endTime: string;
+  appTheme: string;
   nameRepeatType: string[] = [];
+  private getNavTitleSubscription: Subscription;
+
   constructor(
     public dialogRef: MatDialogRef<SettingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User,
     private recurrenceEventService: RecurrenceEventService,
     private fb: FormBuilder,
-    overlayContainer: OverlayContainer
+    overlayContainer: OverlayContainer,
+    private dataRouting: DataRoutingService
   ) {
-    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
+       this.getNavTitleSubscription = this.dataRouting.getNavTitle()
+    .subscribe((appTheme: string) => this.appTheme = appTheme);
+    overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme");
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  ngOnDestroy() {
+    // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+    this.getNavTitleSubscription.unsubscribe();
   }
   ngOnInit() {
     this.recForm = this.fb.group({

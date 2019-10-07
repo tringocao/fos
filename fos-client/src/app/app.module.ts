@@ -114,6 +114,8 @@ import { PromotionsChipListComponent } from "./components/promotions-chip-list/p
 import { AdjustPriceComponent } from "./components/adjust-price/adjust-price.component";
 import { NoPromotionsNotificationComponent } from "./components/event-dialog/no-promotions-notification/no-promotions-notification.component";
 import { AddPromotionDialogComponent } from "./components/event-summary-dialog/add-promotion-dialog/add-promotion-dialog.component";
+import { BehaviorSubject } from "rxjs";
+import { DataRoutingService } from "./data-routing.service";
 
 @NgModule({
   declarations: [
@@ -232,6 +234,7 @@ import { AddPromotionDialogComponent } from "./components/event-summary-dialog/a
     MatNativeDateModule // <----- import for date formating(optional)
   ],
   providers: [
+    DataRoutingService,
     OrderService,
     CookieService,
     AuthService,
