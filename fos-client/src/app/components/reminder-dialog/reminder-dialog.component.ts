@@ -56,7 +56,7 @@ export class ReminderDialogComponent implements OnInit {
  private getNavTitleSubscription: Subscription;
  appTheme: string;
   ngOnInit() {
-    console.log(this.data.isClosedEvent);
+    //console.log(this.data.isClosedEvent);
     this.orderService
       .GetUserNotOrdered(this.data.event.EventId)
       .then(result => {
@@ -69,7 +69,7 @@ export class ReminderDialogComponent implements OnInit {
           const participant = participants.filter(
             item => item.Id === element.UserId
           );
-          console.log('participant: ', participant);
+          //console.log('participant: ', participant);
           this.graphUserNotOrder.push(...participant);
         });
         this.dataSource = new MatTableDataSource(this.graphUserNotOrder);

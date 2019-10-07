@@ -16,7 +16,11 @@
       />
     </mat-form-field>
 
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-autocomplete
+      (closed)="closeMiniSearch()"
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+    >
       <mat-option *ngIf="isLoading" class="is-loading"
         ><mat-spinner diameter="30"></mat-spinner
       ></mat-option>

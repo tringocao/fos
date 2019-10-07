@@ -45,7 +45,7 @@ export class UsersOrderedFoodDialogComponent implements OnInit {
     if (this.data.isHostUser) {
       this.displayedColumns = ["avatar", "Name", "Email", "editMakeOrder"];
     }
-    console.log("data: ", this.data);
+    //console.log("data: ", this.data);
     this.dataSource = new MatTableDataSource(this.data.users);
   }
 

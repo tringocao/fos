@@ -77,7 +77,7 @@ export class EventDialogUserpickerComponent implements OnInit {
       .subscribe((data: ApiOperationResult<Array<User>>) => {
         if (data && data.Data) {
           const dataSourceTemp: UserPicker[] = [];
-          console.log(data.Data);
+          //console.log(data.Data);
 
           data.Data.map(user => {
             if (user.DisplayName) {

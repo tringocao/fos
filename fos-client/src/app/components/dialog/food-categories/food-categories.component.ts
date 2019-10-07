@@ -16,7 +16,7 @@ export class FoodCategoriesComponent implements OnInit {
   mode = "indeterminate";
   constructor() {}
   openedChange(opened: boolean) {
-    console.log(opened ? "opened" : "closed");
+    //console.log(opened ? "opened" : "closed");
     if (!opened) {
       this.loading = true;
       let topic = this.ts.value ? this.getTopic(this.ts.value) : 0;
@@ -25,7 +25,7 @@ export class FoodCategoriesComponent implements OnInit {
     }
   }
   getTopic(term: string) {
-    console.log(this.ts.value);
+    //console.log(this.ts.value);
     return this.toppingList.map(x => x.DishTypeId).indexOf(term);
   }
   ngOnInit() {

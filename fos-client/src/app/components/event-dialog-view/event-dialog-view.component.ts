@@ -52,7 +52,7 @@ export class EventDialogViewComponent implements OnInit {
   currency = 'đ';
   ngOnInit() {
     //get user not order
-    console.log('EventId', this.data.EventId);
+    //console.log('EventId', this.data.EventId);
     const participants: Array<GraphUser> = JSON.parse(this.data.EventParticipantsJson);
 
     this.orderService.GetOrdersByEventId(this.data.EventId).then((order: Array<Order>) =>{

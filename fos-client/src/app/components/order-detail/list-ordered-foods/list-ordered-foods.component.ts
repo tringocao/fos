@@ -66,7 +66,7 @@ export class ListOrderedFoodsComponent implements OnInit {
   @Input() totalBudget: Number;
   ngOnInit() {
     this.dataSource2 = new MatTableDataSource<FoodDetailJson>();
-    //console.log(this.user.DisplayName);
+    ////console.log(this.user.DisplayName);
     this.updateTable();
   }
   Caculator() {

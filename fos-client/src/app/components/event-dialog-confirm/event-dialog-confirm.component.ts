@@ -37,7 +37,7 @@ export class EventDialogConfirmComponent implements OnInit {
   ngOnInit() {
     var self = this;
     // var dataSource = self.data;
-    // console.log(dataSource);
+    // //console.log(dataSource);
   }
 
   onNoClick(): void {

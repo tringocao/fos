@@ -70,7 +70,7 @@ export class FoodComponent implements OnInit {
   IsSomeSelected(ref, row) {
     var checked = this.selection.isSelected(row);
     ref.checked = checked;
-    console.log(checked, row);
+    //console.log(checked, row);
     this.valueChange.emit({
       food: row,
       checked: checked
@@ -118,7 +118,7 @@ export class FoodComponent implements OnInit {
       });
   }
   updateTable(dataSourceTemp: Food[]) {
-    console.log(dataSourceTemp);
+    //console.log(dataSourceTemp);
     this.dataSource2 = new MatTableDataSource(dataSourceTemp);
     this.dataSource2.sort = this.sort;
     this.dataSource2.paginator = this.paginator;
@@ -130,7 +130,7 @@ export class FoodComponent implements OnInit {
     this.load = false;
   }
   showAll(dataSourceTemp: FoodCategory[]) {
-    console.log(dataSourceTemp);
+    //console.log(dataSourceTemp);
     this.dataSource2 = new MatTableDataSource();
 
     dataSourceTemp.forEach(f => {

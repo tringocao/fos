@@ -15,7 +15,7 @@ export class SummaryService {
 
   sendEmail(report: Report): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      console.log(report);
+      //console.log(report);
       this.http
         .post<ApiOperationResult<void>>(
           environment.apiUrl + 'api/summary/sendreport',

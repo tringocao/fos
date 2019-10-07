@@ -108,7 +108,7 @@ export class PromotionsChipListComponent implements OnInit {
     // promotion.MinOrderAmount = 0;
     this.promotions.push(promotion);
     this.promotionChanged.emit(this.promotions);
-    // console.log(this.promotions);
+    // //console.log(this.promotions);
   }
 
   removePromotion(promotion: Promotion) {

@@ -69,7 +69,7 @@ export class ShowActionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
     this.isShowListAction = false;
   }
@@ -82,7 +82,7 @@ export class ShowActionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
     this.isShowListAction = false;
   }
@@ -95,7 +95,7 @@ export class ShowActionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
     this.isShowListAction = false;
   }
@@ -112,7 +112,7 @@ export class ShowActionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
     this.isShowListAction = false;
   }
@@ -185,7 +185,7 @@ export class ShowActionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
+      //console.log("The dialog was closed");
     });
     this.isShowListAction = false;
   }

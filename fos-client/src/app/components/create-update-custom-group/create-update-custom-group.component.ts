@@ -90,7 +90,7 @@ export class CreateUpdateCustomGroupComponent implements OnInit, OnChanges {
 
   public CreateOwner = ownerFormValue => {
     if (this.ownerForm.valid) {
-      console.log('pass');
+      //console.log('pass');
     }
     // tslint:disable-next-line:semicolon
   };
@@ -105,7 +105,7 @@ export class CreateUpdateCustomGroupComponent implements OnInit, OnChanges {
     if (!choosingUser.Email) {
       return;
     }
-    console.log('choose User', choosingUser);
+    //console.log('choose User', choosingUser);
 
     let flag = false;
     self.eventUsers.forEach(element => {
@@ -129,7 +129,7 @@ export class CreateUpdateCustomGroupComponent implements OnInit, OnChanges {
   }
   notifyMessage(eventHost: userPicker) {
     const self = this;
-    console.log('change picker', event);
+    //console.log('change picker', event);
     const newHost: userPicker[] = this.eventUsers.filter(
       u => u.Email === eventHost.Email
     );

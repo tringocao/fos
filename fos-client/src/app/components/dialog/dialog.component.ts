@@ -51,7 +51,7 @@ export class DialogComponent implements OnInit {
  appTheme: string;
 
   async ngOnInit(): Promise<void> {
-    console.log("-------------------------------------");
+    //console.log("-------------------------------------");
   }
 
   onNoClick(): void {
@@ -67,7 +67,7 @@ export class DialogComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
+      //console.log("The dialog was closed");
     });
   }
 }

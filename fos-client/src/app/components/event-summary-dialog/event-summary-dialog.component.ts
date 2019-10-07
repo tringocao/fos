@@ -53,10 +53,10 @@ import { Promotion } from "src/app/models/promotion";
 import { PromotionType } from "src/app/models/promotion-type";
 import { EventPromotionService } from "src/app/services/event-promotion/event-promotion.service";
 import { EventPromotion } from "src/app/models/event-promotion";
-import { ExcelService } from 'src/app/services/print/excel/excel.service';
-import { ExcelModel } from 'src/app/models/excel-model';
-import { DataRoutingService } from 'src/app/data-routing.service';
-import { Subscription } from 'rxjs';
+import { ExcelService } from "src/app/services/print/excel/excel.service";
+import { ExcelModel } from "src/app/models/excel-model";
+import { DataRoutingService } from "src/app/data-routing.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-event-summary-dialog",
@@ -83,20 +83,22 @@ export class EventSummaryDialogComponent implements OnInit {
     private overlay: Overlay,
     private feedbackService: FeedbackService,
     private eventPromotionService: EventPromotionService,
-    private excelService: ExcelService
-    ,
+    private excelService: ExcelService,
     private dataRouting: DataRoutingService
- ) {
-      this.getNavTitleSubscription = this.dataRouting.getNavTitle()
-   .subscribe((appTheme: string) => this.appTheme = appTheme);
-   overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme");
- }
- ngOnDestroy() {
-   // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
-   this.getNavTitleSubscription.unsubscribe();
- }
- private getNavTitleSubscription: Subscription;
- appTheme: string;
+  ) {
+    this.getNavTitleSubscription = this.dataRouting
+      .getNavTitle()
+      .subscribe((appTheme: string) => (this.appTheme = appTheme));
+    overlayContainer
+      .getContainerElement()
+      .classList.add("app-" + this.appTheme + "-theme");
+  }
+  ngOnDestroy() {
+    // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+    this.getNavTitleSubscription.unsubscribe();
+  }
+  private getNavTitleSubscription: Subscription;
+  appTheme: string;
   selection = new SelectionModel<FoodReport>(true, []);
 
   eventData: any;
@@ -171,7 +173,7 @@ export class EventSummaryDialogComponent implements OnInit {
       foods: this.foods,
       orderByPerson: this.orderByPerson,
       users: this.users,
-      total: this.totalCost,
+      total: this.totalCost
     });
   }
 
@@ -195,7 +197,7 @@ export class EventSummaryDialogComponent implements OnInit {
       letterRendering: 1,
       scale: 2
     };
-    console.log(this.userGroupTab);
+    //console.log(this.userGroupTab);
     html2canvas(page).then(pageSource => {
       //Converting canvas to Image
       var pageData = pageSource.toDataURL("image/PNG");
@@ -256,7 +258,7 @@ export class EventSummaryDialogComponent implements OnInit {
                       this.promotion
                     )
                     .then(eventPromotion => {
-                      console.log(eventPromotion.DiscountedFoodIds);
+                      //console.log(eventPromotion.DiscountedFoodIds);
                       this.promotion = eventPromotion;
                       const promontionIndex = this.eventPromotion.Promotions.findIndex(
                         p => p.PromotionType === PromotionType.DiscountPerItem
@@ -290,7 +292,7 @@ export class EventSummaryDialogComponent implements OnInit {
                 217
               )
               .then(result => {
-                console.log(result[0]);
+                //console.log(result[0]);
                 this.restaurant = result[0];
                 this.restaurant.address = result[0].Address;
 
@@ -305,7 +307,7 @@ export class EventSummaryDialogComponent implements OnInit {
                     this.restaurant.isLoaded = true;
                     this.eventData.restaurant = this.restaurant;
                   });
-                console.log(this.restaurant);
+                //console.log(this.restaurant);
                 // this.restaurant.RestaurantUrl = "01234";
               });
             this.isHost(result);
@@ -318,7 +320,7 @@ export class EventSummaryDialogComponent implements OnInit {
   getOrdersInfo(id) {
     this.orderService.GetOrdersByEventId(id).then(orders => {
       this.orders = orders;
-      console.log(orders);
+      //console.log(orders);
       var foodList: string[] = [];
       var orderProceed = 0;
       this.orders = orders;
@@ -330,7 +332,7 @@ export class EventSummaryDialogComponent implements OnInit {
         });
         orderProceed++;
         if (orderProceed == orders.length) {
-          console.log(orderProceed);
+          //console.log(orderProceed);
           this.dishGroupViewdataSource = new MatTableDataSource(this.foods);
           this.dishViewDataAvailable = true;
           this.eventData.foods = this.foods;
@@ -372,7 +374,7 @@ export class EventSummaryDialogComponent implements OnInit {
         var comments: Comment[] = [];
         var total = 0;
         order.FoodDetail.forEach(food => {
-          console.log(food);
+          //console.log(food);
           foods += food.Value.Amount + "x " + food.Value.Name + ", ";
           // comment += ' ' + food.Value.Comment;
           if (food.Value.Comment !== "") {
@@ -423,7 +425,7 @@ export class EventSummaryDialogComponent implements OnInit {
   }
 
   getDishGroupView(food, foodList, foodDetail, foodProceed) {
-    console.log(food);
+    //console.log(food);
     var _food: FoodReport = {
       FoodId: food.IdFood,
       Name: food.Value.Name,
@@ -592,14 +594,14 @@ export class EventSummaryDialogComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
+      //console.log("The dialog was closed");
     });
   }
   showUsers(userIds: string[], foodName: string) {
     const listUserOrderFood = this.users.filter(user =>
       userIds.includes(user.Id)
     );
-    console.log("data: ", userIds, listUserOrderFood, foodName);
+    //console.log("data: ", userIds, listUserOrderFood, foodName);
     const dialogRef = this.dialog.open(UsersOrderedFoodDialogComponent, {
       data: {
         users: listUserOrderFood,
@@ -611,7 +613,7 @@ export class EventSummaryDialogComponent implements OnInit {
       minWidth: "50%"
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      //console.log(result);
     });
   }
   closeDialog() {
@@ -666,9 +668,9 @@ export class EventSummaryDialogComponent implements OnInit {
       this.discountedFoodIds &&
       this.discountedFoodIds[food.IdFood]
     ) {
-      console.log(
-        Number(food.Value.Price) + this.discountedFoodIds[food.IdFood]
-      );
+      //console.log(
+      //Number(food.Value.Price) + this.discountedFoodIds[food.IdFood]
+      //);
       return Number(food.Value.Price) + this.discountedFoodIds[food.IdFood];
     }
     return Number(food.Value.Price);
@@ -740,16 +742,20 @@ export class EventSummaryDialogComponent implements OnInit {
     //   users: this.users
 
     const excelModel: ExcelModel = {
-      Event : this.eventDetail,
-      FoodReport : this.foods,
+      Event: this.eventDetail,
+      FoodReport: this.foods,
       RestaurantExcel: this.restaurant,
       UserOrder: this.orderByPerson,
       User: this.users,
       Total: this.totalCost
     };
     this.excelService.CreateCSV(excelModel).then(value => {
-      if ( value === true) {
-        window.open(environment.apiUrl + 'api/Excel/DownloadCSV?eventId=' + this.eventDetail.EventId.toString());
+      if (value === true) {
+        window.open(
+          environment.apiUrl +
+            "api/Excel/DownloadCSV?eventId=" +
+            this.eventDetail.EventId.toString()
+        );
       }
     });
   }

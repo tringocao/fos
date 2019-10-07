@@ -236,15 +236,15 @@ export class EventDialogComponent implements OnInit {
   }
 
   // public OnCancel = () => {
-  //   console.log('click cancel');
+  //   //console.log('click cancel');
   //   if (this.ownerForm.valid && this.eventUsers.length > 0) {
-  //     console.log('pass');
+  //     //console.log('pass');
   //   }
   // };
 
   public CreateOwner = ownerFormValue => {
     if (this.ownerForm.valid) {
-      console.log("pass");
+      //console.log("pass");
     }
   };
   OnNoClick(): void {
@@ -252,7 +252,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   DeleteUserInTable(name: string): void {
-    console.log("xoa ", name);
+    //console.log("xoa ", name);
     for (var j = 0; j < this.eventUsers.length; j++) {
       if (name == this.eventUsers[j].Name) {
         this.eventUsers.splice(j, 1);
@@ -265,16 +265,16 @@ export class EventDialogComponent implements OnInit {
 
   AddUserToTable(): void {
     var self = this;
-    console.log("Nhan add card");
+    //console.log("Nhan add card");
 
-    console.log(self.userSelect);
+    //console.log(self.userSelect);
 
     var choosingUser = self.ownerForm.get("userInputPicker").value;
 
     if (!choosingUser.Email) {
       return;
     }
-    console.log("choose User", choosingUser);
+    //console.log("choose User", choosingUser);
     var flag = false;
     self.eventUsers.forEach(element => {
       if (element.Name === choosingUser.Name) {
@@ -353,25 +353,25 @@ export class EventDialogComponent implements OnInit {
       this.toStandardDate(this.ownerForm.get("eventDate").value) +
       "T" +
       this.ownerForm.get("eventTime").value;
-    console.log("get eventDate: ", eventDate);
+    //console.log("get eventDate: ", eventDate);
 
     var dateTimeToClose =
       this.toStandardDate(this.ownerForm.get("closeDate").value) +
       "T" +
       this.ownerForm.get("closeTime").value;
-    console.log("get dateTimeToClose: ", dateTimeToClose);
+    //console.log("get dateTimeToClose: ", dateTimeToClose);
 
     var dateToReminder = this.ownerForm.get("remindDate").value
       ? this.toStandardDate(this.ownerForm.get("remindDate").value) +
         "T" +
         this.ownerForm.get("remindTime").value
       : "";
-    console.log("get dateToReminder: ", dateToReminder);
+    //console.log("get dateToReminder: ", dateToReminder);
 
     Promise.all(promises).then(function() {
-      console.log("final", jsonParticipants);
+      //console.log("final", jsonParticipants);
       var myJSON = JSON.stringify(jsonParticipants);
-      console.log("final", myJSON);
+      //console.log("final", myJSON);
 
       var eventListitem: Event = {
         Name: self.ownerForm.get("title").value,
@@ -403,7 +403,7 @@ export class EventDialogComponent implements OnInit {
         .toPromise()
         .then(newId => {
           if (newId.Success === true) {
-            console.log("new Id", newId.Data);
+            //console.log("new Id", newId.Data);
             if (self.promotions) {
               self.eventPromotionService.AddEventPromotion(
                 Number(newId.Data),
@@ -427,7 +427,7 @@ export class EventDialogComponent implements OnInit {
   }
   SendEmail(id: string) {
     this.restaurantService.setEmail(id);
-    console.log("Sent!");
+    //console.log("Sent!");
   }
   fetchAllPromotions() {
     this.eventPromotionService
@@ -447,7 +447,7 @@ export class EventDialogComponent implements OnInit {
           );
 
           dialogRef.afterClosed().subscribe(result => {
-            console.log("The dialog was closed");
+            //console.log("The dialog was closed");
           });
         }
         // this.promotionChanged.emit(this.promotions);
@@ -458,7 +458,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   public HasError = (controlName: string, errorName: string) => {
-    // console.log(controlName + ' ' +this.ownerForm.controls[controlName].hasError(errorName) + ' ' + errorName);
+    // //console.log(controlName + ' ' +this.ownerForm.controls[controlName].hasError(errorName) + ' ' + errorName);
     return this.ownerForm.controls[controlName].hasError(errorName);
   };
 
@@ -630,7 +630,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   onDateTimeInputChange($event) {
-    console.log($event);
+    //console.log($event);
     this.checkDatetimeValidation();
   }
 
@@ -690,11 +690,11 @@ export class EventDialogComponent implements OnInit {
   }
 
   isValidEventClose(component: Component) {
-    console.log(component);
+    //console.log(component);
   }
   notifyMessage(eventHost: userPicker) {
     var self = this;
-    console.log("change picker", event);
+    //console.log("change picker", event);
     var newHost: userPicker[] = this.eventUsers.filter(
       u => u.Email === eventHost.Email
     );
@@ -713,7 +713,7 @@ export class EventDialogComponent implements OnInit {
   }
 
   SetClonedEventData(clonnedEventData: Event, self) {
-    console.log(clonnedEventData);
+    //console.log(clonnedEventData);
     self.ownerForm
       .get("MaximumBudget")
       .setValue(
@@ -744,7 +744,7 @@ export class EventDialogComponent implements OnInit {
           IsGroup: 0
         };
 
-        console.log("curentuser", dataSourceTemp);
+        //console.log("curentuser", dataSourceTemp);
         self.ownerForm.get("userInputHost").setValue(dataSourceTemp);
 
         const host: EventUser = {
@@ -887,7 +887,7 @@ export class EventDialogComponent implements OnInit {
     var closeTime = this.ToDateString(newCloseTime);
     this.dateTimeToClose = closeTime;
 
-    console.log(clonnedEventData.RemindTime);
+    //console.log(clonnedEventData.RemindTime);
     if (clonnedEventData.RemindTime) {
       var newRemindTime = new Date(clonnedEventData.RemindTime);
       // var remindTime = this.ToDateString(newRemindTime);

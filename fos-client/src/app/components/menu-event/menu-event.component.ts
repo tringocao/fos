@@ -35,7 +35,7 @@ export class MenuEventComponent implements OnInit {
 
   ngOnInit() {}
   openDialog(): void {
-    console.log("restaurant", this.restaurant);
+    //console.log("restaurant", this.restaurant);
 
     const dialogRef = this.dialog.open(EventDialogComponent, {
       // scrollStrategy: this.overlay.scrollStrategies.noop(),
@@ -46,7 +46,7 @@ export class MenuEventComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
+      //console.log("The dialog was closed");
     });
   }
 }

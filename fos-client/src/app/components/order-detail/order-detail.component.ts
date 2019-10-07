@@ -87,7 +87,7 @@ export class OrderDetailComponent implements OnInit {
       this.eventFormService.GetEventById(eventId).then(event => {
         if (event && event.EventType === 'Open') {
           this.event = event;
-          console.log(this.event);
+          //console.log(this.event);
           this.restaurantService
             .getRestaurants(
               [Number(this.event.RestaurantId)],
@@ -246,7 +246,7 @@ export class OrderDetailComponent implements OnInit {
   getDbPromotions(eventId: string, order: Order) {
     this.eventPromotionService.GetByEventId(Number(eventId)).then(promotion => {
       this.eventPromotion = promotion;
-      console.log(this.eventPromotion);
+      //console.log(this.eventPromotion);
       this.promotions = this.eventPromotion.Promotions;
       this.discountPerItem = this.promotions
         .filter(p => p.PromotionType == PromotionType.DiscountPerItem)

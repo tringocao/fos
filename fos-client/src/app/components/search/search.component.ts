@@ -100,7 +100,7 @@ export class SearchComponent implements OnInit, OnChanges {
     //   );
   }
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    console.log(changes);
+    //console.log(changes);
   }
   onBlur() {
     this.show$ = false;
@@ -114,16 +114,18 @@ export class SearchComponent implements OnInit, OnChanges {
       return user.Name;
     }
   }
-
+  closeMiniSearch() {
+    this.onSubmit();
+  }
   filterByFavorite($event) {
-    console.log($event);
-    this.isChecked = $event.checked
+    //console.log($event);
+    this.isChecked = $event.checked;
     this.change.emit({ isChecked: $event.checked });
     //this.change.emit({ isChecked: event.checked });
   }
 
   openedChange(opened: boolean) {
-    console.log(opened ? "opened" : "closed");
+    //console.log(opened ? "opened" : "closed");
     if (!opened) {
       this.onSubmit();
     }
@@ -133,7 +135,7 @@ export class SearchComponent implements OnInit, OnChanges {
     let cod = this.toppings.value
       ? this.getCondition(this.toppings.value)
       : "[]";
-    console.log(cod);
+    //console.log(cod);
     var keyword = "";
     if (this.usersForm.get("userInput").value != null) {
       keyword = this.usersForm.get("userInput").value.Name
@@ -141,8 +143,11 @@ export class SearchComponent implements OnInit, OnChanges {
         : this.usersForm.get("userInput").value;
     }
     this.isChecked = false;
-    this.change.emit({ topic: JSON.parse(cod), keyword: keyword, isChecked: this.isChecked });
-
+    this.change.emit({
+      topic: JSON.parse(cod),
+      keyword: keyword,
+      isChecked: this.isChecked
+    });
   }
 
   getCondition(term: Category[]): string {

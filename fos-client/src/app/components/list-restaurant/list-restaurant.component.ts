@@ -75,11 +75,11 @@ export class ListRestaurantComponent implements OnInit {
     this.favoriteService
       .getFavorite()
       .then(response => {
-        console.log(response);
+        //console.log(response);
         response.map((item: FavoriteRestaurant) => {
           this.favoriteRestaurants.push(item.RestaurantId);
         });
-        console.log(this.favoriteRestaurants);
+        //console.log(this.favoriteRestaurants);
       })
       .then(() => {
         this.getRestaurant({ topic: this.topic, keyword: this.keyword });
@@ -102,9 +102,9 @@ export class ListRestaurantComponent implements OnInit {
   }
 
   addToFavorite(event, restaurantId: string) {
-    console.log('add', restaurantId);
+    //console.log('add', restaurantId);
     this.dataSource.data.forEach(data => {
-      console.log(data);
+      //console.log(data);
       if (data.RestaurantId == restaurantId) {
         data.IsFavorite = true;
         this.toast(data.Name + ' added! ', 'Dismiss');
@@ -112,7 +112,7 @@ export class ListRestaurantComponent implements OnInit {
     });
     this.favoriteRestaurants.push(restaurantId);
     this.favoriteService.addFavoriteRestaurant(restaurantId).then(response => {
-      // console.log(this.dataSource.data);
+      // //console.log(this.dataSource.data);
       if (response != null && response.ErrorMessage != null) {
         this.toast('Error happnened ', 'Dismiss');
       }
@@ -134,7 +134,7 @@ export class ListRestaurantComponent implements OnInit {
   // }
 
   removeFromFavorite(event, restaurantId: string) {
-    console.log('remove', this.dataSource.data);
+    //console.log('remove', this.dataSource.data);
     this.dataSource.data.forEach(data => {
       if (data.RestaurantId == restaurantId) {
         data.IsFavorite = false;
@@ -145,7 +145,7 @@ export class ListRestaurantComponent implements OnInit {
     this.favoriteService
       .removeFavoriteRestaurant(restaurantId)
       .then(response => {
-        // console.log(this.dataSource.data);
+        // //console.log(this.dataSource.data);
         if (response != null && response.ErrorMessage != null) {
           this.toast('Error happnened ', 'Dismiss');
         }
@@ -156,7 +156,7 @@ export class ListRestaurantComponent implements OnInit {
     if ($event.isChecked) {
       this.baseDataSource.data = this.dataSource.data;
       this.restaurantService.getRestaurants(this.favoriteRestaurants.map(Number), this.idService, 217).then(result => {
-        console.log(result)
+        //console.log(result)
         result.forEach(item => item.IsFavorite = true);
         this.dataSource.data = result;
         this.dataSource.paginator = this.paginator;
@@ -176,7 +176,7 @@ export class ListRestaurantComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
-    console.log($event.isChecked);
+    //console.log($event.isChecked);
     if ($event.topic != undefined && $event.keyword != undefined) {
       this.load = true;
 

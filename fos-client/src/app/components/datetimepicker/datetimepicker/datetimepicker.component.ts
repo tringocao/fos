@@ -67,8 +67,8 @@ export class DatetimepickerComponent implements OnInit {
   }
 
   openDialog(): void {
-    console.log(this.itime)
-    console.log(this.userTime)
+    //console.log(this.itime)
+    //console.log(this.userTime)
     if (!this.itime) {
       if (this.userTime) {
         this.itime = {

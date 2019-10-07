@@ -61,12 +61,12 @@ export class FeedbackComponent implements OnInit {
   }
 
   OnRatingChanged(rating) {
-    console.log(rating);
+    //console.log(rating);
     this.rating = rating;
   }
 
   OnCommentChange(event, foodId) {
-    console.log(foodId);
+    //console.log(foodId);
   }
 
   GetOrderInfo(orderId: string) {
@@ -77,7 +77,7 @@ export class FeedbackComponent implements OnInit {
         return foodDetail;
       });
       this.dishViewdataSource = this.orderDetail;
-      console.log(this.orderDetail);
+      //console.log(this.orderDetail);
       this.GetEventById(this.order.IdEvent);
     });
   }
@@ -85,7 +85,7 @@ export class FeedbackComponent implements OnInit {
   GetEventById(eventId: string) {
     return this.eventFormService.GetEventById(eventId).then((event: Event) => {
       this.event = event;
-      console.log(this.event)
+      //console.log(this.event)
       this.loading = false;
       this.feedback.DeliveryId = this.event.DeliveryId;
       this.feedbackService
@@ -110,7 +110,7 @@ export class FeedbackComponent implements OnInit {
                 if (feedBackIndex !== -1) {
                   this.orderDetail[foodIndex].Comment =
                     foodFeedback.UserFeedBacks[feedBackIndex].Comment;
-                  console.log(this.orderDetail[foodIndex]);
+                  //console.log(this.orderDetail[foodIndex]);
                 }
               }
             });
@@ -149,10 +149,10 @@ export class FeedbackComponent implements OnInit {
       userFeedback.Comment = food.Comment;
       userFeedback.UserId = this.order.IdUser;
       feedbackDetail.UserFeedBacks.push(userFeedback);
-      console.log(feedbackDetail);
+      //console.log(feedbackDetail);
       return feedbackDetail;
     });
-    console.log(this.feedback);
+    //console.log(this.feedback);
 
     this.feedbackService.feedBackEvent(this.feedback).then(result => {
       this.toast('Feedback Submitted!', 'Dismiss');

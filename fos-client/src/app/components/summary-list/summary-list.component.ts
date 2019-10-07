@@ -74,7 +74,7 @@ export class SummaryListComponent implements OnInit, OnChanges {
   }
 
   showDishesSummary(row: RestaurantSummary) {
-    console.log('row: ', row);
+    //console.log('row: ', row);
 
     const dialogRef = this.dialog.open(SummaryDishesDialogComponent, {
       maxHeight: '98vh',
@@ -83,7 +83,7 @@ export class SummaryListComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
   }
 }
