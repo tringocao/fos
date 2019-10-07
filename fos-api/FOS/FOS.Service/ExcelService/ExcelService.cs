@@ -29,7 +29,7 @@ namespace FOS.Services.ExcelService
                     string lineHostAndAdress = string.Format("{0},{1},{2},{3},{4}", "Host", excelModel.Event.HostName, "", "Adress", restaurantAddress);
                     stream.WriteLine(lineHostAndAdress, Encoding.UTF8);
                     DateTime closeTime = DateTime.Parse(excelModel.Event.CloseTime.ToString());
-                    string closeTimeLine = closeTime.ToLocalTime().ToString();
+                    string closeTimeLine = String.Format("{0:MM/dd/yyyy HH:mm}", closeTime);
                     string TimeToClose = string.Format("{0},{1}", "Time to close", closeTimeLine);
                     stream.WriteLine(TimeToClose, Encoding.UTF8);
                     string Status = string.Format("{0},{1}", "Status", excelModel.Event.Status);
