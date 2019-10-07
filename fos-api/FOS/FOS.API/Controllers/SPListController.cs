@@ -121,18 +121,18 @@ namespace FOS.API.Controllers
             try
             {
                 
-                bool checkHost = await _userService.ValidateIsHost(Int32.Parse(id));
-                if (checkHost == false)
-                {
-                    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
-                }
+                //bool checkHost = await _userService.ValidateIsHost(Int32.Parse(id));
+                //if (checkHost == false)
+                //{
+                //    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
+                //}
 
                 var domainItem = _eventDtoMapper.DtoToDomain(item);
-                bool check = _eventService.ValidateEventInfo(domainItem);
-                if (check == false)
-                {
-                    return ApiUtil<string>.CreateFailResult(Constant.NotValidEventInfo);
-                }
+                //bool check = _eventService.ValidateEventInfo(domainItem);
+                //if (check == false)
+                //{
+                //    return ApiUtil<string>.CreateFailResult(Constant.NotValidEventInfo);
+                //}
                 await _spListService.UpdateListItem(id, domainItem);
                 return ApiUtil.CreateSuccessfulResult();
             }

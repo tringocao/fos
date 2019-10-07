@@ -59,7 +59,7 @@ namespace FOS.Services.ExcelService
 
                         stream.WriteLine(csvRow, Encoding.UTF8);
                     }
-                    string total = string.Format("{0},{1},{2},{3},{4},{5}", "", "", "", excelModel.Total.ToString(), "", "");
+                    string total = string.Format("{0},{1},{2},{3},{4},{5}", "", "", "", "", excelModel.Total.ToString(), "");
 
                     stream.WriteLine(total, Encoding.UTF8);
 
