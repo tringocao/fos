@@ -16,5 +16,6 @@ namespace FOS.Model.Domain
         public string DeliveryId { get; set; }
         public string ServiceId { get; set; }
         public int AppearTimes { get; set; }
+        public float AverageRating { get; set; }
     }
 }

@@ -20,6 +20,7 @@ using System.Linq;
 using FOS.Model.Domain;
 using Newtonsoft.Json;
 using FOS.Common.Constants;
+using FOS.Repositories.Mapping;
 
 namespace FOS.Services.SummaryService
 {
@@ -31,8 +32,10 @@ namespace FOS.Services.SummaryService
         ISharepointContextProvider _sharepointContextProvider;
         IEventService _eventService;
         IOrderRepository _orderRepository;
+        IFeedbackRepository _feedBackRepository;
+        IFeedbackMapper _feedbackMapper;
 
-        public SummaryService(ISPUserService spUserService, ISendEmailService sendEmailService, IReportFileRepository reportFileRepository, ISharepointContextProvider sharepointContextProvider, IEventService eventService, IOrderRepository orderRepository)
+        public SummaryService(ISPUserService spUserService, ISendEmailService sendEmailService, IReportFileRepository reportFileRepository, ISharepointContextProvider sharepointContextProvider, IEventService eventService, IOrderRepository orderRepository, IFeedbackRepository feedbackRepository, IFeedbackMapper feedbackMapper)
         {
             _spUserService = spUserService;
             _sendEmailService = sendEmailService;
@@ -40,6 +43,8 @@ namespace FOS.Services.SummaryService
             _sharepointContextProvider = sharepointContextProvider;
             _eventService = eventService;
             _orderRepository = orderRepository;
+            _feedBackRepository = feedbackRepository;
+            _feedbackMapper = feedbackMapper;
         }
 
         public string GetReportContentByEventId(string eventId)
@@ -177,6 +182,13 @@ namespace FOS.Services.SummaryService
                 var unique = new Model.Domain.RestaurantSummary();
                 unique = element.ToList()[0];
                 unique.AppearTimes = element.ToList().Count();
+
+                var feedback = _feedBackRepository.GetById(unique.DeliveryId);
+                if (feedback != null)
+                {
+                    var domainFeedback = _feedbackMapper.MapToDomain(feedback);
+                    unique.AverageRating = domainFeedback.Ratings.Sum(item => item.Value) / (float)domainFeedback.Ratings.Count;
+                }
                 uniqueList.Add(unique);
             }
             return uniqueList;

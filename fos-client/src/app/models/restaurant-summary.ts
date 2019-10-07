@@ -19,6 +19,7 @@
         public RestaurantId: string = null;   
         public DeliveryId: string = null;   
         public ServiceId: string = null;   
-        public AppearTime: number = 0;
+        public AppearTime: number = 0;   
+        public AverageRating: number = 0;
     }
          
