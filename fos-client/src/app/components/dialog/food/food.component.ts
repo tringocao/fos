@@ -97,7 +97,6 @@ export class FoodComponent implements OnInit {
   }
   ngOnInit() {
     if (this.isOrder) {
-      //debugger;
       this.displayedColumns2 = [
         "select",
         "Photos",

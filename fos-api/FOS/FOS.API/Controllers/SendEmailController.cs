@@ -45,12 +45,6 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var id = Int32.Parse(eventId);
-                var isHost = await _spUserService.ValidateIsHost(id);
-                if (!isHost)
-                {
-                    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
-                }
                 string path  = System.Web.HttpContext.Current.Server.MapPath(Constant.email_template);
                 string html = System.IO.File.ReadAllText(path);
                 await _sendEmailService.SendEmailAsync(eventId, html);
@@ -120,12 +114,12 @@ namespace FOS.API.Controllers
         {
             try
             {
-                var id = Int32.Parse(updateEvent.IdEvent);
-                var isHost = await _spUserService.ValidateIsHost(id);
-                if (!isHost)
-                {
-                    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
-                }
+                //var id = Int32.Parse(updateEvent.IdEvent);
+                //var isHost = await _spUserService.ValidateIsHost(id);
+                //if (!isHost)
+                //{
+                //    return ApiUtil.CreateFailResult(Constant.UserNotPerission);
+                //}
                 string path = System.Web.HttpContext.Current.Server.MapPath(Constant.email_template);
                 string html = System.IO.File.ReadAllText(path);
 
