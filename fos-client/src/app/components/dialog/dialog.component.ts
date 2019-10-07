@@ -4,12 +4,13 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { Observable, Observer } from "rxjs";
+import { Observable, Observer, Subscription } from "rxjs";
 import { RestaurantService } from "src/app/services/restaurant/restaurant.service";
 import { EventDialogComponent } from "../event-dialog/event-dialog.component";
 import { RestaurantDetail } from "src/app/models/restaurant-detail";
 import { DeliveryInfos } from "src/app/models/delivery-infos";
 import { OverlayContainer } from "@angular/cdk/overlay";
+import { DataRoutingService } from 'src/app/data-routing.service';
 
 interface RestaurantMore {
   restaurant: DeliveryInfos;
@@ -35,10 +36,19 @@ export class DialogComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: RestaurantMore,
-    overlayContainer: OverlayContainer
-  ) {
-    overlayContainer.getContainerElement().classList.add("app-theme1-theme");
-  }
+    overlayContainer: OverlayContainer,
+    private dataRouting: DataRoutingService
+ ) {
+      this.getNavTitleSubscription = this.dataRouting.getNavTitle()
+   .subscribe((appTheme: string) => this.appTheme = appTheme);
+   overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme");
+ }
+ ngOnDestroy() {
+   // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+   this.getNavTitleSubscription.unsubscribe();
+ }
+ private getNavTitleSubscription: Subscription;
+ appTheme: string;
 
   async ngOnInit(): Promise<void> {
     console.log("-------------------------------------");

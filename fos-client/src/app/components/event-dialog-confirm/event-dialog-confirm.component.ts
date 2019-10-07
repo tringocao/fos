@@ -6,6 +6,8 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { DataRoutingService } from 'src/app/data-routing.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-event-dialog-confirm',
@@ -18,11 +20,19 @@ export class EventDialogConfirmComponent implements OnInit {
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: string,
     private overlayContainer: OverlayContainer
-  ) {
-    this.overlayContainer
-      .getContainerElement()
-      .classList.add('app-theme1-theme');
-  }
+    ,
+    private dataRouting: DataRoutingService
+ ) {
+      this.getNavTitleSubscription = this.dataRouting.getNavTitle()
+   .subscribe((appTheme: string) => this.appTheme = appTheme);
+   overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme");
+ }
+ ngOnDestroy() {
+   // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+   this.getNavTitleSubscription.unsubscribe();
+ }
+ private getNavTitleSubscription: Subscription;
+ appTheme: string;
 
   ngOnInit() {
     var self = this;

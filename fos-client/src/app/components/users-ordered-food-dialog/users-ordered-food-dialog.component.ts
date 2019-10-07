@@ -5,6 +5,8 @@ import { MatTableDataSource } from "@angular/material";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { OverlayContainer } from "@angular/cdk/overlay";
 import { OrderService } from "src/app/services/order/order.service";
+import { DataRoutingService } from 'src/app/data-routing.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: "app-users-ordered-food-dialog",
@@ -22,11 +24,22 @@ export class UsersOrderedFoodDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<UsersOrderedFoodDialogComponent>,
     private overlayContainer: OverlayContainer,
     private orderService: OrderService
+    ,
+    private dataRouting: DataRoutingService
   ) {
-    this.overlayContainer
+    this.getNavTitleSubscription = this.dataRouting
+      .getNavTitle()
+      .subscribe((appTheme: string) => (this.appTheme = appTheme));
+    overlayContainer
       .getContainerElement()
-      .classList.add("app-theme1-theme");
+      .classList.add("app-" + this.appTheme + "-theme");
   }
+  ngOnDestroy() {
+    // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+    this.getNavTitleSubscription.unsubscribe();
+  }
+  private getNavTitleSubscription: Subscription;
+  appTheme: string;
 
   ngOnInit() {
     if (this.data.isHostUser) {
