@@ -16,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SummaryService } from 'src/app/services/summary/summary.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { reject } from 'q';
+import { DataRoutingService } from 'src/app/data-routing.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reminder-dialog',
@@ -40,12 +42,19 @@ export class ReminderDialogComponent implements OnInit {
     private snackBar: MatSnackBar,
     private summaryService: SummaryService,
     private overlayContainer: OverlayContainer
-  ) {
-    this.overlayContainer
-      .getContainerElement()
-      .classList.add('app-theme1-theme');
-  }
-
+    ,
+    private dataRouting: DataRoutingService
+ ) {
+      this.getNavTitleSubscription = this.dataRouting.getNavTitle()
+   .subscribe((appTheme: string) => this.appTheme = appTheme);
+   overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme");
+ }
+ ngOnDestroy() {
+   // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
+   this.getNavTitleSubscription.unsubscribe();
+ }
+ private getNavTitleSubscription: Subscription;
+ appTheme: string;
   ngOnInit() {
     console.log(this.data.isClosedEvent);
     this.orderService
