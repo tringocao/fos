@@ -38,7 +38,6 @@ export class EventDialogConfirmComponent implements OnInit {
     var self = this;
     // var dataSource = self.data;
     // console.log(dataSource);
-    // debugger;
   }
 
   onNoClick(): void {

@@ -63,7 +63,6 @@ export class DatetimepickerComponent implements OnInit {
   }
 
   public HasError = (controlName: string, errorName: string) => {
-    // debugger;
     return this.formGroup.controls[controlName].hasError(errorName);
   }
 
