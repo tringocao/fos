@@ -5,7 +5,7 @@
         *ngFor="let promotion of promotions"
         [visible]="visible"
         [selectable]="selectable"
-        [removable]="promotion.PromotionType > 0"
+        [removable]="promotion.PromotionType > 0 && isHost"
         [addOnBlur]="addOnBlur"
         [promotion]="promotion"
         (removePressed)="removePromotion($event)"

@@ -155,7 +155,7 @@ export class EventSummaryDialogComponent implements OnInit {
   promoteChangeAble: boolean = true;
 
   toStandardDate(date: Date) {
-    return moment(date).format("DD/MM/YYYY HH:mm");
+    return moment(date).format("MM/DD/YYYY HH:mm");
   }
 
   toast(message: string, action: string) {

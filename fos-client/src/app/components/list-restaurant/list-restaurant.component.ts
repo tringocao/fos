@@ -158,14 +158,21 @@ export class ListRestaurantComponent implements OnInit {
       this.restaurantService.getRestaurants(this.favoriteRestaurants.map(Number), this.idService, 217).then(result => {
         console.log(result)
         result.forEach(item => item.IsFavorite = true);
-        // this.favoriteOnlyDataSource.data = result;
         this.dataSource.data = result;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.toast('Filtered by favorite! ', 'Dismiss');
       })
     } else {
-      this.dataSource.data = this.baseDataSource.data;
+      this.dataSource.data = this.baseDataSource.data.map(restaurant => {
+        if (this.favoriteRestaurants.includes(restaurant.RestaurantId)) {
+          restaurant.IsFavorite = true;
+        }
+        else {
+          restaurant.IsFavorite = false;
+        }
+        return restaurant;
+      });
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }

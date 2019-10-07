@@ -14,6 +14,7 @@
            
         public CanViewEvent: boolean = false;   
         public CanEditEvent: boolean = false;   
+        public CanCloneEvent: boolean = false;   
         public CanCloseEvent: boolean = false;   
         public CanMakeOrder: boolean = false;   
         public CanSendRemind: boolean = false;   
