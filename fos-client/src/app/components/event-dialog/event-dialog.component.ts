@@ -49,6 +49,7 @@ import { NoPromotionsNotificationComponent } from "./no-promotions-notification/
 import { Restaurant } from "src/app/models/restaurant";
 import { OrderService } from 'src/app/services/order/order.service';
 import { Order } from 'src/app/models/order';
+import { DataRoutingService } from 'src/app/data-routing.service';
 interface MoreInfo {
   restaurant: DeliveryInfos;
   idService: number;
@@ -97,8 +98,7 @@ export class EventDialogComponent implements OnInit {
     private snackBar: MatSnackBar,
     overlayContainer: OverlayContainer,
     private userService: UserService,
-    private customGroupService: CustomGroupService,
-    private dataRouting: DataRoutingService
+    private dataRouting: DataRoutingService,
     private customGroupService: CustomGroupService,
     private orderService: OrderService,
   ) {
