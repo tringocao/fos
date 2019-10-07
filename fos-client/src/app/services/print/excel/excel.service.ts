@@ -25,11 +25,11 @@ export class ExcelService {
         .catch(alert => console.log(alert));
     });
   }
-  DownloadCSV(): Promise<void> {
+  DownloadCSV(eventId: number): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.http
         .get<ApiOperationResult<void>>(
-          environment.apiUrl + 'api/Excel/DownloadCSV/',
+          environment.apiUrl + 'api/Excel/DownloadCSV/eventId?=' + eventId.toString(),
         )
         .toPromise()
         .then(result => {

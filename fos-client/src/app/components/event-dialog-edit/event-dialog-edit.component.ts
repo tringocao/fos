@@ -101,7 +101,8 @@ export class EventDialogEditComponent implements OnInit {
     });
     this.getNavTitleSubscription = this.dataRouting.getNavTitle()
     .subscribe((appTheme: string) => this.appTheme = appTheme);
-    overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme");  }
+    overlayContainer.getContainerElement().classList.add("app-"+this.appTheme+"-theme"); 
+   }
     ngOnDestroy() {
       // You have to `unsubscribe()` from subscription on destroy to avoid some kind of errors
       this.getNavTitleSubscription.unsubscribe();

@@ -748,7 +748,9 @@ export class EventSummaryDialogComponent implements OnInit {
       Total: this.totalCost
     };
     this.excelService.CreateCSV(excelModel).then(value => {
-      window.open(environment.apiUrl + 'api/Excel/DownloadCSV');
+      if ( value === true) {
+        window.open(environment.apiUrl + 'api/Excel/DownloadCSV?eventId=' + this.eventDetail.EventId.toString());
+      }
     });
   }
 }
