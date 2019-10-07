@@ -715,7 +715,6 @@ export class EventDialogComponent implements OnInit {
     self.ownerForm.get('MaximumBudget').setValue(clonnedEventData ? clonnedEventData.MaximumBudget : 0);
     self.ownerForm.get('EventType').setValue(clonnedEventData ? clonnedEventData.EventType : 'Open');
 
-    this.checkDatetimeValidation();
     //get currentUser
     self.loading = true;
     self.eventFormService
